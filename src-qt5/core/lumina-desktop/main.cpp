@@ -76,6 +76,7 @@ int main(int argc, char ** argv)
     setenv("QT_QPA_PLATFORMTHEME", "lthemeengine", 1);
     unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //causes pixel-specific scaling issues with the desktop - turn this on after-the-fact for other apps
     //Startup the session
+    LSession::checkUserFiles(); //make sure to create any config files before creating the QApplication
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
     //Setup the log file

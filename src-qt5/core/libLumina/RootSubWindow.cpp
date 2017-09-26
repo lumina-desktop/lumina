@@ -242,6 +242,16 @@ void RootSubWindow::enableFrame(bool on){
   WIN->setProperty(NativeWindow::FrameExtents, QVariant::fromValue< QList<int> >(extents) ); //save to structure now
 }
 
+void RootSubWindow::enableFrame(QList<NativeWindow::Type> types){
+  static QList<NativeWindow::Type> noframe;
+  if(noframe.isEmpty()){ noframe << NativeWindow::T_DESKTOP << NativeWindow::T_DOCK << NativeWindow::T_TOOLBAR << NativeWindow::T_MENU << NativeWindow::T_SPLASH << NativeWindow::T_DROPDOWN_MENU << NativeWindow::T_POPUP_MENU << NativeWindow::T_TOOLTIP << NativeWindow::T_NOTIFICATION << NativeWindow::T_COMBO << NativeWindow::T_DND; }
+  for(int i=0; i<types.length(); i++){
+    if(noframe.contains(types[i])){ enableFrame(false); return; }
+  }
+  enableFrame(true);
+  //Now make buttons visible as appropriate for the type
+  //NativeWindow::T_UTILITY, NativeWindow::T_DIALOG, , NativeWindow::T_NORMAL
+}
 void RootSubWindow::LoadProperties( QList< NativeWindow::Property> list){
   QList<QVariant> vals;
   //Always ensure that visibility changes are evaluated last
@@ -370,7 +380,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
     switch(props[i]){
 	case NativeWindow::Visible:
                 if(!WinWidget->isPaused() && (this->isVisible()!=vals[i].toBool()) && activeState==Normal ){
-		  qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
+		  //qDebug() << "Got Visibility Change:" << vals[i] << this->geometry() << WIN->geometry();
 		  if(vals[i].toBool()){ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/appear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		  else{ loadAnimation( DesktopSettings::instance()->value(DesktopSettings::Animation, "window/disappear", "random").toString(), NativeWindow::Visible, vals[i]); }
 		}
@@ -397,7 +407,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		  i--;
 		}else if(!WinWidget->isPaused() && activeState==Normal){
 		  if(WIN->property(NativeWindow::Size).toSize() != WinWidget->size()){
-                    qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
+                    //qDebug() << "Got Direct Geometry Change:" << WIN->geometry();
 		    this->setGeometry( QRect(this->geometry().topLeft(), WIN->geometry().size()) );
 		    WinWidget->resyncWindow();
 		  }
@@ -434,8 +444,8 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		mainLayout->setContentsMargins( vals[i].value< QList<int> >().at(0),vals[i].value< QList<int> >().at(2) - titleLabel->height(),vals[i].value< QList<int> >().at(1),vals[i].value< QList<int> >().at(3));
 		break;*/
 	case NativeWindow::WinTypes:
-		qDebug() << "Got Window Types:" << vals[i].value< QList<NativeWindow::Type> >();
-		enableFrame(vals[i].value< QList<NativeWindow::Type> >().contains(NativeWindow::T_NORMAL) );
+		//qDebug() << "Got Window Types:" << vals[i].value< QList<NativeWindow::Type> >();
+		enableFrame(vals[i].value< QList<NativeWindow::Type> >() );
 		break;
 	default:
 		qDebug() << "Window Property Unused:" << props[i] << vals[i];

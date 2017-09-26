@@ -6,7 +6,7 @@
     <message>
         <location filename="../TarBackend.cpp" line="229"/>
         <source>Could not read archive</source>
-        <translation>No s&apos;ha pogut llegir l&apos;arxiu</translation>
+        <translation>No s'ha pogut llegir l'arxiu</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="231"/>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation>Afegiu fitxers a l&apos;arxiu</translation>
+        <translation>Afegiu fitxers a l'arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation>Elimina la selecció de l&apos;arxiu</translation>
+        <translation>Elimina la selecció de l'arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="215"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
-        <translation>Extreu l&apos;arxiu en un directori</translation>
+        <translation>Extreu l'arxiu en un directori</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="223"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation>Afegeix un directori a l&apos;arxiu</translation>
+        <translation>Afegeix un directori a l'arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
@@ -131,17 +131,17 @@
     <message>
         <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d&apos;administrador)</translation>
+        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d'administrador)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="24"/>
         <source>Archive Manager</source>
-        <translation>Gestor d&apos;arxius</translation>
+        <translation>Gestor d'arxius</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="25"/>
         <source>Admin Mode</source>
-        <translation>Mode d&apos;administrador</translation>
+        <translation>Mode d'administrador</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="51"/>
@@ -179,7 +179,7 @@
         <location filename="../MainUI.cpp" line="81"/>
         <location filename="../MainUI.cpp" line="220"/>
         <source>Opening Archive...</source>
-        <translation>S&apos;obre l&apos;arxiu...</translation>
+        <translation>S'obre l'arxiu...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="164"/>
@@ -301,7 +301,7 @@
     <message>
         <location filename="../MainUI.cpp" line="210"/>
         <source>Could not overwrite file:</source>
-        <translation>No s&apos;ha pogut sobreescriure el fitxer:</translation>
+        <translation>No s'ha pogut sobreescriure el fitxer:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="218"/>
@@ -312,18 +312,18 @@
         <location filename="../MainUI.cpp" line="226"/>
         <location filename="../MainUI.cpp" line="233"/>
         <source>Add to Archive</source>
-        <translation>Afegeix a l&apos;arxiu</translation>
+        <translation>Afegeix a l'arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="228"/>
         <location filename="../MainUI.cpp" line="235"/>
         <source>Adding Items...</source>
-        <translation>S&apos;afegeixen elements...</translation>
+        <translation>S'afegeixen elements...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="246"/>
         <source>Removing Items...</source>
-        <translation>S&apos;eliminen elements...</translation>
+        <translation>S'eliminen elements...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="251"/>
@@ -337,7 +337,7 @@
         <location filename="../MainUI.cpp" line="278"/>
         <location filename="../MainUI.cpp" line="290"/>
         <source>Extracting...</source>
-        <translation>S&apos;extreu...</translation>
+        <translation>S'extreu...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="310"/>
@@ -350,67 +350,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimèdia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolupament</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educació</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jocs</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Gràfics</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Xarxa</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Oficina</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciència</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitat</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sense classificar</translation>
     </message>
 </context>
 <context>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation>Neteja tot l&apos;espai extra al dispositiu (conv = sync)</translation>
+        <translation>Neteja tot l'espai extra al dispositiu (conv = sync)</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
@@ -473,7 +473,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
-        <translation>Mode d&apos;administrador</translation>
+        <translation>Mode d'administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
@@ -508,12 +508,12 @@
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Administrator Permissions Needed</source>
-        <translation>Calen permisos d&apos;administrador</translation>
+        <translation>Calen permisos d'administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>This operation requires administrator priviledges.</source>
-        <translation>Aquesta operació requereix privilegis d&apos;administrador.</translation>
+        <translation>Aquesta operació requereix privilegis d'administrador.</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -528,7 +528,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation>El procés no s&apos;ha pogut completar:</translation>
+        <translation>El procés no s'ha pogut completar:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
@@ -538,7 +538,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation>La imatge s&apos;ha gravat correctament al dispositiu USB.</translation>
+        <translation>La imatge s'ha gravat correctament al dispositiu USB.</translation>
     </message>
 </context>
 </TS>

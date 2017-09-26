@@ -182,7 +182,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>21</height>
+     <height>28</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -437,6 +437,11 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>line_find</tabstop>
+  <tabstop>line_replace</tabstop>
+  <tabstop>tool_hideReplaceGroup</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

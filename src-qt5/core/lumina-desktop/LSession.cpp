@@ -120,7 +120,7 @@ void LSession::setupSession(){
   //Setup the user's lumina settings directory as necessary
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
-  checkUserFiles(); //adds these files to the watcher as well
+  //checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
   DESKTOPS.clear();
@@ -387,11 +387,15 @@ void LSession::checkWindowGeoms(){
 void LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = sessionsettings->value("DesktopVersion","0").toString(); //Old Version String
-  bool changed = LDesktopUtils::checkUserFiles(OVS);
+  QSettings sset("lumina-desktop", "sessionsettings");
+  QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
+    char *tmp;
+    int tmpN = 0;
+    QApplication A(tmpN, &tmp);
+  bool changed = LDesktopUtils::checkUserFiles(OVS, LDesktopUtils::LuminaDesktopVersion());
   if(changed){
     //Save the current version of the session to the settings file (for next time)
-    sessionsettings->setValue("DesktopVersion", this->applicationVersion());
+    sset.setValue("DesktopVersion", LDesktopUtils::LuminaDesktopVersion());
   }
 }
 
