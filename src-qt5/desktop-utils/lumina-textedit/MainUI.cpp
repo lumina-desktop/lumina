@@ -496,11 +496,14 @@ void MainUI::closeEvent(QCloseEvent *ev){
       unsaved << tmp->currentFile();
     }
   }
-  bool savenow = unsaved.isEmpty();
+  if(unsaved.isEmpty()){ QMainWindow::closeEvent(ev); return; }
+  bool savenow = false;
   if(!savenow && !ui->actionShow_Popups->isChecked()){ savenow = true; }
   if(!savenow){
-      savenow = (QMessageBox::Yes == QMessageBox::question(this, tr("Save Changes before closing?"), QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
+      QMessageBox::StandardButton but = QMessageBox::question(this, tr("Save Changes before closing?"), QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
+      savenow = (but == QMessageBox::Yes);
+      if(but == QMessageBox::Cancel){ ev->ignore(); return; }
     }
-    if(!savenow){ QMainWindow::closeEvent(ev); }
-    else{ ev->ignore(); SaveFile(); }
+    if(savenow){ SaveFile(); }
+    QMainWindow::closeEvent(ev);
 }
