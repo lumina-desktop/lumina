@@ -41,7 +41,9 @@ signals:
 protected:
 	void mouseMoveEvent(QMouseEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
-	void paintEvent(QPaintEvent *ev);
+	//void paintEvent(QPaintEvent *ev);
+	//void initializeGL();
+	void paintGL();
 };
 
 #endif

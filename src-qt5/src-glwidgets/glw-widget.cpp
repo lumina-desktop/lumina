@@ -33,9 +33,9 @@ void GLW_Widget::setGLBase(GLW_Base *base){
   connect(this, SIGNAL(repaintArea(QRect)), glw_base, SLOT(repaintArea(QRect)) );
 }
 
-void GLW_Widget::paintYourself(QStylePainter *painter, QPaintEvent *ev){
+void GLW_Widget::paintYourself(QStylePainter *painter, const QRect *prect){
   QRect rect = widgetRect();
-  rect = rect.intersected(ev->rect());
+  rect = prect->intersected(rect);
   QColor color( mouseOverWidget() ? Qt::gray : Qt::yellow);
   //if(this->windowOpacity()!=1.0){ qDebug() << "Opacity:" << this->windowOpacity(); }
   //color.setAlpha( qRound(this->windowOpacity()*255) );
@@ -43,15 +43,15 @@ void GLW_Widget::paintYourself(QStylePainter *painter, QPaintEvent *ev){
   painter->fillRect(rect, color);
 }
 
-void GLW_Widget::paintChildren(QStylePainter *painter, QPaintEvent *ev){
+void GLW_Widget::paintChildren(QStylePainter *painter, const QRect *prect){
   QObjectList child = this->children(); //Note: This is returned in stacking order (lowest -> highest)
   for(int i=0; i<child.length(); i++){
     if( !child[i]->isWidgetType() ){ continue; } //not a widget
     GLW_Widget *glww = qobject_cast<GLW_Widget*>(child[i]);
     if(glww!=0){
-      if(ev->rect().contains(glww->widgetRect())){
-        glww->paintYourself(painter, ev);
-        glww->paintChildren(painter,ev);
+      if( !prect->intersected(glww->widgetRect()).isNull() ){
+        glww->paintYourself(painter, prect);
+        glww->paintChildren(painter,prect);
       }
     }
   }

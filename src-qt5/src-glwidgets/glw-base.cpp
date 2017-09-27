@@ -6,10 +6,17 @@
 //===========================================
 #include "glw-base.h"
 #include "glw-widget.h"
+#include <QPaintEngine>
+#include <QDebug>
+#include <QOpenGLContext>
+#include <QOpenGLFunctions>
+#include <QOpenGLPaintDevice>
 
 GLW_Base::GLW_Base(QWidget *parent, Qt::WindowFlags f) : QOpenGLWidget(parent,f){
   bg_color = QColor(Qt::black);
   mouse_over_child = 0;
+  qDebug() << "Canvas supports threaded OpenGL:" <<  this->context()->supportsThreadedOpenGL();
+  qDebug() << " - globally:" <<  QOpenGLContext::globalShareContext()->supportsThreadedOpenGL();
 }
 
 GLW_Base::~GLW_Base(){
@@ -30,11 +37,11 @@ void GLW_Base::setBackgroundColor(QColor color){
 void GLW_Base::setBackground(QRect geom, QImage img){
   QPainter P(&bg_img);
   P.drawImage(geom, img);
-  this->update();
+  this->update(geom);
 }
 
 void GLW_Base::repaintArea(QRect rect){
-  paintEvent(new QPaintEvent(rect));
+  this->update(rect);
 }
 
 void GLW_Base::setMouseOverWidget(QWidget *child){
@@ -55,26 +62,46 @@ void GLW_Base::resizeEvent(QResizeEvent *ev){
   emit BaseResized();
 }
 
-void GLW_Base::paintEvent(QPaintEvent *ev){
-  QStylePainter painter(this);
-  painter.setClipRegion(ev->rect());
+/*void GLW_Base::paintEvent(QPaintEvent *ev){
+  QOpenGLWidget::paintEvent(ev);
+}*/
+
+void GLW_Base::paintGL(){
+  //Setup the OpenGL stuff
+  QRect rect = QRect(QPoint(0,0), this->size());
+  //Prepare the image to be painted
+  QImage img(this->size(), QImage::Format_RGBA8888);
+  QPainter painter;
+    painter.begin(&img);
+    painter.fillRect(rect, bg_color);
+  painter.end();
+  QOpenGLFunctions *f = this->context()->functions();
+  //f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //do native OpenGL commands here
+  glDrawPixels(bg_img.width(), bg_img.height(), GL_RGBA, GL_UNSIGNED_BYTE, bg_img.bits());
+
+  //Now do any QPainter drawing
+  /*QOpenGLPaintDevice device(rect.size());
+  QStylePainter painter;
+    painter.begin(&device, this);
+  //qDebug() << "Paint Engine type:" << painter.paintEngine()->type();
+  painter.setClipRegion(rect);
   //Fill in the background color first
-  painter.fillRect(ev->rect(), bg_color);
+  painter.fillRect(rect, bg_color);
   //Now paint any background image over that
-  painter.drawImage(ev->rect(), bg_img, ev->rect(), Qt::AutoColor | Qt::PreferDither | Qt::NoOpaqueDetection);
+  painter.drawImage(rect, bg_img, rect, Qt::AutoColor | Qt::PreferDither | Qt::NoOpaqueDetection);
   //Now find any children widgets and paint them if they are in that area
   QObjectList child = this->children(); //Note: This is returned in stacking order (lowest -> highest)
   for(int i=0; i<child.length(); i++){
     if( !child[i]->isWidgetType() ){ continue; } //not a widget
     GLW_Widget *glww = qobject_cast<GLW_Widget*>(child[i]);
     if(glww!=0){
-      if(!ev->rect().intersected(glww->widgetRect()).isNull()){
-        glww->paintYourself(&painter, ev);
-        glww->paintChildren(&painter,ev);
+      if(!rect.intersected(glww->widgetRect()).isNull()){
+        glww->paintYourself(&painter, &rect);
+        glww->paintChildren(&painter,&rect);
       }
-    }/*else{
-      QWidget *widg = qobject_cast<QWidget*>(child[i]);
-      widg->render(&painter, widg->geometry().topLeft());
-    }*/
+    }
   }
+  painter.end();
+  update();*/
 }

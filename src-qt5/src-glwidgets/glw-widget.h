@@ -31,8 +31,8 @@ public:
 
 	void setGLBase(GLW_Base *base);
 
-	virtual void paintYourself(QStylePainter *painter, QPaintEvent *ev);
-	void paintChildren(QStylePainter *painter, QPaintEvent *ev);
+	virtual void paintYourself(QStylePainter *painter, const QRect *prect);
+	void paintChildren(QStylePainter *painter, const QRect *prect);
 
 	//Properties
 	bool isDraggable(){ return draggable; }
