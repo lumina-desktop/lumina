@@ -19,11 +19,13 @@ class GLW_Base : public QOpenGLWidget{
 private:
 	QColor bg_color;
 	QImage bg_img;
+	QWidget *mouse_over_child;
 
 public:
 	GLW_Base(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
 	~GLW_Base();
 
+	QWidget * mouseOverWidget();
 
 private slots:
 
@@ -31,11 +33,13 @@ public slots:
 	void setBackgroundColor(QColor color);
 	void setBackground(QRect geom, QImage img);
 	void repaintArea(QRect);
+	void setMouseOverWidget(QWidget*);
 
 signals:
 	void BaseResized();
 
 protected:
+	void mouseMoveEvent(QMouseEvent *ev);
 	void resizeEvent(QResizeEvent *ev);
 	void paintEvent(QPaintEvent *ev);
 };

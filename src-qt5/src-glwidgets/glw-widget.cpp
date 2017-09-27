@@ -10,7 +10,6 @@
 // --- PUBLIC ---
 GLW_Widget::GLW_Widget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f){
   glw_base = 0;
-  this->setMouseTracking(true);
   draggable = false;
   drag_offset = QPoint();
 }
@@ -25,10 +24,7 @@ QRect GLW_Widget::widgetRect(){
 }
 
 bool GLW_Widget::mouseOverWidget(){
-  QPoint pos = this->mapFromGlobal(QCursor::pos());
-  QRect geom(QPoint(0,0), this->size());
-  return geom.contains(pos) || (draggable && !drag_offset.isNull());
-
+  return (glw_base->mouseOverWidget()==this);
 }
 
 void GLW_Widget::setGLBase(GLW_Base *base){
@@ -63,6 +59,16 @@ void GLW_Widget::paintChildren(QStylePainter *painter, QPaintEvent *ev){
 
 
 // --- PROTECTED ---
+void GLW_Widget::enterEvent(QEvent*){
+  if(!mouseOverWidget()){ glw_base->setMouseOverWidget(this); }
+  this->update();
+}
+
+void GLW_Widget::leaveEvent(QEvent*){
+  if(mouseOverWidget()){ glw_base->setMouseOverWidget(0); }
+  this->update();
+}
+
 void GLW_Widget::mousePressEvent(QMouseEvent *ev){
   if(!draggable){ QWidget::mousePressEvent(ev); return; }
   if(ev->button()==Qt::LeftButton){
@@ -78,6 +84,7 @@ void GLW_Widget::mouseReleaseEvent(QMouseEvent *ev){
 }
 
 void GLW_Widget::mouseMoveEvent(QMouseEvent *ev){
+  if(!mouseOverWidget()){ glw_base->setMouseOverWidget(this); }
   if(!draggable){ QWidget::mouseMoveEvent(ev); return; }
   if(!drag_offset.isNull()){
     this->move( this->mapTo(glw_base, ev->pos()-drag_offset) );

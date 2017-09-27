@@ -44,8 +44,8 @@ public slots:
 
 
 protected:
-	virtual void enterEvent(QEvent*){ this->update(); }
-	virtual void leaveEvent(QEvent*){ this->update(); }
+	virtual void enterEvent(QEvent*);
+	virtual void leaveEvent(QEvent*);
 
 	virtual void mousePressEvent(QMouseEvent *ev);
 	virtual void mouseReleaseEvent(QMouseEvent *ev);

@@ -9,10 +9,15 @@
 
 GLW_Base::GLW_Base(QWidget *parent, Qt::WindowFlags f) : QOpenGLWidget(parent,f){
   bg_color = QColor(Qt::black);
+  mouse_over_child = 0;
 }
 
 GLW_Base::~GLW_Base(){
 
+}
+
+QWidget * GLW_Base::mouseOverWidget(){
+  return mouse_over_child;
 }
 
 // --- PUBLIC SLOTS ---
@@ -32,7 +37,16 @@ void GLW_Base::repaintArea(QRect rect){
   paintEvent(new QPaintEvent(rect));
 }
 
+void GLW_Base::setMouseOverWidget(QWidget *child){
+  mouse_over_child = child;
+}
+
 // --- PROTECTED ---
+void GLW_Base::mouseMoveEvent(QMouseEvent *ev){
+  mouse_over_child = 0; //reset this flag - mouse is over the base right now
+  QWidget::mouseMoveEvent(ev);
+}
+
 void GLW_Base::resizeEvent(QResizeEvent *ev){
   QOpenGLWidget::resizeEvent(ev);
   if(!bg_img.isNull()){

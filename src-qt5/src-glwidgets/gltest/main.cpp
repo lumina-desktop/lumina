@@ -32,7 +32,7 @@ int main(int argc, char** argv){
       anim.setEndValue(QRect(0,0,200,200));
       anim.setDuration(1500);
       anim.setLoopCount(-1);
-      anim.start();
+      //anim.start();
     /*QPushButton but(&base);
       but.setText("button");
       but.setGeometry(100,100,50,50);
