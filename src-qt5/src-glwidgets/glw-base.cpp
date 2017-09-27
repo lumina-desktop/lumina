@@ -54,10 +54,13 @@ void GLW_Base::paintEvent(QPaintEvent *ev){
     if( !child[i]->isWidgetType() ){ continue; } //not a widget
     GLW_Widget *glww = qobject_cast<GLW_Widget*>(child[i]);
     if(glww!=0){
-      if(ev->rect().contains(glww->widgetRect())){
+      if(!ev->rect().intersected(glww->widgetRect()).isNull()){
         glww->paintYourself(&painter, ev);
         glww->paintChildren(&painter,ev);
       }
-    }
+    }/*else{
+      QWidget *widg = qobject_cast<QWidget*>(child[i]);
+      widg->render(&painter, widg->geometry().topLeft());
+    }*/
   }
 }

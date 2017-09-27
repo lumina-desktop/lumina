@@ -11,6 +11,8 @@
 GLW_Widget::GLW_Widget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f){
   glw_base = 0;
   this->setMouseTracking(true);
+  draggable = false;
+  drag_offset = QPoint();
 }
 
 GLW_Widget::~GLW_Widget(){
@@ -25,7 +27,7 @@ QRect GLW_Widget::widgetRect(){
 bool GLW_Widget::mouseOverWidget(){
   QPoint pos = this->mapFromGlobal(QCursor::pos());
   QRect geom(QPoint(0,0), this->size());
-  return geom.contains(pos);
+  return geom.contains(pos) || (draggable && !drag_offset.isNull());
 
 }
 
@@ -39,7 +41,9 @@ void GLW_Widget::paintYourself(QStylePainter *painter, QPaintEvent *ev){
   QRect rect = widgetRect();
   rect = rect.intersected(ev->rect());
   QColor color( mouseOverWidget() ? Qt::gray : Qt::yellow);
-  color.setAlpha(125);
+  //if(this->windowOpacity()!=1.0){ qDebug() << "Opacity:" << this->windowOpacity(); }
+  //color.setAlpha( qRound(this->windowOpacity()*255) );
+  color.setAlpha( 125);
   painter->fillRect(rect, color);
 }
 
@@ -59,6 +63,34 @@ void GLW_Widget::paintChildren(QStylePainter *painter, QPaintEvent *ev){
 
 
 // --- PROTECTED ---
+void GLW_Widget::mousePressEvent(QMouseEvent *ev){
+  if(!draggable){ QWidget::mousePressEvent(ev); return; }
+  if(ev->button()==Qt::LeftButton){
+    drag_offset = ev->pos();
+  }
+}
+
+void GLW_Widget::mouseReleaseEvent(QMouseEvent *ev){
+  if(!draggable){ QWidget::mouseReleaseEvent(ev); return; }
+  if(ev->button()==Qt::LeftButton){
+    if(drag_offset!=ev->pos()){ emit doneDragging(); }
+     drag_offset = QPoint(); } //reset offset
+}
+
+void GLW_Widget::mouseMoveEvent(QMouseEvent *ev){
+  if(!draggable){ QWidget::mouseMoveEvent(ev); return; }
+  if(!drag_offset.isNull()){
+    this->move( this->mapTo(glw_base, ev->pos()-drag_offset) );
+  }
+}
+
+
+void GLW_Widget::moveEvent(QMoveEvent *ev){
+  QRect oldgeom = QRect(ev->oldPos(), this->size());
+  QRect newgeom = QRect(ev->pos(), this->size());
+  emit repaintArea( oldgeom.united(newgeom) );
+}
+
 void GLW_Widget::resizeEvent(QResizeEvent *ev){
   if(glw_base==0){ return; }
   QPoint pos = this->mapTo(glw_base, QPoint(0,0));

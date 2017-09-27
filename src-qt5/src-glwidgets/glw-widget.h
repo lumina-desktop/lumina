@@ -19,6 +19,8 @@ class GLW_Widget : public QWidget{
 	Q_OBJECT
 private:
 	GLW_Base *glw_base;
+	QPoint drag_offset;
+	bool draggable;
 
 public:
 	GLW_Widget(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = Qt::WindowFlags());
@@ -32,18 +34,29 @@ public:
 	virtual void paintYourself(QStylePainter *painter, QPaintEvent *ev);
 	void paintChildren(QStylePainter *painter, QPaintEvent *ev);
 
+	//Properties
+	bool isDraggable(){ return draggable; }
+
 private slots:
 
 public slots:
+	void setDraggable(bool drag){ draggable = drag; }
+
 
 protected:
-	void enterEvent(QEvent*){ this->update(); }
-	void leaveEvent(QEvent*){ this->update(); }
-	void resizeEvent(QResizeEvent *ev);
-	void paintEvent(QPaintEvent *ev);
+	virtual void enterEvent(QEvent*){ this->update(); }
+	virtual void leaveEvent(QEvent*){ this->update(); }
+
+	virtual void mousePressEvent(QMouseEvent *ev);
+	virtual void mouseReleaseEvent(QMouseEvent *ev);
+	virtual void mouseMoveEvent(QMouseEvent *ev);
+	virtual void moveEvent(QMoveEvent *ev);
+	virtual void resizeEvent(QResizeEvent *ev);
+	virtual void paintEvent(QPaintEvent *ev);
 
 signals:
 	void repaintArea(QRect);
+	void doneDragging();
 };
 
 Q_DECLARE_INTERFACE(GLW_Widget, "GLW_Widget");
