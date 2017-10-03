@@ -8,6 +8,7 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include <QVideoFrame>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -22,12 +23,17 @@ MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   terminate_thread = false;
   UpdateIcons(); //Set all the icons in the dialog
   SetupConnections();
+  player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
+  surface = new LVideoSurface();
+  player->setVideoOutput(surface);
   INFO = 0;
 }
 
 MainUI::~MainUI(){
   terminate_thread = true;
   this->close();
+  delete surface;
+  delete player;
 }
 
 //=============
@@ -86,7 +92,15 @@ void MainUI::LoadFile(QString path, QString type){
       ui->label_file_icon->setPixmap( pix.scaledToHeight(64) );
       ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
       //qDebug() << "  - done with image";
-    }else{
+    }/*else if(INFO->isVideo()){
+      player->setMedia(QUrl("file://"+INFO->absoluteFilePath()));
+      player->play();
+      player->setPosition(player->duration() / 2);
+      connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(stopVideo(QImage)));
+      //Pixmap set when video is loaded in stopVideo
+      //ui->label_file_icon->setPixmap( QPixmap::fromImage(surface->frameImage()).scaledToHeight(64) );
+      //ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
+    }*/else{
       ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
     }
     //Now verify the tab is available in the widget
@@ -103,7 +117,7 @@ void MainUI::LoadFile(QString path, QString type){
   }
   //Now load the special XDG desktop info
   qDebug() << "Check XDG Info:" << type;
-  //qDebug() << INFO->isDesktopFile() << type;
+  qDebug() << INFO->isDesktopFile() << type;
   if(INFO->isDesktopFile() || !type.isEmpty()){
 
     if(INFO->XDG()->type == XDGDesktop::APP){
@@ -295,6 +309,13 @@ void MainUI::getXdgCommand(QString prev){
   ui->line_xdg_command->setText(file);
   xdgvaluechanged();
 }
+
+/*void MainUI::stopVideo(QImage img) {
+  static bool flag = true;
+  if(flag) { player->setPosition(player->duration() / 2); flag = false;}
+  player->pause();
+  ui->label_file_icon->setPixmap( QPixmap::fromImage( img.scaledToHeight(64) ));
+}*/
 
 void MainUI::on_tool_xdg_getDir_clicked(){
   //Find a directory

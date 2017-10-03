@@ -10,14 +10,14 @@
 
 int main(int argc, char** argv){
 
-    QSurfaceFormat fmt;
+  QSurfaceFormat fmt;
     fmt.setRenderableType(QSurfaceFormat::OpenGL); //OpenGL, OpenGLES, OpenVG
     fmt.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
-    QSurfaceFormat::setDefaultFormat(fmt);
+  QSurfaceFormat::setDefaultFormat(fmt);
 
   QApplication A(argc,argv);
 
-    qDebug() << "Creating base widget";
+      qDebug() << "Creating base widget";
     GLW_Base base;
       qDebug() << "Resize base widget";
     base.resize(1024,768);
@@ -29,7 +29,7 @@ int main(int argc, char** argv){
     GLW_Widget wgt(&base);
       wgt.setGLBase(&base);
       wgt.setGeometry(75,50,50,50);
-      QPropertyAnimation anim(&wgt);
+    QPropertyAnimation anim(&wgt);
       anim.setTargetObject(&wgt);
       anim.setPropertyName("geometry");
       //anim.setStartValue(QRect(-50,-50,50,50));
@@ -46,6 +46,7 @@ int main(int argc, char** argv){
     colorchange CC(&base);
       qDebug() << "Start Event loop";
     base.show();
-  A.exec();
-    qDebug() << " - Finished";
+    int ret = A.exec();
+      qDebug() << " - Finished";
+    return ret;
 }
