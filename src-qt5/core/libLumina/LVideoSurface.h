@@ -1,20 +1,21 @@
 #include <QAbstractVideoSurface>
 #include <QVideoSurfaceFormat>
+#include <QPixmap>
 #include <QDebug>
 
 class LVideoSurface : public QAbstractVideoSurface {
   Q_OBJECT
 
   public:
-    LVideoSurface();
+    LVideoSurface(QObject *parent=0);
     virtual bool present(const QVideoFrame&);
     virtual QList<QVideoFrame::PixelFormat> supportedPixelFormats(QAbstractVideoBuffer::HandleType) const;
-    QImage currentFrame();
-    bool frameReady();
+    /*virtual QList<QVidebool isFormatSupported(const QVideoSurfaceFormat &format) const;
+    bool start(const QVideoSurfaceFormat &format);
+    void stop();*/
   signals:
-    void frameReceived(QImage);
+    void frameReceived(QPixmap);
   private:
-    int recording;
-    QImage frameImage;
-    bool ready;
+    QPixmap frameImage;
+    //QImage::Format imageFormat;
 };

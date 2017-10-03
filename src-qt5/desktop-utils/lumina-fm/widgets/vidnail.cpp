@@ -18,7 +18,7 @@ struct vFrame {
 public:
 
     QString getCodec();
-    void goto(int timeInSeconds);
+    void skipTo(int timeInSeconds);
     void readVideoFrame();
     void getScaledVideoFrame(int scaledSize, vFrame& vFrame);
 
@@ -35,14 +35,12 @@ public:
 
 
  private:
-
     bool readVideoPacket();
     bool getVideoPacket();
     void scaleVideo(int scaledSize, int& scaledWidth, int& scaledHeight);
     void createVFrame(AVFrame *vFrame, quint8 *frameBuffer, int width, int height);
     void calculateDimensions(int size);
-    void generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage& 
-image);
+    void generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage& image);
     QString getMimeType(const QString& videoFile);
     QString getExtension(const QString& videoFilename);
 
