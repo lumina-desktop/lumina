@@ -1,7 +1,7 @@
 include("$${PWD}/../../OS-detect.pri")
 
 QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent multimedia
 
 
 TARGET = lumina-fileinfo
@@ -13,6 +13,7 @@ target.path = $${L_BINDIR}
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 #include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LVideoSurface.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp\

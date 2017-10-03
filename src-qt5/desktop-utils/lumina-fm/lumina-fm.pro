@@ -15,6 +15,7 @@ include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 include(../../core/libLumina/ExternalProcess.pri)
+include(../../core/libLumina/LVideoSurface.pri)
 
 SOURCES += main.cpp \
 		MainUI.cpp \

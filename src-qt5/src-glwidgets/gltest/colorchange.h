@@ -13,14 +13,9 @@ private:
 
 public slots:
   void toggle(){
-    static int current = 0;
-    if(current==0){
-      base->setBackgroundColor(QColor(Qt::red));
-    }else{
-      base->setBackgroundColor(QColor(Qt::blue));
-      current = -1;
-    }
-    current++;
+    static bool current = false;
+    base->setBackgroundColor( current ? QColor(Qt::blue) : QColor(Qt::red));
+    current = !current;
   }
 
 public:

@@ -15,6 +15,8 @@
 #include <QIcon>
 //#include <QFutureWatcher>
 
+#include <QMediaPlayer>
+#include <LVideoSurface.h>
 #include <LuminaXDG.h>
 /*class FileItem{
 public:
@@ -43,8 +45,9 @@ public:
 private:
 	QString currentDir;
 	QFileSystemWatcher *watcher;
+  //QImage videoFrame;
 	bool showHidden, showThumbs;
-	QStringList imageFormats, oldFiles;
+	QStringList imageFormats, videoFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
 
 	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
@@ -53,7 +56,8 @@ private:
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-
+  //void captureFrame(QImage);
+  //void stopVideo(QMediaPlayer*, QMediaPlayer::MediaStatus);
 	void futureFinished(QString, QImage);
 
 public slots:
@@ -70,6 +74,8 @@ signals:
 
 	//Internal signal for the alternate threads
 	void threadDone(QString, QImage);
+
+  //void frameChanged();
 };
 
 #endif
