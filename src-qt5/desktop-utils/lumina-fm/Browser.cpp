@@ -94,8 +94,8 @@ void Browser::dirChanged(QString dir){
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
-/*void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) {
-  qDebug() << status;
+void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) {
+  //qDebug() << status;
   if(status == QMediaPlayer::BufferedMedia) {
     qDebug() << "stoppingVideo" << player << player->currentMedia().canonicalUrl();
     player->setPosition(player->duration() / 2);
@@ -103,11 +103,11 @@ void Browser::dirChanged(QString dir){
   }
 }
 
-void Browser::captureFrame(QImage pix) {
+void Browser::captureFrame(QPixmap pix) {
   qDebug() << "grabbing frame";
   videoFrame = pix.scaledToHeight(64);
   emit frameChanged();
-}*/
+}
 
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
@@ -120,29 +120,20 @@ void Browser::futureFinished(QString name, QImage icon){
       if(ico.isNull()){
         if(videoFormats.contains(name.section(".",-1).toLower())) {
           qDebug() << "Loading Video for" << name;
-          qDebug() << "VIDEO" << info;
-          //qDebug() << obj << this << QThread::currentThread();
+          //qDebug() << "VIDEO" << info;
           QMediaPlayer *player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
           qDebug() << " - created player";
           LVideoSurface *surface = new LVideoSurface();
           qDebug() << " - Create objects";
-          //connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(captureFrame(QImage)));
-          //connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
+          connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(captureFrame(QPixmap)));
+          connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
           player->setVideoOutput(surface);
-          player->setVolume(0);
+          player->setMuted(true);
           player->setMedia(QUrl("file://"+info->absoluteFilePath()));
           player->play();
-          qDebug() << "Wait for buffer";
-          while(player->mediaStatus()!=QMediaPlayer::BufferedMedia){
-            QCoreApplication::processEvents();
-          }
           player->pause();
-          player->setPosition(player->duration()/2);
-          while(!surface->frameReady()) {
-            QCoreApplication::processEvents();
-          }
-          qDebug() << "Load Frame";
-          ico.addPixmap(QPixmap::fromImage(surface->currentFrame()));
+          //ico.addPixmap(videoFrame);
+          ico = loadIcon(info->iconfile());
           delete player;
           delete surface;
         }else {
