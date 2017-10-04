@@ -51,12 +51,12 @@ private:
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
 
 	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
-	QIcon loadIcon(QString icon); //simplification for using/populating the mimIcons cache
+	QIcon* loadIcon(QString icon); //simplification for using/populating the mimIcons cache
 
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-  void captureFrame(QPixmap);
+  void captureFrame(QPixmap, QIcon*);
   void stopVideo(QMediaPlayer*, QMediaPlayer::MediaStatus);
 	void futureFinished(QString, QImage);
 

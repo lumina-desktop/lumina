@@ -71,12 +71,12 @@ void Browser::loadItem(QString info, Browser *obj){
   obj->emit threadDone(info, pix);
 }
 
-QIcon Browser::loadIcon(QString icon){
+QIcon* Browser::loadIcon(QString icon){
   if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
 
-  return mimeIcons[icon];
+  return &mimeIcons[icon];
 }
 
 
@@ -103,21 +103,21 @@ void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) 
   }
 }
 
-void Browser::captureFrame(QPixmap pix) {
+void Browser::captureFrame(QPixmap pix, QIcon *ico) {
   qDebug() << "grabbing frame";
-  videoFrame = pix.scaledToHeight(64);
+  *ico = pix.scaledToHeight(64);
   emit frameChanged();
 }
 
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
-     QIcon ico;
+     QIcon *ico = new QIcon();
      LFileInfo *info = new LFileInfo(name);
       if(!icon.isNull() && showThumbs){
         QPixmap pix = QPixmap::fromImage(icon);
-        ico.addPixmap(pix);
+        ico->addPixmap(pix);
       }
-      if(ico.isNull()){
+      if(ico->isNull()){
         if(videoFormats.contains(name.section(".",-1).toLower())) {
           qDebug() << "Loading Video for" << name;
           //qDebug() << "VIDEO" << info;
@@ -125,22 +125,27 @@ void Browser::futureFinished(QString name, QImage icon){
           qDebug() << " - created player";
           LVideoSurface *surface = new LVideoSurface();
           qDebug() << " - Create objects";
-          connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(captureFrame(QPixmap)));
+          connect(surface, &LVideoSurface::frameReceived, this, [&] (QPixmap pix) { captureFrame(pix, ico); });
           connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
           player->setVideoOutput(surface);
           player->setMuted(true);
           player->setMedia(QUrl("file://"+info->absoluteFilePath()));
           player->play();
           player->pause();
-          //ico.addPixmap(videoFrame);
-          ico = loadIcon(info->iconfile());
+
+	  QEventLoop loop;
+	  connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()));
+	  loop.exec();
+
+          ico->addPixmap(videoFrame);
+          //ico = loadIcon(info->iconfile());
           delete player;
           delete surface;
         }else {
           ico = loadIcon(info->iconfile());
         }
       }
-      this->emit itemDataAvailable( ico, info);
+      this->emit itemDataAvailable( *ico, info);
      //qDebug() << " -- done:" << name;
 }
 
