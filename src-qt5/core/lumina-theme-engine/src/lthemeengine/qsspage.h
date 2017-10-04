@@ -24,6 +24,7 @@ private slots:
     void on_qssListWidget_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
     void on_list_disabled_currentItemChanged(QListWidgetItem *current, QListWidgetItem *);
     void on_createButton_clicked();
+    void on_copyButton_clicked();
     void on_editButton_clicked();
     void on_removeButton_clicked();
     void on_renameButton_clicked();

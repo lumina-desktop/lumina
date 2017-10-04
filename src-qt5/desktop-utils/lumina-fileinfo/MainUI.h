@@ -14,11 +14,11 @@
 #define _LUMINA_FILE_INFO_MAIN_UI_H
 
 #include <QDialog>
-
+#include <QMediaPlayer>
 #include <LuminaXDG.h>
+#include <LVideoSurface.h>
 
-namespace Ui{
-	class MainUI;
+namespace Ui{ class MainUI;
 };
 
 class MainUI : public QDialog{
@@ -35,6 +35,9 @@ public slots:
 private:
 	Ui::MainUI *ui;
 	LFileInfo *INFO;
+  LVideoSurface *surface;
+  QMediaPlayer *player;
+  bool flag;
 
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task
@@ -51,6 +54,8 @@ private slots:
 	//UI Buttons
 	void on_push_close_clicked();
 	void on_push_save_clicked();
+  void stopVideo(QPixmap);
+  void setDuration(QMediaPlayer::MediaStatus);
 	void getXdgCommand(QString prev = "");
 	//void on_tool_xdg_getCommand_clicked(QString prev = "");
 	void on_tool_xdg_getDir_clicked();

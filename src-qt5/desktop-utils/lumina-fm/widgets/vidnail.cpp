@@ -1,33 +1,59 @@
-#include "vidnail.h"
-vidnail::vidnail(QWidget *parent) : QMainWindow(parent), mplayer(parent, QMediaPlayer::VideoSurface){  //there is no UI, so not sure how to alter the constructor
+#ifndef VIDNAIL_H
+#define VIDNAIL_H
+
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
 }
 
-vidnail::~vidnail()
-{
+class VidNail;
 
-vidnail::grabvideothumbnail(){
-  vsurface = new QAbstractVideoSurface();
-  mplayer.setVideoOutput(vsurface);
-  mplayer.setMedia($file);  // video file to get thumbnail of
-  imageCaptured = QPixmap();
-  mplayer.setPosition(2000); // time in milliseconds
-  mplayer.setMuted(true); // just to make sure no sound is emited
-  mplayer.play();
+struct vFrame {
+    vFrame() : *width(0), *height(0) {}
+    vFrame(int *width, int *height : width(width), height(height) {}
+    int *width;
+    int *height;
+};
 
-  currentFrame = frame;
-  const QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());
-  const QSize size = format.frameSize();
+public:
 
-  this->imageFormat = imageFormat;
-  QAbstractVideoSurface::start(format);
-  QImage image( currentFrame.bits(), currentFrame.width(), currentFrame.height(), currentFrame.bytesPerLine(), imageFormat);
-  imageCaptured = QPixmap::fromImage(image.copy(image.rect()));
+    QString getCodec();
+    void skipTo(int timeInSeconds);
+    void readVideoFrame();
+    void getScaledVideoFrame(int scaledSize, vFrame& vFrame);
 
-// Now do scaling with regular thumbnail process to make proper size
+    int getWidth();
+    int getHeight();
+    int getLength();
 
-  mplayer.stop();
-  vsurface.stop();
-}
+    void makeThumbnail(const QString& videoFile, QImage &image);
+    void setThumbnailSize(int size);
+    void setPercentage(int percent);
+    void setTime(const QString& Time);
+
+    void writeVidNail(vFrame& frame, QImage& image);
 
 
+ private:
+    bool readVideoPacket();
+    bool getVideoPacket();
+    void scaleVideo(int scaledSize, int& scaledWidth, int& scaledHeight);
+    void createVFrame(AVFrame *vFrame, quint8 *frameBuffer, int width, int height);
+    void calculateDimensions(int size);
+    void generateThumbnail(const QString& videoFile, ImageWriter& imageWriter, QImage& image);
+    QString getMimeType(const QString& videoFile);
+    QString getExtension(const QString& videoFilename);
 
+
+ private:
+     int                    videoStream;
+     AVFormatContext        *inputVideoFormatContext;
+     AVCodecContext         *inputvideoCodecContext;
+     AVCodec                *inputVideoCodec;
+     AVStream               *inputVideoStream;
+     AVFrame                *inputVideoFrame;
+     quint8                 *inputFrameBuffer;
+     AVPacket               *videoPacket;
+
+
+#endif // VIDNAIL_H

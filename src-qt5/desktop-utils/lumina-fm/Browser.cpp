@@ -16,10 +16,13 @@
 Browser::Browser(QObject *parent) : QObject(parent){
   watcher = new QFileSystemWatcher(this);
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged(QString)) );
- connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
+  connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
+  videoFormats = LUtils::videoExtensions(); //lowercase suffixes
+  //connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(captureFrame(QImage)));
+  //connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
   connect(this, SIGNAL(threadDone(QString, QImage)), this, SLOT(futureFinished(QString, QImage))); //will always be between different threads
 }
 
@@ -60,21 +63,20 @@ void Browser::loadItem(QString info, Browser *obj){
       file.close();
       pix.loadFromData(bytes);
       if(pix.width() > 256 || pix.height() > 256 ){
-        pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        pix = pix.scaled(256,256, Qt::KeepAspectRatio);
       }
     }
   }
-
-  //qDebug() << " - done with item:" << info;
+  qDebug() << " - done with item:" << info;
   obj->emit threadDone(info, pix);
 }
 
-QIcon Browser::loadIcon(QString icon){
+QIcon* Browser::loadIcon(QString icon){
   if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
 
-  return mimeIcons[icon];
+  return &mimeIcons[icon];
 }
 
 
@@ -92,24 +94,58 @@ void Browser::dirChanged(QString dir){
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
+void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) {
+  //qDebug() << status;
+  if(status == QMediaPlayer::BufferedMedia) {
+    qDebug() << "stoppingVideo" << player << player->currentMedia().canonicalUrl();
+    player->setPosition(player->duration() / 2);
+    player->pause();
+  }
+}
+
+void Browser::captureFrame(QPixmap pix, QIcon *ico) {
+  qDebug() << "grabbing frame";
+  *ico = pix.scaledToHeight(64);
+  emit frameChanged();
+}
+
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
-     QIcon ico;
-     //LFileInfo info(name);
+     QIcon *ico = new QIcon();
      LFileInfo *info = new LFileInfo(name);
       if(!icon.isNull() && showThumbs){
-        //qDebug() << " -- Data:";
         QPixmap pix = QPixmap::fromImage(icon);
-        ico.addPixmap(pix);
-       //}else if(info->isDir()){
-        //qDebug() << " -- Folder:";
-        //ico = loadIcon("folder");
+        ico->addPixmap(pix);
       }
-      if(ico.isNull()){
-	//qDebug() << " -- MimeType:" << info.fileName() << info.mimetype();
-        ico = loadIcon(info->iconfile());
+      if(ico->isNull()){
+        if(videoFormats.contains(name.section(".",-1).toLower())) {
+          qDebug() << "Loading Video for" << name;
+          //qDebug() << "VIDEO" << info;
+          QMediaPlayer *player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
+          qDebug() << " - created player";
+          LVideoSurface *surface = new LVideoSurface();
+          qDebug() << " - Create objects";
+          connect(surface, &LVideoSurface::frameReceived, this, [&] (QPixmap pix) { captureFrame(pix, ico); });
+          connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
+          player->setVideoOutput(surface);
+          player->setMuted(true);
+          player->setMedia(QUrl("file://"+info->absoluteFilePath()));
+          player->play();
+          player->pause();
+
+	  QEventLoop loop;
+	  connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()));
+	  loop.exec();
+
+          ico->addPixmap(videoFrame);
+          //ico = loadIcon(info->iconfile());
+          delete player;
+          delete surface;
+        }else {
+          ico = loadIcon(info->iconfile());
+        }
       }
-      this->emit itemDataAvailable( ico, info);
+      this->emit itemDataAvailable( *ico, info);
      //qDebug() << " -- done:" << name;
 }
 

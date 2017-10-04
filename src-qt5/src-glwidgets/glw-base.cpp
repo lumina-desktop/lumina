@@ -67,7 +67,24 @@ void GLW_Base::resizeEvent(QResizeEvent *ev){
 }*/
 
 void GLW_Base::paintGL(){
+
   //Setup the OpenGL stuff
+  QOpenGLFunctions *f = this->context()->functions();
+  f->glViewport(0, 0, width(), height());
+  f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  GLfloat vertices[] = {
+      0.0f, 0.707f,
+      -0.5f, -0.5f,
+      0.5f, -0.5f
+  };
+
+  f->glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+  f->glEnableVertexAttribArray(0);
+  f->glDrawArrays(GL_TRIANGLES, 0, 3);
+  f->glDisableVertexAttribArray(0);
+  glDrawPixels(bg_img.width(), bg_img.height(), GL_RGBA, GL_UNSIGNED_BYTE, bg_img.bits());
+
   QRect rect = QRect(QPoint(0,0), this->size());
   //Prepare the image to be painted
   QImage img(this->size(), QImage::Format_RGBA8888);
@@ -75,10 +92,6 @@ void GLW_Base::paintGL(){
     painter.begin(&img);
     painter.fillRect(rect, bg_color);
   painter.end();
-  QOpenGLFunctions *f = this->context()->functions();
-  //f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //do native OpenGL commands here
-  glDrawPixels(bg_img.width(), bg_img.height(), GL_RGBA, GL_UNSIGNED_BYTE, bg_img.bits());
 
   //Now do any QPainter drawing
   /*QOpenGLPaintDevice device(rect.size());

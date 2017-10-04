@@ -1,25 +1,13 @@
-#ifndef VIDNAIL_H
-#define VIDNAIL_H
+//===========================================
+//  Lumina-DE source code
+//  Copyright (c) 2017, q5sys
+//  Available under the 3-clause BSD license
+//  See the LICENSE file for full details
+//===========================================
+#include "vidnail.h"
 
-#include <QMediaPlayer>
-#include <QtMultimediaWidgets>
-#include "videowidgetsurface.h"
-#include <QPixmap>
-#include <QAbstractVideoSurface>
-#include <QImage>
-#include <QRect>
-#include <QVideoFrame>
+VidNail::VidNail(QObject *parent) : QObject(parent){
+}
 
-public:
-
-  void grabvideothumbnail();
-
-private:
-
-  QAbstractVideoSurface *vsurface;
-  QImage::Format imageFormat;
-  QPixmap imageCaptured;
-
-
-#endif // VIDNAIL_H
-
+VidNail::~VidNail(){
+}
