@@ -12,7 +12,7 @@ bool LVideoSurface::present(const QVideoFrame &frame) {
   }
 
   if(frame.isValid()) {
-    qDebug() << "Recording Frame" << frame.pixelFormat();
+    //qDebug() << "Recording Frame" << frame.pixelFormat();
     QVideoFrame icon(frame);
     icon.map(QAbstractVideoBuffer::ReadOnly);
     QImage img(icon.bits(), icon.width(), icon.height(), icon.bytesPerLine(), QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));

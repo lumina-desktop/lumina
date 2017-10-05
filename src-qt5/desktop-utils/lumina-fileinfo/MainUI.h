@@ -17,6 +17,7 @@
 #include <QMediaPlayer>
 #include <LuminaXDG.h>
 #include <LVideoSurface.h>
+#include <QElapsedTimer>
 
 namespace Ui{ class MainUI;
 };
@@ -38,6 +39,7 @@ private:
   LVideoSurface *surface;
   QMediaPlayer *player;
   bool flag;
+  QElapsedTimer timer;
 
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task

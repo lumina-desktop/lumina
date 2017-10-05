@@ -25,6 +25,7 @@ MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   SetupConnections();
   player = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
   surface = new LVideoSurface(this);
+  qDebug() << surface->surfaceFormat();
   player->setVideoOutput(surface);
   player->setMuted(true);
   connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(setDuration(QMediaPlayer::MediaStatus)));
@@ -96,7 +97,11 @@ void MainUI::LoadFile(QString path, QString type){
       ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
       //qDebug() << "  - done with image";
     }else if(INFO->isVideo()){
-      player->setMedia(QUrl("file://"+INFO->absoluteFilePath()));
+      timer.start();
+      QMediaResource video = QMediaResource(QUrl("file://"+INFO->absoluteFilePath()));
+      video.setResolution(64,64);
+      player->setMedia(video);
+      //player->setMedia(QUrl("file://"+INFO->absoluteFilePath()));
       player->play();
       player->pause();
       //Pixmap set when video is loaded in stopVideo
@@ -313,6 +318,8 @@ void MainUI::getXdgCommand(QString prev){
 void MainUI::stopVideo(QPixmap img) {
   ui->label_file_icon->setPixmap( img.scaledToHeight(64) );
   player->pause();
+  qDebug() << timer.elapsed();
+  qDebug() << player->media().canonicalResource().resolution();
 }
 
 void MainUI::setDuration(QMediaPlayer::MediaStatus status) {
