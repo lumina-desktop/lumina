@@ -45,7 +45,7 @@ public:
 private:
 	QString currentDir;
 	QFileSystemWatcher *watcher;
-  QPixmap videoFrame;
+  QList<QString> videoList;
 	bool showHidden, showThumbs;
 	QStringList imageFormats, videoFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons

@@ -66,6 +66,8 @@ void Browser::loadItem(QString info, Browser *obj){
         pix = pix.scaled(256,256, Qt::KeepAspectRatio);
       }
     }
+  }else if(videoFormats.contains(info.section(".",-1).toLower()) ){
+    videoList.push_back(info);
   }
   qDebug() << " - done with item:" << info;
   obj->emit threadDone(info, pix);
@@ -97,60 +99,77 @@ void Browser::dirChanged(QString dir){
 void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) {
   //qDebug() << status;
   if(status == QMediaPlayer::BufferedMedia) {
-    qDebug() << "stoppingVideo" << player << player->currentMedia().canonicalUrl();
+    //qDebug() << "stoppingVideo" << player << player->currentMedia().canonicalUrl();
     player->setPosition(player->duration() / 2);
     player->pause();
   }
 }
 
 void Browser::captureFrame(QPixmap pix, QIcon *ico) {
-  qDebug() << "grabbing frame";
-  *ico = pix.scaledToHeight(64);
-  emit frameChanged();
+  static int received = 0;
+  //qDebug() << "grabbing frame" << received+1;
+  *ico = pix/*.scaledToHeight(64)*/;
+  if(++received == videoList.size()) { 
+    emit frameChanged();
+    received = 0;
+  }
 }
 
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
-     QIcon *ico = new QIcon();
-     LFileInfo *info = new LFileInfo(name);
-      if(!icon.isNull() && showThumbs){
-        QPixmap pix = QPixmap::fromImage(icon);
-        ico->addPixmap(pix);
-      }
-      if(ico->isNull()){
-        if(videoFormats.contains(name.section(".",-1).toLower())) {
-          qDebug() << "Loading Video for" << name;
-          //qDebug() << "VIDEO" << info;
-          QMediaPlayer *player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
-          qDebug() << " - created player";
-          LVideoSurface *surface = new LVideoSurface();
-          qDebug() << " - Create objects";
-          connect(surface, &LVideoSurface::frameReceived, this, [&] (QPixmap pix) { captureFrame(pix, ico); });
-          connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
-          player->setVideoOutput(surface);
-          player->setMuted(true);
-          player->setMedia(QUrl("file://"+info->absoluteFilePath()));
-          player->play();
-          player->pause();
+    QIcon *ico = new QIcon();
+    LFileInfo *info = new LFileInfo(name);
+    if(!icon.isNull() && showThumbs){
+      QPixmap pix = QPixmap::fromImage(icon);
+      ico->addPixmap(pix);
+    }
+    if(ico->isNull()){
+      if(videoFormats.contains(name.section(".",-1).toLower())) {
+        QElapsedTimer loadingTime;
+        //qDebug() << videoList;
+        //videoList.add(name);
+        //qDebug() << "Loading Video for" << name;
+        //qDebug() << "VIDEO" << info;
+        QMediaPlayer *player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
+        //qDebug() << " - created player" << player;
+        LVideoSurface *surface = new LVideoSurface();
+        //qDebug() << " - Create objects";
+        connect(surface, &LVideoSurface::frameReceived, this, [&] (QPixmap pix) { captureFrame(pix, ico); });
+        connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
+        player->setVideoOutput(surface);
+        player->setMuted(true);
+        QMediaResource video = QMediaResource(QUrl("file://"+info->absoluteFilePath()));
+        video.setResolution(QSize(64, 64));
+        player->setMedia(video);
+        //player->setMedia(QUrl("file://"+info->absoluteFilePath()));
+        player->play();
+        player->pause();
 
-	  QEventLoop loop;
-	  connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()));
-	  loop.exec();
+        //qDebug() << "Started loop"; 
+        loadingTime.start();
+        QTimer timeout;
+        timeout.setSingleShot(true);
+        timeout.setInterval(5000);
+        QEventLoop loop;
+        connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()), Qt::DirectConnection);
+        connect(&timeout, SIGNAL(timeout()), &loop, SLOT(quit()));
+        loop.exec();
+        //qDebug() << "Exited loop"; 
 
-          ico->addPixmap(videoFrame);
-          //ico = loadIcon(info->iconfile());
-          delete player;
-          delete surface;
-        }else {
-          ico = loadIcon(info->iconfile());
-        }
+        qDebug() << loadingTime.elapsed();
+        delete player;
+        delete surface;
+      }else {
+        ico = loadIcon(info->iconfile());
       }
-      this->emit itemDataAvailable( *ico, info);
-     //qDebug() << " -- done:" << name;
+    }
+    this->emit itemDataAvailable( *ico, info);
+    //qDebug() << " -- done:" << name;
 }
 
 // PUBLIC SLOTS
 void Browser::loadDirectory(QString dir){
+  videoList.clear();
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   //qDebug() << "Load Directory" << dir;
