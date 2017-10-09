@@ -24,7 +24,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
   connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
   connect(BROWSER, SIGNAL(itemsLoading(int)), this, SLOT(itemsLoading(int)) );
-  connect(this, SIGNAL(dirChange(QString)), BROWSER, SLOT(loadDirectory(QString)) );
+  connect(this, SIGNAL(dirChange(QString, bool)), BROWSER, SLOT(loadDirectory(QString, bool)) );
   listWidget = 0;
   treeWidget = 0;
   readDateFormat();
@@ -50,7 +50,7 @@ void BrowserWidget::changeDirectory(QString dir){
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
   //qDebug() << "History:" << historyList;
-  emit dirChange(dir);
+  emit dirChange(dir, false);
 }
 
 void BrowserWidget::showDetails(bool show){
@@ -81,7 +81,7 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     retranslate();
     treeWidget->sortItems(0, Qt::AscendingOrder);
-    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange(""); }
+    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
     listWidget = new DDListWidget(this);
      listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -91,7 +91,7 @@ void BrowserWidget::showDetails(bool show){
     connect(listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SIGNAL(contextMenuRequested()) );
     connect(listWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(DataDropped(QString, QStringList)) );
     connect(listWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
-    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange(""); }
+    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("",true); }
   }
   //qDebug() << "  Done making widget";
 }
@@ -127,7 +127,7 @@ void BrowserWidget::setThumbnailSize(int px){
   }
   //qDebug() << "Changing Icon Size:" << px << larger;
   if(BROWSER->currentDirectory().isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
-  emit dirChange("");
+  emit dirChange("", larger);
 }
 
 int BrowserWidget::thumbnailSize(){

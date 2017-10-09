@@ -59,7 +59,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
   ui->browser_layout->addWidget(BW);
-  connect(BW, SIGNAL(dirChange(QString)), this, SLOT(currentDirectoryChanged()) );
+  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
   connect(BW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(BW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(BW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );

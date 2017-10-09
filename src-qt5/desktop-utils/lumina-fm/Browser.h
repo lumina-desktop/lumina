@@ -44,8 +44,9 @@ public:
 
 private:
 	QString currentDir;
+	QDateTime lastcheck;
 	QFileSystemWatcher *watcher;
-  QList<QString> videoList;
+	QList<QString> videoList;
 	bool showHidden, showThumbs;
 	QStringList imageFormats, videoFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
@@ -56,12 +57,13 @@ private:
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-  void captureFrame(QPixmap, QIcon*);
-  void stopVideo(QMediaPlayer*, QMediaPlayer::MediaStatus);
+	void captureFrame(QPixmap, QIcon*);
+	void stopVideo(QMediaPlayer*, QMediaPlayer::MediaStatus);
 	void futureFinished(QString, QImage);
 
 public slots:
-	void loadDirectory(QString dir = "");
+	void loadDirectory(QString dir = "", bool force = false);
+
 signals:
 	//Main Signals
 	void itemRemoved(QString item); //emitted if a file was removed from the underlying

@@ -88,7 +88,7 @@ signals:
 	void hasFocus(QString); //ID output
 
 	//Internal signal
-	void dirChange(QString); //current dir path
+	void dirChange(QString, bool); //current dir path, force
 
 };
 #endif

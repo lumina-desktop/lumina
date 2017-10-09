@@ -35,6 +35,7 @@ QString Browser::currentDirectory(){ return currentDir; }
 void Browser::showHiddenFiles(bool show){
   if(show !=showHidden){
     showHidden = show;
+    lastcheck = QDateTime(); //reset this timestamp - need to reload all
     if(!currentDir.isEmpty()){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
   }
 }
@@ -45,6 +46,7 @@ bool Browser::showingHiddenFiles(){
 void Browser::showThumbnails(bool show){
   if(show != showThumbs){
     showThumbs = show;
+    lastcheck = QDateTime(); //reset this timestamp - need to reload all
     if(!currentDir.isEmpty()){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
   }
 }
@@ -69,7 +71,7 @@ void Browser::loadItem(QString info, Browser *obj){
   }else if(videoFormats.contains(info.section(".",-1).toLower()) ){
     videoList.push_back(info);
   }
-  qDebug() << " - done with item:" << info;
+  //qDebug() << " - done with item:" << info;
   obj->emit threadDone(info, pix);
 }
 
@@ -84,15 +86,19 @@ QIcon* Browser::loadIcon(QString icon){
 
 // PRIVATE SLOTS
 void Browser::fileChanged(QString file){
-  if(file.startsWith(currentDir+"/") ){
+  //qDebug() << "Got File Changed:" << file;
+  if(file.section("/",0,-2) == currentDir){
     if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file, this); } //file modified but not removed
-    else{ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); } //file removed - need to update entire dir
-  }else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+    else if(oldFiles.contains(file) ){
+      oldFiles.removeAll(file);
+      emit itemRemoved(file);
+    }
+  }//else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
 }
 
 void Browser::dirChanged(QString dir){
-
-  if(dir==currentDir){ QTimer::singleShot(500, this, SLOT(loadDirectory()) ); }
+  //qDebug() << "Got Dir Changed:" << dir;
+  if(dir==currentDir){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
@@ -109,7 +115,7 @@ void Browser::captureFrame(QPixmap pix, QIcon *ico) {
   static int received = 0;
   //qDebug() << "grabbing frame" << received+1;
   *ico = pix/*.scaledToHeight(64)*/;
-  if(++received == videoList.size()) { 
+  if(++received == videoList.size()) {
     emit frameChanged();
     received = 0;
   }
@@ -145,7 +151,7 @@ void Browser::futureFinished(QString name, QImage icon){
         player->play();
         player->pause();
 
-        //qDebug() << "Started loop"; 
+        //qDebug() << "Started loop";
         loadingTime.start();
         QTimer timeout;
         timeout.setSingleShot(true);
@@ -154,7 +160,7 @@ void Browser::futureFinished(QString name, QImage icon){
         connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()), Qt::DirectConnection);
         connect(&timeout, SIGNAL(timeout()), &loop, SLOT(quit()));
         loop.exec();
-        //qDebug() << "Exited loop"; 
+        //qDebug() << "Exited loop";
 
         qDebug() << loadingTime.elapsed();
         delete player;
@@ -168,16 +174,21 @@ void Browser::futureFinished(QString name, QImage icon){
 }
 
 // PUBLIC SLOTS
-void Browser::loadDirectory(QString dir){
+void Browser::loadDirectory(QString dir, bool force){
+  if(force){ lastcheck = QDateTime(); } //reset check time to force reloads
   videoList.clear();
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   //qDebug() << "Load Directory" << dir;
+  bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
     oldFiles.clear();
+    lastcheck = QDateTime(); //null time
     emit clearItems();
+    dirupdate = false;
   }
   currentDir = dir; //save this for later
+  QDateTime now = QDateTime::currentDateTime();
   //clean up the watcher first
   QStringList watched; watched << watcher->files() << watcher->directories();
   if(!watched.isEmpty()){ watcher->removePaths(watched); }
@@ -189,15 +200,18 @@ void Browser::loadDirectory(QString dir){
     QStringList files;
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
-    emit itemsLoading(files.length());
+    if(dirupdate){ emit itemsLoading(files.length()); }
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));
-      //qDebug() << "Future Starting:" << files[i];
       QString path = directory.absoluteFilePath(files[i]);
-      if(old.contains(path)){ old.removeAll(path); }
       oldFiles << path; //add to list for next time
+      bool reloaditem = !dirupdate || lastcheck.isNull() || (QFileInfo(path).lastModified() > lastcheck || QFileInfo(path).created() > lastcheck);
+      //if(dirupdate){ qDebug() << "Reload Item:" << reloaditem << path.section("/",-1); }
+      //reloaditem = true;
+      if(old.contains(path)){ old.removeAll(path); } //still in existance
       //if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
-        QtConcurrent::run(this, &Browser::loadItem, path, this);
+      //qDebug() << "Future Starting:" << files[i];
+      if(reloaditem){ QtConcurrent::run(this, &Browser::loadItem, path, this); }
       /*}else{
         //No special icon loading - just skip the file read step
         futureFinished(path, QImage()); //loadItem(path, this);
@@ -213,4 +227,5 @@ void Browser::loadDirectory(QString dir){
   }else{
     emit itemsLoading(0); //nothing to load
   }
+  lastcheck = now; // save this for later
 }
