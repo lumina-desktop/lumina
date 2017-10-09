@@ -1,4 +1,4 @@
-QT = core gui widgets quick quickwidgets
+QT = core gui widgets quick quickwidgets qml
 
 TARGET = test
 
