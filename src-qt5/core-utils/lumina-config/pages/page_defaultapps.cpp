@@ -245,7 +245,7 @@ void page_defaultapps::setdefaultitem(){
   //Now set the items
   for(int i=0; i<list.length(); i++){
     //Set it in the back end
-    LXDG::setDefaultAppForMime(list[i]->whatsThis(0), app.section("/",-1));
+    LXDG::setDefaultAppForMime(list[i]->whatsThis(0), app);
     //Set it in the UI
     XDGDesktop desk(app);
     list[i]->setWhatsThis(1,app); //app path
