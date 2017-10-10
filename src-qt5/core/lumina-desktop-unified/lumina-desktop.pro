@@ -54,6 +54,9 @@ desktop.files = lumina-desktop.desktop
 defaults.path = $${L_SHAREDIR}/lumina-desktop
 defaults.files = defaults/*
 
+extrafiles.path = $${L_SHAREDIR}/lumina-desktop
+extrafiles.files = extrafiles/*
+
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
                 i18n/lumina-desktop_az.ts \
