@@ -13,22 +13,22 @@ Example JSON manifest file (sample.json):
 {
   "name" : {
     "default" : "sample",
-    "en_US" : "US English localization of the name"
+    "en_US" : "US English localization of the name",
     "en" : "Generic english localization of the name"
-  }
+  },
  
   "description" : {
     "default" : "sample screensaver",
     "en_US" : "US English Localization of the description"
-  }
+  },
 
   "author" : {
     "name" : "Me",
     "email" : "Me@myself.net",
     "website" : "http://mywebsite.net",
-    "company" : "iXsystems"
+    "company" : "iXsystems",
     "company_website" : "http://ixsystems.com"
-  }
+  },
 
   "meta" : {
     "license" : "3-clause BSD",
@@ -37,7 +37,7 @@ Example JSON manifest file (sample.json):
     "date_created" : "20171010",
     "date_updated" : "20171011",
     "version" : "1.0"
-  }
+  },
 
   "qml" : {
     "exec" : "absolute/or/relative/path/to/script.qml",

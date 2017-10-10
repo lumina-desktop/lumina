@@ -18,7 +18,7 @@
     "copyright" : "Copyright (c) 2017, Ken Moore (ken@ixsystems.com)",
     "date_created" : "20171010",
     "version" : "1.0"
-  }
+  },
   "qml" : {
     "qml_file" : "qml_scripts/Fireflies.qml",
     "additional_files" : ["qml_scripts/Firefly.qml"]
