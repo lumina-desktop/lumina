@@ -1,6 +1,6 @@
 #include <QDebug>
 #include <QApplication>
-#include <QQuickWidget>
+#include <QQuickView>
 
 int main(int argc, char** argv){
   QString QMLFile;
@@ -14,7 +14,8 @@ int main(int argc, char** argv){
   }
   QApplication A(argc,argv);
       qDebug() << "Creating base widget";
-    QQuickWidget base;
+    QQuickView base;
+    base.setResizeMode(QQuickView::SizeRootObjectToView);
       qDebug() << "Resize base widget";
     base.resize(1024,768);
       qDebug() << "Load QML File:" << QMLFile;
