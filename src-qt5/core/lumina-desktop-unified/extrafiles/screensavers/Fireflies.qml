@@ -8,11 +8,12 @@ Rectangle {
   color: "black"
   
   Repeater {
-      model: Math.round(Math.random()*100)+30
+      model: Math.round(Math.random()*200)+60
      QML.Firefly {
        parent: canvas
        x: Math.round(Math.random()*canvas.width)
        y: Math.round(Math.random()*canvas.height)
      }
   }  //end of Repeater
+
 } //end of canvas rectangle
