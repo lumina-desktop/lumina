@@ -19,6 +19,7 @@
 #include <QMouseEvent>
 #include <QAction>
 #include <QPoint>
+#include <QTemporaryFile>
 #include <QFile>
 #include <QDir>
 #include <QString>
