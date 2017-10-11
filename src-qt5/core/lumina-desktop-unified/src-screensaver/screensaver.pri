@@ -9,7 +9,7 @@ HEADERS *= $${PWD}/LLockScreen.h \
 FORMS *= $${PWD}/LLockScreen.ui
 
 #update the includepath so we can just (#include <LScreenSaver.h>) as needed without paths
-INCLUDEPATH *= ${PWD}
+INCLUDEPATH *= $${PWD}
 
 #Now include all the screensaver animations/options
-include(animations/animations.pri)
+#include(animations/animations.pri)

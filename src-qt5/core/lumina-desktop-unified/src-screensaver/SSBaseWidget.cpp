@@ -16,10 +16,10 @@ SSBaseWidget::SSBaseWidget(QWidget *parent) : QQuickView(parent->windowHandle())
   this->setObjectName("LuminaBaseSSWidget");
   this->setResizeMode(QQuickView::SizeRootObjectToView);
   this->setColor(QColor("black")); //default color for the view
-  //this->setMouseTracking(true);
+  this->setCursor(Qt::BlankCursor);
   plugType="none";
   restartTimer = new QTimer(this);
-    restartTimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "globals/plugin_time_seconds", 60).toInt() * 1000);
+    restartTimer->setInterval( DesktopSettings::instance()->value(DesktopSettings::ScreenSaver, "globals/plugin_time_seconds", 120).toInt() * 1000);
     restartTimer->setSingleShot(true);
   connect(restartTimer, SIGNAL(timeout()), this, SLOT(startPainting()) );
 }
@@ -47,7 +47,7 @@ void SSBaseWidget::startPainting(){
   if(DEBUG){ qDebug() << " - Screen Saver:" << plugType << cplug.scriptURL() << cplug.isValid(); }
   if(cplug.isValid()){
     this->setSource( cplug.scriptURL() );
-    restartTimer->start();
+    if(plugType=="random"){ restartTimer->start(); }
   }
 
 }
