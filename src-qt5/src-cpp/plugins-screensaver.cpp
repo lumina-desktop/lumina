@@ -6,6 +6,10 @@
 //===========================================
 #include "plugins-screensaver.h"
 #include <QJsonDocument>
+#include <QJsonArray>
+#include <QFile>
+#include <QDir>
+#include <QDebug>
 
 //Relative directory to search along the XDG paths for screensavers
 #define REL_DIR QString("/lumina-desktop/screensavers")
@@ -24,12 +28,10 @@ SSPlugin::~SSPlugin(){
 void SSPlugin::loadFile(QString path){
   data = QJsonObject();
   currentfile = path;
-  SSPlugin SSP;
   QFile file(path);
-  if(!file.exists() || !file.open(QIODevice::ReadOnly)){ return SSP; }
-  SSP.data = QJsonDocument::fromJson(file.readAll()).object();
+  if(!file.exists() || !file.open(QIODevice::ReadOnly)){ return; }
+  data = QJsonDocument::fromJson(file.readAll()).object();
   file.close();
-  return SSP;
 }
 
 bool SSPlugin::isLoaded(){
@@ -53,11 +55,13 @@ if(ok){
     //go to the next qml level and see if required sub-items exist
     QJsonObject tmp = data.value("qml").toObject();
     QStringList mustexist;
-    mustexist << tmp.value("exec").toString();
-    ok = !mustexist.isEmpty(); //exec file should **always** be listed
+    QString exec = tmp.value("exec").toString();
+    if(exec.isEmpty() || !exec.endsWith(".qml")){ return false; }
+    mustexist << exec;
     QJsonArray tmpA = data.value("additional_files").toArray();
     for(int i=0; i<tmpA.count(); i++){ mustexist << tmpA[i].toString(); }
     QString reldir = currentfile.section("/",0,-2) + "/";
+    qDebug() << "Got MustExist:" << mustexist << reldir;
     for(int i=0; i<mustexist.length() && ok; i++){
       if(mustexist[i].startsWith("/")){ ok = QFile::exists(mustexist[i]); }
       else { ok = QFile::exists(reldir+mustexist[i]); }
@@ -98,6 +102,7 @@ QString SSPlugin::translatedDescription(){
 
 QUrl SSPlugin::scriptURL(){
   QString exec = data.value("qml").toObject().value("exec").toString();
+  qDebug() << "got exec:" << exec;
   if(!exec.startsWith("/")){ exec.prepend( currentfile.section("/",0,-2)+"/" ); }
   return QUrl::fromLocalFile(exec);
 }
@@ -123,7 +128,7 @@ SSPlugin SSPluginSystem::findPlugin(QString name){
   return SSP;
 }
 
-QList<SSPlugin> SSPluginSystem::findAllPlugins(bool validonly = true){
+QList<SSPlugin> SSPluginSystem::findAllPlugins(bool validonly){
   QList<SSPlugin> LIST;
   //Get the list of directories to search
   QStringList dirs;
@@ -132,10 +137,12 @@ QList<SSPlugin> SSPluginSystem::findAllPlugins(bool validonly = true){
   for(int i=0; i<dirs.length(); i++){
     if(!QFile::exists(dirs[i]+REL_DIR)){ continue; }
     QDir dir(dirs[i]+REL_DIR);
-    QStringList files = dir.entryList(QStringList() << "*.json", QDir::Files, QDir::Names);
+    QStringList files = dir.entryList(QStringList() << "*.json", QDir::Files, QDir::Name);
+     qDebug() << "Found Files:" << files;
     for(int j=0; j<files.length(); j++){
       SSPlugin tmp;
-      tmp.loadFile(dir.canonicalFilePath(files[j]));
+      tmp.loadFile(dir.absoluteFilePath(files[j]));
+      qDebug() << "Loaded File:" << files[j] << tmp.isValid();
       if(!validonly || tmp.isValid()){ LIST << tmp; }
     }
   }

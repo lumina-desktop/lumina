@@ -20,7 +20,7 @@
     "version" : "1.0"
   },
   "qml" : {
-    "qml_file" : "qml_scripts/Fireflies.qml",
+    "exec" : "qml_scripts/Fireflies.qml",
     "additional_files" : ["qml_scripts/Firefly.qml"]
   }
 }

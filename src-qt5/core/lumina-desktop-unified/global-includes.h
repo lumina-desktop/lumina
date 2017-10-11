@@ -53,6 +53,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QQuickView>
 
 
 // libLumina includes

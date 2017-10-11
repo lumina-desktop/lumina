@@ -1,8 +1,15 @@
 include($${PWD}/../../OS-detect.pri)
 
-QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia multimediawidgets concurrent svg
+lessThan(QT_MAJOR_VERSION, 5) {
+  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  exit
+}
+lessThan(QT_MINOR_VERSION, 4){
+  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  exit
+}
 
+QT *= core gui network widgets x11extras multimedia multimediawidgets concurrent svg quick qml
 
 
 TARGET = lumina-desktop-unified
@@ -21,6 +28,8 @@ include(../libLumina/ExternalProcess.pri)
 include(../libLumina/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
 include(../libLumina/LIconCache.pri)
+
+include(../../src-cpp/plugins-screensaver.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)

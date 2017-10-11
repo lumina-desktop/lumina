@@ -356,12 +356,12 @@ void LSession::launchStartupApps(){
 void LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
+  /*QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
     DesktopSettings::instance()->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
-  }
+  }*/
 }
 
 

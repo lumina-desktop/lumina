@@ -10,9 +10,9 @@
 #define _LUMINA_DESKTOP_SCREEN_SAVER_BASE_WIDGET_H
 
 #include "global-includes.h"
-#include "animations/BaseAnimGroup.h"
+#include <plugins-screensaver.h>
 
-class SSBaseWidget : public QWidget{
+class SSBaseWidget : public QQuickView{
 	Q_OBJECT
 public:
 	SSBaseWidget(QWidget *parent);
@@ -25,8 +25,8 @@ public slots:
 	void stopPainting();
 
 private:
-	QString plugType, cplug; //type of custom painting to do
-	BaseAnimGroup *ANIM;
+        QString plugType;
+        SSPlugin cplug;
 	QTimer *restartTimer;
 
 private slots:
@@ -43,12 +43,12 @@ protected:
 	  ev->accept();
 	  emit InputDetected();
 	}
-	void paintEvent(QPaintEvent*){
+	/*void paintEvent(QPaintEvent*){
 	  QStyleOption opt;
 	  opt.init(this);
 	  QPainter p(this);
 	  style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-	}
+	}*/
 
 };
 
