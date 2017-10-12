@@ -7,8 +7,8 @@ Rectangle {
   color: "black"
 
   function getStarColor(num){
-    if(num < 0.5) { return "white" }
-    if(num < 1.5) { return "mistyrose" }
+    if(num < 1) { return "white" }
+    if(num < 2) { return "mistyrose" }
     return "lightblue"
   }  
 
