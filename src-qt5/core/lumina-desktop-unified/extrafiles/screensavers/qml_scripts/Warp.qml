@@ -5,7 +5,13 @@ Rectangle {
   id : canvas
   anchors.fill: parent
   color: "black"
-  
+
+  function getStarColor(num){
+    if(num < 0.5) { return "white" }
+    if(num < 1.5) { return "mistyrose" }
+    return "lightblue"
+  }  
+
   // CREATE STARFIELD
   Repeater {
       model: Math.round(Math.random()*canvas.width/10)+500
@@ -16,7 +22,8 @@ Rectangle {
        width: Math.round(Math.random()*3)+3
        height: width
        radius: width/2
-       color: "white"
+       color: getStarColor( (index%3) )
+
      }
   }  //end of Repeater
 
