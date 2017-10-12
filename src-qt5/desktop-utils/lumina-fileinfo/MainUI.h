@@ -17,6 +17,7 @@
 #include <QMediaPlayer>
 #include <LuminaXDG.h>
 #include <LVideoSurface.h>
+#include <LVideoLabel.h>
 #include <QElapsedTimer>
 
 namespace Ui{ class MainUI;
@@ -56,8 +57,6 @@ private slots:
 	//UI Buttons
 	void on_push_close_clicked();
 	void on_push_save_clicked();
-  void stopVideo(QPixmap);
-  void setDuration(QMediaPlayer::MediaStatus);
 	void getXdgCommand(QString prev = "");
 	//void on_tool_xdg_getCommand_clicked(QString prev = "");
 	void on_tool_xdg_getDir_clicked();

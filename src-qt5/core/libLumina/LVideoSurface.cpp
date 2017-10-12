@@ -3,10 +3,12 @@
 
 LVideoSurface::LVideoSurface(QObject *parent) : QAbstractVideoSurface(parent) {
   frameImage = QPixmap();
+  entered = false;
 }
 
 bool LVideoSurface::present(const QVideoFrame &frame) {
-  if(!frameImage.isNull()) {
+  //qDebug() << surfaceFormat().pixelFormat() << frame.pixelFormat() << surfaceFormat().frameSize() << frame.size();
+  if(!frameImage.isNull() && !entered) {
     emit frameReceived(frameImage);
     return true;
   }
@@ -15,9 +17,10 @@ bool LVideoSurface::present(const QVideoFrame &frame) {
     //qDebug() << "Recording Frame" << frame.pixelFormat();
     QVideoFrame icon(frame);
     icon.map(QAbstractVideoBuffer::ReadOnly);
+    //qDebug() << icon.width() << icon.height();
     QImage img(icon.bits(), icon.width(), icon.height(), icon.bytesPerLine(), QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));
     
-    if(frameImage.isNull())
+    if((frameImage.isNull() && !entered) or entered)
       frameImage = QPixmap::fromImage(img.copy(img.rect()));
 
     icon.unmap();
@@ -33,26 +36,22 @@ QList<QVideoFrame::PixelFormat> LVideoSurface::supportedPixelFormats(QAbstractVi
          << QVideoFrame::Format_RGB565 << QVideoFrame::Format_RGB555 << QVideoFrame::Format_BGRA32 << QVideoFrame::Format_BGR32;
 }
 
-/*bool VideoSurface::isFormatSupported(const QVideoSurfaceFormat &format) const {
-  const QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());
-  const QSize size = format.frameSize();
-
-  return imageFormat != QImage::Format_Invalid && !size.isEmpty() && format.handleType() == QAbstractVideoBuffer::NoHandle;
-}
-
-void VideoSurface::stop() {
+void LVideoSurface::stop() {
   QAbstractVideoSurface::stop();
 }
 
-bool VideoSurface::start(const QVideoSurfaceFormat &format) {
+void LVideoSurface::switchRollOver() {
+  entered = !entered;
+}
+
+bool LVideoSurface::start(const QVideoSurfaceFormat &format) {
   const QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());
   const QSize size = format.frameSize();
 
   if (imageFormat != QImage::Format_Invalid && !size.isEmpty()) {
-      this->imageFormat = imageFormat;
       QAbstractVideoSurface::start(format);
       return true;
   } else {
       return false;
   }
-}*/
+}

@@ -1,3 +1,6 @@
+#ifndef LVIDEOSURFACE_H
+#define LVIDEOSURFACE_H
+
 #include <QAbstractVideoSurface>
 #include <QVideoSurfaceFormat>
 #include <QPixmap>
@@ -10,12 +13,14 @@ class LVideoSurface : public QAbstractVideoSurface {
     LVideoSurface(QObject *parent=0);
     virtual bool present(const QVideoFrame&);
     virtual QList<QVideoFrame::PixelFormat> supportedPixelFormats(QAbstractVideoBuffer::HandleType) const;
-    /*virtual QList<QVidebool isFormatSupported(const QVideoSurfaceFormat &format) const;
     bool start(const QVideoSurfaceFormat &format);
-    void stop();*/
+    void stop();
   signals:
     void frameReceived(QPixmap);
+  public slots:
+    void switchRollOver();
   private:
     QPixmap frameImage;
-    //QImage::Format imageFormat;
+    bool entered;
 };
+#endif

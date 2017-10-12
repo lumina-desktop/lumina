@@ -13,7 +13,7 @@ target.path = $${L_BINDIR}
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 #include(../../core/libLumina/LuminaSingleApplication.pri)
-include(../../core/libLumina/LVideoSurface.pri)
+include(../../core/libLumina/LVideoLabel.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp\

@@ -23,20 +23,11 @@ MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   terminate_thread = false;
   UpdateIcons(); //Set all the icons in the dialog
   SetupConnections();
-  player = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
-  surface = new LVideoSurface(this);
-  qDebug() << surface->surfaceFormat();
-  player->setVideoOutput(surface);
-  player->setMuted(true);
-  connect(player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(setDuration(QMediaPlayer::MediaStatus)));
-  connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(stopVideo(QPixmap)));
   INFO = 0;
 }
 
 MainUI::~MainUI(){
   terminate_thread = true;
-  surface->deleteLater();
-  player->deleteLater();
   this->close();
 }
 
@@ -91,20 +82,10 @@ void MainUI::LoadFile(QString path, QString type){
     ui->label_file_type->setText(ftype);
     //Now load the icon for the file
     if(INFO->isImage()){
-      //qDebug() << "Set Image:";
-      QPixmap pix(INFO->absoluteFilePath());
-      ui->label_file_icon->setPixmap( pix.scaledToHeight(64) );
-      ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
-      //qDebug() << "  - done with image";
+      ui->label_file_icon = new LVideoLabel(INFO->absoluteFilePath(), false);
+      //ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
     }else if(INFO->isVideo()){
-      timer.start();
-      QMediaResource video = QMediaResource(QUrl("file://"+INFO->absoluteFilePath()));
-      video.setResolution(64,64);
-      player->setMedia(video);
-      //player->setMedia(QUrl("file://"+INFO->absoluteFilePath()));
-      player->play();
-      player->pause();
-      //Pixmap set when video is loaded in stopVideo
+      ui->label_file_icon = new LVideoLabel(INFO->absoluteFilePath(), true);
     }else{
       ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
     }
@@ -313,20 +294,6 @@ void MainUI::getXdgCommand(QString prev){
   }
   ui->line_xdg_command->setText(file);
   xdgvaluechanged();
-}
-
-void MainUI::stopVideo(QPixmap img) {
-  ui->label_file_icon->setPixmap( img.scaledToHeight(64) );
-  player->pause();
-  qDebug() << timer.elapsed();
-  qDebug() << player->media().canonicalResource().resolution();
-}
-
-void MainUI::setDuration(QMediaPlayer::MediaStatus status) {
-  if(status == QMediaPlayer::BufferedMedia) {
-    player->setPosition(player->duration() / 2);
-    player->play();
-  }
 }
 
 void MainUI::on_tool_xdg_getDir_clicked(){
