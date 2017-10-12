@@ -27,7 +27,7 @@
 void showUsage(){
     puts("lumina-checkpass: Simple user-level check for password validity (for screen unlockers and such).");
     puts("Usage:");
-    puts("  lumina-checkpass <password>");
+    //puts("  lumina-checkpass <password>");
     puts("  lumina-checkpass -fd <file descriptor>");
     puts("  lumina-checkpass -f <file path>");
     puts("Returns: 0 for a valid password, 1 for invalid");
@@ -35,14 +35,13 @@ void showUsage(){
 
 int main(int argc, char** argv){
   //Check the inputs
-  if(argc<2){
+  if(argc!=3){
     //Invalid inputs - show the help text
     showUsage();
     return 1;
   }
   char*pass = 0;
-  if(argc==2){ pass = argv[1]; }
-  else if(argc==3 && 0==strcmp(argv[1],"-fd") ){
+  if(argc==3 && 0==strcmp(argv[1],"-fd") ){
     FILE *fp = fdopen(atoi(argv[2]), "r");
     size_t len;
     if(fp!=0){
@@ -56,6 +55,11 @@ int main(int argc, char** argv){
     if(fp!=0){
       ssize_t slen = getline(&pass, &len, fp);
       if(pass[slen-1]=='\n'){ pass[slen-1] = '\0'; }
+    }else{
+      puts("[ERROR] Unknown option provided");
+      puts("----------------");
+      showUsage();
+      return 1;
     }
     fclose(fp);
   }
