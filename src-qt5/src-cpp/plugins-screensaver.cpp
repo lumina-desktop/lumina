@@ -61,7 +61,7 @@ if(ok){
     QJsonArray tmpA = data.value("additional_files").toArray();
     for(int i=0; i<tmpA.count(); i++){ mustexist << tmpA[i].toString(); }
     QString reldir = currentfile.section("/",0,-2) + "/";
-    qDebug() << "Got MustExist:" << mustexist << reldir;
+    //qDebug() << "Got MustExist:" << mustexist << reldir;
     for(int i=0; i<mustexist.length() && ok; i++){
       if(mustexist[i].startsWith("/")){ ok = QFile::exists(mustexist[i]); }
       else { ok = QFile::exists(reldir+mustexist[i]); }
@@ -102,7 +102,7 @@ QString SSPlugin::translatedDescription(){
 
 QUrl SSPlugin::scriptURL(){
   QString exec = data.value("qml").toObject().value("exec").toString();
-  qDebug() << "got exec:" << exec;
+  //qDebug() << "got exec:" << exec;
   if(!exec.startsWith("/")){ exec.prepend( currentfile.section("/",0,-2)+"/" ); }
   return QUrl::fromLocalFile(exec);
 }
@@ -138,11 +138,11 @@ QList<SSPlugin> SSPluginSystem::findAllPlugins(bool validonly){
     if(!QFile::exists(dirs[i]+REL_DIR)){ continue; }
     QDir dir(dirs[i]+REL_DIR);
     QStringList files = dir.entryList(QStringList() << "*.json", QDir::Files, QDir::Name);
-     qDebug() << "Found Files:" << files;
+     //qDebug() << "Found Files:" << files;
     for(int j=0; j<files.length(); j++){
       SSPlugin tmp;
       tmp.loadFile(dir.absoluteFilePath(files[j]));
-      qDebug() << "Loaded File:" << files[j] << tmp.isValid();
+      //qDebug() << "Loaded File:" << files[j] << tmp.isValid();
       if(!validonly || tmp.isValid()){ LIST << tmp; }
     }
   }
