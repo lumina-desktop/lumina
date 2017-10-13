@@ -13,14 +13,39 @@
 //  RootDesktopObject *rootobj = new RootDesktopObject();
 //  QQuickView *root = new QQuickView();
 //    root->setResizeMode(QQuickView::SizeRootObjectToView);
-//    root->engine()->rootContext->setContextProperty("RootObject", rootobj);
+//    root->engine()->rootContext()->setContextProperty("RootObject", rootobj);
 //===========================================
 import QtQuick 2.0
 import QtQuick.Window 2.2
 
+import Lumina.Backend.RootDesktopObject 2.0
+import Lumina.Backend.ScreenObject 2.0
+
 Rectangle {
   id: RootCanvas
   color: "black"
+
+  //Setup the right-click context menu
+  MouseArea { 
+    anchors.fill: RootCanvas
+    acceptedButton: Qt.RightButton
+    onClicked: { contextMenu.open() }
+  }
+
+  //Create the context menu itself
+  Menu { 
+    id: contextMenu
+    
+    MenuItem {
+      test: qtTr("Logout")
+      indicator: Image{
+        asynchronous: true
+        autoTransform: true
+        source: "image://theme/system-logout"
+      }
+      onTriggered: RootObject.logout()
+    }
+  }
 
   //Setup the wallpapers
   Repeater{

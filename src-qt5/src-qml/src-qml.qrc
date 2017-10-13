@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="QML">
+    <file alias="RootDesktop">RootDesktop.qml</file>
+  </qresource>
+</RCC>
