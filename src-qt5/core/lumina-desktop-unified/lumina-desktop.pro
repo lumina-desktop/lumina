@@ -16,18 +16,13 @@ TARGET = lumina-desktop-unified
 target.path = $${L_BINDIR}
 
 #include all the special classes from the Lumina tree
-include(../libLumina/ResizeMenu.pri)
 include(../libLumina/LDesktopUtils.pri) #includes LUtils and LOS
 include(../libLumina/LuminaXDG.pri)
-#include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
-include(../libLumina/LuminaThemes.pri)
 include(../libLumina/DesktopSettings.pri)
-include(../libLumina/RootWindow.pri)
 include(../libLumina/ExternalProcess.pri)
-include(../libLumina/NativeWindow.pri)
+include(../../src-cpp/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
-include(../libLumina/LIconCache.pri)
 
 include(../../src-cpp/plugins-screensaver.pri)
 
@@ -45,8 +40,7 @@ SOURCES += main.cpp \
 HEADERS  += global-includes.h \
 	global-objects.h \
 	LSession.h \
-	BootSplash.h \
-	JsonMenu.h
+	BootSplash.h
 
 FORMS    +=	BootSplash.ui 
 

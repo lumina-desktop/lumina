@@ -1,6 +1,8 @@
-SOURCES *= $${PWD}/ContextMenu.cpp
+SOURCES *= $${PWD}/RootWindow.cpp
 
-HEADERS *= $${PWD}/ContextMenu.h
+HEADERS *= $${PWD}/RootWindow.h
 
 #update the includepath so we can just #include as needed without paths
-INCLUDEPATH *= ${PWD}
+INCLUDEPATH *= $${PWD}
+
+include(../../../src-cpp/Desktop.pri)

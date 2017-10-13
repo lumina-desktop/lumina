@@ -22,12 +22,12 @@ import Lumina.Backend.RootDesktopObject 2.0
 import Lumina.Backend.ScreenObject 2.0
 
 Rectangle {
-  id: RootCanvas
+  id: rootCanvas
   color: "black"
 
   //Setup the right-click context menu
   MouseArea { 
-    anchors.fill: RootCanvas
+    anchors.fill: rootCanvas
     acceptedButton: Qt.RightButton
     onClicked: { contextMenu.open() }
   }
@@ -51,7 +51,7 @@ Rectangle {
   Repeater{
     model: RootObject.screens
     AnimatedImage {
-      id: modelData.name
+      id: ("screen_"+modelData.name)
       asynchronous: true
       clip: true
       source: modelData.background

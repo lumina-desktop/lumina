@@ -1,9 +1,12 @@
 
 QT *= gui qml quick
 
-SOURCES *= RootDesktopObject.cpp
+SOURCES *= $${PWD}/RootDesktopObject.cpp \
+		$${PWD}/ScreenObject.cpp
 
-HEADERS *= RootDesktopObject.h \
-		ScreenObject.h
+HEADERS *= $${PWD}/RootDesktopObject.h \
+		$${PWD}/ScreenObject.h
 
-include(../src-qml/src-qml.pri)
+INCLUDEPATH *= $${PWD}
+
+include($${PWD}/../src-qml/src-qml.pri)

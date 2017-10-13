@@ -4,12 +4,15 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-// This is the base C++ object that is used to pass information to the QML "RootDesktop" object
+// This is the base C++ object that is used to pass Screen/Wallpaper info to the QML classes
 //===========================================
-#ifndef _LUMINA_DESKTOP_ROOT_DESKTOP_OBJECT_H
-#define _LUMINA_DESKTOP_ROOT_DESKTOP_OBJECT_H
+#ifndef _LUMINA_DESKTOP_SCREEN_DESKTOP_OBJECT_H
+#define _LUMINA_DESKTOP_SCREEN_DESKTOP_OBJECT_H
+#include <QObject>
+#include <QString>
+#include <QScreen>
 
-class ScreenObject : public QObject{
+class ScreenObject : public QObject {
 	Q_OBJECT
 	Q_PROPERTY( QString name READ name )
 	Q_PROPERTY( QString background READ background NOTIFY backgroundChanged)
@@ -22,29 +25,24 @@ private:
 	QScreen *bg_screen;
 	QString bg;
 
-public
-	ScreenObject(QScreen *scrn, QObject *parent = 0) : QObject(parent){
-	  bg_screen = scrn;
-	}
+public:
+	ScreenObject(QScreen *scrn = 0, QObject *parent = 0);
 
-	static void RegisterType(){ qmlRegisterType<RootDesktopObject>("Lumina.Backend.ScreenObject",2,0, "ScreenObject");
+	static void RegisterType();
 
-	QString name(){ return bg_screen->name(); }
-	QString background(){ return bg; }
-	int x(){ return bg_screen->geometry().x(); }
-	int y(){ return bg_screen->geometry().y(); }
-	int width(){ return bg_screen->geometry().width(); }
-	int height(){ return bg_screen->geometry().height(); }
+	QString name();
+	QString background();
+	int x();
+	int y();
+	int width();
+	int height();
 
 public slots:
-	void setBackground(QString fileOrColor){
-	  if(bg!=fileOrColor){
-	    bg = fileOrColor;
-	    emit backgroundChanged();
-	  }
-	}
+	void setBackground(QString fileOrColor);
 
 signals:
 	void backgroundChanged();
 	void geomChanged();
 };
+
+#endif

@@ -25,7 +25,11 @@
 
 #include "src-screensaver/LScreenSaver.h"
 //#include "src-WM/LWindowManager.h"
+#include <RootWindow.h>
 #include "LSession.h"
+
+// Standard C includes
+#include <unistd.h>
 
 //Any special defines for settings/testing
 #define ANIMTIME 80 //animation time in milliseconds

@@ -129,15 +129,15 @@ void LSession::setupSession(){
   QList<QScreen*> scrns= QApplication::screens();
   for(int i=0; i<scrns.length(); i++){
     qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
-    Lumina::ROOTWIN->ChangeWallpaper(scrns[i]->name(), RootWindow::Stretch, LOS::LuminaShare()+"desktop-background.jpg");
+    RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(), LOS::LuminaShare()+"desktop-background.jpg");
   }
-  Lumina::ROOTWIN->start();
+  //Lumina::ROOTWIN->start();
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
   Lumina::NWS->setRoot_currentWorkspace(0);
   if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
-  DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
+  /*DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
-  cmenu->start();
+  cmenu->start();*/
 
   //desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   //updateDesktops();
@@ -229,6 +229,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
   connect(Lumina::ROOTWIN, SIGNAL(MouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
+  connect(Lumina::ROOTWIN, SIGNAL(startLogout()), this, SLOT(StartLogout()) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));

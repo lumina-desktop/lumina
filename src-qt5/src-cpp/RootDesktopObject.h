@@ -6,10 +6,13 @@
 //===========================================
 // This is the base C++ object that is used to pass information to the QML "RootDesktop" object
 //===========================================
-#ifndef _LUMINA_DESKTOP_ROOT_DESKTOP_OBJECT_H
-#define _LUMINA_DESKTOP_ROOT_DESKTOP_OBJECT_H
+#ifndef _LUMINA_DESKTOP_QML_BACKEND_ROOT_DESKTOP_OBJECT_H
+#define _LUMINA_DESKTOP_QML_BACKEND_ROOT_DESKTOP_OBJECT_H
+#include <QObject>
+#include <QList>
 
 #include "ScreenObject.h"
+
 class RootDesktopObject : public QObject{
 	Q_OBJECT
 	//Define all the QML Properties here (interface between QML and the C++ methods below)
@@ -20,7 +23,7 @@ public:
 	RootDesktopObject(QObject *parent = 0);
 	~RootDesktopObject();
 
-	static void RegisterType(){ qmlRegisterType<RootDesktopObject>("Lumina.Backend.RootDesktopObject",2,0, "RootDesktopObject");
+	static void RegisterType();
 
 	//primary interface to fetch the current instance of the class (so only one is running at any given time)
 	static RootDesktopObject* instance();
@@ -36,11 +39,13 @@ private:
 
 public slots:
 	void updateScreens(); //rescan/update screen objects
+	void ChangeWallpaper(QString screen, QString);
 
 private slots:
 
 signals:
 	void screensChanged();
+	void startLogout();
 
 };
 #endif

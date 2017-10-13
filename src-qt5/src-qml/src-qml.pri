@@ -3,7 +3,7 @@
 QT *= quick qml
 
 lupdate_only{
-  SOURCES *= RootDesktop.qml
+  SOURCES *= $${PWD}/RootDesktop.qml
 }
 
-RESOURCES *= src-qml.qrc
+RESOURCES *= $${PWD}/src-qml.qrc
