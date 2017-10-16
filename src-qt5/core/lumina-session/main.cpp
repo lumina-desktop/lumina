@@ -55,14 +55,6 @@ int main(int argc, char ** argv)
       return QProcess::execute("xinit", args);
     }
     qDebug() << "Starting the Lumina desktop on current X11 session:" << disp;
-    //Setup any initialization values
-    LTHEME::LoadCustomEnvSettings();
-    LXDG::setEnvironmentVars();
-    setenv("DESKTOP_SESSION","Lumina",1);
-    setenv("XDG_CURRENT_DESKTOP","Lumina",1);
-    unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
-    //Check for any missing user config files
-    
 
     //Check for any stale desktop lock files and clean them up
     QString cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
@@ -81,14 +73,22 @@ int main(int argc, char ** argv)
     }
 
     //Configure X11 monitors if needed
-    if(LUtils::isValidBinary("lumina-xconfig")){ 
+    if(LUtils::isValidBinary("lumina-xconfig")){
       qDebug() << " - Resetting monitor configuration to last-used settings";
       QProcess::execute("lumina-xconfig --reset-monitors");
     }
     qDebug() << " - Starting the session...";
+    //Setup any initialization values
+    LTHEME::LoadCustomEnvSettings();
+    LXDG::setEnvironmentVars();
+    setenv("DESKTOP_SESSION","Lumina",1);
+    setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+    unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
+      setenv("QP_QPA_PLATFORMTHEME","lthemeengine",1); //make sure this is after the QApplication - not actually using the theme plugin for **this** process
     LSession sess;
+      sess.checkFiles(); //Make sure user files are created/installed first
       sess.start(unified);
     int retCode = a.exec();
     qDebug() << "Finished Closing Down Lumina";

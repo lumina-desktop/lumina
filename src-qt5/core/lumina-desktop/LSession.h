@@ -52,7 +52,7 @@ public:
 	LSession(int &argc, char **argv);
 	~LSession();
 
-	static void checkUserFiles();
+	static bool checkUserFiles();
 	//Functions to be called during startup
 	void setupSession();
 

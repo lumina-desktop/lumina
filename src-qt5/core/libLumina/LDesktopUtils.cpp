@@ -483,10 +483,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
   //Convert from the old desktop numbering system to the new one (change occured with 1.0.1)
   if(oldversion<=1000001){
     QStringList DS = LUtils::readFile(dset);
-    char *tmp;
-    int tmpN = 0;
-    QApplication A(tmpN, &tmp);
-    QList<QScreen*> screens = A.screens();
+    QList<QScreen*> screens = QApplication::screens();
     for(int i=0; i<DS.length(); i++){
       if(!DS[i].startsWith("[")){ continue; }
       if(DS[i].startsWith("[desktop-")){

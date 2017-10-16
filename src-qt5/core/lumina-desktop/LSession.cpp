@@ -384,20 +384,26 @@ void LSession::checkWindowGeoms(){
   }
 }
 
-void LSession::checkUserFiles(){
+bool LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
+  qDebug() << "Check User Files";
+    //char tmp[] = "junk\0";
+    //int tmpN = 0;
+  //QApplication A(tmpN, (char **)&tmp);
   QSettings sset("lumina-desktop", "sessionsettings");
   QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
-    char *tmp;
-    int tmpN = 0;
-  QApplication *A = new QApplication(tmpN, &tmp);
+  qDebug() << " - Old Version:" << OVS;
+  qDebug() << " - Current Version:" << LDesktopUtils::LuminaDesktopVersion();
   bool changed = LDesktopUtils::checkUserFiles(OVS, LDesktopUtils::LuminaDesktopVersion());
+  qDebug() << " - Made Changes:" << changed;
   if(changed){
     //Save the current version of the session to the settings file (for next time)
     sset.setValue("DesktopVersion", LDesktopUtils::LuminaDesktopVersion());
   }
-  delete A;
+  qDebug() << "Finished with user files check";
+  //delete A;
+  return changed;
 }
 
 void LSession::refreshWindowManager(){

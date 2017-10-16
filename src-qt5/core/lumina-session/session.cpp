@@ -15,6 +15,7 @@
 
 #include <LUtils.h>
 #include <LuminaOS.h>
+#include <LDesktopUtils.h>
 
 void LSession::stopall(){
   stopping = true;
@@ -38,8 +39,12 @@ void LSession::procFinished(){
       stopped++;
       if(!stopping){
         //See if this process is the main desktop binary
-        if(PROCS[i]->objectName()=="runtime"){ stopall(); }
-        else if(PROCS[i]->objectName()=="wm" && wmfails<2){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); } //restart the WM
+        if(PROCS[i]->objectName()=="runtime"){
+          qDebug() << "Got Desktop Process Finished:" << PROCS[i]->exitCode();
+          //if(PROCS[i]->exitCode()==787){ PROCS[i]->start(QIODevice::ReadOnly); } //special internal restart code
+          //else{ 
+          stopall(); //}
+        }else if(PROCS[i]->objectName()=="wm" && wmfails<2){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); } //restart the WM
         //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         //break;
@@ -163,4 +168,21 @@ void LSession::start(bool unified){
   //unified process
   startProcess("runtime","lumina-desktop-unified");
  }
+}
+
+void LSession::checkFiles(){
+//internal version conversion examples:
+  //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
+  qDebug() << "[Lumina] Checking User Files";
+  QSettings sset("lumina-desktop", "sessionsettings");
+  QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
+  qDebug() << " - Old Version:" << OVS;
+  qDebug() << " - Current Version:" << LDesktopUtils::LuminaDesktopVersion();
+  bool changed = LDesktopUtils::checkUserFiles(OVS, LDesktopUtils::LuminaDesktopVersion());
+  qDebug() << " - Made Changes:" << changed;
+  if(changed){
+    //Save the current version of the session to the settings file (for next time)
+    sset.setValue("DesktopVersion", LDesktopUtils::LuminaDesktopVersion());
+  }
+  qDebug() << "Finished with user files check";
 }
