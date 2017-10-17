@@ -122,6 +122,8 @@ QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
 
 //Save a new theme/color file
 bool LTHEME::saveLocalTheme(QString name, QStringList contents){
+  Q_UNUSED(name);
+  Q_UNUSED(contents);
   return false; //old format - do not use!!
   //QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes/";
   //if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
@@ -129,6 +131,8 @@ bool LTHEME::saveLocalTheme(QString name, QStringList contents){
 }
 
 bool LTHEME::saveLocalColors(QString name, QStringList contents){
+  Q_UNUSED(name);
+  Q_UNUSED(contents);
   return false; //old format - do not use!!
  // QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors/";
   //if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
@@ -182,6 +186,8 @@ QString LTHEME::currentCursor(){
 
   //Change the current Theme/Colors/Icons
 bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize){
+  Q_UNUSED(font);
+  Q_UNUSED(fontsize);
   //QIcon::setThemeName(iconname);
   //Save these settings into the theme engine settings
   QSettings engineset("lthemeengine","lthemeengine");

@@ -1,40 +1,42 @@
 #include "LVideoLabel.h"
 
-LVideoLabel::LVideoLabel(QString file, bool video) : QLabel(){ 
-    this->setScaledContents(true);
-    if(video) {
-      mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
-      thumbnail = QPixmap();
-      entered = false;
-      surface = new LVideoSurface(this);
-      mediaPlayer->setVideoOutput(surface);
-      mediaPlayer->setMedia(QUrl("file://" + file));
-      mediaPlayer->setPlaybackRate(3);
-      mediaPlayer->setMuted(true);
-      mediaPlayer->play();
-      mediaPlayer->pause();
-      this->connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(stopVideo(QPixmap)));
-      this->connect(mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(setDuration(QMediaPlayer::MediaStatus)));
-      this->connect(this, SIGNAL(rollOver()), surface, SLOT(switchRollOver()));
-    }else{
-      thumbnail = QPixmap(file);
-      this->setPixmap(thumbnail);
-    }
+LVideoLabel::LVideoLabel(QString file, QWidget *parent) : QLabel(parent) {
+  this->setScaledContents(true);
+  mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+  thumbnail = QPixmap();
+  this->setPixmap(thumbnail);
+  entered = false;
+  surface = new LVideoSurface(this);
+  mediaPlayer->setVideoOutput(surface);
+  mediaPlayer->setPlaybackRate(3);
+  mediaPlayer->setMuted(true);
+  mediaPlayer->setMedia(QUrl("file://" + file));
+  mediaPlayer->play();
+  mediaPlayer->pause();
+
+  this->connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(stopVideo(QPixmap)));
+  this->connect(mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(setDuration(QMediaPlayer::MediaStatus)));
+  this->connect(this, SIGNAL(rollOver()), surface, SLOT(switchRollOver()));
 }
 
 LVideoLabel::~LVideoLabel() {
   mediaPlayer->deleteLater();
-  surface->deleteLater();
+  delete surface;
+}
+
+void LVideoLabel::setShrinkPixmap(bool shrink) {
+  this->shrink = shrink;
 }
 
 void LVideoLabel::stopVideo(QPixmap pix) {
   if(!entered) {
+    emit frameReceived(pix);
     if(thumbnail.isNull())
-      thumbnail = QPixmap(pix.scaledToHeight(64));
-    this->setPixmap(thumbnail);
+      thumbnail = pix;
+    this->setPixmap((shrink) ? thumbnail.scaledToHeight(64) : thumbnail);
     mediaPlayer->pause();
   }else {
-    this->setPixmap(QPixmap(pix.scaledToHeight(64)));
+    this->setPixmap((shrink) ? pix.scaledToHeight(64) : pix);
   }
 }
 

@@ -80,12 +80,17 @@ void MainUI::LoadFile(QString path, QString type){
     else{ ftype = INFO->suffix().toUpper(); }
     if(INFO->isHidden()){ ftype = QString(tr("Hidden %1")).arg(type); }
     ui->label_file_type->setText(ftype);
+    
     //Now load the icon for the file
     if(INFO->isImage()){
-      ui->label_file_icon = new LVideoLabel(INFO->absoluteFilePath(), false);
-      //ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
+      QPixmap pix(INFO->absoluteFilePath());
+      ui->label_file_icon->setPixmap(pix.scaledToHeight(64));
+      ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
     }else if(INFO->isVideo()){
-      ui->label_file_icon = new LVideoLabel(INFO->absoluteFilePath(), true);
+      ui->label_file_icon->hide();
+      LVideoLabel *mediaLabel = new LVideoLabel(INFO->absoluteFilePath(), ui->tab_file);
+      mediaLabel->setShrinkPixmap(true);
+      ui->formLayout->replaceWidget(ui->label_file_icon, mediaLabel);
     }else{
       ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
     }
@@ -101,6 +106,7 @@ void MainUI::LoadFile(QString path, QString type){
       ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_file) );
     }
   }
+
   //Now load the special XDG desktop info
   qDebug() << "Check XDG Info:" << type;
   //qDebug() << INFO->isDesktopFile() << type;

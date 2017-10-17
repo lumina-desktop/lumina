@@ -68,8 +68,6 @@ void Browser::loadItem(QString info, Browser *obj){
         pix = pix.scaled(256,256, Qt::KeepAspectRatio);
       }
     }
-  }else if(videoFormats.contains(info.section(".",-1).toLower()) ){
-    videoList.push_back(info);
   }
   //qDebug() << " - done with item:" << info;
   obj->emit threadDone(info, pix);
@@ -79,7 +77,6 @@ QIcon* Browser::loadIcon(QString icon){
   if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
-
   return &mimeIcons[icon];
 }
 
@@ -102,72 +99,28 @@ void Browser::dirChanged(QString dir){
   else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
-void Browser::stopVideo(QMediaPlayer *player, QMediaPlayer::MediaStatus status) {
-  //qDebug() << status;
-  if(status == QMediaPlayer::BufferedMedia) {
-    //qDebug() << "stoppingVideo" << player << player->currentMedia().canonicalUrl();
-    player->setPosition(player->duration() / 2);
-    player->pause();
-  }
-}
-
-void Browser::captureFrame(QPixmap pix, QIcon *ico) {
-  static int received = 0;
-  //qDebug() << "grabbing frame" << received+1;
-  *ico = pix/*.scaledToHeight(64)*/;
-  if(++received == videoList.size()) {
-    emit frameChanged();
-    received = 0;
-  }
-}
-
 void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
+    //Haven't added the extra files in a directory fix, but that should be easy to do
+    //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
+    qDebug() << name << "here";
     QIcon *ico = new QIcon();
     LFileInfo *info = new LFileInfo(name);
     if(!icon.isNull() && showThumbs){
       QPixmap pix = QPixmap::fromImage(icon);
       ico->addPixmap(pix);
-    }
-    if(ico->isNull()){
-      if(videoFormats.contains(name.section(".",-1).toLower())) {
-        QElapsedTimer loadingTime;
-        //qDebug() << videoList;
-        //videoList.add(name);
-        //qDebug() << "Loading Video for" << name;
-        //qDebug() << "VIDEO" << info;
-        QMediaPlayer *player = new QMediaPlayer(0, QMediaPlayer::VideoSurface);
-        //qDebug() << " - created player" << player;
-        LVideoSurface *surface = new LVideoSurface();
-        //qDebug() << " - Create objects";
-        connect(surface, &LVideoSurface::frameReceived, this, [&] (QPixmap pix) { captureFrame(pix, ico); });
-        connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
-        player->setVideoOutput(surface);
-        player->setMuted(true);
-        QMediaResource video = QMediaResource(QUrl("file://"+info->absoluteFilePath()));
-        video.setResolution(QSize(64, 64));
-        player->setMedia(video);
-        //player->setMedia(QUrl("file://"+info->absoluteFilePath()));
-        player->play();
-        player->pause();
-
-        //qDebug() << "Started loop";
-        loadingTime.start();
-        QTimer timeout;
-        timeout.setSingleShot(true);
-        timeout.setInterval(5000);
-        QEventLoop loop;
-        connect(this, SIGNAL(frameChanged()), &loop, SLOT(quit()), Qt::DirectConnection);
-        connect(&timeout, SIGNAL(timeout()), &loop, SLOT(quit()));
-        loop.exec();
-        //qDebug() << "Exited loop";
-
-        qDebug() << loadingTime.elapsed();
-        delete player;
-        delete surface;
-      }else {
-        ico = loadIcon(info->iconfile());
+    }else if(videoFormats.contains(name.section(".",-1).toLower())) {
+      if(videoImages.find(name) == videoImages.end()) {
+        LVideoLabel *mediaLabel = new LVideoLabel(name);
+        while(mediaLabel->pixmap()->isNull()) { QCoreApplication::processEvents(QEventLoop::AllEvents, 50); }
+        ico->addPixmap(*(mediaLabel->pixmap()));
+        videoImages.insert(name, *mediaLabel->pixmap());
+        delete mediaLabel;
+      }else{
+        ico->addPixmap(videoImages[name]);
       }
+    }else{
+      ico = loadIcon(info->iconfile());
     }
     this->emit itemDataAvailable( *ico, info);
     //qDebug() << " -- done:" << name;
@@ -176,12 +129,12 @@ void Browser::futureFinished(QString name, QImage icon){
 // PUBLIC SLOTS
 void Browser::loadDirectory(QString dir, bool force){
   if(force){ lastcheck = QDateTime(); } //reset check time to force reloads
-  videoList.clear();
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   //qDebug() << "Load Directory" << dir;
   bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
+    videoImages.clear();
     oldFiles.clear();
     lastcheck = QDateTime(); //null time
     emit clearItems();

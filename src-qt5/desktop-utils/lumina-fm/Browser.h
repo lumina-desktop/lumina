@@ -17,6 +17,7 @@
 
 #include <QMediaPlayer>
 #include <LVideoSurface.h>
+#include <LVideoLabel.h>
 #include <LuminaXDG.h>
 /*class FileItem{
 public:
@@ -46,7 +47,7 @@ private:
 	QString currentDir;
 	QDateTime lastcheck;
 	QFileSystemWatcher *watcher;
-	QList<QString> videoList;
+	QMap<QString, QPixmap> videoImages;
 	bool showHidden, showThumbs;
 	QStringList imageFormats, videoFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
@@ -57,8 +58,6 @@ private:
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-	void captureFrame(QPixmap, QIcon*);
-	void stopVideo(QMediaPlayer*, QMediaPlayer::MediaStatus);
 	void futureFinished(QString, QImage);
 
 public slots:
@@ -75,8 +74,6 @@ signals:
 
 	//Internal signal for the alternate threads
 	void threadDone(QString, QImage);
-
-  void frameChanged();
 };
 
 #endif
