@@ -664,11 +664,11 @@ LFileInfo::LFileInfo(){
 LFileInfo::LFileInfo(QString filepath){ //overloaded contructor
   this->setFile(filepath);
   loadExtraInfo();
-}	
+}
 LFileInfo::LFileInfo(QFileInfo info){ //overloaded contructor
   this->swap(info); //use the given QFileInfo without re-loading it
   loadExtraInfo();
-}		
+}
 
 //Functions for accessing the extra information
 // -- Return the mimetype for the file
@@ -683,7 +683,7 @@ QString LFileInfo::iconfile(){
     return icon;
   }else{
     if(!mime.isEmpty()){
-      QString tmp = mime; 
+      QString tmp = mime;
       tmp.replace("/","-");
       return tmp;
     }else if(this->isExecutable()){
@@ -696,7 +696,7 @@ QString LFileInfo::iconfile(){
 // -- Check if this is an XDG desktop file
 bool LFileInfo::isDesktopFile(){
   if(desk==0){ return false; }
-  return (!desk->filePath.isEmpty());	
+  return (!desk->filePath.isEmpty());
 }
 
 // -- Allow access to the XDG desktop data structure

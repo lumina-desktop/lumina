@@ -6,7 +6,7 @@
 //===========================================
 #include "RootWindow.h"
 
-RootWindow::RootWindow(){
+RootWindow::RootWindow() : QObject(){
   root_win = QWindow::fromWinId( QX11Info::appRootWindow() ); //
   root_view = new QQuickView(root_win); //make it a child of the root window
   root_obj = RootDesktopObject::instance();
@@ -16,8 +16,7 @@ RootWindow::RootWindow(){
   //Now setup the QQuickView
   root_view->setResizeMode(QQuickView::SizeRootObjectToView);
   root_view->engine()->rootContext()->setContextProperty("RootObject", root_obj);
-  root_view->setSource(QUrl("qrc:///qml/RootDesktop"));
-  root_view->show();
+  RootDesktopObject::RegisterType(); //make sure object classes are registered with the QML subsystems
 }
 
 RootWindow::~RootWindow(){
@@ -25,9 +24,21 @@ RootWindow::~RootWindow(){
   root_obj->deleteLater();
 }
 
+void RootWindow::start(){
+  root_view->setSource(QUrl("qrc:///qml/RootDesktop"));
+  root_win->show();
+  root_view->show();
+}
+
 void RootWindow::syncRootSize(){
-  if(root_win->width() != root_view->width() || root_win->height() != root_view->height()){
-    root_view->setGeometry(0, 0, root_win->width(), root_win->height() );
+  //qDebug() << "Sync Root Size:" << root_win->width() << root_win->height() << root_view->geometry();
+  QList<QScreen*> screens = QApplication::screens();
+  QRect unif;
+  for(int i=0; i<screens.length(); i++){ unif = unif.united(screens[i]->geometry()); }
+  if(unif.width() != root_view->width() || unif.height() != root_view->height()){
+    root_view->setGeometry(0, 0, unif.width(), unif.height() );
     emit RootResized(root_view->geometry());
   }
+  root_obj->updateScreens();
+  //qDebug() << " - after:" << root_view->geometry();
 }

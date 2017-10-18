@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QScreen>
 
+#include <QDebug>
 
 // === PUBLIC ===
 RootDesktopObject::RootDesktopObject(QObject *parent) : QObject(parent){
@@ -39,6 +40,10 @@ void RootDesktopObject::logout(){
   emit startLogout();
 }
 
+void RootDesktopObject::mousePositionChanged(){
+  emit mouseMoved();
+}
+
 // === PUBLIC SLOTS ===
 void RootDesktopObject::updateScreens(){
   QList<QScreen*> scrns = QApplication::screens();
@@ -53,6 +58,7 @@ void RootDesktopObject::updateScreens(){
   //Delete any leftover objects
   for(int i=0; i<s_objects.length(); i++){ s_objects[i]->deleteLater(); }
   s_objects = tmp;
+  emit screensChanged();
 }
 
 void RootDesktopObject::ChangeWallpaper(QString screen, QString value){

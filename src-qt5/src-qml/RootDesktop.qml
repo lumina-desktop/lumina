@@ -15,8 +15,11 @@
 //    root->setResizeMode(QQuickView::SizeRootObjectToView);
 //    root->engine()->rootContext()->setContextProperty("RootObject", rootobj);
 //===========================================
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Window 2.2
+import QtQuick.Controls 1.4
+
+import "."
 
 import Lumina.Backend.RootDesktopObject 2.0
 import Lumina.Backend.ScreenObject 2.0
@@ -28,22 +31,33 @@ Rectangle {
   //Setup the right-click context menu
   MouseArea { 
     anchors.fill: rootCanvas
-    acceptedButton: Qt.RightButton
-    onClicked: { contextMenu.open() }
+    acceptedButtons: Qt.RightButton
+    onClicked: { 
+      //contextMenu.x = mouseX
+      //contextMenu.y = mouseY
+      contextMenu.popup() 
+    }
+    onPositionChanged: {
+      RootObject.mousePositionChanged()
+    }
   }
 
   //Create the context menu itself
   Menu { 
     id: contextMenu
-    
+    //closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     MenuItem {
-      test: qtTr("Logout")
-      indicator: Image{
+      text: "Logout"
+      iconName: "system-logout"
+      /*indicator: Image{
         asynchronous: true
-        autoTransform: true
+        //autoTransform: true
         source: "image://theme/system-logout"
+      }*/
+      onTriggered: {
+        RootObject.logout()
+        //contextMenu.close()
       }
-      onTriggered: RootObject.logout()
     }
   }
 
@@ -51,14 +65,14 @@ Rectangle {
   Repeater{
     model: RootObject.screens
     AnimatedImage {
-      id: ("screen_"+modelData.name)
       asynchronous: true
       clip: true
       source: modelData.background
-      x: modelData.screen.virtualX
-      y: modelData.screen.virtualY
-      width: modelData.screen.width
-      height: modelData.screen.height
+      x: modelData.x
+      y: modelData.y
+      z: 0+index
+      width: modelData.width
+      height: modelData.height
     }
   }
 }

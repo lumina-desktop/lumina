@@ -19,6 +19,8 @@ public:
 	RootWindow();
 	~RootWindow();
 
+	void start();
+
 public slots:
 	void syncRootSize();
 

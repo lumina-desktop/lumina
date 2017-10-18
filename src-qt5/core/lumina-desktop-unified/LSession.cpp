@@ -104,7 +104,7 @@ void LSession::setupSession(){
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   //checkUserFiles(); //adds these files to the watcher as well
-
+  Lumina::ROOTWIN->start();
   //Initialize the internal variables
   //DESKTOPS.clear();
 
@@ -116,7 +116,6 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Populate App List:" << timer->elapsed();}
   Lumina::APPLIST->updateList();
   //appmenu = new AppMenu();
-
     splash.showScreen("menus");
   //if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   //settingsmenu = new SettingsMenu();
@@ -129,12 +128,13 @@ void LSession::setupSession(){
   QList<QScreen*> scrns= QApplication::screens();
   for(int i=0; i<scrns.length(); i++){
     qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
-    RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(), LOS::LuminaShare()+"desktop-background.jpg");
+    RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(),QUrl::fromLocalFile(LOS::LuminaShare()+"desktop-background.jpg").toString() );
   }
-  //Lumina::ROOTWIN->start();
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
   Lumina::NWS->setRoot_currentWorkspace(0);
+
   if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
+
   /*DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
   cmenu->start();*/
@@ -228,8 +228,8 @@ void LSession::setupGlobalConnections(){
   //Root window connections
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
-  connect(Lumina::ROOTWIN, SIGNAL(MouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
-  connect(Lumina::ROOTWIN, SIGNAL(startLogout()), this, SLOT(StartLogout()) );
+  connect(RootDesktopObject::instance(), SIGNAL(mouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
+  connect(RootDesktopObject::instance(), SIGNAL(startLogout()), this, SLOT(StartLogout()) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
