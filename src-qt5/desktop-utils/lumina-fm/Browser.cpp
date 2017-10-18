@@ -103,13 +103,13 @@ void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
     //Haven't added the extra files in a directory fix, but that should be easy to do
     //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
-    qDebug() << name << "here";
+    //qDebug() << name << "here";
     QIcon *ico = new QIcon();
     LFileInfo *info = new LFileInfo(name);
     if(!icon.isNull() && showThumbs){
       QPixmap pix = QPixmap::fromImage(icon);
       ico->addPixmap(pix);
-    }else if(videoFormats.contains(name.section(".",-1).toLower())) {
+    }else if(info->isVideo() && showThumbs) {
       if(videoImages.find(name) == videoImages.end()) {
         LVideoLabel *mediaLabel = new LVideoLabel(name);
         while(mediaLabel->pixmap()->isNull()) { QCoreApplication::processEvents(QEventLoop::AllEvents, 50); }
