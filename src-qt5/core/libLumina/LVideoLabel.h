@@ -27,6 +27,7 @@ class LVideoLabel : public QLabel{
     void initializeBackend();
     void stopVideo(QPixmap);
     void setDuration(QMediaPlayer::MediaStatus);
+    void stateChanged(QMediaPlayer::State);
 
   private:
     QMediaPlayer *mediaPlayer;
