@@ -89,7 +89,7 @@ void MainUI::LoadFile(QString path, QString type){
     }else if(INFO->isVideo()){
       ui->label_file_icon->hide();
       LVideoLabel *mediaLabel = new LVideoLabel(INFO->absoluteFilePath(), ui->tab_file);
-      mediaLabel->setShrinkPixmap(true);
+      mediaLabel->setFixedSize(64,64);
       ui->formLayout->replaceWidget(ui->label_file_icon, mediaLabel);
     }else{
       ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );

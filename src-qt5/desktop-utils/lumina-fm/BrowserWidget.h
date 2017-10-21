@@ -23,6 +23,7 @@ private:
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
+  QMap<QString,QTreeWidgetItem*> videoMap;
 	bool freshload;
 
 	//The drag and drop brower widgets

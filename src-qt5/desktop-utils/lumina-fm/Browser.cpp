@@ -20,7 +20,6 @@ Browser::Browser(QObject *parent) : QObject(parent){
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
-  videoFormats = LUtils::videoExtensions(); //lowercase suffixes
   //connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(captureFrame(QImage)));
   //connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
   connect(this, SIGNAL(threadDone(QString, QImage)), this, SLOT(futureFinished(QString, QImage))); //will always be between different threads
@@ -109,7 +108,7 @@ void Browser::futureFinished(QString name, QImage icon){
     if(!icon.isNull() && showThumbs){
       QPixmap pix = QPixmap::fromImage(icon);
       ico->addPixmap(pix);
-    }else if(info->isVideo() && showThumbs) {
+    /*}else if(info->isVideo() && showThumbs) {
       if(videoImages.find(name) == videoImages.end()) {
         LVideoLabel *mediaLabel = new LVideoLabel(name);
         while(mediaLabel->pixmap()->isNull()) { QCoreApplication::processEvents(QEventLoop::AllEvents, 50); }
@@ -118,7 +117,7 @@ void Browser::futureFinished(QString name, QImage icon){
         delete mediaLabel;
       }else{
         ico->addPixmap(videoImages[name]);
-      }
+      }*/
     }else{
       ico = loadIcon(info->iconfile());
     }
@@ -134,7 +133,7 @@ void Browser::loadDirectory(QString dir, bool force){
   //qDebug() << "Load Directory" << dir;
   bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
-    videoImages.clear();
+    //videoImages.clear();
     oldFiles.clear();
     lastcheck = QDateTime(); //null time
     emit clearItems();

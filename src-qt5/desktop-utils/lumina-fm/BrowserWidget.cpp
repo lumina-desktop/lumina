@@ -12,6 +12,7 @@
 
 #include <LUtils.h>
 #include <LuminaOS.h>
+#include <LVideoWidget.h>
 
 BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
@@ -38,6 +39,7 @@ BrowserWidget::~BrowserWidget(){
 }
 
 void BrowserWidget::changeDirectory(QString dir){
+  videoMap.clear();
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
 
@@ -124,6 +126,12 @@ void BrowserWidget::setThumbnailSize(int px){
   }else if(treeWidget!=0){
     larger = treeWidget->iconSize().height() < px;
     treeWidget->setIconSize(QSize(px,px));
+  }
+  for(QString file : videoMap.uniqueKeys()) {
+    QTreeWidgetItem *it = videoMap[file];
+    LVideoWidget *widget = (LVideoWidget*)treeWidget->itemWidget(it, 0);
+    widget->setIconSize(treeWidget->iconSize());
+    treeWidget->setItemWidget(it, 0, widget);
   }
   //qDebug() << "Changing Icon Size:" << px << larger;
   if(BROWSER->currentDirectory().isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
@@ -326,15 +334,30 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
-      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first(); }
-      else{
+      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) { 
+        it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
+      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()){
         it = new CQTreeWidgetItem(treeWidget);
-        it->setText(0, info->fileName() ); //name (0)
         treeWidget->addTopLevelItem(it);
+        LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), treeWidget);
+        videoMap.insert(info->absoluteFilePath(), it);
+        treeWidget->setItemWidget(it, 0, widget);
+      }else if(info->isVideo()){
+        it = videoMap[info->absoluteFilePath()];
+        if(treeWidget->itemWidget(it, 0) != 0) {
+          LVideoWidget *widget = (LVideoWidget*)treeWidget->itemWidget(it, 0);
+          widget->setIconSize(treeWidget->iconSize());
+          treeWidget->setItemWidget(it, 0, widget);
+        }
+      }else{
+        it = new CQTreeWidgetItem(treeWidget);
+        treeWidget->addTopLevelItem(it);
+        it->setText(0, info->fileName() ); //name (0)
       }
     }
     //Now set/update all the data
-    it->setIcon(0, ico);
+    if(!info->isVideo())
+      it->setIcon(0, ico);
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)

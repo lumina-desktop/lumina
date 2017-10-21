@@ -3,11 +3,11 @@
 
 #include <QLabel>
 #include <QMediaPlayer>
+#include <QTimer>
+#include <QResizeEvent>
 #include "LVideoSurface.h"
 
-//class LVideoSurface;
-
-class LVideoLabel : public QLabel {
+class LVideoLabel : public QLabel{
   Q_OBJECT
   public:
     LVideoLabel(QString, QWidget* parent=NULL);
@@ -17,13 +17,14 @@ class LVideoLabel : public QLabel {
   protected:
     void enterEvent(QEvent*);
     void leaveEvent(QEvent*);
+    void resizeEvent(QResizeEvent*);
 
   signals:
     void rollOver();
     void frameReceived(QPixmap);
 
   private slots:
-	void initializeBackend();
+    void initializeBackend();
     void stopVideo(QPixmap);
     void setDuration(QMediaPlayer::MediaStatus);
 
@@ -33,6 +34,6 @@ class LVideoLabel : public QLabel {
     QPixmap thumbnail;
     bool entered;
     bool shrink;
-	QString filepath;
+    QString filepath;
 };
 #endif

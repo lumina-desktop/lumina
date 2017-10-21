@@ -1,15 +1,17 @@
 #include "LVideoLabel.h"
-#include <QTimer>
+
 LVideoLabel::LVideoLabel(QString file, QWidget *parent) : QLabel(parent) {
-  this->setScaledContents(true);
-  this->setPixmap(thumbnail); //blank pixmap by default
+  thumbnail = QPixmap();
   entered = false;
+  shrink = true;
   filepath = file;
+
   QTimer::singleShot(0, this, SLOT(initializeBackend()) );
 }
 
 LVideoLabel::~LVideoLabel() {
-
+  mediaPlayer->deleteLater();
+  surface->deleteLater();
 }
 
 void LVideoLabel::setShrinkPixmap(bool shrink) {
@@ -22,6 +24,7 @@ void LVideoLabel::initializeBackend(){
   mediaPlayer->setVideoOutput(surface);
   mediaPlayer->setPlaybackRate(3);
   mediaPlayer->setMuted(true);
+  
   mediaPlayer->setMedia(QUrl::fromLocalFile(filepath));
   mediaPlayer->play();
   mediaPlayer->pause();
@@ -36,10 +39,10 @@ void LVideoLabel::stopVideo(QPixmap pix) {
     emit frameReceived(pix);
     if(thumbnail.isNull())
       thumbnail = pix;
-    this->setPixmap((shrink) ? thumbnail.scaledToHeight(64) : thumbnail);
+    this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
     mediaPlayer->pause();
   }else {
-    this->setPixmap((shrink) ? pix.scaledToHeight(64) : pix);
+    this->setPixmap(pix.scaled(this->size(),Qt::IgnoreAspectRatio));
   }
 }
 
@@ -50,17 +53,23 @@ void LVideoLabel::setDuration(QMediaPlayer::MediaStatus status) {
   }
 }
 
+void LVideoLabel::resizeEvent(QResizeEvent *event) {
+  if(!thumbnail.isNull())
+    this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+  QLabel::resizeEvent(event);
+}
+
 void LVideoLabel::enterEvent(QEvent *event) {
   entered=true;
   emit rollOver();
   mediaPlayer->setPosition(0);
   mediaPlayer->play();
-  QLabel::enterEvent(event);
+  QWidget::enterEvent(event);
 }
 
 void LVideoLabel::leaveEvent(QEvent *event) {
   entered=false;
   mediaPlayer->setPosition(mediaPlayer->duration() / 2);
   emit rollOver();
-  QLabel::leaveEvent(event);
+  QWidget::leaveEvent(event);
 }
