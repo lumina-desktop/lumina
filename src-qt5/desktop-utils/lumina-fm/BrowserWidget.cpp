@@ -334,15 +334,22 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
+      if(!BROWSER->showingThumbnails() && videoMap.size() !=0) {
+        for(QString file : videoMap.keys()) {
+          QTreeWidgetItem *it = videoMap[file];
+          treeWidget->removeItemWidget(it, 0);
+        }
+        videoMap.clear();
+      }
       if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) { 
         it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
-      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()){
+      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end() && BROWSER->showingThumbnails()){
         it = new CQTreeWidgetItem(treeWidget);
         treeWidget->addTopLevelItem(it);
         LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), treeWidget);
         videoMap.insert(info->absoluteFilePath(), it);
         treeWidget->setItemWidget(it, 0, widget);
-      }else if(info->isVideo()){
+      }else if(info->isVideo() && BROWSER->showingThumbnails()){
         it = videoMap[info->absoluteFilePath()];
         if(treeWidget->itemWidget(it, 0) != 0) {
           LVideoWidget *widget = (LVideoWidget*)treeWidget->itemWidget(it, 0);
@@ -356,7 +363,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       }
     }
     //Now set/update all the data
-    if(!info->isVideo())
+    if(!info->isVideo() || (info->isVideo() && !BROWSER->showingThumbnails()))
       it->setIcon(0, ico);
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
