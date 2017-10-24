@@ -64,7 +64,7 @@ void Browser::loadItem(QString info, Browser *obj){
       file.close();
       pix.loadFromData(bytes);
       if(pix.width() > 256 || pix.height() > 256 ){
-        pix = pix.scaled(256,256, Qt::KeepAspectRatio);
+        pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
       }
     }
   }
