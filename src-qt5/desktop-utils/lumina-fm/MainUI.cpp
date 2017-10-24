@@ -25,6 +25,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //qRegisterMetaType< QVector<int> >("QVector<int>");
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
   waitingToClose = false;
+  //put if statement here to check if running as root
+  rootmode = false;
 
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
