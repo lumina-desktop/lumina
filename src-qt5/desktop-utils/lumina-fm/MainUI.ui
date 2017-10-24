@@ -434,6 +434,11 @@
     <string>Ctrl+P</string>
    </property>
   </action>
+  <action name="actionOpen_as_Root">
+   <property name="text">
+    <string>Open as Root</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

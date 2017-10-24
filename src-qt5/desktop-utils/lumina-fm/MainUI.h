@@ -177,6 +177,8 @@ private slots:
 
 	void TrayJobsFinished();
 
+    void on_actionOpen_as_Root_triggered();
+
 signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 

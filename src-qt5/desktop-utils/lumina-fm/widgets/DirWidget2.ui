@@ -22,8 +22,16 @@
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1,0">
    <item>
     <widget class="QLabel" name="label_rootmode">
+     <property name="font">
+      <font>
+       <family>Droid Sans Mono</family>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Warning - Running as Root</string>
+      <string> * - FILE MANAGER RUNNING AS ROOT- * </string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

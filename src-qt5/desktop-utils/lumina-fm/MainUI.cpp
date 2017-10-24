@@ -14,6 +14,7 @@
 
 #include <LUtils.h>
 #include <LDesktopUtils.h>
+#include <ExternalProcess.h>
 
 #define DEBUG 0
 
@@ -963,4 +964,9 @@ void MainUI::closeEvent(QCloseEvent *ev){
     }
   }
   QMainWindow::closeEvent(ev); //continue normal close routine
+}
+
+void MainUI::on_actionOpen_as_Root_triggered()
+{
+    ExternalProcess::launch("qsudo lumina-fm");
 }
