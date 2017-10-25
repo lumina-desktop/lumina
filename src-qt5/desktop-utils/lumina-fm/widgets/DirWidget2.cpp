@@ -32,7 +32,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   ui->setupUi(this); //load the designer file
   //if(rootmode = true){ui->label_rootmode->setVisible(true);}
   //else{
-  ui->label_rootmode->setVisible(false);
+  //ui->label_rootmode->setVisible(false);
   //}
   ID = objID;
   //Assemble the toolbar for the widget
