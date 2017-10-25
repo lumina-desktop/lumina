@@ -2,11 +2,12 @@
 #include <LuminaXDG.h>
 #include <QCoreApplication>
 
-LVideoLabel::LVideoLabel(QString file, QWidget *parent) : QLabel(parent) {
+LVideoLabel::LVideoLabel(QString file, bool icons, QWidget *parent) : QLabel(parent) {
   thumbnail = QPixmap();
   entered = false;
-  icons = true;
+  this->icons = icons;
   filepath = file;
+  defaultThumbnail = LXDG::findIcon("unknown", "").pixmap(256,256);
 
   QTimer::singleShot(0, this, SLOT(initializeBackend()) );
 }
@@ -23,6 +24,7 @@ void LVideoLabel::initializeBackend(){
   mediaPlayer->setPlaybackRate(3);
   mediaPlayer->setMuted(true);
   
+  this->setPixmap(defaultThumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
   mediaPlayer->setMedia(QUrl::fromLocalFile(filepath));
   mediaPlayer->play();
 
@@ -38,7 +40,7 @@ void LVideoLabel::enableIcons() {
 }
 
 void LVideoLabel::disableIcons() {
-  this->setPixmap(LXDG::findIcon("unknown", "").pixmap(this->size()));
+  this->setPixmap(defaultThumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
   icons = false;
 }
 
@@ -47,10 +49,12 @@ void LVideoLabel::stopVideo(QPixmap pix) {
     emit frameReceived(pix);
     if(thumbnail.isNull())
       thumbnail = pix;
-    this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+    if(icons)
+      this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
     mediaPlayer->pause();
   }else {
-    this->setPixmap(pix.scaled(this->size(),Qt::IgnoreAspectRatio));
+    if(icons)
+      this->setPixmap(pix.scaled(this->size(),Qt::IgnoreAspectRatio));
   }
 }
 
@@ -84,8 +88,13 @@ void LVideoLabel::setDuration(QMediaPlayer::MediaStatus status) {
 }
 
 void LVideoLabel::resizeEvent(QResizeEvent *event) {
-  if(!thumbnail.isNull()) //Resize the current pixmap to match the new size
-    this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+  //Resize the current pixmap to match the new size
+  if(!thumbnail.isNull()){
+    if(icons)
+      this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+    else
+      this->setPixmap(defaultThumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+  }
   QLabel::resizeEvent(event);
 }
 

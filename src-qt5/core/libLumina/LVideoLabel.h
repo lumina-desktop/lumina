@@ -10,7 +10,7 @@
 class LVideoLabel : public QLabel{
   Q_OBJECT
   public:
-    LVideoLabel(QString, QWidget* parent=NULL);
+    LVideoLabel(QString, bool, QWidget* parent=NULL);
     ~LVideoLabel();
     void enableIcons();
     void disableIcons();
@@ -34,6 +34,7 @@ class LVideoLabel : public QLabel{
     QMediaPlayer *mediaPlayer;
     LVideoSurface *surface;
     QPixmap thumbnail;
+    QPixmap defaultThumbnail;
     bool entered;
     bool icons;
     QString filepath;

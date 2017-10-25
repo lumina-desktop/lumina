@@ -88,7 +88,7 @@ void MainUI::LoadFile(QString path, QString type){
       ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
     }else if(INFO->isVideo()){
       ui->label_file_icon->hide();
-      LVideoLabel *mediaLabel = new LVideoLabel(INFO->absoluteFilePath(), ui->tab_file);
+      LVideoLabel *mediaLabel = new LVideoLabel(INFO->absoluteFilePath(), true, ui->tab_file);
       mediaLabel->setFixedSize(64,64);
       ui->formLayout->replaceWidget(ui->label_file_icon, mediaLabel);
     }else{

@@ -38,7 +38,6 @@ BrowserWidget::~BrowserWidget(){
 }
 
 void BrowserWidget::changeDirectory(QString dir){
-  qDebug() << "changing";
   videoMap.clear();
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
@@ -116,10 +115,10 @@ void BrowserWidget::showThumbnails(bool show){
     QTreeWidgetItem *it = videoMap[file].first;
     LVideoWidget *widget = videoMap[file].second;
     if(show) {
-      widget->disableIcons();
+      widget->enableIcons();
       treeWidget->setItemWidget(it, 0, widget);
     }else{
-      widget->enableIcons();
+      widget->disableIcons();
       treeWidget->setItemWidget(it, 0, widget);
     }
   }
@@ -351,13 +350,14 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()) {
         it = new CQTreeWidgetItem(treeWidget);
         treeWidget->addTopLevelItem(it);
-        LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), treeWidget);
+        LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), hasThumbnails(), treeWidget);
         videoMap.insert(info->absoluteFilePath(), QPair<QTreeWidgetItem*,LVideoWidget*>(it, widget));
         treeWidget->setItemWidget(it, 0, widget);
       }else if(info->isVideo()) {
         it = videoMap[info->absoluteFilePath()].first;
         LVideoWidget *widget = videoMap[info->absoluteFilePath()].second;
         widget->setIconSize(treeWidget->iconSize());
+        treeWidget->setItemWidget(it, 0, widget);
       }else{
         it = new CQTreeWidgetItem(treeWidget);
         treeWidget->addTopLevelItem(it);
