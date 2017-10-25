@@ -12,7 +12,8 @@ class LVideoLabel : public QLabel{
   public:
     LVideoLabel(QString, QWidget* parent=NULL);
     ~LVideoLabel();
-    void setShrinkPixmap(bool);
+    void enableIcons();
+    void disableIcons();
 
   protected:
     void enterEvent(QEvent*);
@@ -34,7 +35,7 @@ class LVideoLabel : public QLabel{
     LVideoSurface *surface;
     QPixmap thumbnail;
     bool entered;
-    bool shrink;
+    bool icons;
     QString filepath;
 };
 #endif

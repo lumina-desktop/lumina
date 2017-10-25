@@ -1,10 +1,11 @@
 #include "LVideoLabel.h"
+#include <LuminaXDG.h>
 #include <QCoreApplication>
 
 LVideoLabel::LVideoLabel(QString file, QWidget *parent) : QLabel(parent) {
   thumbnail = QPixmap();
   entered = false;
-  shrink = true;
+  icons = true;
   filepath = file;
 
   QTimer::singleShot(0, this, SLOT(initializeBackend()) );
@@ -13,10 +14,6 @@ LVideoLabel::LVideoLabel(QString file, QWidget *parent) : QLabel(parent) {
 LVideoLabel::~LVideoLabel() {
   mediaPlayer->deleteLater();
   surface->deleteLater();
-}
-
-void LVideoLabel::setShrinkPixmap(bool shrink) {
-  this->shrink = shrink;
 }
 
 void LVideoLabel::initializeBackend(){
@@ -35,6 +32,15 @@ void LVideoLabel::initializeBackend(){
   this->connect(this, SIGNAL(rollOver()), surface, SLOT(switchRollOver()));
 }
 
+void LVideoLabel::enableIcons() {
+  this->setPixmap(thumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
+  icons = true;
+}
+
+void LVideoLabel::disableIcons() {
+  this->setPixmap(LXDG::findIcon("unknown", "").pixmap(this->size()));
+  icons = false;
+}
 
 void LVideoLabel::stopVideo(QPixmap pix) {
   if(!entered) {
@@ -85,17 +91,21 @@ void LVideoLabel::resizeEvent(QResizeEvent *event) {
 
 //Start playing the video from the beginning when the mouse enters the label
 void LVideoLabel::enterEvent(QEvent *event) {
-  entered=true;
-  emit rollOver();
-  mediaPlayer->setPosition(0);
-  mediaPlayer->play();
+  if(icons) {
+    entered=true;
+    emit rollOver();
+    mediaPlayer->setPosition(0);
+    mediaPlayer->play();
+  }
   QWidget::enterEvent(event);
 }
 
 //Stop the video and set the thumbnail back to the middle of the video when the mouse leaves the label
 void LVideoLabel::leaveEvent(QEvent *event) {
-  entered=false;
-  mediaPlayer->setPosition(mediaPlayer->duration() / 2);
-  emit rollOver();
+  if(icons) {
+    entered=false;
+    mediaPlayer->setPosition(mediaPlayer->duration() / 2);
+    emit rollOver();
+  }
   QWidget::leaveEvent(event);
 }

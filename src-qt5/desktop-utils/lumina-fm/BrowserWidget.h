@@ -12,6 +12,8 @@
 #include <QWidget>
 #include <QThread>
 
+#include <LVideoWidget.h>
+
 #include "Browser.h"
 #include "widgets/DDListWidgets.h"
 
@@ -23,7 +25,7 @@ private:
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
-  QMap<QString,QTreeWidgetItem*> videoMap;
+  QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
 	bool freshload;
 
 	//The drag and drop brower widgets

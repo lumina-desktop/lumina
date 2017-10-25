@@ -26,3 +26,11 @@ LVideoWidget::~LVideoWidget() {
 void LVideoWidget::setIconSize(QSize iconSize) {
   iconLabel->setFixedSize(iconSize);
 }
+
+void LVideoWidget::enableIcons() {
+  iconLabel->enableIcons();
+}
+
+void LVideoWidget::disableIcons() {
+  iconLabel->disableIcons();
+}

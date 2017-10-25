@@ -11,6 +11,8 @@ class LVideoWidget : public QWidget {
     LVideoWidget(QString, QSize, QWidget* parent=NULL);
     ~LVideoWidget();
     void setIconSize(QSize);
+    void disableIcons();
+    void enableIcons();
 
   private:
     bool flag;
