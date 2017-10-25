@@ -98,7 +98,7 @@ void LSession::setupSession(){
   qDebug() << "Initializing Session";
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
-  //if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
+  if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
 
   //Setup the QSettings default paths
     splash.showScreen("settings");
@@ -118,8 +118,8 @@ void LSession::setupSession(){
   }
 //use the system settings
   //Setup the user's lumina settings directory as necessary
-    splash.showScreen("user");
-  if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
+    //splash.showScreen("user");
+  //if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   //checkUserFiles(); //adds these files to the watcher as well
 
   //Initialize the internal variables
@@ -147,11 +147,12 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
   desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   updateDesktops();
-  for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
+  //if(DEBUG){ qDebug() << " - Process Events (6x):" << timer->elapsed();}
+  //for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
 
   //Now setup the system watcher for changes
     splash.showScreen("final");
-  qDebug() << " - Initialize file system watcher";
+  //qDebug() << " - Initialize file system watcher";
   if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
   watcher = new QFileSystemWatcher(this);
     QString confdir = sessionsettings->fileName().section("/",0,-2);
@@ -171,14 +172,18 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
-  if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
-  for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
+  //if(DEBUG){ qDebug() << " - Process Events (4x):" << timer->elapsed();}
+  //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
+  if(DEBUG){ qDebug() << " - Launch Startup Apps:" << timer->elapsed();}
   //launchStartupApps();
   QTimer::singleShot(500, this, SLOT(launchStartupApps()) );
-  splash.hide();
-  LSession::processEvents();
+  //if(DEBUG){ qDebug() << " - Hide Splashscreen:" << timer->elapsed();}
+  //splash.hide();
+  //LSession::processEvents();
+  if(DEBUG){ qDebug() << " - Close Splashscreen:" << timer->elapsed();}
   splash.close();
-  LSession::processEvents();
+  //LSession::processEvents();
+  if(DEBUG){ qDebug() << " - Init Finished:" << timer->elapsed(); delete timer;}
 }
 
 void LSession::CleanupSession(){
@@ -303,7 +308,7 @@ void LSession::launchStartupApps(){
      QString sfile = sessionsettings->value("audiofiles/login", LOS::LuminaShare()+"Login.ogg").toString();
      playAudioFile(sfile);
   }
-  qDebug() << "[DESKTOP INIT FINISHED]";
+  //qDebug() << "[DESKTOP INIT FINISHED]";
 }
 
 void LSession::StartLogout(){
