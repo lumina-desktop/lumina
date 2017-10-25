@@ -40,6 +40,10 @@ void RootDesktopObject::logout(){
   emit startLogout();
 }
 
+void RootDesktopObject::lockscreen(){
+  emit lockScreen();
+}
+
 void RootDesktopObject::mousePositionChanged(){
   emit mouseMoved();
 }
@@ -59,6 +63,9 @@ void RootDesktopObject::updateScreens(){
   for(int i=0; i<s_objects.length(); i++){ s_objects[i]->deleteLater(); }
   s_objects = tmp;
   emit screensChanged();
+  for(int i=0; i<s_objects.length(); i++){
+    s_objects[i]->emit geomChanged();
+  }
 }
 
 void RootDesktopObject::ChangeWallpaper(QString screen, QString value){

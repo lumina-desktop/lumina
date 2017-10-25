@@ -30,12 +30,12 @@ public:
 
 	static void RegisterType();
 
-	QString name();
-	QString background();
-	int x();
-	int y();
-	int width();
-	int height();
+	Q_INVOKABLE QString name();
+	Q_INVOKABLE QString background();
+	Q_INVOKABLE int x();
+	Q_INVOKABLE int y();
+	Q_INVOKABLE int width();
+	Q_INVOKABLE int height();
 
 public slots:
 	void setBackground(QString fileOrColor);

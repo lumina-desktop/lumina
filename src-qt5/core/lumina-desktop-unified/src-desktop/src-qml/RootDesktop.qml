@@ -17,9 +17,9 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 
-import "."
+import "." as QML
 
 import Lumina.Backend.RootDesktopObject 2.0
 import Lumina.Backend.ScreenObject 2.0
@@ -33,9 +33,9 @@ Rectangle {
     anchors.fill: rootCanvas
     acceptedButtons: Qt.RightButton
     onClicked: { 
-      //contextMenu.x = mouseX
-      //contextMenu.y = mouseY
-      contextMenu.popup() 
+      contextMenu.x = mouseX
+      contextMenu.y = mouseY
+      contextMenu.open() 
     }
     onPositionChanged: {
       RootObject.mousePositionChanged()
@@ -43,36 +43,15 @@ Rectangle {
   }
 
   //Create the context menu itself
-  Menu { 
-    id: contextMenu
-    //closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-    MenuItem {
-      text: "Logout"
-      iconName: "system-logout"
-      /*indicator: Image{
-        asynchronous: true
-        //autoTransform: true
-        source: "image://theme/system-logout"
-      }*/
-      onTriggered: {
-        RootObject.logout()
-        //contextMenu.close()
-      }
-    }
-  }
+  QML.ContextMenu { id: contextMenu }
 
   //Setup the wallpapers
   Repeater{
     model: RootObject.screens
-    AnimatedImage {
-      asynchronous: true
-      clip: true
-      source: modelData.background
-      x: modelData.x
-      y: modelData.y
+    QML.WallpaperImage{
+      //console.log( modelData.name() )
+      object: modelData
       z: 0+index
-      width: modelData.width
-      height: modelData.height
     }
   }
 }

@@ -33,6 +33,7 @@ public:
 
 	//QML Access Functions
 	Q_INVOKABLE void logout();
+	Q_INVOKABLE void lockscreen();
 	Q_INVOKABLE void mousePositionChanged();
 private:
 	QList<ScreenObject*> s_objects;
@@ -47,6 +48,7 @@ signals:
 	void screensChanged();
 	void startLogout();
 	void mouseMoved();
+	void lockScreen();
 
 };
 #endif

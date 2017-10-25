@@ -25,7 +25,7 @@ RootWindow::~RootWindow(){
 }
 
 void RootWindow::start(){
-  root_view->setSource(QUrl("qrc:///qml/RootDesktop"));
+  root_view->setSource(QUrl("qrc:///qml/RootDesktop.qml"));
   root_win->show();
   root_view->show();
 }

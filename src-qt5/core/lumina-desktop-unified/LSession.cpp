@@ -230,6 +230,7 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
   connect(RootDesktopObject::instance(), SIGNAL(mouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
   connect(RootDesktopObject::instance(), SIGNAL(startLogout()), this, SLOT(StartLogout()) );
+  connect(RootDesktopObject::instance(), SIGNAL(lockScreen()), Lumina::SS, SLOT(LockScreenNow()) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
