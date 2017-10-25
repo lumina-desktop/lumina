@@ -101,7 +101,7 @@ void MainUI::LoadArguments(QStringList args){
     connect(BACKEND, SIGNAL(ArchivalSuccessful()), delayClose, SLOT(start()) );
   }else if(action==3){
     sxList.clear();
-    for(int j=1; j<files.length(); j++){ sxList << files[j]; }
+    for(int j=0; j<files.length(); j++){ sxList << files[j]; }
     for(int k=0; k<sxList.length(); k++){
     if(k==0){ sxFile = sxList[k]; }
     if(k==1){ sxPath = sxList[k]; }
