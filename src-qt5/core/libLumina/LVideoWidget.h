@@ -8,12 +8,13 @@
 class LVideoWidget : public QWidget {
   Q_OBJECT
   public:
-    LVideoWidget(QString, QSize, QWidget* parent=NULL);
+    LVideoWidget(QString, QSize, bool icons, QWidget* parent=NULL);
     ~LVideoWidget();
     void setIconSize(QSize);
+    void disableIcons();
+    void enableIcons();
 
   private:
-    bool flag;
     LVideoLabel *iconLabel;
     QLabel *textLabel;
     QHBoxLayout *layout;
