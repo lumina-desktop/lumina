@@ -67,7 +67,7 @@ class MainUI : public QMainWindow{
 public:
 	MainUI();
 	~MainUI();
-    bool rootmode;
+    //bool rootmode;
 
 public slots:
 	void OpenDirs(QStringList);	 //also called from the main.cpp after initialization

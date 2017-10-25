@@ -17,6 +17,7 @@
 #include <ExternalProcess.h>
 
 #define DEBUG 0
+bool rootmode = false;
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //for Signal/slot we must register the Typedef of QFileInfoList
@@ -27,7 +28,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
   waitingToClose = false;
   //put if statement here to check if running as root
-  rootmode = false;
+  rootmode = (getuid()==0);
 
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
