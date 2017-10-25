@@ -110,7 +110,7 @@ bool BrowserWidget::hasHiddenFiles(){
 }
 
 void BrowserWidget::showThumbnails(bool show){
-  qDebug() << show << videoMap.size();
+  //qDebug() << show << videoMap.size();
   for(QString file : videoMap.uniqueKeys()) {
     QTreeWidgetItem *it = videoMap[file].first;
     LVideoWidget *widget = videoMap[file].second;

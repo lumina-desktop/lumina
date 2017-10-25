@@ -7,17 +7,17 @@ LVideoSurface::LVideoSurface(QObject *parent) : QAbstractVideoSurface(parent) {
 }
 
 bool LVideoSurface::present(const QVideoFrame &frame) {
-  //qDebug() << surfaceFormat().pixelFormat() << frame.pixelFormat() << surfaceFormat().frameSize() << frame.size();
+  //qDebug() << surfaceFormat().frameSize() << frame.size();
   if(!frameImage.isNull() && !entered) {
     emit frameReceived(frameImage);
     return true;
   }
 
   if(frame.isValid()) {
-    //qDebug() << "Recording Frame" << frame.pixelFormat();
+    //qDebug() << "Recording Frame";
+    //qDebug() << surfaceFormat().frameSize() << frame.size();
     QVideoFrame icon(frame);
     icon.map(QAbstractVideoBuffer::ReadOnly);
-    //qDebug() << icon.width() << icon.height();
     QImage img(icon.bits(), icon.width(), icon.height(), icon.bytesPerLine(), QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));
     
     if((frameImage.isNull() && !entered) or entered)
@@ -48,10 +48,13 @@ bool LVideoSurface::start(const QVideoSurfaceFormat &format) {
   const QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());
   const QSize size = format.frameSize();
 
-  if (imageFormat != QImage::Format_Invalid && !size.isEmpty()) {
+  //QVideoSurfaceFormat newFormat = format;
+  //Shrink the frames passed through the format to a smaller, thumbnail appropriate size and increase the frame rate
+  //newFormat.setFrameSize(258,258);
+  //newFormat.setFrameRate(90);
+
+  if (imageFormat != QImage::Format_Invalid && !size.isEmpty())
       QAbstractVideoSurface::start(format);
-      return true;
-  } else {
-      return false;
-  }
+
+  return (imageFormat != QImage::Format_Invalid && !size.isEmpty());
 }
