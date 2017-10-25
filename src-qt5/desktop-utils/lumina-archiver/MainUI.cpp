@@ -82,6 +82,7 @@ void MainUI::LoadArguments(QStringList args){
       else if(args[i]=="--burn-img"){ action = 0; continue; }
       else if(args[i]=="--ax"){ action = 1; continue; }
       else if(args[i]=="--aa"){ action = 2; continue; }
+      else if(args[i]=="--sx"){ action = 3; continue; }
     }else{
       files << args[i];
     }
@@ -90,6 +91,7 @@ void MainUI::LoadArguments(QStringList args){
   //Now go through and do any actions as needed
   ui->label_progress->setText(tr("Opening Archive..."));
   if(action==1){
+    qDebug() << "blah";
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
     connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }else if(action==2){
@@ -97,6 +99,18 @@ void MainUI::LoadArguments(QStringList args){
     for(int j=1; j<files.length(); j++){ aaFileList << files[j]; }
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoArchiveFiles()) );
     connect(BACKEND, SIGNAL(ArchivalSuccessful()), delayClose, SLOT(start()) );
+  }else if(action==3){
+    sxList.clear();
+    for(int j=1; j<files.length(); j++){ sxList << files[j]; }
+    for(int k=0; k<sxList.length(); k++){
+    if(k==0){ sxFile = sxList[k]; }
+    if(k==1){ sxPath = sxList[k]; }
+    }
+    qDebug() << "sxList" << sxList;
+    qDebug() << "sxFile" << sxFile;
+    qDebug() << "sxPath" << sxPath;
+    connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(simpleExtractFiles()) );
+    connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }
   BACKEND->loadFile(files[0]);
   ui->actionUSB_Image->setEnabled(files[0].simplified().endsWith(".img"));
@@ -260,30 +274,35 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
-    disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
-    QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
-    if(dir.isEmpty()){ return; }
-    QDir tmp(dir);
-    QString name = BACKEND->currentFile().section("/",-1).section(".",0,0);
-    if(QFile::exists(dir+"/"+name)){
-      int num = 1;
-      while( QFile::exists(dir+"/"+name+"_"+QString::number(num))){ num++; }
-      name = name+"_"+QString::number(num);
-    }
-    if(tmp.mkdir(name) ){
-      dir.append("/"+name); //created sub directory
-    }
-    ui->label_progress->setText(tr("Extracting..."));
-    BACKEND->startExtract(dir, true);
+  disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+  QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
+  if(dir.isEmpty()){ return; }
+  QDir tmp(dir);
+  QString name = BACKEND->currentFile().section("/",-1).section(".",0,0);
+  if(QFile::exists(dir+"/"+name)){
+    int num = 1;
+    while( QFile::exists(dir+"/"+name+"_"+QString::number(num))){ num++; }
+    name = name+"_"+QString::number(num);
   }
+  if(tmp.mkdir(name) ){
+    dir.append("/"+name); //created sub directory
+  }
+  ui->label_progress->setText(tr("Extracting..."));
+  BACKEND->startExtract(dir, true);
+}
 
+void MainUI::simpleExtractFiles(){
+  disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+  QString dir = sxPath;
+  ui->label_progress->setText(tr("Extracting..."));
+  BACKEND->startExtract(dir, true);
+}
 
 void MainUI::autoArchiveFiles(){
   qDebug() << "Auto Archive Files:" << aaFileList;
   ui->label_progress->setText(tr("Adding Items..."));
   BACKEND->startAdd(aaFileList);
 }
-
 
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected

@@ -30,7 +30,8 @@ public:
 private:
 	Ui::MainUI *ui;
 	Backend *BACKEND;
-	QStringList aaFileList;
+    QStringList aaFileList, sxList;
+    QString sxPath, sxFile;
 	QTimer *delayClose;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
@@ -49,6 +50,7 @@ private slots:
 	void extractFiles();
 	void autoextractFiles();
 	void autoArchiveFiles();
+    void simpleExtractFiles();
 	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();
