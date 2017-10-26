@@ -21,7 +21,7 @@ LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
   //this->setAttribute(Qt::WA_TranslucentBackground);
   //this->setAttribute(Qt::WA_NoSystemBackground);
   this->setAutoFillBackground(false);
-  this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }"); 
+  this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }");
   this->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
   this->setAcceptDrops(true);
   this->setContextMenuPolicy(Qt::NoContextMenu);
@@ -34,7 +34,7 @@ LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
 }
 
 LDesktopPluginSpace::~LDesktopPluginSpace(){
-  
+
 }
 
 void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
@@ -76,7 +76,7 @@ void LDesktopPluginSpace::setBackground(QPixmap pix){
 void LDesktopPluginSpace::setDesktopArea(QRect area){
   //qDebug() << "Setting Desktop Plugin Area:" << area;
   desktopRect = area;
-  
+
 }
 
 // ===================

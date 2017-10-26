@@ -44,7 +44,7 @@ void AppLauncherPlugin::loadButton(){
   QFileInfo info(path);
   this->contextMenu()->clear();
   //qDebug() << "Default Application Launcher:" << def << path;
-  bool ok = QFile::exists(path);
+  bool ok = info.canonicalPath().startsWith("/net/") || QFile::exists(path);
   if(!ok){ emit RemovePlugin(this->ID()); return;}
   icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);

@@ -631,7 +631,7 @@ void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
 void LFileInfo::loadExtraInfo(){
   desk = 0;
   //Now load the extra information
-  if(this->isDir()){
+  if( this->suffix().isEmpty() && (this->absoluteFilePath().startsWith("/net/") || this->isDir()) ){
     mime = "inode/directory";
     //Special directory icons
     QString name = this->fileName().toLower();
@@ -644,6 +644,7 @@ void LFileInfo::loadExtraInfo(){
     else if(name=="downloads"){ icon = "folder-downloads"; }
     else if(name=="documents"){ icon = "folder-documents"; }
     else if(name=="images" || name=="pictures"){ icon = "folder-image"; }
+    else if(this->absoluteFilePath().startsWith("/net/")){ icon = "folder-shared"; }
     else if( !this->isReadable() ){ icon = "folder-locked"; }
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
@@ -730,7 +731,7 @@ bool LXDG::checkExec(QString exec){
   else{
     QStringList paths = QString(getenv("PATH")).split(":");
     for(int i=0; i<paths.length(); i++){
-      if(QFile::exists(paths[i]+"/"+exec)){ return true; }	    
+      if(QFile::exists(paths[i]+"/"+exec)){ return true; }
     }
   }
   return false; //could not find the executable in the current path(s)

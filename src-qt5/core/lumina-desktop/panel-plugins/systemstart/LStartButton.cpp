@@ -28,7 +28,7 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
   menu->setContents(startmenu);
   QSize saved = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/"+this->type()+"/MenuSize", QSize(0,0)).toSize();
   if(!saved.isNull()){ startmenu->setFixedSize(saved); } //re-load the previously saved value
-  
+
   button->setMenu(menu);
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
