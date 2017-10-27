@@ -44,7 +44,8 @@ void AppLauncherPlugin::loadButton(){
   QFileInfo info(path);
   this->contextMenu()->clear();
   //qDebug() << "Default Application Launcher:" << def << path;
-  bool ok = info.canonicalPath().startsWith("/net/") || QFile::exists(path);
+  bool ok = info.canonicalPath().startsWith("/net/");
+  if(!ok){ ok = QFile::exists(path); } //do it this way to ensure the file existance check never runs for /net/ files
   if(!ok){ emit RemovePlugin(this->ID()); return;}
   icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
