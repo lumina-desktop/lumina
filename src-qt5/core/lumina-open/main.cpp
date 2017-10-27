@@ -29,7 +29,7 @@
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
@@ -50,7 +50,6 @@ void ShowErrorDialog(int argc, char **argv, QString message){
     //Setup the application
     QApplication App(argc, argv);
         App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    LuminaThemeEngine theme(&App);
 	LUtils::LoadTranslation(&App,"lumina-open");
     QMessageBox dlg(QMessageBox::Critical, QObject::tr("File Error"), message );
     dlg.exec();
@@ -141,7 +140,6 @@ QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QS
   LTHEME::LoadCustomEnvSettings();
   QApplication App(argc, argv);
   App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-  LuminaThemeEngine theme(&App);
   LUtils::LoadTranslation(&App,"lumina-open");
 
   LFileDialog w;
