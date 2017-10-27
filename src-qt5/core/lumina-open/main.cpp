@@ -29,7 +29,7 @@
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
-#define DEBUG 0
+#define DEBUG 1
 
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
@@ -369,7 +369,7 @@ int main(int argc, char **argv){
   QString bin = cmd.section(" ",0,0);
   if( !LUtils::isValidBinary(bin) ){
     //invalid binary for some reason - open a dialog to warn the user instead
-    QMessageBox::warning(0, QObject::tr("Binary Missing"), QString(QObject::tr("Could not find \"%1\". Please ensure it is installed first.")).arg(bin)+"\n\n"+cmd);
+    ShowErrorDialog(argc,argv, QString(QObject::tr("Could not find \"%1\". Please ensure it is installed first.")).arg(bin)+"\n\n"+cmd);
     return 1;
   }
   if(DEBUG) qDebug() << "[lumina-open] Running Cmd:" << cmd;
@@ -416,7 +416,6 @@ int main(int argc, char **argv){
       //Setup the application
       QApplication App(argc, argv);
       App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-      LuminaThemeEngine theme(&App);
       LUtils::LoadTranslation(&App,"lumina-open");
 	//App.setApplicationName("LuminaOpen");
       QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );

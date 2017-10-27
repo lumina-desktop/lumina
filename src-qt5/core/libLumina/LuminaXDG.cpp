@@ -72,6 +72,7 @@ void XDGDesktop::sync(){
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
     QString val = line.section("=",1,50).simplified();
+    if( val.count("\"")==2 && val.startsWith("\"") && val.endsWith("\"")){ val.chop(1); val = val.remove(0,1); } //remove the starting/ending quotes
     //-------------------
     if(var=="Name"){
       if(insection){
@@ -727,6 +728,8 @@ bool LFileInfo::isAVFile(){
 //==== LXDG Functions ====
 bool LXDG::checkExec(QString exec){
   //Return true(good) or false(bad)
+  //Check for quotes around the exec, and remove them as needed
+  if(exec.startsWith("\"") && exec.count("\"")>=2){ exec = exec.section("\"",1,1); }
   if(exec.startsWith("/")){ return QFile::exists(exec); }
   else{
     QStringList paths = QString(getenv("PATH")).split(":");
@@ -748,7 +751,7 @@ QStringList LXDG::systemApplicationDirs(){
   for(int i=0; i<appDirs.length(); i++){
     if( QFile::exists(appDirs[i]+"/applications") ){
       out << appDirs[i]+"/applications";
-      //Also check any subdirs within this directory 
+      //Also check any subdirs within this directory
       // (looking at you KDE - stick to the standards!!)
       out << LUtils::listSubDirectories(appDirs[i]+"/applications");
     }

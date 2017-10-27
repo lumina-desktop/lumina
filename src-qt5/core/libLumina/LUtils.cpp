@@ -121,6 +121,9 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
 }
 
 bool LUtils::isValidBinary(QString& bin){
+  //Trim off any quotes
+  if(bin.startsWith("\"") && bin.endsWith("\"")){ bin.chop(1); bin = bin.remove(0,1); }
+  //Now look for relative/absolute path
   if(!bin.startsWith("/")){
     //Relative path: search for it on the current "PATH" settings
     QStringList paths = QString(qgetenv("PATH")).split(":");
