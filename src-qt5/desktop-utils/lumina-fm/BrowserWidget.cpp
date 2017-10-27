@@ -82,6 +82,7 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     retranslate();
     treeWidget->sortItems(0, Qt::AscendingOrder);
+    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
     listWidget = new DDListWidget(this);
@@ -384,7 +385,9 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   }else{
     if(freshload && treeWidget!=0){
       //qDebug() << "Resize Tree Widget Contents";
-      for(int i=0; i<treeWidget->columnCount(); i++){ treeWidget->resizeColumnToContents(i); }
+      //for(int i=treeWidget->columnCount()-1; i>0; i--){ treeWidget->resizeColumnToContents(i); }
+      treeWidget->resizeColumnToContents(1);
+      //treeWidget->resizeColumnToContents(0);
     }
     freshload = false; //any further changes are updates - not a fresh load of a dir
     //Done loading items
