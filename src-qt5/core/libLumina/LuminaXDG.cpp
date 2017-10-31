@@ -729,7 +729,8 @@ bool LFileInfo::isAVFile(){
 bool LXDG::checkExec(QString exec){
   //Return true(good) or false(bad)
   //Check for quotes around the exec, and remove them as needed
-  if(exec.startsWith("\"") && exec.count("\"")>=2){ exec = exec.section("\"",1,1); }
+  if(exec.startsWith("\"") && exec.count("\"")>=2){ exec = exec.section("\"",1,1).simplified(); }
+  if(exec.startsWith("\'") && exec.count("\'")>=2){ exec = exec.section("\'",1,1).simplified(); }
   if(exec.startsWith("/")){ return QFile::exists(exec); }
   else{
     QStringList paths = QString(getenv("PATH")).split(":");
