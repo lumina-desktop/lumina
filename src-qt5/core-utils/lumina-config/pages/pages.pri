@@ -14,8 +14,8 @@ HEADERS	+= 	$${PWD}/getPage.h \
 		$${PWD}/page_session_locale.h \
 		$${PWD}/page_session_options.h \
 		$${PWD}/page_compton.h \
-    $$PWD/page_soundtheme.h
-#	  $${PWD}/page_bluetooth_trueos.h 
+                $$PWD/page_soundtheme.h
+#	  $${PWD}/page_bluetooth_trueos.h
 #		$${PWD}/page_mouse_trueos.h
 
 
@@ -33,7 +33,7 @@ SOURCES	+=	$${PWD}/getPage.cpp \
 		$${PWD}/page_session_locale.cpp \
 		$${PWD}/page_session_options.cpp \
 		$${PWD}/page_compton.cpp \  
-    $$PWD/page_soundtheme.cpp
+                $$PWD/page_soundtheme.cpp
 #		$${PWD}/page_bluetooth_trueos.cpp 
 #   $${PWD}/page_mouse_trueos.cpp 
 
@@ -52,6 +52,6 @@ FORMS	+=	$${PWD}/page_main.ui \
 		$${PWD}/page_session_locale.ui \
 		$${PWD}/page_session_options.ui \
 		$${PWD}/page_compton.ui \
-    $$PWD/page_soundtheme.ui
+                $$PWD/page_soundtheme.ui
 #		$${PWD}/page_bluetooth_trueos.ui 
 #   $${PWD}/page_mouse_trueos.ui 
