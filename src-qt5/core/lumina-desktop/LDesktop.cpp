@@ -539,7 +539,16 @@ void LDesktop::UpdateBackground(){
   //qDebug() << " - List:" << bgL << CBG;
     //Remove any invalid files
     for(int i=0; i<bgL.length(); i++){
-      if( (!QFile::exists(bgL[i]) && bgL[i]!="default" && !bgL[i].startsWith("rgb(") ) || bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if(bgL[i]=="default" || bgL[i].startsWith("rgb(") ){ continue; } //built-in definitions - treat them as valid
+      if(bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if( !QFile::exists(bgL[i]) ){
+        //Quick Detect/replace for new path for Lumina wallpapers (change in 1.3.4)
+        if(bgL[i].contains("/wallpapers/Lumina-DE/")){
+          bgL[i] = bgL[i].replace("/wallpapers/Lumina-DE/", "/wallpapers/lumina-desktop/"); i--; //modify the path and re-check it
+        }else{
+          bgL.removeAt(i); i--;
+        }
+      }
     }
     if(bgL.isEmpty()){ bgL << "default"; } //always fall back on the default
   //Determine if the background needs to be changed

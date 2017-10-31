@@ -294,7 +294,7 @@ void LSession::launchStartupApps(){
     qDebug() << " - - Screen Brightness:" << QString::number(tmp)+"%";
   }
   //QProcess::startDetached("nice lumina-open -autostart-apps");
-  ExternalProcess::launch("nice lumina-open -autostart-apps");
+  ExternalProcess::launch("lumina-open", QStringList() << "-autostart-apps", false);
 
   //Re-load the screen brightness and volume settings from the previous session
   // Wait until after the XDG-autostart functions, since the audio system might be started that way
@@ -589,7 +589,7 @@ void LSession::SessionEnding(){
 //===============
 void LSession::LaunchApplication(QString cmd){
   //LSession::setOverrideCursor(QCursor(Qt::BusyCursor));
-  ExternalProcess::launch(cmd);
+  ExternalProcess::launch(cmd, QStringList(), true);
   //QProcess::startDetached(cmd);
 }
 
@@ -690,7 +690,7 @@ void LSession::WindowPropertyEvent(){
   if(RunningApps.length() < newapps.length()){
     //New Window found
     //qDebug() << "New window found";
-    LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
+    //LSession::restoreOverrideCursor(); //restore the mouse cursor back to normal (new window opened?)
     //Perform sanity checks on any new window geometries
     for(int i=0; i<newapps.length() && !TrayStopping; i++){
       if(!RunningApps.contains(newapps[i])){
@@ -842,7 +842,7 @@ void LSession::attachTrayWindow(WId win){
   if(RunningTrayApps.contains(win)){ return; } //already managed
   qDebug() << "Session Tray: Window Added";
   RunningTrayApps << win;
-  LSession::restoreOverrideCursor();
+  //LSession::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Tray List Changed"; }
   emit TrayListChanged();
 }
