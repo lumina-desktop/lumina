@@ -509,8 +509,11 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
     //Lumina 1.3.4 - Migrate theme settings from old format to the new theme engine format
     QString themefile = QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/lthemeengine.conf";
     if(!QFile::exists(themefile)){
+      QDir dir;
+      dir.mkpath(themefile.section("/",0,-2)); //make sure the main directory exists first
       //Need to migrate theme settings from the old location to the new one
-      QSettings newtheme(themefile);
+      QSettings newtheme(themefile, QSettings::NativeFormat);
+      qDebug() << "Migrating Theme settings:" << newtheme.fileName();
       QStringList oldtheme = LUtils::readFile( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg" );
       //Find the system install location for the theme engine for use later
       QString enginedir = LOS::LuminaShare()+"/../lthemeengine/";
