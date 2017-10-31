@@ -505,6 +505,40 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
     }
     LUtils::writeFile(dset, DS, true);
   }
+  if(oldversion<1003004){
+    //Lumina 1.3.4 - Migrate theme settings from old format to the new theme engine format
+    QString themefile = QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/lthemeengine.conf";
+    if(!QFile::exists(themefile)){
+      //Need to migrate theme settings from the old location to the new one
+      QSettings newtheme(themefile);
+      QStringList oldtheme = LUtils::readFile( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg" );
+      //Find the system install location for the theme engine for use later
+      QString enginedir = LOS::LuminaShare()+"/../lthemeengine/";
+      //Find/match the icon theme
+      QString tmp = oldtheme.filter("ICONTHEME=").join("\n").section("=",1,-1).section("\n",0,0).simplified();
+      if(tmp.isEmpty()){ tmp = "material-design-light"; } //unknown Icon theme - use the default "light" version
+      newtheme.setValue("Appearance/icon_theme",tmp);
+      //Quick detect/adjust of the tone of the color theme based on the icons/colors (no 1-to-1 color theme matching between systems)
+      bool isdarktheme = tmp.contains("dark");
+      isdarktheme = isdarktheme || oldtheme.filter("COLORFILE=").join("\n").section("=",1,-1).section("\n",0,0).contains("DarkGlass");
+      //Quick adjust for the material-design icon theme to make it match the current dark/light theme
+      if(tmp.contains("material-design")){
+        newtheme.setValue("Appearance/icon_theme", QString("material-design-")+ (isdarktheme ? "dark" : "light") );
+      }
+      if(isdarktheme){
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/darker.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/DarkGlass.qss");
+      }else{
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/airy.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/Glass.qss");
+      }
+      newtheme.setValue("Appearance/style", "Fusion");
+      newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss");
+      newtheme.sync(); //flush this to file right now
+    } //end check for theme file existance
+  }
 
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
