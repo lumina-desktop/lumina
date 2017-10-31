@@ -73,7 +73,7 @@ private:
 	Ui::DirWidget *ui;
 	BrowserWidget *BW, *RCBW; //Main BrowserWidget and right-column browser widget
 	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
-	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
+    QString normalbasedir, snapbasedir, snaprelpath, rootfmdir; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
   QSettings *settings;
 	bool canmodify;
@@ -129,6 +129,7 @@ private slots:
 	void fileCheckSums();
 	void fileProperties();
 	void openTerminal();
+    void openRootFM();
 
 
 	//Browser Functions
