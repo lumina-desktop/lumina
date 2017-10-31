@@ -19,7 +19,7 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
   if(appname!="lumina-desktop"){ cTrans = LUtils::LoadTranslation(this, appname); }//save the translator for later
   //Initialize a couple convenience internal variables
   cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
-  QString username = QString(getlogin());
+  QString username = QString(getuid());
   //For locking the process use the official process name - not the user input (no masking)
   appname = this->applicationName();
   cfile = cfile.arg( username, appname, QString::number(QX11Info::appScreen()) );
