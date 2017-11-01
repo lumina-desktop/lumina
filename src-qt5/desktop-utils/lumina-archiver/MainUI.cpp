@@ -91,24 +91,18 @@ void MainUI::LoadArguments(QStringList args){
   //Now go through and do any actions as needed
   ui->label_progress->setText(tr("Opening Archive..."));
   if(action==1){
-    qDebug() << "blah";
+    //qDebug() << "blah";
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
     connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }else if(action==2){
     aaFileList.clear();
     for(int j=1; j<files.length(); j++){ aaFileList << files[j]; }
+    qDebug() << "AA Files:" << aaFileList;
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoArchiveFiles()) );
     connect(BACKEND, SIGNAL(ArchivalSuccessful()), delayClose, SLOT(start()) );
-  }else if(action==3){
-    sxList.clear();
-    for(int j=0; j<files.length(); j++){ sxList << files[j]; }
-    for(int k=0; k<sxList.length(); k++){
-    if(k==0){ sxFile = sxList[k]; }
-    if(k==1){ sxPath = sxList[k]; }
-    }
-    qDebug() << "sxList" << sxList;
-    qDebug() << "sxFile" << sxFile;
-    qDebug() << "sxPath" << sxPath;
+  }else if(action==3 && files.length()==2){
+    sxFile = files[0];
+    sxPath = files[1];
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(simpleExtractFiles()) );
     connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }
