@@ -896,7 +896,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
     }
     //Now load all the icon theme dependencies in order (Theme1 -> Theme2 -> Theme3 -> Fallback)
-    
+
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
     QDir::setSearchPaths("default", oxy);
@@ -931,7 +931,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       //simple PNG image - load directly into the QIcon structure
       ico.addFile(srch[i]+":"+iconName+".png");
     }
-    
+
   }
   //If still no icon found, look for any image format in the "pixmaps" directory
   if(ico.isNull()){
@@ -951,13 +951,13 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
 	  break;
 	}
       }
-      
+
     }
   }
   //Use the fallback icon if necessary
   if(ico.isNull() ){
     if(!fallback.isEmpty()){ ico = LXDG::findIcon(fallback,""); }
-    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){ 
+    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){
       //mimetype - try to use the generic type icon
       ico = LXDG::findIcon(iconName.section("-x-",0,0)+"-x-generic", "");
     }
@@ -974,7 +974,7 @@ QStringList LXDG::getChildIconDirs(QString parent){
   QDir D(parent);
   QStringList out;
   QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){ 
+  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){
     //Need to sort these directories by image size
     //qDebug() << " - Parent:" << parent << "Dirs:" << dirs;
     for(int i=0; i<dirs.length(); i++){
@@ -1022,7 +1022,7 @@ QStringList LXDG::systemMimeDirs(){
   QStringList out;
   for(int i=0; i<appDirs.length(); i++){
     if( QFile::exists(appDirs[i]+"/mime") ){
-      out << appDirs[i]+"/mime";	    
+      out << appDirs[i]+"/mime";
     }
   }
   return out;
@@ -1033,7 +1033,7 @@ QIcon LXDG::findMimeIcon(QString extension){
   QString mime = LXDG::findAppMimeForFile(extension);
   if(mime.isEmpty()){ mime = LXDG::findAppMimeForFile(extension.toLower()); }
   mime.replace("/","-"); //translate to icon mime name
-  if(!mime.isEmpty()){ ico = LXDG::findIcon(mime, "unknown");} //use the "unknown" mimetype icon as fallback	
+  if(!mime.isEmpty()){ ico = LXDG::findIcon(mime, "unknown");} //use the "unknown" mimetype icon as fallback
   if(ico.isNull()){ ico = LXDG::findIcon("unknown",""); } //just in case
   return ico;
 }
@@ -1055,8 +1055,8 @@ while(mimes.isEmpty()){
     return extension;
   }
   //Look for globs at the end of the filename
-  if(!extension.isEmpty()){ 
-    mimes = mimefull.filter(":*."+extension); 
+  if(!extension.isEmpty()){
+    mimes = mimefull.filter(":*."+extension);
     //If nothing found, try a case-insensitive search
     if(mimes.isEmpty()){ mimes = mimefull.filter(":*."+extension, Qt::CaseInsensitive); }
     //Now ensure that the filter was accurate (*.<extention>.<something> will still be caught)
@@ -1067,7 +1067,7 @@ while(mimes.isEmpty()){
     }
   }
   //Look for globs at the start of the filename
-  if(mimes.isEmpty()){ 
+  if(mimes.isEmpty()){
     mimes = mimefull.filter(":"+filename.left(2)); //look for the first 2 characters initially
 	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
     //Now ensure that the filter was accurate
