@@ -15,15 +15,13 @@
 #include <LUtils.h>
 #include <LuminaOS.h>
 
-//LFileInfo INFO = LFileInfo("");
-
 MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer form
   canwrite = false;
   terminate_thread = false;
+  INFO = new LFileInfo();
   UpdateIcons(); //Set all the icons in the dialog
   SetupConnections();
-  INFO = 0;
 }
 
 MainUI::~MainUI(){
@@ -80,7 +78,7 @@ void MainUI::LoadFile(QString path, QString type){
     else{ ftype = INFO->suffix().toUpper(); }
     if(INFO->isHidden()){ ftype = QString(tr("Hidden %1")).arg(type); }
     ui->label_file_type->setText(ftype);
-    
+
     //Now load the icon for the file
     if(INFO->isImage()){
       QPixmap pix(INFO->absoluteFilePath());
@@ -159,18 +157,20 @@ void MainUI::LoadFile(QString path, QString type){
 }
 
 void MainUI::UpdateIcons(){
-  this->setWindowIcon(LXDG::findIcon("document-preview","unknown"));
-  ui->push_close->setIcon( LXDG::findIcon("dialog-close","") );
-  ui->push_save->setIcon( LXDG::findIcon("document-save","") );
-  ui->tool_xdg_getCommand->setIcon( LXDG::findIcon("edit-find-page","") );
-  ui->tool_xdg_getDir->setIcon( LXDG::findIcon("document-open","") );
+
 }
 
 //==============
 //     PRIVATE
 //==============
 void MainUI::ReloadAppIcon(){
-  ui->push_xdg_getIcon->setIcon( LXDG::findIcon(ui->push_xdg_getIcon->whatsThis(),"") );
+  //qDebug() << "Reload App Icon:";
+  ui->label_xdg_icon->setPixmap( LXDG::findIcon(ui->line_xdg_icon->text(),"").pixmap(64,64) );
+  //qDebug() << "Check Desktop File entry";
+  if(INFO->iconfile()!=ui->line_xdg_icon->text()){
+    xdgvaluechanged();
+  }
+  //qDebug() << "Done with app icon";
 }
 
 void MainUI::GetDirSize(const QString dirname) const {
@@ -225,6 +225,7 @@ void MainUI::GetDirSize(const QString dirname) const {
 void MainUI::SetupConnections(){
   connect(ui->line_xdg_command, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
   connect(ui->line_xdg_comment, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->line_xdg_icon, SIGNAL(textChanged(QString)), this, SLOT(ReloadAppIcon()) );
   connect(ui->tool_xdg_getCommand, SIGNAL(clicked()), this, SLOT(getXdgCommand()) );
   connect(ui->line_xdg_name, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
   connect(ui->line_xdg_wdir, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
@@ -262,7 +263,7 @@ void MainUI::on_push_save_clicked(){
   XDG->name = ui->line_xdg_name->text();
   XDG->genericName = ui->line_xdg_name->text().toLower();
   XDG->comment = ui->line_xdg_comment->text();
-  XDG->icon = ui->push_xdg_getIcon->whatsThis();
+  XDG->icon = ui->line_xdg_icon->text();
   //Now do the type-specific fields
   if(XDG->type == XDGDesktop::APP){
     XDG->exec = ui->line_xdg_command->text();
@@ -321,14 +322,15 @@ void MainUI::on_push_xdg_getIcon_clicked(){
   for(int i=0; i<ext.length(); i++){ ext[i].prepend("*."); } //turn them into valid filters
   QString file = QFileDialog::getOpenFileName(this, tr("Select an icon"), dir ,QString(tr("Images (%1);; All Files (*)")).arg(ext.join(" ")) );
   if(file.isEmpty()){ return; } //cancelled
-  ui->push_xdg_getIcon->setWhatsThis(file);
+  ui->line_xdg_icon->setText(file);
   ReloadAppIcon();
   xdgvaluechanged();
 }
 
 //XDG Value Changed
 void MainUI::xdgvaluechanged(){
-  if(INFO!=0 && (INFO->isDesktopFile() || INFO->filePath().isEmpty() ) ){
+  //qDebug() << "xdgvaluechanged";
+  if( INFO->isDesktopFile() || INFO->filePath().isEmpty()  ){
     ui->push_save->setVisible(true);
     //Compare the current UI values to the file values
     ui->push_save->setEnabled(canwrite); //assume changed at this point

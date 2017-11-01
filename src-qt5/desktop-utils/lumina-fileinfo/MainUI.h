@@ -33,18 +33,17 @@ public:
 
 public slots:
 	void UpdateIcons();
-
+	void ReloadAppIcon();
 private:
 	Ui::MainUI *ui;
 	LFileInfo *INFO;
-  LVideoSurface *surface;
-  QMediaPlayer *player;
-  bool flag;
-  QElapsedTimer timer;
+	LVideoSurface *surface;
+	QMediaPlayer *player;
+	bool flag;
+	QElapsedTimer timer;
 
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task
-	void ReloadAppIcon();
 	void GetDirSize(const QString dirname) const; //function to get folder size
 
 signals:
