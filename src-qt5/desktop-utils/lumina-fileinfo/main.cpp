@@ -20,26 +20,17 @@ int main(int argc, char ** argv)
   QString flag = "";
   for(int i=1; i<argc; i++){
     QString tmp(argv[i]);
-    if( tmp=="-application" ){ flag = "APP"; }
-    else if( tmp=="-link" ){ flag = "APP"; }
-    else{ path = QString(argv[i]); break; }
+    if( tmp=="--new-application" ){ flag = "APP"; }
+    else if( tmp=="--new-link" ){ flag = "LINK"; }
+    else if(!tmp.startsWith("-")){ path = QString(argv[i]); break; }
   }
   //Check the input variables
   // - path
   if(!path.isEmpty()){ path = LUtils::PathToAbsolute(path); }
-
-  if(!path.isEmpty() || !flag.isEmpty()){
+  if(path.isEmpty() && flag.isEmpty()){ flag = "APP"; }
     MainUI w;
     w.LoadFile(path, flag);
     w.show();
     int retCode = a.exec();
     return retCode;
-  }else{
-    //Show an error text and exit
-    qDebug() << "ERROR: Invalid input arguments";
-    qDebug() << "Usage: \"lumina-fileinfo [-application | -link] [file]";
-    return 1;
-  }
-
-
 }
