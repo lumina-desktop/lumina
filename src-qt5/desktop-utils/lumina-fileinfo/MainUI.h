@@ -18,6 +18,7 @@
 #include <LVideoSurface.h>
 #include <LVideoLabel.h>
 #include <QElapsedTimer>
+#include <QFuture>
 
 #include <LuminaXDG.h>
 
@@ -44,9 +45,12 @@ private:
 	QMediaPlayer *player;
 	bool flag;
 	QElapsedTimer timer;
+	QFuture<void> sizeThread;
 
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task
+	void stopDirSize();
+
 	void GetDirSize(const QString dirname) const; //function to get folder size
 
 	void SyncFileInfo();
@@ -54,6 +58,7 @@ private:
 	void syncXdgStruct(XDGDesktop*);
 
 	bool saveFile(QString path);
+	QString findOpenDirFile(bool isdir = false);
 
 signals:
 	void folder_size_changed(quint64 size, quint64 files, quint64 folders, bool finished) const; //Signal for updating the folder size asynchronously
@@ -66,16 +71,20 @@ private slots:
 	//UI Buttons
 	void closeApplication();
 	void save_clicked();
+	void save_as_local_clicked();
+	void save_as_register_clicked();
+	void open_dir_clicked();
+	void open_file_clicked();
 	void getXdgCommand(QString prev = "");
-	//void on_tool_xdg_getCommand_clicked(QString prev = "");
 	void on_tool_xdg_getDir_clicked();
 	void on_push_xdg_getIcon_clicked();
 
 	//XDG Value Changed
+	bool checkXDGValidity();
 	void xdgvaluechanged();
 
-    //Folder size
-    void refresh_folder_size(quint64 size, quint64 files, quint64 folders, bool finished); //Slot for updating the folder size asynchronously
+	//Folder size
+	void refresh_folder_size(quint64 size, quint64 files, quint64 folders, bool finished); //Slot for updating the folder size asynchronously
 };
 
 #endif
