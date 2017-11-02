@@ -61,8 +61,10 @@ QStringList LOS::ExternalDevicePaths(){
   }
   //Also add info about anything in the "/media" directory
   QDir media("/media");
-  QFileInfoList list = media.entryInfoList(QDir::NoDotAndDotDot, QDir::Type | QDir::Name);
+  QFileInfoList list = media.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Type | QDir::Name);
+  //qDebug() << "Media files found:" << list.length();
   for(int i=0; i<list.length(); i++){
+    //qDebug() << "Found media entry:" << list[i].fileName();
     if(list[i].isDir()){
       devs << "UNKNOWN::::directory::::/media/"+list[i].fileName();
     }else if(list[i].fileName().endsWith(".desktop")){
