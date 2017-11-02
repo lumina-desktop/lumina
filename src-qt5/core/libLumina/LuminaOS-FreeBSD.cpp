@@ -66,7 +66,7 @@ QStringList LOS::ExternalDevicePaths(){
   for(int i=0; i<list.length(); i++){
     //qDebug() << "Found media entry:" << list[i].fileName();
     if(list[i].isDir()){
-      devs << "UNKNOWN::::directory::::/media/"+list[i].fileName();
+      devs << "UNKNOWN::::::::/media/"+list[i].fileName();
     }else if(list[i].fileName().endsWith(".desktop")){
       QString type = list[i].fileName().section(".desktop",0,-2);
       //Determine the type of hardware device based on the dev node
@@ -75,7 +75,7 @@ QStringList LOS::ExternalDevicePaths(){
       else if(type.startsWith("mmsd")){ type = "SDCARD"; }
       else if(type.startsWith("cd")||type.startsWith("acd")){ type="DVD"; }
       else{ type = "UNKNOWN"; }
-      devs << type+"::::unknown::::/media/"+list[i].fileName();
+      devs << type+"::::::::/media/"+list[i].fileName();
     }
   }
   return devs;
