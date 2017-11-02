@@ -89,7 +89,7 @@ signals:
 	void contextMenuRequested();
 	void DataDropped(QString, QStringList);
 	void hasFocus(QString); //ID output
-  void stopLoop();
+	void stopLoop();
 
 	//Internal signal
 	void dirChange(QString, bool); //current dir path, force

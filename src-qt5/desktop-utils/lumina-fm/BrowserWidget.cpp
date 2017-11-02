@@ -95,6 +95,8 @@ void BrowserWidget::showDetails(bool show){
     connect(listWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("",true); }
   }
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   //qDebug() << "  Done making widget";
 }
 
@@ -291,6 +293,8 @@ void BrowserWidget::itemRemoved(QString item){
 }
 
 void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   //qDebug() << "Item Data Available:" << info->fileName();
   int num = 0;
   if(listWidget!=0){
@@ -346,7 +350,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
-      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) { 
+      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) {
         it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
       }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()) {
         it = new CQTreeWidgetItem(treeWidget);

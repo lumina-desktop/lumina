@@ -477,7 +477,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
-  connect(RCBW, SIGNAL(dirChange(QString)), this, SLOT(currentDirectoryChanged()) );
+  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
   connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(RCBW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(RCBW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -488,6 +488,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   RCBW->showDetails(BW->hasDetails());
   RCBW->showHiddenFiles( BW->hasHiddenFiles());
   RCBW->setThumbnailSize( BW->thumbnailSize());
+  RCBW->showThumbnails( BW->hasThumbnails());
   RCBW->changeDirectory( BW->currentDirectory());
 }
 

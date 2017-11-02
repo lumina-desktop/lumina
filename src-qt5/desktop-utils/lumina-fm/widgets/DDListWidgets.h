@@ -23,6 +23,7 @@
 #include <QMouseEvent>
 #include <QUrl>
 #include <QDir>
+#include <QApplication>
 
 #include <LUtils.h>
 
@@ -144,7 +145,7 @@ protected:
 	}
 	/*void mouseMoveEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
-	  else{ QListWidget::mouseMoveEvent(ev); } //pass it along to the widget	
+	  else{ QListWidget::mouseMoveEvent(ev); } //pass it along to the widget
 	}*/
 };
 
@@ -158,6 +159,7 @@ public:
 	  //Drag and Drop Properties
 	  this->setDragDropMode(QAbstractItemView::DragDrop);
 	  this->setDefaultDropAction(Qt::MoveAction); //prevent any built-in Qt actions - the class handles it
+	  this->setDropIndicatorShown(true);
 	  //Other custom properties necessary for the FM
 	  this->setFocusPolicy(Qt::StrongFocus);
 	  this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -192,15 +194,14 @@ protected:
 	  //Create the drag structure
 	  QDrag *drag = new QDrag(this);
 	  drag->setMimeData(mime);
-	  /*if(info.first().section("::::",0,0)=="cut"){
-	    drag->exec(act | Qt::MoveAction);
-	  }else{*/
+	  //qDebug() << "Start Drag:" << urilist;
 	    drag->exec(act | Qt::CopyAction| Qt::MoveAction);
-	  //}
+          //qDebug() << " - Drag Finished";
 	}
 
 	void dragEnterEvent(QDragEnterEvent *ev){
-	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasFormat(MIME);
+	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
+	  QTreeWidget::dragEnterEvent(ev);
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    ev->acceptProposedAction(); //allow this to be dropped here
 	  }else{
@@ -209,18 +210,25 @@ protected:
 	}
 
 	void dragMoveEvent(QDragMoveEvent *ev){
+	  //qDebug() << "Drag Move Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
+	  //QTreeWidget::dragMoveEvent(ev);
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    //Change the drop type depending on the data/dir
 	    QString home = QDir::homePath();
-	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); }
-	    else{ ev->setDropAction(Qt::CopyAction); }
-	    ev->accept(); //allow this to be dropped here
+	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); this->setCursor(Qt::DragMoveCursor); }
+	    else{ ev->setDropAction(Qt::CopyAction); this->setCursor(Qt::DragCopyCursor);}
+	    ev->acceptProposedAction(); //allow this to be dropped here
+	    //this->setCursor(Qt::CrossCursor);
 	  }else{
+	    this->setCursor(Qt::ForbiddenCursor);
 	    ev->ignore();
 	  }
+	  this->update();
+	  //QTreeWidget::dragMoveEvent(ev);
 	}
 
 	void dropEvent(QDropEvent *ev){
+          //qDebug() << "Drop Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
 	  if(this->whatsThis().isEmpty() || !ev->mimeData()->hasUrls() ){ ev->ignore(); return; } //not supported
 	  ev->accept(); //handled here
 	  QString dirpath = this->whatsThis();
