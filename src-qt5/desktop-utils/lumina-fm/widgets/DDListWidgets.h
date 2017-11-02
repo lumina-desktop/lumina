@@ -160,6 +160,7 @@ public:
 	  this->setDragDropMode(QAbstractItemView::DragDrop);
 	  this->setDefaultDropAction(Qt::MoveAction); //prevent any built-in Qt actions - the class handles it
 	  this->setDropIndicatorShown(true);
+	  this->setAcceptDrops(true);
 	  //Other custom properties necessary for the FM
 	  this->setFocusPolicy(Qt::StrongFocus);
 	  this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -201,7 +202,7 @@ protected:
 
 	void dragEnterEvent(QDragEnterEvent *ev){
 	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
-	  QTreeWidget::dragEnterEvent(ev);
+	  //QTreeWidget::dragEnterEvent(ev);
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    ev->acceptProposedAction(); //allow this to be dropped here
 	  }else{
@@ -218,12 +219,14 @@ protected:
 	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); this->setCursor(Qt::DragMoveCursor); }
 	    else{ ev->setDropAction(Qt::CopyAction); this->setCursor(Qt::DragCopyCursor);}
 	    ev->acceptProposedAction(); //allow this to be dropped here
-	    //this->setCursor(Qt::CrossCursor);
+            //this->setAcceptDrops(true);
 	  }else{
+            //this->setAcceptDrops(false);
 	    this->setCursor(Qt::ForbiddenCursor);
 	    ev->ignore();
 	  }
-	  this->update();
+	  //this->setDropIndicatorShown(true);
+	  //this->update();
 	  //QTreeWidget::dragMoveEvent(ev);
 	}
 
