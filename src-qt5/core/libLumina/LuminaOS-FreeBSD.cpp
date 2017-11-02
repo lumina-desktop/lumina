@@ -27,12 +27,12 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
 //OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
-QStringList LOS::RSSFeeds(){ 
+QStringList LOS::RSSFeeds(){
   QStringList feeds;
     feeds << "FreeBSD News Feed::::https://www.freebsd.org/news/rss.xml";
     feeds << "TrueOS News Feed::::http://www.trueos.org/?feed=rss2";
   return feeds;
- } 
+ }
 
 // ==== ExternalDevicePaths() ====
 QStringList LOS::ExternalDevicePaths(){
@@ -57,6 +57,23 @@ QStringList LOS::ExternalDevicePaths(){
       //invalid device - remove it from the list
       devs.removeAt(i);
       i--;
+    }
+  }
+  //Also add info about anything in the "/media" directory
+  QDir media("/media");
+  QFileInfoList list = media.entryInfoList(QDir::NoDotAndDotDot, QDir::Type | QDir::Name);
+  for(int i=0; i<list.length(); i++){
+    if(list[i].isDir()){
+      devs << "UNKNOWN::::directory::::/media/"+list[i].fileName();
+    }else if(list[i].fileName().endsWith(".desktop")){
+      QString type = list[i].fileName().section(".desktop",0,-2);
+      //Determine the type of hardware device based on the dev node
+      if(type.startsWith("da")){ type = "USB"; }
+      else if(type.startsWith("ada")){ type = "HDRIVE"; }
+      else if(type.startsWith("mmsd")){ type = "SDCARD"; }
+      else if(type.startsWith("cd")||type.startsWith("acd")){ type="DVD"; }
+      else{ type = "UNKNOWN"; }
+      devs << type+"::::unknown::::/media/"+list[i].fileName();
     }
   }
   return devs;
