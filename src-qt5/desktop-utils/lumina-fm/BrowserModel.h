@@ -60,6 +60,9 @@ public:
 	LFileInfo* fileInfo(QString name);
 	QString currentDirectory();
 
+	void setShowHidden(bool showHidden);
+	bool showHidden
+
 public slots:
 	void loadDirectory(QString dir="");
 	void loadItem(QString item);
@@ -82,4 +85,3 @@ signals:
 };
 
 #endif
-
