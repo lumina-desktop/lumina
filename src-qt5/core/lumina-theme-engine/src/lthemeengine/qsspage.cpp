@@ -31,6 +31,7 @@ QSSPage::QSSPage(QWidget *parent, bool desktop) : TabPage(parent), m_ui(new Ui::
   m_ui->removeButton->setIcon(QIcon::fromTheme("edit-delete"));
   m_ui->tool_enable->setEnabled(false);
   m_ui->tool_disable->setEnabled(false);
+  m_ui->copyButton->setEnabled(false);
 }
 
 QSSPage::~QSSPage(){
@@ -56,6 +57,7 @@ void QSSPage::on_qssListWidget_currentItemChanged(QListWidgetItem *current, QLis
   }
   //qDebug() << "Got Current Item Changed";
   m_ui->tool_disable->setEnabled(current!=0);
+  m_ui->copyButton->setEnabled(current!=0);
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
     m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -76,6 +78,7 @@ void QSSPage::on_list_disabled_currentItemChanged(QListWidgetItem *current, QLis
   }
   //qDebug() << "Got Current Item Changed";
   m_ui->tool_enable->setEnabled(current!=0);
+  m_ui->copyButton->setEnabled(current!=0);
   if(current){
     m_ui->editButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
     m_ui->removeButton->setEnabled(current->data(QSS_WRITABLE_ROLE).toBool());
@@ -125,6 +128,36 @@ void QSSPage::on_editButton_clicked(){
     QSSEditorDialog dialog(item->data(QSS_FULL_PATH_ROLE).toString(), this);
     dialog.exec();
     }
+}
+
+void QSSPage::on_copyButton_clicked(){
+ QListWidgetItem *sel = currentSelection();
+  if(sel==0){ return; }
+ QString name = QInputDialog::getText(this, tr("Enter Style Sheet Name"), tr("File name:"), QLineEdit::Normal, sel->text().section(".qss",0,0)+"_copy");
+  if(name.isEmpty()){ return; }
+  if(!name.endsWith(".qss", Qt::CaseInsensitive)){ name.append(".qss"); }
+  QString filePath;
+    if(desktop_qss){ filePath = lthemeengine::userDesktopStyleSheetPath() + name; }
+    else{ filePath = lthemeengine::userStyleSheetPath() + name; }
+  if(QFile::exists(filePath)){
+    QMessageBox::warning(this, tr("Error"), tr("The file \"%1\" already exists").arg(filePath));
+    return;
+    }
+  // Make sure the directory exists
+  QString dir = filePath.section("/",0,-2);
+  if(!QFile::exists(dir)){
+    QDir D(dir);
+    D.mkpath(dir);
+  }
+  //Copy the file over
+  QFile::copy(sel->data(QSS_FULL_PATH_ROLE).toString(), filePath);
+  //creating item
+  QFileInfo info(filePath);
+  QListWidgetItem *item = new QListWidgetItem(info.fileName(),  m_ui->list_disabled);
+  item->setToolTip(info.filePath());
+  item->setData(QSS_FULL_PATH_ROLE, info.filePath());
+  item->setData(QSS_WRITABLE_ROLE, info.isWritable());
+  m_ui->list_disabled->setCurrentRow(m_ui->list_disabled->count()-1);
 }
 
 void QSSPage::on_removeButton_clicked(){

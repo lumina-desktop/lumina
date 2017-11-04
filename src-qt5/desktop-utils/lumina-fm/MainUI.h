@@ -67,6 +67,7 @@ class MainUI : public QMainWindow{
 public:
 	MainUI();
 	~MainUI();
+    //bool rootmode;
 
 public slots:
 	void OpenDirs(QStringList);	 //also called from the main.cpp after initialization
@@ -175,6 +176,8 @@ private slots:
 	void DisplayStatusBar(QString);
 
 	void TrayJobsFinished();
+
+    void on_actionOpen_as_Root_triggered();
 
 signals:
 	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);

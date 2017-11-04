@@ -43,7 +43,7 @@ public:
 
 	//Load the default setup for the system
 	static void LoadSystemDefaults(bool skipOS = false);
-	static bool checkUserFiles(QString lastversion); //returns true if something changed
+	static bool checkUserFiles(QString lastversion, QString currentversion); //returns true if something changed
 	static int VersionStringToNumber(QString version); //convert the lumina version string to a number for comparisons
 
 	//Migrating desktop settings from one ID to another

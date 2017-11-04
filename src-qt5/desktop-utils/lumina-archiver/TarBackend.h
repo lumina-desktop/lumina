@@ -64,7 +64,7 @@ signals:
 	void ProcessStarting();
 	void ProgressUpdate(int, QString); //percentage, text
 	void ProcessFinished(bool, QString); //success, text
-    //void ArchivalSuccessful();
+	void ArchivalSuccessful();
 };
 
 #endif

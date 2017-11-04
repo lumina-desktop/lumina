@@ -13,15 +13,20 @@
 #ifndef _LUMINA_FILE_INFO_MAIN_UI_H
 #define _LUMINA_FILE_INFO_MAIN_UI_H
 
-#include <QDialog>
+#include <QMainWindow>
+#include <QMediaPlayer>
+#include <LVideoSurface.h>
+#include <LVideoLabel.h>
+#include <QElapsedTimer>
+#include <QFuture>
 
 #include <LuminaXDG.h>
 
 namespace Ui{
-	class MainUI;
+  class MainUI;
 };
 
-class MainUI : public QDialog{
+class MainUI : public QMainWindow{
 	Q_OBJECT
 public:
 	MainUI();
@@ -31,36 +36,55 @@ public:
 
 public slots:
 	void UpdateIcons();
+	void ReloadAppIcon();
 
 private:
 	Ui::MainUI *ui;
 	LFileInfo *INFO;
+	LVideoSurface *surface;
+	QMediaPlayer *player;
+	bool flag;
+	QElapsedTimer timer;
+	QFuture<void> sizeThread;
 
 	bool canwrite;
 	bool terminate_thread; //flag for terminating the GetDirSize task
-	void ReloadAppIcon();
+	void stopDirSize();
+
 	void GetDirSize(const QString dirname) const; //function to get folder size
+
+	void SyncFileInfo();
+
+	void syncXdgStruct(XDGDesktop*);
+
+	bool saveFile(QString path);
+	QString findOpenDirFile(bool isdir = false);
 
 signals:
 	void folder_size_changed(quint64 size, quint64 files, quint64 folders, bool finished) const; //Signal for updating the folder size asynchronously
 
 private slots:
+	void SetupNewFile();
 	//Initialization functions
 	void SetupConnections();
 
 	//UI Buttons
-	void on_push_close_clicked();
-	void on_push_save_clicked();
+	void closeApplication();
+	void save_clicked();
+	void save_as_local_clicked();
+	void save_as_register_clicked();
+	void open_dir_clicked();
+	void open_file_clicked();
 	void getXdgCommand(QString prev = "");
-	//void on_tool_xdg_getCommand_clicked(QString prev = "");
 	void on_tool_xdg_getDir_clicked();
 	void on_push_xdg_getIcon_clicked();
 
 	//XDG Value Changed
+	bool checkXDGValidity();
 	void xdgvaluechanged();
 
-    //Folder size
-    void refresh_folder_size(quint64 size, quint64 files, quint64 folders, bool finished); //Slot for updating the folder size asynchronously
+	//Folder size
+	void refresh_folder_size(quint64 size, quint64 files, quint64 folders, bool finished); //Slot for updating the folder size asynchronously
 };
 
 #endif

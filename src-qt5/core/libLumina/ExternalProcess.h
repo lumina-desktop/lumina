@@ -15,6 +15,7 @@
 #include <QString>
 #include <QTimer>
 #include <QApplication>
+#include <QDebug>
 
 class ExternalProcess : public QProcess{
 	Q_OBJECT
@@ -23,18 +24,21 @@ private:
 
 private slots:
 	void resetCursor(){
+	  //qDebug() << "External Process: Reset Mouse Cursor =" << !cursorRestored;
 	  if(!cursorRestored){
 	    QApplication::restoreOverrideCursor();
 	    cursorRestored = true;
 	  }
 	}
 	void processStarting(){
+	  //qDebug() << "Starting External Process: Mouse Notification =" << !cursorRestored;
 	  if(!cursorRestored){
-	    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	    QTimer::singleShot(15000, this, SLOT(resetCursor()) );
+	    QApplication::setOverrideCursor( QCursor(Qt::BusyCursor) );
+	    QTimer::singleShot(3000, this, SLOT(resetCursor()) );
 	  }
 	}
 	void processFinished(){
+	   //qDebug() << "External Process Finished: Reset Mouse Cursor =" << !cursorRestored;
 	  if(!cursorRestored){
 	    QApplication::restoreOverrideCursor();
 	    cursorRestored = true;
@@ -53,6 +57,7 @@ public:
 	    this->setStandardOutputFile(logfile);
 	  }
 	  //Setup the connection for automatic cleanup
+	  connect(this, SIGNAL(started()), this, SLOT(processStarting()) );
 	  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished()) );
 	}
 
@@ -62,7 +67,7 @@ public:
 	  }*/
 	}
 
-	static void launch(QString program, QStringList args = QStringList(), bool manageCursors = false){
+	static void launch(QString program, QStringList args = QStringList(), bool manageCursors = true){
 	  //Quick launch of a process with logging disabled and automatic cleanup
 	  ExternalProcess *tmp = new ExternalProcess("", manageCursors);
 	  if(args.isEmpty()){ tmp->start(program); }

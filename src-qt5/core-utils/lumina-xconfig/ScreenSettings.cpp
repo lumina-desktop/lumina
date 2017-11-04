@@ -13,6 +13,7 @@
 void RRSettings::ApplyPrevious(){
   QList<ScreenInfo> screens;
   QSettings set("lumina-desktop","lumina-xconfig");
+  if(set.allKeys().isEmpty()){ return; }
   QString profile = set.value("default_profile","").toString();
   if(profile.isEmpty() || !savedProfiles().contains(profile) ){ screens = PreviousSettings(); }
   else{ screens = PreviousSettings(profile); }
@@ -167,6 +168,13 @@ bool RRSettings::SaveScreens(QList<ScreenInfo> screens, QString profile){
 
 //Apply screen configuration
 void RRSettings::Apply(QList<ScreenInfo> screens){
+  //Verify that there is at least 1 active/enabled monitor first
+  bool foundactive = false;
+  for(int i=0; i<screens.length() && !foundactive; i++){
+    if(screens[i].isactive){ foundactive = (screens[i].applyChange!=1); } //make sure we are not turning it off
+    else{ foundactive = (screens[i].applyChange==2); }
+  }
+  if(!foundactive){ return; } //never disable all screens
   //Read all the settings and create the xrandr options to maintain these settings
   QStringList opts;
   //qDebug() << "Apply:" << screens.length();

@@ -30,6 +30,9 @@
 class LUtils{
 public:
 
+	//Run an external command and return output & exit code
+     static QString runCommand(bool &success, QString command, QStringList arguments = QStringList(), QString workdir = "", QStringList env = QStringList());
+
 	//Run an external command and return the exit code
 	static int runCmd(QString cmd, QStringList args = QStringList());
 	//Run an external command and return any text output (one line per entry)

@@ -52,8 +52,8 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->emit WorkspaceChanged();
 		}else if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Update the status/list of all running windows
-		  session->WindowPropertyEvent();	
-			
+		  session->WindowPropertyEvent();
+
 		//window-specific property change
 		}else if( WinNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Ping only that window
@@ -61,7 +61,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->WindowPropertyEvent();
 	        }
 		break;
-//==============================	    
+//==============================
 	    case XCB_CLIENT_MESSAGE:
 		//qDebug() << "Client Message Event";
 		//qDebug() << " - Root Window:" << QX11Info::appRootWindow();
@@ -72,7 +72,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		      session->SysTrayDockRequest( ((xcb_client_message_event_t*)ev)->data.data32[2] );
 		  }
 		  //Ignore the System Tray messages at the moment (let the WM handle it)
-		  
+
 		//window-specific property changes
 		/*}else if( ((xcb_client_message_event_t*)ev)->type == session->XCB->EWMH._NET_WM_STATE ){
 		  if( session->XCB->WindowIsMaximized( ((xcb_client_message_event_t*)ev)->window ) ){
@@ -86,22 +86,22 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->WindowPropertyEvent();
 	        }
 	        break;
-//==============================	    
+//==============================
 	    case XCB_DESTROY_NOTIFY:
 		//qDebug() << "Window Closed Event";
 		session->WindowClosedEvent( ( (xcb_destroy_notify_event_t*)ev )->window );
 	        break;
-//==============================	    
+//==============================
 	    case XCB_CONFIGURE_NOTIFY:
 		//qDebug() << "Configure Notify Event";
 		session->WindowConfigureEvent( ((xcb_configure_notify_event_t*)ev)->window );
 	        break;
-//==============================	    
+//==============================
 	    case XCB_SELECTION_CLEAR:
 		//qDebug() << "Selection Clear Event";
-		session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );  
+		session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );
 	        break;
-//==============================	    
+//==============================
 	    default:
 		if(TrayDmgFlag!=0){
 		  //if( (ev->response_type & ~0x80)==TrayDmgFlag){

@@ -8,21 +8,25 @@
 #include "MainUI.h"
 #include "ui_MainUI.h"
 
+#include <QVideoFrame>
 #include <QFileDialog>
 #include <QMessageBox>
 
 #include <LUtils.h>
 #include <LuminaOS.h>
 
-//LFileInfo INFO = LFileInfo("");
-
-MainUI::MainUI() : QDialog(), ui(new Ui::MainUI){
+MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this); //load the designer form
   canwrite = false;
   terminate_thread = false;
+  INFO = new LFileInfo();
   UpdateIcons(); //Set all the icons in the dialog
   SetupConnections();
-  INFO = 0;
+
+  //Disable buttons that are not working yet
+  //ui->actionOpen_File->setVisible(false);
+  //ui->actionOpen_Directory->setVisible(false);
+  //ui->menuSave_As->setEnabled(false);
 }
 
 MainUI::~MainUI(){
@@ -38,133 +42,38 @@ void MainUI::LoadFile(QString path, QString type){
   //Do the first file information tab
   qDebug() << "Load File:" << path << type;
   INFO = new LFileInfo(path);
-  if(INFO->exists()){ canwrite = INFO->isWritable(); }
-  else if(!INFO->filePath().isEmpty()){
-    //See if the containing directory can be written
-    //QFileInfo chk(INFO->absolutePath());
-    canwrite = (INFO->isDir() && INFO->isWritable());
-  }else{
-    canwrite = true; //no associated file yet
-  }
-  if(!INFO->exists() && !type.isEmpty()){
-    //Set the proper type flag on the shortcut
-    if(type=="APP"){ INFO->XDG()->type = XDGDesktop::APP; }
-    else if(type=="LINK"){ INFO->XDG()->type = XDGDesktop::LINK; }
-  }
   //First load the general file information
   if(!INFO->filePath().isEmpty()){
-    ui->label_file_name->setText( INFO->fileName() );
-    ui->label_file_mimetype->setText( INFO->mimetype() );
-    if(!INFO->isDir()){ ui->label_file_size->setText( LUtils::BytesToDisplaySize( INFO->size() ) ); }
-    else {
-      ui->label_file_size->setText(tr("---Calculating---"));
-      QtConcurrent::run(this, &MainUI::GetDirSize, INFO->absoluteFilePath());
-    }
-    ui->label_file_owner->setText(INFO->owner());
-    ui->label_file_group->setText(INFO->group());
-    ui->label_file_created->setText( INFO->created().toString(Qt::SystemLocaleLongDate) );
-    ui->label_file_modified->setText( INFO->lastModified().toString(Qt::SystemLocaleLongDate) );
-    //Get the file permissions
-    QString perms;
-    if(INFO->isReadable() && INFO->isWritable()){ perms = tr("Read/Write"); }
-    else if(INFO->isReadable()){ perms = tr("Read Only"); }
-    else if(INFO->isWritable()){ perms = tr("Write Only"); }
-    else{ perms = tr("No Access"); }
-    ui->label_file_perms->setText(perms);
-    //Now the special "type" for the file
-    QString ftype;
-    if(INFO->suffix().toLower()=="desktop"){ ftype = tr("XDG Shortcut"); }
-    else if(INFO->isDir()){ ftype = tr("Directory"); }
-    else if(INFO->isExecutable()){ ftype = tr("Binary"); }
-    else{ ftype = INFO->suffix().toUpper(); }
-    if(INFO->isHidden()){ ftype = QString(tr("Hidden %1")).arg(type); }
-    ui->label_file_type->setText(ftype);
-    //Now load the icon for the file
-    if(INFO->isImage()){
-      //qDebug() << "Set Image:";
-      QPixmap pix(INFO->absoluteFilePath());
-      ui->label_file_icon->setPixmap( pix.scaledToHeight(64) );
-      ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
-      //qDebug() << "  - done with image";
-    }else{
-      ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
-    }
-    //Now verify the tab is available in the widget
-    //qDebug() << "Check tab widget";
-    if(ui->tabWidget->indexOf(ui->tab_file)<0){
-      //qDebug() << "Add File Info Tab";
-      ui->tabWidget->addTab(ui->tab_file, tr("File Information"));
-    }
-    //qDebug() << "Done with Tab Check";
+    SyncFileInfo();
   }else{
-    if(ui->tabWidget->indexOf(ui->tab_file)>=0){
-      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_file) );
-    }
+    SetupNewFile();
   }
-  //Now load the special XDG desktop info
-  qDebug() << "Check XDG Info:" << type;
-  //qDebug() << INFO->isDesktopFile() << type;
-  if(INFO->isDesktopFile() || !type.isEmpty()){
-
-    if(INFO->XDG()->type == XDGDesktop::APP){
-      ui->line_xdg_command->setText(INFO->XDG()->exec);
-      ui->line_xdg_wdir->setText(INFO->XDG()->path);
-      ui->check_xdg_useTerminal->setChecked( INFO->XDG()->useTerminal );
-      ui->check_xdg_startupNotify->setChecked( INFO->XDG()->startupNotify );
-    }else if(INFO->XDG()->type==XDGDesktop::LINK){
-      //Hide the options that are unavailable for links
-      //Command  line (exec)
-      ui->line_xdg_command->setVisible(false);
-      ui->tool_xdg_getCommand->setVisible(false);
-      ui->lblCommand->setVisible(false);
-      //Options
-      ui->lblOptions->setVisible(false);
-      ui->check_xdg_useTerminal->setVisible(false);
-      ui->check_xdg_startupNotify->setVisible(false);
-      //Now load the variables for this type of shortcut
-      ui->lblWorkingDir->setText(tr("URL:"));
-      ui->line_xdg_wdir->setText( INFO->XDG()->url );
-      ui->tool_xdg_getDir->setVisible(false); //the dir selection button
-
-    }
-    ui->line_xdg_name->setText(INFO->XDG()->name);
-    ui->line_xdg_comment->setText(INFO->XDG()->comment);
-    ui->push_xdg_getIcon->setWhatsThis( INFO->XDG()->icon );
-    ReloadAppIcon();
-    ui->push_save->setVisible(true);
-    ui->push_save->setEnabled(false);
-    //Now ensure the xdg tab exists in the widget
-    if(ui->tabWidget->indexOf(ui->tab_deskedit)<0){
-      qDebug() << "Adding the deskedit tab";
-      ui->tabWidget->addTab(ui->tab_deskedit, tr("Edit Shortcut"));
-    }
-  }else{
-    xdgvaluechanged(); //just do the disables here
-    //Also remove the xdg tab
-    if(ui->tabWidget->indexOf(ui->tab_deskedit) >= 0){
-      qDebug() << "Removing the deskedit tab";
-      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_deskedit) );
-    }
-  }
-  //Setup the tab
-  if(type.isEmpty()){  ui->tabWidget->setCurrentIndex(0); }
-  else if(ui->tabWidget->count()>1){ ui->tabWidget->setCurrentIndex(1); }
-  qDebug() << "Done Loading File";
 }
 
 void MainUI::UpdateIcons(){
-  this->setWindowIcon(LXDG::findIcon("document-preview","unknown"));
-  ui->push_close->setIcon( LXDG::findIcon("dialog-close","") );
-  ui->push_save->setIcon( LXDG::findIcon("document-save","") );
-  ui->tool_xdg_getCommand->setIcon( LXDG::findIcon("edit-find-page","") );
-  ui->tool_xdg_getDir->setIcon( LXDG::findIcon("document-open","") );
+
 }
 
 //==============
 //     PRIVATE
 //==============
 void MainUI::ReloadAppIcon(){
-  ui->push_xdg_getIcon->setIcon( LXDG::findIcon(ui->push_xdg_getIcon->whatsThis(),"") );
+  //qDebug() << "Reload App Icon:";
+  ui->label_xdg_icon->setPixmap( LXDG::findIcon(ui->line_xdg_icon->text(),"").pixmap(64,64) );
+  //qDebug() << "Check Desktop File entry";
+  if(INFO->iconfile()!=ui->line_xdg_icon->text()){
+    xdgvaluechanged();
+  }
+  //qDebug() << "Done with app icon";
+}
+
+void MainUI::stopDirSize(){
+  if(sizeThread.isRunning()){
+    terminate_thread = true;
+    sizeThread.waitForFinished();
+    QApplication::processEvents(); //throw away any last signals waiting to be processed
+  }
+  terminate_thread = false;
 }
 
 void MainUI::GetDirSize(const QString dirname) const {
@@ -215,48 +124,139 @@ void MainUI::GetDirSize(const QString dirname) const {
   emit folder_size_changed(filesize, file_number, dir_number, true);
 }
 
-// Initialization procedures
-void MainUI::SetupConnections(){
-  connect(ui->line_xdg_command, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
-  connect(ui->line_xdg_comment, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
-  connect(ui->tool_xdg_getCommand, SIGNAL(clicked()), this, SLOT(getXdgCommand()) );
-  connect(ui->line_xdg_name, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
-  connect(ui->line_xdg_wdir, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
-  connect(ui->check_xdg_useTerminal, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
-  connect(ui->check_xdg_startupNotify, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
-  connect(this, SIGNAL(folder_size_changed(quint64, quint64, quint64, bool)), this, SLOT(refresh_folder_size(quint64, quint64, quint64, bool)));
+void MainUI::SyncFileInfo(){
+  qDebug() << "Sync File Info";
+  stopDirSize();
+  if(INFO->filePath().isEmpty()){ return; }
+  if(INFO->exists()){ canwrite = INFO->isWritable(); }
+  else{
+    //See if the containing directory can be written
+    QFileInfo chk(INFO->absolutePath());
+    canwrite = (chk.isDir() && chk.isWritable());
+  }
+    ui->label_file_name->setText( INFO->fileName() );
+    ui->label_file_mimetype->setText( INFO->mimetype() );
+    if(!INFO->isDir()){ ui->label_file_size->setText( LUtils::BytesToDisplaySize( INFO->size() ) ); }
+    else {
+      ui->label_file_size->setText(tr("---Calculating---"));
+      sizeThread = QtConcurrent::run(this, &MainUI::GetDirSize, INFO->absoluteFilePath());
+    }
+    ui->label_file_owner->setText(INFO->owner());
+    ui->label_file_group->setText(INFO->group());
+    ui->label_file_created->setText( INFO->created().toString(Qt::SystemLocaleLongDate) );
+    ui->label_file_modified->setText( INFO->lastModified().toString(Qt::SystemLocaleLongDate) );
+    //Get the file permissions
+    QString perms;
+    if(INFO->isReadable() && INFO->isWritable()){ perms = tr("Read/Write"); }
+    else if(INFO->isReadable()){ perms = tr("Read Only"); }
+    else if(INFO->isWritable()){ perms = tr("Write Only"); }
+    else{ perms = tr("No Access"); }
+    ui->label_file_perms->setText(perms);
+    //Now the special "type" for the file
+    QString ftype;
+    if(INFO->suffix().toLower()=="desktop"){ ftype = tr("XDG Shortcut"); }
+    else if(INFO->isDir()){ ftype = tr("Directory"); }
+    else if(INFO->isExecutable()){ ftype = tr("Binary"); }
+    else{ ftype = INFO->suffix().toUpper(); }
+    if(INFO->isHidden()){ ftype = QString(tr("Hidden %1")).arg(ftype); }
+    ui->label_file_type->setText(ftype);
+
+    //Now load the icon for the file
+    if(INFO->isImage()){
+      QPixmap pix(INFO->absoluteFilePath());
+      ui->label_file_icon->setPixmap(pix.scaledToHeight(64));
+      ui->label_file_size->setText( ui->label_file_size->text()+" ("+QString::number(pix.width())+" x "+QString::number(pix.height())+" px)" );
+    }else if(INFO->isVideo()){
+      ui->label_file_icon->hide();
+      LVideoLabel *mediaLabel = new LVideoLabel(INFO->absoluteFilePath(), true, ui->tab_file);
+      mediaLabel->setFixedSize(64,64);
+      ui->formLayout->replaceWidget(ui->label_file_icon, mediaLabel);
+    }else{
+      ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
+    }
+
+  //qDebug() << "Check XDG Info:"
+  //qDebug() << INFO->isDesktopFile() << type;
+  syncXdgStruct(INFO->XDG());
+  //Make sure the right tabs are available
+  if(ui->tabWidget->indexOf(ui->tab_file)<0){
+    //qDebug() << "Add File Info Tab";
+    ui->tabWidget->insertTab(0, ui->tab_file, tr("File Information"));
+  }
+  if(!INFO->isDesktopFile()){
+    if(ui->tabWidget->indexOf(ui->tab_deskedit)>=0){
+      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_deskedit) );
+    }
+  }else if(ui->tabWidget->indexOf(ui->tab_deskedit)<0){
+    ui->tabWidget->addTab( ui->tab_deskedit, tr("XDG Shortcut") );
+  }
+  ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_file) );
 }
 
-//UI Buttons
-void MainUI::on_push_close_clicked(){
-  terminate_thread = true;
-  if(ui->push_save->isEnabled()){
-    //Still have unsaved changes
-    //TO-DO - prompt for whether to save the changes
+void MainUI::SetupNewFile(){
+  //qDebug() << "Setup New File";
+  if(!INFO->filePath().isEmpty()){
+    INFO = new LFileInfo();
   }
-  this->close();
+  stopDirSize();
+  canwrite = true; //can always write a new file
+  syncXdgStruct(INFO->XDG());
+  //Make sure the right tabs are enabled
+  if(ui->tabWidget->indexOf(ui->tab_file)>=0){
+    ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_file) );
+  }
+  if(ui->tabWidget->indexOf(ui->tab_deskedit)<0){
+    //qDebug() << "Adding the deskedit tab";
+    ui->tabWidget->addTab(ui->tab_deskedit, tr("XDG Shortcut"));
+  }
+  ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_deskedit) );
 }
 
-void MainUI::on_push_save_clicked(){
-  //Save all the xdg values into the structure
-  if( (!INFO->isDesktopFile() && !INFO->filePath().isEmpty()) || !canwrite){ return; }
-  if(INFO->filePath().isEmpty()){
-    //Need to prompt for where to save the file and what to call it
-    QString appdir = QString(getenv("XDG_DATA_HOME"))+"/applications/";
-    if(!QFile::exists(appdir)){ QDir dir; dir.mkpath(appdir); }
-    QString filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), appdir, tr("Application Registrations (*.desktop)") );
-    if(filePath.isEmpty()){ return; }
-    if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
-    //Update the file paths in the data structure
-    INFO->setFile(filePath);
-    INFO->XDG()->filePath = filePath;
-  }
+void MainUI::syncXdgStruct(XDGDesktop *XDG){
+  bool cleanup = false;
+  if(XDG==0){ XDG = new XDGDesktop(); cleanup = true;} //make sure nothing crashes
+  if(XDG->type == XDGDesktop::APP){
+      ui->line_xdg_command->setText(XDG->exec);
+      ui->line_xdg_wdir->setText(XDG->path);
+      ui->check_xdg_useTerminal->setChecked( XDG->useTerminal );
+      ui->check_xdg_startupNotify->setChecked( XDG->startupNotify );
+    }else if(XDG->type==XDGDesktop::LINK){
+      //Hide the options that are unavailable for links
+      //Command  line (exec)
+      ui->line_xdg_command->setVisible(false);
+      ui->tool_xdg_getCommand->setVisible(false);
+      ui->lblCommand->setVisible(false);
+      //Options
+      ui->lblOptions->setVisible(false);
+      ui->check_xdg_useTerminal->setVisible(false);
+      ui->check_xdg_startupNotify->setVisible(false);
+      //Now load the variables for this type of shortcut
+      ui->lblWorkingDir->setText(tr("URL:"));
+      ui->line_xdg_wdir->setText( XDG->url );
+      ui->tool_xdg_getDir->setVisible(false); //the dir selection button
+    }
+    ui->line_xdg_name->setText(XDG->name);
+    ui->line_xdg_comment->setText(XDG->comment);
+    ui->line_xdg_icon->setText( XDG->icon );
+    ReloadAppIcon();
+    ui->actionSave_Shortcut->setVisible(true);
+    ui->actionSave_Shortcut->setEnabled(false);
+  if(cleanup){ delete XDG; }
+  checkXDGValidity();
+}
+
+bool MainUI::saveFile(QString path){
+  //qDebug() << "Request save file:" << path;
   XDGDesktop *XDG = INFO->XDG();
+  if(XDG==0){ XDG = new XDGDesktop(); }
+  if(XDG->type == XDGDesktop::BAD){ XDG->type = XDGDesktop::APP; }
+  //Update the file path in the data structure
+  XDG->filePath = path;
   //Now change the structure
   XDG->name = ui->line_xdg_name->text();
   XDG->genericName = ui->line_xdg_name->text().toLower();
   XDG->comment = ui->line_xdg_comment->text();
-  XDG->icon = ui->push_xdg_getIcon->whatsThis();
+  XDG->icon = ui->line_xdg_icon->text();
   //Now do the type-specific fields
   if(XDG->type == XDGDesktop::APP){
     XDG->exec = ui->line_xdg_command->text();
@@ -271,13 +271,136 @@ void MainUI::on_push_save_clicked(){
   XDG->actionList.clear();
   XDG->actions.clear();
   //Now save the structure to file
-  bool saved = XDG->saveDesktopFile(true); //Try to merge the file/structure as necessary
-  qDebug() << "File Saved:" << saved;
-  ui->push_save->setEnabled( !saved );
+  //qDebug() << "Saving File:" << XDG->filePath;
+  return XDG->saveDesktopFile(true); //Try to merge the file/structure as necessary
+}
+
+QString MainUI::findOpenDirFile(bool isdir){
+  static QList<QUrl> urls;
+  if(urls.isEmpty()){
+    urls << QUrl::fromLocalFile("/");
+    QStringList dirs = QString(getenv("XDG_DATA_DIRS")).split(":");
+    for(int i=0; i<dirs.length(); i++){
+      if(QFile::exists(dirs[i]+"/applications")){ urls << QUrl::fromLocalFile(dirs[i]+"/applications"); }
+    }
+    //Now do the home-directory folders
+    urls << QUrl::fromLocalFile(QDir::homePath());
+    QString localapps = QString(getenv("XDG_DATA_HOME"))+"/applications";
+    if(QFile::exists(localapps)){ urls << QUrl::fromLocalFile(localapps); }
+  }
+  static QString lastdir = QDir::homePath();
+  QFileDialog dlg(this);
+  dlg.setAcceptMode(QFileDialog::AcceptOpen);
+  dlg.setFileMode( isdir ? QFileDialog::Directory : QFileDialog::ExistingFiles );
+  dlg.setOptions(QFileDialog::ReadOnly | QFileDialog::HideNameFilterDetails);
+  dlg.setViewMode(QFileDialog::Detail);
+  dlg.setSidebarUrls( urls );
+  dlg.setDirectory(lastdir);
+  if(!dlg.exec() ){ return ""; } //cancelled
+  if(dlg.selectedFiles().isEmpty()){ return ""; }
+  QString path = dlg.selectedFiles().first();
+  //Update the last used directory
+  if(isdir){ lastdir = path; } //save this for next time
+  else{ lastdir = path.section("/",0,-2); }
+  //return the path
+  return path;
+}
+
+
+// Initialization procedures
+void MainUI::SetupConnections(){
+  connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(closeApplication()) );
+  connect(ui->actionSave_Shortcut, SIGNAL(triggered()), this, SLOT(save_clicked()) );
+  connect(ui->actionLocal_Shortcut, SIGNAL(triggered()), this, SLOT(save_as_local_clicked()) );
+  connect(ui->actionRegister_Shortcut, SIGNAL(triggered()), this, SLOT(save_as_register_clicked()) );
+  connect(ui->actionNew_Shortcut, SIGNAL(triggered()), this, SLOT(SetupNewFile()) );
+  connect(ui->actionOpen_File, SIGNAL(triggered()), this, SLOT(open_file_clicked()) );
+  connect(ui->actionOpen_Directory, SIGNAL(triggered()), this, SLOT(open_dir_clicked()) );
+  connect(ui->line_xdg_command, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->line_xdg_comment, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->line_xdg_icon, SIGNAL(textChanged(QString)), this, SLOT(ReloadAppIcon()) );
+  connect(ui->tool_xdg_getCommand, SIGNAL(clicked()), this, SLOT(getXdgCommand()) );
+  connect(ui->line_xdg_name, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->line_xdg_wdir, SIGNAL(editingFinished()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->check_xdg_useTerminal, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
+  connect(ui->check_xdg_startupNotify, SIGNAL(clicked()), this, SLOT(xdgvaluechanged()) );
+  connect(this, SIGNAL(folder_size_changed(quint64, quint64, quint64, bool)), this, SLOT(refresh_folder_size(quint64, quint64, quint64, bool)));
+}
+
+//UI Buttons
+void MainUI::closeApplication(){
+  terminate_thread = true;
+  if(ui->actionSave_Shortcut->isEnabled()){
+    //Still have unsaved changes
+    //TO-DO - prompt for whether to save the changes
+  }
+  this->close();
+}
+
+void MainUI::save_clicked(){
+  //Save all the xdg values into the structure
+  QString filePath = INFO->filePath();
+  if( !filePath.isEmpty() && !INFO->isDesktopFile() ){ return; }
+  if(filePath.isEmpty() || !canwrite){
+    //Need to prompt for where to save the file and what to call it
+    QString appdir = QString(getenv("XDG_DATA_HOME"))+"/applications/";
+    if(!QFile::exists(appdir)){ QDir dir; dir.mkpath(appdir); }
+    filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), appdir, tr("XDG Shortcuts (*.desktop)") );
+    if(filePath.isEmpty()){ return; }
+    if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
+  }
+  //qDebug() << " -Try Saving File:" << filePath;
+  bool saved = saveFile(filePath);
+  //qDebug() << "File Saved:" << saved;
+  ui->actionSave_Shortcut->setEnabled( !saved );
   if(saved){
     //Re-load the file info
-    LoadFile(INFO->absoluteFilePath());
+    LoadFile(filePath);
   }
+}
+
+void MainUI::save_as_local_clicked(){
+  QString filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), QDir::homePath(), tr("XDG Shortcuts (*.desktop)") );
+    if(filePath.isEmpty()){ return; }
+    if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
+
+  //qDebug() << " -Try Saving File:" << filePath;
+  bool saved = saveFile(filePath);
+  //qDebug() << "File Saved:" << saved;
+  ui->actionSave_Shortcut->setEnabled( !saved );
+  if(saved){
+    //Re-load the file info
+    LoadFile(filePath);
+  }
+}
+
+void MainUI::save_as_register_clicked(){
+  QString appdir = QString(getenv("XDG_DATA_HOME"))+"/applications/";
+    if(!QFile::exists(appdir)){ QDir dir; dir.mkpath(appdir); }
+  QString filePath = QFileDialog::getSaveFileName(this, tr("Save Application File"), appdir, tr("XDG Shortcuts (*.desktop)") );
+    if(filePath.isEmpty()){ return; }
+    if(!filePath.endsWith(".desktop")){ filePath.append(".desktop"); }
+
+  //qDebug() << " -Try Saving File:" << filePath;
+  bool saved = saveFile(filePath);
+  //qDebug() << "File Saved:" << saved;
+  ui->actionSave_Shortcut->setEnabled( !saved );
+  if(saved){
+    //Re-load the file info
+    LoadFile(filePath);
+  }
+}
+
+void MainUI::open_dir_clicked(){
+  QString path = findOpenDirFile(true); //directory only
+  if(path.isEmpty()){ return; }
+  LoadFile(path, "");
+}
+
+void MainUI::open_file_clicked(){
+  QString path = findOpenDirFile(false); //files only
+  if(path.isEmpty()){ return; }
+  LoadFile(path, "");
 }
 
 void MainUI::getXdgCommand(QString prev){
@@ -315,22 +438,45 @@ void MainUI::on_push_xdg_getIcon_clicked(){
   for(int i=0; i<ext.length(); i++){ ext[i].prepend("*."); } //turn them into valid filters
   QString file = QFileDialog::getOpenFileName(this, tr("Select an icon"), dir ,QString(tr("Images (%1);; All Files (*)")).arg(ext.join(" ")) );
   if(file.isEmpty()){ return; } //cancelled
-  ui->push_xdg_getIcon->setWhatsThis(file);
+  ui->line_xdg_icon->setText(file);
   ReloadAppIcon();
   xdgvaluechanged();
 }
 
 //XDG Value Changed
+bool MainUI::checkXDGValidity(){
+  XDGDesktop tmp;
+  tmp.type = XDGDesktop::APP; //make this adjustable later (GUI radio buttons?)
+  tmp.name = ui->line_xdg_name->text();
+  tmp.genericName = ui->line_xdg_name->text().toLower();
+  tmp.comment = ui->line_xdg_comment->text();
+  tmp.icon = ui->line_xdg_icon->text();
+  //Now do the type-specific fields
+  if(tmp.type == XDGDesktop::APP){
+    tmp.exec = ui->line_xdg_command->text();
+    tmp.tryexec = ui->line_xdg_command->text().section(" ",0,0); //use the first word/binary for the existance check
+    tmp.path = ui->line_xdg_wdir->text(); //working dir/path
+    tmp.useTerminal = ui->check_xdg_useTerminal->isChecked();
+    tmp.startupNotify = ui->check_xdg_startupNotify->isChecked();
+  }else if(tmp.type==XDGDesktop::LINK){
+    tmp.url = ui->line_xdg_wdir->text(); //we re-used this field
+  }
+  bool valid = tmp.isValid();
+  ui->label_xdg_statusicon->setPixmap( LXDG::findIcon( valid ? "dialog-ok" : "dialog-cancel", "").pixmap(32,32) );
+  ui->label_xdg_status->setText( valid ? tr("Valid Settings") : tr("Invalid Settings") );
+  return tmp.isValid();
+}
+
 void MainUI::xdgvaluechanged(){
-  if(INFO!=0 && (INFO->isDesktopFile() || INFO->filePath().isEmpty() ) ){
-    ui->push_save->setVisible(true);
+  //qDebug() << "xdgvaluechanged";
+  if( INFO->isDesktopFile() || INFO->filePath().isEmpty()  ){
+    bool valid = checkXDGValidity();
     //Compare the current UI values to the file values
-    ui->push_save->setEnabled(canwrite); //assume changed at this point
-    // TO-DO
+    ui->menuSave_As->setEnabled(valid);
+    ui->actionSave_Shortcut->setEnabled(canwrite && valid); //assume changed at this point
 
   }else{
-    ui->push_save->setVisible(false);
-    ui->push_save->setEnabled(false);
+    ui->actionSave_Shortcut->setEnabled(false);
   }
 }
 

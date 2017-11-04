@@ -72,6 +72,7 @@ void XDGDesktop::sync(){
     QString loc = var.section("[",1,1).section("]",0,0).simplified(); // localization
     var = var.section("[",0,0).simplified(); //remove the localization
     QString val = line.section("=",1,50).simplified();
+    if( val.count("\"")==2 && val.startsWith("\"") && val.endsWith("\"")){ val.chop(1); val = val.remove(0,1); } //remove the starting/ending quotes
     //-------------------
     if(var=="Name"){
       if(insection){
@@ -631,7 +632,7 @@ void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
 void LFileInfo::loadExtraInfo(){
   desk = 0;
   //Now load the extra information
-  if(this->isDir()){
+  if( this->suffix().isEmpty() && (this->absoluteFilePath().startsWith("/net/") || this->isDir()) ){
     mime = "inode/directory";
     //Special directory icons
     QString name = this->fileName().toLower();
@@ -644,6 +645,7 @@ void LFileInfo::loadExtraInfo(){
     else if(name=="downloads"){ icon = "folder-downloads"; }
     else if(name=="documents"){ icon = "folder-documents"; }
     else if(name=="images" || name=="pictures"){ icon = "folder-image"; }
+    else if(this->absoluteFilePath().startsWith("/net/")){ icon = "folder-shared"; }
     else if( !this->isReadable() ){ icon = "folder-locked"; }
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
@@ -664,11 +666,11 @@ LFileInfo::LFileInfo(){
 LFileInfo::LFileInfo(QString filepath){ //overloaded contructor
   this->setFile(filepath);
   loadExtraInfo();
-}	
+}
 LFileInfo::LFileInfo(QFileInfo info){ //overloaded contructor
   this->swap(info); //use the given QFileInfo without re-loading it
   loadExtraInfo();
-}		
+}
 
 //Functions for accessing the extra information
 // -- Return the mimetype for the file
@@ -683,7 +685,7 @@ QString LFileInfo::iconfile(){
     return icon;
   }else{
     if(!mime.isEmpty()){
-      QString tmp = mime; 
+      QString tmp = mime;
       tmp.replace("/","-");
       return tmp;
     }else if(this->isExecutable()){
@@ -696,7 +698,7 @@ QString LFileInfo::iconfile(){
 // -- Check if this is an XDG desktop file
 bool LFileInfo::isDesktopFile(){
   if(desk==0){ return false; }
-  return (!desk->filePath.isEmpty());	
+  return (!desk->filePath.isEmpty());
 }
 
 // -- Allow access to the XDG desktop data structure
@@ -726,11 +728,14 @@ bool LFileInfo::isAVFile(){
 //==== LXDG Functions ====
 bool LXDG::checkExec(QString exec){
   //Return true(good) or false(bad)
+  //Check for quotes around the exec, and remove them as needed
+  if(exec.startsWith("\"") && exec.count("\"")>=2){ exec = exec.section("\"",1,1).simplified(); }
+  if(exec.startsWith("\'") && exec.count("\'")>=2){ exec = exec.section("\'",1,1).simplified(); }
   if(exec.startsWith("/")){ return QFile::exists(exec); }
   else{
     QStringList paths = QString(getenv("PATH")).split(":");
     for(int i=0; i<paths.length(); i++){
-      if(QFile::exists(paths[i]+"/"+exec)){ return true; }	    
+      if(QFile::exists(paths[i]+"/"+exec)){ return true; }
     }
   }
   return false; //could not find the executable in the current path(s)
@@ -747,7 +752,7 @@ QStringList LXDG::systemApplicationDirs(){
   for(int i=0; i<appDirs.length(); i++){
     if( QFile::exists(appDirs[i]+"/applications") ){
       out << appDirs[i]+"/applications";
-      //Also check any subdirs within this directory 
+      //Also check any subdirs within this directory
       // (looking at you KDE - stick to the standards!!)
       out << LUtils::listSubDirectories(appDirs[i]+"/applications");
     }
@@ -891,7 +896,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       fall << getChildIconDirs(paths[i]+"hicolor"); //XDG fallback (apps add to this)
     }
     //Now load all the icon theme dependencies in order (Theme1 -> Theme2 -> Theme3 -> Fallback)
-    
+
     //fall << LOS::AppPrefix()+"share/pixmaps"; //always use this as well as a final fallback
     QDir::setSearchPaths("icontheme", theme);
     QDir::setSearchPaths("default", oxy);
@@ -926,7 +931,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       //simple PNG image - load directly into the QIcon structure
       ico.addFile(srch[i]+":"+iconName+".png");
     }
-    
+
   }
   //If still no icon found, look for any image format in the "pixmaps" directory
   if(ico.isNull()){
@@ -946,13 +951,13 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
 	  break;
 	}
       }
-      
+
     }
   }
   //Use the fallback icon if necessary
   if(ico.isNull() ){
     if(!fallback.isEmpty()){ ico = LXDG::findIcon(fallback,""); }
-    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){ 
+    else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){
       //mimetype - try to use the generic type icon
       ico = LXDG::findIcon(iconName.section("-x-",0,0)+"-x-generic", "");
     }
@@ -969,7 +974,7 @@ QStringList LXDG::getChildIconDirs(QString parent){
   QDir D(parent);
   QStringList out;
   QStringList dirs = D.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
-  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){ 
+  if(!dirs.isEmpty() && (dirs.contains("32x32") || dirs.contains("scalable")) ){
     //Need to sort these directories by image size
     //qDebug() << " - Parent:" << parent << "Dirs:" << dirs;
     for(int i=0; i<dirs.length(); i++){
@@ -1017,7 +1022,7 @@ QStringList LXDG::systemMimeDirs(){
   QStringList out;
   for(int i=0; i<appDirs.length(); i++){
     if( QFile::exists(appDirs[i]+"/mime") ){
-      out << appDirs[i]+"/mime";	    
+      out << appDirs[i]+"/mime";
     }
   }
   return out;
@@ -1028,7 +1033,7 @@ QIcon LXDG::findMimeIcon(QString extension){
   QString mime = LXDG::findAppMimeForFile(extension);
   if(mime.isEmpty()){ mime = LXDG::findAppMimeForFile(extension.toLower()); }
   mime.replace("/","-"); //translate to icon mime name
-  if(!mime.isEmpty()){ ico = LXDG::findIcon(mime, "unknown");} //use the "unknown" mimetype icon as fallback	
+  if(!mime.isEmpty()){ ico = LXDG::findIcon(mime, "unknown");} //use the "unknown" mimetype icon as fallback
   if(ico.isNull()){ ico = LXDG::findIcon("unknown",""); } //just in case
   return ico;
 }
@@ -1050,8 +1055,8 @@ while(mimes.isEmpty()){
     return extension;
   }
   //Look for globs at the end of the filename
-  if(!extension.isEmpty()){ 
-    mimes = mimefull.filter(":*."+extension); 
+  if(!extension.isEmpty()){
+    mimes = mimefull.filter(":*."+extension);
     //If nothing found, try a case-insensitive search
     if(mimes.isEmpty()){ mimes = mimefull.filter(":*."+extension, Qt::CaseInsensitive); }
     //Now ensure that the filter was accurate (*.<extention>.<something> will still be caught)
@@ -1062,7 +1067,7 @@ while(mimes.isEmpty()){
     }
   }
   //Look for globs at the start of the filename
-  if(mimes.isEmpty()){ 
+  if(mimes.isEmpty()){
     mimes = mimefull.filter(":"+filename.left(2)); //look for the first 2 characters initially
 	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
     //Now ensure that the filter was accurate

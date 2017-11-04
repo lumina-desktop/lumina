@@ -24,7 +24,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
   connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
   connect(BROWSER, SIGNAL(itemsLoading(int)), this, SLOT(itemsLoading(int)) );
-  connect(this, SIGNAL(dirChange(QString)), BROWSER, SLOT(loadDirectory(QString)) );
+  connect(this, SIGNAL(dirChange(QString, bool)), BROWSER, SLOT(loadDirectory(QString, bool)) );
   listWidget = 0;
   treeWidget = 0;
   readDateFormat();
@@ -38,6 +38,7 @@ BrowserWidget::~BrowserWidget(){
 }
 
 void BrowserWidget::changeDirectory(QString dir){
+  videoMap.clear();
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
 
@@ -50,7 +51,7 @@ void BrowserWidget::changeDirectory(QString dir){
     if( (historyList.isEmpty() || historyList.last()!=cleaned) && !cleaned.isEmpty() ){ historyList << cleaned; }
   }
   //qDebug() << "History:" << historyList;
-  emit dirChange(dir);
+  emit dirChange(dir, false);
 }
 
 void BrowserWidget::showDetails(bool show){
@@ -81,7 +82,8 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     retranslate();
     treeWidget->sortItems(0, Qt::AscendingOrder);
-    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange(""); }
+    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
+    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
     listWidget = new DDListWidget(this);
      listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -91,8 +93,10 @@ void BrowserWidget::showDetails(bool show){
     connect(listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SIGNAL(contextMenuRequested()) );
     connect(listWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(DataDropped(QString, QStringList)) );
     connect(listWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
-    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange(""); }
+    if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("",true); }
   }
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   //qDebug() << "  Done making widget";
 }
 
@@ -109,6 +113,18 @@ bool BrowserWidget::hasHiddenFiles(){
 }
 
 void BrowserWidget::showThumbnails(bool show){
+  //qDebug() << show << videoMap.size();
+  for(QString file : videoMap.uniqueKeys()) {
+    QTreeWidgetItem *it = videoMap[file].first;
+    LVideoWidget *widget = videoMap[file].second;
+    if(show) {
+      widget->enableIcons();
+      treeWidget->setItemWidget(it, 0, widget);
+    }else{
+      widget->disableIcons();
+      treeWidget->setItemWidget(it, 0, widget);
+    }
+  }
   BROWSER->showThumbnails(show);
 }
 
@@ -125,9 +141,15 @@ void BrowserWidget::setThumbnailSize(int px){
     larger = treeWidget->iconSize().height() < px;
     treeWidget->setIconSize(QSize(px,px));
   }
+  for(QString file : videoMap.uniqueKeys()) {
+    QTreeWidgetItem *it = videoMap[file].first;
+    LVideoWidget *widget = videoMap[file].second;
+    widget->setIconSize(treeWidget->iconSize());
+    treeWidget->setItemWidget(it, 0, widget);
+  }
   //qDebug() << "Changing Icon Size:" << px << larger;
   if(BROWSER->currentDirectory().isEmpty() || !larger ){ return; } //don't need to reload icons unless the new size is larger
-  emit dirChange("");
+  emit dirChange("", larger);
 }
 
 int BrowserWidget::thumbnailSize(){
@@ -271,6 +293,8 @@ void BrowserWidget::itemRemoved(QString item){
 }
 
 void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
   //qDebug() << "Item Data Available:" << info->fileName();
   int num = 0;
   if(listWidget!=0){
@@ -326,15 +350,28 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
-      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ){ it =  treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first(); }
-      else{
+      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) {
+        it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
+      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()) {
         it = new CQTreeWidgetItem(treeWidget);
-        it->setText(0, info->fileName() ); //name (0)
         treeWidget->addTopLevelItem(it);
+        LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), hasThumbnails(), treeWidget);
+        videoMap.insert(info->absoluteFilePath(), QPair<QTreeWidgetItem*,LVideoWidget*>(it, widget));
+        treeWidget->setItemWidget(it, 0, widget);
+      }else if(info->isVideo()) {
+        it = videoMap[info->absoluteFilePath()].first;
+        LVideoWidget *widget = videoMap[info->absoluteFilePath()].second;
+        widget->setIconSize(treeWidget->iconSize());
+        treeWidget->setItemWidget(it, 0, widget);
+      }else{
+        it = new CQTreeWidgetItem(treeWidget);
+        treeWidget->addTopLevelItem(it);
+        it->setText(0, info->fileName() ); //name (0)
       }
     }
     //Now set/update all the data
-    it->setIcon(0, ico);
+    if(!info->isVideo())
+      it->setIcon(0, ico);
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
@@ -352,7 +389,9 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   }else{
     if(freshload && treeWidget!=0){
       //qDebug() << "Resize Tree Widget Contents";
-      for(int i=0; i<treeWidget->columnCount(); i++){ treeWidget->resizeColumnToContents(i); }
+      //for(int i=treeWidget->columnCount()-1; i>0; i--){ treeWidget->resizeColumnToContents(i); }
+      treeWidget->resizeColumnToContents(1);
+      //treeWidget->resizeColumnToContents(0);
     }
     freshload = false; //any further changes are updates - not a fresh load of a dir
     //Done loading items

@@ -1,7 +1,7 @@
 //===========================================
 //  Copyright (c) 2017, q5sys (JT)
 //  Available under the MIT license
-//  See the LICENSE file for full details    
+//  See the LICENSE file for full details
 //===========================================
 
 #include "mainwindow.h"

@@ -221,7 +221,7 @@ void page_wallpaper::deskbgcoloradded(){
   ui->combo_desk_bg->addItem( QString(tr("Solid Color: %1")).arg(color), color);
   //Now move to the last item in the list (the new image(s));
   ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
-  
+
   emit HasPendingChanges(true);
 }
 

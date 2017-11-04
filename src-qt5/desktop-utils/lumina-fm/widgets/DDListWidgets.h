@@ -23,6 +23,7 @@
 #include <QMouseEvent>
 #include <QUrl>
 #include <QDir>
+#include <QApplication>
 
 #include <LUtils.h>
 
@@ -63,8 +64,8 @@ protected:
 	  QList<QListWidgetItem*> items = this->selectedItems();
 	  if(items.length()<1){ return; }
 	  QList<QUrl> urilist;
-	  for(int i=0; i<items.length(); i++){ 
-	    urilist << QUrl::fromLocalFile(items[i]->whatsThis());	  
+	  for(int i=0; i<items.length(); i++){
+	    urilist << QUrl::fromLocalFile(items[i]->whatsThis());
 	  }
 	  //Create the mime data
 	  //qDebug() << "Start Drag:" << urilist;
@@ -88,7 +89,7 @@ protected:
 	    ev->ignore();
 	  }
 	}
-	
+
 	void dragMoveEvent(QDragMoveEvent *ev){
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    //Change the drop type depending on the data/dir
@@ -104,7 +105,7 @@ protected:
 	  }
 	  this->update();
 	}
-	
+
 	void dropEvent(QDropEvent *ev){
 	  if(this->whatsThis().isEmpty() || !ev->mimeData()->hasUrls() ){ ev->ignore(); return; } //not supported
 	  //qDebug() << "Drop Event:";
@@ -125,7 +126,7 @@ protected:
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
 	    //If the target file is modifiable, assume a move - otherwise copy
-	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){ 
+	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){
 	      if(filepath.section("/",0,-2)!=dirpath){ files << "cut::::"+filepath;  } //don't "cut" a file into the same dir
 	    }else{ files << "copy::::"+filepath; }
 	  }
@@ -133,18 +134,18 @@ protected:
 	  if(!files.isEmpty()){  emit DataDropped( dirpath, files ); }
 	  this->setCursor(Qt::ArrowCursor);
 	}
-	
+
 	void mouseReleaseEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
 	  else{ QListWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
 	void mousePressEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
-	  else{ QListWidget::mousePressEvent(ev); } //pass it along to the widget	  
+	  else{ QListWidget::mousePressEvent(ev); } //pass it along to the widget
 	}
 	/*void mouseMoveEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
-	  else{ QListWidget::mouseMoveEvent(ev); } //pass it along to the widget		
+	  else{ QListWidget::mouseMoveEvent(ev); } //pass it along to the widget
 	}*/
 };
 
@@ -158,6 +159,8 @@ public:
 	  //Drag and Drop Properties
 	  this->setDragDropMode(QAbstractItemView::DragDrop);
 	  this->setDefaultDropAction(Qt::MoveAction); //prevent any built-in Qt actions - the class handles it
+	  this->setDropIndicatorShown(true);
+	  this->setAcceptDrops(true);
 	  //Other custom properties necessary for the FM
 	  this->setFocusPolicy(Qt::StrongFocus);
 	  this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -183,8 +186,8 @@ protected:
 	  QList<QTreeWidgetItem*> items = this->selectedItems();
 	  if(items.length()<1){ return; }
 	  QList<QUrl> urilist;
-	  for(int i=0; i<items.length(); i++){ 
-	    urilist << QUrl::fromLocalFile(items[i]->whatsThis(0));	  
+	  for(int i=0; i<items.length(); i++){
+	    urilist << QUrl::fromLocalFile(items[i]->whatsThis(0));
 	  }
 	  //Create the mime data
 	  QMimeData *mime = new QMimeData;
@@ -192,35 +195,43 @@ protected:
 	  //Create the drag structure
 	  QDrag *drag = new QDrag(this);
 	  drag->setMimeData(mime);
-	  /*if(info.first().section("::::",0,0)=="cut"){
-	    drag->exec(act | Qt::MoveAction);
-	  }else{*/
+	  //qDebug() << "Start Drag:" << urilist;
 	    drag->exec(act | Qt::CopyAction| Qt::MoveAction);
-	  //}
+          //qDebug() << " - Drag Finished";
 	}
 
 	void dragEnterEvent(QDragEnterEvent *ev){
-	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasFormat(MIME);
+	  //qDebug() << "Drag Enter Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
+	  //QTreeWidget::dragEnterEvent(ev);
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    ev->acceptProposedAction(); //allow this to be dropped here
 	  }else{
 	    ev->ignore();
-	  }		  
+	  }
 	}
-	
+
 	void dragMoveEvent(QDragMoveEvent *ev){
+	  //qDebug() << "Drag Move Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
+	  //QTreeWidget::dragMoveEvent(ev);
 	  if(ev->mimeData()->hasUrls() && !this->whatsThis().isEmpty() ){
 	    //Change the drop type depending on the data/dir
 	    QString home = QDir::homePath();
-	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); }
-	    else{ ev->setDropAction(Qt::CopyAction); }
-	    ev->accept(); //allow this to be dropped here
+	    if( this->whatsThis().startsWith(home) ){ ev->setDropAction(Qt::MoveAction); this->setCursor(Qt::DragMoveCursor); }
+	    else{ ev->setDropAction(Qt::CopyAction); this->setCursor(Qt::DragCopyCursor);}
+	    ev->acceptProposedAction(); //allow this to be dropped here
+            //this->setAcceptDrops(true);
 	  }else{
+            //this->setAcceptDrops(false);
+	    this->setCursor(Qt::ForbiddenCursor);
 	    ev->ignore();
 	  }
+	  //this->setDropIndicatorShown(true);
+	  //this->update();
+	  //QTreeWidget::dragMoveEvent(ev);
 	}
-	
+
 	void dropEvent(QDropEvent *ev){
+          //qDebug() << "Drop Event:" << ev->mimeData()->hasUrls() << this->whatsThis();
 	  if(this->whatsThis().isEmpty() || !ev->mimeData()->hasUrls() ){ ev->ignore(); return; } //not supported
 	  ev->accept(); //handled here
 	  QString dirpath = this->whatsThis();
@@ -239,25 +250,25 @@ protected:
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
 	   //If the target file is modifiable, assume a move - otherwise copy
-	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){ 
+	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){
 	      if(filepath.section("/",0,-2)!=dirpath){ files << "cut::::"+filepath;  } //don't "cut" a file into the same dir
 	    }else{ files << "copy::::"+filepath; }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
 	  emit DataDropped( dirpath, files );
 	}
-	
+
 	void mouseReleaseEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
 	  else{ QTreeWidget::mouseReleaseEvent(ev); } //pass it along to the widget
 	}
 	void mousePressEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
-	  else{ QTreeWidget::mousePressEvent(ev); } //pass it along to the widget	  
+	  else{ QTreeWidget::mousePressEvent(ev); } //pass it along to the widget
 	}
 	/*void mouseMoveEvent(QMouseEvent *ev){
 	  if(ev->button() != Qt::RightButton && ev->button() != Qt::LeftButton){ ev->ignore(); }
-	  else{ QTreeWidget::mouseMoveEvent(ev); } //pass it along to the widget		
+	  else{ QTreeWidget::mouseMoveEvent(ev); } //pass it along to the widget
 	}*/
 };
 

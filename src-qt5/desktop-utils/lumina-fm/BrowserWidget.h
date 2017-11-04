@@ -12,6 +12,8 @@
 #include <QWidget>
 #include <QThread>
 
+#include <LVideoWidget.h>
+
 #include "Browser.h"
 #include "widgets/DDListWidgets.h"
 
@@ -23,6 +25,7 @@ private:
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
+  QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
 	bool freshload;
 
 	//The drag and drop brower widgets
@@ -86,9 +89,10 @@ signals:
 	void contextMenuRequested();
 	void DataDropped(QString, QStringList);
 	void hasFocus(QString); //ID output
+	void stopLoop();
 
 	//Internal signal
-	void dirChange(QString); //current dir path
+	void dirChange(QString, bool); //current dir path, force
 
 };
 #endif

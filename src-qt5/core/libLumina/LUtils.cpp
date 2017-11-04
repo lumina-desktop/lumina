@@ -14,7 +14,7 @@
 
 #include <unistd.h>
 
-inline QStringList ProcessRun(QString cmd, QStringList args){
+/*inline QStringList ProcessRun(QString cmd, QStringList args){
   //Assemble outputs
   QStringList out; out << "1" << ""; //error code, string output
   QProcess proc;
@@ -38,50 +38,58 @@ inline QStringList ProcessRun(QString cmd, QStringList args){
   out[0] = QString::number(proc.exitCode());
   out[1] = info+QString(proc.readAllStandardOutput());
   return out;
-}
+}*/
+
 //=============
 //  LUtils Functions
 //=============
-int LUtils::runCmd(QString cmd, QStringList args){
-  /*QProcess proc;
-  proc.setProcessChannelMode(QProcess::MergedChannels);
-  if(args.isEmpty()){
-    proc.start(cmd);
-  }else{
-    proc.start(cmd, args);
+QString LUtils::runCommand(bool &success, QString command, QStringList arguments, QString workdir, QStringList env){
+  QProcess proc;
+    proc.setProcessChannelMode(QProcess::MergedChannels); //need output
+  //First setup the process environment as necessary
+  QProcessEnvironment PE = QProcessEnvironment::systemEnvironment();
+    if(!env.isEmpty()){
+      for(int i=0; i<env.length(); i++){
+    if(!env[i].contains("=")){ continue; }
+        PE.insert(env[i].section("=",0,0), env[i].section("=",1,100));
+      }
+    }
+    proc.setProcessEnvironment(PE);
+  //if a working directory is specified, check it and use it
+  if(!workdir.isEmpty()){
+    proc.setWorkingDirectory(workdir);
   }
-  //if(!proc.waitForStarted(30000)){ return 1; } //process never started - max wait of 30 seconds
-  while(!proc.waitForFinished(300)){
+  //Now run the command (with any optional arguments)
+  if(arguments.isEmpty()){ proc.start(command); }
+  else{ proc.start(command, arguments); }
+  //Wait for the process to finish (but don't block the event loop)
+  QString info;
+  while(!proc.waitForFinished(1000)){
     if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
-    QCoreApplication::processEvents();
+    QString tmp = proc.readAllStandardOutput();
+    if(tmp.isEmpty()){ proc.terminate(); }
+    else{ info.append(tmp); }
   }
-  int ret = proc.exitCode();
-  return ret;*/
-  QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
-  return future.result()[0].toInt(); //turn it back into an integer return code
+  info.append(proc.readAllStandardOutput()); //make sure we don't miss anything in the output
+  success = (proc.exitCode()==0); //return success/failure
+  return info;
+}
+
+int LUtils::runCmd(QString cmd, QStringList args){
+  bool success;
+  LUtils::runCommand(success, cmd, args);
+  return success;
+
+  /*QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
+  return future.result()[0].toInt(); //turn it back into an integer return code*/
 }
 
 QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
-  /*QProcess proc;
-  QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-  env.insert("LANG", "C");
-  env.insert("LC_MESSAGES", "C");
-  proc.setProcessEnvironment(env);
-  proc.setProcessChannelMode(QProcess::MergedChannels);
-  if(args.isEmpty()){
-    proc.start(cmd);
-  }else{
-    proc.start(cmd,args);
-  }
-  //if(!proc.waitForStarted(30000)){ return QStringList(); } //process never started - max wait of 30 seconds
-  while(!proc.waitForFinished(300)){
-    if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
-    QCoreApplication::processEvents();
-  }
-  QStringList out = QString(proc.readAllStandardOutput()).split("\n");
-  return out;*/
-  QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
-  return future.result()[1].split("\n"); //Split the return message into lines
+  bool success;
+  QString log = LUtils::runCommand(success, cmd, args);
+  return log.split("\n");
+  /*QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
+  return future.result()[1].split("\n"); //Split the return message into lines*/
 }
 
 QStringList LUtils::readFile(QString filepath){
@@ -113,6 +121,10 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
 }
 
 bool LUtils::isValidBinary(QString& bin){
+  //Trim off any quotes
+  if(bin.startsWith("\"") && bin.endsWith("\"")){ bin.chop(1); bin = bin.remove(0,1); }
+  if(bin.startsWith("\'") && bin.endsWith("\'")){ bin.chop(1); bin = bin.remove(0,1); }
+  //Now look for relative/absolute path
   if(!bin.startsWith("/")){
     //Relative path: search for it on the current "PATH" settings
     QStringList paths = QString(qgetenv("PATH")).split(":");

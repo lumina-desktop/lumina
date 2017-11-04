@@ -27,9 +27,12 @@
 #include "../ScrollDialog.h"
 
 #define DEBUG 0
+extern bool rootmode;
 
 DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWidget(parent), ui(new Ui::DirWidget){
   ui->setupUi(this); //load the designer file
+  ui->label_rootmode->setVisible(rootmode);
+
   ID = objID;
   //Assemble the toolbar for the widget
   toolbar = new QToolBar(this);
@@ -59,7 +62,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
   ui->browser_layout->addWidget(BW);
-  connect(BW, SIGNAL(dirChange(QString)), this, SLOT(currentDirectoryChanged()) );
+  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
   connect(BW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(BW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(BW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -281,10 +284,11 @@ void DirWidget::createMenus(){
   else{ cOpenMenu->clear(); }
   cOpenMenu->setTitle(tr("Launch..."));
   cOpenMenu->setIcon( LXDG::findIcon("quickopen","") );
-  cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
+  cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Open Current Dir in a Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
   cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
-/*
+  if(LUtils::isValidBinary("qsudo")){ cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+  /*
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }
   else{ cFModMenu->clear(); }
   cFModMenu->setTitle(tr("Modify Files..."));
@@ -316,6 +320,8 @@ void DirWidget::createMenus(){
   if(LUtils::isValidBinary("lumina-fileinfo")){
     cFViewMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("Properties"), this, SLOT(fileProperties()) );
   }
+
+}
 
 }
 
@@ -471,7 +477,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
-  connect(RCBW, SIGNAL(dirChange(QString)), this, SLOT(currentDirectoryChanged()) );
+  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
   connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(RCBW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(RCBW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -482,6 +488,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   RCBW->showDetails(BW->hasDetails());
   RCBW->showHiddenFiles( BW->hasHiddenFiles());
   RCBW->setThumbnailSize( BW->thumbnailSize());
+  RCBW->showThumbnails( BW->hasThumbnails());
   RCBW->changeDirectory( BW->currentDirectory());
 }
 
@@ -879,4 +886,10 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
   }else{
     ev->ignore(); //not handled here
   }
+}
+
+void DirWidget::openRootFM(){
+  rootfmdir = "qsudo lumina-fm -new-instance " + currentDir();
+  qDebug() << "rootfmdir" << rootfmdir;
+  ExternalProcess::launch(rootfmdir);
 }

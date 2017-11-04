@@ -119,6 +119,8 @@
     <addaction name="separator"/>
     <addaction name="actionClose_Browser"/>
     <addaction name="separator"/>
+    <addaction name="actionOpen_as_Root"/>
+    <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -432,6 +434,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionOpen_as_Root">
+   <property name="text">
+    <string>Open as Root</string>
    </property>
   </action>
  </widget>

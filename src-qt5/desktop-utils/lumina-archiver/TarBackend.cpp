@@ -36,7 +36,7 @@ void Backend::loadFile(QString path){
   flags.clear();
   flags << "-f" << filepath; //add the actual archive path
   if(QFile::exists(path)){ startList(); qDebug () << "BACKEND LOAD startList has started";}
-  else{ contents.clear(); emit ProcessFinished(true, ""); }
+  else{ contents.clear(); emit FileLoaded(); emit ProcessFinished(true, ""); }
 }
 
 bool Backend::canModify(){
@@ -262,8 +262,7 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
       }
     }
     if(args.contains("-x")){ result = tr("Extraction Finished"); emit ExtractSuccessful(); }
-    //if(args.contains("-aa")){ result = tr("Archival Finished"); emit ArchivalSuccessful(); }
-    else if(args.contains("-c")){ result = tr("Modification Finished"); }
+    else if(args.contains("-c")){ result = tr("Modification Finished"); emit ArchivalSuccessful(); }
     if(needupdate){ startList(); }
     else{ emit ProcessFinished(retcode==0, result); result.clear(); }
   }
