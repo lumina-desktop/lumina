@@ -16,7 +16,7 @@
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähtekoodi repositoorium</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation>Puukidest teadaandmine</translation>
+        <translation>Puukide raporteerimine</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
