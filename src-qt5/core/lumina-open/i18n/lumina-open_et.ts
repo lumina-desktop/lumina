@@ -166,7 +166,7 @@
     <message>
         <location filename="../main.cpp" line="267"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakenduse %1 kirje on vigane.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="278"/>
@@ -191,12 +191,12 @@
     <message>
         <location filename="../main.cpp" line="370"/>
         <source>Binary Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Binaarfail puudub</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei leidnud &quot;%1&quot; . Palun veendu et see on paigaldatud.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="421"/>
@@ -214,67 +214,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimeedia</translation>
+        <translation>Multimeedia</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished">Arendus</translation>
+        <translation>Arendus</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished">Haridus</translation>
+        <translation>Haridus</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Mängud</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished">Graafika</translation>
+        <translation>Graafika</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished">Võrk</translation>
+        <translation>Võrk</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished">Kontor</translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished">Teadus</translation>
+        <translation>Teadus</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished">Sätted</translation>
+        <translation>Sätted</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished">Süsteem</translation>
+        <translation>Süsteem</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Tööriistad</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorteerimata</translation>
     </message>
 </context>
 </TS>
