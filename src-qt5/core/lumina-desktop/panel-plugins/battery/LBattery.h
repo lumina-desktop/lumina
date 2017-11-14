@@ -30,6 +30,7 @@ private:
 	QTimer *timer;
 	QLabel *label;
 	int iconOld;
+	QSettings *sessionsettings;
 
 private slots:
 	void updateBattery(bool force = false);

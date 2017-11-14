@@ -155,8 +155,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
   //Find the number of the left-most desktop screen
   QString screen = "0";
-  QDesktopWidget *desk =QApplication::desktop();
   QRect screenGeom;
+  QDesktopWidget *desk =QApplication::desktop();
   for(int i=0; i<desk->screenCount(); i++){
      if(desk->screenGeometry(i).x()==0){
 	screen = QString::number(i);
@@ -401,7 +401,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
     //qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
-    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss.template")){
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss")){
       themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
 	 if(systhemes[i].startsWith(themesettings[0]+"::::",Qt::CaseInsensitive)){
@@ -411,9 +411,9 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
       }
     }
     //color file
-    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".qss.colors") ){
+    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".conf") ){
       //Remove any extra/invalid extension
-      themesettings[1] = themesettings[1].section(".qss",0,0).simplified();
+      themesettings[1] = themesettings[1].section(".conf",0,0).simplified();
       for(int i=0; i<syscolors.length(); i++){
 	 if(syscolors[i].startsWith(themesettings[1]+"::::",Qt::CaseInsensitive)){
 	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
@@ -434,13 +434,6 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Now save the settings files
   if(setTheme){
     LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
-    QSettings themeset("lthemeengine","lthemeengine");
-      themeset.setValue("Appearance/icon_theme",themesettings[2]);
-      //Quick hack for a "dark" theme/color to be uniform across the desktop/applications
-      if(themesettings[0].contains("DarkGlass") || themesettings[1].contains("Black")){
-        themeset.setValue("Appearance/custom_palette", true);
-        themeset.setValue("Appearance/color_scheme_path", LOS::LuminaShare().section("/",0,-3)+"/lthemeengine/colors/darker.conf");
-      }
   }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
@@ -463,12 +456,14 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
 }
 
-bool LDesktopUtils::checkUserFiles(QString lastversion){
+bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
+  //WARNING: Make sure you create a QApplication instance before calling this function!!!
+
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   //returns true if something changed
   int oldversion = LDesktopUtils::VersionStringToNumber(lastversion);
-  int nversion = LDesktopUtils::VersionStringToNumber(QApplication::applicationVersion());
+  int nversion = LDesktopUtils::VersionStringToNumber(currentversion);
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
 
@@ -509,6 +504,43 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
       }
     }
     LUtils::writeFile(dset, DS, true);
+  }
+  if(oldversion<1003004){
+    //Lumina 1.3.4 - Migrate theme settings from old format to the new theme engine format
+    QString themefile = QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/lthemeengine.conf";
+    if(!QFile::exists(themefile)){
+      QDir dir;
+      dir.mkpath(themefile.section("/",0,-2)); //make sure the main directory exists first
+      //Need to migrate theme settings from the old location to the new one
+      QSettings newtheme(themefile, QSettings::NativeFormat);
+      qDebug() << "Migrating Theme settings:" << newtheme.fileName();
+      QStringList oldtheme = LUtils::readFile( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg" );
+      //Find the system install location for the theme engine for use later
+      QString enginedir = LOS::LuminaShare()+"/../lthemeengine/";
+      //Find/match the icon theme
+      QString tmp = oldtheme.filter("ICONTHEME=").join("\n").section("=",1,-1).section("\n",0,0).simplified();
+      if(tmp.isEmpty()){ tmp = "material-design-light"; } //unknown Icon theme - use the default "light" version
+      newtheme.setValue("Appearance/icon_theme",tmp);
+      //Quick detect/adjust of the tone of the color theme based on the icons/colors (no 1-to-1 color theme matching between systems)
+      bool isdarktheme = tmp.contains("dark");
+      isdarktheme = isdarktheme || oldtheme.filter("COLORFILE=").join("\n").section("=",1,-1).section("\n",0,0).contains("DarkGlass");
+      //Quick adjust for the material-design icon theme to make it match the current dark/light theme
+      if(tmp.contains("material-design")){
+        newtheme.setValue("Appearance/icon_theme", QString("material-design-")+ (isdarktheme ? "dark" : "light") );
+      }
+      if(isdarktheme){
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/darker.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/DarkGlass.qss");
+      }else{
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/airy.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/Glass.qss");
+      }
+      newtheme.setValue("Appearance/style", "Fusion");
+      newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss");
+      newtheme.sync(); //flush this to file right now
+    } //end check for theme file existance
   }
 
   //Check the fluxbox configuration files

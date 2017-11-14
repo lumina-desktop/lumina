@@ -11,7 +11,7 @@ QScrollBar:vertical{
 QScrollBar::handle{
   background: palette(base);
   border: 1px solid transparent;
-  border-radius: 7px;
+  border-radius: 1px;
 }
 QScrollBar::handle:hover, QScrollBar::add-line:hover, QScrollBar::sub-line:hover{
   background: palette(highlight);

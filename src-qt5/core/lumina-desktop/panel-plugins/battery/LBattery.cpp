@@ -20,6 +20,7 @@ LBattery::LBattery(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
   connect(timer,SIGNAL(timeout()), this, SLOT(updateBattery()) );
   timer->start();
   QTimer::singleShot(0,this,SLOT(OrientationChange()) ); //update the sizing/icon
+  sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
 }
 
 LBattery::~LBattery(){
@@ -78,7 +79,8 @@ void LBattery::updateBattery(bool force){
     }
     if(icon<iconOld && icon==0){
       //Play some audio warning chime when
-      QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
+   bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
+   if( playaudio ){ QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
       LSession::handle()->playAudioFile(sfile);
       }
 
@@ -94,6 +96,7 @@ void LBattery::updateBattery(bool force){
   if(icon > 9 && icon < 15){ tt = QString(tr("%1 % (Charging)")).arg(QString::number(charge)); }
   else{ tt = QString( tr("%1 % (%2 Remaining)") ).arg(QString::number(charge), getRemainingTime() ); }
   label->setToolTip(tt);
+}
 }
 
 QString LBattery::getRemainingTime(){

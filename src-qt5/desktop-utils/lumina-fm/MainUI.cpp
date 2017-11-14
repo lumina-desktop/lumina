@@ -14,8 +14,10 @@
 
 #include <LUtils.h>
 #include <LDesktopUtils.h>
+#include <ExternalProcess.h>
 
 #define DEBUG 0
+bool rootmode = false;
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //for Signal/slot we must register the Typedef of QFileInfoList
@@ -25,6 +27,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   //qRegisterMetaType< QVector<int> >("QVector<int>");
   //qRegisterMetaType< QList<QPersistentModelIndex> >("QList<QPersistentModelIndex>");
   waitingToClose = false;
+  //put if statement here to check if running as root
+  rootmode = (getuid()==0);
 
   ui->setupUi(this);
   if(DEBUG){ qDebug() << "Initilization:"; }
@@ -112,6 +116,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   TRAY = new TrayUI(this);
   connect(TRAY, SIGNAL(JobsFinished()), this, SLOT(TrayJobsFinished()) );
   if(DEBUG){ qDebug() << " - Done with init"; }
+  ui->actionOpen_as_Root->setVisible(LUtils::isValidBinary("qsudo"));
 }
 
 MainUI::~MainUI(){
@@ -344,7 +349,7 @@ void MainUI::RebuildDeviceMenu(){
   QStringList devs = LOS::ExternalDevicePaths();
     //Output Format: <type>::::<filesystem>::::<path>  (6/24/14 - version 0.4.0 )
         // <type> = [USB, HDRIVE, SDCARD, DVD, LVM, UNKNOWN]
-  qDebug() << "Externally-mounted devices:" << devs;
+  //qDebug() << "Externally-mounted devices:" << devs;
   //Now add them to the menu appropriately
   for(int i=0; i<devs.length(); i++){
     //Skip hidden mount points (usually only for system usage - not user browsing)
@@ -356,6 +361,7 @@ void MainUI::RebuildDeviceMenu(){
       if(path == "/"){ label = tr("Root"); }
       else{ label = path.section("/",-1).simplified(); }
     if(label.startsWith(".") ){ continue; }  //don't show hidden mountpoint (not usually user-browsable)
+    if(label.endsWith(".desktop")){ label = label.section(".desktop",0,-2); } //chop the shortcut suffix off the end
     //Create entry for this device
     if( !fs.simplified().isEmpty()){
       //Add filesystem type to the label
@@ -502,13 +508,29 @@ void MainUI::goToDevice(QAction *act){
   if(act==ui->actionScan){
     RebuildDeviceMenu();
   }else{
+    QString action = act->whatsThis();
+    if(action.endsWith(".desktop")){
+      //Find the actual action/directory within this shortcut
+      XDGDesktop xdg(action);
+      if(xdg.type==XDGDesktop::DIR){
+        action = xdg.path; //use the new path
+      }else{
+        //Need to run the full open routine on this shortcut
+        QProcess::startDetached("lumina-open", QStringList() << action);
+        return;
+      }
+    }else if( !QFileInfo(action).isDir() ){
+        //Need to run the full open routine on this file since it is not a directory
+        QProcess::startDetached("lumina-open", QStringList() << action);
+        return;
+    }
     DirWidget *dir = FindActiveBrowser();
     if(dir!=0){
-      dir->ChangeDir(act->whatsThis());
+      dir->ChangeDir(action);
       return;
     }
     //If no current dir could be found - open a new tab/column
-    OpenDirs(QStringList() << act->whatsThis() );
+    OpenDirs(QStringList() << action );
   }
 }
 
@@ -961,4 +983,9 @@ void MainUI::closeEvent(QCloseEvent *ev){
     }
   }
   QMainWindow::closeEvent(ev); //continue normal close routine
+}
+
+void MainUI::on_actionOpen_as_Root_triggered()
+{
+    ExternalProcess::launch("qsudo lumina-fm");
 }

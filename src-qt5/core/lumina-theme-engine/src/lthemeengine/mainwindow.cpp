@@ -55,7 +55,7 @@ void MainWindow::on_buttonBox_clicked(QAbstractButton *button){
       if(p) { p->writeSettings(); }
       }
     }
-  if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Cancel){
+  if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Cancel || id== QDialogButtonBox::Close){
     close();
     qApp->quit();
     }

@@ -78,33 +78,19 @@ int main(int argc, char ** argv)
     //Startup the session
     LSession a(argc, argv);
     if(!a.isPrimaryProcess()){ return 0; }
+    //Ensure that the user's config files exist
+    /*if( LSession::checkUserFiles() ){  //make sure to create any config files before creating the QApplication
+      qDebug() << "User files changed - restarting the desktop session";
+      return 787; //return special restart code
+    }*/
     //Setup the log file
-   /* logfile.setFileName( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs/runtime.log" );
-    qDebug() << "Lumina Log File:" << logfile.fileName();
-    if(QFile::exists(logfile.fileName()+".old")){ QFile::remove(logfile.fileName()+".old"); }
-    if(logfile.exists()){ QFile::rename(logfile.fileName(), logfile.fileName()+".old"); }
-      //Make sure the parent directory exists
-      if(!QFile::exists(QDir::homePath()+"/.lumina/logs")){
-        QDir dir;
-        dir.mkpath(QDir::homePath()+"/.lumina/logs");
-      }
-    logfile.open(QIODevice::WriteOnly | QIODevice::Append);*/
     QTime *timer=0;
     if(DEBUG){ timer = new QTime(); timer->start(); }
-    //Setup Log File
-    //qInstallMessageHandler(MessageOutput);
-    //if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
-    //LuminaThemeEngine theme(&a);
-    //QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
-    //if(DEBUG){ qDebug() << "Load Locale:" << timer->elapsed(); }
-    //LUtils::LoadTranslation(&a, "lumina-desktop");
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
-    //theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     //qDebug() << "Stopping the window manager";
     qDebug() << "Finished Closing Down Lumina";
-    //logfile.close();
     return retCode;
 }

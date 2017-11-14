@@ -1,0 +1,25 @@
+{
+  "name" : {
+    "default" : "Warp"
+  },
+  "description" : {
+    "default" : "Warp trail through the stars"
+  },
+  "author" : {
+    "name" : "Ken Moore",
+    "email" : "ken@ixsystems.com",
+    "website" : "https://github.com/beanpole135",
+    "company" : "iXsystems",
+    "company_website" : "http://ixsystems.com"
+  },
+  "meta" : {
+    "license" : "3-clause BSD",
+    "license_url" : "https://github.com/trueos/lumina/blob/master/LICENSE",
+    "copyright" : "Copyright (c) 2017, Ken Moore (ken@ixsystems.com)",
+    "date_created" : "20171012",
+    "version" : "1.0"
+  },
+  "qml" : {
+    "exec" : "qml_scripts/Warp.qml"
+  }
+}

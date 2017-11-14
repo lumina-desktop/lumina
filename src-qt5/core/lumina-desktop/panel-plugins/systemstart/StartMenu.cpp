@@ -138,7 +138,7 @@ void StartMenu::UpdateMenu(bool forceall){
 }
 
 void StartMenu::ReLoadQuickLaunch(){
-  emit UpdateQuickLaunch( LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList() );  
+  emit UpdateQuickLaunch( LSession::handle()->sessionSettings()->value("QuicklaunchApps",QStringList()).toStringList() );
 }
 
 void StartMenu::UpdateQuickLaunch(QString path, bool keep){
@@ -431,7 +431,9 @@ void StartMenu::UpdateFavs(){
     tmp.sort(); //Sort alphabetically by name (dirs/files)
     for(int i=0; i<tmp.length(); i++){
       if(type<2){ rest.removeAll(tmp[i]); }
-      if( !QFile::exists(tmp[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
+      if( !tmp[i].section("::::",2,-1).startsWith("/net/") ){
+        if( !QFile::exists(tmp[i].section("::::",2,-1)) ){ continue; } //invalid favorite - skip it
+      }
       ItemWidget *it = 0;
       if( tmp[i].section("::::",2,-1).endsWith(".desktop")){
         XDGDesktop item(tmp[i].section("::::",2,-1));
@@ -493,7 +495,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
     if(tot>1){
       ui->frame_wkspace->setVisible(true);
       int cur = LSession::handle()->XCB->CurrentWorkspace();
-      ui->label_wkspace->setText( QString(tr("Workspace %1/%2")).arg(QString::number(cur+1), QString::number(tot)) );	
+      ui->label_wkspace->setText( QString(tr("Workspace %1/%2")).arg(QString::number(cur+1), QString::number(tot)) );
     }else{
       ui->frame_wkspace->setVisible(false);
     }
@@ -635,14 +637,14 @@ void StartMenu::on_tool_mute_audio_clicked(){
     ui->slider_volume->setValue(0);
   }
 }
-	
+
 //Screen Brightness
 void StartMenu::on_slider_bright_valueChanged(int val){
   ui->label_bright->setText(QString::number(val)+"%");
   LOS::setScreenBrightness(val);
 }
 
-	
+
 //Workspace
 void StartMenu::on_tool_set_nextwkspace_clicked(){
   int cur = LSession::handle()->XCB->CurrentWorkspace();
@@ -663,10 +665,10 @@ void StartMenu::on_tool_set_prevwkspace_clicked(){
   if(cur<0){ cur = tot-1; } //back to end
   //qDebug() << " - New Current:" << cur;
   LSession::handle()->XCB->SetCurrentWorkspace(cur);
-  ui->label_wkspace->setText( QString(tr("Workspace %1/%2")).arg(QString::number(cur+1), QString::number(tot)) );	
+  ui->label_wkspace->setText( QString(tr("Workspace %1/%2")).arg(QString::number(cur+1), QString::number(tot)) );
 }
 
-	
+
 //Locale
 void StartMenu::on_combo_locale_currentIndexChanged(int){
   //Get the currently selected Locale
@@ -677,7 +679,7 @@ void StartMenu::on_combo_locale_currentIndexChanged(int){
   LSession::handle()->switchLocale(locale);
 }
 
-	
+
 //Search
 void StartMenu::on_line_search_textEdited(QString){
   if(searchTimer->isActive()){ searchTimer->stop(); }

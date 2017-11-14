@@ -23,7 +23,7 @@
 # =============================================
 isEmpty(OS){
   message("Build OS Info: $${QMAKE_HOST.os}, $${QMAKE_HOST.arch}, $${QMAKE_HOST.version_string}")
-
+  message(" - Detected Qt Version: $${QT_VERSION}")
   #Load the initial library/includefile search locations (more can be added in the OS-specific sections below)
   LIBS = -L$${PWD}/core/libLumina -L$$[QT_INSTALL_LIBS]
   INCLUDEPATH = $${PWD}/core/libLumina $$[QT_INSTALL_HEADERS] $$[QT_INSTALL_PREFIX]
@@ -75,12 +75,15 @@ isEmpty(OS){
     #Apply any special rules for particular distros
     equals(LINUX_DISTRO,"Fedora"){
       isEmpty(L_ETCDIR){ L_ETCDIR=/etc }
-      }
+    }
     equals(LINUX_DISTRO,"Gentoo"){
       isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
       isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/../etc }
       isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
-      }
+    }
+    equals(LINUX_DISTRO,"Ubuntu"){
+      INCLUDEPATH *= /usr/include/poppler/qt5
+    }
   }else{
     OS="Unknown";
   }

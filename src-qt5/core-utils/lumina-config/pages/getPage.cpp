@@ -20,6 +20,7 @@
 #include "page_session_locale.h"
 #include "page_session_options.h"
 #include "page_compton.h"
+#include "page_soundtheme.h"
 
 // #include "page_mouse_trueos.h"
 // #include "page_bluetooth_trueos.h"
@@ -51,6 +52,7 @@ QList<PAGEINFO> Pages::KnownPages(){
   list << Pages::PageInfo("interface-menu", QObject::tr("Menu"), QObject::tr("Menu Plugins"), "format-list-unordered",QObject::tr("Change what options are shown on the desktop context menu"), "interface", QStringList(), QStringList() << "desktop" << "menu" << "plugins" << "shortcuts");
   list << Pages::PageInfo("session-locale", QObject::tr("Localization"), QObject::tr("Locale Settings"), "preferences-desktop-locale",QObject::tr("Change the default locale settings for this user"), "user", QStringList(), QStringList() << "user"<<"locale"<<"language"<<"translations");
   list << Pages::PageInfo("session-options", QObject::tr("General Options"), QObject::tr("User Settings"), "configure",QObject::tr("Change basic user settings such as time/date formats"), "user", QStringList(), QStringList() << "user"<<"settings"<<"time"<<"date"<<"icon"<<"reset"<<"numlock"<<"clock");
+  list << Pages::PageInfo("soundtheme", QObject::tr("Sound Themeing"), QObject::tr("Theme"), "media-playlist-audio",QObject::tr("Change basic sound settings"), "session", QStringList(), QStringList() << "session"<<"settings"<<"sound"<<"theme");
  // list << Pages::PageInfo("mouse-settings", QObject::tr("TrueOS Mouse Settings"), QObject::tr("TrueOS Mouse Settings"), "preferences-desktop-mouse",QObject::tr("Adjust mouse devices"), "user", QStringList(), QStringList() << "user"<<"speed"<<"accel"<<"mouse");
  // list << Pages::PageInfo("bluetooth-settings", QObject::tr("TrueOS Bluetooth Settings"), QObject::tr("TrueOS Bluetooth Settings"), "preferences-desktop-bluetooth",QObject::tr("Setup Bluetooth devices"), "user", QStringList(), QStringList() << "user"<<"bluetooth"<<"audio");
 
@@ -72,7 +74,7 @@ PageWidget* Pages::GetNewPage(QString id, QWidget *parent){
   else if(id=="session-locale"){ page = new page_session_locale(parent); }
   else if(id=="session-options"){ page = new page_session_options(parent); }
   else if(id=="compton"){ page = new page_compton(parent); }
-
+  else if(id=="soundtheme"){ page = new page_soundtheme(parent); }
  // else if(id=="mouse-settings"){ page = new page_mouse_trueos(parent); }
  // else if(id=="bluetooth-settings"){ page = new page_bluetooth_trueos(parent); }
   //Return the main control_panel page as the fallback/default

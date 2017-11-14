@@ -29,6 +29,8 @@
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
+#define DEBUG 0
+
 void printUsageInfo(){
   qDebug() << "lumina-open: Application launcher for the Lumina Desktop Environment";
   qDebug() << "Description: Given a file (with absolute path) or URL, this utility will try to find the appropriate application with which to open the file. If the file is a *.desktop application shortcut, it will just start the application appropriately. It can also perform a few specific system operations if given special flags.";
@@ -48,7 +50,6 @@ void ShowErrorDialog(int argc, char **argv, QString message){
     //Setup the application
     QApplication App(argc, argv);
         App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    LuminaThemeEngine theme(&App);
 	LUtils::LoadTranslation(&App,"lumina-open");
     QMessageBox dlg(QMessageBox::Critical, QObject::tr("File Error"), message );
     dlg.exec();
@@ -68,7 +69,7 @@ void showOSD(int argc, char **argv, QString message){
      splash.setAlignment(Qt::AlignCenter);
 
 
-  qDebug() << "Display OSD";
+  if(DEBUG) qDebug() << "Display OSD";
   splash.setText(message);
   //Make sure it is centered on the current screen
   QPoint center = App.desktop()->screenGeometry(QCursor::pos()).center();
@@ -89,7 +90,7 @@ void LaunchAutoStart(){
     if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
     //Now run the command
     if(!cmd.isEmpty()){
-      qDebug() << " - Auto-Starting File:" << xdgapps[i]->filePath;
+      if(DEBUG) qDebug() << " - Auto-Starting File:" << xdgapps[i]->filePath;
       QProcess::startDetached(cmd);
     }
   }
@@ -98,130 +99,129 @@ void LaunchAutoStart(){
 }
 
 QString cmdFromUser(int argc, char **argv, QString inFile, QString extension, QString& path, bool showDLG=false){
-    //First check to see if there is a default for this extension
-    QString defApp;
-    if(extension=="mimetype"){
+  //First check to see if there is a default for this extension
+  QString defApp;
+  if(extension=="mimetype"){
 	//qDebug() << "inFile:" << inFile;
 	QStringList matches = LXDG::findAppMimeForFile(inFile, true).split("::::"); //allow multiple matches
-	qDebug() << "Mimetype Matches:" << matches;
+	if(DEBUG) qDebug() << "Mimetype Matches:" << matches;
 	for(int i=0; i<matches.length(); i++){
 	  defApp = LXDG::findDefaultAppForMime(matches[i]);
-          //qDebug() << "MimeType:" << matches[i] << defApp;
+    //qDebug() << "MimeType:" << matches[i] << defApp;
 	  if(!defApp.isEmpty()){ extension = matches[i]; break; }
 	  else if(i+1==matches.length()){ extension = matches[0]; }
 	}
-    }else{ defApp = LFileDialog::getDefaultApp(extension); }
-    qDebug() << "Mimetype:" << extension << "defApp:" << defApp;
-    if( !defApp.isEmpty() && !showDLG ){
-      if(defApp.endsWith(".desktop")){
-        XDGDesktop DF(defApp);
-        if(DF.isValid()){
-      	  QString exec = DF.getDesktopExec();
-      	  if(!exec.isEmpty()){
-      	    qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
-            if(!DF.path.isEmpty()){ path = DF.path; }
-            return exec;
-          }
+  }else{ defApp = LFileDialog::getDefaultApp(extension); }
+  if(DEBUG) qDebug() << "Mimetype:" << extension << "defApp:" << defApp;
+  if( !defApp.isEmpty() && !showDLG ){
+    if(defApp.endsWith(".desktop")){
+      XDGDesktop DF(defApp);
+      if(DF.isValid()){
+        QString exec = DF.getDesktopExec();
+        if(!exec.isEmpty()){
+          if(DEBUG) qDebug() << "[lumina-open] Using default application:" << DF.name << "File:" << inFile;
+          if(!DF.path.isEmpty()){ path = DF.path; }
+          return exec;
         }
-      }else{
-	//Only binary given
-	if(LUtils::isValidBinary(defApp)){
-	  qDebug() << "[lumina-open] Using default application:" << defApp << "File:" << inFile;
-	  return defApp; //just use the binary
-	}
       }
-      //invalid default - reset it and continue on
-      LFileDialog::setDefaultApp(extension, "");
-    }
-    //Final catch: directory given - no valid default found - use lumina-fm
-    if(extension=="inode/directory" && !showDLG){ return "lumina-fm"; }
-    //No default set -- Start up the application selection dialog
-    LTHEME::LoadCustomEnvSettings();
-    QApplication App(argc, argv);
-    App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-    LuminaThemeEngine theme(&App);
-      LUtils::LoadTranslation(&App,"lumina-open");
-
-    LFileDialog w;
-    if(extension=="email" || extension.startsWith("x-scheme-handler/")){
-      //URL
-      w.setFileInfo(inFile, extension, false);
     }else{
-      //File
-      if(inFile.endsWith("/")){ inFile.chop(1); }
-      w.setFileInfo(inFile.section("/",-1), extension, true);
+    //Only binary given
+      if(LUtils::isValidBinary(defApp)){
+      if(DEBUG) qDebug() << "[lumina-open] Using default application:" << defApp << "File:" << inFile;
+      return defApp; //just use the binary
     }
+  }
+    //invalid default - reset it and continue on
+    LFileDialog::setDefaultApp(extension, "");
+  }
+  //Final catch: directory given - no valid default found - use lumina-fm
+  if(extension=="inode/directory" && !showDLG){ return "lumina-fm"; }
+  //No default set -- Start up the application selection dialog
+  LTHEME::LoadCustomEnvSettings();
+  QApplication App(argc, argv);
+  App.setAttribute(Qt::AA_UseHighDpiPixmaps);
+  LUtils::LoadTranslation(&App,"lumina-open");
 
-    w.show();
-    App.exec();
-    if(!w.appSelected){ return ""; }
-    //Return the run path if appropriate
-    if(!w.appPath.isEmpty()){ path = w.appPath; }
-    //Just do the default application registration here for now
-    //  might move it to the runtime phase later after seeing that the app has successfully started
-    if(w.setDefault){
-      if(!w.appFile.isEmpty()){ LFileDialog::setDefaultApp(extension, w.appFile); }
-      else{ LFileDialog::setDefaultApp(extension, w.appExec); }
-    }
-    //Now return the resulting application command
-    return w.appExec;
+  LFileDialog w;
+  if(extension=="email" || extension.startsWith("x-scheme-handler/")){
+    //URL
+    w.setFileInfo(inFile, extension, false);
+  }else{
+    //File
+    if(inFile.endsWith("/")){ inFile.chop(1); }
+    w.setFileInfo(inFile.section("/",-1), extension, true);
+  }
+
+  w.show();
+  App.exec();
+  if(!w.appSelected){ return ""; }
+  //Return the run path if appropriate
+  if(!w.appPath.isEmpty()){ path = w.appPath; }
+  //Just do the default application registration here for now
+  //  might move it to the runtime phase later after seeing that the app has successfully started
+  if(w.setDefault){
+    if(!w.appFile.isEmpty()){ LFileDialog::setDefaultApp(extension, w.appFile); }
+    else{ LFileDialog::setDefaultApp(extension, w.appExec); }
+  }
+  //Now return the resulting application command
+  return w.appExec;
 }
 
 void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& path, bool& watch){
-  //Get the input file
-    //Make sure to load the proper system encoding first
-    LUtils::LoadTranslation(0,""); //bypass application modification
-  QString inFile, ActionID;
-  bool showDLG = false; //flag to bypass any default application setting
-  if(argc > 1){
-    for(int i=1; i<argc; i++){
-      if(QString(argv[i]).simplified() == "-select"){
-      	showDLG = true;
-      }else if(QString(argv[i]).simplified() == "-testcrash"){
-	//Test the crash handler
-	binary = "internalcrashtest"; watch=true;
-	return;
-      }else if(QString(argv[i]).simplified() == "-autostart-apps"){
-	LaunchAutoStart();
-	return;
-      }else if(QString(argv[i]).simplified() == "-volumeup"){
-	int vol = LOS::audioVolume()+5; //increase 5%
-	if(vol>100){ vol=100; }
-	LOS::setAudioVolume(vol);
-	showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
-	return;
-      }else if(QString(argv[i]).simplified() == "-volumedown"){
-	int vol = LOS::audioVolume()-5; //decrease 5%
-	if(vol<0){ vol=0; }
-	LOS::setAudioVolume(vol);
-	showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
-	return;
-      }else if(QString(argv[i]).simplified() == "-brightnessup"){
-	int bright = LOS::ScreenBrightness();
-	if(bright > 0){ //brightness control available
-	  bright = bright+5; //increase 5%
-	  if(bright>100){ bright = 100; }
-	  LOS::setScreenBrightness(bright);
-	  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
-	}
-	return;
-      }else if(QString(argv[i]).simplified() == "-brightnessdown"){
-	int bright = LOS::ScreenBrightness();
-	if(bright > 0){ //brightness control available
-	  bright = bright-5; //decrease 5%
-	  if(bright<0){ bright = 0; }
-	  LOS::setScreenBrightness(bright);
-	  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
-	}
-	return;
-      }else if( (QString(argv[i]).simplified() =="-action") && (argc>(i+1)) ){
-        ActionID = QString(argv[i+1]);
-	i++; //skip the next input
-      }else if(QString(argv[i]).simplified()=="-terminal"){
-        inFile = LXDG::findDefaultAppForMime("application/terminal");
-        break;
-      }else{
-        inFile = QString::fromLocal8Bit(argv[i]);
+//Get the input file
+  //Make sure to load the proper system encoding first
+  LUtils::LoadTranslation(0,""); //bypass application modification
+QString inFile, ActionID;
+bool showDLG = false; //flag to bypass any default application setting
+if(argc > 1){
+  for(int i=1; i<argc; i++){
+    if(QString(argv[i]).simplified() == "-select"){
+      showDLG = true;
+    }else if(QString(argv[i]).simplified() == "-testcrash"){
+//Test the crash handler
+binary = "internalcrashtest"; watch=true;
+return;
+    }else if(QString(argv[i]).simplified() == "-autostart-apps"){
+LaunchAutoStart();
+return;
+    }else if(QString(argv[i]).simplified() == "-volumeup"){
+int vol = LOS::audioVolume()+5; //increase 5%
+if(vol>100){ vol=100; }
+LOS::setAudioVolume(vol);
+showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
+return;
+    }else if(QString(argv[i]).simplified() == "-volumedown"){
+int vol = LOS::audioVolume()-5; //decrease 5%
+if(vol<0){ vol=0; }
+LOS::setAudioVolume(vol);
+showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
+return;
+    }else if(QString(argv[i]).simplified() == "-brightnessup"){
+int bright = LOS::ScreenBrightness();
+if(bright > 0){ //brightness control available
+  bright = bright+5; //increase 5%
+  if(bright>100){ bright = 100; }
+  LOS::setScreenBrightness(bright);
+  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
+}
+return;
+    }else if(QString(argv[i]).simplified() == "-brightnessdown"){
+int bright = LOS::ScreenBrightness();
+if(bright > 0){ //brightness control available
+  bright = bright-5; //decrease 5%
+  if(bright<0){ bright = 0; }
+  LOS::setScreenBrightness(bright);
+  showOSD(argc,argv, QString(QObject::tr("Screen Brightness %1%")).arg(QString::number(bright)) );
+}
+return;
+    }else if( (QString(argv[i]).simplified() =="-action") && (argc>(i+1)) ){
+      ActionID = QString(argv[i+1]);
+i++; //skip the next input
+    }else if(QString(argv[i]).simplified()=="-terminal"){
+      inFile = LXDG::findDefaultAppForMime("application/terminal");
+      break;
+    }else{
+      inFile = QString::fromLocal8Bit(argv[i]);
         break;
       }
     }
@@ -268,14 +268,14 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
     }
     switch(DF.type){
       case XDGDesktop::APP:
-        qDebug() << "Found .desktop application:" << ActionID;
+        if(DEBUG) qDebug() << "Found .desktop application:" << ActionID;
         if(!DF.exec.isEmpty()){
           cmd = DF.getDesktopExec(ActionID);
-          qDebug() << "Got command:" << cmd;
+          if(DEBUG) qDebug() << "Got command:" << cmd;
           if(!DF.path.isEmpty()){ path = DF.path; }
-	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
+          watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
-	  ShowErrorDialog( argc, argv, QString(QObject::tr("Application shortcut is missing the launching information (malformed shortcut): %1")).arg(inFile) );
+          ShowErrorDialog( argc, argv, QString(QObject::tr("Application shortcut is missing the launching information (malformed shortcut): %1")).arg(inFile) );
         }
         break;
       case XDGDesktop::LINK:
@@ -284,11 +284,11 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.url;
           cmd.clear();
           extension = inFile.section(":",0,0);
-	  if(extension=="file"){ extension = "http"; } //local file URL - Make sure we use the default browser for a LINK type
+        if(extension=="file"){ extension = "http"; } //local file URL - Make sure we use the default browser for a LINK type
           extension.prepend("x-scheme-handler/");
-	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
+          watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
-	  ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
+          ShowErrorDialog( argc, argv, QString(QObject::tr("URL shortcut is missing the URL: %1")).arg(inFile) );
         }
         break;
       case XDGDesktop::DIR:
@@ -297,14 +297,14 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
           inFile = DF.path;
           cmd.clear();
           extension = "inode/directory";
-	  watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
+          watch = DF.startupNotify || !DF.filePath.contains("/xdg/autostart/");
         }else{
-	  ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
+          ShowErrorDialog( argc, argv, QString(QObject::tr("Directory shortcut is missing the path to the directory: %1")).arg(inFile) );
         }
         break;
       default:
-	qDebug() << DF.type << DF.name << DF.icon << DF.exec;
-	ShowErrorDialog( argc, argv, QString(QObject::tr("Unknown type of shortcut : %1")).arg(inFile) );
+        if(DEBUG) qDebug() << DF.type << DF.name << DF.icon << DF.exec;
+        ShowErrorDialog( argc, argv, QString(QObject::tr("Unknown type of shortcut : %1")).arg(inFile) );
     }
   }
   if(cmd.isEmpty()){
@@ -344,7 +344,7 @@ void getCMD(int argc, char ** argv, QString& binary, QString& args, QString& pat
       cmd.append(" \""+inFile+"\"");
     }
   }
-  qDebug() << "Found Command:" << cmd << "Extension:" << extension;
+  if(DEBUG) qDebug() << "Found Command:" << cmd << "Extension:" << extension;
   //Clean up any leftover "Exec" field codes (should have already been replaced earlier)
   if(cmd.contains("%")){cmd = cmd.remove("%U").remove("%u").remove("%F").remove("%f").remove("%i").remove("%c").remove("%k").simplified(); }
   binary = cmd; //pass this string to the calling function
@@ -367,10 +367,10 @@ int main(int argc, char **argv){
   QString bin = cmd.section(" ",0,0);
   if( !LUtils::isValidBinary(bin) ){
     //invalid binary for some reason - open a dialog to warn the user instead
-    QMessageBox::warning(0, QObject::tr("Binary Missing"), QString(QObject::tr("Could not find \"%1\". Please ensure it is installed first.")).arg(bin)+"\n\n"+cmd);
+    ShowErrorDialog(argc,argv, QString(QObject::tr("Could not find \"%1\". Please ensure it is installed first.")).arg(bin)+"\n\n"+cmd);
     return 1;
   }
-  qDebug() << "[lumina-open] Running Cmd:" << cmd;
+  if(DEBUG) qDebug() << "[lumina-open] Running Cmd:" << cmd;
   int retcode = 0;
   //Provide an override file for never watching running processes.
   if(watch){ watch = !QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch" ); }
@@ -391,12 +391,12 @@ int main(int argc, char **argv){
     }else{
       QProcess *p = new QProcess();
       p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-      if(!path.isEmpty() && QFile::exists(path)){ 
+      if(!path.isEmpty() && QFile::exists(path)){
         //qDebug() << " - Setting working path:" << path;
-        p->setWorkingDirectory(path); 
+        p->setWorkingDirectory(path);
       }
       p->start(cmd);
-      
+
       //Now check up on it once every minute until it is finished
       while(!p->waitForFinished(60000)){
         //qDebug() << "[lumina-open] process check:" << p->state();
@@ -410,19 +410,17 @@ int main(int argc, char **argv){
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
     if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)
     if( (retcode < 0) && watch){ //-1 is used internally for crashed processes - most apps return >=0
-      
       qDebug() << "[lumina-open] Application Error:" << retcode;
-        //Setup the application
-        QApplication App(argc, argv);
-        App.setAttribute(Qt::AA_UseHighDpiPixmaps);
-        LuminaThemeEngine theme(&App);
-	  LUtils::LoadTranslation(&App,"lumina-open");
+      //Setup the application
+      QApplication App(argc, argv);
+      App.setAttribute(Qt::AA_UseHighDpiPixmaps);
+      LUtils::LoadTranslation(&App,"lumina-open");
 	//App.setApplicationName("LuminaOpen");
-        QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
-	  dlg.setWindowFlags(Qt::Window);
-          if(!log.isEmpty()){ dlg.setDetailedText(log); }
-          dlg.exec();
-      }
+      QMessageBox dlg(QMessageBox::Critical, QObject::tr("Application Error"), QObject::tr("The following application experienced an error and needed to close:")+"\n\n"+cmd );
+      dlg.setWindowFlags(Qt::Window);
+      if(!log.isEmpty()){ dlg.setDetailedText(log); }
+      dlg.exec();
+    }
   }
   return retcode;
 }

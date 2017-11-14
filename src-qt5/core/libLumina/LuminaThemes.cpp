@@ -25,42 +25,42 @@
 
 QStringList LTHEME::availableSystemThemes(){
   //returns: [name::::path] for each item
-  QDir dir(LOS::LuminaShare()+"themes");
-  QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name);
+  QDir dir(LOS::LuminaShare()+"../lthemeengine/desktop_qss");
+  QStringList list = dir.entryList(QStringList() <<"*.qss", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
-    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+    list[i] = list[i].section(".qss",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
   return list;
 }
 
 QStringList LTHEME::availableLocalThemes(){	//returns: [name::::path] for each item
-  QDir dir( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes");
-  QStringList list = dir.entryList(QStringList() <<"*.qss.template", QDir::Files, QDir::Name);
+  QDir dir( QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/desktop_qss");
+  QStringList list = dir.entryList(QStringList() <<"*.qss", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
-    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+    list[i] = list[i].section(".qss",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
   return list;
 }
 
 QStringList LTHEME::availableSystemColors(){ 	//returns: [name::::path] for each item
   //returns: [name::::path] for each item
-  QDir dir(LOS::LuminaShare()+"colors");
-  QStringList list = dir.entryList(QStringList() <<"*.qss.colors", QDir::Files, QDir::Name);
+  QDir dir(LOS::LuminaShare()+"../lthemeengine/colors");
+  QStringList list = dir.entryList(QStringList() <<"*.conf", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
-    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+    list[i] = list[i].section(".conf",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
   return list;
 }
 
 QStringList LTHEME::availableLocalColors(){ 	//returns: [name::::path] for each item
-  QDir dir(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors");
-  QStringList list = dir.entryList(QStringList() <<"*.qss.colors", QDir::Files, QDir::Name);
+  QDir dir(QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/colors");
+  QStringList list = dir.entryList(QStringList() <<"*.conf", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
-    list[i] = list[i].section(".qss.",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+    list[i] = list[i].section(".conf",0,0)+"::::"+dir.absoluteFilePath(list[i]);
   }
   return list;
 }
@@ -122,15 +122,21 @@ QStringList LTHEME::availableSystemCursors(){	//returns: [name] for each item
 
 //Save a new theme/color file
 bool LTHEME::saveLocalTheme(QString name, QStringList contents){
-  QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes/";
-  if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
-  return LUtils::writeFile(localdir+name+".qss.template", contents, true);
+  Q_UNUSED(name);
+  Q_UNUSED(contents);
+  return false; //old format - do not use!!
+  //QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themes/";
+  //if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
+  //return LUtils::writeFile(localdir+name+".qss.template", contents, true);
 }
 
 bool LTHEME::saveLocalColors(QString name, QStringList contents){
-  QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors/";
-  if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
-  return LUtils::writeFile(localdir+name+".qss.colors", contents, true);
+  Q_UNUSED(name);
+  Q_UNUSED(contents);
+  return false; //old format - do not use!!
+ // QString localdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/colors/";
+  //if(!QFile::exists(localdir)){  QDir dir; dir.mkpath(localdir); }
+  //return LUtils::writeFile(localdir+name+".qss.colors", contents, true);
 }
 
 //Return the currently selected Theme/Colors/Icons
@@ -180,23 +186,25 @@ QString LTHEME::currentCursor(){
 
   //Change the current Theme/Colors/Icons
 bool LTHEME::setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize){
+  Q_UNUSED(font);
+  Q_UNUSED(fontsize);
   //QIcon::setThemeName(iconname);
+  //Save these settings into the theme engine settings
   QSettings engineset("lthemeengine","lthemeengine");
   engineset.setValue("Appearance/icon_theme", iconname);
-  //engineset.setValue("Appearance/color_scheme_path", colorpath); //re-enable this once the color scheme has been synced with lthemeengine
-  //Need to add theme path saving here too later
-
-
+  engineset.setValue("Appearance/custom_palette", QFile::exists(colorpath) );
+  engineset.setValue("Appearance/color_scheme_path", colorpath);
+  engineset.setValue("Interface/desktop_stylesheets", QStringList() << themepath);
+  return true;
   //Now save the theme settings file
-  QStringList contents;
+  /*QStringList contents;
 	contents << "THEMEFILE="+themepath;
 	contents << "COLORFILE="+colorpath;
 	contents << "ICONTHEME="+iconname;
 	contents << "FONTFAMILY="+font;
 	contents << "FONTSIZE="+fontsize;
   bool ok = LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg", contents, true);
-
-  return ok;
+  return ok;*/
 }
 
 //Change the current Cursor Theme
@@ -299,13 +307,13 @@ QStringList LTHEME::cursorInformation(QString name){
     }
   }
   return out;
-}	
+}
 
 QStringList LTHEME::CustomEnvSettings(bool useronly){ //view all the key=value settings
   QStringList newinfo;
   if(!useronly){
     QStringList sysfiles;  sysfiles << L_ETCDIR+"/lumina_environment.conf" << LOS::LuminaShare()+"lumina_environment.conf";
-    for(int i=0; i<sysfiles.length() && newinfo.isEmpty(); i++){ 
+    for(int i=0; i<sysfiles.length() && newinfo.isEmpty(); i++){
       newinfo << LUtils::readFile(sysfiles[i]);
     }
   }

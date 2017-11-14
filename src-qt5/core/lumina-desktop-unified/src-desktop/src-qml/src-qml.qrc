@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="qml">
+    <file>RootDesktop.qml</file>
+    <file>ContextMenu.qml</file>
+    <file>WallpaperImage.qml</file>
+  </qresource>
+</RCC>

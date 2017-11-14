@@ -104,7 +104,7 @@ void LSession::setupSession(){
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   //checkUserFiles(); //adds these files to the watcher as well
-
+  Lumina::ROOTWIN->start();
   //Initialize the internal variables
   //DESKTOPS.clear();
 
@@ -116,7 +116,6 @@ void LSession::setupSession(){
   if(DEBUG){ qDebug() << " - Populate App List:" << timer->elapsed();}
   Lumina::APPLIST->updateList();
   //appmenu = new AppMenu();
-
     splash.showScreen("menus");
   //if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
   //settingsmenu = new SettingsMenu();
@@ -129,15 +128,16 @@ void LSession::setupSession(){
   QList<QScreen*> scrns= QApplication::screens();
   for(int i=0; i<scrns.length(); i++){
     qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
-    Lumina::ROOTWIN->ChangeWallpaper(scrns[i]->name(), RootWindow::Stretch, LOS::LuminaShare()+"desktop-background.jpg");
+    RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(),QUrl::fromLocalFile(LOS::LuminaShare()+"desktop-background.jpg").toString() );
   }
-  Lumina::ROOTWIN->start();
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
   Lumina::NWS->setRoot_currentWorkspace(0);
+
   if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
-  DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
+
+  /*DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
   connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
-  cmenu->start();
+  cmenu->start();*/
 
   //desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   //updateDesktops();
@@ -228,7 +228,9 @@ void LSession::setupGlobalConnections(){
   //Root window connections
   connect(Lumina::ROOTWIN, SIGNAL(RegisterVirtualRoot(WId)), Lumina::NWS, SLOT(RegisterVirtualRoot(WId)) );
   connect(Lumina::ROOTWIN, SIGNAL(RootResized(QRect)), Lumina::NWS, SLOT(setRoot_desktopGeometry(QRect)) );
-  connect(Lumina::ROOTWIN, SIGNAL(MouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
+  connect(RootDesktopObject::instance(), SIGNAL(mouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
+  connect(RootDesktopObject::instance(), SIGNAL(startLogout()), this, SLOT(StartLogout()) );
+  connect(RootDesktopObject::instance(), SIGNAL(lockScreen()), Lumina::SS, SLOT(LockScreenNow()) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
@@ -356,12 +358,12 @@ void LSession::launchStartupApps(){
 void LSession::checkUserFiles(){
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
-  QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
+  /*QString OVS = DesktopSettings::instance()->value(DesktopSettings::System,"DesktopVersion","0").toString(); //Old Version String
   bool changed = LDesktopUtils::checkUserFiles(OVS);
   if(changed){
     //Save the current version of the session to the settings file (for next time)
     DesktopSettings::instance()->setValue(DesktopSettings::System,"DesktopVersion", this->applicationVersion());
-  }
+  }*/
 }
 
 

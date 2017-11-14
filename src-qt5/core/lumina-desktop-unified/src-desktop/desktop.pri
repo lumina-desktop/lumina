@@ -1,6 +1,11 @@
-SOURCES *= $${PWD}/ContextMenu.cpp
+QT *= gui widgets qml quick
 
-HEADERS *= $${PWD}/ContextMenu.h
+SOURCES *= $${PWD}/RootWindow.cpp
+
+HEADERS *= $${PWD}/RootWindow.h
 
 #update the includepath so we can just #include as needed without paths
-INCLUDEPATH *= ${PWD}
+INCLUDEPATH *= $${PWD}
+
+include($${PWD}/src-cpp/src-cpp.pri)
+include($${PWD}/src-qml/src-qml.pri)

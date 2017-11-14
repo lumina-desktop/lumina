@@ -73,9 +73,9 @@ private:
 	Ui::DirWidget *ui;
 	BrowserWidget *BW, *RCBW; //Main BrowserWidget and right-column browser widget
 	QString ID, cBID; //unique ID assigned by the parent, and currently active browser widget
-	QString normalbasedir, snapbasedir, snaprelpath; //for maintaining directory context while moving between snapshots
+	QString normalbasedir, snapbasedir, snaprelpath, rootfmdir; //for maintaining directory context while moving between snapshots
 	QStringList snapshots, needThumbs, tmpSel;
-  QSettings *settings;
+	QSettings *settings;
 	bool canmodify;
 
 	//The Toolbar and associated items
@@ -83,10 +83,10 @@ private:
 	QLineEdit *line_dir;
 
 	//The context menu and associated items
-    QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
+	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
 
 	//The keyboard shortcuts for context menu items
-    QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
+	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
         *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract; //, *kArchive;
 
 	//Functions for internal use
@@ -129,6 +129,7 @@ private slots:
 	void fileCheckSums();
 	void fileProperties();
 	void openTerminal();
+    void openRootFM();
 
 
 	//Browser Functions
