@@ -342,7 +342,7 @@
     <message>
         <location filename="../MainUI.cpp" line="310"/>
         <source>Link To: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuoroda į: %1</translation>
     </message>
 </context>
 <context>
@@ -355,7 +355,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Programavimas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
@@ -400,7 +400,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Paslaugų programos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
@@ -410,7 +410,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesurūšiuota</translation>
     </message>
 </context>
 <context>
@@ -428,7 +428,7 @@
     <message>
         <location filename="../imgDialog.ui" line="54"/>
         <source>Block Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloko dydis</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="84"/>
@@ -443,7 +443,7 @@
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation type="unfinished"></translation>
+        <translation>Išvalyti įrenginyje visą papildomą vietą (conv = sync)</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
