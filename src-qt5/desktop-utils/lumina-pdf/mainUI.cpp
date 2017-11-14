@@ -82,6 +82,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Now set the default state of the menu's and actions
   ui->menuStart_Presentation->setEnabled(false);
   ui->actionStop_Presentation->setEnabled(false);
+  this->grabKeyboard();
 }
 
 MainUI::~MainUI(){
@@ -187,7 +188,7 @@ void MainUI::startPresentation(bool atStart){
   QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
   if(cancelled){ return;}
   int page = 0;
-  if(!atStart){ page = CurrentPage; }
+  if(!atStart){ page = WIDGET->currentPage()-1; } //currentPage() starts at 1 rather than 0
   //PDPI = QSize(SCALEFACTOR*screen->physicalDotsPerInchX(), SCALEFACTOR*screen->physicalDotsPerInchY());
   //Now create the full-screen window on the selected screen
   if(presentationLabel == 0){
@@ -209,13 +210,15 @@ void MainUI::startPresentation(bool atStart){
 }
 
 void MainUI::ShowPage(int page){
-  if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   //Check for valid document/page
-  //qDebug() << "Load Page:" << page << "/" << numPages-1;
-  if(page<0 || page > numPages ){
+  //qDebug() << "Load Page:" << page << "/" << numPages << "Index:" << page;
+  if(page<0 || page > numPages || (page==numPages && CurrentPage==page) ){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
+  WIDGET->setCurrentPage(page+1); //page numbers start at 1 for this widget
+  //Stop here if no presentation currently running
+  if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   CurrentPage = page;
   QImage PAGEIMAGE;
   if(page<numPages){ PAGEIMAGE = loadingHash[page]; }
@@ -244,6 +247,7 @@ void MainUI::startLoadingPages(QPrinter *printer){
   if(numPages>0){ return; } //currently loaded[ing]
   //qDebug() << " - Start Loading Pages";
   numPages = DOC->numPages();
+  //qDebug() << "numPages:" << numPages;
   progress->setRange(0,numPages);
   progress->setValue(0);
   progAct->setVisible(true);

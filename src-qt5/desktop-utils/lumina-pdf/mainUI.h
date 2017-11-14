@@ -75,19 +75,16 @@ signals:
 protected:
 	void keyPressEvent(QKeyEvent *event){
 	  //See if this is one of the special hotkeys and act appropriately
-	  // NOTE: Some of this is duplicated with the QShortcut definitions (for non-presentation mode)
-	  //  This routine does not always work for the main window viewer due to differing widget focus policies
-	  if(presentationLabel!=0 && presentationLabel->isVisible()){
 	    //qDebug() << "Got Key Press:";
 	    if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
 	      //qDebug() << " - Escape/Backspace";
 	      endPresentation();
-	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space){
+	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
 	      //qDebug() << " - Right/Down/Spacebar";
-	      ShowPage( CurrentPage+1 );
-	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up){
+	      ShowPage( WIDGET->currentPage() ); //currentPage() starts at 1 rather than 0
+	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up || event->key()==Qt::Key_PageUp){
 	      //qDebug() << " - Left/Up";
-	      ShowPage( CurrentPage-1 );
+	      ShowPage( WIDGET->currentPage()-2 ); //currentPage() starts at 1 rather than 0
 	    }else if(event->key()==Qt::Key_Home){
 	      //qDebug() << " - Home";
 	      ShowPage(0); //go to the first page
@@ -100,9 +97,6 @@ protected:
             }else{
 	      QMainWindow::keyPressEvent(event);
 	    }
-	  }else{
-	    QMainWindow::keyPressEvent(event);
-	  }
 	}
 };
 #endif
