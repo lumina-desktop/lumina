@@ -53,11 +53,9 @@ Occasionally there may be patches committed for particular versions which are no
 
 Translations <a name="translations"></a>
 ----
-**Version 1.0.0 and older**
+**Legacy Versions (1.0.0 and older)**
 
-All the translation files for Lumina are available through the TrueOS pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
-
-Translation Website URL: http://translate.pcbsd.org/
+All the translation files for Lumina are available through the trueos/lumina-i18n reposotiry (Qt5+ only). Please follow the directions in that repository for installing localization files.
 
 **Version 1.1.0+**
 
@@ -67,7 +65,7 @@ To submit translations, please use the online [TrueOS Translation System](http:/
 
 How to file bug reports or feature requests <a name="filebugs"></a>
 ----
-Please create a ticket through the GitHub issues tracker on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
+Please create a ticket through the [GitHub issues tracker](https://github.com/trueos/lumina/issues) on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed as quickly as possible.
 
 
 How to build from source <a name="buildfromsource"></a>
