@@ -23,6 +23,7 @@
 #include <LuminaXDG.h>
 #include <LUtils.h>
 #include <ExternalProcess.h>
+#include <QFileDialog>
 
 #include "../ScrollDialog.h"
 
@@ -245,7 +246,7 @@ void DirWidget::createShortcuts(){
   kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
   kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
   kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
-  //kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
+  kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
   kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
   kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
   kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
@@ -560,7 +561,7 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
       if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-      //if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
+      if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
 
   }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
@@ -864,13 +865,15 @@ void DirWidget::autoExtractFiles(){
   ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
 }
 
-/*
- * void DirWidget::autoArchiveFiles(){
+
+void DirWidget::autoArchiveFiles(){
   QStringList files = currentBrowser()->currentSelection();
-  qDebug() << "Starting auto-archival:" << files;
-  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << files);
+  QString archive = QFileDialog::getSaveFileName(this, tr("Select Archive"), currentBrowser()->currentDirectory()+"/archive-"+QDateTime::currentDateTime().toString("yyyyMMdd_hhmm")+".tar.gz", currentBrowser()->currentDirectory());
+  if(archive.isEmpty()){ return; } //cancelled
+  qDebug() << "Starting auto-archival:" << archive << files;
+  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << archive << files);
 }
-*/
+
 
 //====================
 //         PROTECTED
