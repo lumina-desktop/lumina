@@ -19,7 +19,7 @@
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nėra paleisto vaizdo įrašo)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora paskyros prisijungimas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Valdymo įgaliotojo serverio URL</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
@@ -224,22 +224,22 @@
     <message>
         <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš esamo atlikėjo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti stotį iš esamo atlikėjo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš esamos dainos</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti stotį iš esamos dainos</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="808"/>
@@ -249,23 +249,23 @@
     <message>
         <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti...</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti naujos stoties</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora radijas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Transliuoti iš Pandora radijo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="839"/>
@@ -285,7 +285,7 @@
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation type="unfinished"></translation>
+        <translation>Transliuoti muziką iš Pandora internetinio radijo paslaugos</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
@@ -316,32 +316,33 @@
         <location filename="../mainUI.cpp" line="471"/>
         <source>[PLAYBACK ERROR]
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[ATKŪRIMO KLAIDA]
+%1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="488"/>
         <source>Media Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medija įkeliama...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="490"/>
         <source>Media Stalled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medija atitrūko...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="492"/>
         <source>Media Buffering...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medijos buferizacija...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Pandora: Create Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora: Sukurti stotį</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Search Term</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškomas žodis</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="654"/>
@@ -359,7 +360,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="358"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko rasti jokių atitikmenų. Pabandykite kitokį ieškomą žodį</translation>
     </message>
 </context>
 </TS>
