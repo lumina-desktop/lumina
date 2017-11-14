@@ -95,8 +95,9 @@ void MainUI::LoadArguments(QStringList args){
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
     connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }else if(action==2){
-    aaFileList.clear();
-    for(int j=1; j<files.length(); j++){ aaFileList << files[j]; }
+    aaFileList = files;
+    aaFileList.removeFirst();
+    //for(int j=1; j<files.length(); j++){ aaFileList << files[j]; }
     qDebug() << "AA Files:" << aaFileList;
     connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoArchiveFiles()) );
     connect(BACKEND, SIGNAL(ArchivalSuccessful()), delayClose, SLOT(start()) );
