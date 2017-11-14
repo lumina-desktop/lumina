@@ -13,6 +13,8 @@
 #include <LUtils.h>
 #include <LuminaOS.h>
 
+#define USE_VIDEO_LABEL 0
+
 BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
   this->setLayout( new QVBoxLayout(this) );
@@ -38,7 +40,9 @@ BrowserWidget::~BrowserWidget(){
 }
 
 void BrowserWidget::changeDirectory(QString dir){
-  videoMap.clear();
+  QStringList vids = videoMap.keys();
+  for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
+  //videoMap.clear();
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
 
@@ -277,6 +281,7 @@ void BrowserWidget::clearItems(){
   if(listWidget!=0){ listWidget->clear(); }
   else if(treeWidget!=0){ treeWidget->clear(); }
   freshload = true;
+  videoMap.clear();
 }
 
 void BrowserWidget::itemRemoved(QString item){
@@ -352,13 +357,13 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     }else{
       if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) {
         it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
-      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()) {
+      }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && !videoMap.contains(info->absoluteFilePath()) ) {
         it = new CQTreeWidgetItem(treeWidget);
         treeWidget->addTopLevelItem(it);
         LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), hasThumbnails(), treeWidget);
         videoMap.insert(info->absoluteFilePath(), QPair<QTreeWidgetItem*,LVideoWidget*>(it, widget));
         treeWidget->setItemWidget(it, 0, widget);
-      }else if(info->isVideo()) {
+      }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && videoMap.contains(info->absoluteFilePath()) ) {
         it = videoMap[info->absoluteFilePath()].first;
         LVideoWidget *widget = videoMap[info->absoluteFilePath()].second;
         widget->setIconSize(treeWidget->iconSize());
@@ -370,8 +375,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       }
     }
     //Now set/update all the data
-    if(!info->isVideo())
-      it->setIcon(0, ico);
+    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){ it->setIcon(0, ico); }
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
