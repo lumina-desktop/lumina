@@ -6,67 +6,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Programavimas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Švietimas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Žaidimai</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinklas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Raštinė</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Mokslas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Paslaugų programos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesurūšiuota</translation>
     </message>
 </context>
 <context>

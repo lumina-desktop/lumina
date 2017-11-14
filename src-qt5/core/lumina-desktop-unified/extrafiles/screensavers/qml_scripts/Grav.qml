@@ -8,38 +8,74 @@ Rectangle {
   height: 600
   color: "black"
 
+  //TODO Add orbital trails option
+
   //Between 5 and 15 planets, read from settings
-  property var planets: Math.round(( Math.random() * 10 ) + 5 )
+  property int planets: Math.round(( Math.random() * 10 ) + 5 )
+  property int cx: Math.round(width/2)
+  property int cy: Math.round(height/2)
 
   //Create planets
   Repeater {
-     model: planets
+    id: planetRepeater
+    model: planets
 
-     Rectangle {
-       id : index
-       parent: canvas
+    Rectangle {
+      id : index
+      parent: canvas
 
-       //Place the planet randomly on the canvas, but not too close to the edge
-       x: Math.round(Math.random()*canvas.width)
+      //Creates random distance for elipse
+      property double c: Math.random() * 250
+      property double b: Math.random() * 150 + c
+      property double a: Math.sqrt(b*b+c*c)
+      //Random angle of rotation
+      property double th: Math.random() * Math.PI 
 
-       //Check to make sure the planets are not too close to the sun (outside a 50px radius)
-       //while( Math.round(Math.random()*canvas.width) < (width/2 + 50) or Math.round(Math.random()*canvas.width) > (width/2 - 50))
+      //Calculates starting position
+      x: Math.round(cx + a * Math.cos(th))
+      y: Math.round(cy + b * Math.sin(th))
 
-       y: Math.round(Math.random()*canvas.height)
+      //Planet size between 14 and 32 pixels
+      width: Math.round(1.75 * (((Math.random() * 10) + 8 )))
+      height: width
 
+      //Make each rectangle look circular
+      radius: width / 2
 
-       //Create the orbit animation
+      //Give each planet a random color, semi-transparent
+      color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.5)
 
-       //Planet size between 14 and 32 pixels
-       width: Math.round(1.75 * (((Math.random() * 10) + 8 )))
-       height: width
+      Timer {
+        //Each planet updates between 1ms and 51ms (smaller times=faster)
+        interval: Math.round(Math.random() * 50 ) + 1
+        repeat: true
+        running: true
+        property bool starting: true
+        property int time: 0
 
-       //Make each rectangle look circular
-       radius: width / 2
+        onTriggered: {
+          //Move a planet 80 pixels away from the sun if the planet is too close
+          if(starting) {
+            if(x > cx && Math.abs(cx-x) < 80) {
+              x+=80
+            }else if(x < cx && Math.abs(cx-x) < 80) {
+              x-=80
+            }
 
-       //Give each planet a random color, semi-transparent
-       color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.5)
-     }
+            if(y > cy && Math.abs(cy-y) < 80) {
+              y+=80
+            }else if(y < cy && Math.abs(cy-y) < 80) {
+              y-=80
+            }
+            starting = false;
+          }
+          //Parametric equation that calculates the position of the general ellipse. Completes a loop ever 314 cycles. Credit to 
+          x = cx+a*Math.cos(2*Math.PI*(time/314.0))*Math.cos(th) - b*Math.sin(2*Math.PI*(time/314.0))*Math.sin(th)
+          y = cy+a*Math.cos(2*Math.PI*(time/314.0))*Math.sin(th) + b*Math.sin(2*Math.PI*(time/314.0))*Math.cos(th)
+          time++;
+        }
+      }
+    }
   }
 
   //Create the star
@@ -47,9 +83,9 @@ Rectangle {
     id: star
     parent: canvas
 
-    //Centers in star in the center of the canvas 
-    x: Math.round(canvas.width / 2)
-    y: Math.round(canvas.height / 2)
+    //Centers in star in the center of the canvas, with an offset to center the animation
+    x: cx - 30
+    y: cy - 30
 
     width: 60 
     height: width 
@@ -67,8 +103,6 @@ Rectangle {
       PropertyAnimation { duration: 2000; to: 60 }
     }
 
-    //border.width: 4
-    //border.color: "blue"
     color: "black"
     radius: width / 2
 
@@ -86,21 +120,4 @@ Rectangle {
     } 
 
   }
-
-  /*Motion timer
-  Timer {
-    interval: 1
-    repeat: true
-    running: true
-    property bool starting: true
-
-    onTriggered: {
-      if(starting) { interval = 3010; starting = false; }
-
-    }
-  }*/
-  
-  Component.onCompleted: {
-    //console.log(Math.random())
-  } 
 }

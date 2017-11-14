@@ -27,6 +27,7 @@ Other Files that get installed if "core" is built directly:
    * svg
    * widgets
    * x11extras
+   * NOTE: Qt5 platform theme and developer libraries are also required to build the Lumina theme engine plugin ("qtbase5-*" on Ubuntu 17.10)
 2. X11 Libraries
    * libXdamage
 3. XCB Libraries
