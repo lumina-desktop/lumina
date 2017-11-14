@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "ResizeMenu.h"
+#include <QDebug>
 
 // =======================
 //      RESIZEMENU CLASS
@@ -21,7 +22,7 @@ ResizeMenu::ResizeMenu(QWidget *parent) : QMenu(parent){
 }
 
 ResizeMenu::~ResizeMenu(){
-	
+
 }
 
 void ResizeMenu::setContents(QWidget *con){
@@ -30,6 +31,15 @@ void ResizeMenu::setContents(QWidget *con){
   this->addAction(cAct);
   contents = con; //save for later
   contents->setCursor(Qt::ArrowCursor);
+  resyncSize();
+}
+
+void ResizeMenu::resyncSize(){
+  if(contents==0){ return; }
+  qDebug() << "Resync Size:" << this->size() << contents->size();
+  this->resize(contents->size());
+  qDebug() << " - after menu resize:" << this->size() << contents->size();
+  emit MenuResized(this->size());
 }
 
 void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
@@ -46,21 +56,21 @@ void ResizeMenu::mouseMoveEvent(QMouseEvent *ev){
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
 	handled = true;
-        break;	    
+        break;
     case BOTTOM:
 	if(gpos.y() <= geom.top()+1){ break; }
 	geom.setBottom( gpos.y());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
 	handled = true;
-        break;	    
+        break;
     case LEFT:
 	if(gpos.x() >= geom.right()-1){ break; }
 	geom.setLeft(gpos.x());
         this->setGeometry(geom);
         if(contents!=0){ contents->setFixedSize(QSize(geom.width()-2, geom.height()-2));}
 	handled = true;
-        break;	    
+        break;
     case RIGHT:
 	if(gpos.x() <= geom.left()+1){ break; }
 	geom.setRight(gpos.x());

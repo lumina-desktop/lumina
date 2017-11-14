@@ -63,7 +63,7 @@ void StartMenu::UpdateAll(){
   ui->tool_restart->setIcon(LXDG::findIcon("system-reboot",""));
   ui->tool_shutdown->setIcon(LXDG::findIcon("system-shutdown",""));
   ui->tool_suspend->setIcon(LXDG::findIcon("system-suspend",""));
- 
+
   //Update Visibility of system/session/OS options
   // -- Control Panel
   QString tmp = LOS::ControlPanelShortcut();
