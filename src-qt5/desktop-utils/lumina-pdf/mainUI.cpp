@@ -131,7 +131,7 @@ void MainUI::loadFile(QString path){
 	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
-    qDebug() << " - Document Setup : start loading pages now";
+    //qDebug() << " - Document Setup : start loading pages now";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 

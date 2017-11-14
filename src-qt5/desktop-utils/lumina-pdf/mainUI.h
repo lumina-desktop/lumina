@@ -15,6 +15,8 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QWheelEvent>
+#include <QApplication>
 
 #include <poppler-qt5.h>
 
@@ -76,11 +78,25 @@ protected:
 	void keyPressEvent(QKeyEvent *event){
 	  //See if this is one of the special hotkeys and act appropriately
 	    //qDebug() << "Got Key Press:";
+	  bool inPresentation = (presentationLabel!=0);
+ 	  if(!inPresentation){
+	    //Alternate functionality when **not** in presentation mode
+	    /*if(event->key()==Qt::Key_Down){
+	      qDebug() << "Send Wheel Event";
+ 	      QWheelEvent event( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
+	      QApplication::sendEvent(WIDGET, &event);
+	      //WIDGET->scrollDown();
+ 	      return;
+	    }else if(event->key()==Qt::Key_Up){
+	      return;
+	    }*/
+	  }
+
 	    if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
 	      //qDebug() << " - Escape/Backspace";
 	      endPresentation();
 	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
-	      //qDebug() << " - Right/Down/Spacebar";
+	      //qDebug() << " - Right/Down/Spacebar" << inPresentation;
 	      ShowPage( WIDGET->currentPage() ); //currentPage() starts at 1 rather than 0
 	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up || event->key()==Qt::Key_PageUp){
 	      //qDebug() << " - Left/Up";
