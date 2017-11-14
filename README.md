@@ -10,10 +10,10 @@ For additional information about the project, please browse the official website
 **Lumina Project Info: Table of Contents**
 
 - [Description](#description)
-	- [Latest Versions](#latestversions)
-	- [Translations](#translations)
-	- [How to file bug reports or feature requests](#filebugs)
-	- [How to build from source](#buildfromsource)
+- [Latest Versions](#latestversions)
+- [Translations](#translations)
+- [How to file bug reports or feature requests](#filebugs)
+- [How to build from source](#buildfromsource)
 
 **General Project Information: Table of Contents**
 
@@ -36,6 +36,11 @@ Description <a name="description"></a>
 =====
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
+
+Supported operating systems include (but are not limited to):
+ * BSD: TrueOS, FreeBSD, OpenBSD, NetBSD, DragonflyBSD, GNU/kFreeBSD
+ * Linux: Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
+
 
 Latest Versions <a name="latestversions"></a>
 ----
