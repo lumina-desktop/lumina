@@ -12,11 +12,13 @@ LFileInfo::LFileInfo() : QFileInfo(){
 }
 
 LFileInfo::LFileInfo(QString filepath) : QFileInfo(){ //overloaded contructor
+  desk = 0;
   this->setFile(filepath);
   loadExtraInfo();
 }
 
 LFileInfo::LFileInfo(QFileInfo info) : QFileInfo(){ //overloaded contructor
+  desk = 0;
   this->swap(info); //use the given QFileInfo without re-loading it
   loadExtraInfo();
 }

@@ -8,13 +8,14 @@
 #include "ui_MainUI.h"
 
 #include <QMenu>
-#include <QFileInfo>
+
 #include "gitCompat.h"
 #include "gitWizard.h"
 
 #include <LUtils.h>
 #include <LDesktopUtils.h>
 #include <ExternalProcess.h>
+#include <LFileInfo.h>
 
 #define DEBUG 0
 bool rootmode = false;
@@ -184,6 +185,7 @@ void MainUI::OpenDirs(QStringList dirs){
     }*/
 
     //Initialize the widget with the proper settings
+    if(DEBUG){ qDebug() << "Setup Dir Widget"; }
     DW->setShowDetails(radio_view_details->isChecked());
     DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
@@ -191,6 +193,7 @@ void MainUI::OpenDirs(QStringList dirs){
     //DW->showDirTreePane( ui->actionView_showDirTreePane->isChecked() );
     DW->adjustTreeWidget( settings->value("dirTree_width", 25.0).toFloat() );
     //Now load the directory
+    if(DEBUG){ qDebug() << "Load Directory"; }
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
   }
   //Update visibilities
