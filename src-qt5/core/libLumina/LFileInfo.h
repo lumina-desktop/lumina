@@ -13,13 +13,17 @@
 #include <LuminaXDG.h>
 #include <QString>
 #include <QFileInfo>
+#include <QJsonObject>
 
 class LFileInfo : public QFileInfo{
 private:
-	QString mime, icon;
+	QString mime, icon, zfs_ds;
 	XDGDesktop *desk;
 
 	void loadExtraInfo();
+	bool zfsAvailable();
+	void getZfsDataset(); //note: only run this if "zfsAvailable" is true
+	bool goodZfsDataset(); //simplification of the two functions above
 
 public:
 	//Couple overloaded contructors
@@ -45,6 +49,13 @@ public:
 	bool isImage(); //Is a readable image file (for thumbnail support)
 	bool isVideo(); //Is a readable video file (for thumbnail support)
 	bool isAVFile(); //Is an audio/video file
+
+	bool isZfsDataset();
+	QString zfsPool();
+	QStringList zfsSnapshots(); //Format: "snapshot name::::path/to/snapshot"
+	QJsonObject zfsProperties();
+	bool zfsSetProperty(QString property, QString value);
+
 };
 typedef QList<LFileInfo> LFileInfoList;
 

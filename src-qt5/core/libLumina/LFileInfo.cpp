@@ -60,6 +60,31 @@ void LFileInfo::loadExtraInfo(){
   }
 }
 
+bool LFileInfo::zfsAvailable(){
+  static unsigned int avail = 2;
+  if(avail == 2){ avail = (LUtils::isValidBinary("zfs") ? 0 : 1); }
+  return (avail == 0);
+}
+
+void LFileInfo::getZfsDataset(){
+  if(zfs_ds.isEmpty()){
+    //First run - need to probe the current directory
+    bool ok = false;
+    //Use the "atime" property for this check - been around since the earliest versions of ZFS and should take no time to probe
+    QString out = LUtils::runCommand(ok, "zfs", QStringList() << "get" << "-H" << "atime" << this->canonicalFilePath() );
+    if(!ok){ zfs_ds = "."; } //just something that is not empty - but is clearly not a valid dataset
+    else{  zfs_ds = out.section("\n",0,0).section("\t",0,0).simplified(); }
+    //qDebug() << "Found Dataset:" << zfs_ds << out << ok;
+  }
+}
+
+bool LFileInfo::goodZfsDataset(){
+  if(!zfsAvailable()){ return false; }
+  getZfsDataset(); //ensure this field is populated
+  if(zfs_ds=="." || zfs_ds.isEmpty()){ return false; }
+  return true;
+}
+
 //Functions for accessing the extra information
 // -- Return the mimetype for the file
 QString LFileInfo::mimetype(){
@@ -108,4 +133,52 @@ bool LFileInfo::isImage(){
 
 bool LFileInfo::isAVFile(){
   return (mime.startsWith("audio/") || mime.startsWith("video/") );
+}
+
+bool LFileInfo::isZfsDataset(){
+  if(!goodZfsDataset()){ return false; }
+  return ( ("/"+zfs_ds.section("/",1,-1)) == this->canonicalFilePath());
+}
+
+QString LFileInfo::zfsPool(){
+  if(!goodZfsDataset()){ return ""; }
+  return zfs_ds.section("/",0,0);
+}
+
+QStringList LFileInfo::zfsSnapshots(){
+  if(!goodZfsDataset()){ return QStringList(); }
+  QString relpath = this->canonicalFilePath().remove(0, QString("/"+zfs_ds.section("/",1,-1)).length() );
+  //qDebug() << "Got Relative path:" << zfs_ds << this->canonicalFilePath() << relpath;
+  QDir dir("/"+zfs_ds.section("/",1,-1)+"/.zfs/snapshot/");
+  QStringList snaps = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Time);
+  for(int i=0; i<snaps.length(); i++){
+    if( QFile::exists(dir.absoluteFilePath(snaps[i])+relpath) ){  snaps[i].append("::::" + dir.absoluteFilePath(snaps[i])+relpath ); }
+    else{ snaps.removeAt(i); i--; }
+  }
+  return snaps;
+}
+
+QJsonObject LFileInfo::zfsProperties(){
+  QJsonObject props;
+  if(!goodZfsDataset()){ return props; }
+  bool ok = false;
+  QStringList out = LUtils::runCommand(ok, "zfs", QStringList() << "get" << "-H" << "all"  << zfs_ds).split("\n");
+  //Note: Formating of zfs output: tab-delimited, with columns [dataset, property, value, source]
+  for(int i=0; i<out.length() && ok; i++){
+    if(out[i].simplified().isEmpty()){ continue; }
+    QJsonObject prop;
+    prop.insert("property", out[i].section("\t",1,1).simplified());
+    prop.insert("value", out[i].section("\t",2,2).simplified());
+    prop.insert("source", out[i].section("\t",3,-1).simplified());
+    props.insert(prop.value("property").toString(), prop);
+  }
+  return props;
+}
+
+bool LFileInfo::zfsSetProperty(QString property, QString value){
+  if(!goodZfsDataset()){ return false; }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "set" << property+"="+value << zfs_ds);
+  if(!ok){ qDebug() << "Error Setting ZFS Property:" << property+"="+value << info; }
+  return ok;
 }
