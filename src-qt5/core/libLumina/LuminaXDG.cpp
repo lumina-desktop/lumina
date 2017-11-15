@@ -629,7 +629,7 @@ void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
 
 //==== LFileInfo Functions ====
 //Need some extra information not usually available by a QFileInfo
-void LFileInfo::loadExtraInfo(){
+/*void LFileInfo::loadExtraInfo(){
   desk = 0;
   //Now load the extra information
   if( this->suffix().isEmpty() && (this->absoluteFilePath().startsWith("/net/") || this->isDir()) ){
@@ -722,7 +722,7 @@ bool LFileInfo::isImage(){
 
 bool LFileInfo::isAVFile(){
   return (mime.startsWith("audio/") || mime.startsWith("video/") );
-}
+}*/
 
 
 //==== LXDG Functions ====

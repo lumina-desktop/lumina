@@ -19,14 +19,7 @@
 #include <LVideoSurface.h>
 #include <LVideoLabel.h>
 #include <LuminaXDG.h>
-/*class FileItem{
-public:
-	QString name;
-	QByteArray icon;
-
-	FileItem(){}
-	~FileItem(){};
-};*/
+#include <LFileInfo.h>
 
 class Browser : public QObject{
 	Q_OBJECT

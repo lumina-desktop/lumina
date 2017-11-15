@@ -17,6 +17,7 @@
 #include <QMediaPlayer>
 #include <LVideoSurface.h>
 #include <LVideoLabel.h>
+#include <LFileInfo.h>
 #include <QElapsedTimer>
 #include <QFuture>
 

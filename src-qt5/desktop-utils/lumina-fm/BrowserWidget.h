@@ -13,6 +13,7 @@
 #include <QThread>
 
 #include <LVideoWidget.h>
+#include <LFileInfo.h>
 
 #include "Browser.h"
 #include "widgets/DDListWidgets.h"
