@@ -42,7 +42,7 @@ void LFileInfo::loadExtraInfo(){
     else if(name=="downloads"){ icon = "folder-downloads"; }
     else if(name=="documents"){ icon = "folder-documents"; }
     else if(name=="images" || name=="pictures"){ icon = "folder-image"; }
-    else if(this->absoluteFilePath().startsWith("/net/")){ icon = "folder-shared"; }
+    else if(this->absoluteFilePath().startsWith("/net/")){ icon = "folder-remote"; }
     else if( !this->isReadable() ){ icon = "folder-locked"; }
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";

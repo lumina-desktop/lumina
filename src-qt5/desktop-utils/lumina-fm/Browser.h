@@ -34,8 +34,6 @@ public:
 	void showThumbnails(bool);
 	bool showingThumbnails();
 
-	//FileItem loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
-
 private:
 	QString currentDir;
 	QDateTime lastcheck;
