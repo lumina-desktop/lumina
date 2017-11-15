@@ -152,7 +152,7 @@ void Browser::loadDirectory(QString dir, bool force){
     QStringList files;
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
-    if(dirupdate){ emit itemsLoading(files.length()); }
+    if(dirupdate || old.isEmpty()){ emit itemsLoading(files.length()); }
     //qDebug() << "Files Found:" << files.length();
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));

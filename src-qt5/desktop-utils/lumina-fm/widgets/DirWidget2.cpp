@@ -628,7 +628,7 @@ void DirWidget::UpdateContextMenu(){
 }
 
 void DirWidget::currentDirectoryChanged(QString cur, bool widgetonly){
-  qDebug() << "Got current directory changed:" << cur << widgetonly;
+  //qDebug() << "Got current directory changed:" << cur << widgetonly;
   QFileInfo info(cur);
   canmodify = info.isWritable();
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }

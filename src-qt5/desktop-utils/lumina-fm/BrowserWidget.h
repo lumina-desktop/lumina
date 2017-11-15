@@ -79,6 +79,7 @@ private slots:
 	void itemDataAvailable(QIcon, LFileInfo*);
 	void itemsLoading(int total);
 	void selectionChanged();
+	void loadStatistics(BrowserWidget *bw); //designed to be run in a background thread
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
