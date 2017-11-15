@@ -19,9 +19,11 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
   this->setLayout( new QVBoxLayout(this) );
   ID = objID;
-  //BROWSER = 0;
   //Setup the backend browser object
-  BROWSER = new Browser(this);
+  bThread = new QThread();
+  BROWSER = new Browser();
+  BROWSER->moveToThread(bThread);
+  bThread->start();
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
   connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
@@ -37,14 +39,18 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
 
 BrowserWidget::~BrowserWidget(){
   BROWSER->deleteLater();
+  bThread->exit();
+  bThread->deleteLater();
 }
 
 void BrowserWidget::changeDirectory(QString dir){
-  QStringList vids = videoMap.keys();
-  for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
-  //videoMap.clear();
+  if(USE_VIDEO_LABEL){
+    QStringList vids = videoMap.keys();
+    for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
+    //videoMap.clear();
+  }
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
-  //qDebug() << "Change Directory:" << dir << historyList;
+  qDebug() << "Change Directory:" << dir << historyList;
 
   if( !dir.contains("/.zfs/snapshot/") ){
     if(historyList.isEmpty() || !dir.isEmpty()){ historyList << dir; }
@@ -281,7 +287,7 @@ void BrowserWidget::clearItems(){
   if(listWidget!=0){ listWidget->clear(); }
   else if(treeWidget!=0){ treeWidget->clear(); }
   freshload = true;
-  videoMap.clear();
+  //videoMap.clear();
 }
 
 void BrowserWidget::itemRemoved(QString item){

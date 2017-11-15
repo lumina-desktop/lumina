@@ -63,7 +63,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
   ui->browser_layout->addWidget(BW);
-  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
+  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged(QString)) );
   connect(BW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(BW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(BW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -478,7 +478,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
-  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
+  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged(QString)) );
   connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(RCBW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(RCBW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -627,8 +627,8 @@ void DirWidget::UpdateContextMenu(){
   cOpenWithMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Other..."), this, SLOT(runWithFiles()) );
 }
 
-void DirWidget::currentDirectoryChanged(bool widgetonly){
-  QString cur = currentBrowser()->currentDirectory();
+void DirWidget::currentDirectoryChanged(QString cur, bool widgetonly){
+  qDebug() << "Got current directory changed:" << cur << widgetonly;
   QFileInfo info(cur);
   canmodify = info.isWritable();
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }
@@ -650,7 +650,13 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
   emit TabNameChanged(ID, normalbasedir.section("/",-1));
   QModelIndex index = dirtreeModel->index(normalbasedir,0);
   ui->folderViewPane->setCurrentIndex( index );
-  ui->folderViewPane->scrollTo(index);
+  ui->folderViewPane->scrollTo(index, QAbstractItemView::PositionAtCenter);
+}
+
+void DirWidget::currentDirectoryChanged(bool widgetonly){
+  //overload for the more expansive slot above
+  QString cur = currentBrowser()->currentDirectory();
+  currentDirectoryChanged(cur, widgetonly);
 }
 
 void DirWidget::dirStatusChanged(QString stat){

@@ -135,6 +135,7 @@ private slots:
 	//Browser Functions
 	void OpenContextMenu();
 	void UpdateContextMenu();
+	void currentDirectoryChanged(QString dir, bool widgetonly = false);
 	void currentDirectoryChanged(bool widgetonly = false);
 	void dirStatusChanged(QString);
 	void setCurrentBrowser(QString);

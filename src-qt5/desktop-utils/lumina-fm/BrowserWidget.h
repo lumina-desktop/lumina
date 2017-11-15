@@ -22,7 +22,7 @@ class BrowserWidget : public QWidget{
 	Q_OBJECT
 private:
 	Browser *BROWSER;
-	//QThread *bThread; //browserThread
+	QThread *bThread; //browserThread
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
