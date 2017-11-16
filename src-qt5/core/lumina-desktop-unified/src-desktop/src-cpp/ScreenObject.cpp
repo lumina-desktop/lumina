@@ -16,7 +16,7 @@ void ScreenObject::RegisterType(){
   qmlRegisterType<ScreenObject>("Lumina.Backend.ScreenObject",2,0, "ScreenObject");
 }
 
-QString ScreenObject::name(){ return bg_screen->name(); }
+QString ScreenObject::name(){ return bg_screen->name().replace("-","_"); }
 QString ScreenObject::background(){ qDebug() << "Got Background:" << bg_screen->name() << bg << bg_screen->geometry(); return bg; }
 int ScreenObject::x(){ return bg_screen->geometry().x(); }
 int ScreenObject::y(){ return bg_screen->geometry().y(); }

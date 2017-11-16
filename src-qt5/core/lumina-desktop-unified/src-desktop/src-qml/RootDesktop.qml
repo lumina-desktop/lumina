@@ -50,7 +50,7 @@ Rectangle {
     model: RootObject.screens
     QML.WallpaperImage{
       //console.log( modelData.name() )
-      object: modelData
+      screen_id: modelData.name()
       z: 0+index
     }
   }

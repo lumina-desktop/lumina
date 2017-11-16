@@ -36,6 +36,13 @@ QList<ScreenObject*> RootDesktopObject::screens(){
   return s_objects;
 }
 
+ScreenObject* RootDesktopObject::screen(QString id){
+  for(int i=0; i<s_objects.length(); i++){
+    if(s_objects[i]->name()==id){ return s_objects[i]; }
+  }
+  return 0;
+}
+
 void RootDesktopObject::logout(){
   emit startLogout();
 }

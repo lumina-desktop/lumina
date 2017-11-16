@@ -30,6 +30,7 @@ public:
 
 	//QML Read Functions
 	QList<ScreenObject*> screens();
+	Q_INVOKABLE ScreenObject* screen(QString id);
 
 	//QML Access Functions
 	Q_INVOKABLE void logout();
