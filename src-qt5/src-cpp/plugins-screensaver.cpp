@@ -31,6 +31,7 @@ void SSPlugin::loadFile(QString path){
   QFile file(path);
   if(!file.exists() || !file.open(QIODevice::ReadOnly)){ return; }
   data = QJsonDocument::fromJson(file.readAll()).object();
+  qDebug() << "Loaded ScreenSaver Data:" << currentfile << data;
   file.close();
 }
 
@@ -102,7 +103,7 @@ QString SSPlugin::translatedDescription(){
 
 QUrl SSPlugin::scriptURL(){
   QString exec = data.value("qml").toObject().value("exec").toString();
-  //qDebug() << "got exec:" << exec;
+  qDebug() << "got exec:" << exec << data;
   if(!exec.startsWith("/")){ exec.prepend( currentfile.section("/",0,-2)+"/" ); }
   return QUrl::fromLocalFile(exec);
 }
@@ -111,6 +112,7 @@ QUrl SSPlugin::scriptURL(){
 // 	SS PLUGIN SYSTEM
 // ===================
 SSPlugin SSPluginSystem::findPlugin(QString name){
+  //qDebug() << "FindPlugin:" << name;
   SSPlugin SSP;
   if(name.startsWith("/") && QFile::exists(name)){ SSP.loadFile(name); return SSP;} //absolute path give - just load that one
   //Cleanup the input name and ensure it has the right suffix

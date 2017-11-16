@@ -12,7 +12,7 @@ import Lumina.Backend.RootDesktopObject 2.0
 
 Menu { 
     id: contextMenu
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    //closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     MenuItem {
       text: "Lock Screen"
       onTriggered: {
@@ -23,12 +23,12 @@ Menu {
     MenuItem {
       text: "Logout"
       //iconName: "system-log-out"
-      indicator: Image{
+      /*indicator: Image{
         asynchronous: true
         //autoTransform: true
         //source: "image://theme/system-logout"
         source: "file:///usr/local/share/icons/material-design-light/scalable/actions/system-log-out.svg"
-      }
+      }*/
       onTriggered: {
         RootObject.logout()
       }

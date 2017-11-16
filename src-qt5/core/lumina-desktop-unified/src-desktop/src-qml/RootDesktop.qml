@@ -29,13 +29,14 @@ Rectangle {
   color: "black"
 
   //Setup the right-click context menu
-  /*MouseArea { 
+  MouseArea { 
     anchors.fill: rootCanvas
     acceptedButtons: Qt.RightButton
     onClicked: { 
-      contextMenu.x = mouseX
+      /*contextMenu.x = mouseX
       contextMenu.y = mouseY
-      contextMenu.open() 
+      contextMenu.open() */
+      contextMenu.popup()
     }
     onPositionChanged: {
       RootObject.mousePositionChanged()
@@ -43,7 +44,7 @@ Rectangle {
   }
 
   //Create the context menu itself
- QML.ContextMenu { id: contextMenu }*/
+ QML.ContextMenu { id: contextMenu }
 
   //Setup the wallpapers
   Repeater{
