@@ -175,7 +175,7 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 manpage.path=$${L_MANDIR}/man8/
 manpage.extra="$${MAN_ZIP} lumina-desktop.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/lumina-desktop.8.gz"
 
-INSTALLS += target desktop icons wallpapers defaults conf fluxconf manpage
+INSTALLS += target desktop icons defaults conf fluxconf manpage
 
 WITH_I18N{
   INSTALLS += dotrans

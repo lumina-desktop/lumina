@@ -17,7 +17,7 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Window 2.2
-import QtQuick.Controls 2.0
+import QtQuick.Controls 1
 
 import "." as QML
 
@@ -29,7 +29,7 @@ Rectangle {
   color: "black"
 
   //Setup the right-click context menu
-  MouseArea { 
+  /*MouseArea { 
     anchors.fill: rootCanvas
     acceptedButtons: Qt.RightButton
     onClicked: { 
@@ -43,14 +43,13 @@ Rectangle {
   }
 
   //Create the context menu itself
-  QML.ContextMenu { id: contextMenu }
+ QML.ContextMenu { id: contextMenu }*/
 
   //Setup the wallpapers
   Repeater{
     model: RootObject.screens
     QML.WallpaperImage{
-      //console.log( modelData.name() )
-      screen_id: modelData.name()
+      screen_id: modelData
       z: 0+index
     }
   }

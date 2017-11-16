@@ -32,11 +32,15 @@ RootDesktopObject* RootDesktopObject::instance(){
 }
 
 //QML Read Functions
-QList<ScreenObject*> RootDesktopObject::screens(){
-  return s_objects;
+QStringList RootDesktopObject::screens(){
+  qDebug() << "Request Screens:" << s_objects.length();
+  QStringList names;
+  for(int i=0; i<s_objects.length(); i++){ names << s_objects[i]->name(); }
+  return names;
 }
 
 ScreenObject* RootDesktopObject::screen(QString id){
+  qDebug() << "Got Screen Request:" << id;
   for(int i=0; i<s_objects.length(); i++){
     if(s_objects[i]->name()==id){ return s_objects[i]; }
   }
