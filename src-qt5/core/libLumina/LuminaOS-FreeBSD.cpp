@@ -85,7 +85,7 @@ QStringList LOS::ExternalDevicePaths(){
 int LOS::ScreenBrightness(){
   //First run a quick check to ensure this is not a VirtualBox VM (no brightness control)
   static int goodsys = -1; //This will not change over time - only check/set once
-  if(goodsys<0){  
+  if(goodsys<0){
       //Make sure we are not running in VirtualBox (does not work in a VM)
       QStringList info = LUtils::getCmdOutput("pciconf -lv");
       if( info.filter("VirtualBox", Qt::CaseInsensitive).isEmpty() ){ goodsys = 1; }
@@ -103,8 +103,8 @@ int LOS::ScreenBrightness(){
     }
   }
   //If it gets to this point, then we have a valid (but new) installation
-  if(screenbrightness<0){ screenbrightness = 100; } //default value for systems 
-  return screenbrightness;	
+  if(screenbrightness<0){ screenbrightness = 100; } //default value for systems
+  return screenbrightness;
 }
 
 //Set screen brightness
@@ -149,10 +149,10 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
   if(out < 0){
     //First time session check: Load the last setting for this user
     QString info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume").join("");
-    if(!info.isEmpty()){ 
-      out = info.simplified().toInt(); 
+    if(!info.isEmpty()){
+      out = info.simplified().toInt();
       audiovolume = out; //reset this internal flag
-      return out; 
+      return out;
     }
   }
   bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
@@ -173,7 +173,7 @@ int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 
 	  //Volume changed by other utility: adjust the saved value as well
 	  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(out), true);
 	}
-	audiovolume = out; 
+	audiovolume = out;
       }
   }
   return out;
@@ -222,7 +222,7 @@ void LOS::changeAudioVolume(int percentdiff){
       //Run Command
       LUtils::runCmd("mixer vol "+QString::number(L)+":"+QString::number(R));
     }
-  }	
+  }
 }
 
 //Check if a graphical audio mixer is installed
@@ -260,24 +260,31 @@ void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
 
 //System Restart
 void LOS::systemRestart(bool skipupdates){ //start reboot sequence
-  if(skipupdates){QProcess::startDetached("shutdown -ro now"); }
-  else{ QProcess::startDetached("shutdown -r now"); }
+  bool activeupdates = !LUtils::readFile("/etc/defaults/vendor.conf").filter("trueos_active_update=\"YES\"").isEmpty();
+  if(skipupdates){
+    QProcess::startDetached("shutdown -ro now");
+  }else{
+    if(activeupdates && LUtils::isValidBinary("pc-updatemanager") && LOS::systemPendingUpdates().isEmpty()){ QProcess::startDetached("pc-updatemanager startupdate"); }
+    else{ QProcess::startDetached("shutdown -r now"); }
+  }
 }
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  //This will only function on TrueOS 
-  //(permissions issues on standard FreeBSD unless setup a special way)
-  bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
+  QString state = LUtils::getCmdOutput("sysctl hw.acpi.suspend_state").join("").simplified();
+  bool ok = LUtils::getCmdOutput("sysctl hw.acpi.supported_sleep_state").join("").split(" ",QString::SkipEmptyParts).contains(state);
+  /*bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
   if(ok){
     ok = LUtils::getCmdOutput("pc-sysconfig systemcansuspend").join("").toLower().contains("true");
-  }
+  }*/
   return ok;
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-  QProcess::startDetached("pc-sysconfig suspendsystem");
+  QString state = LUtils::getCmdOutput("sysctl hw.acpi.suspend_state").join("").simplified();
+  //QProcess::startDetached("pc-sysconfig suspendsystem");
+  QProcess::startDetached("acpiconf", QStringList() << "-s" << state );
 }
 
 //Battery Availability
@@ -289,8 +296,8 @@ bool LOS::hasBattery(){
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
   int charge = LUtils::getCmdOutput("apm -l").join("").toInt();
-  if(charge > 100){ charge = -1; } //invalid charge 
-  return charge;	
+  if(charge > 100){ charge = -1; } //invalid charge
+  return charge;
 }
 
 //Battery Charging State
@@ -328,11 +335,11 @@ QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
   static QStringList vars = QStringList();
   QStringList temps;
-  if(vars.isEmpty()){ 
+  if(vars.isEmpty()){
     temps = LUtils::getCmdOutput("sysctl -i dev.cpu").filter(".temperature:");  //try direct readings first
     if(temps.isEmpty()){ temps = LUtils::getCmdOutput("sysctl -i hw.acpi").filter(".temperature:"); } // then try acpi values
   }else{ temps = LUtils::getCmdOutput("sysctl "+vars.join(" ")); vars.clear(); }
-  
+
     temps.sort();
     for(int i=0; i<temps.length(); i++){
       if(temps[i].contains(".acpi.") || temps[i].contains(".cpu")){
@@ -383,7 +390,7 @@ int LOS::CPUUsagePercent(){ //Returns: Overall percentage of the amount of CPU c
       tot += 100.0L - ( (100.0L*result[i].toLong())/sum ); //remember IDLE is the last of the five values per CPU
     }
   return qRound(tot/cpnum);
-  
+
 }
 
 int LOS::MemoryUsagePercent(){
@@ -407,14 +414,14 @@ QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for ea
     info[i].replace("\t"," ");
     if(i==1){ labs = info[i].split(" ", QString::SkipEmptyParts); }//the labels for each column
     else{
-      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device 
+      QStringList data = info[i].split(" ",QString::SkipEmptyParts); //data[0] is always the device
       //qDebug() << "Data Line:" << data;
       if(data.length()>2 && labs.length()>2){
         out << fmt.arg(data[0], data[1]+" "+labs[1], data[2]+" "+labs[2]);
       }
     }
   }
-  
+
   return out;
 }
 

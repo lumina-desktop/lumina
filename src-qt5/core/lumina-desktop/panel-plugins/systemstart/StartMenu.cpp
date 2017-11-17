@@ -507,6 +507,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
     tmp = LOS::audioVolume();
     ui->frame_audio->setVisible(tmp >= 0);
     if(tmp >= 0){ ui->slider_volume->setValue(tmp); }
+
   }else if(page == ui->page_leave){
     if( !ui->frame_leave_system->whatsThis().isEmpty() ){
       //This frame is allowed/visible - need to adjust the shutdown detection
@@ -514,6 +515,7 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
       ui->tool_restart->setEnabled(!updating);
       ui->tool_shutdown->setEnabled(!updating);
       ui->label_updating->setVisible(updating); //to let the user know *why* they can't shutdown/restart right now
+      ui->tool_restart_updates->setVisible(!updating && !LOS::systemPendingUpdates().isEmpty() );
     }
     ui->frame_leave_suspend->setVisible( LOS::systemCanSuspend() );
   }
@@ -590,17 +592,25 @@ void StartMenu::on_tool_logout_clicked(){
 void StartMenu::on_tool_restart_clicked(){
   emit CloseMenu();
   QCoreApplication::processEvents();
-  bool skipupdates =  false;
-  if( !promptAboutUpdates(skipupdates) ){ return; }
-  LSession::handle()->StartReboot(skipupdates);
+  //bool skipupdates =  false;
+  //if( !promptAboutUpdates(skipupdates) ){ return; }
+  LSession::handle()->StartReboot(true);
+}
+
+void StartMenu::on_tool_restart_update_clicked(){
+  emit CloseMenu();
+  QCoreApplication::processEvents();
+  //bool skipupdates =  false;
+  //if( !promptAboutUpdates(skipupdates) ){ return; }
+  LSession::handle()->StartReboot(false);
 }
 
 void StartMenu::on_tool_shutdown_clicked(){
   emit CloseMenu();
   QCoreApplication::processEvents();
-  bool skipupdates = false;
-  if( !promptAboutUpdates(skipupdates) ){ return; }
-  LSession::handle()->StartShutdown(skipupdates);
+  //bool skipupdates = false;
+  //if( !promptAboutUpdates(skipupdates) ){ return; }
+  LSession::handle()->StartShutdown();
 }
 
 void StartMenu::on_tool_suspend_clicked(){

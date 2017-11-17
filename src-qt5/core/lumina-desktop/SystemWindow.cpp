@@ -29,6 +29,7 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   connect(ui->tool_suspend, SIGNAL(clicked()), this, SLOT(sysSuspend()) );
   connect(ui->push_cancel, SIGNAL(clicked()), this, SLOT(sysCancel()) );
   connect(ui->push_lock, SIGNAL(clicked()), this, SLOT(sysLock()) );
+  connect(ui->tool_restart_updates, SIGNAL(clicked()), this, SLOT(sysUpdate()) );
   //Disable buttons if necessary
   updateWindow();
   ui->tool_suspend->setVisible(LOS::systemCanSuspend()); //does not change with time - just do a single check
@@ -46,6 +47,7 @@ void SystemWindow::updateWindow(){
   bool ok = LOS::userHasShutdownAccess();
     ui->tool_restart->setEnabled(ok);
     ui->tool_shutdown->setEnabled(ok);
+  ui->frame_update->setVisible( !LOS::systemPendingUpdates().isEmpty() );
   //Center this window on the current screen
   QPoint center = QApplication::desktop()->screenGeometry(QCursor::pos()).center(); //get the center of the current screen
   this->move(center.x() - this->width()/2, center.y() - this->height()/2);
@@ -74,21 +76,29 @@ void SystemWindow::sysLogout(){
   LSession::processEvents();
   QTimer::singleShot(0, LSession::handle(), SLOT(StartLogout()) );
 }
-	
+
 void SystemWindow::sysRestart(){
-  bool skip = false;
-  if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
-  this->close();
-  LSession::processEvents();
-  LSession::handle()->StartReboot(skip);
+  //bool skip = false;
+  //if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
+  //this->close();
+  //LSession::processEvents();
+  LSession::handle()->StartReboot(true);
 }
-	
+
+void SystemWindow::sysUpdate(){
+  //bool skip = false;
+  //if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
+  //this->close();
+  //LSession::processEvents();
+  LSession::handle()->StartReboot(false);
+}
+
 void SystemWindow::sysShutdown(){
-  bool skip = false;
-  if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
-  this->close();
-  LSession::processEvents();
-  LSession::handle()->StartShutdown(skip);
+  //bool skip = false;
+  //if(!promptAboutUpdates(skip)){ this->close(); return; } //cancelled
+  //this->close();
+  //LSession::processEvents();
+  LSession::handle()->StartShutdown();
 }
 
 void SystemWindow::sysSuspend(){

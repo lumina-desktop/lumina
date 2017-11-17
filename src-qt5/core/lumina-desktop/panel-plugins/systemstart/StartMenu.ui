@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>181</width>
-    <height>405</height>
+    <width>336</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>4</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="page_main">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -142,8 +142,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>179</width>
-            <height>208</height>
+            <width>334</width>
+            <height>102</height>
            </rect>
           </property>
          </widget>
@@ -438,8 +438,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>179</width>
-            <height>299</height>
+            <width>334</width>
+            <height>277</height>
            </rect>
           </property>
          </widget>
@@ -1003,6 +1003,31 @@
            </widget>
           </item>
           <item>
+           <widget class="QToolButton" name="tool_restart_updates">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton{ background-color: rgba(150,150,0,100); }</string>
+            </property>
+            <property name="text">
+             <string>Update and Restart</string>
+            </property>
+            <property name="icon">
+             <iconset theme="system-reboot"/>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="tool_shutdown">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1033,7 +1058,7 @@
           <item>
            <widget class="QLabel" name="label_updating">
             <property name="text">
-             <string>(System Performing Updates)</string>
+             <string>(System Preparing Updates)</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -1099,8 +1124,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>167</width>
-            <height>345</height>
+            <width>308</width>
+            <height>351</height>
            </rect>
           </property>
          </widget>
