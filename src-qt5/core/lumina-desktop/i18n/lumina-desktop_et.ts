@@ -261,7 +261,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
         <source>One with the law is a majority.</source>
-        <translation type="unfinished></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="65"/>
