@@ -83,7 +83,7 @@ private:
 	QLineEdit *line_dir;
 
 	//The context menu and associated items
-	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
+	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu, *cArchiveMenu;
 
 	//The keyboard shortcuts for context menu items
 	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \

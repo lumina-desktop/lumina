@@ -15,7 +15,7 @@ include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 include(../../core/libLumina/ExternalProcess.pri)
-#include(../../core/libLumina/LVideoSurface.pri)
+include(../../core/libLumina/XDGMime.pri)
 include(../../core/libLumina/LVideoLabel.pri)
 
 SOURCES += main.cpp \

@@ -26,6 +26,7 @@
 #include <QFileDialog>
 
 #include "../ScrollDialog.h"
+#include <XDGMime.h>
 
 #define DEBUG 0
 extern bool rootmode;
@@ -86,7 +87,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
-  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = 0; //not created yet
+  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = cArchiveMenu =0; //not created yet
   connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(UpdateContextMenu()) );
   connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()) );
 
@@ -289,6 +290,11 @@ void DirWidget::createMenus(){
   cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
   if(LUtils::isValidBinary("qsudo")){ cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+
+  if(cArchiveMenu==0){ cArchiveMenu = new QMenu(this); }
+  cArchiveMenu->setTitle(tr("Archive Options"));
+  cArchiveMenu->setIcon( LXDG::findIcon("utilities-file-archiver","application-x-compressed-tar") );
+
   /*
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }
   else{ cFModMenu->clear(); }
@@ -560,9 +566,6 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
-      if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-      if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
-
   }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
       contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
@@ -571,6 +574,15 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addSeparator();
       contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() )->setEnabled(canmodify);
       contextMenu->addSeparator();
+    }
+    if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1 && canmodify){
+      cArchiveMenu->clear();
+      if(sel.length()==1 && XDGMime::fromFileName(sel[0]).endsWith("-tar") ){
+        cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Extract Here"), this, SLOT(autoExtractFiles()), kExtract->key() );
+      }else{
+        cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Archive Selection"), this, SLOT(autoArchiveFiles()), kArchive->key() );
+      }
+      contextMenu->addMenu(cArchiveMenu);
     }
     contextMenu->addMenu(cFViewMenu);
     cFViewMenu->setEnabled(!sel.isEmpty());
@@ -862,6 +874,8 @@ void DirWidget::OpenWithApp(QAction* act){
   //Now we need to open the app file, and create the process
   XDGDesktop desk(act->whatsThis());
   QString exec = desk.generateExec(sel);
+  //qDebug() << "Launch App with selection:" << act->whatsThis() << sel;
+  //qDebug() << "Generating exec:" << exec;
   ExternalProcess::launch(exec);
 }
 
