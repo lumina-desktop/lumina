@@ -577,7 +577,14 @@ void DirWidget::UpdateContextMenu(){
     }
     if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1 && canmodify){
       cArchiveMenu->clear();
-      if(sel.length()==1 && XDGMime::fromFileName(sel[0]).endsWith("-tar") ){
+      if(sel.length()==1 && ( XDGMime::fromFileName(sel[0]).endsWith("-tar") || 
+                                                XDGMime::fromFileName(sel[0]).endsWith("-image") || 
+                                                 ( XDGMime::fromFileName(sel[0]).contains("zip") && 
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("epub+zip") && 
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("vnd.comicbook+zip" ) 
+                                                  )
+                                                 )
+                                               ){
         cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Extract Here"), this, SLOT(autoExtractFiles()), kExtract->key() );
       }else{
         cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Archive Selection"), this, SLOT(autoArchiveFiles()), kArchive->key() );
