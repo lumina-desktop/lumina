@@ -117,12 +117,12 @@ void LOS::setScreenBrightness(int percent){
   bool success = false;
   // - try hardware setting first (TrueOS || or intel_backlight)
   bool remoteSession = !QString(getenv("PICO_CLIENT_LOGIN")).isEmpty();
-  if( LUtils::isValidBinary("pc-sysconfig") && !remoteSession){
+  /*if( LUtils::isValidBinary("pc-sysconfig") && !remoteSession){
     //Use TrueOS tool (direct sysctl control)
     QString ret = LUtils::getCmdOutput("pc-sysconfig", QStringList() <<"setscreenbrightness "+QString::number(percent)).join("");
     success = ret.toLower().contains("success");
     qDebug() << "Set hardware brightness:" << percent << success;
-  }
+  }*/
   if( !success && LUtils::isValidBinary("intel_backlight") && !remoteSession){
     //Use the intel_backlight utility (only for Intel mobo/hardware?)
    if(0== LUtils::runCmd("intel_backlight", QStringList() <<QString::number(percent)) ){
@@ -271,8 +271,8 @@ void LOS::systemRestart(bool skipupdates){ //start reboot sequence
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  QString state = LUtils::getCmdOutput("sysctl hw.acpi.suspend_state").join("").simplified();
-  bool ok = LUtils::getCmdOutput("sysctl hw.acpi.supported_sleep_state").join("").split(" ",QString::SkipEmptyParts).contains(state);
+  QString state = LUtils::getCmdOutput("sysctl -n hw.acpi.suspend_state").join("").simplified();
+  bool ok = LUtils::getCmdOutput("sysctl -n hw.acpi.supported_sleep_state").join("").split(" ",QString::SkipEmptyParts).contains(state);
   /*bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
   if(ok){
     ok = LUtils::getCmdOutput("pc-sysconfig systemcansuspend").join("").toLower().contains("true");
@@ -282,7 +282,7 @@ bool LOS::systemCanSuspend(){
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-  QString state = LUtils::getCmdOutput("sysctl hw.acpi.suspend_state").join("").simplified();
+  QString state = LUtils::getCmdOutput("sysctl -n hw.acpi.suspend_state").join("").simplified();
   //QProcess::startDetached("pc-sysconfig suspendsystem");
   QProcess::startDetached("acpiconf", QStringList() << "-s" << state );
 }
