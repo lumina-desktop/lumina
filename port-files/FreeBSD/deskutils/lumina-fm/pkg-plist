@@ -1,5 +1,5 @@
 bin/lumina-fm
-man/man8/lumina-fm.8.gz
+man/man1/lumina-fm.1.gz
 share/applications/lumina-fm.desktop
 share/lumina-desktop/i18n/lumina-fm_af.qm
 share/lumina-desktop/i18n/lumina-fm_ar.qm

@@ -98,8 +98,8 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-search.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-manpage.path=$${L_MANDIR}/man8/
-manpage.extra="$${MAN_ZIP} lumina-search.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/lumina-search.8.gz"
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} lumina-search.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-search.1.gz"
 
 INSTALLS += target desktop manpage
 
