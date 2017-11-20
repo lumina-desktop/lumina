@@ -16,7 +16,7 @@
 static QStringList fav;
 
 QString LDesktopUtils::LuminaDesktopVersion(){
-  QString ver = "1.3.3";
+  QString ver = "1.4.0";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif

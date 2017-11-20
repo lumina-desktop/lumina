@@ -13,6 +13,8 @@
 #include "qsspage.h"
 #include "ui_mainwindow.h"
 
+#include <LDesktopUtils.h>
+
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWindow){
   m_ui->setupUi(this);
   bgroup = new QButtonGroup(this);
@@ -35,7 +37,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   restoreGeometry(settings.value("SettingsWindow/geometry").toByteArray());
   setWindowIcon(QIcon::fromTheme("preferences-desktop-theme"));
-  m_ui->versionLabel->setText(tr("Version: %1").arg(LTHEMEENGINE_VERSION_STR));
+  this->setWindowTitle(tr("Theme Settings"));
+  m_ui->versionLabel->setText(tr("Version: %1").arg(LDesktopUtils::LuminaDesktopVersion()));
 }
 
 MainWindow::~MainWindow(){
