@@ -142,7 +142,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>File Error</source>
         <translation>Faili viga</translation>
     </message>
@@ -190,21 +190,16 @@
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
-        <source>Binary Missing</source>
-        <translation>Binaarfail puudub</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="370"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>Ei leidnud &quot;%1&quot; . Palun veendu et see on paigaldatud.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>Application Error</source>
         <translation>Programmi viga</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>See rakendus sulgus, kuna esines viga:</translation>
     </message>
@@ -212,67 +207,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
         <translation>Multimeedia</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
         <translation>Arendus</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
         <translation>Haridus</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
         <translation>Mängud</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
         <translation>Graafika</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
         <translation>Võrk</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
         <translation>Kontor</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
         <translation>Teadus</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
         <translation>Sätted</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
         <translation>Süsteem</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
         <translation>Tööriistad</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
         <translation>Sorteerimata</translation>
     </message>
