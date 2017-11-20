@@ -558,11 +558,13 @@ void DirWidget::UpdateContextMenu(){
    //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
    contextMenu->addMenu(cOpenWithMenu);
    bool ok = (QString(getenv("XDG_CURRENT_DESKTOP"))=="Lumina");
-   static QStringList imageformats = LUtils::imageExtensions();
-   for(int i=0; i<sel.length() && ok; i++){
-      ok = imageformats.contains(sel[i].section(".",-1));
+   if(ok){
+     static QStringList imageformats = LUtils::imageExtensions();
+     for(int i=0; i<sel.length() && ok; i++){
+        ok = imageformats.contains(sel[i].section(".",-1));
+      }
+      contextMenu->addAction(LXDG::findIcon("preferences-desktop-wallpaper","preferences-desktop"), tr("Set as Wallpaper"), this, SLOT(setAsWallpaper()) )->setEnabled(ok);
     }
-    if(ok){ contextMenu->addAction(LXDG::findIcon("preferences-desktop-wallpaper","preferences-desktop"), tr("Set as Wallpaper"), this, SLOT(setAsWallpaper()) ); }
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
