@@ -17,8 +17,6 @@ int main(int argc, char ** argv)
       if( !a.isPrimaryProcess()){ return 0; }
     //qDebug() << "Set Application Name";
     a.setApplicationName("About Lumina");
-    //qDebug() << "Load Theme Engine";
-    LuminaThemeEngine themes(&a);
     //qDebug() << "Start the UI";
     //Start the UI
     MainUI w;
