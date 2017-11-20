@@ -1,0 +1,50 @@
+.Dd November 7, 2017
+.Dt LUMINA-SEARCH 8
+.Os  1.3.3
+
+.Sh NAME
+.Nm lumina-search
+.Nd searches for files and applications.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl no-excludes
+.Op Fl dir Op DIRECTORY
+.Op Fl "search \fI term"
+
+.Sh DESCRIPTION
+.Nm
+brings up the graphical utility to search the system.
+There are two search filters: "Applications" and "Files or Directories".
+The utility searches the system according to the selected filter.
+Search results populate a list with the most relevant options first.
+.Pp
+.Nm
+optional commands:
+.Bl -tag -width indent
+.It Ic -no-excludes
+Excludes nothing from the search.
+.It Ic -dir
+Opens the utility pointed at the working directory.
+.It Ic -dir Ar DIRECTORY
+Opens the utility pointed at the specified directory.
+.It Ic -search Ar term
+Opens the utility and searchs for the specified term.
+.El
+
+.Sh EXAMPLES
+.Pp
+.Dl % lumina-search -dir /home/aaron/Downloads/
+Opens search utility pointing to Downloads.
+.Pp
+.Dl % lumina-search -search \*(lqHello World\*(rq
+Searches applications for things relevant to the phrase "Hello World".
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-search
+.El
+
+.Sh AUTHORS
+.An Aaron St. John
+.Aq aaron@ixsystems.com

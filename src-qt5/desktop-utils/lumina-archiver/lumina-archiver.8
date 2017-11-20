@@ -1,0 +1,62 @@
+.Dd November 2, 2017
+.Dt LUMINA-ARCHIVER 8
+.Os 1.3.3
+
+.Sh NAME
+.Nm lumina-archiver
+.Nd a graphical front-end to tar.
+Manages and creates archives.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl -burn-img Ar FILE
+.Op Fl -ax  Ar FILE
+.Op Fl -aa Ar NEW_ARCHIVE Ar FILES
+.Op Fl -sx Ar ARCHIVE Ar EXTRACT_PATH
+
+.Sh DESCRIPTION
+.Nm
+is a graphical front end to the tar utility.
+.Nm
+includes limited support for copying USB images to a USB device.
+This uses the dd utility.
+.Nm
+requires two runtime utilities: tar and dd.
+The tar utility is used for the backend archive control system.
+The dd utility is used to copy an image file ("*.img") to a USB device.
+.Pp
+Arguments for
+.Nm
+include:
+.Bl -tag -width indent
+.It Ic --burn-img
+This launches the burn dialog when lumina-archiver loads.
+.It Ic --ax
+This auto-extracts a file into a new directory with the same name as
+the given file.
+.It Ic --aa
+Auto extracts files into a new archive the user designates.
+.It Ic --sx
+Designate an archive and path to place extracted files.
+.El
+
+.Sh EXAMPLES
+.Pp
+.Dl % lumina-archiver --burn-img ./TrueOS-2017-07-05-x64-USB.img
+Opens the burn dialog for TrueOS-2017-07-05-x64-USB.img.
+.Pp
+.Dl % lumina-archiver --ax ./lumina-master.zip
+Auto-extracts lumina-master.zip into a directory called lumina-master.
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-archiver
+.El
+
+.Sh SEE ALSO
+.Xr dd(1),
+.Xr tar(1)
+
+.Sh AUTHORS
+.An Aaron St. John and Tim Moore
+.Aq aaron@ixsystems.com

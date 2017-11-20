@@ -95,7 +95,10 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-screenshot.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target desktop
+manpage.path=$${L_MANDIR}/man8/
+manpage.extra="$${MAN_ZIP} lumina-screenshot.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/lumina-screenshot.8.gz"
+
+INSTALLS += target desktop manpage
 
 WITH_I18N{
   INSTALLS += dotrans

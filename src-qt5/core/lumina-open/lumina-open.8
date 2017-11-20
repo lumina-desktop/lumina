@@ -1,0 +1,104 @@
+.Dd November 7, 2017
+.Dt LUMINA-OPEN 1
+.Os 1.3.3
+
+.Sh NAME
+.Nm lumina-open
+.Nd a graphical front-end to xdg-open.
+Opens files or links with the proper application.
+
+.Sh SYNOPSIS
+.Nm
+.Pp
+.Nm
+.Op Fl select | action No <ActionID>
+.Op Ar FILE_PATH | URL
+.Pp
+.Nm
+.Op Fl volumeup | volumedown | brightnessup | brightnessdown | \
+ autostart-apps | terminal
+
+.Sh DESCRIPTION
+Given a file with an absolute pathway or URL, the
+.Nm
+utility finds the appropriate application to open the file.
+If the file is a *.desktop application shortcut,
+.Nm
+starts the application automatically.
+.Nm
+can also perform specific system operations.
+Here are all flags and descriptions:
+.Pp
+.Bl -tag -width indent
+.It Ic lumina-open
+Displays the description and usage for lumina-open.
+.It Nm Fl select
+Bypasses any default application settings to display the application
+selector window.
+.It Nm Fl action\ \fIActionID\fR
+Runs the specified ActionID that is listed in a .desktop registration
+file rather than the main command.
+.It Nm Fl volumeup
+Increase system audio volume by 5%.
+.It Nm Fl volumedown
+Decrease system audio volume by 5%.
+.It Nm Fl brightnessup
+Increase screen brightness by 5%.
+.It Nm Fl brightnessdown
+Decrease screen brightness by 5%.
+.It Nm Fl autostart-apps
+Launches all applications registered with the XDG autostart application.
+Typically run by the desktop instead of manually launched.
+.It Nm Fl terminal
+Open the default terminal.
+.El
+
+.Sh EXAMPLES
+.Bl -tag -width indent
+.It lumina-open sample.txt
+.Nm
+finds the default program for .txt files and opens sample.txt with
+the appropriate application.
+.It lumina-open ~/Documents
+.Nm
+launches the default file manager pointed to the current Documents
+directory.
+.It lumina-open http://lumina-desktop.org
+Launches the default web browser pointed to the Lumina website.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa %{XDG_CONFIG_HOME}/mimeapps.list
+Default file that saves mimetype to application associations.
+.It Pa %{XDG_CONFIG_HOME}/${XDG_CURRENT_DESKTOP}-mimeapps.list
+Default file that saves mimetype to application associations for the
+current desktop session.
+This file is used before the generic associations file.
+.El
+
+.Sh SEE ALSO
+.Xr XDG-OPEN(1)
+
+.Sh REFERENCES
+For .desktop entry specifications and formatting, refer to these
+websites:
+.Bl -tag -width indent
+.Pp
+.Cm https://specifications.freedesktop.org/desktop-entry-spec/latest/
+.Pp
+Specifications for .desktop files.
+.Pp
+.Cm https://specifications.freedesktop.org/mime-apps-spec/latest/
+.Pp
+Details how default applications are registered.
+.Pp
+.Cm https://specifications.freedesktop.org/autostart-spec/latest/
+.Pp
+Used in the -autostart-apps action.
+Determines which applications are automatically started.
+.El
+
+.Sh AUTHORS
+.An Tim Moore and Aaron St. John
+.Aq timmoore88@gmail.com

@@ -1,0 +1,62 @@
+.Dd November 2, 2017
+.Dt LUMINA-FM 8
+.Os 1.3.3
+
+.Sh NAME
+.Nm lumina-fm
+.Nd is a utility used for browsing and interacting with files
+on the system.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl new-instance
+.Op Ar FILE
+
+.Sh DESCRIPTION
+.Nm
+is the CLI command to open Insight File Manager.
+The file manager interface maintains files stored on the system.
+.Nm
+can take an optional argument and file path.
+If no argument or file path is specified, the command opens the
+Insight File Manager in the home directory.
+Specifying a file path while the interface is open creates a new tab in
+the existing window.
+.Pp
+.Bl -tag -width indent
+.It Ic -new-instance
+Opens Insight File Manager in a new window.
+.El
+
+.Sh EXAMPLES
+.Pp
+.Dl % lumina-fm -new-instance /usr/bin/etc
+Opens Insight in a new window pointed to the specified directory.
+.Pp
+.Dl % lumina-fm /usr/etc/bin
+Opens the specified directory with the file manager.
+If Insight is already open, a second tab is created.
+
+.Sh OPTIONAL RUNTIME DEPENDENCIES
+If other lumina utilities are installed more options are available.
+The following are optional for
+.Nm
+.Pp
+.Bl -tag -width indent
+.It Ic lumina-archiver
+Gives the option to instantaneously extract an
+archive into a new subfolder within the current directory.
+.It Ic lumina-open
+Gives the option to "open-with".
+.It Ic lumina-fileinfo
+Provides an option to view the properties of files.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-fm
+.El
+
+.Sh AUTHORS
+.An Aaron St. John and Tim Moore
+.Aq aaron@ixsystems.com

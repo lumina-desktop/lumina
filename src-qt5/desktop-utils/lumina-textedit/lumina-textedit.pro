@@ -102,7 +102,10 @@ link.extra=ln -sf lumina-textedit $(INSTALL_ROOT)$${L_BINDIR}/lte
 syntax.path=$${L_SHAREDIR}/lumina-desktop/syntax_rules
 syntax.files=syntax_rules/*
 
-INSTALLS += target desktop link syntax
+manpage.path=$${L_MANDIR}/man8/
+manpage.extra="$${MAN_ZIP} lumina-textedit.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/lumina-textedit.8.gz"
+
+INSTALLS += target desktop link syntax manpage
 
 WITH_I18N{
   INSTALLS += dotrans
