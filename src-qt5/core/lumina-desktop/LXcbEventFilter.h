@@ -62,7 +62,7 @@ private:
 	QList<xcb_atom_t> WinNotifyAtoms, SysNotifyAtoms;
 	int TrayDmgFlag; //internal damage event offset value for the system tray
 	bool stopping;
-	
+
 	void InitAtoms(){
 	  //Initialize any special atoms that we need to save/use regularly
 	  //NOTE: All the EWMH atoms are already saved in session->XCB->EWMH
@@ -73,7 +73,7 @@ private:
 					<< session->XCB->EWMH._NET_WM_VISIBLE_ICON_NAME \
 					<< session->XCB->EWMH._NET_WM_ICON \
 					<< session->XCB->EWMH._NET_WM_ICON_GEOMETRY;
-		
+
 	  SysNotifyAtoms.clear();
 	    SysNotifyAtoms << session->XCB->EWMH._NET_CLIENT_LIST \
 					<< session->XCB->EWMH._NET_CLIENT_LIST_STACKING \
@@ -85,12 +85,12 @@ private:
 	  //_NET_SYSTEM_TRAY_OPCODE
 	  xcb_intern_atom_cookie_t cookie = xcb_intern_atom(QX11Info::connection(), 0, 23,"_NET_SYSTEM_TRAY_OPCODE");
 	    xcb_intern_atom_reply_t *r = xcb_intern_atom_reply(QX11Info::connection(), cookie, NULL);
-	    if(r){ 
-	      _NET_SYSTEM_TRAY_OPCODE = r->atom; 
+	    if(r){
+	      _NET_SYSTEM_TRAY_OPCODE = r->atom;
 	      free(r);
 	    }
 	}
-	
+
 public:
 	XCBEventFilter(LSession *sessionhandle);
 	void setTrayDamageFlag(int flag);
@@ -98,7 +98,7 @@ public:
 
 	//This function format taken directly from the Qt5.3 documentation
 	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *) Q_DECL_OVERRIDE;
-	
+
 };
 
 #endif
