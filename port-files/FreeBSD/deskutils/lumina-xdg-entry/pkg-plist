@@ -1,2 +1,3 @@
 bin/lumina-xdg-entry
+man/man8/lumina-xdg-entry.8.gz
 share/applications/lumina-xdg-entry.desktop
