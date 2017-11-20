@@ -557,6 +557,12 @@ void DirWidget::UpdateContextMenu(){
    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
    //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
    contextMenu->addMenu(cOpenWithMenu);
+   bool ok = (QString(getenv("XDG_CURRENT_DESKTOP"))=="Lumina");
+   static QStringList imageformats = LUtils::imageExtensions();
+   for(int i=0; i<sel.length() && ok; i++){
+      ok = imageformats.contains(sel[i].section(".",-1));
+    }
+    if(ok){ contextMenu->addAction(LXDG::findIcon("preferences-desktop-wallpaper","preferences-desktop"), tr("Set as Wallpaper"), this, SLOT(setAsWallpaper()) ); }
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
@@ -901,6 +907,23 @@ void DirWidget::autoArchiveFiles(){
   ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << archive << files);
 }
 
+void DirWidget::setAsWallpaper(){
+  QStringList files = currentBrowser()->currentSelection();
+  //Get the screen for the wallpaper
+  QList<QScreen*> screens = QApplication::screens();
+  QString screenID;
+  if(screens.length()>1){
+    QStringList opts;
+     for(int i=0; i<screens.length(); i++){ opts << screens[i]->name(); }
+    screenID = QInputDialog::getItem(this, tr("Set Wallpaper on Screen"), tr("Screen"), opts, 0, false);
+    if(screenID.isEmpty()){ return; }
+  }else{
+    screenID = screens[0]->name();
+  }
+  //Now save this to the settings
+  QSettings deskset("lumina-desktop","desktopsettings");
+  deskset.setValue("desktop-"+screenID+"/background/filelist" , files);
+}
 
 //====================
 //         PROTECTED

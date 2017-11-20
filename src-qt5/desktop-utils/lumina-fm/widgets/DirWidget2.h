@@ -160,6 +160,7 @@ private slots:
 	//void attachToNewEmail();
 	void autoExtractFiles();
 	void autoArchiveFiles();
+	void setAsWallpaper();
 
 	// - Context-specific operations
 	void openInSlideshow();
