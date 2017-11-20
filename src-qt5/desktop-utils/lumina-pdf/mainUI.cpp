@@ -36,8 +36,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
   //frame_presenter = new QFrame(this);
   label_clock = new QLabel(this);
-    label_clock->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    label_clock->setAlignment(Qt::AlignCenter );
     label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
   //Now put the widgets into the UI
   this->setCentralWidget(WIDGET);
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
