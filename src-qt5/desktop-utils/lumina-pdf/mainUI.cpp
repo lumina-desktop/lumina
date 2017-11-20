@@ -29,7 +29,16 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 0;
   lastdir = QDir::homePath();
   Printer = new QPrinter();
+  //Create the interface widgets
   WIDGET = new QPrintPreviewWidget(Printer,this);
+  clockTimer = new QTimer(this);
+    clockTimer->setInterval(1000); //1-second updates to clock
+    connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
+  //frame_presenter = new QFrame(this);
+  label_clock = new QLabel(this);
+    label_clock->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+    label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  //Now put the widgets into the UI
   this->setCentralWidget(WIDGET);
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
@@ -44,7 +53,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     progress->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     progress->setFormat("%v/%m (%p%)"); // [current]/[total]
   progAct = ui->toolBar->addWidget(progress);
-  progAct->setVisible(false);
+    progAct->setVisible(false);
+  clockAct = ui->toolBar->addWidget(label_clock);
+    clockAct->setVisible(false);
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
     tmp->setExclusive(true);
@@ -143,6 +154,14 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
   if(PAGE!=0){
     //qDebug() << "DPI:" << 4*dpi;
     loadingHash.insert(num, PAGE->renderToImage(2.5*dpi.width(), 2.5*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    /*
+    QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
+    QStringList annoS;
+    for(int i=0; i<anno.length(); i++){
+      annoS << static_cast<TextAnnotation*>(anno[i])->???
+    }
+    annotateHash.insert(num, PAGE->
+    */
   }else{
     loadingHash.insert(num, QImage());
   }
@@ -203,6 +222,9 @@ void MainUI::startPresentation(bool atStart){
 
   ui->actionStop_Presentation->setEnabled(true);
   ui->menuStart_Presentation->setEnabled(false);
+  updateClock();
+  clockAct->setVisible(true);
+  clockTimer->start();
   QApplication::processEvents();
   //Now start at the proper page
   ShowPage(page);
@@ -240,6 +262,8 @@ void MainUI::endPresentation(){
   presentationLabel->hide(); //just hide this (no need to re-create the label for future presentations)
   ui->actionStop_Presentation->setEnabled(false);
   ui->menuStart_Presentation->setEnabled(true);
+  clockTimer->stop();
+  clockAct->setVisible(false);
   this->releaseKeyboard();
 }
 
@@ -354,4 +378,8 @@ void MainUI::OpenNewFile(){
   QString path = QFileDialog::getOpenFileName(this, tr("Open PDF"), lastdir, tr("PDF Documents (*.pdf)"));
   //Now Open it
   if(!path.isEmpty()){ loadFile(path); }
+}
+
+void MainUI::updateClock(){
+  label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
 }

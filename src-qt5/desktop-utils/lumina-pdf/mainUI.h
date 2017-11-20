@@ -45,6 +45,10 @@ private:
 	//Other Interface elements
 	QProgressBar *progress;
 	QAction *progAct; //action associated with the progressbar
+	QTimer *clockTimer;
+	//QFrame *frame_presenter;
+	QLabel *label_clock;
+	QAction *clockAct;
 
 	//PDF Page Loading cache variables
 	QHash<int, QImage> loadingHash;
@@ -70,6 +74,9 @@ private slots:
 
 	//Button Slots
 	void OpenNewFile();
+
+	//Other interface slots
+	void updateClock();
 
 signals:
 	void PageLoaded(int);
