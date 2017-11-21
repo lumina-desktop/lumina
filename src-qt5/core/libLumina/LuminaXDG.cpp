@@ -853,7 +853,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   QIcon tmp;
   if(!iconName.contains("libreoffice")){ //libreoffice is stupid - their svg icons are un-renderable with Qt
     tmp = QIcon::fromTheme(iconName);
-    if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
+    //if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
   }
   if(!tmp.isNull()){ return tmp; } //found one in the theme
 

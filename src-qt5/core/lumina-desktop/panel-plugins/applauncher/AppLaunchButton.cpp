@@ -16,7 +16,7 @@ AppLaunchButtonPlugin::AppLaunchButtonPlugin(QWidget *parent, QString id, bool h
     button->setAutoRaise(true);
     button->setToolButtonStyle(Qt::ToolButtonIconOnly);
     appfile = id.section("---",0,0).section("::",1,1);
-    if(!QFile::exists(appfile) && appfile.endsWith(".desktop")){ 
+    if(!QFile::exists(appfile) && appfile.endsWith(".desktop")){
       //might be a relative path - try to find the file
       appfile = LUtils::AppToAbsolute(appfile.section("/",-1) );
     }
