@@ -94,7 +94,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Now set the default state of the menu's and actions
   ui->menuStart_Presentation->setEnabled(false);
   ui->actionStop_Presentation->setEnabled(false);
-  this->grabKeyboard();
 }
 
 MainUI::~MainUI(){
