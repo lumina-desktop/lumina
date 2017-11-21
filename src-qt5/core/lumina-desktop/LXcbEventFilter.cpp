@@ -50,6 +50,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_CURRENT_DESKTOP) )){
  		  //qDebug() << "Got Workspace Change";
 		  session->emit WorkspaceChanged();
+		  session->WindowPropertyEvent(); //make sure we update the lists again - some windows are now hidden
 		}else if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Update the status/list of all running windows
 		  session->WindowPropertyEvent();
