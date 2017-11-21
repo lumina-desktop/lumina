@@ -19,7 +19,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_buttonBox_clicked(QAbstractButton *button);
+	void closeWindow();
+	void applyWindow();
 
 private:
     void closeEvent(QCloseEvent *);

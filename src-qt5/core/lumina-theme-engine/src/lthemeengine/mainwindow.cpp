@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   bgroup->addButton(m_ui->tool_page_deskstyles, m_ui->stackedWidget->addWidget(new QSSPage(this, true)));
   bgroup->addButton(m_ui->tool_page_cursors, m_ui->stackedWidget->addWidget(new CursorThemePage(this)) );
   connect(bgroup, SIGNAL(buttonClicked(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)) );
+  connect(m_ui->push_close, SIGNAL(clicked()), this, SLOT(closeWindow()) );
+  connect(m_ui->push_apply, SIGNAL(clicked()), this, SLOT(applyWindow()) );
 
   QTimer::singleShot(10, m_ui->tool_page_general, SLOT(toggle()));
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
@@ -39,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   setWindowIcon(QIcon::fromTheme("preferences-desktop-theme"));
   this->setWindowTitle(tr("Theme Settings"));
   m_ui->versionLabel->setText(tr("Version: %1").arg(LDesktopUtils::LuminaDesktopVersion()));
+  //m_ui->buttonBox->set
 }
 
 MainWindow::~MainWindow(){
@@ -50,16 +53,14 @@ void MainWindow::closeEvent(QCloseEvent *){
   settings.setValue("SettingsWindow/geometry", saveGeometry());
 }
 
-void MainWindow::on_buttonBox_clicked(QAbstractButton *button){
-  int id = m_ui->buttonBox->standardButton(button);
-  if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Apply){
-    for(int i = 0; i < m_ui->stackedWidget->count(); ++i){
-      TabPage *p = qobject_cast<TabPage*>(m_ui->stackedWidget->widget(i));
-      if(p) { p->writeSettings(); }
-      }
-    }
-  if(id == QDialogButtonBox::Ok || id == QDialogButtonBox::Cancel || id== QDialogButtonBox::Close){
-    close();
-    qApp->quit();
-    }
+void MainWindow::closeWindow(){
+  close();
+  QApplication::quit();
+}
+
+void MainWindow::applyWindow(){
+  for(int i = 0; i < m_ui->stackedWidget->count(); ++i){
+    TabPage *p = qobject_cast<TabPage*>(m_ui->stackedWidget->widget(i));
+    if(p) { p->writeSettings(); }
+  }
 }

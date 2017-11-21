@@ -224,7 +224,14 @@ void QSSPage::readSettings(){
   QStringList styleSheets;
   if(desktop_qss){ styleSheets = settings.value("Interface/desktop_stylesheets").toStringList(); }
   else{ styleSheets = settings.value("Interface/stylesheets").toStringList(); }
+  for(int i=0; i<styleSheets.length(); i++){
+    if(styleSheets[i].contains("..") || styleSheets[i].contains("//") ){
+      //Get the absolute path for matching later
+      styleSheets[i] = QFileInfo(styleSheets[i]).absoluteFilePath();
+    }
+  }
   //Now load the items into list widgets
+  //qDebug() << "Found Stylesheets" << styleSheets;
   if(desktop_qss){ findStyleSheets(QStringList() << lthemeengine::userDesktopStyleSheetPath() << lthemeengine::sharedDesktopStyleSheetPath(), styleSheets); }
   else{findStyleSheets(QStringList() << lthemeengine::userStyleSheetPath() << lthemeengine::sharedStyleSheetPath(), styleSheets); }
 
