@@ -248,7 +248,7 @@ bool LOS::systemPerformingUpdates(){
 
 //Return the details of any updates which are waiting to apply on shutdown
 QString LOS::systemPendingUpdates(){
-  if(QFile::exists("/tmp/.rebootRequired")){ return LUtils::readFile("/tmp/.rebootRequired").join("\n"); }
+  if(QFile::exists("/tmp/.trueos-update-staged")){ return LUtils::readFile("/tmp/.trueos-update-staged").join("\n"); }
   else{ return ""; }
 }
 
@@ -260,7 +260,7 @@ void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
 
 //System Restart
 void LOS::systemRestart(bool skipupdates){ //start reboot sequence
-  bool activeupdates = !LUtils::readFile("/etc/defaults/vendor.conf").filter("trueos_active_update=\"YES\"").isEmpty();
+  bool activeupdates = (LUtils::getCmdOutput("sysrc -n trueos_active_update").join("").simplified()=="YES");
   if(skipupdates){
     QProcess::startDetached("shutdown -ro now");
   }else{
