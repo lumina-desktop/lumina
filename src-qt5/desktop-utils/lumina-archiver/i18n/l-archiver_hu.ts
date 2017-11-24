@@ -36,67 +36,67 @@
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="296"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fájl</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szerkeszt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>Burn to Disk</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiírás lemezre</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archívum mengnyitás</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archívum megnyitás</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Új archívum</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Új archívum</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kilépés</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fájl(ok) hozzáadás</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fájlok hozzáadása az archívumhoz</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fájl(ok) eltávolítása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztottak eltávolítása az archívumból</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Összes kibontása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="218"/>
@@ -106,27 +106,27 @@
     <message>
         <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Új könyvtár</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Könyvtár hozzáadás az archívumhoz</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztottak kibontása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztott elemek kibontása</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">USB lemezkép</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="242"/>
@@ -136,127 +136,127 @@
     <message>
         <location filename="../MainUI.cpp" line="24"/>
         <source>Archive Manager</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archívumkezelő</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="25"/>
         <source>Admin Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Adminisztráció</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="51"/>
         <source>CTRL+N</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CTRL+N</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="52"/>
         <source>CTRL+O</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CTRL+O</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="53"/>
         <source>CTRL+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CTRL+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="54"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="296"/>
         <source>MimeType</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mime típus</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="296"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Méret</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="81"/>
         <location filename="../MainUI.cpp" line="220"/>
         <source>Opening Archive...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Archívum megnyitása...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="164"/>
         <source>All Types %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Összes %1 típus</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="165"/>
         <location filename="../MainUI.cpp" line="183"/>
         <source>Uncompressed Archive (*.tar)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kitömörítetlen archívum (*.tar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="166"/>
         <location filename="../MainUI.cpp" line="184"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">GZip tömörített archívum (*.tar.gz *.tgz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="167"/>
         <location filename="../MainUI.cpp" line="185"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BZip tömörített archívum (*.tar.bz *.tbz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="168"/>
         <location filename="../MainUI.cpp" line="186"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BZip2 tömörített archívum (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="169"/>
         <location filename="../MainUI.cpp" line="188"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LMZA tömörített archívum (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="170"/>
         <location filename="../MainUI.cpp" line="187"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">XZ tömörített archívum (*.tar.xz *.txz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="171"/>
         <location filename="../MainUI.cpp" line="189"/>
         <source>CPIO Archive (*.cpio)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CPIO archívum (*.cpio)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="172"/>
         <location filename="../MainUI.cpp" line="190"/>
         <source>PAX Archive (*.pax)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PAX archívum (*.pax)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="173"/>
         <location filename="../MainUI.cpp" line="191"/>
         <source>AR Archive (*.ar)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">AR archívum (*.ar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="174"/>
         <location filename="../MainUI.cpp" line="192"/>
         <source>SHAR Archive (*.shar)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SHAR archívum (*.shar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="175"/>
         <location filename="../MainUI.cpp" line="193"/>
         <source>Zip Archive (*.zip)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zip archívum (*.zip)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="176"/>
         <location filename="../MainUI.cpp" line="194"/>
         <source>7-Zip Archive (*.7z)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">7-Zip archívum (*.7z)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="182"/>
@@ -350,52 +350,52 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Multimédia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejlesztés</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oktatás</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Játékok</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grafika</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hálózat</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Iroda</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Tudomány</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
