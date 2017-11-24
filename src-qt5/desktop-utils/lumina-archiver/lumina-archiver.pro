@@ -95,7 +95,10 @@ desktop.path=$${L_SHAREDIR}/applications/
 #link.path=$${L_BINDIR}
 #link.extra=ln -sf lumina-archiver $(INSTALL_ROOT)$${L_BINDIR}/lpac
 
-INSTALLS += target desktop
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} lumina-archiver.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-archiver.1.gz"
+
+INSTALLS += target desktop manpage
 
 WITH_I18N{
   INSTALLS += dotrans

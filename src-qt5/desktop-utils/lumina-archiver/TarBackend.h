@@ -50,10 +50,13 @@ private:
 	QStringList flags;
 	QHash<QString, QStringList> contents; //<filepath, [attributes, size, compressed size]
 
+	QStringList insertQueue;
+
 	bool LIST, STARTING;
 	void parseLines(QStringList lines);
 
 private slots:
+	void startInsertFromQueue(){ startAdd(insertQueue); }
 	void startList();
 	void procFinished(int retcode, QProcess::ExitStatus);
 	void processData();

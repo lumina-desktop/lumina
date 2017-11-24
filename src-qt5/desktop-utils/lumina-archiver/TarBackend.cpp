@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <QCoreApplication>
+#include <QTimer>
 
 Backend::Backend(QObject *parent) : QObject(parent){
   //Setup the backend process
@@ -91,14 +92,23 @@ QString Backend::linkTo(QString file){
 
 //Modification routines
 void Backend::startAdd(QStringList paths){
-  //NOTE: All the "paths" have to have the same parent directory
+  //if(paths.isEmpty() && !insertQueue.isEmpty()){ paths = insertQueue; } //load the queue
   if(paths.contains(filepath)){ paths.removeAll(filepath); }
   if(paths.isEmpty()){ return; }
+  //NOTE: All the "paths" have to have the same parent directory
+  //Go through and find all the files that contain the same parent dir, and put the rest into the insertQueue
+  QString parent = paths[0].section("/",0,-2);
+  insertQueue.clear();
+  for(int i=1; i<paths.length(); i++){
+    if(paths[i].section("/",0,-2)!=parent){
+      insertQueue << paths.takeAt(i); i--; //push this back a bit for later
+    }
+  }
+  //qDebug() << "Start Archive Insert:" << paths << "Queued:" << insertQueue;
   QStringList args;
   args << "-c" << "-a";
   args << flags;
   //Now setup the parent dir
-  QString parent = paths[0].section("/",0,-2);
   for(int i=0; i<paths.length(); i++){
     paths[i] = paths[i].section(parent,1,-1);
     if(paths[i].startsWith("/")){ paths[i].remove(0,1); }
@@ -262,7 +272,11 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
       }
     }
     if(args.contains("-x")){ result = tr("Extraction Finished"); emit ExtractSuccessful(); }
-    else if(args.contains("-c")){ result = tr("Modification Finished"); emit ArchivalSuccessful(); }
+    else if(args.contains("-c")){
+      result = tr("Modification Finished");
+      if(insertQueue.isEmpty()){ emit ArchivalSuccessful(); }
+      else{ needupdate = false; QTimer::singleShot(0, this, SLOT(startInsertFromQueue())); }
+    }
     if(needupdate){ startList(); }
     else{ emit ProcessFinished(retcode==0, result); result.clear(); }
   }

@@ -15,7 +15,7 @@ include(../../core/libLumina/LuminaXDG.pri)
 include(../../core/libLumina/LuminaSingleApplication.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 include(../../core/libLumina/ExternalProcess.pri)
-#include(../../core/libLumina/LVideoSurface.pri)
+include(../../core/libLumina/XDGMime.pri)
 include(../../core/libLumina/LVideoLabel.pri)
 
 SOURCES += main.cpp \
@@ -131,7 +131,10 @@ dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_RO
 desktop.files=lumina-fm.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target desktop icons
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} lumina-fm.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-fm.1.gz"
+
+INSTALLS += target desktop icons manpage
 
 WITH_I18N{
   INSTALLS += dotrans

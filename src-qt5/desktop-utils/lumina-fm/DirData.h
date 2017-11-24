@@ -17,6 +17,7 @@
 
 #include <LuminaXDG.h>
 #include <LUtils.h>
+#include <LFileInfo.h>
 
 #define ZSNAPDIR QString("/.zfs/snapshot/")
 

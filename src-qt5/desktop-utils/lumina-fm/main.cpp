@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QStringList>
+#include <QDateTime>
 
 #include "MainUI.h"
 #include <LuminaOS.h>
@@ -14,6 +15,7 @@
 int main(int argc, char ** argv)
 {
     LTHEME::LoadCustomEnvSettings();
+    qsrand(QDateTime::currentMSecsSinceEpoch());
     LSingleApplication a(argc, argv, "lumina-fm"); //loads translations inside constructor
       if( !a.isPrimaryProcess()){ return 0; }
     qDebug() << "Loaded QApplication";

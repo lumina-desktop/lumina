@@ -83,11 +83,11 @@ private:
 	QLineEdit *line_dir;
 
 	//The context menu and associated items
-	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu;
+	QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu, *cArchiveMenu;
 
 	//The keyboard shortcuts for context menu items
 	QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
-        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract; //, *kArchive;
+        *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract, *kArchive;
 
 	//Functions for internal use
 	void createShortcuts(); //on init only
@@ -129,12 +129,13 @@ private slots:
 	void fileCheckSums();
 	void fileProperties();
 	void openTerminal();
-    void openRootFM();
+	void openRootFM();
 
 
 	//Browser Functions
 	void OpenContextMenu();
 	void UpdateContextMenu();
+	void currentDirectoryChanged(QString dir, bool widgetonly = false);
 	void currentDirectoryChanged(bool widgetonly = false);
 	void dirStatusChanged(QString);
 	void setCurrentBrowser(QString);
@@ -158,7 +159,8 @@ private slots:
 	void runWithFiles();
 	//void attachToNewEmail();
 	void autoExtractFiles();
-    //void autoArchiveFiles();
+	void autoArchiveFiles();
+	void setAsWallpaper();
 
 	// - Context-specific operations
 	void openInSlideshow();

@@ -47,6 +47,7 @@
 // libLumina includes
 #include <LuminaXDG.h>
 #include <LuminaOS.h>
+#include <LFileInfo.h>
 
 // Local includes
 //#include "FODialog.h" //file operation dialog

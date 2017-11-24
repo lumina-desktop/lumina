@@ -9,17 +9,22 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QSettings>
+#include <QtConcurrent>
 
 #include <LUtils.h>
 #include <LuminaOS.h>
+
+#define USE_VIDEO_LABEL 0
 
 BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
   this->setLayout( new QVBoxLayout(this) );
   ID = objID;
-  //BROWSER = 0;
   //Setup the backend browser object
-  BROWSER = new Browser(this);
+  bThread = new QThread();
+  BROWSER = new Browser();
+  BROWSER->moveToThread(bThread);
+  bThread->start();
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
   connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
@@ -35,10 +40,16 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
 
 BrowserWidget::~BrowserWidget(){
   BROWSER->deleteLater();
+  bThread->exit();
+  bThread->deleteLater();
 }
 
 void BrowserWidget::changeDirectory(QString dir){
-  videoMap.clear();
+  if(USE_VIDEO_LABEL){
+    QStringList vids = videoMap.keys();
+    for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
+    //videoMap.clear();
+  }
   if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
 
@@ -277,6 +288,7 @@ void BrowserWidget::clearItems(){
   if(listWidget!=0){ listWidget->clear(); }
   else if(treeWidget!=0){ treeWidget->clear(); }
   freshload = true;
+  //videoMap.clear();
 }
 
 void BrowserWidget::itemRemoved(QString item){
@@ -299,42 +311,39 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   int num = 0;
   if(listWidget!=0){
     //LIST WIDGET - name and icon only
+    QListWidgetItem *it = 0;
+    //Find the existing item for this
     if(info->isDesktopFile() && info->XDG()->isValid()){
       QList<QListWidgetItem*> items = listWidget->findItems(info->XDG()->name, Qt::MatchExactly);
       //Could be multiple items with the same text in this case - check paths as well
-      bool found = false;
-      for(int i=0; i<items.length() && !found; i++){
-        if(items[i]->whatsThis()==info->absoluteFilePath()){
-          found = true;
-          items[i]->setText(info->XDG()->name);
-          items[i]->setIcon(ico);
-        }
-      }
-      if(!found){
-        //New Item
-        QListWidgetItem *it = new CQListWidgetItem(ico, info->XDG()->name, listWidget);
-          it->setWhatsThis(info->absoluteFilePath());
-          it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
-        listWidget->addItem(it);
+      for(int i=0; i<items.length() && it==0; i++){
+        if(items[i]->whatsThis()==info->absoluteFilePath()){ it = items[i]; }
       }
     }else{
       //non-desktop entry
-      if(!listWidget->findItems(info->fileName(), Qt::MatchExactly).isEmpty()){
-        //Update existing item
-        QListWidgetItem *it = listWidget->findItems(info->fileName(), Qt::MatchExactly).first();
-        it->setText(info->fileName());
-        it->setWhatsThis(info->absoluteFilePath());
-        it->setIcon(ico);
-
-      }else{
-        //New item
-        QListWidgetItem *it = new CQListWidgetItem(ico, info->fileName(), listWidget);
+      QList<QListWidgetItem*> items = listWidget->findItems(info->fileName(), Qt::MatchExactly);
+      //Could be multiple items with the same text in this case - check paths as well
+      for(int i=0; i<items.length() && it==0; i++){
+        if(items[i]->whatsThis()==info->absoluteFilePath()){ it = items[i]; }
+      }
+    }
+    //No existing item - make a new one
+    if(it==0){
+      it = new CQListWidgetItem(ico, info->fileName(), listWidget);
           it->setWhatsThis(info->absoluteFilePath());
           it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
         listWidget->addItem(it);
-      }
-      num = listWidget->count();
-    } //end non-desktop entry
+    }
+    num = listWidget->count();
+    //Now update the information for the item
+    if(info->isDesktopFile() && info->XDG()->isValid()){
+      it->setText(info->XDG()->name);
+      it->setIcon(ico);
+    }else{
+      it->setIcon(ico);
+      it->setText(info->fileName());
+    }
+
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
     if(info->isDesktopFile()){
@@ -352,13 +361,13 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     }else{
       if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) {
         it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
-      }else if(info->isVideo() && videoMap.find(info->absoluteFilePath()) == videoMap.end()) {
+      }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && !videoMap.contains(info->absoluteFilePath()) ) {
         it = new CQTreeWidgetItem(treeWidget);
         treeWidget->addTopLevelItem(it);
         LVideoWidget *widget = new LVideoWidget(info->absoluteFilePath(), treeWidget->iconSize(), hasThumbnails(), treeWidget);
         videoMap.insert(info->absoluteFilePath(), QPair<QTreeWidgetItem*,LVideoWidget*>(it, widget));
         treeWidget->setItemWidget(it, 0, widget);
-      }else if(info->isVideo()) {
+      }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && videoMap.contains(info->absoluteFilePath()) ) {
         it = videoMap[info->absoluteFilePath()].first;
         LVideoWidget *widget = videoMap[info->absoluteFilePath()].second;
         widget->setIconSize(treeWidget->iconSize());
@@ -370,8 +379,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       }
     }
     //Now set/update all the data
-    if(!info->isVideo())
-      it->setIcon(0, ico);
+    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){ it->setIcon(0, ico); }
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
@@ -382,11 +390,11 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     it->setWhatsThis(4, info->created().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     num = treeWidget->topLevelItemCount();
   }
-
   if(num < numItems){
     //Still loading items
-    //this->setEnabled(false);
+    this->setEnabled(false);
   }else{
+    //qDebug() << "Got Items Loaded:" << num << numItems;
     if(freshload && treeWidget!=0){
       //qDebug() << "Resize Tree Widget Contents";
       //for(int i=treeWidget->columnCount()-1; i>0; i--){ treeWidget->resizeColumnToContents(i); }
@@ -394,8 +402,30 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       //treeWidget->resizeColumnToContents(0);
     }
     freshload = false; //any further changes are updates - not a fresh load of a dir
+    QtConcurrent::run(this, &BrowserWidget::loadStatistics, this);
+    //QTimer::singleShot(0, this, SLOT(loadStatistics()));
     //Done loading items
-    //this->setEnabled(true);
+    this->setEnabled(true);
+
+  }//end check for finished loading items
+}
+
+void BrowserWidget::itemsLoading(int total){
+  //qDebug() << "Got number of items loading:" << total;
+  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
+  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
+  numItems = total; //save this for later
+  if(total<1){
+    emit updateDirectoryStatus( tr("No Directory Contents") );
+    this->setEnabled(true);
+  }
+}
+
+void BrowserWidget::selectionChanged(){
+  emit hasFocus(ID); //let the parent know the widget is "active" with the user
+}
+
+void BrowserWidget::loadStatistics(BrowserWidget* bw){
     //Assemble any status message
     QString stats = QString(tr("Capacity: %1")).arg(LOS::FileSystemCapacity(BROWSER->currentDirectory()));
     int nF, nD;
@@ -433,24 +463,8 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         stats.prepend( QString(tr("Dirs: %1")).arg(QString::number(nD)) );
       }
     }
-    emit updateDirectoryStatus( stats.simplified() );
+    bw->emit updateDirectoryStatus( stats.simplified() );
     statustip = stats.simplified(); //save for later
-  }//end check for finished loading items
-}
-
-void BrowserWidget::itemsLoading(int total){
-  //qDebug() << "Got number of items loading:" << total;
-  if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
-  if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
-  numItems = total; //save this for later
-  if(total<1){
-    emit updateDirectoryStatus( tr("No Directory Contents") );
-    this->setEnabled(true);
-  }
-}
-
-void BrowserWidget::selectionChanged(){
-  emit hasFocus(ID); //let the parent know the widget is "active" with the user
 }
 
 void BrowserWidget::resizeEvent(QResizeEvent *ev){

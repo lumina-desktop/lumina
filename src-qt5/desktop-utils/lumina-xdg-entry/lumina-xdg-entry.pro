@@ -25,4 +25,7 @@ FORMS    += mainwindow.ui
 desktop.files=lumina-xdg-entry.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target desktop
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} lumina-xdg-entry.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-xdg-entry.1.gz"
+
+INSTALLS += target desktop manpage

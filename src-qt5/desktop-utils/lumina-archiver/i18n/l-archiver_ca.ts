@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="229"/>
+        <location filename="../TarBackend.cpp" line="239"/>
         <source>Could not read archive</source>
-        <translation>No s'ha pogut llegir l'arxiu</translation>
+        <translation>No s&apos;ha pogut llegir l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="231"/>
+        <location filename="../TarBackend.cpp" line="241"/>
         <source>Archive Loaded</source>
         <translation>Arxiu carregat</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="264"/>
+        <location filename="../TarBackend.cpp" line="274"/>
         <source>Extraction Finished</source>
         <translation>Extracció acabada</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="266"/>
+        <location filename="../TarBackend.cpp" line="276"/>
         <source>Modification Finished</source>
         <translation>Modificació acabada</translation>
     </message>
@@ -33,8 +33,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="125"/>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="296"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>File</source>
         <translation>Fitxer</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation>Afegiu fitxers a l'arxiu</translation>
+        <translation>Afegiu fitxers a l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation>Elimina la selecció de l'arxiu</translation>
+        <translation>Elimina la selecció de l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="215"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
-        <translation>Extreu l'arxiu en un directori</translation>
+        <translation>Extreu l&apos;arxiu en un directori</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="223"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation>Afegeix un directori a l'arxiu</translation>
+        <translation>Afegeix un directori a l&apos;arxiu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
@@ -131,216 +131,218 @@
     <message>
         <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d'administrador)</translation>
+        <translation>Copia una IMG en un dispositiu USB (pot caldre permís d&apos;administrador)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="24"/>
+        <location filename="../MainUI.cpp" line="28"/>
         <source>Archive Manager</source>
-        <translation>Gestor d'arxius</translation>
+        <translation>Gestor d&apos;arxius</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="25"/>
+        <location filename="../MainUI.cpp" line="29"/>
         <source>Admin Mode</source>
-        <translation>Mode d'administrador</translation>
+        <translation>Mode d&apos;administrador</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="51"/>
+        <location filename="../MainUI.cpp" line="55"/>
         <source>CTRL+N</source>
         <translation>CTRL+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="52"/>
+        <location filename="../MainUI.cpp" line="56"/>
         <source>CTRL+O</source>
         <translation>CTRL+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="53"/>
+        <location filename="../MainUI.cpp" line="57"/>
         <source>CTRL+Q</source>
         <translation>CTRL+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="54"/>
+        <location filename="../MainUI.cpp" line="58"/>
         <source>CTRL+E</source>
         <translation>CTRL+E</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="296"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>MimeType</source>
         <translation>Tipus MIME</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="296"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>Size</source>
         <translation>Mida</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="81"/>
-        <location filename="../MainUI.cpp" line="220"/>
+        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="234"/>
         <source>Opening Archive...</source>
-        <translation>S'obre l'arxiu...</translation>
+        <translation>S&apos;obre l&apos;arxiu...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="164"/>
+        <location filename="../MainUI.cpp" line="178"/>
         <source>All Types %1</source>
         <translation>Tots els tipus %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="165"/>
-        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="179"/>
+        <location filename="../MainUI.cpp" line="197"/>
         <source>Uncompressed Archive (*.tar)</source>
         <translation>Arxiu no comprimit (*.tar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="166"/>
-        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="180"/>
+        <location filename="../MainUI.cpp" line="198"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
         <translation>Arxiu comprimit GZip (*.tar.gz *.tgz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="167"/>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="181"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
         <translation>Arxiu comprimit BZip (*.tar.bz *.tbz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="168"/>
-        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="200"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
         <translation>Arxiu comprimit BZip2 (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="169"/>
-        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="202"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
         <translation>Arxiu comprimit LMZA (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="170"/>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="201"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
         <translation>Arxiu comprimit XZ (*.tar.xz *.txz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="171"/>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="203"/>
         <source>CPIO Archive (*.cpio)</source>
         <translation>Arxiu CPIO (*.cpio)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="172"/>
-        <location filename="../MainUI.cpp" line="190"/>
+        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="204"/>
         <source>PAX Archive (*.pax)</source>
         <translation>Arxiu PAX (*.pax)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="173"/>
-        <location filename="../MainUI.cpp" line="191"/>
+        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="205"/>
         <source>AR Archive (*.ar)</source>
         <translation>Arxiu AR (*.ar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="174"/>
-        <location filename="../MainUI.cpp" line="192"/>
+        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="206"/>
         <source>SHAR Archive (*.shar)</source>
         <translation>Arxiu SHAR (*.shar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="175"/>
-        <location filename="../MainUI.cpp" line="193"/>
+        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="207"/>
         <source>Zip Archive (*.zip)</source>
         <translation>Arxiu Zip (*.zip)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="176"/>
-        <location filename="../MainUI.cpp" line="194"/>
+        <location filename="../MainUI.cpp" line="190"/>
+        <location filename="../MainUI.cpp" line="208"/>
         <source>7-Zip Archive (*.7z)</source>
         <translation>Arxiu 7-Zip (*.7z)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="196"/>
         <source>All Known Types %1</source>
         <translation>Tots els tipus coneguts %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="195"/>
+        <location filename="../MainUI.cpp" line="209"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
         <translation>NOMÉS DE LECTURA: imatge ISO (*.iso *.img)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="196"/>
+        <location filename="../MainUI.cpp" line="210"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
         <translation>NOMÉS DE LECTURA: arxiu XAR (*.xar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="197"/>
+        <location filename="../MainUI.cpp" line="211"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
         <translation>NOMÉS DE LECTURA: arxiu Java (*.jar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="198"/>
+        <location filename="../MainUI.cpp" line="212"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
         <translation>NOMÉS DE LECTURA: paquet de RedHat (*.rpm)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="213"/>
         <source>Show All Files (*)</source>
         <translation>Mostra tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="207"/>
+        <location filename="../MainUI.cpp" line="221"/>
         <source>Create Archive</source>
         <translation>Crea un arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>Could not overwrite file:</source>
-        <translation>No s'ha pogut sobreescriure el fitxer:</translation>
+        <translation>No s&apos;ha pogut sobreescriure el fitxer:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="218"/>
+        <location filename="../MainUI.cpp" line="232"/>
         <source>Open Archive</source>
         <translation>Obre un arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="226"/>
-        <location filename="../MainUI.cpp" line="233"/>
+        <location filename="../MainUI.cpp" line="240"/>
+        <location filename="../MainUI.cpp" line="247"/>
         <source>Add to Archive</source>
-        <translation>Afegeix a l'arxiu</translation>
+        <translation>Afegeix a l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="228"/>
-        <location filename="../MainUI.cpp" line="235"/>
+        <location filename="../MainUI.cpp" line="242"/>
+        <location filename="../MainUI.cpp" line="249"/>
+        <location filename="../MainUI.cpp" line="298"/>
         <source>Adding Items...</source>
-        <translation>S'afegeixen elements...</translation>
+        <translation>S&apos;afegeixen elements...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="246"/>
+        <location filename="../MainUI.cpp" line="260"/>
         <source>Removing Items...</source>
-        <translation>S'eliminen elements...</translation>
+        <translation>S&apos;eliminen elements...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="251"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="309"/>
         <source>Extract Into Directory</source>
         <translation>Extreu en un directori</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="253"/>
-        <location filename="../MainUI.cpp" line="261"/>
-        <location filename="../MainUI.cpp" line="278"/>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="267"/>
+        <location filename="../MainUI.cpp" line="285"/>
+        <location filename="../MainUI.cpp" line="292"/>
+        <location filename="../MainUI.cpp" line="311"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>Extracting...</source>
-        <translation>S'extreu...</translation>
+        <translation>S&apos;extreu...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="310"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Link To: %1</source>
         <translation>Enllaç: %1</translation>
     </message>
@@ -348,67 +350,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
         <translation>Multimèdia</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
         <translation>Desenvolupament</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
         <translation>Educació</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
         <translation>Jocs</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
         <translation>Gràfics</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
         <translation>Xarxa</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
         <translation>Oficina</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
         <translation>Ciència</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
         <translation>Paràmetres</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
         <translation>Utilitat</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
         <translation>Sense classificar</translation>
     </message>
@@ -443,7 +445,7 @@
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation>Neteja tot l'espai extra al dispositiu (conv = sync)</translation>
+        <translation>Neteja tot l&apos;espai extra al dispositiu (conv = sync)</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
@@ -473,7 +475,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
-        <translation>Mode d'administrador</translation>
+        <translation>Mode d&apos;administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
@@ -508,12 +510,12 @@
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Administrator Permissions Needed</source>
-        <translation>Calen permisos d'administrador</translation>
+        <translation>Calen permisos d&apos;administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>This operation requires administrator priviledges.</source>
-        <translation>Aquesta operació requereix privilegis d'administrador.</translation>
+        <translation>Aquesta operació requereix privilegis d&apos;administrador.</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -528,7 +530,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation>El procés no s'ha pogut completar:</translation>
+        <translation>El procés no s&apos;ha pogut completar:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
@@ -538,7 +540,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation>La imatge s'ha gravat correctament al dispositiu USB.</translation>
+        <translation>La imatge s&apos;ha gravat correctament al dispositiu USB.</translation>
     </message>
 </context>
 </TS>

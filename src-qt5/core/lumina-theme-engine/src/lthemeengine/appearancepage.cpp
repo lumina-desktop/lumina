@@ -195,6 +195,10 @@ void AppearancePage::readSettings(){
   m_ui->styleComboBox->setCurrentText(style);
   m_ui->customPaletteButton->setChecked(settings.value("custom_palette", false).toBool());
   QString colorSchemePath = settings.value("color_scheme_path").toString();
+  if(colorSchemePath.contains("..") || colorSchemePath.contains("//") ){
+    //Make this an absolute path for comparison later
+    colorSchemePath = QFileInfo(colorSchemePath).absoluteFilePath();
+  }
   QDir("/").mkpath(lthemeengine::userColorSchemePath());
   findColorSchemes( QStringList() << lthemeengine::userColorSchemePath() << lthemeengine::sharedColorSchemePath());
   if(m_ui->colorSchemeComboBox->count() == 0){

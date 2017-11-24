@@ -17,6 +17,7 @@
 #include <QMediaPlayer>
 #include <LVideoSurface.h>
 #include <LVideoLabel.h>
+#include <LFileInfo.h>
 #include <QElapsedTimer>
 #include <QFuture>
 
@@ -54,7 +55,7 @@ private:
 	void GetDirSize(const QString dirname) const; //function to get folder size
 
 	void SyncFileInfo();
-
+	void SyncZfsInfo();
 	void syncXdgStruct(XDGDesktop*);
 
 	bool saveFile(QString path);
@@ -65,6 +66,7 @@ signals:
 
 private slots:
 	void SetupNewFile();
+
 	//Initialization functions
 	void SetupConnections();
 

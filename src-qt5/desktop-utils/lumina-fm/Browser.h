@@ -19,14 +19,7 @@
 #include <LVideoSurface.h>
 #include <LVideoLabel.h>
 #include <LuminaXDG.h>
-/*class FileItem{
-public:
-	QString name;
-	QByteArray icon;
-
-	FileItem(){}
-	~FileItem(){};
-};*/
+#include <LFileInfo.h>
 
 class Browser : public QObject{
 	Q_OBJECT
@@ -40,8 +33,6 @@ public:
 
 	void showThumbnails(bool);
 	bool showingThumbnails();
-
-	//FileItem loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
 
 private:
 	QString currentDir;
