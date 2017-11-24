@@ -1,4 +1,3 @@
-# Created by: Ken Moore <ken@pcbsd.org>
 # $FreeBSD$
 
 PORTNAME=	lumina-screenshot
@@ -6,7 +5,7 @@ PORTVERSION=	%%CHGVERSION%%
 PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	deskutils
 
-MAINTAINER=	kmoore@FreeBSD.org
+MAINTAINER=	jt@ixsystems.com
 COMMENT=	Screenshot utility from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE

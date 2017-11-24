@@ -1,4 +1,3 @@
-# Created by: Ken Moore <ken@pcbsd.org>
 # $FreeBSD$
 
 PORTNAME=	lumina
@@ -7,7 +6,7 @@ PORTREVISION=	%%CHGREVISION%%
 PORTEPOCH=	3
 CATEGORIES=	x11
 
-MAINTAINER=	kmoore@FreeBSD.org
+MAINTAINER=	jt@ixsystems.com
 COMMENT=	Lumina Desktop Environment (meta-port)
 
 LICENSE=	BSD3CLAUSE
