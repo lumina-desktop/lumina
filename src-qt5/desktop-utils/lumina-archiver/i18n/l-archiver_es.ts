@@ -161,7 +161,7 @@
     <message>
         <location filename="../MainUI.cpp" line="54"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="65"/>
