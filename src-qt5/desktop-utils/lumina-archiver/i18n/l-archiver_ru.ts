@@ -36,7 +36,7 @@
         <location filename="../MainUI.cpp" line="65"/>
         <location filename="../MainUI.cpp" line="296"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
@@ -350,67 +350,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультимедиа</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработка</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Образование</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Игры</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Графика</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Сети</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Офис</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Наука</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Система</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Вино</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Разное</translation>
     </message>
 </context>
 <context>
