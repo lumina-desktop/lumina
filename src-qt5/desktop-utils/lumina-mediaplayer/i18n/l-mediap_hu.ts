@@ -154,7 +154,7 @@
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fájl</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
