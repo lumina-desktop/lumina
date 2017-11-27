@@ -99,7 +99,7 @@ desktop.path=$${L_SHAREDIR}/applications/
 #link.extra=ln -sf lumina-mediaplayer $(INSTALL_ROOT)$${L_BINDIR}/lplay
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-mediaplayer.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-mediaplayer.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-mediaplayer.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-mediaplayer.1.gz"
 
 INSTALLS += target desktop manpage
 

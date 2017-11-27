@@ -16,6 +16,6 @@ SOURCES += main.cpp \
 HEADERS  += session.h
 
 manpage.path=$${L_MANDIR}/man8/
-manpage.extra="$${MAN_ZIP} start-lumina-desktop.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/start-lumina-desktop.8.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/start-lumina-desktop.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/start-lumina-desktop.8.gz"
 
 INSTALLS += target manpage

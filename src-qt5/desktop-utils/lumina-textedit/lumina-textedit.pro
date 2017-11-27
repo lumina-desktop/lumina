@@ -103,7 +103,7 @@ syntax.path=$${L_SHAREDIR}/lumina-desktop/syntax_rules
 syntax.files=syntax_rules/*
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-textedit.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-textedit.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-textedit.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-textedit.1.gz"
 
 INSTALLS += target desktop link syntax manpage
 

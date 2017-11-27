@@ -173,7 +173,7 @@ dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
 INSTALLS += target desktop icons defaults conf fluxconf manpage
 

@@ -121,7 +121,7 @@ desktop.files=lumina-config.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-config.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-config.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-config.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-config.1.gz"
 
 INSTALLS += target desktop manpage
 
