@@ -7,7 +7,7 @@
 #include "LXcbEventFilter.h"
 
 //For all the XCB interactions and atoms
-// is accessed via 
+// is accessed via
 //    session->XCB->EWMH.(atom name)
 //    session->XCB->(do something)
 #include <LuminaX11.h>
@@ -41,7 +41,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		//qDebug() << "Property Notify Event:";
 	        //qDebug() << " - Root Window:" << QX11Info::appRootWindow();
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
-		//System-specific proprty change
+		//System-specific property change
 		if( ((xcb_property_notify_event_t*)ev)->window == QX11Info::appRootWindow() \
 			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_DESKTOP_GEOMETRY) \
 			  ||  (((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_WORKAREA) )){
@@ -50,6 +50,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_CURRENT_DESKTOP) )){
  		  //qDebug() << "Got Workspace Change";
 		  session->emit WorkspaceChanged();
+		  session->WindowPropertyEvent(); //make sure we update the lists again - some windows are now hidden
 		}else if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Update the status/list of all running windows
 		  session->WindowPropertyEvent();

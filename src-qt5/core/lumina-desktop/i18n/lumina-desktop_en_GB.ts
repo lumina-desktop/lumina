@@ -32,68 +32,68 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="62"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="116"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="63"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="117"/>
         <source>Click to Set</source>
         <translation>Click to Set</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="74"/>
         <source>Launch %1</source>
         <translation type="unfinished">Starte %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="135"/>
         <source>Open</source>
         <translation type="unfinished">Open</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="140"/>
         <source>View Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>File Operations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="147"/>
         <source>Copy</source>
         <translation type="unfinished">Copy</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="150"/>
         <source>Cut</source>
         <translation type="unfinished">Cut</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="152"/>
         <source>Delete</source>
         <translation type="unfinished">Delete</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Select Application</source>
         <translation>Select Application</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="300"/>
         <source>New Filename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="96"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Charging)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="97"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (%2 Remaining)</translation>
     </message>
@@ -777,13 +777,13 @@
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
-        <location filename="../LDesktop.cpp" line="608"/>
+        <location filename="../LDesktop.cpp" line="636"/>
         <source>New Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
-        <location filename="../LDesktop.cpp" line="628"/>
+        <location filename="../LDesktop.cpp" line="656"/>
         <source>New File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -823,9 +823,9 @@
         <translation>Leave</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="614"/>
-        <location filename="../LDesktop.cpp" line="634"/>
-        <location filename="../LDesktop.cpp" line="655"/>
+        <location filename="../LDesktop.cpp" line="642"/>
+        <location filename="../LDesktop.cpp" line="662"/>
+        <location filename="../LDesktop.cpp" line="683"/>
         <source>Desktop</source>
         <translation type="unfinished">Desktop</translation>
     </message>
@@ -855,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="164"/>
-        <location filename="../LSession.cpp" line="347"/>
+        <location filename="../LSession.cpp" line="165"/>
+        <location filename="../LSession.cpp" line="352"/>
         <source>Desktop</source>
         <translation>Desktop</translation>
     </message>
@@ -927,42 +927,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="148"/>
         <source>Activate Window</source>
         <translation>Activate Window</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="151"/>
         <source>Minimize Window</source>
         <translation>Minimise Window</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="153"/>
         <source>Restore Window</source>
         <translation>Restore Window</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="155"/>
         <source>Maximize Window</source>
         <translation>Maximise Window</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="158"/>
         <source>Close Window</source>
         <translation>Close Window</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Show All Windows</source>
         <translation>Show All Windows</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Minimize All Windows</source>
         <translation>Minimise All Windows</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
         <source>Close All Windows</source>
         <translation>Close All Windows</translation>
     </message>
@@ -989,16 +989,19 @@
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="20"/>
         <source>CPU Temp:</source>
         <translation>CPU Temp:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="21"/>
         <source>CPU Usage:</source>
         <translation>CPU Usage:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="22"/>
         <source>Mem Usage:</source>
         <translation>Mem Usage:</translation>
     </message>
@@ -1430,11 +1433,21 @@
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
+        <source>Update and Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
         <source>Power Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
+        <source>(System Preparing Updates)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
         <translation type="unfinished">Log Out</translation>
     </message>
@@ -1444,12 +1457,7 @@
         <translation>Preferences</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
-        <source>(System Performing Updates)</source>
-        <translation>(System Performing Updates)</translation>
-    </message>
-    <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1150"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -1479,24 +1487,24 @@
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="477"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (Plugged In)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="481"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (%2 Estimated)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="480"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="482"/>
         <source>%1% Remaining</source>
         <translation>%1% Remaining</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="496"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="655"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="666"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="498"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="667"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="678"/>
         <source>Workspace %1/%2</source>
         <translation>Workspace %1/%2</translation>
     </message>
@@ -1524,38 +1532,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="127"/>
-        <location filename="../SystemWindow.cpp" line="60"/>
+        <location filename="../SystemWindow.ui" line="132"/>
+        <source>Update Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="154"/>
+        <source>Updates ready to install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="192"/>
+        <location filename="../SystemWindow.cpp" line="63"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="156"/>
+        <location filename="../SystemWindow.ui" line="221"/>
         <source>Lock</source>
         <translation>Lock</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="172"/>
+        <location filename="../SystemWindow.ui" line="237"/>
         <source>Suspend</source>
         <translation>Suspend</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Apply Updates?</source>
         <translation>Apply Updates?</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>You have system updates waiting to be applied! Do you wish to install them now?</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="58"/>
+        <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="59"/>
+        <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1767,67 +1785,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="603"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
         <translation type="unfinished">Multimedia</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="604"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
         <translation type="unfinished">Development</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="605"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
         <translation type="unfinished">Education</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="606"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
         <translation type="unfinished">Games</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="607"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
         <translation type="unfinished">Graphics</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
         <translation type="unfinished">Network</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
         <translation type="unfinished">Office</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
         <translation type="unfinished">Science</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
         <translation type="unfinished">Settings</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
         <translation type="unfinished">System</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
         <translation type="unfinished">Utility</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
         <translation type="unfinished">Wine</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
         <translation type="unfinished">Unsorted</translation>
     </message>

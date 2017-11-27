@@ -15,6 +15,8 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QWheelEvent>
+#include <QApplication>
 
 #include <poppler-qt5.h>
 
@@ -43,6 +45,10 @@ private:
 	//Other Interface elements
 	QProgressBar *progress;
 	QAction *progAct; //action associated with the progressbar
+	QTimer *clockTimer;
+	//QFrame *frame_presenter;
+	QLabel *label_clock;
+	QAction *clockAct;
 
 	//PDF Page Loading cache variables
 	QHash<int, QImage> loadingHash;
@@ -69,25 +75,39 @@ private slots:
 	//Button Slots
 	void OpenNewFile();
 
+	//Other interface slots
+	void updateClock();
+
 signals:
 	void PageLoaded(int);
 
 protected:
 	void keyPressEvent(QKeyEvent *event){
 	  //See if this is one of the special hotkeys and act appropriately
-	  // NOTE: Some of this is duplicated with the QShortcut definitions (for non-presentation mode)
-	  //  This routine does not always work for the main window viewer due to differing widget focus policies
-	  if(presentationLabel!=0 && presentationLabel->isVisible()){
 	    //qDebug() << "Got Key Press:";
+	  bool inPresentation = (presentationLabel!=0);
+ 	  if(!inPresentation){
+	    //Alternate functionality when **not** in presentation mode
+	    /*if(event->key()==Qt::Key_Down){
+	      qDebug() << "Send Wheel Event";
+ 	      QWheelEvent event( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
+	      QApplication::sendEvent(WIDGET, &event);
+	      //WIDGET->scrollDown();
+ 	      return;
+	    }else if(event->key()==Qt::Key_Up){
+	      return;
+	    }*/
+	  }
+
 	    if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
 	      //qDebug() << " - Escape/Backspace";
 	      endPresentation();
-	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space){
-	      //qDebug() << " - Right/Down/Spacebar";
-	      ShowPage( CurrentPage+1 );
-	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up){
+	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
+	      //qDebug() << " - Right/Down/Spacebar" << inPresentation;
+	      ShowPage( WIDGET->currentPage() ); //currentPage() starts at 1 rather than 0
+	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up || event->key()==Qt::Key_PageUp){
 	      //qDebug() << " - Left/Up";
-	      ShowPage( CurrentPage-1 );
+	      ShowPage( WIDGET->currentPage()-2 ); //currentPage() starts at 1 rather than 0
 	    }else if(event->key()==Qt::Key_Home){
 	      //qDebug() << " - Home";
 	      ShowPage(0); //go to the first page
@@ -100,9 +120,6 @@ protected:
             }else{
 	      QMainWindow::keyPressEvent(event);
 	    }
-	  }else{
-	    QMainWindow::keyPressEvent(event);
-	  }
 	}
 };
 #endif

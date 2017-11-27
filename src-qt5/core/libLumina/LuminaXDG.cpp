@@ -237,8 +237,9 @@ QString XDGDesktop::generateExec(QStringList inputfiles, QString ActionID){
   //Does the app need the input files in URL or File syntax?
   bool URLsyntax = (exec.contains("%u") || exec.contains("%U"));
   //Adjust the input file formats as needed
+  //qDebug() << "Got inputfiles:" << inputfiles << URLsyntax;
   for(int i=0; i<inputfiles.length(); i++){
-    bool url = inputfiles[i].contains("://") || inputfiles[i].startsWith("www") || QUrl(inputfiles[i]).isValid();
+    bool url = inputfiles[i].startsWith("www") || inputfiles[i].contains("://");
     //Run it through the QUrl class to catch/fix any URL syntax issues
     if(URLsyntax){
       if(inputfiles[i].startsWith("mailto:") ){} //don't touch this syntax - already formatted
@@ -246,11 +247,14 @@ QString XDGDesktop::generateExec(QStringList inputfiles, QString ActionID){
       else{ inputfiles[i] = QUrl::fromLocalFile(inputfiles[i]).url(); }
     }else{
       //if(inputfiles[i].startsWith("mailto:") ){} //don't touch this syntax - already formatted
+      //qDebug() << "Need local format:" << inputfiles[i] << url;
       if(url){ inputfiles[i] = QUrl(inputfiles[i]).toLocalFile(); }
-      else{ inputfiles[i] = QUrl::fromLocalFile(inputfiles[i]).toLocalFile(); }
+      else{ inputfiles[i] = inputfiles[i]; } //QUrl::fromLocalFile(inputfiles[i]).toLocalFile(); }
     }
   }
+  inputfiles.removeAll(""); //just in case any empty ones get through
   //Now to the exec replacements as needed
+  //qDebug() << "Generate Exec:" << exec << inputfiles;
   if(exec.contains("%f")){
     if(inputfiles.isEmpty()){ exec.replace("%f",""); }
     else{ exec.replace("%f", "\""+inputfiles.first()+"\""); } //Note: can only take one input
@@ -629,7 +633,7 @@ void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
 
 //==== LFileInfo Functions ====
 //Need some extra information not usually available by a QFileInfo
-void LFileInfo::loadExtraInfo(){
+/*void LFileInfo::loadExtraInfo(){
   desk = 0;
   //Now load the extra information
   if( this->suffix().isEmpty() && (this->absoluteFilePath().startsWith("/net/") || this->isDir()) ){
@@ -722,7 +726,7 @@ bool LFileInfo::isImage(){
 
 bool LFileInfo::isAVFile(){
   return (mime.startsWith("audio/") || mime.startsWith("video/") );
-}
+}*/
 
 
 //==== LXDG Functions ====
@@ -849,7 +853,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   QIcon tmp;
   if(!iconName.contains("libreoffice")){ //libreoffice is stupid - their svg icons are un-renderable with Qt
     tmp = QIcon::fromTheme(iconName);
-    if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
+    //if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
   }
   if(!tmp.isNull()){ return tmp; } //found one in the theme
 

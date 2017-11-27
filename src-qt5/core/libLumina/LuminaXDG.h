@@ -128,7 +128,7 @@ signals:
 // File Information simplification class (combine QFileInfo with XDGDesktop)
 //  Need some extra information not usually available by a QFileInfo
 // ========================
-class LFileInfo : public QFileInfo{
+/*class LFileInfo : public QFileInfo{
 private:
 	QString mime, icon;
 	XDGDesktop *desk;
@@ -162,7 +162,7 @@ public:
 	bool isVideo(); //Is a readable video file (for thumbnail support)
 	bool isAVFile(); //Is an audio/video file
 };
-typedef QList<LFileInfo> LFileInfoList;
+typedef QList<LFileInfo> LFileInfoList;*/
 
 // ================================
 //  Collection of FreeDesktop standards interaction routines

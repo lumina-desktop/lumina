@@ -10,10 +10,10 @@ For additional information about the project, please browse the official website
 **Lumina Project Info: Table of Contents**
 
 - [Description](#description)
-	- [Latest Versions](#latestversions)
-	- [Translations](#translations)
-	- [How to file bug reports or feature requests](#filebugs)
-	- [How to build from source](#buildfromsource)
+- [Latest Versions](#latestversions)
+- [Translations](#translations)
+- [How to file bug reports or feature requests](#filebugs)
+- [How to build from source](#buildfromsource)
 
 **General Project Information: Table of Contents**
 
@@ -37,6 +37,11 @@ Description <a name="description"></a>
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
+Supported operating systems include (but are not limited to):
+ * BSD: TrueOS, FreeBSD, OpenBSD, NetBSD, DragonflyBSD, GNU/kFreeBSD
+ * Linux: Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
+
+
 Latest Versions <a name="latestversions"></a>
 ----
 Click [HERE](https://github.com/trueos/lumina/releases) to see all the available releases for the Lumina Desktop.
@@ -48,11 +53,9 @@ Occasionally there may be patches committed for particular versions which are no
 
 Translations <a name="translations"></a>
 ----
-**Version 1.0.0 and older**
+**Legacy Versions (1.0.0 and older)**
 
-All the translation files for Lumina are available through the TrueOS pootle translations systems, which are then auto-committed to the pcbsd/lumina-i18n repo (Qt5+ only). This provides an easy interface through which to contribute translations while also ensuring that the translation files are kept in sync with the Lumina source files, and it is highly recommended that translators use this interface.
-
-Translation Website URL: http://translate.pcbsd.org/
+All the translation files for Lumina are available through the trueos/lumina-i18n reposotiry (Qt5+ only). Please follow the directions in that repository for installing localization files.
 
 **Version 1.1.0+**
 
@@ -62,7 +65,7 @@ To submit translations, please use the online [TrueOS Translation System](http:/
 
 How to file bug reports or feature requests <a name="filebugs"></a>
 ----
-Please create a ticket through the GitHub issues tracker on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed to the main repo as quickly as possible.
+Please create a ticket through the [GitHub issues tracker](https://github.com/trueos/lumina/issues) on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed as quickly as possible.
 
 
 How to build from source <a name="buildfromsource"></a>

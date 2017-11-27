@@ -102,7 +102,7 @@ void Browser::futureFinished(QString name, QImage icon){
   //Note: this will be called once for every item that loads
     //Haven't added the extra files in a directory fix, but that should be easy to do
     //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
-    //qDebug() << name << "here";
+    //qDebug() << "Finished:" << name;
     QIcon *ico = new QIcon();
     LFileInfo *info = new LFileInfo(name);
     if(!icon.isNull() && showThumbs){
@@ -152,7 +152,8 @@ void Browser::loadDirectory(QString dir, bool force){
     QStringList files;
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
-    if(dirupdate){ emit itemsLoading(files.length()); }
+    if(dirupdate || old.isEmpty()){ emit itemsLoading(files.length()); }
+    //qDebug() << "Files Found:" << files.length();
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));
       QString path = directory.absoluteFilePath(files[i]);

@@ -23,8 +23,10 @@
 #include <LuminaXDG.h>
 #include <LUtils.h>
 #include <ExternalProcess.h>
+#include <QFileDialog>
 
 #include "../ScrollDialog.h"
+#include <XDGMime.h>
 
 #define DEBUG 0
 extern bool rootmode;
@@ -62,7 +64,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   RCBW = 0; //right column browser is unavailable initially
   BW = new BrowserWidget("", this);
   ui->browser_layout->addWidget(BW);
-  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
+  connect(BW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged(QString)) );
   connect(BW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(BW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(BW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -85,7 +87,7 @@ DirWidget::DirWidget(QString objID, QSettings *settings, QWidget *parent) : QWid
   //Now update the rest of the UI
   canmodify = false; //initial value
   contextMenu = new QMenu(this);
-  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = 0; //not created yet
+  cNewMenu = cOpenMenu = cFModMenu = cFViewMenu = cOpenWithMenu = cArchiveMenu =0; //not created yet
   connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(UpdateContextMenu()) );
   connect(ui->splitter, SIGNAL(splitterMoved(int,int)), this, SLOT(splitterMoved()) );
 
@@ -245,7 +247,7 @@ void DirWidget::createShortcuts(){
   kPaste= new QShortcut(QKeySequence(QKeySequence::Paste),this);
   kRename= new QShortcut(QKeySequence(Qt::Key_F2),this);
   kExtract= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_E), this);
-  //kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
+  kArchive= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_R), this);
   kFav= new QShortcut(QKeySequence(Qt::Key_F3),this);
   kDel= new QShortcut(QKeySequence(QKeySequence::Delete),this);
   kOpSS= new QShortcut(QKeySequence(Qt::Key_F6),this);
@@ -287,7 +289,14 @@ void DirWidget::createMenus(){
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Open Current Dir in a Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
   cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
-  if(LUtils::isValidBinary("qsudo")){ cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+  if(LUtils::isValidBinary("qsudo")){
+    cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+  }
+
+  if(cArchiveMenu==0){ cArchiveMenu = new QMenu(this); }
+  cArchiveMenu->setTitle(tr("Archive Options"));
+  cArchiveMenu->setIcon( LXDG::findIcon("utilities-file-archiver","application-x-compressed-tar") );
+
   /*
   if(cFModMenu==0){ cFModMenu = new QMenu(this); }
   else{ cFModMenu->clear(); }
@@ -320,9 +329,6 @@ void DirWidget::createMenus(){
   if(LUtils::isValidBinary("lumina-fileinfo")){
     cFViewMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("Properties"), this, SLOT(fileProperties()) );
   }
-
-}
-
 }
 
 BrowserWidget* DirWidget::currentBrowser(){
@@ -477,7 +483,7 @@ void DirWidget::on_actionDualColumn_triggered(bool checked){
   if(RCBW!=0){ return; } //nothing to do
   RCBW = new BrowserWidget("rc", this);
   ui->browser_layout->addWidget(RCBW);
-  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged()) );
+  connect(RCBW, SIGNAL(dirChange(QString, bool)), this, SLOT(currentDirectoryChanged(QString)) );
   connect(RCBW, SIGNAL(itemsActivated()), this, SLOT(runFiles()) );
   connect(RCBW, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(PasteFiles(QString, QStringList)) );
   connect(RCBW, SIGNAL(contextMenuRequested()), this, SLOT(OpenContextMenu()) );
@@ -550,6 +556,14 @@ void DirWidget::UpdateContextMenu(){
    contextMenu->addAction(LXDG::findIcon("system-run",""), tr("Open"), this, SLOT(runFiles()) );
    //contextMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Open With..."), this, SLOT(runWithFiles()) );
    contextMenu->addMenu(cOpenWithMenu);
+   bool ok = (QString(getenv("XDG_CURRENT_DESKTOP"))=="Lumina");
+   if(ok){
+     static QStringList imageformats = LUtils::imageExtensions();
+     for(int i=0; i<sel.length() && ok; i++){
+        ok = imageformats.contains(sel[i].section(".",-1));
+      }
+      contextMenu->addAction(LXDG::findIcon("preferences-desktop-wallpaper","preferences-desktop"), tr("Set as Wallpaper"), this, SLOT(setAsWallpaper()) )->setEnabled(ok);
+    }
   }
   contextMenu->addSection(LXDG::findIcon("unknown",""), tr("File Operations"));
  // contextMenu->addMenu(cFModMenu);
@@ -559,9 +573,6 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addAction(LXDG::findIcon("edit-rename",""), tr("Rename..."), this, SLOT(renameFiles()), kRename->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-cut",""), tr("Cut Selection"), this, SLOT(cutFiles()), kCut->key() )->setEnabled(canmodify);
       contextMenu->addAction(LXDG::findIcon("edit-copy",""), tr("Copy Selection"), this, SLOT(copyFiles()), kCopy->key() )->setEnabled(canmodify);
-      if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Extract"), this, SLOT(autoExtractFiles()), kExtract->key() )->setEnabled(canmodify); }
-      //if(LUtils::isValidBinary("lumina-archiver") && sel.length() ==1){ contextMenu->addAction(LXDG::findIcon("archive",""), tr("Auto-Archive"), this, SLOT(autoArchiveFiles()), kArchive->key() )->setEnabled(canmodify); }
-
   }
     if( QApplication::clipboard()->mimeData()->hasFormat("x-special/lumina-copied-files") ){
       contextMenu->addAction(LXDG::findIcon("edit-paste",""), tr("Paste"), this, SLOT(pasteFiles()), QKeySequence(Qt::CTRL+Qt::Key_V) )->setEnabled(canmodify);
@@ -570,6 +581,22 @@ void DirWidget::UpdateContextMenu(){
       contextMenu->addSeparator();
       contextMenu->addAction(LXDG::findIcon("edit-delete",""), tr("Delete Selection"), this, SLOT(removeFiles()), kDel->key() )->setEnabled(canmodify);
       contextMenu->addSeparator();
+    }
+    if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1 && canmodify){
+      cArchiveMenu->clear();
+      if(sel.length()==1 && ( XDGMime::fromFileName(sel[0]).endsWith("-tar") || 
+                                                XDGMime::fromFileName(sel[0]).endsWith("-image") || 
+                                                 ( XDGMime::fromFileName(sel[0]).contains("zip") && 
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("epub+zip") && 
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("vnd.comicbook+zip" ) 
+                                                  )
+                                                 )
+                                               ){
+        cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Extract Here"), this, SLOT(autoExtractFiles()), kExtract->key() );
+      }else{
+        cArchiveMenu->addAction(LXDG::findIcon("archive",""), tr("Archive Selection"), this, SLOT(autoArchiveFiles()), kArchive->key() );
+      }
+      contextMenu->addMenu(cArchiveMenu);
     }
     contextMenu->addMenu(cFViewMenu);
     cFViewMenu->setEnabled(!sel.isEmpty());
@@ -626,8 +653,8 @@ void DirWidget::UpdateContextMenu(){
   cOpenWithMenu->addAction(LXDG::findIcon("system-run-with",""), tr("Other..."), this, SLOT(runWithFiles()) );
 }
 
-void DirWidget::currentDirectoryChanged(bool widgetonly){
-  QString cur = currentBrowser()->currentDirectory();
+void DirWidget::currentDirectoryChanged(QString cur, bool widgetonly){
+  //qDebug() << "Got current directory changed:" << cur << widgetonly;
   QFileInfo info(cur);
   canmodify = info.isWritable();
   if(widgetonly){ ui->label_status->setText(currentBrowser()->status()); }
@@ -649,7 +676,13 @@ void DirWidget::currentDirectoryChanged(bool widgetonly){
   emit TabNameChanged(ID, normalbasedir.section("/",-1));
   QModelIndex index = dirtreeModel->index(normalbasedir,0);
   ui->folderViewPane->setCurrentIndex( index );
-  ui->folderViewPane->scrollTo(index);
+  ui->folderViewPane->scrollTo(index, QAbstractItemView::PositionAtCenter);
+}
+
+void DirWidget::currentDirectoryChanged(bool widgetonly){
+  //overload for the more expansive slot above
+  QString cur = currentBrowser()->currentDirectory();
+  currentDirectoryChanged(cur, widgetonly);
 }
 
 void DirWidget::dirStatusChanged(QString stat){
@@ -855,6 +888,8 @@ void DirWidget::OpenWithApp(QAction* act){
   //Now we need to open the app file, and create the process
   XDGDesktop desk(act->whatsThis());
   QString exec = desk.generateExec(sel);
+  //qDebug() << "Launch App with selection:" << act->whatsThis() << sel;
+  //qDebug() << "Generating exec:" << exec;
   ExternalProcess::launch(exec);
 }
 
@@ -864,13 +899,32 @@ void DirWidget::autoExtractFiles(){
   ExternalProcess::launch("lumina-archiver", QStringList() << "--ax" << files);
 }
 
-/*
- * void DirWidget::autoArchiveFiles(){
+
+void DirWidget::autoArchiveFiles(){
   QStringList files = currentBrowser()->currentSelection();
-  qDebug() << "Starting auto-archival:" << files;
-  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << files);
+  QString archive = QFileDialog::getSaveFileName(this, tr("Select Archive"), currentBrowser()->currentDirectory()+"/archive-"+QDateTime::currentDateTime().toString("yyyyMMdd_hhmm")+".tar.gz", currentBrowser()->currentDirectory());
+  if(archive.isEmpty()){ return; } //cancelled
+  qDebug() << "Starting auto-archival:" << archive << files;
+  ExternalProcess::launch("lumina-archiver", QStringList() << "--aa" << archive << files);
 }
-*/
+
+void DirWidget::setAsWallpaper(){
+  QStringList files = currentBrowser()->currentSelection();
+  //Get the screen for the wallpaper
+  QList<QScreen*> screens = QApplication::screens();
+  QString screenID;
+  if(screens.length()>1){
+    QStringList opts;
+     for(int i=0; i<screens.length(); i++){ opts << screens[i]->name(); }
+    screenID = QInputDialog::getItem(this, tr("Set Wallpaper on Screen"), tr("Screen"), opts, 0, false);
+    if(screenID.isEmpty()){ return; }
+  }else{
+    screenID = screens[0]->name();
+  }
+  //Now save this to the settings
+  QSettings deskset("lumina-desktop","desktopsettings");
+  deskset.setValue("desktop-"+screenID+"/background/filelist" , files);
+}
 
 //====================
 //         PROTECTED

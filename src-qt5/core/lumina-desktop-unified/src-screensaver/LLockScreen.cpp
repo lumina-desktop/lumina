@@ -83,12 +83,13 @@ void LLockScreen::TryUnlock(){
   bool ok = false;
   if( TF->open() ){
     QTextStream in(TF);
-    in << pass;
-    in.flush(); //make sure we push it to the file **right now** since we need to keep the file open
-    ok = (LUtils::runCmd("lumina-checkpass", QStringList() << "-f" << TF->fileName() ) == 0);
+    in << pass.toUtf8()+"\0"; //make sure it is null-terminated
     TF->close();
+    //qDebug() << "Trying to unlock session:" << TF->fileName() << LUtils::readFile(TF->fileName());
+    //qDebug() << "UserName:" << getlogin();
+    LUtils::runCommand(ok, "lumina-checkpass",QStringList() << "-f" << TF->fileName() );
   }
-  delete TF;
+  delete TF; //ensure the temporary file is removed **right now** for security purposes
   if(ok){
     emit ScreenUnlocked();
     this->setEnabled(true);

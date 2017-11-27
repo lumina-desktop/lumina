@@ -5,222 +5,319 @@
     <name>MainUI</name>
     <message>
         <location filename="../MainUI.ui" line="14"/>
-        <location filename="../MainUI.ui" line="24"/>
-        <location filename="../MainUI.cpp" line="125"/>
+        <location filename="../MainUI.ui" line="29"/>
+        <location filename="../MainUI.cpp" line="184"/>
         <source>File Information</source>
         <translation>Informacje o pliku</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="56"/>
+        <location filename="../MainUI.ui" line="61"/>
         <source>Owner:</source>
         <translation>Właściciel:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="73"/>
+        <location filename="../MainUI.ui" line="78"/>
         <source>Group:</source>
         <translation>Grupa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="90"/>
+        <location filename="../MainUI.ui" line="95"/>
         <source>Permissions:</source>
         <translation>Uprawnienia:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="104"/>
+        <location filename="../MainUI.ui" line="109"/>
         <source>Created:</source>
         <translation>Utworzony:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="111"/>
+        <location filename="../MainUI.ui" line="116"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
         <translation>Uwaga: Jeśli uprawnienia pliku zostały ostatnio zmienione, wtedy czas utworzenia pliku oraz czas jego ostatniej modyfikacji mogą się różnić.</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="124"/>
+        <location filename="../MainUI.ui" line="129"/>
         <source>Last Modified:</source>
         <translation>Zmodyfikowany:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="131"/>
+        <location filename="../MainUI.ui" line="136"/>
         <source>Type:</source>
         <translation>Typ:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../MainUI.ui" line="143"/>
         <source>MimeType:</source>
         <translation>Typ MIME:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="185"/>
+        <location filename="../MainUI.ui" line="190"/>
         <source>File Size:</source>
         <translation>Rozmiar:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="216"/>
-        <location filename="../MainUI.cpp" line="168"/>
-        <source>Edit Shortcut</source>
-        <translation>Edytuj skrót</translation>
+        <location filename="../MainUI.ui" line="221"/>
+        <location filename="../MainUI.cpp" line="232"/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="239"/>
+        <location filename="../MainUI.ui" line="235"/>
+        <source>ZFS Pool:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="255"/>
+        <source>Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="260"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="265"/>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="277"/>
+        <source>Snapshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="282"/>
+        <source>Date Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="287"/>
+        <source>Date Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="617"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="621"/>
+        <source>Save As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="649"/>
+        <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="652"/>
+        <source>Ctrl+O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="664"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="667"/>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="679"/>
+        <source>Save Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="682"/>
+        <source>Ctrl+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="694"/>
+        <source>Local Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="703"/>
+        <source>Register Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="712"/>
+        <source>Open Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="721"/>
+        <source>New Shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="319"/>
         <source>Working Dir:</source>
         <translation>Katalog roboczy:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="246"/>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Use startup notification</source>
         <translation>Powiadamianie przy uruchomieniu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="260"/>
+        <location filename="../MainUI.ui" line="340"/>
         <source>Icon:</source>
         <translation>Ikona:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="267"/>
+        <location filename="../MainUI.ui" line="347"/>
         <source>Command:</source>
         <translation>Polecenie:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="274"/>
+        <location filename="../MainUI.ui" line="354"/>
         <source>Comment:</source>
         <translation>Komentarz:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
+        <location filename="../MainUI.ui" line="364"/>
         <source>Run in terminal</source>
         <translation>Uruchom w terminalu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="371"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="378"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="336"/>
-        <source>No Icon</source>
-        <translation>Brak ikony</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="392"/>
-        <source>Save</source>
-        <translation>Zapisz</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="405"/>
-        <source>Close</source>
-        <translation>Zamknij</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.cpp" line="77"/>
+        <location filename="../MainUI.cpp" line="141"/>
         <source>---Calculating---</source>
         <translatorcomment>moze szacowanie bedzie lepsze?</translatorcomment>
         <translation>---Obliczanie---</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="86"/>
+        <location filename="../MainUI.cpp" line="150"/>
         <source>Read/Write</source>
         <translation>odczyt/zapis</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="87"/>
+        <location filename="../MainUI.cpp" line="151"/>
         <source>Read Only</source>
         <translation>Tylko do odczytu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="88"/>
+        <location filename="../MainUI.cpp" line="152"/>
         <source>Write Only</source>
         <translation>Tylko do zapisu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="89"/>
+        <location filename="../MainUI.cpp" line="153"/>
         <source>No Access</source>
         <translation>Brak dostępu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="93"/>
+        <location filename="../MainUI.ui" line="296"/>
+        <location filename="../MainUI.cpp" line="157"/>
+        <location filename="../MainUI.cpp" line="191"/>
+        <location filename="../MainUI.cpp" line="256"/>
         <source>XDG Shortcut</source>
         <translation>Skrót XDG</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="158"/>
         <source>Directory</source>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="95"/>
+        <location filename="../MainUI.cpp" line="159"/>
         <source>Binary</source>
         <translation>Plik binarny</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="97"/>
+        <location filename="../MainUI.cpp" line="161"/>
         <source>Hidden %1</source>
         <translation>Ukryty %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="284"/>
         <source>URL:</source>
         <translation>URL:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="398"/>
+        <location filename="../MainUI.cpp" line="413"/>
+        <location filename="../MainUI.cpp" line="430"/>
         <source>Save Application File</source>
         <translation>Zapisz plik aplikacji</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="276"/>
-        <source>Application Registrations (*.desktop)</source>
-        <translation>Rejestracje aplikacji (*.desktop)</translation>
+        <location filename="../MainUI.cpp" line="398"/>
+        <location filename="../MainUI.cpp" line="413"/>
+        <location filename="../MainUI.cpp" line="430"/>
+        <source>XDG Shortcuts (*.desktop)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="317"/>
+        <location filename="../MainUI.cpp" line="461"/>
         <source>Select a binary</source>
         <translation>Wybierz plik binarny</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="320"/>
+        <location filename="../MainUI.cpp" line="464"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="320"/>
+        <location filename="../MainUI.cpp" line="464"/>
         <source>Invalid selection: Not a valid executable</source>
         <translation>Nieprawidłowy wybór: To nie jest prawidłowy plik binarny</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="332"/>
+        <location filename="../MainUI.cpp" line="476"/>
         <source>Select a directory</source>
         <translation>Wybierz katalog</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="345"/>
+        <location filename="../MainUI.cpp" line="489"/>
         <source>Select an icon</source>
         <translation>Wybierz ikonę</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="345"/>
+        <location filename="../MainUI.cpp" line="489"/>
         <source>Images (%1);; All Files (*)</source>
         <translation>Obrazy (%1);; Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="368"/>
-        <location filename="../MainUI.cpp" line="370"/>
+        <location filename="../MainUI.cpp" line="516"/>
+        <source>Valid Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="516"/>
+        <source>Invalid Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="535"/>
+        <location filename="../MainUI.cpp" line="537"/>
         <source> Folders: </source>
         <translation> Katalogi: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="368"/>
-        <location filename="../MainUI.cpp" line="370"/>
+        <location filename="../MainUI.cpp" line="535"/>
+        <location filename="../MainUI.cpp" line="537"/>
         <source>Files: </source>
         <translation>Pliki: </translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="370"/>
+        <location filename="../MainUI.cpp" line="537"/>
         <source>  Calculating...</source>
         <translation>  Szacowanie...</translation>
     </message>
@@ -228,67 +325,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="603"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="604"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="605"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="606"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="607"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>

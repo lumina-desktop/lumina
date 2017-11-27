@@ -5,9 +5,6 @@
 
 #include "ui_SystemWindow.h"
 
-
-
-
 namespace Ui{
 	class SystemWindow;
 };
@@ -29,17 +26,17 @@ private:
 
 private slots:
 	void sysLogout();
-	
+
 	void sysRestart();
-	
+	void sysUpdate();
 	void sysShutdown();
-	
+
 	void sysSuspend();
 
 	void sysCancel(){
 	  this->close();
 	}
-	
+
 	void sysLock();
 };
 

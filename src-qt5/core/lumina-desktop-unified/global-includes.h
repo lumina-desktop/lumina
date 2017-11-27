@@ -78,6 +78,7 @@
 #include <NativeEventFilter.h>
 #include <XDGMime.h>
 #include <LIconCache.h>
+#include <LFileInfo.h>
 
 
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)

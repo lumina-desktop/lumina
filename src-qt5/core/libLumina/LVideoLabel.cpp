@@ -1,15 +1,15 @@
 #include "LVideoLabel.h"
 #include <LuminaXDG.h>
 #include <QCoreApplication>
+#include <QTimer>
 
 LVideoLabel::LVideoLabel(QString file, bool icons, QWidget *parent) : QLabel(parent) {
   thumbnail = QPixmap();
   entered = false;
   this->icons = icons;
   filepath = file;
-  defaultThumbnail = LXDG::findIcon("unknown", "").pixmap(256,256);
-
-  QTimer::singleShot(0, this, SLOT(initializeBackend()) );
+  defaultThumbnail = LXDG::findIcon("media-playback-start", "").pixmap(256,256);
+  QTimer::singleShot(qrand()%10, this, SLOT(initializeBackend()) );
 }
 
 LVideoLabel::~LVideoLabel() {
@@ -23,15 +23,17 @@ void LVideoLabel::initializeBackend(){
   mediaPlayer->setVideoOutput(surface);
   mediaPlayer->setPlaybackRate(3);
   mediaPlayer->setMuted(true);
-  
+
   this->setPixmap(defaultThumbnail.scaled(this->size(),Qt::IgnoreAspectRatio));
   mediaPlayer->setMedia(QUrl::fromLocalFile(filepath));
-  mediaPlayer->play();
 
   this->connect(surface, SIGNAL(frameReceived(QPixmap)), this, SLOT(stopVideo(QPixmap)));
   this->connect(mediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(stateChanged(QMediaPlayer::State)));
   this->connect(mediaPlayer, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(setDuration(QMediaPlayer::MediaStatus)));
   this->connect(this, SIGNAL(rollOver()), surface, SLOT(switchRollOver()));
+
+  //QTimer::singleShot( qrand()%100,mediaPlayer, SLOT(play()) );
+  //mediaPlayer->play();
 }
 
 void LVideoLabel::enableIcons() {
@@ -72,7 +74,7 @@ void LVideoLabel::setDuration(QMediaPlayer::MediaStatus status) {
     mediaPlayer->play();
   }else if(status == QMediaPlayer::InvalidMedia){
     mediaPlayer->stop();
-    mediaPlayer->play();
+    QTimer::singleShot(qrand()%100, mediaPlayer, SLOT(play())); //mediaPlayer->play();
   }/*else if(status == QMediaPlayer::LoadingMedia) {
     mediaPlayer->pause();
     QTimer timer;

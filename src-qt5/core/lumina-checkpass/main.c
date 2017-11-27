@@ -64,6 +64,8 @@ int main(int argc, char** argv){
     fclose(fp);
   }
   if(pass == 0){ puts("Could not read password!!"); return 1; } //error in reading password
+  //puts("Read Password:");
+  //puts(pass);
   //Validate current user (make sure current UID matches the logged-in user,
   char* cUser = getlogin();
   struct passwd *pwd = 0;

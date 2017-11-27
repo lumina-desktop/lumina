@@ -191,6 +191,52 @@ void MainUI::SyncFileInfo(){
     ui->tabWidget->addTab( ui->tab_deskedit, tr("XDG Shortcut") );
   }
   ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_file) );
+  SyncZfsInfo();
+}
+
+void MainUI::SyncZfsInfo(){
+  bool showtab = false;
+  if(INFO->zfsPool().isEmpty()){
+    //Not on a ZFS pool - hide the tab if it is available
+    showtab = false;
+  }else{
+    qDebug() << "Is a ZFS Dataset:" << INFO->isZfsDataset();
+    ui->label_zfs_pool->setText(INFO->zfsPool());
+    if(INFO->isZfsDataset()){
+      ui->tree_zfs_props->clear();
+      QJsonObject props = INFO->zfsProperties();
+      QStringList keys = props.keys();
+      for(int i=0; i<keys.length(); i++){
+        ui->tree_zfs_props->addTopLevelItem( new QTreeWidgetItem(QStringList() << keys[i] << props.value(keys[i]).toObject().value("value").toString() << props.value(keys[i]).toObject().value("source").toString() ) );
+        ui->tree_zfs_props->resizeColumnToContents(0);
+        ui->tree_zfs_props->resizeColumnToContents(1);
+      }
+      ui->tree_zfs_props->setVisible(!keys.isEmpty());
+      showtab = !keys.isEmpty();
+    }else{
+      ui->tree_zfs_props->setVisible(false);
+    }
+    QStringList snaps = INFO->zfsSnapshots();
+    ui->tree_zfs_snaps->clear();
+    for(int i=0; i<snaps.length(); i++){
+      QFileInfo finfo(snaps[i].section("::::",1,-1));
+      ui->tree_zfs_snaps->addTopLevelItem( new QTreeWidgetItem(QStringList() << snaps[i].section("::::",0,0) << finfo.created().toString(Qt::SystemLocaleShortDate) << finfo.lastModified().toString(Qt::SystemLocaleShortDate) ) );
+      ui->tree_zfs_snaps->resizeColumnToContents(0);
+    }
+    ui->tree_zfs_snaps->setVisible(!snaps.isEmpty());
+    showtab = showtab || !snaps.isEmpty();
+  }
+  if(showtab){
+    //Make sure the tab is visible
+    if(ui->tabWidget->indexOf(ui->tab_zfs)<0){
+      ui->tabWidget->addTab( ui->tab_zfs, tr("Advanced") );
+    }
+  }else{
+    //hide the tab if it is visible right now
+    if(ui->tabWidget->indexOf(ui->tab_zfs)>=0){
+      ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_zfs) );
+    }
+  }
 }
 
 void MainUI::SetupNewFile(){
@@ -208,6 +254,10 @@ void MainUI::SetupNewFile(){
   if(ui->tabWidget->indexOf(ui->tab_deskedit)<0){
     //qDebug() << "Adding the deskedit tab";
     ui->tabWidget->addTab(ui->tab_deskedit, tr("XDG Shortcut"));
+  }
+  //Not on a ZFS pool - hide the tab if it is available
+  if(ui->tabWidget->indexOf(ui->tab_zfs)>=0){
+    ui->tabWidget->removeTab( ui->tabWidget->indexOf(ui->tab_zfs) );
   }
   ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_deskedit) );
 }
