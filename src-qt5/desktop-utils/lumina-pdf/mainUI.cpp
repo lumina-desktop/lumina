@@ -20,6 +20,7 @@
 #include <QtConcurrent>
 
 #include <LuminaXDG.h>
+#include "CM_PrintPreviewWidget.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
@@ -30,7 +31,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   lastdir = QDir::homePath();
   Printer = new QPrinter();
   //Create the interface widgets
-  WIDGET = new QPrintPreviewWidget(Printer,this);
+  WIDGET = new CM_PrintPreviewWidget(Printer,this);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -39,8 +40,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     label_clock->setAlignment(Qt::AlignCenter );
     label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
+  //Context Menu
+  contextMenu = new QMenu(this);
+    connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
   //Now put the widgets into the UI
   this->setCentralWidget(WIDGET);
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
@@ -153,7 +159,7 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
     //qDebug() << "DPI:" << 4*dpi;
-    loadingHash.insert(num, PAGE->renderToImage(2.5*dpi.width(), 2.5*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    loadingHash.insert(num, PAGE->renderToImage(4*dpi.width(), 4*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
     /*
     QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
     QStringList annoS;
@@ -212,9 +218,12 @@ void MainUI::startPresentation(bool atStart){
   //Now create the full-screen window on the selected screen
   if(presentationLabel == 0){
     //Create the label and any special flags for it
-    presentationLabel = new QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    presentationLabel = new PresentationLabel();
       presentationLabel->setStyleSheet("background-color: black;");
       presentationLabel->setAlignment(Qt::AlignCenter);
+      presentationLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+      connect(presentationLabel, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)) );
+      connect(presentationLabel, SIGNAL(nextSlide()), this, SLOT(nextPage()) );
   }
   //Now put the label in the proper location
   presentationLabel->setGeometry(screen->geometry());
@@ -311,6 +320,7 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
       if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
       else{ painter.drawImage(0,0, QImage()); }
     }
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
@@ -382,4 +392,23 @@ void MainUI::OpenNewFile(){
 
 void MainUI::updateClock(){
   label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
+}
+
+void MainUI::updateContextMenu(){
+  contextMenu->clear();
+  int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
+  int lastP = numPages-1;
+  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(curP+1), QString::number(lastP+1) ) );
+  contextMenu->addAction(tr("Next Page"), this, SLOT(nextPage()))->setEnabled(curP<lastP);
+  contextMenu->addAction(tr("Previous Page"), this, SLOT(prevPage()))->setEnabled( curP>0 );
+  contextMenu->addSeparator();
+  contextMenu->addAction(tr("First Page"), this, SLOT(firstPage()))->setEnabled(curP!=0);
+  contextMenu->addAction(tr("Last Page"), this, SLOT(lastPage()))->setEnabled(curP!=lastP);
+  contextMenu->addSeparator();
+  if(presentationLabel==0 || !presentationLabel->isVisible()){
+    contextMenu->addAction(tr("Start Presentation (current slide)"), this, SLOT(startPresentationHere()) );
+    contextMenu->addAction(tr("Start Presentation (at beginning)"), this, SLOT(startPresentationBeginning()) );
+  }else{
+    contextMenu->addAction(tr("Stop Presentation"), this, SLOT(closePresentation()) );
+  }
 }

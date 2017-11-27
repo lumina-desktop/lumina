@@ -17,8 +17,10 @@
 #include <QDebug>
 #include <QWheelEvent>
 #include <QApplication>
+#include <QMenu>
 
 #include <poppler-qt5.h>
+#include "PresentationLabel.h"
 
 namespace Ui{
 	class MainUI;
@@ -46,6 +48,7 @@ private:
 	QProgressBar *progress;
 	QAction *progAct; //action associated with the progressbar
 	QTimer *clockTimer;
+	QMenu *contextMenu;
 	//QFrame *frame_presenter;
 	QLabel *label_clock;
 	QAction *clockAct;
@@ -57,7 +60,7 @@ private:
 	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
 
 	//Functions/variables for the presentation mode
-	QLabel *presentationLabel;
+	PresentationLabel *presentationLabel;
 	QScreen *getScreen(bool current, bool &cancelled);
 	int CurrentPage;
 	void startPresentation(bool atStart);
@@ -69,6 +72,16 @@ private slots:
 	void slotPageLoaded(int);
 	void slotStartPresentation(QAction *act);
 
+	//Simplification routines
+	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
+	void prevPage(){ ShowPage( WIDGET->currentPage()-2 ); } //currentPage() starts at 1 rather than 0
+	void firstPage(){ ShowPage(0); }
+	void lastPage(){ ShowPage(numPages-1); }
+	void startPresentationHere(){ startPresentation(false); }
+	void startPresentationBeginning(){ startPresentation(true); }
+	void closePresentation(){ endPresentation(); }
+
+
 	void paintOnWidget(QPrinter *PRINTER);
 	void paintToPrinter(QPrinter *PRINTER);
 
@@ -77,6 +90,8 @@ private slots:
 
 	//Other interface slots
 	void updateClock();
+	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
+	void updateContextMenu();
 
 signals:
 	void PageLoaded(int);
@@ -101,22 +116,23 @@ protected:
 
 	    if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
 	      //qDebug() << " - Escape/Backspace";
-	      endPresentation();
+	      if(inPresentation){ endPresentation(); }
 	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
 	      //qDebug() << " - Right/Down/Spacebar" << inPresentation;
-	      ShowPage( WIDGET->currentPage() ); //currentPage() starts at 1 rather than 0
+	      nextPage();
 	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up || event->key()==Qt::Key_PageUp){
 	      //qDebug() << " - Left/Up";
-	      ShowPage( WIDGET->currentPage()-2 ); //currentPage() starts at 1 rather than 0
+	      prevPage();
 	    }else if(event->key()==Qt::Key_Home){
 	      //qDebug() << " - Home";
-	      ShowPage(0); //go to the first page
+	      firstPage();
 	    }else if(event->key()==Qt::Key_End){
 	      //qDebug() << " - End";
-	      ShowPage( numPages-1 ); //go to the last page
+	      lastPage();
 	    }else if(event->key()==Qt::Key_F11){
 	      //qDebug() << " - F11";
-	      endPresentation();
+	      if(inPresentation){ endPresentation(); }
+	      else{ startPresentationHere(); }
             }else{
 	      QMainWindow::keyPressEvent(event);
 	    }

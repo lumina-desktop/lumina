@@ -20,7 +20,9 @@ message("Qt Modules Needed: $${QT}")
 SOURCES += main.cpp \
         mainUI.cpp
 
-HEADERS  += mainUI.h
+HEADERS  += mainUI.h \
+		CM_PrintPreviewWidget.h \
+		PresentationLabel.h
 
 FORMS += mainUI.ui
 
