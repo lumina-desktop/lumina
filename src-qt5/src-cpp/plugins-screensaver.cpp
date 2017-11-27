@@ -31,7 +31,7 @@ void SSPlugin::loadFile(QString path){
   QFile file(path);
   if(!file.exists() || !file.open(QIODevice::ReadOnly)){ return; }
   data = QJsonDocument::fromJson(file.readAll()).object();
-  qDebug() << "Loaded ScreenSaver Data:" << currentfile << data;
+  //qDebug() << "Loaded ScreenSaver Data:" << currentfile << data;
   file.close();
 }
 
@@ -103,7 +103,7 @@ QString SSPlugin::translatedDescription(){
 
 QUrl SSPlugin::scriptURL(){
   QString exec = data.value("qml").toObject().value("exec").toString();
-  qDebug() << "got exec:" << exec << data;
+  //qDebug() << "got exec:" << exec << data;
   if(!exec.startsWith("/")){ exec.prepend( currentfile.section("/",0,-2)+"/" ); }
   return QUrl::fromLocalFile(exec);
 }
