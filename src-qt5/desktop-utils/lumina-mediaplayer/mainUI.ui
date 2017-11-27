@@ -673,19 +673,19 @@
      <x>0</x>
      <y>0</y>
      <width>405</width>
-     <height>19</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="action_closeToTray"/>
     <addaction name="action_showNotifications"/>

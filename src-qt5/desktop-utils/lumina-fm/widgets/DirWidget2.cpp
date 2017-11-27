@@ -289,7 +289,9 @@ void DirWidget::createMenus(){
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Open Current Dir in a Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
   cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
-  if(LUtils::isValidBinary("qsudo")){ cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+  if(LUtils::isValidBinary("qsudo")){
+    cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+  }
 
   if(cArchiveMenu==0){ cArchiveMenu = new QMenu(this); }
   cArchiveMenu->setTitle(tr("Archive Options"));
@@ -327,9 +329,6 @@ void DirWidget::createMenus(){
   if(LUtils::isValidBinary("lumina-fileinfo")){
     cFViewMenu->addAction(LXDG::findIcon("edit-find-replace",""), tr("Properties"), this, SLOT(fileProperties()) );
   }
-
-}
-
 }
 
 BrowserWidget* DirWidget::currentBrowser(){

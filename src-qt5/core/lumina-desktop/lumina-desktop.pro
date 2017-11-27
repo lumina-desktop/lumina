@@ -92,17 +92,17 @@ conf.path = $${L_ETCDIR}
   message("Installing defaults settings for OS: $${DEFAULT_SETTINGS}")
   OS=$${DEFAULT_SETTINGS}
 }
-exists("defaults/luminaDesktop-$${OS}.conf"){
+exists("$$PWD/defaults/luminaDesktop-$${OS}.conf"){
   message(" -- Found OS-specific system config file: $${OS}");
-  conf.extra = cp defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  conf.extra = cp $$PWD/defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
 }else{
-  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  conf.extra = cp $$PWD/defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
 }
-exists("defaults/desktop-background-$${OS}.jpg"){
+exists("$$PWD/defaults/desktop-background-$${OS}.jpg"){
   message(" -- Found OS-specific background image: $${OS}");
-  defaults.extra = cp defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+  defaults.extra = cp $$PWD/defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }else{
-  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+  defaults.extra = cp $$PWD/defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
@@ -170,10 +170,10 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zu.ts
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
 INSTALLS += target desktop icons defaults conf fluxconf manpage
 

@@ -97,7 +97,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_zu.ts 
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-pdf.desktop
 desktop.path=$${L_SHAREDIR}/applications/

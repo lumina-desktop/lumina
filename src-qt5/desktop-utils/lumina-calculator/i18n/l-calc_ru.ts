@@ -6,67 +6,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультимедиа</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработка</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Образование</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Игры</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Графика</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Сети</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Офис</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Наука</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Система</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Вино</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Разное</translation>
     </message>
 </context>
 <context>
@@ -75,102 +75,102 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="53"/>
         <source>Calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Калькулятор</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="657"/>
         <source>Advanced Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Расширенные операции</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="83"/>
         <source>Percentage %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Процент %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="85"/>
         <source>Power %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Степень %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="87"/>
         <source>Base-10 Exponential %1</source>
-        <translation type="unfinished"></translation>
+        <translation>10 в степени %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="89"/>
         <source>Exponential %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспонента %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="91"/>
         <source>Constant Pi %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Число Пи %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="94"/>
         <source>Square Root %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Квадратный корень %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="96"/>
         <source>Logarithm %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Логарифм %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="98"/>
         <source>Natural Log %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Нат. логарифм %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="101"/>
         <source>Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Синус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="103"/>
         <source>Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Косинус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Тангенс %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="108"/>
         <source>Arc Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Арксинус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="110"/>
         <source>Arc Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Арккосинус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="112"/>
         <source>Arc Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Арктангес %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="115"/>
         <source>Hyperbolic Sine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Гиперболический синус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="117"/>
         <source>Hyperbolic Cosine %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Гиперболический косинус %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="119"/>
         <source>Hyperbolic Tangent %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Гиперболический тангенс %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить историю калькулятора</translation>
     </message>
 </context>
 </TS>
