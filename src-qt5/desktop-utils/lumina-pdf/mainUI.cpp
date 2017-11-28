@@ -155,11 +155,22 @@ void MainUI::loadFile(QString path){
 }
 
 void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page){
+  //PERFORMANCE NOTES:
+  // Using Poppler to scale the image (adjust dpi value) helps a bit but you take a large CPU loading hit (and still quite a lot of pixelization)
+  // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
+  // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
+
   //qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
-    //qDebug() << "DPI:" << 4*dpi;
-    loadingHash.insert(num, PAGE->renderToImage(4*dpi.width(), 4*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    //qDebug() << "DPI:" << dpi << "Size:" << page << "Page Size (pt):" << PAGE->pageSize();
+    float scalefactor = (dpi.width()/72.0); //How different the screen DPI compares to standard page DPI
+    //qDebug() << "Scale Factor:" << scalefactor;
+    QImage raw = PAGE->renderToImage((scalefactor+0.2)*dpi.width(), (scalefactor+0.2)*dpi.height()); //make the raw image a tiny bit larger than the end result
+    //qDebug() << " - Raw Image Size:" << raw.size();
+    loadingHash.insert(num, raw.scaled(scalefactor*page.width(), scalefactor*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    raw = QImage(); //clear it
+    //qDebug() << "Page Label:" << num << PAGE->label();
     /*
     QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
     QStringList annoS;
@@ -286,6 +297,11 @@ void MainUI::startLoadingPages(QPrinter *printer){
   progAct->setVisible(true);
   QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
   QSize DPI(printer->resolution(),printer->resolution());
+  /*qDebug() << "Screen Resolutions:";
+  QList<QScreen*> screens = QApplication::screens();
+  for(int i=0; i<screens.length(); i++){
+    qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
+  }*/
   for(int i=0; i<numPages; i++){
     //qDebug() << " - Kickoff page load:" << i;
     QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size() );
