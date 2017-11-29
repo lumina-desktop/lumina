@@ -19,7 +19,7 @@
 #include <QApplication>
 #include <QMenu>
 
-#include <poppler-qt5.h>
+#include <poppler/qt5/poppler-qt5.h>
 #include "PresentationLabel.h"
 
 namespace Ui{
