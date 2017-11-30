@@ -72,6 +72,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   for(int i=0; i<smodes.length(); i++){
     ui->menuSyntax_Highlighting->addAction(smodes[i]);
   }
+
+  bool toolbarVisible = settings->value("showToolbar",true).toBool();
+  ui->toolBar->setHidden(!toolbarVisible);
+  ui->actionShow_Toolbar->setChecked(toolbarVisible);
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
@@ -96,6 +100,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(tabWidget->dndTabBar(), SIGNAL(DetachTab(int)), this, SLOT(tabDetached(int)) );
   connect(tabWidget->dndTabBar(), SIGNAL(DroppedIn(QStringList)), this, SLOT(LoadArguments(QStringList)) );
   connect(tabWidget->dndTabBar(), SIGNAL(DraggedOut(int, Qt::DropAction)), this, SLOT(tabDraggedOut(int, Qt::DropAction)) );
+  connect(ui->actionShow_Toolbar, SIGNAL(toggled(bool)), this, SLOT(showToolbar(bool)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
@@ -335,6 +340,11 @@ void MainUI::ModifyColors(){
 
 void MainUI::showPopupWarnings(bool show){
   settings->setValue("showPopupWarnings",show);
+}
+
+void MainUI::showToolbar(bool show){
+  settings->setValue("showToolbar",show);
+  ui->toolBar->setHidden(!show);
 }
 
 void MainUI::updateTab(QString file){
