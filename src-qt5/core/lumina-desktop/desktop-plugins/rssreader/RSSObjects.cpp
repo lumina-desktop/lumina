@@ -116,11 +116,18 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
   RSSchannel rssinfo;
   //qDebug() << "Can Read XML Stream:" << !xml.hasError();
   if(xml.readNextStartElement()){
-    //qDebug() << " - RSS Element:" << xml.name();
-    if(xml.name() == "rss" && (xml.attributes().value("version") =="2.0" || xml.attributes().value("version") =="0.91") ){
+    qDebug() << " - RSS Element:" << xml.name();
+    if(xml.name() == "rss" && (xml.attributes().value("version") =="2.0" || xml.attributes().value("version") =="0.91")) {
       while(xml.readNextStartElement()){
         //qDebug() << " - RSS Element:" << xml.name();
         if(xml.name()=="channel"){ rssinfo = readRSSChannel(&xml); }
+        else{ xml.skipCurrentElement(); }
+      }
+    }else if(xml.name() == "feed") {
+      qDebug() << "starting feed";
+      while(xml.readNextStartElement()){
+        qDebug() << " - ATOM Element:" << xml.name();
+        if(xml.name()=="entry"){ rssinfo = readRSSChannel(&xml); }
         else{ xml.skipCurrentElement(); }
       }
     }
@@ -128,6 +135,7 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
   if(xml.hasError()){ qDebug() << " - XML Read Error:" << xml.errorString() << "\n" << bytes; }
   return rssinfo;
 }
+
 RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
   RSSchannel info;
   info.timetolive = -1;
@@ -149,6 +157,45 @@ RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
     else{ rss->skipCurrentElement(); }
   }
   return info;
+}
+
+RSSchannel RSSReader::readRSSChannelAtom(QXmlStreamReader *rss){
+  RSSchannel info;
+  info.timetolive = -1;
+  while(rss->readNextStartElement()){
+    qDebug() << " - RSS Element (channel):" <<rss->name();
+    if(rss->name()=="entry"){ info.items << readRSSItemAtom(rss); }
+    else if(rss->name()=="title"){ info.title = rss->readElementText(); }
+    else if(rss->name()=="link"){ 
+      QString txt = rss->readElementText(); 
+      if(!txt.isEmpty()){ info.link = txt; } 
+    }
+    else if(rss->name()=="subtitle"){ info.description = rss->readElementText(); }
+    else if(rss->name()=="updated"){ info.lastBuildDate = RSSDateTime(rss->readElementText()); }
+    else{ rss->skipCurrentElement(); }
+  }
+  return info;
+}
+
+RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
+  RSSitem item;
+  while(rss->readNextStartElement()){
+    qDebug() << " - RSS Element (Item):" << rss->name();
+    if(rss->name()=="title"){ item.title = rss->readElementText(); }
+    else if(rss->name()=="link"){ item.link = rss->readElementText(); }
+    else if(rss->name()=="summary"){ item.description = rss->readElementText(); }
+    else if(rss->name()=="comments"){ item.comments_url = rss->readElementText(); }
+    else if(rss->name()=="author"){ 
+      //Special handling - this field can contain both email and name
+        rss->skipCurrentElement();
+        item.author = rss->readElementText();
+        qDebug() << item.author;
+        rss->skipCurrentElement();
+    }
+    else if(rss->name()=="updated"){ item.pubdate = RSSDateTime(rss->readElementText()); }
+    else{ rss->skipCurrentElement(); }
+  }
+  return item;
 }
 
 RSSitem RSSReader::readRSSItem(QXmlStreamReader *rss){

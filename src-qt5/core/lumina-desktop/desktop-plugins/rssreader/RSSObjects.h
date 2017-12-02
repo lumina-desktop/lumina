@@ -88,7 +88,9 @@ private:
 	//RSS parsing functions
 	RSSchannel readRSS(QByteArray bytes);
 	RSSchannel readRSSChannel(QXmlStreamReader *rss);
+	RSSchannel readRSSChannelAtom(QXmlStreamReader *rss);
 	RSSitem readRSSItem(QXmlStreamReader *rss);
+	RSSitem readRSSItemAtom(QXmlStreamReader *rss);
         void readRSSImage(RSSchannel *item, QXmlStreamReader *rss);
 	QDateTime RSSDateTime(QString datetime);
 
