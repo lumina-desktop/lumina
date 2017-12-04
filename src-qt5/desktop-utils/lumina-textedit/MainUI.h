@@ -60,6 +60,7 @@ private slots:
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);
+    void showToolbar(bool);
 	void showLineNumbers(bool);
 	void wrapLines(bool);
 	void ModifyColors();
