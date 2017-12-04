@@ -58,7 +58,7 @@ public:
 	  if(logfile.isEmpty()){
 	    this->setStandardOutputFile(QProcess::nullDevice());
 	  }else if(logfile=="stdout"){
-	    connect(this, SIGNAL(readyReadStandardOutput()), this, SLOT(updateLog());
+	    connect(this, SIGNAL(readyReadStandardOutput()), this, SLOT(updateLog()) );
 	  }else{
 	    this->setStandardOutputFile(logfile);
 	  }
