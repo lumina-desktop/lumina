@@ -118,21 +118,44 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
   if(xml.readNextStartElement()){
     qDebug() << " - RSS Element:" << xml.name();
     if(xml.name() == "rss" && (xml.attributes().value("version") =="2.0" || xml.attributes().value("version") =="0.91")) {
+      rssinfo.rss = true;
       while(xml.readNextStartElement()){
         //qDebug() << " - RSS Element:" << xml.name();
         if(xml.name()=="channel"){ rssinfo = readRSSChannel(&xml); }
         else{ xml.skipCurrentElement(); }
       }
     }else if(xml.name() == "feed") {
-      qDebug() << "starting feed";
+      rssinfo.timetolive = -1;
+      rssinfo.rss = false;
       while(xml.readNextStartElement()){
-        qDebug() << " - ATOM Element:" << xml.name();
-        if(xml.name()=="entry"){ rssinfo = readRSSChannel(&xml); }
-        else{ xml.skipCurrentElement(); }
+        qDebug() << " - ATOM Element (channel):" << xml.name();
+        if(xml.name()=="entry") { 
+          rssinfo.items << readRSSItemAtom(&xml);
+        }else if(xml.name()=="title"){
+          rssinfo.title = xml.readElementText();
+        }else if(xml.name()=="link"){ 
+          QXmlStreamAttributes att = xml.attributes();
+          for(int i = 0; i < att.size(); i++) {
+            if(att[i].name() == "href") {
+              rssinfo.link = att[i].value().toString();
+            }
+          }
+          xml.readElementText();
+        }else if(xml.name()=="subtitle"){
+          rssinfo.description = xml.readElementText();
+        }else if(xml.name()=="updated"){
+          rssinfo.lastBuildDate = ATOMDateTime(xml.readElementText());
+        }else if(xml.name()=="icon"){ 
+          rssinfo.icon_url = xml.readElementText();
+          qDebug() << "icon" << rssinfo.icon_url;
+          requestRSS(rssinfo.icon_url);
+        }else{
+          xml.skipCurrentElement();
+        }
       }
     }
   }
-  if(xml.hasError()){ qDebug() << " - XML Read Error:" << xml.errorString() << "\n" << bytes; }
+  //if(xml.hasError()){ qDebug() << " - XML Read Error:" << xml.errorString() << "\n" << bytes; }
   return rssinfo;
 }
 
@@ -159,41 +182,36 @@ RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
   return info;
 }
 
-RSSchannel RSSReader::readRSSChannelAtom(QXmlStreamReader *rss){
-  RSSchannel info;
-  info.timetolive = -1;
-  while(rss->readNextStartElement()){
-    qDebug() << " - RSS Element (channel):" <<rss->name();
-    if(rss->name()=="entry"){ info.items << readRSSItemAtom(rss); }
-    else if(rss->name()=="title"){ info.title = rss->readElementText(); }
-    else if(rss->name()=="link"){ 
-      QString txt = rss->readElementText(); 
-      if(!txt.isEmpty()){ info.link = txt; } 
-    }
-    else if(rss->name()=="subtitle"){ info.description = rss->readElementText(); }
-    else if(rss->name()=="updated"){ info.lastBuildDate = RSSDateTime(rss->readElementText()); }
-    else{ rss->skipCurrentElement(); }
-  }
-  return info;
-}
-
 RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
   RSSitem item;
   while(rss->readNextStartElement()){
-    qDebug() << " - RSS Element (Item):" << rss->name();
-    if(rss->name()=="title"){ item.title = rss->readElementText(); }
-    else if(rss->name()=="link"){ item.link = rss->readElementText(); }
-    else if(rss->name()=="summary"){ item.description = rss->readElementText(); }
-    else if(rss->name()=="comments"){ item.comments_url = rss->readElementText(); }
-    else if(rss->name()=="author"){ 
-      //Special handling - this field can contain both email and name
-        rss->skipCurrentElement();
-        item.author = rss->readElementText();
-        qDebug() << item.author;
-        rss->skipCurrentElement();
-    }
-    else if(rss->name()=="updated"){ item.pubdate = RSSDateTime(rss->readElementText()); }
-    else{ rss->skipCurrentElement(); }
+    if(rss->name()=="title"){ 
+      item.title = rss->readElementText();
+      qDebug() << rss->name() << item.title;
+    }else if(rss->name()=="link"){ 
+      QXmlStreamAttributes att = rss->attributes();
+      for(int i = 0; i < att.size(); i++) {
+        if(att[i].name() == "href") {
+          item.link = att[i].value().toString();
+        }
+      }
+      rss->readElementText();
+      qDebug() << rss->name() << item.link;
+    }else if(rss->name()=="summary"){ 
+      item.description = rss->readElementText();
+      qDebug() << rss->name() << item.description;
+    } else if(rss->name()=="comments"){ 
+      item.comments_url = rss->readElementText();
+      qDebug() << rss->name() << item.comments_url;
+    } else if(rss->name()=="author"){ 
+      rss->readNextStartElement();
+      item.author = rss->readElementText();
+      qDebug() << "author" << item.author;
+      rss->skipCurrentElement();
+    }else if(rss->name()=="updated"){
+      item.pubdate = ATOMDateTime(rss->readElementText());
+      qDebug() << rss->name() << item.pubdate;
+    } else{ rss->skipCurrentElement(); }
   }
   return item;
 }
@@ -239,17 +257,21 @@ QDateTime RSSReader::RSSDateTime(QString datetime){
   return QDateTime::fromString(datetime, Qt::RFC2822Date);
 }
 
+QDateTime RSSReader::ATOMDateTime(QString datetime){
+  return QDateTime::fromString(datetime, Qt::ISODate);
+}
+
 //=================
 //    PRIVATE SLOTS
 //=================
 void RSSReader::replyFinished(QNetworkReply *reply){
   QString url = reply->request().url().toString();
-  //qDebug() << "Got Reply:" << url;
+  qDebug() << "Got Reply:" << url;
   QString key = keyForUrl(url); //current hash key for this URL
   QByteArray data = reply->readAll();
   outstandingURLS.removeAll(url);
   if(data.isEmpty()){
-    //qDebug() << "No data returned:" << url;
+    qDebug() << "No data returned:" << url;
     //see if the URL can be adjusted for known issues
     bool handled = false;
     QUrl redirecturl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
@@ -276,13 +298,13 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     //Could also be an icon fetch response
     QStringList keys = hash.keys();
     for(int i=0; i<keys.length(); i++){
-      //qDebug() << " - Check for icon URL:" << hash[keys[i]].icon_url;
+      qDebug() << " - Check for icon URL:" << hash[keys[i]].icon_url;
       if(hash[keys[i]].icon_url.toLower() == url.toLower()){ //needs to be case-insensitive
         //Icon fetch response
         RSSchannel info = hash[keys[i]];
         QImage img = QImage::fromData(data);
         info.icon = QIcon( QPixmap::fromImage(img) );
-        //qDebug() << "Got Icon response:" << url << info.icon;
+        qDebug() << "Got Icon response:" << url << info.icon;
         hash.insert(keys[i], info); //insert back into the hash
         emit rssChanged( hash[keys[i]].originalURL );
         break;

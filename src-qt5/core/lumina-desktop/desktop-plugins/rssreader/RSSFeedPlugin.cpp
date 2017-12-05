@@ -119,11 +119,13 @@ void RSSFeedPlugin::updateFeed(QString ID){
         if(!data.items[i].author_email.isEmpty()){ html.append("<a href=\"mailto:"+data.items[i].author_email+"\" style=\"color: "+color+";\">"+data.items[i].author+"</a>"); }
         else{ html.append(data.items[i].author); }
       }
-      html.append(")</i><br>");
+      html.append(")</i>");
+      if(data.rss)
+        html.append("<br>");
     }
     html.append(data.items[i].description);
     //html.append("</li>\n");
-    if(i+1 < data.items.length()){ html.append("<br>"); }
+    if(i+1 < data.items.length() && data.rss){ html.append("<br>"); }
   }
   //html.append("</ul>\n");
   // - load that html into the viewer
