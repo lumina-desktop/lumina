@@ -10,6 +10,8 @@
 
 #include "LSession.h"
 
+#define DEBUG 0
+
 //============
 //    PUBLIC
 //============
@@ -116,7 +118,7 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
   RSSchannel rssinfo;
   //qDebug() << "Can Read XML Stream:" << !xml.hasError();
   if(xml.readNextStartElement()){
-    qDebug() << " - RSS Element:" << xml.name();
+    if(DEBUG) qDebug() << " - RSS Element:" << xml.name();
     if(xml.name() == "rss" && (xml.attributes().value("version") =="2.0" || xml.attributes().value("version") =="0.91")) {
       rssinfo.rss = true;
       while(xml.readNextStartElement()){
@@ -128,11 +130,12 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
       rssinfo.timetolive = -1;
       rssinfo.rss = false;
       while(xml.readNextStartElement()){
-        qDebug() << " - ATOM Element (channel):" << xml.name();
+        if(DEBUG) qDebug() << " - ATOM Element (channel):" << xml.name();
         if(xml.name()=="entry") { 
           rssinfo.items << readRSSItemAtom(&xml);
         }else if(xml.name()=="title"){
           rssinfo.title = xml.readElementText();
+          if(DEBUG) qDebug() << "title" << rssinfo.link;
         }else if(xml.name()=="link"){ 
           QXmlStreamAttributes att = xml.attributes();
           for(int i = 0; i < att.size(); i++) {
@@ -141,13 +144,14 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
             }
           }
           xml.readElementText();
+          if(DEBUG) qDebug() << "link" << rssinfo.link;
         }else if(xml.name()=="subtitle"){
           rssinfo.description = xml.readElementText();
         }else if(xml.name()=="updated"){
           rssinfo.lastBuildDate = ATOMDateTime(xml.readElementText());
         }else if(xml.name()=="icon"){ 
           rssinfo.icon_url = xml.readElementText();
-          qDebug() << "icon" << rssinfo.icon_url;
+          if(DEBUG) qDebug() << "icon" << rssinfo.icon_url;
           requestRSS(rssinfo.icon_url);
         }else{
           xml.skipCurrentElement();
@@ -187,7 +191,7 @@ RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
   while(rss->readNextStartElement()){
     if(rss->name()=="title"){ 
       item.title = rss->readElementText();
-      qDebug() << rss->name() << item.title;
+      if(DEBUG) qDebug() << rss->name() << item.title;
     }else if(rss->name()=="link"){ 
       QXmlStreamAttributes att = rss->attributes();
       for(int i = 0; i < att.size(); i++) {
@@ -196,21 +200,21 @@ RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
         }
       }
       rss->readElementText();
-      qDebug() << rss->name() << item.link;
+      if(DEBUG) qDebug() << rss->name() << item.link;
     }else if(rss->name()=="summary"){ 
       item.description = rss->readElementText();
-      qDebug() << rss->name() << item.description;
+      if(DEBUG) qDebug() << rss->name() << item.description;
     } else if(rss->name()=="comments"){ 
       item.comments_url = rss->readElementText();
-      qDebug() << rss->name() << item.comments_url;
+      if(DEBUG) qDebug() << rss->name() << item.comments_url;
     } else if(rss->name()=="author"){ 
       rss->readNextStartElement();
       item.author = rss->readElementText();
-      qDebug() << "author" << item.author;
+      if(DEBUG) qDebug() << "author" << item.author;
       rss->skipCurrentElement();
     }else if(rss->name()=="updated"){
       item.pubdate = ATOMDateTime(rss->readElementText());
-      qDebug() << rss->name() << item.pubdate;
+      if(DEBUG) qDebug() << rss->name() << item.pubdate;
     } else{ rss->skipCurrentElement(); }
   }
   return item;
