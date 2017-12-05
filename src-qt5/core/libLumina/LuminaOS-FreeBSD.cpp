@@ -30,7 +30,7 @@ QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.d
 QStringList LOS::RSSFeeds(){
   QStringList feeds;
     feeds << "FreeBSD News Feed::::https://www.freebsd.org/news/rss.xml";
-    feeds << "TrueOS News Feed::::http://www.trueos.org/?feed=rss2";
+    feeds << "TrueOS News Feed::::http://www.trueos.org/feed/";
   return feeds;
  }
 

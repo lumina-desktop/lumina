@@ -4,10 +4,8 @@ import QtQuick.Window 2.2
 import Qt.labs.folderlistmodel 2.1
 
 Rectangle {
-  //width: Screen.width
-  //height: Screen.height
-  width: 800
-  height: 600
+  width: Screen.width
+  height: Screen.height
   color: "black"
 
   FolderListModel {
