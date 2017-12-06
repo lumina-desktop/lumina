@@ -529,7 +529,8 @@ void MainUI::closeEvent(QCloseEvent *ev){
           this,
           tr("Save Changes before closing?"),
           QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")),
-          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
+          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+          QMessageBox::No);
 
   if(but == QMessageBox::Cancel){
     ev->ignore();
