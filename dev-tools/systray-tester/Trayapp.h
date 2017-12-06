@@ -9,7 +9,7 @@
 
 class TrayApp : public QSystemTrayIcon {
    Q_OBJECT
-   
+
 private:
   QTimer *timer;
   int iconnum;
@@ -25,12 +25,13 @@ private slots:
     else if(iconnum==2){ ico = "arrow-right"; iconnum=3; }
     else{ico = "arrow-down"; iconnum=0; }
     this->setIcon( LXDG::findIcon(ico,"") );
+    this->showMessage("Title","Some random message", QSystemTrayIcon::Information, 1500); //1.5 second popup
    }
-   
+
    void StopTest(){
       QApplication::exit(0);
    }
-   
+
 public:
    TrayApp() : QSystemTrayIcon(){
       iconnum = 0;
@@ -43,9 +44,5 @@ public:
       timer->start();
    }
    virtual ~TrayApp(){}
-   
-
-   
-
 
 };
