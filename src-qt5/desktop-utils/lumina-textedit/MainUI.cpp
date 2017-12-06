@@ -505,7 +505,6 @@ PlainTextEditor *cur = currentEditor();
   }
 }
 
-
 //=============
 //   PROTECTED
 //=============
