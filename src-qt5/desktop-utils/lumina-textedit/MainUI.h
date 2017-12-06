@@ -13,6 +13,8 @@
 #include <QShortcut>
 #include <QFontComboBox>
 #include <QSpinBox>
+#include <QAction>
+#include <QApplication>
 
 #include "PlainTextEditor.h"
 #include "ColorDialog.h"
@@ -40,6 +42,7 @@ private:
 	QSettings *settings;
 	QShortcut *closeFindS;
 	QSpinBox *fontSizes;
+	QAction *label_readonly;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();

@@ -33,6 +33,7 @@ public:
 	QString currentFile();
 
 	bool hasChange();
+	bool readOnlyFile();
 
 	//Functions for managing the line number widget (internal - do not need to run directly)
 	int LNWWidth(); //replacing the LNW size hint detection
@@ -55,8 +56,9 @@ private:
 	void clearMatchData();
 	void highlightMatch(QChar ch, bool forward, int fromPos, QChar startch);
 
-	//Flags to keep track of changes
-	bool hasChanges;
+	//Flags to keep track of changes/status
+	bool hasChanges, readonly;
+
 private slots:
 	//Functions for managing the line number widget
 	void LNW_updateWidth();  	// Tied to the QPlainTextEdit::blockCountChanged() signal
@@ -68,7 +70,7 @@ private slots:
 	void textChanged();
 	void cursorMoved();
 	//Function for prompting the user if the file changed externally
-    void fileChanged();
+	void fileChanged();
 
 protected:
 	void resizeEvent(QResizeEvent *ev);

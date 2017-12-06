@@ -24,7 +24,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   LNW = new LNWidget(this);
   showLNW = true;
   watcher = new QFileSystemWatcher(this);
-  hasChanges = false;
+  hasChanges = readonly = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
   this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
@@ -99,7 +99,14 @@ void PlainTextEditor::LoadFile(QString filepath){
     this->centerCursor(); //scroll until cursor is centered (if possible)
   }
   hasChanges = false;
-  if(QFile::exists(filepath)){ watcher->addPath(filepath); }
+  readonly = false;
+  if(QFile::exists(filepath)){
+    readonly =  !QFileInfo(filepath).isWritable();
+    watcher->addPath(filepath);
+  }else if(filepath.startsWith("/")){
+    //See if the containing directory is writable instead
+    readonly =  !QFileInfo(filepath.section("/",0,-2)).isWritable();
+  }
   emit FileLoaded(this->whatsThis());
 }
 
@@ -117,6 +124,7 @@ bool PlainTextEditor::SaveFile(bool newname){
     this->setWhatsThis(file);
     SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
     SYNTAX->rehighlight();
+    readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
@@ -133,6 +141,11 @@ QString PlainTextEditor::currentFile(){
 
 bool PlainTextEditor::hasChange(){
   return hasChanges;
+}
+
+bool PlainTextEditor::readOnlyFile(){
+  //qDebug() << "Read Only File:" << readonly << this->whatsThis();
+  return readonly;
 }
 
 //Functions for managing the line number widget

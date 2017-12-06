@@ -29,15 +29,26 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     fontbox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  QWidget *spacer2 = new QWidget(this);
+    spacer2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  label_readonly = new QAction(tr("Read-Only File"), this);
+    label_readonly->setEnabled(false); //not an actual button
+    label_readonly->setToolTip("");
+  QFont fnt = this->font();
+    fnt.setItalic(true);
+    fnt.setBold(true);
+    label_readonly->setFont(fnt);
   fontSizes = new QSpinBox(this);
     fontSizes->setRange(5, 72);
-    fontSizes->setValue(9);
+    fontSizes->setValue(this->font().pointSize());
    fontSizes->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   //For some reason, the FontComboBox is always 2 pixels taller than the SpinBox - manually fix that here
-  fontbox->setFixedHeight(30);
-  fontSizes->setFixedHeight(32);
+  fontbox->setFixedHeight(ui->toolBar->iconSize().height()-2);
+  fontSizes->setFixedHeight(ui->toolBar->iconSize().height());
 
   ui->toolBar->addWidget(spacer);
+  ui->toolBar->addAction(label_readonly);
+  ui->toolBar->addWidget(spacer2);
   ui->toolBar->addWidget(fontbox);
   ui->toolBar->addWidget(fontSizes);
   //Load the special Drag and Drop QTabWidget
@@ -264,12 +275,13 @@ bool MainUI::SaveFileAs(){
 
 bool MainUI::SaveAllFiles(){
   bool ok = true;
-  for(int i=0; i<tabWidget->count(); i++){
+  for(int i=0; i<tabWidget->count() && ok; i++){
     PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
     if(tmp->hasChange()){
       ok = ok && tmp->SaveFile();
     }
   }
+  return ok;
 }
 
 void MainUI::Print() {
@@ -387,6 +399,7 @@ void MainUI::updateTab(QString file){
   tabWidget->setTabWhatsThis(index, file); //needed for drag/drop functionality
   ui->actionSave_File->setEnabled(changes);
   this->setWindowTitle( (changes ? "*" : "") + file.section("/",-2) );
+  label_readonly->setVisible( cur->readOnlyFile() );
 }
 
 void MainUI::tabChanged(){
@@ -404,6 +417,7 @@ void MainUI::tabChanged(){
   fontbox->setCurrentFont(font);
   fontSizes->setValue( font.pointSize() );
   ui->actionWrap_Lines->setChecked( cur->lineWrapMode()==QPlainTextEdit::WidgetWidth );
+  label_readonly->setVisible( cur->readOnlyFile() );
 }
 
 void MainUI::tabClosed(int tab){
