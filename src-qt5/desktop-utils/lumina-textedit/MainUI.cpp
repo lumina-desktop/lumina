@@ -252,7 +252,6 @@ void MainUI::CloseFile(){
 }
 
 void MainUI::SaveFile(){
-  qDebug() << "SaveFile";
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   cur->SaveFile();

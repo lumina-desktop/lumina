@@ -44,7 +44,7 @@ private:
 	//Simplification functions
 	PlainTextEditor* currentEditor();
 	QString currentFileDir();
-    QStringList unsavedFiles();
+  QStringList unsavedFiles();
 
 private slots:
 	//Main Actions
