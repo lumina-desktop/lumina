@@ -200,7 +200,6 @@ QStringList MainUI::unsavedFiles(){
   return unsaved;
 }
 
-
 // =================
 //    PRIVATE SLOTS
 //=================
