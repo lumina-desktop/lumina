@@ -189,6 +189,17 @@ QString MainUI::currentFileDir(){
   return dir;
 }
 
+QStringList MainUI::unsavedFiles(){
+  QStringList unsaved;
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
+    if(tmp->hasChange()){
+      unsaved << tmp->currentFile();
+    }
+  }
+  return unsaved;
+}
+
 // =================
 //    PRIVATE SLOTS
 //=================
@@ -499,21 +510,41 @@ PlainTextEditor *cur = currentEditor();
 //=============
 void MainUI::closeEvent(QCloseEvent *ev){
   //See if any of the open editors have unsaved changes first
-  QStringList unsaved;
-  for(int i=0; i<tabWidget->count(); i++){
-    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
-    if(tmp->hasChange()){
-      unsaved << tmp->currentFile();
+  QStringList unsaved = unsavedFiles();
+  if(unsaved.isEmpty()){
+    QMainWindow::closeEvent(ev);
+    return;
+  }
+
+  //If popups are disabled, give the user a chance by opening
+  //the save dialog automatically, then just close.
+  if(!ui->actionShow_Popups->isChecked()){
+    SaveFile();
+    QMainWindow::closeEvent(ev);
+    return;
+  }
+
+  //Otherwise, ask the user what to do.
+  QMessageBox::StandardButton but = QMessageBox::question(
+          this,
+          tr("Save Changes before closing?"),
+          QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")),
+          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+          QMessageBox::No);
+
+  if(but == QMessageBox::Cancel){
+    ev->ignore();
+    return;
+  }
+  else if(but == QMessageBox::Yes){
+    SaveFile();
+    //If there are still unsaved files, the user presumably
+    //cancelled the save dialog and we don't want to close.
+    unsaved = unsavedFiles();
+    if (!unsaved.isEmpty()) {
+      ev->ignore();
+      return;
     }
   }
-  if(unsaved.isEmpty()){ QMainWindow::closeEvent(ev); return; }
-  bool savenow = false;
-  if(!savenow && !ui->actionShow_Popups->isChecked()){ savenow = true; }
-  if(!savenow){
-      QMessageBox::StandardButton but = QMessageBox::question(this, tr("Save Changes before closing?"), QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::No);
-      savenow = (but == QMessageBox::Yes);
-      if(but == QMessageBox::Cancel){ ev->ignore(); return; }
-    }
-    if(savenow){ SaveFile(); }
-    QMainWindow::closeEvent(ev);
+  QMainWindow::closeEvent(ev);
 }
