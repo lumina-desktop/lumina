@@ -44,7 +44,7 @@ private:
 	//Simplification functions
 	PlainTextEditor* currentEditor();
 	QString currentFileDir();
-  QStringList unsavedFiles();
+	QStringList unsavedFiles();
 
 private slots:
 	//Main Actions
@@ -61,7 +61,7 @@ private slots:
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);
-    void showToolbar(bool);
+	void showToolbar(bool);
 	void showLineNumbers(bool);
 	void wrapLines(bool);
 	void ModifyColors();
