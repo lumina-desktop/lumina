@@ -21,7 +21,7 @@ class PlainTextEditor : public QPlainTextEdit{
 public:
 	PlainTextEditor(QSettings *set, QWidget *parent = 0);
 	~PlainTextEditor();
-	
+
 	//Functions for setting up the editor
 	void showLineNumbers(bool show = true);
 	void LoadSyntaxRule(QString type);
@@ -29,7 +29,7 @@ public:
 
 	//File loading/setting options
 	void LoadFile(QString filepath);
-	void SaveFile(bool newname = false);
+	bool SaveFile(bool newname = false);
 	QString currentFile();
 
 	bool hasChange();
@@ -37,10 +37,10 @@ public:
 	//Functions for managing the line number widget (internal - do not need to run directly)
 	int LNWWidth(); //replacing the LNW size hint detection
 	void paintLNW(QPaintEvent *ev); //forwarded from the LNW paint event
-    void updateLNW();
+	void updateLNW();
 
     QFontMetrics *metrics;
-	
+
 private:
 	QWidget *LNW; //Line Number Widget
 	bool showLNW;

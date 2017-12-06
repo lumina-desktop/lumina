@@ -250,16 +250,26 @@ void MainUI::CloseFile(){
   if(index>=0){ tabClosed(index); }
 }
 
-void MainUI::SaveFile(){
+bool MainUI::SaveFile(){
   PlainTextEditor *cur = currentEditor();
-  if(cur==0){ return; }
-  cur->SaveFile();
+  if(cur==0){ return true; } //nothing to do
+  return cur->SaveFile();
 }
 
-void MainUI::SaveFileAs(){
+bool MainUI::SaveFileAs(){
   PlainTextEditor *cur = currentEditor();
-  if(cur==0){ return; }
-  cur->SaveFile(true);
+  if(cur==0){ return true; } //nothing to do
+  return cur->SaveFile(true);
+}
+
+bool MainUI::SaveAllFiles(){
+  bool ok = true;
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
+    if(tmp->hasChange()){
+      ok = ok && tmp->SaveFile();
+    }
+  }
 }
 
 void MainUI::Print() {
@@ -511,15 +521,7 @@ PlainTextEditor *cur = currentEditor();
 void MainUI::closeEvent(QCloseEvent *ev){
   //See if any of the open editors have unsaved changes first
   QStringList unsaved = unsavedFiles();
-  if(unsaved.isEmpty()){
-    QMainWindow::closeEvent(ev);
-    return;
-  }
-
-  //If popups are disabled, give the user a chance by opening
-  //the save dialog automatically, then just close.
-  if(!ui->actionShow_Popups->isChecked()){
-    SaveFile();
+  if(unsaved.isEmpty() || !ui->actionShow_Popups->isChecked()){
     QMainWindow::closeEvent(ev);
     return;
   }
@@ -537,14 +539,12 @@ void MainUI::closeEvent(QCloseEvent *ev){
     return;
   }
   else if(but == QMessageBox::Yes){
-    SaveFile();
-    //If there are still unsaved files, the user presumably
-    //cancelled the save dialog and we don't want to close.
-    unsaved = unsavedFiles();
-    if (!unsaved.isEmpty()) {
+    if( !SaveAllFiles() ){
+      //cancelled by user
       ev->ignore();
       return;
     }
+
   }
   QMainWindow::closeEvent(ev);
 }

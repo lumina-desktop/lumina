@@ -103,12 +103,17 @@ void PlainTextEditor::LoadFile(QString filepath){
   emit FileLoaded(this->whatsThis());
 }
 
-void PlainTextEditor::SaveFile(bool newname){
+bool PlainTextEditor::SaveFile(bool newname){
+  //NOTE: This returns true for proper behaviour, and false for a user-cancelled process
   //qDebug() << "Save File:" << this->whatsThis();
+  //Quick check for a non-editable file
+  if(!newname && this->whatsThis().startsWith("/")){
+    if(!QFileInfo(this->whatsThis()).isWritable()){ newname = true; } //cannot save the current file name/location
+  }
   if( !this->whatsThis().startsWith("/") || newname ){
     //prompt for a filename/path
     QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
-    if(file.isEmpty()){ return; }
+    if(file.isEmpty()){ return false; } //cancelled
     this->setWhatsThis(file);
     SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
     SYNTAX->rehighlight();
@@ -118,6 +123,7 @@ void PlainTextEditor::SaveFile(bool newname){
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
   watcher->addPath(currentFile());
+  return true;
   //qDebug() << " - Success:" << ok << hasChanges;
 }
 

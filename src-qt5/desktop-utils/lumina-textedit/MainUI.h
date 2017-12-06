@@ -51,8 +51,9 @@ private slots:
 	void NewFile();
 	void OpenFile(QString file = "");
 	void CloseFile(); //current file only
-	void SaveFile();
-	void SaveFileAs();
+	bool SaveFile();
+	bool SaveFileAs();
+	bool SaveAllFiles();
 	void Print();
 	void fontChanged(const QFont &font);
 	void updateStatusTip();
