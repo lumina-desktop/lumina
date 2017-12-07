@@ -70,12 +70,12 @@ ItemWidget::ItemWidget(QWidget *parent, QString itemPath, QString type, bool gob
       iconPath = itemPath;
       //icon->setPixmap( QIcon(itemPath).pixmap(64,64) );
     }else{
-      if( LUtils::isValidBinary(itemPath) ){  
+      if( LUtils::isValidBinary(itemPath) ){
         if(ICONS->exists(type)){ iconPath = type; }
         else{ iconPath = "application-x-executable"; }
       }else{ iconPath = LXDG::findAppMimeForFile(itemPath.section("/",-1)).replace("/","-"); }
     }
-    name->setText( itemPath.section("/",-1) ); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
+    name->setText( itemPath.section("/",-1) ); //this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
     text = itemPath.section("/",-1) ;
   }
   ICONS->loadIcon(icon, iconPath);
@@ -133,11 +133,11 @@ ItemWidget::~ItemWidget(){
   //actButton->deleteLater();
   contextMenu->clear();
   //contextMenu->deleteLater();
-  if(actButton->menu()!=0){ 
+  if(actButton->menu()!=0){
     for(int i=0; i<actButton->menu()->actions().length(); i++){
       actButton->menu()->actions().at(i)->deleteLater();
     }
-    actButton->menu()->deleteLater(); 
+    actButton->menu()->deleteLater();
   }
   //actButton->deleteLater();
   //icon->deleteLater();
@@ -156,7 +156,7 @@ void ItemWidget::createWidget(){
   menuopen = false;
   menureset = new QTimer(this);
     menureset->setSingleShot(true);
-    menureset->setInterval(1000); //1 second	
+    menureset->setInterval(1000); //1 second
   this->setContentsMargins(0,0,0,0);
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
@@ -220,7 +220,7 @@ void ItemWidget::setupActions(XDGDesktop *app){
       else{ ICONS->loadIcon(act, app->icon); }
       act->setToolTip(app->actions[i].ID);
       act->setWhatsThis(app->actions[i].ID);
-      actButton->menu()->addAction(act);	
+      actButton->menu()->addAction(act);
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
   connect(actButton->menu(), SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
@@ -230,9 +230,11 @@ void ItemWidget::setupActions(XDGDesktop *app){
 
 void ItemWidget::updateItems(){
   //update the text/icon to match sizes
-  int H = (2.5*name->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
+  int H = (2.2*name->fontMetrics().height() ) -4; //make sure the height is large enough for two lines
   icon->setFixedSize(QSize(H, H));
+  icon->setAlignment(Qt::AlignCenter);
   actButton->setFixedSize( QSize( H/2, H) );
+  H = (1.8*name->fontMetrics().height() ) -4;
   QStringList newname = text.split("<br>");
   for(int i=0; i<newname.length(); i++){ newname[i] = name->fontMetrics().elidedText(newname[i], Qt::ElideRight, name->width()); }
   name->setText( newname.join("<br>") );
@@ -271,9 +273,9 @@ void ItemWidget::RemoveFavorite(){
 void ItemWidget::AddFavorite(){
   if( LDesktopUtils::addFavorite(icon->whatsThis()) ){
     linkPath = icon->whatsThis();
-    emit NewShortcut();	
+    emit NewShortcut();
   }
-  
+
 }
 void ItemWidget::RemoveQL(){
   qDebug() << "Remove QuickLaunch Button:" << icon->whatsThis();
@@ -282,7 +284,7 @@ void ItemWidget::RemoveQL(){
 
 void ItemWidget::AddQL(){
   qDebug() << "Add QuickLaunch Button:" << icon->whatsThis();
-  emit toggleQuickLaunch(icon->whatsThis(), true);	
+  emit toggleQuickLaunch(icon->whatsThis(), true);
 }
 
 
