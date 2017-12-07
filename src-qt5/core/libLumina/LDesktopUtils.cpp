@@ -546,7 +546,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
          newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/Glass.qss");
       }
       newtheme.setValue("Appearance/style", "Fusion");
-      newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss");
+      newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss" << enginedir+"qss/traynotification-simple.qss");
       newtheme.sync(); //flush this to file right now
     } //end check for theme file existance
   }
