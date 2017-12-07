@@ -73,7 +73,7 @@ private slots:
 	void on_tool_lock_clicked();
 	void on_tool_logout_clicked();
 	void on_tool_restart_clicked();
-	void on_tool_restart_update_clicked();
+	void on_tool_restart_updates_clicked();
 	void on_tool_shutdown_clicked();
 	void on_tool_suspend_clicked();
 

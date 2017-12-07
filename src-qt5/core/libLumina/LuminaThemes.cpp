@@ -34,8 +34,29 @@ QStringList LTHEME::availableSystemThemes(){
   return list;
 }
 
+QStringList LTHEME::availableSystemStyles(){
+  //returns: [name::::path] for each item
+  QDir dir(LOS::LuminaShare()+"../lthemeengine/qss");
+  QStringList list = dir.entryList(QStringList() <<"*.qss", QDir::Files, QDir::Name);
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;
+}
+
 QStringList LTHEME::availableLocalThemes(){	//returns: [name::::path] for each item
   QDir dir( QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/desktop_qss");
+  QStringList list = dir.entryList(QStringList() <<"*.qss", QDir::Files, QDir::Name);
+  for(int i=0; i<list.length(); i++){
+    //Format the output entry [<name>::::<fullpath>]
+    list[i] = list[i].section(".qss",0,0)+"::::"+dir.absoluteFilePath(list[i]);
+  }
+  return list;
+}
+
+QStringList LTHEME::availableLocalStyles(){	//returns: [name::::path] for each item
+  QDir dir( QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/qss");
   QStringList list = dir.entryList(QStringList() <<"*.qss", QDir::Files, QDir::Name);
   for(int i=0; i<list.length(); i++){
     //Format the output entry [<name>::::<fullpath>]
@@ -244,6 +265,23 @@ bool LTHEME::setCursorTheme(QString cursorname){
     return LUtils::writeFile(QDir::homePath()+"/.icons/default/index.theme", info, true);
 }
 
+bool LTHEME::setCurrentStyles(QStringList paths){
+  //Verify that the paths are all absolute paths, otherwise scan/replace with absolute paths
+  QStringList avail = LTHEME::availableSystemStyles();
+  for(int i=0; i<paths.length(); i++){
+    paths[i] = paths[i].simplified();
+    if(paths[i].startsWith("/")){ continue; } //already an absolute path
+    for(int j=0; j<avail.length(); j++){
+      if(avail[j].startsWith(paths[i].section("/",-1).section(".qss",0,0)+"::::") ){ paths[i] = avail[j].section("::::",1,-1); break; }
+    }
+  }
+  //ordered by priority: lowest -> highest
+  QSettings engineset("lthemeengine","lthemeengine");
+  engineset.setValue("Interface/stylesheets",paths);
+  engineset.sync();
+  return true;
+}
+
   //Return the complete stylesheet for a given theme/colors
 QString LTHEME::assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize){
   QString stylesheet = LUtils::readFile(themepath).join("\n");
@@ -340,10 +378,10 @@ void LTHEME::LoadCustomEnvSettings(){
       setenv(info[i].section("=",0,0).toLocal8Bit(), info[i].section("=",1,100).simplified().toLocal8Bit(), 1);
     }
   }
-	
+
 }
 
-bool LTHEME::setCustomEnvSetting(QString var, QString val){ 
+bool LTHEME::setCustomEnvSetting(QString var, QString val){
   //variable/value pair (use an empty val to clear it)
   QStringList info = LTHEME::CustomEnvSettings(true); //user only
   bool changed = false;

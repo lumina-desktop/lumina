@@ -399,6 +399,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
     if(var=="theme_themefile"){ themesettings[0] = val; }
+    else if(var=="theme_styles"){ LTHEME::setCurrentStyles( val.split(",",QString::SkipEmptyParts) ); }
     else if(var=="theme_colorfile"){ themesettings[1] = val; }
     else if(var=="theme_iconset"){ themesettings[2] = val; }
     else if(var=="theme_font"){ themesettings[3] = val; }

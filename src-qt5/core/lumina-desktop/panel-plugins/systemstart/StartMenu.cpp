@@ -597,7 +597,7 @@ void StartMenu::on_tool_restart_clicked(){
   LSession::handle()->StartReboot(true);
 }
 
-void StartMenu::on_tool_restart_update_clicked(){
+void StartMenu::on_tool_restart_updates_clicked(){
   emit CloseMenu();
   QCoreApplication::processEvents();
   //bool skipupdates =  false;

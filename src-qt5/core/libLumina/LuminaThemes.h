@@ -25,7 +25,9 @@ class LTHEME{
 public:
   //Read the Themes/Colors/Icons that are available on the system
   static QStringList availableSystemThemes();//returns: [name::::path] for each item
+  static QStringList availableSystemStyles();//returns: [name::::path] for each item
   static QStringList availableLocalThemes();	//returns: [name::::path] for each item
+  static QStringList availableLocalStyles();	//returns: [name::::path] for each item
   static QStringList availableSystemColors(); 	//returns: [name::::path] for each item
   static QStringList availableLocalColors(); 	//returns: [name::::path] for each item
   static QStringList availableSystemIcons(); 	//returns: [name] for each item
@@ -42,6 +44,7 @@ public:
   //Change the current Theme/Colors/Icons
   static bool setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize);
   static bool setCursorTheme(QString cursorname);
+  static bool setCurrentStyles(QStringList paths); //ordered by priority: lowest -> highest
 
   //Return the complete stylesheet for a given theme/colors
   static QString assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize);
