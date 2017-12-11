@@ -6,95 +6,95 @@
 //===========================================
 #include <OSInterface.h>
 
-//===========
-//    PUBLIC
-//===========
-
-//Simple functions used to determine if the current OS supports using this class, and what levels of support
-QList<OSInterface::Interface> OSInterface::supportedNotifications(){
-  //Which interfaces provide change notifications
-  return QList< OSInterface::Interface >();
-}
-
-QList<OSInterface::Interface> OSInterface::supportedStatus(){
-  //Which interfaces are available for "status" requests
-  return QList< OSInterface::Interface >();
-}
-
-QList<OSInterface::Interface> OSInterface::supportedModify(){
-   //Which interfaces are available for "modify" requests
-  return QList< OSInterface::Interface >();
-}
-
-//Start/stop interface watchers/notifications (each only called once per session)
+//Start/stop interface watchers/notifications
 void OSInterface::start(){
- //nothing to do
+  setupMediaWatcher(); //will create/connect the filesystem watcher automatically
 }
 
 void OSInterface::stop(){
- //nothing to do
-}
-	
-//Generic status update
-QList<QVariant> OSInterface::status(OSInterface::Interface){
-	// ==== Interface status output lists ====
-	//  Battery: [ float (percent charge), bool (is Charging), double (seconds remaining) ];
-	//  Volume: [int (percent volume) ]
-	//  Devices: [ QStringList[ name, mountpoint, type (optional)] ]  (List length depends on number of devices)
-	//  Network: [bool (network access available)]
-	//  PowerOff: [bool (can power off system)]
-	//  Reboot: [bool (can reboot system)]
-	//  Suspend: [bool (can suspend system)]
-	//  Updates: [bool (is updating), bool (reboot required)]
-	// ==========
-  return QList<QVariant>();
+  if(isRunning()){
+    watcher->deleteLater();
+    watcher = 0;
+  }
 }
 
-//Individual Interface interactions
-bool OSInterface::modify(OSInterface::Interface, QList<QVariant>){ //returns: success/failure
-	// ==== Interface modification argument lists ====
-	//  Battery: <NO MODIFICATION>
-	//  Volume: [int (set percent volume) ]
-	//  Devices: <NO MODIFICATION>
-	//  Network: <NO MODIFICATION>
-	//  PowerOff: [bool (skip updates - optional)]
-	//  Reboot: [bool (skip updates - optional)]
-	//  Suspend: [] (No input arguments)
-	//  Updates: <NO MODIFICATION>
-	// ==========
-  return false;
-}
+bool OSInterface::isRunning(){ return (watcher!=0); } //status of the object - whether it has been started yet
 
-//=================
-//     PRIVATE SLOTS
-//=================
+// = Battery =
+bool OSInterface::batteryAvailable(){ return false; }
+float OSInterface::batteryCharge(){ return -1; }
+bool OSInterface::batteryCharging(){ return false; }
+double OSInterface::batterySecondsLeft(){ return -1; }
+
+// = Volume =
+bool OSInterface::volumeAvailable(){ return false; }
+int OSInterface::volume(){ return -1; }
+void OSInterface::setVolume(int){}
+
+// = Network Information =
+bool OSInterface::networkAvailable(){ return false; }
+QString OSInterface::networkType(){ return QString(); } //"wifi", "wired", or "cell"
+float OSInterface::networkStrength(){ return -1; } //percentage. ("wired" type should always be 100%)
+QString OSInterface::networkHostname(){ return QString(); }
+QHostAddress OSInterface::networkAddress(){ return QHostAddress(); }
+// = Network Modification =
+
+// = Media Shortcuts =
+QStringList OSInterface::mediaDirectories(){ return QStringList() << "/media"; } //directory where XDG shortcuts are placed for interacting with media (local/remote)
+QStringList OSInterface::mediaShortcuts(){ return autoHandledMediaFiles(); } //List of currently-available XDG shortcut file paths
+
+// = Updates =
+bool OSInterface::updatesAvailable(){ return false; }
+QString OSInterface::updateDetails(){ return QString(); }	//Information about any available updates
+bool OSInterface::updatesRunning(){ return false; }
+QString OSInterface::updateLog(){ return QString(); }		//Information about any currently-running update
+bool OSInterface::updatesFinished(){ return false; }
+QString OSInterface::updateResults(){ return QString(); }	//Information about any finished update
+void OSInterface::startUpdates(){}
+bool OSInterface::updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
+QDateTime OSInterface::lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
+QString OSInterface::lastUpdateResults(){ return QString(); } //Information about the previously-finished update
+
+// = System Power =
+bool OSInterface::canReboot(){ return false; }
+void OSInterface::startReboot(){}
+bool OSInterface::canShutdown(){ return false; }
+void OSInterface::startShutdown(){}
+bool OSInterface::canSuspend(){ return false; }
+void OSInterface::startSuspend(){}
+
+// = Screen Brightness =
+int OSInterface::brightness(){ return -1; } //percentage: 0-100 with -1 for errors
+void OSInterface::setBrightness(int){}
+
+// = System Status Monitoring
+QList<int> OSInterface::cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
+QStringList OSInterface::cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
+int OSInterface::memoryUsedPercentage(){ return -1; } //percentage: 0-100 with -1 for errors
+QString OSInterface::memoryTotal(){ return QString(); } //human-readable form - does not tend to change within a session
+QStringList OSInterface::diskIO(){ return QStringList(); } //Returns list of current read/write stats for each device
+int OSInterface::fileSystemPercentage(QString dir){ return -1; } //percentage of capacity used: 0-100 with -1 for errors
+QString OSInterface::fileSystemCapacity(QString dir){ return QString(); } //human-readable form - total capacity
+
+// = OS-Specific Utilities =
+bool OSInterface::hasControlPanel(){ return false; }
+QString OSInterface::controlPanelShortcut(){ return QString(); } //relative *.desktop shortcut name (Example: "some_utility.desktop")
+bool OSInterface::hasAudioMixer(){ return false; }
+QString OSInterface::audioMixerShortcut(){ return QString(); } //relative *.desktop shortcut name (Example: "some_utility.desktop")
+bool OSInterface::hasAppStore(){ return false; }
+QString OSInterface::appStoreShortcut(){ return QString(); } //relative *.desktop shortcut name (Example: "some_utility.desktop")
+
 //FileSystemWatcher slots
-void OSInterface::watcherFileChanged(QString){
-
-}
-
-void OSInterface::watcherDirChanged(QString){
-
+void OSInterface::watcherFileChanged(QString){}
+void OSInterface::watcherDirChanged(QString dir){
+  if(handleMediaDirChange(dir)){ return; }
 }
 
 //IO Device slots
-void OSInterface::iodeviceReadyRead(){
-
-}
-
-void OSInterface::iodeviceAboutToClose(){
-
-}
+void OSInterface::iodeviceReadyRead(){}
+void OSInterface::iodeviceAboutToClose(){}
 
 //NetworkAccessManager slots
-void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility){
-
-}
-
-void OSInterface::netRequestFinished(QNetworkReply*){
-
-}
-
-void OSInterface::netSslErrors(QNetworkReply*, const QList<QSslError>&){
-
-}
+void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility){}
+void OSInterface::netRequestFinished(QNetworkReply*){}
+void OSInterface::netSslErrors(QNetworkReply*, const QList<QSslError>&){}
