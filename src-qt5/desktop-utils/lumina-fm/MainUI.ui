@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>359</height>
+             <height>161</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -96,6 +96,16 @@
       </widget>
       <widget class="QWidget" name="page_player"/>
       <widget class="QWidget" name="page_image"/>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTreeView" name="transferTreeView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
      </widget>
     </item>
    </layout>
