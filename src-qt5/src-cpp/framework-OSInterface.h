@@ -49,6 +49,8 @@ class OSInterface : public QObject{
 	Q_PROPERTY( bool canReboot READ canReboot NOTIFY powerAvailableChanged)
 	Q_PROPERTY( bool canShutdown READ canShutdown NOTIFY powerAvailableChanged)
 	Q_PROPERTY( bool canSuspend READ canSuspend NOTIFY powerAvailableChanged)
+	//Brightness
+	Q_PROPERTY( int brightness READ brightness WRITE setBrightness NOTIFY brightnessChanged)
 public:
 	// ================
 	// SEMI-VIRTUAL FUNCTIONS - NEED TO BE DEFINED IN THE OS-SPECIFIC FILES
@@ -96,6 +98,24 @@ public:
 	Q_INVOKABLE void startShutdown();
 	Q_INVOKABLE bool canSuspend();
 	Q_INVOKABLE void startSuspend();
+	// = Screen Brightness =
+	Q_INVOKABLE int brightness(); //percentage: 0-100 with -1 for errors
+	Q_INVOKABLE void setBrightness(int);
+	// = System Status Monitoring
+	Q_INVOKABLE QList<int> cpuPercentage(); // (one per CPU) percentage: 0-100 with -1 for errors
+	Q_INVOKABLE QStringList cpuTemperatures(); // (one per CPU) Temperature of CPU ("50C" for example)
+	Q_INVOKABLE int memoryUsedPercentage(); //percentage: 0-100 with -1 for errors
+	Q_INVOKABLE QString memoryTotal(); //human-readable form - does not tend to change within a session
+	Q_INVOKABLE QStringList diskIO(); //Returns list of current read/write stats for each device
+	Q_INVOKABLE int fileSystemPercentage(QString dir); //percentage of capacity used: 0-100 with -1 for errors
+	Q_INVOKABLE QString fileSystemCapacity(QString dir); //human-readable form - total capacity
+	// = OS-Specific Utilities =
+	Q_INVOKABLE bool hasControlPanel();
+	Q_INVOKABLE QString controlPanelShortcut(); //relative *.desktop shortcut name (Example: "some_utility.desktop")
+	Q_INVOKABLE bool hasAudioMixer();
+	Q_INVOKABLE QString audioMixerShortcut(); //relative *.desktop shortcut name (Example: "some_utility.desktop")
+	Q_INVOKABLE bool hasAppStore();
+	Q_INVOKABLE QString appStoreShortcut(); //relative *.desktop shortcut name (Example: "some_utility.desktop")
 
 private slots:
 	// ================
@@ -122,11 +142,11 @@ signals:
 	void mediaShortcutsChanged();
 	void updateStatusChanged();
 	void powerAvailableChanged();
+	void brightnessChanged();
 
 private:
 	//Internal persistant data storage, OS-specific usage implementation
-	enum Interface{ Battery, Volume, Media, Network, PowerOff, Reboot, Suspend, Updates };
-	QHash< OSInterface::Interface, QList<QVariant> > INFO;
+	QHash< QString, QList<QVariant> > INFO;
 
 	// ============
 	// Internal possibilities for watching the system (OS-Specific usage/implementation)
@@ -140,9 +160,13 @@ private:
 
 	// Internal implifications for connecting the various watcher objects to their respective slots
 	// (OS-agnostic - defined in the "OSInterface_private.cpp" file)
-	void connectWatcher();
-	void connectIodevice();
-	void connectNetman();
+	void connectWatcher(); //setup the internal connections *only*
+	void connectIodevice(); //setup the internal connections *only*
+	void connectNetman(); //setup the internal connections *only*
+	// External Media Management (if system uses *.desktop shortcuts only)
+	void setupMediaWatcher();
+	bool handleMediaDirChange(QString dir); //returns true if directory was handled
+	QStringList autoHandledMediaFiles();
 
 public:
 	OSInterface(QObject *parent = 0);

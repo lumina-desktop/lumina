@@ -54,3 +54,39 @@ void OSInterface::connectNetman(){
   connect(netman, SIGNAL(requestFinished(QNetworkReply*)), this, SLOT(netRequestFinished(QNetworkReply*)) );
   connect(netman, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(netSslErrors(QNetworkReply*, const QList<QSslError>&)) );
 }
+
+// External Media Management (if system uses *.desktop shortcuts)
+void OSInterface::setupMediaWatcher(){
+  //Create/connect the watcher if needed
+  if(watcher == 0){ watcher = new QFileSystemWatcher(); connectWatcher(); }
+  QStringList dirs = this->mediaDirectories();
+  if(dirs.isEmpty()){ return; } //nothing to do
+  //Make sure each directory is scanned **right now** (if it exists)
+  for(int i=0; i<dirs.length(); i++){
+    if(QFile::exists(dirs[i])){
+      handleMediaDirChange(dirs[i]);
+    }
+  }
+}
+
+bool OSInterface::handleMediaDirChange(QString dir){ //returns true if directory was handled
+  if( !this->mediaDirectories().contains(dir) ){ return false; } //not a media directory
+  QDir qdir(dir);
+  QStringList files = qdir.entryList(QStringList() << "*.desktop", QDir::Files, QDir::Name);
+  for(int i=0; i<files.length(); i++){ files[i]  = qdir.absoluteFilePath(files[i]); }
+  QString key = "media_files/"+dir;
+  if(files.isEmpty() && INFO.contains(key)){ INFO.remove(key); emit mediaShortcutsChanged(); } //no files for this directory at the moment
+  else{ INFO.setValue("media_files/"+dir, files); emit mediaShortcutsChanged(); } //save these file paths for later
+  //Make sure the directory is still watched (sometimes the dir is removed/recreated on modification)
+  if(!watcher->directories().contains(dir)){ watcher->addPath(dir); }
+  return true;
+}
+
+QStringList OSInterface::autoHandledMediaFiles(){
+  QStringList files;
+  QStringList keys = INFO.keys().filter("media_files/");
+  for(int i=0; i<keys.length(); i++){
+    if(keys[i].startsWith("media_files/")){ files.append( INFO[keys[i]] ); }
+  }
+  return files;
+}
