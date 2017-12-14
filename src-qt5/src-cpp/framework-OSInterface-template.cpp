@@ -9,6 +9,7 @@
 //Start/stop interface watchers/notifications
 void OSInterface::start(){
   setupMediaWatcher(); //will create/connect the filesystem watcher automatically
+  setupNetworkManager();
 }
 
 void OSInterface::stop(){
@@ -32,11 +33,27 @@ int OSInterface::volume(){ return -1; }
 void OSInterface::setVolume(int){}
 
 // = Network Information =
-bool OSInterface::networkAvailable(){ return false; }
-QString OSInterface::networkType(){ return QString(); } //"wifi", "wired", or "cell"
+bool OSInterface::networkAvailable(){
+  if(INFO.contains()){ return INFO.value("netaccess/available").toBool(); }
+  return false;
+}
+
+QString OSInterface::networkType(){
+  if(INFO.contains("netaccess/type")){ return INFO.value("netaccess/type").toString(); } //"wifi", "wired", or "cell"
+  return "";
+}
+
 float OSInterface::networkStrength(){ return -1; } //percentage. ("wired" type should always be 100%)
-QString OSInterface::networkHostname(){ return QString(); }
-QHostAddress OSInterface::networkAddress(){ return QHostAddress(); }
+
+QString OSInterface::networkHostname(){
+  return QHostInfo::localHostName();
+}
+
+QHostAddress OSInterface::networkAddress(){
+  QString addr;
+  if(INFO.contains("netaccess/address")){ addr = INFO.value("netaccess/address").toString(); }
+  return QHostAddress(addr);
+}
 // = Network Modification =
 
 // = Media Shortcuts =
@@ -95,6 +112,28 @@ void OSInterface::iodeviceReadyRead(){}
 void OSInterface::iodeviceAboutToClose(){}
 
 //NetworkAccessManager slots
-void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility){}
+void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
+  INFO.setValue("netaccess/available", stat== QNetworkAccessManager::Accessible);
+  //Update all the other network status info at the same time
+  QNetworkConfiguration active = netman->activeConfiguration();
+  //Type of connection
+  QString type;
+  switch(active->bearerTypeFamily()){
+    case QNetworkConfiguration::BearerEthernet: type="wired"; break;
+    case QNetworkConfiguration::BearnerWLAN: type="wifi"; break;
+    case QNetworkConfiguration::Bearer2G: type="cell-2G"; break;
+    case QNetworkConfiguration::Bearer3G: type="cell-3G"; break;
+    case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
+  }
+  INFO.setValue("netaccess/type", type);
+  qDebug() << "Detected Device Status:" << active->identifier() << type << stat;
+  QNetworkInterface iface = QNetworkInterface::interfaceFromName(active->identifier());
+  QString address = iface.hardwareAddress();
+  qDebug() << " - Address:" << address;
+  INFO.setValue("netaccess/address", address);
+
+  emit networkStatusChanged();
+}
+
 void OSInterface::netRequestFinished(QNetworkReply*){}
 void OSInterface::netSslErrors(QNetworkReply*, const QList<QSslError>&){}

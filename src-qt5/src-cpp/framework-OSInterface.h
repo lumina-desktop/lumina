@@ -23,6 +23,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QSslError>
+#include <QHostInfo>
+#include <QHostAddress>
 
 class OSInterface : public QObject{
 	Q_OBJECT
@@ -51,6 +53,7 @@ class OSInterface : public QObject{
 	Q_PROPERTY( bool canSuspend READ canSuspend NOTIFY powerAvailableChanged)
 	//Brightness
 	Q_PROPERTY( int brightness READ brightness WRITE setBrightness NOTIFY brightnessChanged)
+
 public:
 	// ================
 	// SEMI-VIRTUAL FUNCTIONS - NEED TO BE DEFINED IN THE OS-SPECIFIC FILES
@@ -71,7 +74,7 @@ public:
 	Q_INVOKABLE void setVolume(int);
 	// = Network Information =
 	Q_INVOKABLE bool networkAvailable();
-	Q_INVOKABLE QString networkType(); //"wifi", "wired", or "cell"
+	Q_INVOKABLE QString networkType(); //"wifi", "wired", "cell", "cell-2G", "cell-3G", "cell-4G"
 	Q_INVOKABLE float networkStrength(); //percentage. ("wired" type should always be 100%)
 	Q_INVOKABLE QString networkHostname();
 	Q_INVOKABLE QHostAddress networkAddress();
@@ -131,6 +134,8 @@ private slots:
 	void netAccessChanged(QNetworkAccessManager::NetworkAccessibility);
 	void netRequestFinished(QNetworkReply*);
 	void netSslErrors(QNetworkReply*, const QList<QSslError>&);
+	//Timer slots
+	void timerUpdate();
 
 signals:
 	void interfaceChanged(OSInterface::Interface);
@@ -157,16 +162,23 @@ private:
 	QIODevice *iodevice;
 	//Network Access Manager (check network connectivity, etc)
 	QNetworkAccessManager *netman;
+	//Timer for regular probes/updates
+	QTimer *timer;
 
 	// Internal implifications for connecting the various watcher objects to their respective slots
 	// (OS-agnostic - defined in the "OSInterface_private.cpp" file)
 	void connectWatcher(); //setup the internal connections *only*
 	void connectIodevice(); //setup the internal connections *only*
 	void connectNetman(); //setup the internal connections *only*
+	void connectTimer(); //setup the internal connections *only*
+
 	// External Media Management (if system uses *.desktop shortcuts only)
 	void setupMediaWatcher();
 	bool handleMediaDirChange(QString dir); //returns true if directory was handled
 	QStringList autoHandledMediaFiles();
+
+	// Qt-based NetworkAccessManager usage
+	void setupNetworkManager();
 
 public:
 	OSInterface(QObject *parent = 0);

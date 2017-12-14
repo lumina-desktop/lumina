@@ -55,6 +55,11 @@ void OSInterface::connectNetman(){
   connect(netman, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(netSslErrors(QNetworkReply*, const QList<QSslError>&)) );
 }
 
+void OSInterface::connectTimer(){
+  if(timer==0){ return; }
+  connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()) );
+}
+
 // External Media Management (if system uses *.desktop shortcuts)
 void OSInterface::setupMediaWatcher(){
   //Create/connect the watcher if needed
@@ -89,4 +94,14 @@ QStringList OSInterface::autoHandledMediaFiles(){
     if(keys[i].startsWith("media_files/")){ files.append( INFO[keys[i]] ); }
   }
   return files;
+}
+
+// Qt-based NetworkAccessManager usage
+void OSInterface::setupNetworkManager(){
+  if(netman==0){
+    netman = new QNetworkAccessManager(this);
+    connectNetman();
+  }
+  //Load the initial state of the network accessibility
+  netAccessChanged(netman->networkAccessibility());
 }
