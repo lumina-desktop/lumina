@@ -4,7 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-// This is a simple class for loading/serving icon files 
+// This is a simple class for loading/serving icon files
 // from the icon theme or local filesystem
 //===========================================
 #include <QHash>
@@ -26,6 +26,7 @@ struct icon_data{
   QList<QPointer<QLabel> > pendingLabels;
   QList<QPointer<QAbstractButton> > pendingButtons;
   QList<QPointer<QAction> > pendingActions;
+  QList<QPointer<QMenu> > pendingMenus;
   QIcon icon;
   QIcon thumbnail;
 };
@@ -50,6 +51,7 @@ public:
 	void loadIcon(QAbstractButton *button, QString icon, bool noThumb = false);
 	void loadIcon(QLabel *label, QString icon, bool noThumb = false);
 	void loadIcon(QAction *action, QString icon, bool noThumb = false);
+	void loadIcon(QMenu *action, QString icon, bool noThumb = false);
 
 	QIcon loadIcon(QString icon, bool noThumb = false); //generic loading routine - does not background the loading of icons when not in the cache
 

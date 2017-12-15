@@ -28,7 +28,8 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <QDebug>
-
+#include <QMenu>
+#include <QAction>
 
 // ======================
 // FreeDesktop Desktop Actions Framework (data structure)
@@ -82,6 +83,9 @@ public:
 	bool saveDesktopFile(bool merge = true); //This will use the "filePath" variable for where to save the file
 
 	bool setAutoStarted(bool autostart = true);
+
+	//Create a menu entry for this application
+	void addToMenu(QMenu*);
 };
 
 // ========================
@@ -93,8 +97,13 @@ public:
 	//Functions
 	XDGDesktopList(QObject *parent = 0, bool watchdirs = false);
 	~XDGDesktopList();
+
+	static XDGDesktopList* instance();
+
 	//Main Interface functions
 	QList<XDGDesktop*> apps(bool showAll, bool showHidden); //showAll: include invalid files, showHidden: include NoShow/Hidden files
+	XDGDesktop* findAppFile(QString filename);
+	void populateMenu(QMenu *, bool byCategory = true);
 
 	//Administration variables (not typically used directly)
 	QDateTime lastCheck;
@@ -119,7 +128,7 @@ signals:
 // File Information simplification class (combine QFileInfo with XDGDesktop)
 //  Need some extra information not usually available by a QFileInfo
 // ========================
-class LFileInfo : public QFileInfo{
+/*class LFileInfo : public QFileInfo{
 private:
 	QString mime, icon;
 	XDGDesktop *desk;
@@ -150,9 +159,10 @@ public:
 
 	//Other file type identification routines
 	bool isImage(); //Is a readable image file (for thumbnail support)
+	bool isVideo(); //Is a readable video file (for thumbnail support)
 	bool isAVFile(); //Is an audio/video file
 };
-typedef QList<LFileInfo> LFileInfoList;
+typedef QList<LFileInfo> LFileInfoList;*/
 
 // ================================
 //  Collection of FreeDesktop standards interaction routines

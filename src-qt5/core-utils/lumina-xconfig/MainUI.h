@@ -39,7 +39,7 @@ private:
 	Ui::MainUI *ui;
 	QList<ScreenInfo> SCREENS;
 	double scaleFactor;
-	QMenu *singleTileMenu;
+	QMenu *singleTileMenu, *profilesMenu;
 
 	ScreenInfo currentScreenInfo();
 
@@ -50,7 +50,7 @@ private:
 	void SyncBackend(); //sync backend structures to current settings
 
 private slots:
-	void UpdateScreens();
+	void UpdateScreens(QString profile = "");
 	void ScreenSelected();
 	void updateNewScreenResolutions();
 	void tileScreensY(bool activeonly = false);
@@ -64,6 +64,11 @@ private slots:
 	void ApplyChanges(); //config changes
 	void SaveSettings();
 	void RestartFluxbox();
+
+	void removeProfile();
+	void updateProfiles();
+	void loadProfile();
+	void saveAsProfile(QAction *);
 };
 
 #endif

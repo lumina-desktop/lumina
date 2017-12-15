@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="218"/>
+        <location filename="../TarBackend.cpp" line="239"/>
         <source>Could not read archive</source>
         <translation>Nedaří se načíst archiv</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="220"/>
+        <location filename="../TarBackend.cpp" line="241"/>
         <source>Archive Loaded</source>
         <translation>Archiv načten</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="253"/>
+        <location filename="../TarBackend.cpp" line="274"/>
         <source>Extraction Finished</source>
         <translation>Rozbalení dokončeno</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="254"/>
+        <location filename="../TarBackend.cpp" line="276"/>
         <source>Modification Finished</source>
         <translation>Úprava dokončena</translation>
     </message>
@@ -33,8 +33,8 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="125"/>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
@@ -134,215 +134,285 @@
         <translation>Zkopírovat IMG na USB zařízení (může vyžadovat oprávnění pro správu systému)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="24"/>
+        <location filename="../MainUI.cpp" line="28"/>
         <source>Archive Manager</source>
         <translation>Správa archivů</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="25"/>
+        <location filename="../MainUI.cpp" line="29"/>
         <source>Admin Mode</source>
         <translation>Režim správce</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="51"/>
+        <location filename="../MainUI.cpp" line="55"/>
         <source>CTRL+N</source>
         <translation>CTRL+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="52"/>
+        <location filename="../MainUI.cpp" line="56"/>
         <source>CTRL+O</source>
         <translation>CTRL+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="53"/>
+        <location filename="../MainUI.cpp" line="57"/>
         <source>CTRL+Q</source>
         <translation>CTRL+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="54"/>
+        <location filename="../MainUI.cpp" line="58"/>
         <source>CTRL+E</source>
         <translation>CTRL+E</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>MimeType</source>
         <translation>MimeTyp</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="65"/>
-        <location filename="../MainUI.cpp" line="276"/>
+        <location filename="../MainUI.cpp" line="69"/>
+        <location filename="../MainUI.cpp" line="329"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="79"/>
-        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="92"/>
+        <location filename="../MainUI.cpp" line="234"/>
         <source>Opening Archive...</source>
         <translation>Otevřít archiv…</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="154"/>
+        <location filename="../MainUI.cpp" line="178"/>
         <source>All Types %1</source>
         <translation>Všechny typy %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="155"/>
-        <location filename="../MainUI.cpp" line="173"/>
+        <location filename="../MainUI.cpp" line="179"/>
+        <location filename="../MainUI.cpp" line="197"/>
         <source>Uncompressed Archive (*.tar)</source>
         <translation>Nekomprimovaný archiv (*.tar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="156"/>
-        <location filename="../MainUI.cpp" line="174"/>
+        <location filename="../MainUI.cpp" line="180"/>
+        <location filename="../MainUI.cpp" line="198"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
         <translation>GZIP komprimovaný archiv (*.tar.gz *.tgz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="157"/>
-        <location filename="../MainUI.cpp" line="175"/>
+        <location filename="../MainUI.cpp" line="181"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
         <translation>BZip komprimovaný archiv (*.tar.bz *.tbz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="158"/>
-        <location filename="../MainUI.cpp" line="176"/>
+        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="200"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
         <translation>BZip2 komprimovaný archiv (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="159"/>
-        <location filename="../MainUI.cpp" line="178"/>
+        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="202"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
         <translation>LZMA komprimovaný archiv (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="160"/>
-        <location filename="../MainUI.cpp" line="177"/>
+        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="201"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
         <translation>XZ komprimovaný archiv (*.tar.xz *.txz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="161"/>
-        <location filename="../MainUI.cpp" line="179"/>
+        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="203"/>
         <source>CPIO Archive (*.cpio)</source>
         <translation>CPIO archiv (*.cpio)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="162"/>
-        <location filename="../MainUI.cpp" line="180"/>
+        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="204"/>
         <source>PAX Archive (*.pax)</source>
         <translation>PAX archiv (*.pax)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="163"/>
-        <location filename="../MainUI.cpp" line="181"/>
+        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="205"/>
         <source>AR Archive (*.ar)</source>
         <translation>AR archiv  (*.ar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="164"/>
-        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="206"/>
         <source>SHAR Archive (*.shar)</source>
         <translation>SHAR archiv (*.shar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="165"/>
-        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="207"/>
         <source>Zip Archive (*.zip)</source>
         <translation>Zip archiv (*.zip)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="166"/>
-        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="190"/>
+        <location filename="../MainUI.cpp" line="208"/>
         <source>7-Zip Archive (*.7z)</source>
         <translation>7-Zip archiv (*.7z)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="172"/>
+        <location filename="../MainUI.cpp" line="196"/>
         <source>All Known Types %1</source>
         <translation>Všechny známé typy %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="209"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
         <translation>POUZE PRO ČTENÍ: ISO obraz (*.iso *.img)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="210"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
         <translation>POUZE PRO ČTENÍ: XAR archiv (*.xar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="211"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
         <translation>POUZE PRO ČTENÍ: java archiv (*.jar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="212"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
         <translation>POUZE PRO ČTENÍ: RedHat balíček (*.rpm)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="213"/>
         <source>Show All Files (*)</source>
         <translation>Zobrazit veškeré soubory (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="197"/>
+        <location filename="../MainUI.cpp" line="221"/>
         <source>Create Archive</source>
         <translation>Vytvořit archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="200"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="200"/>
+        <location filename="../MainUI.cpp" line="224"/>
         <source>Could not overwrite file:</source>
         <translation>Nepodařilo se přepsat soubor:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="208"/>
+        <location filename="../MainUI.cpp" line="232"/>
         <source>Open Archive</source>
         <translation>Otevřít archiv</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="216"/>
-        <location filename="../MainUI.cpp" line="223"/>
+        <location filename="../MainUI.cpp" line="240"/>
+        <location filename="../MainUI.cpp" line="247"/>
         <source>Add to Archive</source>
         <translation>Přidat do archivu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="218"/>
-        <location filename="../MainUI.cpp" line="225"/>
+        <location filename="../MainUI.cpp" line="242"/>
+        <location filename="../MainUI.cpp" line="249"/>
+        <location filename="../MainUI.cpp" line="298"/>
         <source>Adding Items...</source>
         <translation>Přidávání položek…</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="236"/>
+        <location filename="../MainUI.cpp" line="260"/>
         <source>Removing Items...</source>
         <translation>Odebírání položek…</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="241"/>
-        <location filename="../MainUI.cpp" line="262"/>
+        <location filename="../MainUI.cpp" line="265"/>
+        <location filename="../MainUI.cpp" line="309"/>
         <source>Extract Into Directory</source>
         <translation>Rozbalit do složky</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="243"/>
-        <location filename="../MainUI.cpp" line="251"/>
-        <location filename="../MainUI.cpp" line="264"/>
-        <location filename="../MainUI.cpp" line="270"/>
+        <location filename="../MainUI.cpp" line="267"/>
+        <location filename="../MainUI.cpp" line="285"/>
+        <location filename="../MainUI.cpp" line="292"/>
+        <location filename="../MainUI.cpp" line="311"/>
+        <location filename="../MainUI.cpp" line="323"/>
         <source>Extracting...</source>
         <translation>Rozbalování…</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="343"/>
         <source>Link To: %1</source>
         <translation>Odkázat na: %1</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation>Multimédia</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation>Vývoj</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation>Výuka</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation>Hry</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation>Grafika</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation>Sítě</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation>Kancelář</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation>Věda</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation>Nastavení</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation>Systém</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation>Nástroje</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation>Různé</translation>
     </message>
 </context>
 <context>

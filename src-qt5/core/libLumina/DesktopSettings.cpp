@@ -56,11 +56,19 @@ void DesktopSettings::stop(){
 }
 
 //Main Read/Write functions
+QList< DesktopSettings::File > DesktopSettings::writableFiles(){
+  QList< DesktopSettings::File > tmp;
+  if(runmode!=DesktopSettings::SystemFull){ tmp = filesForRunMode(runmode); }
+  return tmp;
+}
+
 QVariant DesktopSettings::value(DesktopSettings::File file, QString variable, QVariant defaultvalue){
   if(!files.contains(file)){ return defaultvalue; }
   for(int i=0; i<files[file].length(); i++){
+    //qDebug() << "Look for Settings value:" << variable << files[file];
     if( settings.contains(files[file][i])){ //make sure this file is in the settings hash
       if(settings[files[file][i]]->contains(variable)){ //if this file does not have the variable - go to the next one
+        //qDebug() << " - Found Setting in File:" << files[file][i];
         return settings[files[file][i]]->value(variable, defaultvalue);
       }
     }
@@ -118,7 +126,7 @@ void DesktopSettings::parseSystemSettings(){
     QString defMode = settings[path]->value("default_mode","fulluser").toString().toLower();
     if(defMode=="fullsystem"){ runmode= DesktopSettings::SystemFull; }
     else if(defMode=="staticinterface"){ runmode = DesktopSettings::SystemInterface; }
-
+    else{ runmode = DesktopSettings::UserFull; }
     //Now determine the runmode for this user
     struct passwd *pw = getpwuid(getuid());
     if(pw!=0){
@@ -178,25 +186,29 @@ void DesktopSettings::locateFiles(){
   systemdirs << QString(getenv("XDG_CONFIG_DIRS")).split(":") << QString(getenv("XDG_DATA_DIRS")).split(":");
   //Load all the user-level files for this run mode
   QList< DesktopSettings::File > tmp;
-  if(runmode == DesktopSettings::UserFull){ tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop << DesktopSettings::Keys << DesktopSettings::Theme; }
-  else if(runmode == DesktopSettings::SystemInterface){ tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop << DesktopSettings::Keys << DesktopSettings::Theme; }
-  for(int i=0; i<tmp.length(); i++){
-    QString path = userdir+rel_path(tmp[i]);
-    touchFile(path);
-    files.insert(tmp[i], QStringList() << path);
-    settings.insert(path, new QSettings(path, QSettings::IniFormat, this) );
-    watcher->addPath(path);
+  if(runmode!=DesktopSettings::SystemFull){
+     //Load the user-level files
+     tmp= filesForRunMode(runmode);
+    for(int i=0; i<tmp.length(); i++){
+      QString path = userdir+rel_path(tmp[i]);
+      touchFile(path);
+      files.insert(tmp[i], QStringList() << path);
+      settings.insert(path, new QSettings(path, QSettings::IniFormat, this) );
+      watcher->addPath(path);
+    }
   }
   //Now load all the system-level files
-  tmp.clear();
-  tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop << DesktopSettings::Keys << DesktopSettings::Theme;
+  tmp = filesForRunMode(DesktopSettings::SystemFull);
   for(int i=0; i<systemdirs.length(); i++){
     if(systemdirs[i].endsWith("/xdg")){ systemdirs[i] = systemdirs[i].section("/",0,-2); }
     if( !QFile::exists(systemdirs[i]+"/lumina-desktop") ){ continue; }
     for(int j=0; j<tmp.length(); j++){
       QString path = systemdirs[i]+rel_path(tmp[j]);
       if(QFile::exists(path)){
-        files.insert(tmp[j], QStringList() << path);
+        QStringList filepaths;
+          if(files.contains(tmp[j])){ filepaths = files[tmp[j]]; }
+           filepaths << path; //add this file to the end of the list for this type of settings file
+        files.insert(tmp[j], filepaths);
         settings.insert(path, new QSettings(path, QSettings::IniFormat, this) );
         watcher->addPath(path);
       }
@@ -219,6 +231,17 @@ void DesktopSettings::touchFile(QString path){
   }
 }
 
+QList< DesktopSettings::File > DesktopSettings::filesForRunMode(RunMode mode){
+  // Note that the "System" file is always ignored here - that is specially loaded
+  QList< DesktopSettings::File > tmp;
+  if(mode == DesktopSettings::UserFull || mode == DesktopSettings::SystemFull){
+    tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session << DesktopSettings::Desktop <<  DesktopSettings::Panels << DesktopSettings::Plugins << DesktopSettings::Keys << DesktopSettings::ContextMenu << DesktopSettings::Animation << DesktopSettings::ScreenSaver << DesktopSettings::WM;
+  }else if(runmode == DesktopSettings::SystemInterface){
+    tmp << DesktopSettings::Favorites << DesktopSettings::Environment << DesktopSettings::Session;
+  }
+  return tmp;
+}
+
 QString DesktopSettings::rel_path(DesktopSettings::File file){
   QString name;
   switch(file){
@@ -236,10 +259,16 @@ QString DesktopSettings::rel_path(DesktopSettings::File file){
 	name="contextmenu"; break;
     case DesktopSettings::Keys:
 	name="keys"; break;
-    case DesktopSettings::Theme:
-	name="theme"; break;
     case DesktopSettings::Animation:
 	name="animations"; break;
+    case DesktopSettings::Panels:
+	name="panels"; break;
+    case DesktopSettings::Plugins:
+	name="plugins"; break;
+    case DesktopSettings::ScreenSaver:
+	name="screensaver"; break;
+    case DesktopSettings::WM:
+	name="windows"; break;
   }
   return FILEPREFIX+name+".conf";
 }

@@ -8,6 +8,9 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include <QDateTime>
+#include <QCoreApplication>
+#include <QTimer>
 
 Backend::Backend(QObject *parent) : QObject(parent){
   //Setup the backend process
@@ -34,12 +37,12 @@ void Backend::loadFile(QString path){
   flags.clear();
   flags << "-f" << filepath; //add the actual archive path
   if(QFile::exists(path)){ startList(); qDebug () << "BACKEND LOAD startList has started";}
-  else{ contents.clear(); emit ProcessFinished(true, ""); }
+  else{ contents.clear(); emit FileLoaded(); emit ProcessFinished(true, ""); }
 }
 
 bool Backend::canModify(){
-  static QStringList validEXT; 
-  if( validEXT.isEmpty() ){ 
+  static QStringList validEXT;
+  if( validEXT.isEmpty() ){
     validEXT << ".zip" << ".tar.gz" << ".tgz" << ".tar.xz" << ".txz" << ".tar.bz" << ".tbz" << ".tar.bz2" << ".tbz2" << ".tar" \
       << ".tar.lzma" << ".tlz" << ".cpio" << ".pax" << ".ar" << ".shar" << ".7z";
   }
@@ -89,22 +92,31 @@ QString Backend::linkTo(QString file){
 
 //Modification routines
 void Backend::startAdd(QStringList paths){
-  //NOTE: All the "paths" have to have the same parent directory
+  //if(paths.isEmpty() && !insertQueue.isEmpty()){ paths = insertQueue; } //load the queue
   if(paths.contains(filepath)){ paths.removeAll(filepath); }
   if(paths.isEmpty()){ return; }
+  //NOTE: All the "paths" have to have the same parent directory
+  //Go through and find all the files that contain the same parent dir, and put the rest into the insertQueue
+  QString parent = paths[0].section("/",0,-2);
+  insertQueue.clear();
+  for(int i=1; i<paths.length(); i++){
+    if(paths[i].section("/",0,-2)!=parent){
+      insertQueue << paths.takeAt(i); i--; //push this back a bit for later
+    }
+  }
+  //qDebug() << "Start Archive Insert:" << paths << "Queued:" << insertQueue;
   QStringList args;
   args << "-c" << "-a";
   args << flags;
-  //Now setup the parent dir 
-  QString parent = paths[0].section("/",0,-2);
-  for(int i=0; i<paths.length(); i++){  
-    paths[i] = paths[i].section(parent,1,-1); 
+  //Now setup the parent dir
+  for(int i=0; i<paths.length(); i++){
+    paths[i] = paths[i].section(parent,1,-1);
     if(paths[i].startsWith("/")){ paths[i].remove(0,1); }
   }
   args << "-C" << parent;
   args << paths;
   if(QFile::exists(filepath)){ //append to existing
-    args.replaceInStrings(filepath, tmpfilepath); 
+    args.replaceInStrings(filepath, tmpfilepath);
     args<< "@"+filepath;
   }
   STARTING=true;
@@ -151,11 +163,20 @@ void Backend::startExtract(QString path, bool overwrite, QStringList files){
 
 void Backend::startViewFile(QString path){
   QStringList args;
+  QString newfilename = QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+"-"+path.section("/",-1);
   args << "-x";
-  args << flags <<"--include" << path <<"--strip-components" << QString::number(path.count("/")) << "-C" << QDir::tempPath();
+  //args << flags <<"--include" << path <<"--strip-components" << QString::number(path.count("/")) << "-C" << QDir::tempPath();
+  args << flags <<"--include" << path <<"--to-stdout";
   STARTING=true;
   //qDebug() << "Starting command:" << "tar" << args;
-  PROC.start("tar", args);
+  emit ProcessStarting();
+  QProcess tmpProc;
+    tmpProc.setStandardOutputFile(newfilename);
+    tmpProc.start("tar",args);
+  while(!tmpProc.waitForFinished(500)){ QCoreApplication::processEvents(); }
+  emit ProcessFinished(tmpProc.exitCode()==0, "");
+  QProcess::startDetached("xdg-open", QStringList() << newfilename);
+  //PROC.start("tar", args);
 }
 
 //===============
@@ -251,7 +272,11 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
       }
     }
     if(args.contains("-x")){ result = tr("Extraction Finished"); emit ExtractSuccessful(); }
-    else if(args.contains("-c")){ result = tr("Modification Finished"); }
+    else if(args.contains("-c")){
+      result = tr("Modification Finished");
+      if(insertQueue.isEmpty()){ emit ArchivalSuccessful(); }
+      else{ needupdate = false; QTimer::singleShot(0, this, SLOT(startInsertFromQueue())); }
+    }
     if(needupdate){ startList(); }
     else{ emit ProcessFinished(retcode==0, result); result.clear(); }
   }

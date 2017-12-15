@@ -6,12 +6,12 @@
     <message>
         <location filename="../TerminalWidget.cpp" line="61"/>
         <source>Copy Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopeeri valitu</translation>
     </message>
     <message>
         <location filename="../TerminalWidget.cpp" line="62"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta</translation>
     </message>
 </context>
 <context>
@@ -29,17 +29,85 @@
     <message>
         <location filename="../TrayIcon.cpp" line="130"/>
         <source>Close Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge Terminal</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="139"/>
         <source>Move To Monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Liiguta ekraanile</translation>
     </message>
     <message>
         <location filename="../TrayIcon.cpp" line="142"/>
         <source>Monitor %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekraan %1</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation>Multimeedia</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation>Arendus</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation>Haridus</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation>Mängud</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation>Graafika</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation>Võrk</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation>Kontor</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation>Teadus</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation>Sätted</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation>Süsteem</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation>Tööriistad</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation>Sorteerimata</translation>
     </message>
 </context>
 </TS>

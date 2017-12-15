@@ -142,7 +142,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>File Error</source>
         <translation>文件错误</translation>
     </message>
@@ -190,23 +190,86 @@
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
-        <source>Binary Missing</source>
-        <translation>二进制文件丢失</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="370"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>无法找到 “%1”。请确认它已被安装。</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>Application Error</source>
         <translation>应用程序出错</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>下面的应用程序遇到错误，需要关闭:</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">多媒体</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation type="unfinished">开发</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation type="unfinished">教育</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation type="unfinished">图像</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation type="unfinished">网络</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation type="unfinished">办公</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation type="unfinished">科学</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation type="unfinished">设置</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation type="unfinished">系统</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

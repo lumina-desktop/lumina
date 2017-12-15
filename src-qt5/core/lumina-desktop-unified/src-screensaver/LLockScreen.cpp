@@ -77,7 +77,19 @@ void LLockScreen::TryUnlock(){
   this->setEnabled(false);
   QString pass = ui->line_password->text();
     ui->line_password->clear();
-  bool ok = (LUtils::runCmd("lumina-checkpass", QStringList() << pass) == 0);
+  //Create a temporary file for the password, then pass that file descriptor to lumina-checkpass
+  QTemporaryFile *TF = new QTemporaryFile(".XXXXXXXXXX");
+  TF->setAutoRemove(true);
+  bool ok = false;
+  if( TF->open() ){
+    QTextStream in(TF);
+    in << pass.toUtf8()+"\0"; //make sure it is null-terminated
+    TF->close();
+    //qDebug() << "Trying to unlock session:" << TF->fileName() << LUtils::readFile(TF->fileName());
+    //qDebug() << "UserName:" << getlogin();
+    LUtils::runCommand(ok, "lumina-checkpass",QStringList() << "-f" << TF->fileName() );
+  }
+  delete TF; //ensure the temporary file is removed **right now** for security purposes
   if(ok){
     emit ScreenUnlocked();
     this->setEnabled(true);

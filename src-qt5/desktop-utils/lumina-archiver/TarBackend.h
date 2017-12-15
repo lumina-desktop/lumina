@@ -22,7 +22,7 @@ public:
 
 	//Listing routines
 	QString currentFile();
-	bool isWorking(); //is this currently still making changes?	
+	bool isWorking(); //is this currently still making changes?
 
 	//Contents listing
 	QStringList heirarchy(); //returns all the file paths within the archive
@@ -50,10 +50,13 @@ private:
 	QStringList flags;
 	QHash<QString, QStringList> contents; //<filepath, [attributes, size, compressed size]
 
+	QStringList insertQueue;
+
 	bool LIST, STARTING;
 	void parseLines(QStringList lines);
 
 private slots:
+	void startInsertFromQueue(){ startAdd(insertQueue); }
 	void startList();
 	void procFinished(int retcode, QProcess::ExitStatus);
 	void processData();
@@ -64,6 +67,7 @@ signals:
 	void ProcessStarting();
 	void ProgressUpdate(int, QString); //percentage, text
 	void ProcessFinished(bool, QString); //success, text
+	void ArchivalSuccessful();
 };
 
 #endif

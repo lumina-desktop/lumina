@@ -5,6 +5,7 @@
 #include <QString>
 #include <QMenu>
 #include <QAction>
+#include <QTimer>
 
 namespace Ui {
 class QSSEditorDialog;
@@ -23,6 +24,8 @@ public:
 private slots:
     void on_buttonBox_clicked(QAbstractButton *button);
     void colorPicked(QAction*);
+    bool isStyleSheetValid(const QString&);
+    void validateStyleSheet();
 
 private:
     void save();
@@ -30,6 +33,7 @@ private:
     Ui::QSSEditorDialog *m_ui;
     QString m_filePath;
     QMenu *colorMenu;
+    QTimer *validateTimer;
 
 };
 

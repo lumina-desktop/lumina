@@ -12,6 +12,9 @@
 #include <QWidget>
 #include <QThread>
 
+#include <LVideoWidget.h>
+#include <LFileInfo.h>
+
 #include "Browser.h"
 #include "widgets/DDListWidgets.h"
 
@@ -19,10 +22,11 @@ class BrowserWidget : public QWidget{
 	Q_OBJECT
 private:
 	Browser *BROWSER;
-	//QThread *bThread; //browserThread
+	QThread *bThread; //browserThread
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
+  QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
 	bool freshload;
 
 	//The drag and drop brower widgets
@@ -75,6 +79,7 @@ private slots:
 	void itemDataAvailable(QIcon, LFileInfo*);
 	void itemsLoading(int total);
 	void selectionChanged();
+	void loadStatistics(BrowserWidget *bw); //designed to be run in a background thread
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
@@ -86,9 +91,10 @@ signals:
 	void contextMenuRequested();
 	void DataDropped(QString, QStringList);
 	void hasFocus(QString); //ID output
+	void stopLoop();
 
 	//Internal signal
-	void dirChange(QString); //current dir path
+	void dirChange(QString, bool); //current dir path, force
 
 };
 #endif

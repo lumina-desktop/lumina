@@ -34,13 +34,13 @@ private:
 	Ui::StartMenu *ui;
 	QStringList favs;
 	QString CCat, CSearch, topsearch; //current category/search
-	QTimer *searchTimer;        
+	QTimer *searchTimer;
 
 	//Simple utility functions
 	//void deleteChildren(QWidget *obj); //recursive function
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
-	void do_search(QString search, bool force);	
+	void do_search(QString search, bool force);
 
 	bool promptAboutUpdates(bool &skip);
 
@@ -73,6 +73,7 @@ private slots:
 	void on_tool_lock_clicked();
 	void on_tool_logout_clicked();
 	void on_tool_restart_clicked();
+	void on_tool_restart_updates_clicked();
 	void on_tool_shutdown_clicked();
 	void on_tool_suspend_clicked();
 
@@ -80,17 +81,17 @@ private slots:
 	void on_slider_volume_valueChanged(int);
 	void on_tool_launch_mixer_clicked();
 	void on_tool_mute_audio_clicked();
-	
+
 	//Screen Brightness
 	void on_slider_bright_valueChanged(int);
-	
+
 	//Workspace
 	void on_tool_set_nextwkspace_clicked();
 	void on_tool_set_prevwkspace_clicked();
-	
+
 	//Locale
 	void on_combo_locale_currentIndexChanged(int);
-	
+
 	//Search
 	void on_line_search_textEdited(QString);
         void startSearch();
@@ -99,7 +100,7 @@ private slots:
 signals:
 	void CloseMenu();
 	void UpdateQuickLaunch(QStringList);
-	
+
 };
 
 #endif

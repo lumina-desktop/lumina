@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>350</height>
+    <height>389</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -19,7 +19,32 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1,0">
+   <item>
+    <widget class="QLabel" name="label_rootmode">
+     <property name="font">
+      <font>
+       <family>Droid Sans Mono</family>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="text">
+      <string> * - FILE MANAGER RUNNING AS ROOT- * </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="toolbar_layout"/>
    </item>
@@ -159,6 +184,12 @@
        <property name="text">
         <string notr="true">ZoomIn</string>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
        <property name="popupMode">
         <enum>QToolButton::InstantPopup</enum>
        </property>
@@ -174,6 +205,12 @@
        </property>
        <property name="text">
         <string notr="true">ZoomOut</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
        </property>
        <property name="autoRaise">
         <bool>true</bool>

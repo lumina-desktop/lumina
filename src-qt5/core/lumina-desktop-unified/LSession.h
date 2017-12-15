@@ -15,6 +15,9 @@ public:
 	LSession(int &argc, char **argv);
 	~LSession();
 
+	static LSession* instance(){
+	  return ( static_cast<LSession*>(QApplication::instance()) );
+	}
 private:
 	void CleanupSession();
 	void setupGlobalConnections();
@@ -33,6 +36,7 @@ public slots:
 	void StartShutdown(bool skipupdates = false);
 	void StartReboot(bool skipupdates = false);
 	void LaunchApplication(QString exec);
+	void LaunchDesktopApplication(QString app, QString action = "");
 	void LaunchStandardApplication(QString app, QStringList args = QStringList());
 
 	void reloadIconTheme(); //will emit the IconThemeChanged signal when ready

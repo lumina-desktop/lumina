@@ -1,25 +1,30 @@
 include($${PWD}/../../OS-detect.pri)
 
-QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia multimediawidgets concurrent svg
+lessThan(QT_MAJOR_VERSION, 5) {
+  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  exit
+}
+lessThan(QT_MINOR_VERSION, 4){
+  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  exit
+}
 
+QT *= core gui network widgets x11extras multimedia multimediawidgets concurrent svg quick qml
 
 
 TARGET = lumina-desktop-unified
 target.path = $${L_BINDIR}
 
 #include all the special classes from the Lumina tree
-include(../libLumina/ResizeMenu.pri)
 include(../libLumina/LDesktopUtils.pri) #includes LUtils and LOS
 include(../libLumina/LuminaXDG.pri)
-#include(../libLumina/LuminaX11.pri)
 include(../libLumina/LuminaSingleApplication.pri)
-include(../libLumina/LuminaThemes.pri)
 include(../libLumina/DesktopSettings.pri)
-include(../libLumina/RootWindow.pri)
 include(../libLumina/ExternalProcess.pri)
-include(../libLumina/NativeWindow.pri)
+include(../../src-cpp/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
+
+include(../../src-cpp/plugins-screensaver.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)
@@ -51,6 +56,9 @@ desktop.files = lumina-desktop.desktop
 
 defaults.path = $${L_SHAREDIR}/lumina-desktop
 defaults.files = defaults/*
+
+extrafiles.path = $${L_SHAREDIR}/lumina-desktop
+extrafiles.files = extrafiles/*
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_ar.ts \
@@ -116,9 +124,9 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zu.ts
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-INSTALLS += target desktop defaults
+INSTALLS += target desktop defaults extrafiles
 
 WITH_I18N{
   INSTALLS += dotrans

@@ -144,7 +144,19 @@ void page_wallpaper::deskbgchanged(){
   }else{
     QString path = ui->combo_desk_bg->itemData( ui->combo_desk_bg->currentIndex() ).toString();
     if(path=="default"){ path = DEFAULTBG; }
-    if(QFile::exists(path)){
+    if(QFileInfo(path).isDir()){
+      QDir dir(path);
+      //Got a directory - go ahead and get all the valid image files
+      QStringList imgs = LUtils::imageExtensions();
+      for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
+      QStringList files = dir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+      //Now update the item/text
+      ui->combo_desk_bg->setItemIcon(ui->combo_desk_bg->currentIndex(), LXDG::findIcon("folder-image","folder"));
+      ui->label_desk_bgview->setPixmap(QPixmap());
+      ui->label_desk_bgview->setText( QString(tr("Image Directory: %1 valid images")).arg(QString::number(files.length()) ));
+      ui->label_desk_bgview->setStyleSheet("");
+      ui->label_desk_bgview->setToolTip(files.join("\n"));
+    }else if(QFile::exists(path)){
       QSize sz = ui->label_desk_bgview->size();
       sz.setWidth( sz.width() - (2*ui->label_desk_bgview->frameWidth()) );
       sz.setHeight( sz.height() - (2*ui->label_desk_bgview->frameWidth()) );
@@ -153,14 +165,17 @@ void page_wallpaper::deskbgchanged(){
       ui->label_desk_bgview->setPixmap( pix.scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation) );
       ui->combo_desk_bg->setItemIcon(ui->combo_desk_bg->currentIndex(), pix.scaled(64,64) );
       ui->label_desk_bgview->setStyleSheet("");
+      ui->label_desk_bgview->setToolTip("");
     }else if(path.startsWith("rgb(")){
       ui->label_desk_bgview->setPixmap(QPixmap());
       ui->label_desk_bgview->setText("");
       ui->label_desk_bgview->setStyleSheet("background-color: "+path+";");
+      ui->label_desk_bgview->setToolTip("");
     }else{
       ui->label_desk_bgview->setPixmap(QPixmap());
       ui->label_desk_bgview->setText(tr("File does not exist"));
       ui->label_desk_bgview->setStyleSheet("");
+      ui->label_desk_bgview->setToolTip("");
     }
   }
   //See if this constitues a change to the current settings and enable the save button
@@ -221,7 +236,7 @@ void page_wallpaper::deskbgcoloradded(){
   ui->combo_desk_bg->addItem( QString(tr("Solid Color: %1")).arg(color), color);
   //Now move to the last item in the list (the new image(s));
   ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
-  
+
   emit HasPendingChanges(true);
 }
 
@@ -233,20 +248,13 @@ void page_wallpaper::deskbgdiradded(){
   dir = QFileDialog::getExistingDirectory(this, tr("Find Background Image Directory"), dir, QFileDialog::ReadOnly);
   if(dir.isEmpty()){ return; }
   //Got a directory - go ahead and find all the valid image files within it
-  QStringList imgs = LUtils::imageExtensions();
-  for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
-  QDir qdir(dir);
-  QStringList bgs = qdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-  if(bgs.isEmpty()){ return; }
-  for(int i=0; i<bgs.length(); i++){
-    ui->combo_desk_bg->addItem( bgs[i], qdir.absoluteFilePath(bgs[i]));
-  }
+  ui->combo_desk_bg->addItem(dir.section("/",-1), dir);
   //Now move to the last item in the list (the new image(s));
   ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
   //If multiple items selected, automatically enable the background rotation option
-  if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
+  /*if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
     ui->radio_desk_multi->setChecked(true);
-  }
+  }*/
   emit HasPendingChanges(true);
 }
 
@@ -263,21 +271,14 @@ void page_wallpaper::deskbgdirradded(){
   //Now load the directory and add all the valid files
   QStringList dirs = LUtils::listSubDirectories(dir, true); //find/list all the dirs
   dirs.prepend(dir); //make sure the main dir is also listed
-  QStringList bgs;
   for(int d=0; d<dirs.length(); d++){
-    QDir qdir(dirs[d]);
-    QStringList tmp = qdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    for(int j=0; j<tmp.length(); j++){ bgs << qdir.absoluteFilePath(tmp[j]); }
-  }
-  //Now add all the files into the widget
-  for(int i=0; i<bgs.length(); i++){
-    ui->combo_desk_bg->addItem( bgs[i].section("/",-1), bgs[i] );
+     ui->combo_desk_bg->addItem(dirs[d].section("/",-1), dirs[d]);
   }
   //Now move to the last item in the list (the new image(s));
   ui->combo_desk_bg->setCurrentIndex( ui->combo_desk_bg->count()-1 );
   //If multiple items selected, automatically enable the background rotation option
-  if(bgs.length() > 1 && !ui->radio_desk_multi->isChecked()){
+  if(dirs.length() > 1 && !ui->radio_desk_multi->isChecked()){
     ui->radio_desk_multi->setChecked(true);
   }
-  emit HasPendingChanges(true);	
+  emit HasPendingChanges(true);
 }

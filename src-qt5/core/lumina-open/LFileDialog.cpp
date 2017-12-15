@@ -54,9 +54,9 @@ QString LFileDialog::getDefaultApp(QString extension){
 void LFileDialog::setDefaultApp(QString extension, QString appFile){
   if(!extension.contains("/")){ extension = LXDG::findAppMimeForFile(appFile); }
 
-    //mime type default: set on the system itself
-    if(appFile.endsWith(".desktop")){ appFile = appFile.section("/",-1); } //only need the relative path
-    LXDG::setDefaultAppForMime(extension, appFile);
+  //mime type default: set on the system itself
+  //if(appFile.endsWith(".desktop")){ appFile = appFile.section("/",-1); } //only need the relative path
+  LXDG::setDefaultAppForMime(extension, appFile);
 }
 
 // -----------

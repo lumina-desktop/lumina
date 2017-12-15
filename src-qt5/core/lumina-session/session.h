@@ -83,4 +83,6 @@ public:
 
 	void start(bool unified = false);
 
+	void checkFiles();
+
 };

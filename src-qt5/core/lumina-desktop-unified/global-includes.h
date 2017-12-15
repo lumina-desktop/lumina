@@ -19,6 +19,7 @@
 #include <QMouseEvent>
 #include <QAction>
 #include <QPoint>
+#include <QTemporaryFile>
 #include <QFile>
 #include <QDir>
 #include <QString>
@@ -50,6 +51,17 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QMediaPlaylist>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QQuickView>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QQuickImageProvider>
+
+// C++ Backend classes for QML interface
+#include <RootDesktopObject.h>
+#include <ScreenObject.h>
 
 // libLumina includes
 #include <LuminaX11.h>
@@ -60,15 +72,14 @@
 #include <LDesktopUtils.h>
 #include <LuminaSingleApplication.h>
 #include <DesktopSettings.h>
-#include <RootWindow.h>
 #include <ExternalProcess.h>
 #include <NativeWindow.h>
 #include <NativeWindowSystem.h>
 #include <NativeEventFilter.h>
 #include <XDGMime.h>
+#include <LIconCache.h>
+#include <LFileInfo.h>
 
-// Standard C includes
-#include <unistd.h>
 
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)
 

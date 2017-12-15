@@ -13,6 +13,8 @@
 #include <QShortcut>
 #include <QFontComboBox>
 #include <QSpinBox>
+#include <QAction>
+#include <QApplication>
 
 #include "PlainTextEditor.h"
 #include "ColorDialog.h"
@@ -40,18 +42,21 @@ private:
 	QSettings *settings;
 	QShortcut *closeFindS;
 	QSpinBox *fontSizes;
+	QAction *label_readonly;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
 	QString currentFileDir();
+	QStringList unsavedFiles();
 
 private slots:
 	//Main Actions
 	void NewFile();
 	void OpenFile(QString file = "");
 	void CloseFile(); //current file only
-	void SaveFile();
-	void SaveFileAs();
+	bool SaveFile();
+	bool SaveFileAs();
+	bool SaveAllFiles();
 	void Print();
 	void fontChanged(const QFont &font);
 	void updateStatusTip();
@@ -60,6 +65,7 @@ private slots:
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);
+	void showToolbar(bool);
 	void showLineNumbers(bool);
 	void wrapLines(bool);
 	void ModifyColors();
@@ -76,12 +82,12 @@ private slots:
 	void closeFindReplace();
 	void openFind();
 	void openReplace();
-	
+
 	void findNext();
 	void findPrev();
 	void replaceOne();
 	void replaceAll();
-	
+
 protected:
 	void resizeEvent(QResizeEvent *ev){
 	  settings->setValue("lastSize", ev->size());

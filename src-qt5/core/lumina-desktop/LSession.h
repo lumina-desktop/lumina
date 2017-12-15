@@ -39,7 +39,7 @@
 #define SYSTEM_TRAY_CANCEL_MESSAGE 2
 
 /*class MenuProxyStyle : public QProxyStyle{
-public: 
+public:
 	int pixelMetric(PixelMetric metric, const QStyleOption *option=0, const QWidget *widget=0) const{
 	  if(metric==PM_SmallIconSize){ return 22; } //override QMenu icon size (make it larger)
 	  else{ return QProxyStyle::pixelMetric(metric, option, widget); } //use the current style for everything else
@@ -51,6 +51,8 @@ class LSession : public LSingleApplication{
 public:
 	LSession(int &argc, char **argv);
 	~LSession();
+
+	static bool checkUserFiles();
 	//Functions to be called during startup
 	void setupSession();
 
@@ -63,7 +65,7 @@ public:
 	bool registerStartButton(QString ID);
 	void unregisterStartButton(QString ID);
 
-	//Special functions for XCB event filter parsing only 
+	//Special functions for XCB event filter parsing only
 	//  (DO NOT USE MANUALLY)
 	void RootSizeChange();
 	void WindowPropertyEvent();
@@ -73,37 +75,37 @@ public:
 	void WindowConfigureEvent(WId);
 	void WindowDamageEvent(WId);
 	void WindowSelectionClearEvent(WId);
-	
+
 	//System Access
 	//Return a pointer to the current session
 	static LSession* handle(){
 	  return static_cast<LSession*>(LSession::instance());
 	}
-	
+
 	static void LaunchApplication(QString cmd);
 	QFileInfoList DesktopFiles();
-	
+
 	QRect screenGeom(int num);
-	
+
 	AppMenu* applicationMenu();
 	void systemWindow();
 	SettingsMenu* settingsMenu();
 	LXCB *XCB; //class for XCB usage
-	
+
 	QSettings* sessionSettings();
 	QSettings* DesktopPluginSettings();
-	
+
 	//Keep track of which non-desktop window should be treated as active
 	WId activeWindow(); //This will return the last active window if a desktop element is currently active
-	
+
 	//Temporarily change the session locale (nothing saved between sessions)
 	void switchLocale(QString localeCode);
-	
+
 	//Play System Audio
 	void playAudioFile(QString filepath);
 	//Window Adjustment Routine (due to Fluxbox not respecting _NET_WM_STRUT)
 	void adjustWindowGeom(WId win, bool maximize = false);
-	
+
 private:
 	//WMProcess *WM;
 	QList<LDesktop*> DESKTOPS;
@@ -136,9 +138,9 @@ private:
 	QFileInfoList desktopFiles;
 
 	void CleanupSession();
-	
+
 	int VersionStringToNumber(QString version);
-	
+
 public slots:
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);
@@ -161,7 +163,6 @@ private slots:
 	void removeTrayWindow(WId);
 
 	//Internal simplification functions
-	void checkUserFiles();
 	void refreshWindowManager();
 	void updateDesktops();
 	void registerDesktopWindows();
@@ -189,7 +190,7 @@ signals:
 	void DesktopFilesChanged();
 	void MediaFilesChanged();
 	void WorkspaceChanged();
-	
+
 };
 
 #endif

@@ -13,10 +13,8 @@
 
 #include "LuminaThemes.h"
 
-static QStringList fav;
-
 QString LDesktopUtils::LuminaDesktopVersion(){
-  QString ver = "1.3.2";
+  QString ver = "1.4.1";
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif
@@ -80,22 +78,23 @@ QStringList LDesktopUtils::infoQuickPlugin(QString ID){ //Returns: [Name, Descri
 }
 
 QStringList LDesktopUtils::listFavorites(){
-  static QDateTime lastRead;
-  QDateTime cur = QDateTime::currentDateTime();
-  if(lastRead.isNull() || lastRead<QFileInfo( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list").lastModified()){
+  //static QDateTime lastRead;
+  QStringList fav;
+  //QDateTime cur = QDateTime::currentDateTime();
+  //if(lastRead.isNull() || fav.isEmpty() || lastRead<QFileInfo( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list").lastModified()){
     fav = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list");
     fav.removeAll(""); //remove any empty lines
     fav.removeDuplicates();
-    lastRead = cur;
-  }
-
+    //lastRead = cur;
+  //}
   return fav;
 }
 
 bool LDesktopUtils::saveFavorites(QStringList list){
   list.removeDuplicates();
+  //qDebug() << "Save Favorites:" << list;
   bool ok = LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/favorites.list", list, true);
-  if(ok){ fav = list; } //also save internally in case of rapid write/read of the file
+  //if(ok){ fav = list; } //also save internally in case of rapid write/read of the file
   return ok;
 }
 
@@ -116,11 +115,13 @@ bool LDesktopUtils::addFavorite(QString path, QString name){
   else{ type = LXDG::findAppMimeForFile(path); }
   //Assign a name if none given
   if(name.isEmpty()){ name = info.fileName(); }
+  //qDebug() << "Add Favorite:" << path << type << name;
   //Now add it to the list
   QStringList favs = LDesktopUtils::listFavorites();
+  //qDebug() << "Current Favorites:" << favs;
   bool found = false;
   for(int i=0; i<favs.length(); i++){
-    if(favs[i].endsWith("::::"+path)){ favs[i] = name+"::::"+type+"::::"+path; }
+    if(favs[i].endsWith("::::"+path)){ favs[i] = name+"::::"+type+"::::"+path; found = true; }
   }
   if(!found){ favs << name+"::::"+type+"::::"+path; }
   return LDesktopUtils::saveFavorites(favs);
@@ -143,6 +144,15 @@ void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
 void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Will create the Lumina configuration files based on the current system template (if any)
   qDebug() << "Loading System Defaults";
+  //Ensure that the settings directory exists
+  QString setdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
+  if(!QFile::exists(setdir)){
+    QDir dir;
+    dir.mkpath(setdir);
+  }
+
+  bool skipmime = QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimapps.list" );
+  //qDebug() << " - Skipping mimetype default apps" << skipmime;
   QStringList sysDefaults;
   if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
   if(sysDefaults.isEmpty() && !skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf.dist"); }
@@ -153,8 +163,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   if(sysDefaults.isEmpty()){ sysDefaults = LUtils::readFile(LOS::LuminaShare()+"luminaDesktop.conf"); }
   //Find the number of the left-most desktop screen
   QString screen = "0";
-  QDesktopWidget *desk =QApplication::desktop();
   QRect screenGeom;
+  QDesktopWidget *desk =QApplication::desktop();
   for(int i=0; i<desk->screenCount(); i++){
      if(desk->screenGeometry(i).x()==0){
 	screen = QString::number(i);
@@ -185,6 +195,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var.endsWith("_ifexists") ){
       var = var.remove("_ifexists"); //remove this flag from the variable
       //Check if the value exists (absolute path only)
+      val = LUtils::AppToAbsolute(val);
+      //qDebug() << "Checking if favorite app exists:" << val;
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
     }
 
@@ -193,18 +205,18 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var=="session_enablenumlock"){ sset = "EnableNumlock="+ istrue; }
     else if(var=="session_playloginaudio"){ sset = "PlayStartupAudio="+istrue; }
     else if(var=="session_playlogoutaudio"){ sset = "PlayLogoutAudio="+istrue; }
-    else if(var=="session_default_terminal"){
+    else if(var=="session_default_terminal" && !skipmime){
       LXDG::setDefaultAppForMime("application/terminal", val);
       //sset = "default-terminal="+val;
-    }else if(var=="session_default_filemanager"){
+    }else if(var=="session_default_filemanager" && !skipmime){
       LXDG::setDefaultAppForMime("inode/directory", val);
       //sset = "default-filemanager="+val;
       //loset = "directory="+val;
-    }else if(var=="session_default_webbrowser"){
+    }else if(var=="session_default_webbrowser" && !skipmime){
       //loset = "webbrowser="+val;
       LXDG::setDefaultAppForMime("x-scheme-handler/http", val);
       LXDG::setDefaultAppForMime("x-scheme-handler/https", val);
-    }else if(var=="session_default_email"){
+    }else if(var=="session_default_email" && !skipmime){
       LXDG::setDefaultAppForMime("application/email",val);
       //loset = "email="+val;
     }
@@ -225,24 +237,27 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
  // -- MIMETYPE DEFAULTS --
   tmp = sysDefaults.filter("mime_default_");
-  for(int i=0; i<tmp.length(); i++){
+  for(int i=0; i<tmp.length()  && !skipmime; i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    qDebug() << "Mime entry:" << var << val;
     if(val.isEmpty()){ continue; }
     QString istrue = (val.toLower()=="true") ? "true": "false";
     //Change in 0.8.5 - use "_" instead of "." within variables names - need backwards compat for a little while
     if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
-    val = LUtils::AppToAbsolute(val);
      //Special handling for values which need to exist first
     if(var.endsWith("_ifexists") ){
       var = var.remove("_ifexists"); //remove this flag from the variable
+      val = LUtils::AppToAbsolute(val);
+      //qDebug() << "Checking if Mime app exists:" << val;
       //Check if the value exists (absolute path only)
       if(!QFile::exists(val)){ continue; } //skip this line - value/file does not exist
     }
     //Now turn this variable into the mimetype only
     var = var.section("_default_",1,-1);
+    //qDebug() << " - Set Default Mime:" << var << val;
     LXDG::setDefaultAppForMime(var, val);
   }
 
@@ -324,6 +339,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   tmp = sysDefaults.filter("favorites_");
   if(tmp.isEmpty()){ tmp = sysDefaults.filter("favorites."); }
   for(int i=0; i<tmp.length(); i++){
+    //qDebug() << "Found Favorite Entry:" << tmp[i];
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();
     QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
@@ -332,9 +348,19 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     //Now parse the variable and put the value in the proper file
     qDebug() << "Favorite entry:" << var << val;
     val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
-    if(var=="favorites_add_ifexists" && QFile::exists(val)){ qDebug() << " - Exists/Adding:"; LDesktopUtils::addFavorite(val); }
+    if(var=="favorites_add_ifexists" && QFile::exists(val)){ qDebug() << " - Exists/Adding:" << val; LDesktopUtils::addFavorite(val); }
     else if(var=="favorites_add"){ qDebug() << " - Adding:"; LDesktopUtils::addFavorite(val); }
     else if(var=="favorites_remove"){ qDebug() << " - Removing:"; LDesktopUtils::removeFavorite(val); }
+  }
+
+  tmp = sysDefaults.filter("desktoplinks_");
+  QString desktopFolder = QDir::homePath()+"/Desktop/"; //need to make this translatable and dynamic later
+  for(int i=0; i<tmp.length(); i++){
+    if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
+    QString var = tmp[i].section("=",0,0).toLower().simplified();
+    QString val = tmp[i].section("=",1,1).section("#",0,0).simplified();
+    val = LUtils::AppToAbsolute(val); //turn any relative files into absolute
+    if(var=="desktoplinks_add" && QFile::exists(val) && !QFile::exists(desktopFolder+val.section("/",-1)) ){ QFile::link(val, desktopFolder+val.section("/",-1)); }
   }
 
   // -- QUICKLAUNCH --
@@ -373,6 +399,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     if(var.contains(".")){ var.replace(".","_"); }
     //Now parse the variable and put the value in the proper file
     if(var=="theme_themefile"){ themesettings[0] = val; }
+    else if(var=="theme_styles"){ LTHEME::setCurrentStyles( val.split(",",QString::SkipEmptyParts) ); }
     else if(var=="theme_colorfile"){ themesettings[1] = val; }
     else if(var=="theme_iconset"){ themesettings[2] = val; }
     else if(var=="theme_font"){ themesettings[3] = val; }
@@ -389,7 +416,7 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     QStringList syscolors = LTHEME::availableSystemColors();
     //theme file
     //qDebug() << "Detected Themes/colors:" << systhemes << syscolors;
-    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss.template")){
+    if( !themesettings[0].startsWith("/") || !QFile::exists(themesettings[0]) || !themesettings[0].endsWith(".qss")){
       themesettings[0] = themesettings[0].section(".qss",0,0).simplified();
       for(int i=0; i<systhemes.length(); i++){
 	 if(systhemes[i].startsWith(themesettings[0]+"::::",Qt::CaseInsensitive)){
@@ -399,9 +426,9 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
       }
     }
     //color file
-    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".qss.colors") ){
+    if( !themesettings[1].startsWith("/") || !QFile::exists(themesettings[1]) || !themesettings[1].endsWith(".conf") ){
       //Remove any extra/invalid extension
-      themesettings[1] = themesettings[1].section(".qss",0,0).simplified();
+      themesettings[1] = themesettings[1].section(".conf",0,0).simplified();
       for(int i=0; i<syscolors.length(); i++){
 	 if(syscolors[i].startsWith(themesettings[1]+"::::",Qt::CaseInsensitive)){
 	    themesettings[1] = syscolors[i].section("::::",1,1); //Replace with the full path
@@ -409,17 +436,14 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 	 }
       }
     }
+
   }
   //qDebug() << " - Final Theme Color:" << themesettings[1];
 
-  //Ensure that the settings directory exists
-  QString setdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
-  if(!QFile::exists(setdir)){
-    QDir dir;
-    dir.mkpath(setdir);
-  }
   //Now save the settings files
-  if(setTheme){ LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]); }
+  if(setTheme){
+    LTHEME::setCurrentSettings( themesettings[0], themesettings[1], themesettings[2], themesettings[3], themesettings[4]);
+  }
   LUtils::writeFile(setdir+"/sessionsettings.conf", sesset, true);
   LUtils::writeFile(setdir+"/desktopsettings.conf", deskset, true);
 
@@ -441,12 +465,14 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
 
 }
 
-bool LDesktopUtils::checkUserFiles(QString lastversion){
+bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
+  //WARNING: Make sure you create a QApplication instance before calling this function!!!
+
   //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   //returns true if something changed
   int oldversion = LDesktopUtils::VersionStringToNumber(lastversion);
-  int nversion = LDesktopUtils::VersionStringToNumber(QApplication::applicationVersion());
+  int nversion = LDesktopUtils::VersionStringToNumber(currentversion);
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
 
@@ -488,6 +514,43 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
     }
     LUtils::writeFile(dset, DS, true);
   }
+  if(oldversion<1003004){
+    //Lumina 1.3.4 - Migrate theme settings from old format to the new theme engine format
+    QString themefile = QString(getenv("XDG_CONFIG_HOME"))+"/lthemeengine/lthemeengine.conf";
+    if(!QFile::exists(themefile)){
+      QDir dir;
+      dir.mkpath(themefile.section("/",0,-2)); //make sure the main directory exists first
+      //Need to migrate theme settings from the old location to the new one
+      QSettings newtheme(themefile, QSettings::NativeFormat);
+      qDebug() << "Migrating Theme settings:" << newtheme.fileName();
+      QStringList oldtheme = LUtils::readFile( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/themesettings.cfg" );
+      //Find the system install location for the theme engine for use later
+      QString enginedir = LOS::LuminaShare()+"/../lthemeengine/";
+      //Find/match the icon theme
+      QString tmp = oldtheme.filter("ICONTHEME=").join("\n").section("=",1,-1).section("\n",0,0).simplified();
+      if(tmp.isEmpty()){ tmp = "material-design-light"; } //unknown Icon theme - use the default "light" version
+      newtheme.setValue("Appearance/icon_theme",tmp);
+      //Quick detect/adjust of the tone of the color theme based on the icons/colors (no 1-to-1 color theme matching between systems)
+      bool isdarktheme = tmp.contains("dark");
+      isdarktheme = isdarktheme || oldtheme.filter("COLORFILE=").join("\n").section("=",1,-1).section("\n",0,0).contains("DarkGlass");
+      //Quick adjust for the material-design icon theme to make it match the current dark/light theme
+      if(tmp.contains("material-design")){
+        newtheme.setValue("Appearance/icon_theme", QString("material-design-")+ (isdarktheme ? "dark" : "light") );
+      }
+      if(isdarktheme){
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/darker.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/DarkGlass.qss");
+      }else{
+         newtheme.setValue("Appearance/custom_palette", true);
+         newtheme.setValue("Appearance/color_scheme_path", enginedir+"colors/airy.conf");
+         newtheme.setValue("Interface/desktop_stylesheets", QStringList() << enginedir+"desktop_qss/Glass.qss");
+      }
+      newtheme.setValue("Appearance/style", "Fusion");
+      newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss" << enginedir+"qss/traynotification-simple.qss");
+      newtheme.sync(); //flush this to file right now
+    } //end check for theme file existance
+  }
 
   //Check the fluxbox configuration files
   dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
@@ -515,7 +578,7 @@ bool LDesktopUtils::checkUserFiles(QString lastversion){
 }
 
 int LDesktopUtils::VersionStringToNumber(QString version){
-  version = version.section("-",0,0); //trim any extra labels off the end
+  version = version.section("_",0,0).section("-",0,0); //trim any extra labels off the end
   int maj, mid, min; //major/middle/minor version numbers (<Major>.<Middle>.<Minor>)
   maj = mid = min = 0;
   bool ok = true;

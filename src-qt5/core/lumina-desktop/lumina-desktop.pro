@@ -77,17 +77,6 @@ fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
 fluxconf.path = $${L_SHAREDIR}/lumina-desktop/
 
-wallpapers.files = wallpapers/Lumina_Wispy_gold.jpg \
-			wallpapers/Lumina_Wispy_green.jpg \
-			wallpapers/Lumina_Wispy_purple.jpg \
-			wallpapers/Lumina_Wispy_red.jpg \
-			wallpapers/Lumina_Wispy_blue-grey.jpg \
-			wallpapers/Lumina_Wispy_blue-grey-zoom.jpg \
-			wallpapers/Lumina_Wispy_grey-blue.jpg \
-			wallpapers/Lumina_Wispy_grey-blue-zoom.jpg 
-wallpapers.path = $${L_SHAREDIR}/wallpapers/Lumina-DE
-
-
 defaults.files = defaults/luminaDesktop.conf \
 		defaults/compton.conf \
 		audiofiles/Logout.ogg \
@@ -103,17 +92,17 @@ conf.path = $${L_ETCDIR}
   message("Installing defaults settings for OS: $${DEFAULT_SETTINGS}")
   OS=$${DEFAULT_SETTINGS}
 }
-exists("defaults/luminaDesktop-$${OS}.conf"){
+exists("$$PWD/defaults/luminaDesktop-$${OS}.conf"){
   message(" -- Found OS-specific system config file: $${OS}");
-  conf.extra = cp defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  conf.extra = cp $$PWD/defaults/luminaDesktop-$${OS}.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
 }else{
-  conf.extra = cp defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
+  conf.extra = cp $$PWD/defaults/luminaDesktop.conf $(INSTALL_ROOT)$${L_ETCDIR}/luminaDesktop.conf.dist
 }
-exists("defaults/desktop-background-$${OS}.jpg"){
+exists("$$PWD/defaults/desktop-background-$${OS}.jpg"){
   message(" -- Found OS-specific background image: $${OS}");
-  defaults.extra = cp defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+  defaults.extra = cp $$PWD/defaults/desktop-background-$${OS}.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }else{
-  defaults.extra = cp defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
+  defaults.extra = cp $$PWD/defaults/desktop-background.jpg $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/desktop-background.jpg
 }
 
 TRANSLATIONS =  i18n/lumina-desktop_af.ts \
@@ -181,12 +170,12 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
                 i18n/lumina-desktop_zu.ts
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-manpage.path=$${L_MANDIR}/man8/
-manpage.extra="$${MAN_ZIP} lumina-desktop.8 > $(INSTALL_ROOT)$${L_MANDIR}/man8/lumina-desktop.8.gz"
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
-INSTALLS += target desktop icons wallpapers defaults conf fluxconf manpage
+INSTALLS += target desktop icons defaults conf fluxconf manpage
 
 WITH_I18N{
   INSTALLS += dotrans

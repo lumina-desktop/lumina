@@ -16,17 +16,17 @@
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähtekoodi repositoorium</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>Lumina Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina veebileht</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Puukide raporteerimine</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../MainUI.ui" line="276"/>
         <source>Ask the Community</source>
-        <translation type="unfinished"></translation>
+        <translation>Küsi kommuunilt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="233"/>
@@ -92,6 +92,74 @@
         <location filename="../MainUI.ui" line="454"/>
         <source>Close</source>
         <translation>Sulge</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation>Multimeedia</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation>Arendustegevus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation>Haridus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation>Mängud</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation>Graafika</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation>Võrk</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation>Kontor</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation>Teadus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation>Sätted</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation>Süsteem</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation>Tööriistad</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation>Sorteerimata</translation>
     </message>
 </context>
 </TS>

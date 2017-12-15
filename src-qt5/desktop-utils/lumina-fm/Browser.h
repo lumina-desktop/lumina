@@ -15,15 +15,11 @@
 #include <QIcon>
 //#include <QFutureWatcher>
 
+#include <QMediaPlayer>
+#include <LVideoSurface.h>
+#include <LVideoLabel.h>
 #include <LuminaXDG.h>
-/*class FileItem{
-public:
-	QString name;
-	QByteArray icon;
-
-	FileItem(){}
-	~FileItem(){};
-};*/
+#include <LFileInfo.h>
 
 class Browser : public QObject{
 	Q_OBJECT
@@ -38,26 +34,25 @@ public:
 	void showThumbnails(bool);
 	bool showingThumbnails();
 
-	//FileItem loadItem(QString info); //this is the main loader class - multiple instances each run in a separate thread
-
 private:
 	QString currentDir;
+	QDateTime lastcheck;
 	QFileSystemWatcher *watcher;
+	QMap<QString, QPixmap> videoImages;
 	bool showHidden, showThumbs;
-	QStringList imageFormats, oldFiles;
+	QStringList imageFormats, videoFormats, oldFiles;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
 
 	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
-	QIcon loadIcon(QString icon); //simplification for using/populating the mimIcons cache
+	QIcon* loadIcon(QString icon); //simplification for using/populating the mimIcons cache
 
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-
 	void futureFinished(QString, QImage);
 
 public slots:
-	void loadDirectory(QString dir = "");
+	void loadDirectory(QString dir = "", bool force = false);
 
 signals:
 	//Main Signals

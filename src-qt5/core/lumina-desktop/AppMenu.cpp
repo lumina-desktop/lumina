@@ -142,7 +142,7 @@ void AppMenu::updateAppList(){
               else{ ICONS->loadIcon(sact, appL[a]->icon); }
               sact->setToolTip(appL[a]->comment);
               sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
-              submenu->addAction(sact);		    
+              submenu->addAction(sact);
 	    }
 	  menu->addMenu(submenu);
 	}

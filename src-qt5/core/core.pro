@@ -17,9 +17,9 @@ SUBDIRS+= lumina-desktop \
 scripts.path = $${L_SHAREDIR}/lumina-desktop/menu-scripts
 scripts.files = menu-scripts/*
 
-#Color themes
-colors.path=$${L_SHAREDIR}/lumina-desktop/colors
-colors.files=colors/*.qss.colors
+#Color themes (pre-theme-engine files - not used any more)
+#colors.path=$${L_SHAREDIR}/lumina-desktop/colors
+#colors.files=colors/*.qss.colors
 
 #Theme templates
 themes.path=$${L_SHAREDIR}/lumina-desktop/themes/
@@ -33,4 +33,4 @@ themes.files=themes/*.qss.template
 globs.path=$${L_SHAREDIR}/lumina-desktop
 globs.files=xtrafiles/globs2
 
-INSTALLS+=scripts colors themes globs
+INSTALLS+=scripts themes globs

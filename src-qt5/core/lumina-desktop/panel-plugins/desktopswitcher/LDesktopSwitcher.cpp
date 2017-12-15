@@ -14,9 +14,9 @@ LDesktopSwitcher::LDesktopSwitcher(QWidget *parent, QString id, bool horizontal)
   label = new QToolButton(this);
   label->setPopupMode(QToolButton::DelayedPopup);
   label->setAutoRaise(true);
-  label->setToolButtonStyle(Qt::ToolButtonIconOnly);
+  label->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   label->setIcon( LXDG::findIcon("format-view-carousel", "preferences-desktop-display") );
-  label->setToolTip(QString("Workspace 1"));
+  label->setToolTip(QString(tr("Workspace 1")));
   connect(label, SIGNAL(clicked()), this, SLOT(openMenu()));
   menu = new QMenu(this);
   connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(menuActionTriggered(QAction*)));
@@ -44,7 +44,7 @@ void LDesktopSwitcher::setNumberOfDesktops(int number) {
   Atom atom = XInternAtom(display, "_NET_NUMBER_OF_DESKTOPS", False);
   XEvent xevent;
   xevent.type                 = ClientMessage;
-  xevent.xclient.type         = ClientMessage; 
+  xevent.xclient.type         = ClientMessage;
   xevent.xclient.display      = display;
   xevent.xclient.window       = rootWindow;
   xevent.xclient.message_type = atom;
@@ -129,7 +129,7 @@ void LDesktopSwitcher::createMenu() {
   int cur = LSession::handle()->XCB->CurrentWorkspace(); //current desktop number
   int tot = LSession::handle()->XCB->NumberOfWorkspaces(); //total number of desktops
   //qDebug() << "-- vor getCurrentDesktop SWITCH";
-  qDebug() << "Virtual Desktops:" << tot << cur;
+  //qDebug() << "Virtual Desktops:" << tot << cur;
   menu->clear();
   for (int i = 0; i < tot; i++) {
     QString name = QString(tr("Workspace %1")).arg( QString::number(i+1) );
@@ -137,6 +137,7 @@ void LDesktopSwitcher::createMenu() {
     menu->addAction(newAction(i, name));
   }
   label->setToolTip(QString(tr("Workspace %1")).arg(QString::number(cur + 1)));
+  label->setText( QString::number(cur+1) );
 }
 
 void LDesktopSwitcher::menuActionTriggered(QAction* act) {

@@ -88,7 +88,7 @@ QRect LDesktop::availableScreenGeom(){
     return globalWorkRect; //saved from previous calculations
   }else{
     return LSession::handle()->screenGeom( Screen() );
-  }	  
+  }
 }
 
 void LDesktop::UpdateGeometry(){
@@ -150,7 +150,7 @@ void LDesktop::checkResolution(){
   }else if(scrn.width()==oldWidth && scrn.height()==oldHeight){
     //nothing to do - same as before
   }else{
-    //Calculate the scale factor between the old/new sizes in each dimension 
+    //Calculate the scale factor between the old/new sizes in each dimension
     //  and forward that on to all the interface elements
     double xscale = scrn.width()/((double) oldWidth);
     double yscale = scrn.height()/((double) oldHeight);
@@ -194,7 +194,7 @@ void LDesktop::checkResolution(){
       }
     }
     DP->sync(); //make sure it gets saved to disk right away
-    
+
   }
   issyncing = false;
 }
@@ -238,7 +238,7 @@ void LDesktop::InitDesktop(){
         bgWindow->setWindowOpacity(0.0);
 	connect(bgWindow, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowMenu()) );*/
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
-  bgDesktop = new LDesktopPluginSpace(); 
+  bgDesktop = new LDesktopPluginSpace();
       int grid = settings->value(DPREFIX+"GridSize",-1).toInt();
       if(grid<0 && LSession::desktop()->screenGeometry(Screen()).height() > 2000){ grid = 200; }
       else if(grid<0){ grid = 100; }
@@ -266,7 +266,7 @@ void LDesktop::InitDesktop(){
 }
 
 void LDesktop::SettingsChanged(){
-  if(issyncing){ return; } //don't refresh for internal modifications to the 
+  if(issyncing){ return; } //don't refresh for internal modifications to the
   issyncing = true;
   qDebug() << "Found Settings Change:" << screenID;
   settings->sync(); //make sure to sync with external settings changes
@@ -341,7 +341,7 @@ void LDesktop::UpdateMenu(bool fast){
 void LDesktop::UpdateWinMenu(){
   winMenu->clear();
   //Get the current list of windows
-  QList<WId> wins = LSession::handle()->XCB->WindowList();	
+  QList<WId> wins = LSession::handle()->XCB->WindowList();
   //Now add them to the menu
   for(int i=0; i<wins.length(); i++){
     LWinInfo info(wins[i]);
@@ -352,7 +352,7 @@ void LDesktop::UpdateWinMenu(){
 }
 
 void LDesktop::winClicked(QAction* act){
-  LSession::handle()->XCB->ActivateWindow( act->data().toString().toULong() );	
+  LSession::handle()->XCB->ActivateWindow( act->data().toString().toULong() );
 }
 
 void LDesktop::UpdateDesktop(){
@@ -393,7 +393,7 @@ void LDesktop::UpdateDesktop(){
   if(settings->value(DPREFIX+"generateMediaIcons",true).toBool()){
     QDir media("/media");
     QStringList mediadirs = media.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
-    for(int i=0; i<mediadirs.length(); i++){ 
+    for(int i=0; i<mediadirs.length(); i++){
       filelist << media.absoluteFilePath(mediadirs[i]);
     }
   }
@@ -406,8 +406,8 @@ void LDesktop::RemoveDeskPlugin(QString ID){
   //This is called after a plugin is manually removed by the user
   //	just need to ensure that the plugin is also removed from the settings file
   QStringList plugs = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
-  if(plugs.contains(ID)){ 
-    plugs.removeAll(ID); 
+  if(plugs.contains(ID)){
+    plugs.removeAll(ID);
     issyncing=true; //don't let the change cause a refresh
     settings->setValue(DPREFIX+"pluginlist", plugs);
     settings->sync();
@@ -437,7 +437,7 @@ void LDesktop::DecreaseDesktopPluginIcons(){
   settings->setValue(DPREFIX+"GridSize",cur);
     settings->sync();
     QTimer::singleShot(200, this, SLOT(UnlockSettings()) );
-  bgDesktop->SetIconSize(cur);	
+  bgDesktop->SetIconSize(cur);
 }
 
 void LDesktop::UpdatePanels(){
@@ -484,18 +484,18 @@ void LDesktop::UpdateDesktopPluginArea(){
     QRegion shifted = visReg;
     QString loc = settings->value(PANELS[i]->prefix()+"location","top").toString().toLower();
     int vis = PANELS[i]->visibleWidth();
-    if(loc=="top"){ 
+    if(loc=="top"){
       if(!shifted.contains(QRect(rawRect.x(), rawRect.y(), rawRect.width(), vis))){ continue; }
-      shifted.translate(0, (rawRect.top()+vis)-shifted.boundingRect().top() ); 
+      shifted.translate(0, (rawRect.top()+vis)-shifted.boundingRect().top() );
     }else if(loc=="bottom"){
-      if(!shifted.contains(QRect(rawRect.x(), rawRect.bottom()-vis, rawRect.width(), vis))){ continue; }	    
-      shifted.translate(0, (rawRect.bottom()-vis)-shifted.boundingRect().bottom()); 
-    }else if(loc=="left"){ 
+      if(!shifted.contains(QRect(rawRect.x(), rawRect.bottom()-vis, rawRect.width(), vis))){ continue; }
+      shifted.translate(0, (rawRect.bottom()-vis)-shifted.boundingRect().bottom());
+    }else if(loc=="left"){
       if( !shifted.contains(QRect(rawRect.x(), rawRect.y(), vis,rawRect.height())) ){ continue; }
-      shifted.translate((rawRect.left()+vis)-shifted.boundingRect().left() ,0); 
+      shifted.translate((rawRect.left()+vis)-shifted.boundingRect().left() ,0);
     }else{  //right
       if(!shifted.contains(QRect(rawRect.right()-vis, rawRect.y(), vis,rawRect.height())) ){ continue; }
-      shifted.translate((rawRect.right()-vis)-shifted.boundingRect().right(),0); 
+      shifted.translate((rawRect.right()-vis)-shifted.boundingRect().right(),0);
     }
     visReg = visReg.intersected( shifted );
   }
@@ -535,11 +535,20 @@ void LDesktop::UpdateBackground(){
   //Get the list of background(s) to show
   QStringList bgL = settings->value(DPREFIX+"background/filelist-workspace-"+QString::number( LSession::handle()->XCB->CurrentWorkspace()), QStringList()).toStringList();
   if(bgL.isEmpty()){ bgL = settings->value(DPREFIX+"background/filelist", QStringList()).toStringList(); }
-  
+  if(bgL.isEmpty()){ bgL << LOS::LuminaShare()+"../wallpapers/lumina-nature"; } //Use this entire directory by default if nothing specified
   //qDebug() << " - List:" << bgL << CBG;
     //Remove any invalid files
     for(int i=0; i<bgL.length(); i++){
-      if( (!QFile::exists(bgL[i]) && bgL[i]!="default" && !bgL[i].startsWith("rgb(") ) || bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if(bgL[i]=="default" || bgL[i].startsWith("rgb(") ){ continue; } //built-in definitions - treat them as valid
+      if(bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if( !QFile::exists(bgL[i]) ){
+        //Quick Detect/replace for new path for Lumina wallpapers (change in 1.3.4)
+        if(bgL[i].contains("/wallpapers/Lumina-DE/")){
+          bgL[i] = bgL[i].replace("/wallpapers/Lumina-DE/", "/wallpapers/lumina-desktop/"); i--; //modify the path and re-check it
+        }else{
+          bgL.removeAt(i); i--;
+        }
+      }
     }
     if(bgL.isEmpty()){ bgL << "default"; } //always fall back on the default
   //Determine if the background needs to be changed
@@ -552,13 +561,32 @@ void LDesktop::UpdateBackground(){
   }
   oldBGL = bgL; //save this for later
   //Determine which background to use next
-  int index ( qrand() % bgL.length() );
-  if(index== bgL.indexOf(CBG)){ //if the current wallpaper was selected by the randomization again
-    //Go to the next in the list
-    if(index < 0 || index >= bgL.length()-1){ index = 0; } //if invalid or last item in the list - go to first
-    else{ index++; } //go to next
+  QString bgFile;
+  while(bgFile.isEmpty() || QFileInfo(bgFile).isDir()){
+    QString prefix;
+    if(!bgFile.isEmpty()){
+      //Got a directory - update the list of files and re-randomize the selection
+      QStringList imgs = LUtils::imageExtensions();
+      for(int i=0; i<imgs.length(); i++){ imgs[i].prepend("*."); }
+      QDir tdir(bgFile);
+      prefix=bgFile+"/";
+      bgL = tdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+      //If directory no longer has any valid images - remove it from list and try again
+      if(bgL.isEmpty()){
+        oldBGL.removeAll(bgFile); //invalid directory - remove it from the list for the moment
+        bgL = oldBGL; //reset the list back to the original list (not within a directory)
+      }
+    }
+    //Verify that there are files in the list - otherwise use the default
+    if(bgL.isEmpty()){ bgFile="default"; break; }
+    int index = ( qrand() % bgL.length() );
+    if(index== bgL.indexOf(CBG)){ //if the current wallpaper was selected by the randomization again
+      //Go to the next in the list
+      if(index < 0 || index >= bgL.length()-1){ index = 0; } //if invalid or last item in the list - go to first
+      else{ index++; } //go to next
+    }
+    bgFile = prefix+bgL[index];
   }
-  QString bgFile = bgL[index];
   //Save this file as the current background
   CBG = bgFile;
   //qDebug() << " - Set Background to:" << CBG << index << bgL;
@@ -570,7 +598,7 @@ void LDesktop::UpdateBackground(){
   bgDesktop->setBackground(backPix);
   //Now reset the timer for the next change (if appropriate)
   if(bgtimer->isActive()){ bgtimer->stop(); }
-  if(bgL.length() > 1){
+  if(bgL.length()>1 || oldBGL.length()>1){
     //get the length of the timer (in minutes)
     int min = settings->value(DPREFIX+"background/minutesToChange",5).toInt();
     //restart the internal timer
@@ -633,9 +661,9 @@ void LDesktop::NewDesktopFile(QString name){
     QDir desktop(QDir::homePath());
     if(desktop.exists(tr("Desktop"))){ desktop.cd(tr("Desktop")); } //translated folder
     else{ desktop.cd("Desktop"); } //default/english folder
-    if(!desktop.exists(name)){ 
+    if(!desktop.exists(name)){
       QFile file(desktop.absoluteFilePath(name));
-      if(file.open(QIODevice::WriteOnly) ){ file.close(); }    
+      if(file.open(QIODevice::WriteOnly) ){ file.close(); }
     }
   }
 }

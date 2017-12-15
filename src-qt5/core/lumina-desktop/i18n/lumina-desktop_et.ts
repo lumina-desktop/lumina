@@ -32,70 +32,70 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="62"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="116"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="63"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="117"/>
         <source>Click to Set</source>
         <translation>Klõpsa määramiseks</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="74"/>
         <source>Launch %1</source>
-        <translation type="unfinished">Käivita %1</translation>
+        <translation>Käivita %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="135"/>
         <source>Open</source>
-        <translation type="unfinished">Ava</translation>
+        <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava Kasutades</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="140"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaata Omadusi</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Failioperatsioonid</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimeta Ümber</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="147"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopeeri</translation>
+        <translation>Kopeeri</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="150"/>
         <source>Cut</source>
-        <translation type="unfinished">Lõika</translation>
+        <translation>Lõika</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="152"/>
         <source>Delete</source>
-        <translation type="unfinished">Kustuta</translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Select Application</source>
         <translation>Vali rakendus</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Name:</source>
         <translation>Nimi:</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="300"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus Failinimi</translation>
     </message>
 </context>
 <context>
@@ -103,12 +103,12 @@
     <message>
         <location filename="../AppMenu.cpp" line="48"/>
         <source>Desktop</source>
-        <translation type="unfinished">Töölaud</translation>
+        <translation>Töölaud</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="85"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Halda Rakendusi</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="90"/>
@@ -196,47 +196,47 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina Töölaua käivitumine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versioon %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Töölaua valmimist on toetanud kohvi, kohvi ja veel rohkem kohvi.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="43"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pea silm peal töölaua uudistel!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="45"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Võrgus on Töölaua kohta olemas täiemahuline käsiraamat (ingl.k)</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="47"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Soovid muuta kasutajaliidest? Kõik töölaua konfiguratsioonis on muudetav!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina võimaldab kergesti taasluua kasutajaliideseid enamikest muudest töölauakeskkondadest</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Selle töölaua valmimist on heldelt toetanud iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="53"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>Mulle ei ole kunagi haiget teenud ütlemata jäänud asjad</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="55"/>
@@ -246,17 +246,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõigel on oma ilu kuid mitte kõik ei oska seda näha</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
         <source>Before God we are all equally wise - and equally foolish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jumala ees oleme kõik võrdselt targad - ja võrdselt lollid.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="61"/>
         <source>We cannot do everything at once, but we can do something at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>Me ei saa teha kõike ühekorraga, kuid me saame teha midagi kohe.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="63"/>
@@ -271,217 +271,217 @@
     <message>
         <location filename="../BootSplash.cpp" line="67"/>
         <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sa ei saa kunagi teada liiga palju, kuid saad öelda.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kohusetunne ei ole kollektiivne, see on isiklik</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ühiskond, mis annab ära veidikene vabadust et lisada veidikene turvalisust, ei vääri kumbagi ning kaotab mõlemad.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
         <source>Never trust a computer you can’t throw out a window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ära kunagi usalda kompuutrit, mida ei ole võimalik aknast välja visata.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="75"/>
         <source>Study the past if you would define the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuleviku ennustamiseks õpi minevikku.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="77"/>
         <source>The way to get started is to quit talking and begin doing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Meetod alustamiseks: lõpeta seletamine ja hakka tegema.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="79"/>
         <source>Ask and it will be given to you; search, and you will find; knock and the door will be opened for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Küsi, ja sulle antakse; Otsi, ning sa leiad; Koputa, ning uks avatakse sulle.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="81"/>
         <source>Start where you are. Use what you have.  Do what you can.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta, sealt kus sa oled. Kasuta, mis sul on. Tee, mis saad.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inimene, kes kunagi pole eksinud, ei ole kunagi proovinud teha midagi uut.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
         <source>It does not matter how slowly you go as long as you do not stop.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole oluline kui aeglaselt sa kulged, kuni sa ei peatu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="87"/>
         <source>Do what you can, where you are, with what you have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tee mis saad, kus parajasti oled, mis käepärast on.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="89"/>
         <source>Remember no one can make you feel inferior without your consent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pea meeles et mitte keegi ei saa sind panna tundma alaväärtuslikuna ilma su enda nõusolekuta</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="91"/>
         <source>It’s not the years in your life that count. It’s the life in your years.</source>
-        <translation type="unfinished"></translation>
+        <translation>Olulised pole elatud aastad. Oluline on elada igas aastas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="93"/>
         <source>Either write something worth reading or do something worth writing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjuta midagi väärt lugemist või tee midagi väärt kirjutamist.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="95"/>
         <source>The only way to do great work is to love what you do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainus valem heaks tööks on armastada seda.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="97"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poliitkorrektsus on kommetega türannia.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="99"/>
         <source>Only two things are infinite, the universe and human stupidity, and I&apos;m not sure about the former.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainult kaks asja on lõputud. Universum ja inimese lollus. Ma ei ole kusjuures esimeses kindel.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="101"/>
         <source>I find that the harder I work, the more luck I seem to have.</source>
-        <translation type="unfinished"></translation>
+        <translation>Olen avastanud et mida rohkem ma tööd raban, seda rohkem õnne näib mul olevat.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tee, või ära tee. Lihtsalt proovimine ei ole variant.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Matemaatik on seade, mis muudab kohvi teoreemideks.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
         <source>Good people do not need laws to tell them to act responsibly, while bad people will find a way around the laws.</source>
-        <translation type="unfinished"></translation>
+        <translation>Head inimesed ei vaja seadusi käitumaks vastutustundlikult, sellal kui halvad inimesed leiavad tee seadustest möödahiilimiseks.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="109"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mustad augud Universumis on kohad, kus Jumal jagas nulliga.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>It&apos;s kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>On omamoodi lõbus saata korda võimatut.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
         <source>Knowledge speaks, but wisdom listens.</source>
-        <translation type="unfinished"></translation>
+        <translation>Teadmised räägivad, tarkus kuulab.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="115"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaval ütlus ei tõesta midagi.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="117"/>
         <source>Success usually comes to those who are too busy to be looking for it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Edu tuleb tavaliselt nende juurde, kel on liiga kiire, selleks et seda otsida.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="119"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hästiajastatud vaikus on väljendusrikkam kui kõne</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="121"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ma ei ole kunagi lasknud koolil segada enda harimist.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="123"/>
         <source>The best way to predict the future is to invent it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Parim meetod tuleviku ennustamiseks on see leiutada</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="125"/>
         <source>Well done is better than well said.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hästitehtu on parem kui hästiöeldu.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="127"/>
         <source>Sometimes it is not enough that we do our best; we must do what is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vahel ei piisa meie parimast; Peame tegema seda, mis on vaja.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="129"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tõde on olulisem kui faktid.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="131"/>
         <source>Better to remain silent and be thought a fool than to speak out and remove all doubt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Parem olla vait ja lasta endast mõelda kui lollist kui teha suu lahti ja eemaldada kõik kahtlused.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="142"/>
         <source>Initializing Session …</source>
-        <translation type="unfinished"></translation>
+        <translation>Seansi käivitumine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="145"/>
         <source>Loading System Settings …</source>
-        <translation type="unfinished"></translation>
+        <translation>Süsteemi Seadete laadimine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="148"/>
         <source>Loading User Preferences …</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutajaeelistuste laadimine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="151"/>
         <source>Preparing System Tray …</source>
-        <translation type="unfinished"></translation>
+        <translation>Süsteemi tööriba ettevalimistamine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="154"/>
         <source>Starting Window Manager …</source>
-        <translation type="unfinished"></translation>
+        <translation>Aknahalduri käivitumine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="157"/>
         <source>Detecting Applications …</source>
-        <translation type="unfinished"></translation>
+        <translation>Olemasolevate programmide tuvastamine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="160"/>
         <source>Preparing Menus …</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutajamenüüde ettevalmistamine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="163"/>
         <source>Preparing Workspace …</source>
-        <translation type="unfinished"></translation>
+        <translation>Töölaua ettevalmistamine...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="166"/>
         <source>Finalizing …</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimased liigutused...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="169"/>
         <source>Starting App: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Käivitan rakenduse: %1</translation>
     </message>
 </context>
 <context>
@@ -527,7 +527,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="44"/>
         <source>Go Back</source>
-        <translation type="unfinished">Mine tagasi</translation>
+        <translation>Mine tagasi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
@@ -547,12 +547,12 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="204"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda Kiirkäivitusest</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="208"/>
         <source>Add to Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa Kiirkäivitusse</translation>
     </message>
 </context>
 <context>
@@ -560,7 +560,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga skripti väljundi töötlemisel: %1</translation>
     </message>
 </context>
 <context>
@@ -573,103 +573,103 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="38"/>
         <source>Applications</source>
-        <translation type="unfinished">Rakendused</translation>
+        <translation>Rakendused</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
-        <translation type="unfinished">Paigalda rakendusi</translation>
+        <translation>Paigalda rakendusi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
-        <translation type="unfinished">Juhtpaneel</translation>
+        <translation>Juhtpaneel</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimeedia</translation>
+        <translation>Multimeedia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
-        <translation type="unfinished">Arendus</translation>
+        <translation>Arendustarkvara</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
-        <translation type="unfinished">Haridus</translation>
+        <translation>Haridus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
-        <translation type="unfinished">Mängud</translation>
+        <translation>Mängud</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
-        <translation type="unfinished">Graafika</translation>
+        <translation>Graafika</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
-        <translation type="unfinished">Võrk</translation>
+        <translation>Võrk</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
-        <translation type="unfinished">Kontor</translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
-        <translation type="unfinished">Teadus</translation>
+        <translation>Teadus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
-        <translation type="unfinished">Sätted</translation>
+        <translation>Sätted</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
-        <translation type="unfinished">Süsteem</translation>
+        <translation>Süsteem</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
-        <translation type="unfinished">Tööriistad</translation>
+        <translation>Tööriistad</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
-        <translation type="unfinished">Wine</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
-        <translation type="unfinished">Sortimata</translation>
+        <translation>Sortimata</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Lahku</translation>
     </message>
 </context>
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="96"/>
         <source>%1 % (Charging)</source>
         <translation>%1% (laeb)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="97"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1% (%2 jäänud)</translation>
     </message>
@@ -679,12 +679,12 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajavöönd (%1)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta süsteemiaega</translation>
     </message>
 </context>
 <context>
@@ -692,32 +692,32 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Muuda</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Start Moving Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta liigutamist</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Start Resizing Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta suuruse muutmist</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Increase Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Suurenda mõõte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="49"/>
         <source>Decrease Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vähenda mõõte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="51"/>
         <source>Remove Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda</translation>
     </message>
 </context>
 <context>
@@ -773,24 +773,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Töölauategevused</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
-        <location filename="../LDesktop.cpp" line="608"/>
+        <location filename="../LDesktop.cpp" line="636"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus Kaust</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
-        <location filename="../LDesktop.cpp" line="628"/>
+        <location filename="../LDesktop.cpp" line="656"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Uus Fail</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Aseta</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
@@ -810,28 +810,33 @@
     <message>
         <location filename="../LDesktop.cpp" line="303"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukusta sessioon</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="304"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Sirvi Faile</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="338"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Lahku</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="614"/>
-        <location filename="../LDesktop.cpp" line="634"/>
-        <location filename="../LDesktop.cpp" line="655"/>
+        <location filename="../LDesktop.cpp" line="642"/>
+        <location filename="../LDesktop.cpp" line="662"/>
+        <location filename="../LDesktop.cpp" line="683"/>
         <source>Desktop</source>
-        <translation type="unfinished">Töölaud</translation>
+        <translation>Töölaud</translation>
     </message>
 </context>
 <context>
     <name>LDesktopSwitcher</name>
+    <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation>Tööruum 1</translation>
+    </message>
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
@@ -844,16 +849,16 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eemalda Kiirkäivitusest</translation>
     </message>
 </context>
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="165"/>
+        <location filename="../LSession.cpp" line="352"/>
         <source>Desktop</source>
-        <translation type="unfinished">Töölaud</translation>
+        <translation>Töölaud</translation>
     </message>
 </context>
 <context>
@@ -874,7 +879,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Helitugevus</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -922,44 +927,44 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="148"/>
         <source>Activate Window</source>
         <translation>Aktiveeri aken</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="151"/>
         <source>Minimize Window</source>
         <translation>Minimeeri aken</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="153"/>
         <source>Restore Window</source>
         <translation>Taasta aken</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="155"/>
         <source>Maximize Window</source>
         <translation>Maksimeeri aken</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="158"/>
         <source>Close Window</source>
         <translation>Sulge aken</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
-        <source>Show All Windows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
-        <source>Minimize All Windows</source>
-        <translation type="unfinished"></translation>
+        <source>Show All Windows</source>
+        <translation>Näita kõiki aknaid</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <source>Minimize All Windows</source>
+        <translation>Minimeeri kõik aknad</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
         <source>Close All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulge kõik aknad</translation>
     </message>
 </context>
 <context>
@@ -984,23 +989,26 @@
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="20"/>
         <source>CPU Temp:</source>
         <translation>CPU temperatuur:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="21"/>
         <source>CPU Usage:</source>
         <translation>CPU kasutus:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="22"/>
         <source>Mem Usage:</source>
         <translation>Mälukasutus:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="85"/>
         <source>Disk I/O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketta I/O</translation>
     </message>
 </context>
 <context>
@@ -1023,37 +1031,37 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Name:</source>
-        <translation type="unfinished">Nimi:</translation>
+        <translation>Nimi:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="140"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Vigane märkmenimi: Proovi uuesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="141"/>
         <source>Select a Note Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali märkmenimi</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="168"/>
         <source>Open Text File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava tekstifail</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="169"/>
         <source>Create a Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Loo märge</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="172"/>
         <source>Rename Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimeta märge ümber</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="173"/>
         <source>Delete Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Kustuta märge</translation>
     </message>
 </context>
 <context>
@@ -1061,57 +1069,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Vorm</translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Tühjenda esitusloend</translation>
+        <translation>Tühjenda esitusloend</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Sega loendi järjekord</translation>
+        <translation>Sega loendi järjekord</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Lisa faile</translation>
+        <translation>Lisa faile</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Lisa kaust</translation>
+        <translation>Lisa kaust</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Lisa URL</translation>
+        <translation>Lisa URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Multimeediafailid</translation>
+        <translation>Multimeediafailid</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Vali multimeediafailid</translation>
+        <translation>Vali multimeediafailid</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Vali multimeedia kaust</translation>
+        <translation>Vali multimeedia kaust</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Sisesta multimeediafaili või -voo URL</translation>
+        <translation>Sisesta multimeediafaili või -voo URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">Multimeedia URL</translation>
+        <translation>Multimeedia URL</translation>
     </message>
 </context>
 <context>
@@ -1177,155 +1185,155 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Vorm</translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaata valikuid</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava veebileht</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Rohkem</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="154"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="245"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="391"/>
         <source>Back to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagasi voo juurde</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="172"/>
         <source>Feed Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Voo informatsioon</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="212"/>
         <source>Remove Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Eemalda voog</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="263"/>
         <source>New Feed Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation>Uuele voole registreerumine</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation type="unfinished"></translation>
+        <translation>RSS URL aadress</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
         <source>Load a preset RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Lae eelseadistatud RSS voog</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
         <source>Add to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa voogudele</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="409"/>
         <source>Feed Reader Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Uudisvoogude lugeja seaded</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="430"/>
         <source>Manual Sync Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainult käsitsi sünkroniseerimine</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Mõned uudisvood võivad nõuda erinevaid uuendusintervalle, selle seade kasutamise asemel.</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaikimisi sünkroniseerimise intervall</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="483"/>
         <source>Hour(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tundides</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="478"/>
         <source>Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Minutites</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="522"/>
         <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta seaded</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="70"/>
         <source>Add RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisa uudisvoog</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
         <source>View Feed Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaata uudisvoo detaile</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="72"/>
         <source>Settings</source>
-        <translation type="unfinished">Sätted</translation>
+        <translation>Sätted</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="74"/>
         <source>Update Feeds Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Uuenda uudisvooge</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina Töölaua RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
         <source>Feed URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uudisvoo URL: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="144"/>
         <source>Title: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pealkiri: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="145"/>
         <source>Description: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjeldus: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="146"/>
         <source>Website: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veebileht: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Last Build Date: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimane koostamise aeg: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
         <source>Last Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimane sünkr.: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
         <source>Next Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Järgmine sünkr.: %1</translation>
     </message>
 </context>
 <context>
@@ -1338,22 +1346,22 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Eelistus</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustapilt</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekraan</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Kõik ekraaniseaded</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
@@ -1371,42 +1379,42 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Vorm</translation>
+        <translation>Vorm</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="38"/>
         <source>Type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>Trüki millegi otsimiseks</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="171"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Sirvi faile</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Sirvi programme</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
         <source>Control Panel</source>
-        <translation type="unfinished">Juhtpaneel</translation>
+        <translation>Juhtpaneel</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Lahku</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Halda programme</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
         <source>Show Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Näita kategooriaid</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
@@ -1416,84 +1424,89 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Arvuti peatamine</translation>
+        <translation>Arvuti unerežiim</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Taaskäivita</translation>
+        <translation>Taaskäivita</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
-        <source>Power Off</source>
+        <source>Update and Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
+        <source>Power Off</source>
+        <translation>Lülita välja</translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
+        <source>(System Preparing Updates)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
-        <translation type="unfinished">Logi välja</translation>
+        <translation>Logi välja</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Eelistused</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
-        <source>(System Performing Updates)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1150"/>
         <source>Back</source>
         <translation>Tagasi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Alusta uuenduste paigaldamist?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sul on ootel süsteemiuuendused. Kas soovid neid nüüd paigaldada?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jah</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>Cancel</source>
-        <translation type="unfinished">Loobu</translation>
+        <translation>Loobu</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="477"/>
         <source>%1% (Plugged In)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% (ühendatud)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="481"/>
         <source>%1% (%2 Estimated)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% (%2 hinnanguliselt)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="482"/>
         <source>%1% Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% jäänud</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="498"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="667"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="678"/>
         <source>Workspace %1/%2</source>
-        <translation type="unfinished">Tööruum %1/%2</translation>
+        <translation>Tööruum %1/%2</translation>
     </message>
 </context>
 <context>
@@ -1516,43 +1529,53 @@
     <message>
         <location filename="../SystemWindow.ui" line="87"/>
         <source>Power Off</source>
+        <translation>Lülita välja</translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="132"/>
+        <source>Update Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="127"/>
-        <location filename="../SystemWindow.cpp" line="60"/>
+        <location filename="../SystemWindow.ui" line="154"/>
+        <source>Updates ready to install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="192"/>
+        <location filename="../SystemWindow.cpp" line="63"/>
         <source>Cancel</source>
         <translation>Loobu</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="156"/>
+        <location filename="../SystemWindow.ui" line="221"/>
         <source>Lock</source>
         <translation>Lukusta</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="172"/>
+        <location filename="../SystemWindow.ui" line="237"/>
         <source>Suspend</source>
         <translation>Arvuti peatamine</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Paigalda uuendused?</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sul on ootel süsteemiuuendused! Kas soovid neid kohe lasta paigaldada?</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="58"/>
+        <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jah</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="59"/>
+        <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei</translation>
     </message>
 </context>
 <context>
@@ -1583,7 +1606,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>UserWidget</translation>
+        <translation>Kasutajavidin</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1755,6 +1778,74 @@
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
+        <source>Unsorted</source>
+        <translation>Sortimata</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation>Multimeedia</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation>Arendus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation>Haridus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation>Mängud</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation>Graafika</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation>Võrk</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation>Kontor</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation>Teadus</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation>Sätted</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation>Süsteem</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation>Tööriistad</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
         <translation>Sortimata</translation>
     </message>

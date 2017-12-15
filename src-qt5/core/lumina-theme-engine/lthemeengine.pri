@@ -3,7 +3,7 @@ QT       *= core gui widgets x11extras network
   error("Use Qt 5.4.0 or higher.")
 }
 include(../../OS-detect.pri)
-
+include(../libLumina/LDesktopUtils.pri)
 CONFIG *= c++11
 
 #Install paths

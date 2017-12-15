@@ -25,7 +25,9 @@ class LTHEME{
 public:
   //Read the Themes/Colors/Icons that are available on the system
   static QStringList availableSystemThemes();//returns: [name::::path] for each item
+  static QStringList availableSystemStyles();//returns: [name::::path] for each item
   static QStringList availableLocalThemes();	//returns: [name::::path] for each item
+  static QStringList availableLocalStyles();	//returns: [name::::path] for each item
   static QStringList availableSystemColors(); 	//returns: [name::::path] for each item
   static QStringList availableLocalColors(); 	//returns: [name::::path] for each item
   static QStringList availableSystemIcons(); 	//returns: [name] for each item
@@ -34,7 +36,7 @@ public:
   //Save a new theme/color file
   static bool saveLocalTheme(QString name, QStringList contents);
   static bool saveLocalColors(QString name, QStringList contents);
-  
+
   //Return the currently selected Theme/Colors/Icons
   static QStringList currentSettings(); //returns [theme path, colorspath, iconsname, font, fontsize]
   static QString currentCursor(); //returns: current cursor theme name
@@ -42,19 +44,20 @@ public:
   //Change the current Theme/Colors/Icons
   static bool setCurrentSettings(QString themepath, QString colorpath, QString iconname, QString font, QString fontsize);
   static bool setCursorTheme(QString cursorname);
+  static bool setCurrentStyles(QStringList paths); //ordered by priority: lowest -> highest
 
   //Return the complete stylesheet for a given theme/colors
   static QString assembleStyleSheet(QString themepath, QString colorpath, QString font, QString fontsize);
-  
+
   //Additional info for a cursor theme
   static QStringList cursorInformation(QString name); //returns: [Name, Comment, Sample Image File]
-  
+
   //Environment settings
   static QStringList CustomEnvSettings(bool useronly = false); //view all the key=value settings
   static void LoadCustomEnvSettings(); //will push the custom settings into the environment (recommended before loading the initial QApplication)
   static bool setCustomEnvSetting(QString var, QString val); //variable/value pair (use an empty val to clear it)
   static QString readCustomEnvSetting(QString var);
-  
+
 };
 
 // Qt Style override to allow custom themeing/colors

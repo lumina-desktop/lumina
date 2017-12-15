@@ -32,68 +32,68 @@
 <context>
     <name>AppLauncherPlugin</name>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="62"/>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="116"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="63"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="117"/>
         <source>Click to Set</source>
         <translation>单击以设定</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="73"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="74"/>
         <source>Launch %1</source>
         <translation>启动 %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="134"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="135"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
         <source>Open With</source>
         <translation>打开用</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="139"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="140"/>
         <source>View Properties</source>
         <translation>查看属性</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>File Operations</source>
         <translation>文件操作</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="146"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="147"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="149"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="150"/>
         <source>Cut</source>
         <translation>剪切</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="152"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Select Application</source>
         <translation>选择程序</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="213"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Name:</source>
         <translation>名称：</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="299"/>
+        <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="300"/>
         <source>New Filename</source>
         <translation>新文件名</translation>
     </message>
@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="94"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="96"/>
         <source>%1 % (Charging)</source>
         <translation>%1 %(充电)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="95"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="97"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 (%2 剩余)</translation>
     </message>
@@ -777,13 +777,13 @@
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
-        <location filename="../LDesktop.cpp" line="608"/>
+        <location filename="../LDesktop.cpp" line="636"/>
         <source>New Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
-        <location filename="../LDesktop.cpp" line="628"/>
+        <location filename="../LDesktop.cpp" line="656"/>
         <source>New File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -823,15 +823,20 @@
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../LDesktop.cpp" line="614"/>
-        <location filename="../LDesktop.cpp" line="634"/>
-        <location filename="../LDesktop.cpp" line="655"/>
+        <location filename="../LDesktop.cpp" line="642"/>
+        <location filename="../LDesktop.cpp" line="662"/>
+        <location filename="../LDesktop.cpp" line="683"/>
         <source>Desktop</source>
         <translation type="unfinished">桌面</translation>
     </message>
 </context>
 <context>
     <name>LDesktopSwitcher</name>
+    <message>
+        <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
+        <source>Workspace 1</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
@@ -850,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="163"/>
-        <location filename="../LSession.cpp" line="346"/>
+        <location filename="../LSession.cpp" line="165"/>
+        <location filename="../LSession.cpp" line="352"/>
         <source>Desktop</source>
         <translation>桌面</translation>
     </message>
@@ -922,42 +927,42 @@
 <context>
     <name>LTaskButton</name>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="147"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="148"/>
         <source>Activate Window</source>
         <translation>激活窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="150"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="151"/>
         <source>Minimize Window</source>
         <translation>最小化窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="153"/>
         <source>Restore Window</source>
         <translation>恢复窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="155"/>
         <source>Maximize Window</source>
         <translation>最大化窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="157"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="158"/>
         <source>Close Window</source>
         <translation>关闭窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="160"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Show All Windows</source>
         <translation>显示所有窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Minimize All Windows</source>
         <translation>最小化所有窗口</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
+        <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
         <source>Close All Windows</source>
         <translation>关闭所有窗口</translation>
     </message>
@@ -984,16 +989,19 @@
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="20"/>
         <source>CPU Temp:</source>
         <translation>CPU 温度:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="21"/>
         <source>CPU Usage:</source>
         <translation>CPU 占用：</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
+        <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="22"/>
         <source>Mem Usage:</source>
         <translation>内存使用：</translation>
     </message>
@@ -1425,11 +1433,21 @@
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
+        <source>Update and Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
         <source>Power Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1065"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
+        <source>(System Preparing Updates)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
         <translation type="unfinished">注销</translation>
     </message>
@@ -1439,12 +1457,7 @@
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1036"/>
-        <source>(System Performing Updates)</source>
-        <translation>(系统正在更新)</translation>
-    </message>
-    <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1125"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1150"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
@@ -1474,24 +1487,24 @@
         <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="501"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="477"/>
         <source>%1% (Plugged In)</source>
         <translation>%1% (已插电)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="505"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="481"/>
         <source>%1% (%2 Estimated)</source>
         <translation>%1% (估计 %2)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="506"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="482"/>
         <source>%1% Remaining</source>
         <translation>剩余 %1%</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="522"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="681"/>
-        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="692"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="498"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="667"/>
+        <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="678"/>
         <source>Workspace %1/%2</source>
         <translation>工作区 %1/%2</translation>
     </message>
@@ -1519,38 +1532,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="127"/>
-        <location filename="../SystemWindow.cpp" line="60"/>
+        <location filename="../SystemWindow.ui" line="132"/>
+        <source>Update Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="154"/>
+        <source>Updates ready to install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../SystemWindow.ui" line="192"/>
+        <location filename="../SystemWindow.cpp" line="63"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="156"/>
+        <location filename="../SystemWindow.ui" line="221"/>
         <source>Lock</source>
         <translation>锁定</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="172"/>
+        <location filename="../SystemWindow.ui" line="237"/>
         <source>Suspend</source>
         <translation>休眠</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>Apply Updates?</source>
         <translation>应用更新？</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="57"/>
+        <location filename="../SystemWindow.cpp" line="60"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
         <translation>您有系统更新可用！请问您是否想现在安装？</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="58"/>
+        <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.cpp" line="59"/>
+        <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1757,6 +1780,74 @@
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
         <translation>未排序的</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">多媒体</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation type="unfinished">开发</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation type="unfinished">教育</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation type="unfinished">游戏</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation type="unfinished">图像</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation type="unfinished">网络</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation type="unfinished">办公</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation type="unfinished">科学</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation type="unfinished">设置</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation type="unfinished">系统</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation type="unfinished">工具</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -21,7 +21,7 @@ LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
   //this->setAttribute(Qt::WA_TranslucentBackground);
   //this->setAttribute(Qt::WA_NoSystemBackground);
   this->setAutoFillBackground(false);
-  this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }"); 
+  this->setStyleSheet("QWidget#LuminaDesktopPluginSpace{ border: none; background: transparent; }");
   this->setWindowFlags(Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
   this->setAcceptDrops(true);
   this->setContextMenuPolicy(Qt::NoContextMenu);
@@ -34,7 +34,7 @@ LDesktopPluginSpace::LDesktopPluginSpace() : QWidget(){
 }
 
 LDesktopPluginSpace::~LDesktopPluginSpace(){
-  
+
 }
 
 void LDesktopPluginSpace::LoadItems(QStringList plugs, QStringList files){
@@ -76,7 +76,7 @@ void LDesktopPluginSpace::setBackground(QPixmap pix){
 void LDesktopPluginSpace::setDesktopArea(QRect area){
   //qDebug() << "Setting Desktop Plugin Area:" << area;
   desktopRect = area;
-  
+
 }
 
 // ===================
@@ -222,7 +222,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
         //else{ row++; }
       }
       if(!found){ col++; row=0; } //go to the next column
-    }	    
+    }
   }else if(reversed && (startRow>0 || startCol>0) ){
     //Arrange Left->Right (work backwards)
     while(row>=0 && !found){
@@ -242,7 +242,7 @@ QRect LDesktopPluginSpace::findOpenSpot(int gridwidth, int gridheight, int start
         //else{ col++; }
       }
       if(!found){ row--; col=colCount-gridwidth;} //go to the previous row
-    }	  
+    }
   }else{
     //Arrange Left->Right
     while(row<(rowCount-gridheight) && !found){
@@ -296,8 +296,8 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
   QStringList plugs = plugins;
   QStringList items = deskitems;
   for(int i=0; i<ITEMS.length(); i++){
-    
-    if( ITEMS[i]->whatsThis().startsWith("applauncher") && ForceIconUpdate){ 
+
+    if( ITEMS[i]->whatsThis().startsWith("applauncher") && ForceIconUpdate){
 	//Change the size of the existing plugin - preserving the location if possible
 	/*QRect geom = ITEMS[i]->loadPluginGeometry(); //pixel coords
 	if(!geom.isNull()){
@@ -306,14 +306,14 @@ void LDesktopPluginSpace::reloadPlugins(bool ForceIconUpdate ){
 	  ITEMS[i]->savePluginGeometry( gridToGeom(geom)); //save it back in pixel coords
 	}*/
 	//Now remove the plugin for the moment - run it through the re-creation routine below
-	ITEMS.takeAt(i)->deleteLater();  
+	ITEMS.takeAt(i)->deleteLater();
 	i--;
     }
     else if(plugs.contains(ITEMS[i]->whatsThis())){ plugs.removeAll(ITEMS[i]->whatsThis()); }
     else if(items.contains(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50))){ items.removeAll(ITEMS[i]->whatsThis().section("---",0,0).section("::",1,50)); }
     else{ ITEMS[i]->removeSettings(true); ITEMS.takeAt(i)->deleteLater();  i--; } //this is considered a permanent removal (cleans settings)
   }
-  
+
   //Now create any new items
   //First load the plugins (almost always have fixed locations)
   for(int i=0; i<plugs.length(); i++){

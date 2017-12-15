@@ -10,6 +10,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QTreeWidgetItem>
+#include <QTimer>
 
 #include "TarBackend.h"
 
@@ -24,20 +25,21 @@ public:
 	~MainUI();
 
 	void LoadArguments(QStringList);
-    void loadIcons();
-
+	void loadIcons();
 
 private:
 	Ui::MainUI *ui;
 	Backend *BACKEND;
-	bool auto_extract_close;
+    QStringList aaFileList, sxList;
+    QString sxPath, sxFile;
+	QTimer *delayClose;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
 	bool cleanItems(QStringList list, QTreeWidgetItem *start = 0); //returns true if anything gets cleaned
 
 	//Functions for setting the valid file extensions ("tar" limitations)
 	QString CreateFileTypes();
-        QString OpenFileTypes();
+	QString OpenFileTypes();
 
 private slots:
 	void NewArchive();
@@ -45,13 +47,15 @@ private slots:
 	void addFiles();
 	void addDirs();
 	void remFiles();
-    void extractFiles();
-    void autoextractFiles();
+	void extractFiles();
+	void autoextractFiles();
+	void autoArchiveFiles();
+    void simpleExtractFiles();
 	void extractSelection();
 	void ViewFile(QTreeWidgetItem *it);
 	void UpdateTree();
 
-	void BurnImgToUSB();	
+	void BurnImgToUSB();
 
 	//Backend Handling
 	void ProcStarting();

@@ -30,12 +30,28 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
+         <widget class="QToolButton" name="push_rescan">
+          <property name="toolTip">
+           <string>Refresh Screens</string>
+          </property>
+          <property name="text">
+           <string>Refresh Screens</string>
+          </property>
+          <property name="icon">
+           <iconset theme="view-refresh"/>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QToolButton" name="tool_deactivate">
           <property name="toolTip">
            <string>Disable Current Screen</string>
           </property>
           <property name="text">
            <string notr="true">...</string>
+          </property>
+          <property name="icon">
+           <iconset theme="list-remove"/>
           </property>
          </widget>
         </item>
@@ -71,7 +87,8 @@
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-column"/>
+           <iconset theme="format-view-column">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -81,7 +98,8 @@
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-agenda"/>
+           <iconset theme="format-view-agenda">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -106,7 +124,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_config">
        <attribute name="title">
@@ -219,6 +237,53 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Profiles</string>
+       </attribute>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Profiles</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="combo_profiles"/>
+        </item>
+        <item row="1" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QToolButton" name="tool_profile_load">
+            <property name="text">
+             <string>Preview</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-restore"/>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tool_profile_remove">
+            <property name="text">
+             <string>Delete</string>
+            </property>
+            <property name="icon">
+             <iconset theme="view-close"/>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
@@ -237,9 +302,44 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="push_rescan">
+       <widget class="QToolButton" name="tool_applyconfig">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
-         <string>Refresh Screens</string>
+         <string>Apply</string>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tool_save">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Save current settings as user defaults</string>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+        <property name="icon">
+         <iconset theme="document-save">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::MenuButtonPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -257,34 +357,13 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="tool_applyconfig">
-        <property name="text">
-         <string>Apply</string>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tool_save">
-        <property name="toolTip">
-         <string>Save current settings as user defaults</string>
-        </property>
-        <property name="text">
-         <string>Save</string>
-        </property>
-        <property name="icon">
-         <iconset theme="document-save">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-        <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="push_close">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Close</string>
         </property>

@@ -184,6 +184,27 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   if(needload){ startReadFile(icon, idata.fullpath); }
 }
 
+void LIconCache::loadIcon(QMenu *action, QString icon, bool noThumb){
+  if(icon.isEmpty()){ return; }
+  if(isThemeIcon(icon)){
+    action->setIcon( iconFromTheme(icon));
+    return ;
+  }
+  //See if the icon has already been loaded into the HASH
+  bool needload = !HASH.contains(icon);
+  if(!needload){
+    if(!noThumb && !HASH[icon].thumbnail.isNull()){ action->setIcon( HASH[icon].thumbnail ); return; }
+    else if(!HASH[icon].icon.isNull()){ action->setIcon( HASH[icon].icon ); return; }
+  }
+  //Need to load the icon
+  icon_data idata;
+  if(HASH.contains(icon)){ idata = HASH.value(icon); }
+  else { idata = createData(icon); }
+    idata.pendingMenus << QPointer<QMenu>(action); //save this button for later
+  HASH.insert(icon, idata);
+  if(needload){ startReadFile(icon, idata.fullpath); }
+}
+
 void LIconCache::clearIconTheme(){
    //use when the icon theme changes to refresh all requested icons
   QStringList keys = HASH.keys();
@@ -282,6 +303,8 @@ void LIconCache::startReadFile(QString id, QString path){
     idat.pendingLabels.clear();
     for(int i=0; i<idat.pendingActions.length(); i++){ if(!idat.pendingActions[i].isNull()){ idat.pendingActions[i]->setIcon(idat.icon); } }
     idat.pendingActions.clear();
+    for(int i=0; i<idat.pendingMenus.length(); i++){ if(!idat.pendingMenus[i].isNull()){ idat.pendingMenus[i]->setIcon(idat.icon); } }
+    idat.pendingMenus.clear();
     //Now update the hash and let the world know it is available now
     HASH.insert(id, idat);
     this->emit IconAvailable(id);

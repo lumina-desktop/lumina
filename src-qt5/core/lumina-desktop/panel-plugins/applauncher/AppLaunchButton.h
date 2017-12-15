@@ -24,11 +24,11 @@
 // PANEL PLUGIN BUTTON
 class AppLaunchButtonPlugin : public LPPlugin{
 	Q_OBJECT
-	
+
 public:
 	AppLaunchButtonPlugin(QWidget *parent = 0, QString id = "applauncher", bool horizontal=true);
 	~AppLaunchButtonPlugin();
-	
+
 private:
 	QToolButton *button;
 	QString appfile;
@@ -50,13 +50,17 @@ public slots:
 	  this->layout()->update();
 	  updateButtonVisuals();
 	}
-	
-	void LocaleChange(){ 
+	void LocaleChange(){
 	  updateButtonVisuals();
 	}
-	
 	void ThemeChange(){
 	  updateButtonVisuals();
+	}
+protected:
+	void changeEvent(QEvent *ev){
+	  LPPlugin::changeEvent(ev);
+	  QEvent::Type tmp = ev->type();
+	  if(tmp == QEvent::StyleChange || tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){ updateButtonVisuals(); }
 	}
 };
 

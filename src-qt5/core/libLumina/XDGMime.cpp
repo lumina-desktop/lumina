@@ -12,6 +12,9 @@ static QStringList mimeglobs;
 static qint64 mimechecktime;
 
 QString XDGMime::fromFileName(QString filename){
+  if(QFile::exists(filename) && QFileInfo(filename).isDir()){
+    return "inode/directory";
+  }
   //Convert a filename into a mimetype
   return findAppMimeForFile(filename.section("/",-1),false);
 }

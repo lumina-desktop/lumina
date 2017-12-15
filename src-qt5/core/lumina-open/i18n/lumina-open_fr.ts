@@ -26,7 +26,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Emplacement de l'Exécutable</translation>
+        <translation>Emplacement de l&apos;Exécutable</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
@@ -142,7 +142,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>File Error</source>
         <translation>Erreur de fichier</translation>
     </message>
@@ -156,7 +156,7 @@
         <location filename="../main.cpp" line="205"/>
         <location filename="../main.cpp" line="214"/>
         <source>Screen Brightness %1%</source>
-        <translation>Luminosité de l'Écran %1%</translation>
+        <translation>Luminosité de l&apos;Écran %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="246"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../main.cpp" line="291"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>L'adresse est introuvable dans le raccourci URL : %1</translation>
+        <translation>L&apos;adresse est introuvable dans le raccourci URL : %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="302"/>
@@ -190,23 +190,86 @@
     </message>
     <message>
         <location filename="../main.cpp" line="370"/>
-        <source>Binary Missing</source>
-        <translation>Exécutable Manquant</translation>
+        <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
+        <translation>&quot;%1&quot; non trouvé. Vérifiez qu&apos;il soit bien installé.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="370"/>
-        <source>Could not find "%1". Please ensure it is installed first.</source>
-        <translation>"%1" non trouvé. Vérifiez qu'il soit bien installé.</translation>
-    </message>
-    <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>Application Error</source>
         <translation>Erreur du Programme</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="421"/>
+        <location filename="../main.cpp" line="419"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>Le programme suivant a provoqué une erreur et a dû être fermé :</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation type="unfinished">Multimédia</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation type="unfinished">Développement</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation type="unfinished">Éducation</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation type="unfinished">Graphiques</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation type="unfinished">Réseau</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation type="unfinished">Bureau</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation type="unfinished">Science</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation type="unfinished">Paramètres</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation type="unfinished">Système</translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

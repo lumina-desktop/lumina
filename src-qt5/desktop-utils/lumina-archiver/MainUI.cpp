@@ -20,7 +20,11 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
-  auto_extract_close = false;
+  delayClose = new QTimer(this);
+    delayClose->setInterval(500);
+    delayClose->setSingleShot(true);
+    connect(delayClose, SIGNAL(timeout()), this, SLOT(close()) );
+
   QString title = tr("Archive Manager");
   if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
   this->setWindowTitle(title);
@@ -70,23 +74,43 @@ MainUI::~MainUI(){
 }
 
 void MainUI::LoadArguments(QStringList args){
-  bool burnIMG = false;
-  bool autoExtract = false;
+  int action = -1; // 0: burnIMG, 1: autoExtract, 2: autoArchive
+  QStringList files;
   for(int i=0; i<args.length(); i++){
-    if(args[i]=="--burn-img"){ burnIMG = true; continue; }
-    if(args[i]=="--ax"){ autoExtract = true; continue; }
-    if(QFile::exists(args[i])){
-      ui->label_progress->setText(tr("Opening Archive..."));
-      if(autoExtract){
-        connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
-        connect(BACKEND, SIGNAL(ExtractSuccessful()), this, SLOT(close()) );
-      }
-      BACKEND->loadFile(args[i]);
-      ui->actionUSB_Image->setEnabled(args[i].simplified().endsWith(".img"));
-      if(burnIMG){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
-      break;
+    if(args[i].startsWith("--") ){
+      if(action>=0){ break; }
+      else if(args[i]=="--burn-img"){ action = 0; continue; }
+      else if(args[i]=="--ax"){ action = 1; continue; }
+      else if(args[i]=="--aa"){ action = 2; continue; }
+      else if(args[i]=="--sx"){ action = 3; continue; }
+    }else{
+      files << args[i];
     }
   }
+  if(files.isEmpty()){ return; }
+  //Now go through and do any actions as needed
+  ui->label_progress->setText(tr("Opening Archive..."));
+  if(action==1){
+    //qDebug() << "blah";
+    connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+    connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
+  }else if(action==2){
+    aaFileList = files;
+    aaFileList.removeFirst();
+    //for(int j=1; j<files.length(); j++){ aaFileList << files[j]; }
+    qDebug() << "AA Files:" << aaFileList;
+    connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoArchiveFiles()) );
+    connect(BACKEND, SIGNAL(ArchivalSuccessful()), delayClose, SLOT(start()) );
+  }else if(action==3 && files.length()==2){
+    sxFile = files[0];
+    sxPath = files[1];
+    connect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(simpleExtractFiles()) );
+    connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
+  }
+  BACKEND->loadFile(files[0]);
+  ui->actionUSB_Image->setEnabled(files[0].simplified().endsWith(".img"));
+  if(action==0){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
+
 }
 
 void MainUI::loadIcons(){
@@ -196,8 +220,8 @@ QString MainUI::OpenFileTypes(){
 void MainUI::NewArchive(){
   QString file = QFileDialog::getSaveFileName(this, tr("Create Archive"), QDir::homePath(), CreateFileTypes() );
   if(file.isEmpty()){ return; }
-  if(QFile::exists(file)){ 
-    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); } 
+  if(QFile::exists(file)){
+    if( !QFile::remove(file) ){ QMessageBox::warning(this, tr("Error"), QString(tr("Could not overwrite file:"))+"\n"+file); }
   }
   ui->label_progress->setText(""); //just clear it (this action is instant)
   BACKEND->loadFile(file);
@@ -245,12 +269,35 @@ void MainUI::extractFiles(){
 }
 
 void MainUI::autoextractFiles(){
-    disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
-    QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
-    if(dir.isEmpty()){ return; }
-    ui->label_progress->setText(tr("Extracting..."));
-    BACKEND->startExtract(dir, true);
+  disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+  QString dir = BACKEND->currentFile().section("/",0,-2); //parent directory of the archive
+  if(dir.isEmpty()){ return; }
+  QDir tmp(dir);
+  QString name = BACKEND->currentFile().section("/",-1).section(".",0,0);
+  if(QFile::exists(dir+"/"+name)){
+    int num = 1;
+    while( QFile::exists(dir+"/"+name+"_"+QString::number(num))){ num++; }
+    name = name+"_"+QString::number(num);
   }
+  if(tmp.mkdir(name) ){
+    dir.append("/"+name); //created sub directory
+  }
+  ui->label_progress->setText(tr("Extracting..."));
+  BACKEND->startExtract(dir, true);
+}
+
+void MainUI::simpleExtractFiles(){
+  disconnect(BACKEND, SIGNAL(FileLoaded()), this, SLOT(autoextractFiles()) );
+  QString dir = sxPath;
+  ui->label_progress->setText(tr("Extracting..."));
+  BACKEND->startExtract(dir, true);
+}
+
+void MainUI::autoArchiveFiles(){
+  qDebug() << "Auto Archive Files:" << aaFileList;
+  ui->label_progress->setText(tr("Adding Items..."));
+  BACKEND->startAdd(aaFileList);
+}
 
 void MainUI::extractSelection(){
   if(ui->tree_contents->currentItem()==0){ return; } //nothing selected
@@ -267,6 +314,12 @@ void MainUI::extractSelection(){
 
 void MainUI::ViewFile(QTreeWidgetItem *it){
   if(it->childCount()>0){ return; } //directory - not viewable
+  /*QString newfile = QDir::tempPath()+"/"+it->whatsThis(0).section("/",-1);
+  if(QFile::exists(newfile)){
+    if(QMessageBox::Yes != QMessageBox::question(this, tr("File exists"), tr("A temporary file with the same name already exists, do you want to overwrite it?")+"\n\n"+newfile, QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
+      return; //cancelled
+    }
+  }*/
   ui->label_progress->setText(tr("Extracting..."));
   BACKEND->startViewFile(it->whatsThis(0));
 }

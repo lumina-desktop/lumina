@@ -30,7 +30,7 @@ LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent)
 }
 
 LTaskButton::~LTaskButton(){
-	
+
 }
 
 //===========
@@ -81,11 +81,12 @@ LWinInfo LTaskButton::currentWindow(){
 //=============
 //   PUBLIC SLOTS
 //=============
+
 void LTaskButton::UpdateButton(){
   if(winMenu->isVisible()){ return; } //skip this if the window menu is currently visible for now
   bool statusOnly = (WINLIST.length() == LWINLIST.length());
   LWINLIST = WINLIST;
-  
+
   winMenu->clear();
   LXCB::WINDOWVISIBILITY showstate = LXCB::IGNORE;
   for(int i=0; i<WINLIST.length(); i++){
@@ -98,7 +99,7 @@ void LTaskButton::UpdateButton(){
       //Update the button visuals from the first window
       this->setIcon(WINLIST[i].icon(noicon));
       cname = WINLIST[i].Class();
-      if(cname.isEmpty()){ 
+      if(cname.isEmpty()){
 	//Special case (chrome/chromium does not register *any* information with X except window title)
 	cname = WINLIST[i].text();
 	if(cname.contains(" - ")){ cname = cname.section(" - ",-1); }

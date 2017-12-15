@@ -20,6 +20,7 @@
 #include <QtConcurrent>
 
 #include <LuminaXDG.h>
+#include "CM_PrintPreviewWidget.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
@@ -29,8 +30,23 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 0;
   lastdir = QDir::homePath();
   Printer = new QPrinter();
-  WIDGET = new QPrintPreviewWidget(Printer,this);
+  //Create the interface widgets
+  WIDGET = new CM_PrintPreviewWidget(Printer,this);
+  clockTimer = new QTimer(this);
+    clockTimer->setInterval(1000); //1-second updates to clock
+    connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
+  //frame_presenter = new QFrame(this);
+  label_clock = new QLabel(this);
+    label_clock->setAlignment(Qt::AlignCenter );
+    label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
+  //Context Menu
+  contextMenu = new QMenu(this);
+    connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
+  //Now put the widgets into the UI
   this->setCentralWidget(WIDGET);
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
@@ -44,7 +60,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     progress->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     progress->setFormat("%v/%m (%p%)"); // [current]/[total]
   progAct = ui->toolBar->addWidget(progress);
-  progAct->setVisible(false);
+    progAct->setVisible(false);
+  clockAct = ui->toolBar->addWidget(label_clock);
+    clockAct->setVisible(false);
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
     tmp->setExclusive(true);
@@ -130,18 +148,37 @@ void MainUI::loadFile(QString path){
 	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
-    qDebug() << " - Document Setup : start loading pages now";
+    //qDebug() << " - Document Setup : start loading pages now";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
 }
 
 void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page){
+  //PERFORMANCE NOTES:
+  // Using Poppler to scale the image (adjust dpi value) helps a bit but you take a large CPU loading hit (and still quite a lot of pixelization)
+  // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
+  // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
+
   //qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
-    //qDebug() << "DPI:" << 4*dpi;
-    loadingHash.insert(num, PAGE->renderToImage(2.5*dpi.width(), 2.5*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    //qDebug() << "DPI:" << dpi << "Size:" << page << "Page Size (pt):" << PAGE->pageSize();
+    float scalefactor = (dpi.width()/72.0); //How different the screen DPI compares to standard page DPI
+    //qDebug() << "Scale Factor:" << scalefactor;
+    QImage raw = PAGE->renderToImage((scalefactor+0.2)*dpi.width(), (scalefactor+0.2)*dpi.height()); //make the raw image a tiny bit larger than the end result
+    //qDebug() << " - Raw Image Size:" << raw.size();
+    loadingHash.insert(num, raw.scaled(scalefactor*page.width(), scalefactor*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    raw = QImage(); //clear it
+    //qDebug() << "Page Label:" << num << PAGE->label();
+    /*
+    QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
+    QStringList annoS;
+    for(int i=0; i<anno.length(); i++){
+      annoS << static_cast<TextAnnotation*>(anno[i])->???
+    }
+    annotateHash.insert(num, PAGE->
+    */
   }else{
     loadingHash.insert(num, QImage());
   }
@@ -187,14 +224,17 @@ void MainUI::startPresentation(bool atStart){
   QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
   if(cancelled){ return;}
   int page = 0;
-  if(!atStart){ page = CurrentPage; }
+  if(!atStart){ page = WIDGET->currentPage()-1; } //currentPage() starts at 1 rather than 0
   //PDPI = QSize(SCALEFACTOR*screen->physicalDotsPerInchX(), SCALEFACTOR*screen->physicalDotsPerInchY());
   //Now create the full-screen window on the selected screen
   if(presentationLabel == 0){
     //Create the label and any special flags for it
-    presentationLabel = new QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    presentationLabel = new PresentationLabel();
       presentationLabel->setStyleSheet("background-color: black;");
       presentationLabel->setAlignment(Qt::AlignCenter);
+      presentationLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+      connect(presentationLabel, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)) );
+      connect(presentationLabel, SIGNAL(nextSlide()), this, SLOT(nextPage()) );
   }
   //Now put the label in the proper location
   presentationLabel->setGeometry(screen->geometry());
@@ -202,6 +242,9 @@ void MainUI::startPresentation(bool atStart){
 
   ui->actionStop_Presentation->setEnabled(true);
   ui->menuStart_Presentation->setEnabled(false);
+  updateClock();
+  clockAct->setVisible(true);
+  clockTimer->start();
   QApplication::processEvents();
   //Now start at the proper page
   ShowPage(page);
@@ -209,13 +252,15 @@ void MainUI::startPresentation(bool atStart){
 }
 
 void MainUI::ShowPage(int page){
-  if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   //Check for valid document/page
-  //qDebug() << "Load Page:" << page << "/" << numPages-1;
-  if(page<0 || page > numPages ){
+  //qDebug() << "Load Page:" << page << "/" << numPages << "Index:" << page;
+  if(page<0 || page > numPages || (page==numPages && CurrentPage==page) ){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
+  WIDGET->setCurrentPage(page+1); //page numbers start at 1 for this widget
+  //Stop here if no presentation currently running
+  if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   CurrentPage = page;
   QImage PAGEIMAGE;
   if(page<numPages){ PAGEIMAGE = loadingHash[page]; }
@@ -237,6 +282,8 @@ void MainUI::endPresentation(){
   presentationLabel->hide(); //just hide this (no need to re-create the label for future presentations)
   ui->actionStop_Presentation->setEnabled(false);
   ui->menuStart_Presentation->setEnabled(true);
+  clockTimer->stop();
+  clockAct->setVisible(false);
   this->releaseKeyboard();
 }
 
@@ -244,11 +291,17 @@ void MainUI::startLoadingPages(QPrinter *printer){
   if(numPages>0){ return; } //currently loaded[ing]
   //qDebug() << " - Start Loading Pages";
   numPages = DOC->numPages();
+  //qDebug() << "numPages:" << numPages;
   progress->setRange(0,numPages);
   progress->setValue(0);
   progAct->setVisible(true);
   QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
   QSize DPI(printer->resolution(),printer->resolution());
+  /*qDebug() << "Screen Resolutions:";
+  QList<QScreen*> screens = QApplication::screens();
+  for(int i=0; i<screens.length(); i++){
+    qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
+  }*/
   for(int i=0; i<numPages; i++){
     //qDebug() << " - Kickoff page load:" << i;
     QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size() );
@@ -283,6 +336,7 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
       if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
       else{ painter.drawImage(0,0, QImage()); }
     }
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
@@ -350,4 +404,27 @@ void MainUI::OpenNewFile(){
   QString path = QFileDialog::getOpenFileName(this, tr("Open PDF"), lastdir, tr("PDF Documents (*.pdf)"));
   //Now Open it
   if(!path.isEmpty()){ loadFile(path); }
+}
+
+void MainUI::updateClock(){
+  label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
+}
+
+void MainUI::updateContextMenu(){
+  contextMenu->clear();
+  int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
+  int lastP = numPages-1;
+  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(curP+1), QString::number(lastP+1) ) );
+  contextMenu->addAction(tr("Next Page"), this, SLOT(nextPage()))->setEnabled(curP<lastP);
+  contextMenu->addAction(tr("Previous Page"), this, SLOT(prevPage()))->setEnabled( curP>0 );
+  contextMenu->addSeparator();
+  contextMenu->addAction(tr("First Page"), this, SLOT(firstPage()))->setEnabled(curP!=0);
+  contextMenu->addAction(tr("Last Page"), this, SLOT(lastPage()))->setEnabled(curP!=lastP);
+  contextMenu->addSeparator();
+  if(presentationLabel==0 || !presentationLabel->isVisible()){
+    contextMenu->addAction(tr("Start Presentation (current slide)"), this, SLOT(startPresentationHere()) );
+    contextMenu->addAction(tr("Start Presentation (at beginning)"), this, SLOT(startPresentationBeginning()) );
+  }else{
+    contextMenu->addAction(tr("Stop Presentation"), this, SLOT(closePresentation()) );
+  }
 }

@@ -1,7 +1,7 @@
 include("$${PWD}/../../OS-detect.pri")
 
 QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets concurrent multimedia
 
 
 TARGET = lumina-fileinfo
@@ -13,6 +13,7 @@ target.path = $${L_BINDIR}
 include(../../core/libLumina/LUtils.pri) #includes LUtils
 include(../../core/libLumina/LuminaXDG.pri)
 #include(../../core/libLumina/LuminaSingleApplication.pri)
+include(../../core/libLumina/LVideoLabel.pri)
 include(../../core/libLumina/LuminaThemes.pri)
 
 SOURCES += main.cpp\
@@ -88,12 +89,15 @@ TRANSLATIONS =  i18n/l-fileinfo_af.ts \
                 i18n/l-fileinfo_zu.ts 
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-fileinfo.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
-INSTALLS += target desktop
+manpage.path=$${L_MANDIR}/man1/
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-fileinfo.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-fileinfo.1.gz"
+
+INSTALLS += target desktop manpage
 
 WITH_I18N{
   INSTALLS += dotrans

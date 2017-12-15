@@ -29,15 +29,26 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     fontbox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   QWidget *spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  QWidget *spacer2 = new QWidget(this);
+    spacer2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  label_readonly = new QAction(tr("Read-Only File"), this);
+    label_readonly->setEnabled(false); //not an actual button
+    label_readonly->setToolTip("");
+  QFont fnt = this->font();
+    fnt.setItalic(true);
+    fnt.setBold(true);
+    label_readonly->setFont(fnt);
   fontSizes = new QSpinBox(this);
     fontSizes->setRange(5, 72);
-    fontSizes->setValue(9);
+    fontSizes->setValue(this->font().pointSize());
    fontSizes->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   //For some reason, the FontComboBox is always 2 pixels taller than the SpinBox - manually fix that here
-  fontbox->setFixedHeight(30);
-  fontSizes->setFixedHeight(32);
+  fontbox->setFixedHeight(ui->toolBar->iconSize().height()-2);
+  fontSizes->setFixedHeight(ui->toolBar->iconSize().height());
 
   ui->toolBar->addWidget(spacer);
+  ui->toolBar->addAction(label_readonly);
+  ui->toolBar->addWidget(spacer2);
   ui->toolBar->addWidget(fontbox);
   ui->toolBar->addWidget(fontSizes);
   //Load the special Drag and Drop QTabWidget
@@ -72,6 +83,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   for(int i=0; i<smodes.length(); i++){
     ui->menuSyntax_Highlighting->addAction(smodes[i]);
   }
+
+  bool toolbarVisible = settings->value("showToolbar",true).toBool();
+  ui->toolBar->setHidden(!toolbarVisible);
+  ui->actionShow_Toolbar->setChecked(toolbarVisible);
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
@@ -96,6 +111,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(tabWidget->dndTabBar(), SIGNAL(DetachTab(int)), this, SLOT(tabDetached(int)) );
   connect(tabWidget->dndTabBar(), SIGNAL(DroppedIn(QStringList)), this, SLOT(LoadArguments(QStringList)) );
   connect(tabWidget->dndTabBar(), SIGNAL(DraggedOut(int, Qt::DropAction)), this, SLOT(tabDraggedOut(int, Qt::DropAction)) );
+  connect(ui->actionShow_Toolbar, SIGNAL(toggled(bool)), this, SLOT(showToolbar(bool)) );
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
@@ -184,6 +200,17 @@ QString MainUI::currentFileDir(){
   return dir;
 }
 
+QStringList MainUI::unsavedFiles(){
+  QStringList unsaved;
+  for(int i=0; i<tabWidget->count(); i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
+    if(tmp->hasChange()){
+      unsaved << tmp->currentFile();
+    }
+  }
+  return unsaved;
+}
+
 // =================
 //    PRIVATE SLOTS
 //=================
@@ -234,16 +261,27 @@ void MainUI::CloseFile(){
   if(index>=0){ tabClosed(index); }
 }
 
-void MainUI::SaveFile(){
+bool MainUI::SaveFile(){
   PlainTextEditor *cur = currentEditor();
-  if(cur==0){ return; }
-  cur->SaveFile();
+  if(cur==0){ return true; } //nothing to do
+  return cur->SaveFile();
 }
 
-void MainUI::SaveFileAs(){
+bool MainUI::SaveFileAs(){
   PlainTextEditor *cur = currentEditor();
-  if(cur==0){ return; }
-  cur->SaveFile(true);
+  if(cur==0){ return true; } //nothing to do
+  return cur->SaveFile(true);
+}
+
+bool MainUI::SaveAllFiles(){
+  bool ok = true;
+  for(int i=0; i<tabWidget->count() && ok; i++){
+    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
+    if(tmp->hasChange()){
+      ok = ok && tmp->SaveFile();
+    }
+  }
+  return ok;
 }
 
 void MainUI::Print() {
@@ -337,6 +375,11 @@ void MainUI::showPopupWarnings(bool show){
   settings->setValue("showPopupWarnings",show);
 }
 
+void MainUI::showToolbar(bool show){
+  settings->setValue("showToolbar",show);
+  ui->toolBar->setHidden(!show);
+}
+
 void MainUI::updateTab(QString file){
   PlainTextEditor *cur = 0;
   int index = -1;
@@ -356,6 +399,7 @@ void MainUI::updateTab(QString file){
   tabWidget->setTabWhatsThis(index, file); //needed for drag/drop functionality
   ui->actionSave_File->setEnabled(changes);
   this->setWindowTitle( (changes ? "*" : "") + file.section("/",-2) );
+  label_readonly->setVisible( cur->readOnlyFile() );
 }
 
 void MainUI::tabChanged(){
@@ -373,6 +417,7 @@ void MainUI::tabChanged(){
   fontbox->setCurrentFont(font);
   fontSizes->setValue( font.pointSize() );
   ui->actionWrap_Lines->setChecked( cur->lineWrapMode()==QPlainTextEdit::WidgetWidth );
+  label_readonly->setVisible( cur->readOnlyFile() );
 }
 
 void MainUI::tabClosed(int tab){
@@ -489,18 +534,31 @@ PlainTextEditor *cur = currentEditor();
 //=============
 void MainUI::closeEvent(QCloseEvent *ev){
   //See if any of the open editors have unsaved changes first
-  QStringList unsaved;
-  for(int i=0; i<tabWidget->count(); i++){
-    PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(i));
-    if(tmp->hasChange()){
-      unsaved << tmp->currentFile();
+  QStringList unsaved = unsavedFiles();
+  if(unsaved.isEmpty() || !ui->actionShow_Popups->isChecked()){
+    QMainWindow::closeEvent(ev);
+    return;
+  }
+
+  //Otherwise, ask the user what to do.
+  QMessageBox::StandardButton but = QMessageBox::question(
+          this,
+          tr("Save Changes before closing?"),
+          QString(tr("There are unsaved changes.\nDo you want save them before you close the editor?\n\n%1")).arg(unsaved.join("\n")),
+          QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+          QMessageBox::No);
+
+  if(but == QMessageBox::Cancel){
+    ev->ignore();
+    return;
+  }
+  else if(but == QMessageBox::Yes){
+    if( !SaveAllFiles() ){
+      //cancelled by user
+      ev->ignore();
+      return;
     }
+
   }
-  bool quitnow = unsaved.isEmpty();
-  if(!quitnow && !ui->actionShow_Popups->isChecked()){ quitnow = true; }
-  if(!quitnow){
-    quitnow = (QMessageBox::Yes == QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("There are unsaved changes.\nDo you want to close the editor anyway?\n\n%1")).arg(unsaved.join("\n")), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
-  }
-  if(quitnow){ QMainWindow::closeEvent(ev); }
-  else{ ev->ignore(); }
+  QMainWindow::closeEvent(ev);
 }

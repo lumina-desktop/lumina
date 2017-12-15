@@ -5,8 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 //  This is the main interface for any OS-specific system calls
-//    To port Lumina to a different operating system, just create a file 
-//    called "LuminaOS-<Operating System>.cpp", and use that file in 
+//    To port Lumina to a different operating system, just create a file
+//    called "LuminaOS-<Operating System>.cpp", and use that file in
 //    the project (libLumina.pro) instead of LuminaOS-FreeBSD.cpp
 //===========================================
 #ifndef _LUMINA_LIBRARY_OS_H
@@ -23,7 +23,7 @@
 class LOS{
 public:
 	//Return the name of the OS being used
-	static QString OSName(); 
+	static QString OSName();
 
 	//OS-specific prefix(s)
 	static QString LuminaShare(); //Install dir for Lumina share files
@@ -34,7 +34,7 @@ public:
 	static QString ControlPanelShortcut();
 	static QString AppStoreShortcut();
 
-	//OS-specific RSS feeds 
+	//OS-specific RSS feeds
 	static QStringList RSSFeeds(); //Return Format: QStringList[ <name>::::<url> ];
 
 	//Scan for mounted external devices
@@ -81,13 +81,13 @@ public:
 	static bool batteryIsCharging();
 	//Battery Time Remaining
 	static int batterySecondsLeft(); //Returns: estimated number of seconds remaining
-	
+
 	//Get the checksum for a file
 	static QStringList Checksums(QStringList filepaths); //Return: checksum of each input file (same order)
-	
+
 	//Get the filesystem capacity
 	static QString FileSystemCapacity(QString dir) ; //Return: percentage capacity as give by the df command
-	
+
 	//System CPU Information
 	static QStringList CPUTemperatures(); //Returns: List containing the temperature of any CPU's ("50C" for example)
 	static int CPUUsagePercent(); //Returns: Overall percentage of the amount of CPU cycles in use (-1 for errors)

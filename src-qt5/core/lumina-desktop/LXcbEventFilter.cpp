@@ -7,7 +7,7 @@
 #include "LXcbEventFilter.h"
 
 //For all the XCB interactions and atoms
-// is accessed via 
+// is accessed via
 //    session->XCB->EWMH.(atom name)
 //    session->XCB->(do something)
 #include <LuminaX11.h>
@@ -41,7 +41,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		//qDebug() << "Property Notify Event:";
 	        //qDebug() << " - Root Window:" << QX11Info::appRootWindow();
 		//qDebug() << " - Given Window:" << ((xcb_property_notify_event_t*)ev)->window;
-		//System-specific proprty change
+		//System-specific property change
 		if( ((xcb_property_notify_event_t*)ev)->window == QX11Info::appRootWindow() \
 			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_DESKTOP_GEOMETRY) \
 			  ||  (((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_WORKAREA) )){
@@ -50,10 +50,11 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 			&& ( ( ((xcb_property_notify_event_t*)ev)->atom == session->XCB->EWMH._NET_CURRENT_DESKTOP) )){
  		  //qDebug() << "Got Workspace Change";
 		  session->emit WorkspaceChanged();
+		  session->WindowPropertyEvent(); //make sure we update the lists again - some windows are now hidden
 		}else if( SysNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Update the status/list of all running windows
-		  session->WindowPropertyEvent();	
-			
+		  session->WindowPropertyEvent();
+
 		//window-specific property change
 		}else if( WinNotifyAtoms.contains( ((xcb_property_notify_event_t*)ev)->atom ) ){
 		  //Ping only that window
@@ -61,7 +62,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->WindowPropertyEvent();
 	        }
 		break;
-//==============================	    
+//==============================
 	    case XCB_CLIENT_MESSAGE:
 		//qDebug() << "Client Message Event";
 		//qDebug() << " - Root Window:" << QX11Info::appRootWindow();
@@ -72,7 +73,7 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		      session->SysTrayDockRequest( ((xcb_client_message_event_t*)ev)->data.data32[2] );
 		  }
 		  //Ignore the System Tray messages at the moment (let the WM handle it)
-		  
+
 		//window-specific property changes
 		/*}else if( ((xcb_client_message_event_t*)ev)->type == session->XCB->EWMH._NET_WM_STATE ){
 		  if( session->XCB->WindowIsMaximized( ((xcb_client_message_event_t*)ev)->window ) ){
@@ -86,22 +87,22 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 		  session->WindowPropertyEvent();
 	        }
 	        break;
-//==============================	    
+//==============================
 	    case XCB_DESTROY_NOTIFY:
 		//qDebug() << "Window Closed Event";
 		session->WindowClosedEvent( ( (xcb_destroy_notify_event_t*)ev )->window );
 	        break;
-//==============================	    
+//==============================
 	    case XCB_CONFIGURE_NOTIFY:
 		//qDebug() << "Configure Notify Event";
 		session->WindowConfigureEvent( ((xcb_configure_notify_event_t*)ev)->window );
 	        break;
-//==============================	    
+//==============================
 	    case XCB_SELECTION_CLEAR:
 		//qDebug() << "Selection Clear Event";
-		session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );  
+		session->WindowSelectionClearEvent( ((xcb_selection_clear_event_t*)ev)->owner );
 	        break;
-//==============================	    
+//==============================
 	    default:
 		if(TrayDmgFlag!=0){
 		  //if( (ev->response_type & ~0x80)==TrayDmgFlag){

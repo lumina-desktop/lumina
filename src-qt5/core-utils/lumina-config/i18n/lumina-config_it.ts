@@ -467,7 +467,7 @@ Sovrascriverlo?</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="270"/>
-        <location filename="../pages/getPage.cpp" line="46"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Applications</source>
         <translation>Applicazioni</translation>
     </message>
@@ -674,167 +674,178 @@ Sovrascriverlo?</translation>
         <translation>Colore utilizzato per evidenziare un elemento (più tenue).</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="42"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Wallpaper Settings</source>
         <translation>Impostazioni sfondo</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="42"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change background image(s)</source>
         <translation>Cambia immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="43"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Theme Settings</source>
         <translation>Impostazioni del tema</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="43"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
         <source>Change interface fonts and colors</source>
         <translation>Cambia i font e i colori dell&apos;interfacia</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="44"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Window Effects</source>
         <translation>Effetti delle finestre</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="44"/>
+        <location filename="../pages/getPage.cpp" line="45"/>
         <source>Adjust transparency levels and window effects</source>
         <translation>Modifica i livelli di trasparenza e gli effetti delle finestre</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="45"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Startup Settings</source>
         <translation>Impostazioni di avvio</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="45"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Automatically start applications or services</source>
         <translation>Avvia automaticamente applicazioni o servizi</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="42"/>
+        <location filename="../pages/getPage.cpp" line="43"/>
         <source>Wallpaper</source>
         <translation>Immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="43"/>
+        <location filename="../pages/getPage.cpp" line="44"/>
+        <location filename="../pages/getPage.cpp" line="55"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="45"/>
+        <location filename="../pages/getPage.cpp" line="46"/>
         <source>Autostart</source>
         <translation>AutoAvvio</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="46"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Mimetype Settings</source>
         <translation>Impostazioni per il tipo MIME</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="46"/>
+        <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change default applications</source>
         <translation>Cambia le applicazioni predefinite</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="47"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Keyboard Shortcuts</source>
         <translation>Scorciatoie della tastiera</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="47"/>
+        <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change keyboard shortcuts</source>
         <translation>Cambia le scorciatoie da tastiera</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="48"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Window Manager</source>
         <translation>Gestore di finestre</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="48"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Window Settings</source>
         <translation>Impostazioni delle finestre</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="48"/>
+        <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change window settings and appearances</source>
         <translation>Cambia le impostazioni ed aspetto delle finestre</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="49"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Desktop</source>
         <translation>Scrivania</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="50"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Panels</source>
         <translation>Pannelli</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="51"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Menu</source>
         <translation>Menu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="49"/>
+        <location filename="../pages/getPage.cpp" line="55"/>
+        <source>Sound Themeing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.cpp" line="55"/>
+        <source>Change basic sound settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Desktop Plugins</source>
         <translation>Estensioni del desktop</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="49"/>
+        <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change what icons or tools are embedded on the desktop</source>
         <translation>Scegli le icone e gli strumenti associati al desktop</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="50"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Panels and Plugins</source>
         <translation>Pannelli ed estensioni</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="50"/>
+        <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change any floating panels and what they show</source>
         <translation>Cambia i pannelli mobili e cosa mostrano</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="51"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Menu Plugins</source>
         <translation>Estensioni del menu</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="51"/>
+        <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change what options are shown on the desktop context menu</source>
         <translation>Scegli le opzioni mostrate nel menu contestuale del desktop</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="52"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Locale Settings</source>
         <translation>Impostazioni della lingua</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="52"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change the default locale settings for this user</source>
         <translation>Cambia le impostazioni della lingua predefinite per questo utente</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="52"/>
+        <location filename="../pages/getPage.cpp" line="53"/>
         <source>Localization</source>
         <translation>Localizzazione</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="53"/>
+        <location filename="../pages/getPage.cpp" line="54"/>
         <source>General Options</source>
         <translation>Opzioni Generali</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="53"/>
+        <location filename="../pages/getPage.cpp" line="54"/>
         <source>User Settings</source>
         <translation>Impostazioni utente</translation>
     </message>
     <message>
-        <location filename="../pages/getPage.cpp" line="53"/>
+        <location filename="../pages/getPage.cpp" line="54"/>
         <source>Change basic user settings such as time/date formats</source>
         <translation>Cambia le impostazioni utente di base tra cui i formati per data/ora</translation>
     </message>
@@ -933,6 +944,74 @@ Sovrascriverlo?</translation>
  Overwrite it?</source>
         <translation>Questo tema esiste già.
   Lo sovrascrivo?</translation>
+    </message>
+</context>
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <source>Development</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <source>Education</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <source>Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <source>Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <source>Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <source>Science</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <source>System</source>
+        <translation type="unfinished">Sistema</translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <source>Utility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <source>Wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <source>Unsorted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1440,18 +1519,44 @@ Sovrascriverlo?</translation>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.ui" line="130"/>
-        <source>Import</source>
-        <translation>Importa</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_interface_panels.cpp" line="58"/>
+        <location filename="../pages/page_interface_panels.cpp" line="59"/>
         <source>Desktop Settings</source>
         <translation>Impostazioni del desktop</translation>
     </message>
     <message>
-        <location filename="../pages/page_interface_panels.cpp" line="104"/>
+        <location filename="../pages/page_interface_panels.cpp" line="110"/>
         <source>No Panels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="136"/>
+        <source>Custom Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="136"/>
+        <source>Copy Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="143"/>
+        <source>Apply</source>
+        <translation type="unfinished">Applica</translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="144"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="149"/>
+        <location filename="../pages/page_interface_panels.cpp" line="204"/>
+        <source>Create Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_interface_panels.cpp" line="204"/>
+        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1812,108 +1917,60 @@ Sovrascriverlo?</translation>
     </message>
 </context>
 <context>
-    <name>page_theme</name>
+    <name>page_soundtheme</name>
     <message>
-        <location filename="../pages/page_theme.ui" line="14"/>
+        <location filename="../pages/page_soundtheme.ui" line="14"/>
         <source>Form</source>
-        <translation>Modulo</translation>
+        <translation type="unfinished">Modulo</translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="36"/>
-        <source>Desktop Theme</source>
-        <translation>Tema della scrivania</translation>
+        <location filename="../pages/page_soundtheme.ui" line="22"/>
+        <location filename="../pages/page_soundtheme.ui" line="67"/>
+        <location filename="../pages/page_soundtheme.ui" line="112"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="42"/>
-        <source>Font:</source>
-        <translation>Carattere:</translation>
+        <location filename="../pages/page_soundtheme.ui" line="36"/>
+        <location filename="../pages/page_soundtheme.ui" line="81"/>
+        <location filename="../pages/page_soundtheme.ui" line="126"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="56"/>
-        <source>Font Size:</source>
-        <translation>Dimensione carattere:</translation>
+        <location filename="../pages/page_soundtheme.ui" line="56"/>
+        <source>Set Startup Audio</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="63"/>
-        <source> point</source>
-        <translation> punto</translation>
+        <location filename="../pages/page_soundtheme.ui" line="101"/>
+        <source>Set Logout Audio</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="70"/>
-        <source>Theme Template:</source>
-        <translation>Modello del tema:</translation>
+        <location filename="../pages/page_soundtheme.ui" line="146"/>
+        <source>Set Battery Audio</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="86"/>
-        <source>Create/Edit a theme template (Advanced)</source>
-        <translation>Crea/Modifica un modello di tema (Avanzato)</translation>
+        <location filename="../pages/page_soundtheme.cpp" line="40"/>
+        <source>Sound Themes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="92"/>
-        <location filename="../pages/page_theme.ui" line="126"/>
-        <source>Edit</source>
-        <translation>Modifica</translation>
+        <location filename="../pages/page_soundtheme.cpp" line="73"/>
+        <source>Select Startup Sound</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="104"/>
-        <source>Color Scheme:</source>
-        <translation>Schema colore:</translation>
+        <location filename="../pages/page_soundtheme.cpp" line="83"/>
+        <source>Select Logout Sound</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_theme.ui" line="120"/>
-        <source>Create/Edit a color scheme</source>
-        <translation>Crea/Modifica uno schema colori</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.ui" line="138"/>
-        <source>Icon Pack:</source>
-        <translation>Gruppo di icone:</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.ui" line="148"/>
-        <source>Mouse Cursors:</source>
-        <translation>Cursori del mouse:</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.ui" line="192"/>
-        <source>Application Themes</source>
-        <translation>Tema per le applicazioni</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.ui" line="198"/>
-        <source>Qt5 Theme Engine</source>
-        <translation>Motore del tema per QT5</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.cpp" line="58"/>
-        <source>Theme Settings</source>
-        <translation>Impostazioni del tema</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.cpp" line="73"/>
-        <location filename="../pages/page_theme.cpp" line="87"/>
-        <location filename="../pages/page_theme.cpp" line="173"/>
-        <location filename="../pages/page_theme.cpp" line="199"/>
-        <source>Local</source>
-        <translation>Lingua</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.cpp" line="80"/>
-        <location filename="../pages/page_theme.cpp" line="94"/>
-        <location filename="../pages/page_theme.cpp" line="180"/>
-        <location filename="../pages/page_theme.cpp" line="206"/>
-        <source>System</source>
-        <translation>Sistema</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.cpp" line="137"/>
-        <source>None</source>
-        <translation>Nessuno</translation>
-    </message>
-    <message>
-        <location filename="../pages/page_theme.cpp" line="138"/>
-        <source>Manual Setting</source>
-        <translation>Impostazioni manuali</translation>
+        <location filename="../pages/page_soundtheme.cpp" line="93"/>
+        <source>Select Low Battery Sound</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1960,7 +2017,7 @@ Sovrascriverlo?</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="66"/>
-        <location filename="../pages/page_wallpaper.cpp" line="221"/>
+        <location filename="../pages/page_wallpaper.cpp" line="236"/>
         <source>Solid Color: %1</source>
         <translation>Colore pieno: %1</translation>
     </message>
@@ -2051,18 +2108,23 @@ Sovrascriverlo?</translation>
         <translation>(usa predefinito di sistema)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="162"/>
+        <location filename="../pages/page_wallpaper.cpp" line="156"/>
+        <source>Image Directory: %1 valid images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_wallpaper.cpp" line="176"/>
         <source>File does not exist</source>
         <translation>Il file non esiste</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="202"/>
+        <location filename="../pages/page_wallpaper.cpp" line="217"/>
         <source>Find Background Image(s)</source>
         <translation>Trova immagine(i) di sfondo</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="233"/>
-        <location filename="../pages/page_wallpaper.cpp" line="258"/>
+        <location filename="../pages/page_wallpaper.cpp" line="248"/>
+        <location filename="../pages/page_wallpaper.cpp" line="266"/>
         <source>Find Background Image Directory</source>
         <translation>Specifica cartella dell&apos;immagine di sfondo</translation>
     </message>

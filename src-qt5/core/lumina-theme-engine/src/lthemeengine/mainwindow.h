@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-
-class QAbstractButton;
+#include <QAbstractButton>
+#include <QButtonGroup>
+//class QAbstractButton;
 
 namespace Ui {
 class MainWindow;
@@ -18,12 +19,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_buttonBox_clicked(QAbstractButton *button);
+	void closeWindow();
+	void applyWindow();
 
 private:
     void closeEvent(QCloseEvent *);
 
     Ui::MainWindow *m_ui;
+    QButtonGroup *bgroup;
 };
 
 #endif // MAINWINDOW_H

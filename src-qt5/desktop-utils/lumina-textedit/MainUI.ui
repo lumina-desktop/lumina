@@ -182,7 +182,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -190,7 +190,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionNew_File"/>
     <addaction name="actionOpen_File"/>
@@ -204,7 +204,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuSyntax_Highlighting">
      <property name="title">
@@ -224,6 +224,7 @@
     </widget>
     <addaction name="menuSyntax_Highlighting"/>
     <addaction name="menuTabs_Location"/>
+    <addaction name="actionShow_Toolbar"/>
     <addaction name="actionLine_Numbers"/>
     <addaction name="actionWrap_Lines"/>
     <addaction name="actionShow_Popups"/>
@@ -232,7 +233,7 @@
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Edit</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionFind"/>
     <addaction name="actionReplace"/>
@@ -436,7 +437,23 @@
     <string>Ctrl+P</string>
    </property>
   </action>
+  <action name="actionShow_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Toolbar</string>
+   </property>
+  </action>
  </widget>
+ <tabstops>
+  <tabstop>line_find</tabstop>
+  <tabstop>line_replace</tabstop>
+  <tabstop>tool_hideReplaceGroup</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
