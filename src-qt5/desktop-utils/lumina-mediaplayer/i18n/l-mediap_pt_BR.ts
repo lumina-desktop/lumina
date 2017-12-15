@@ -74,67 +74,67 @@
     <message>
         <location filename="../mainUI.ui" line="417"/>
         <source>View details about song (launches web browser)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver detalhes da música (abre o navegador web)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="448"/>
         <source>Current Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Estação atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover estação atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation>rm</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
         <source>Create new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar nova estação</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="495"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>Add</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurações</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Login na conta Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;Precisa de uma conta?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualidade do áudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL do proxy</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
