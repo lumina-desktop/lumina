@@ -6,7 +6,10 @@
 //===========================================
 // Internal, OS-agnostic functionality for managing the object itself
 //===========================================
-#include <OSInterface.h>
+#include <framework-OSInterface.h>
+#include <QFile>
+#include <QDir>
+#include <QVariant>
 
 OSInterface::OSInterface(QObject *parent) : QObject(parent){
   watcher = 0;
@@ -29,7 +32,7 @@ OSInterface::~OSInterface(){
   }
 }
 
-OSInterface::OSInterface* instance(){
+OSInterface* OSInterface::instance(){
   static OSInterface* m_os_object = 0;
   if(m_os_object==0){
     m_os_object = new OSInterface();
@@ -81,7 +84,7 @@ bool OSInterface::handleMediaDirChange(QString dir){ //returns true if directory
   for(int i=0; i<files.length(); i++){ files[i]  = qdir.absoluteFilePath(files[i]); }
   QString key = "media_files/"+dir;
   if(files.isEmpty() && INFO.contains(key)){ INFO.remove(key); emit mediaShortcutsChanged(); } //no files for this directory at the moment
-  else{ INFO.setValue("media_files/"+dir, files); emit mediaShortcutsChanged(); } //save these file paths for later
+  else{ INFO.insert("media_files/"+dir, files); emit mediaShortcutsChanged(); } //save these file paths for later
   //Make sure the directory is still watched (sometimes the dir is removed/recreated on modification)
   if(!watcher->directories().contains(dir)){ watcher->addPath(dir); }
   return true;
@@ -91,7 +94,7 @@ QStringList OSInterface::autoHandledMediaFiles(){
   QStringList files;
   QStringList keys = INFO.keys().filter("media_files/");
   for(int i=0; i<keys.length(); i++){
-    if(keys[i].startsWith("media_files/")){ files.append( INFO[keys[i]] ); }
+    if(keys[i].startsWith("media_files/")){ files << INFO[keys[i]].toStringList(); }
   }
   return files;
 }
@@ -103,5 +106,5 @@ void OSInterface::setupNetworkManager(){
     connectNetman();
   }
   //Load the initial state of the network accessibility
-  netAccessChanged(netman->networkAccessibility());
+  netAccessChanged(netman->networkAccessible());
 }

@@ -4,7 +4,9 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#include <OSInterface.h>
+#include <framework-OSInterface.h>
+#include <QNetworkConfiguration>
+#include <QNetworkInterface>
 
 //Start/stop interface watchers/notifications
 void OSInterface::start(){
@@ -34,7 +36,7 @@ void OSInterface::setVolume(int){}
 
 // = Network Information =
 bool OSInterface::networkAvailable(){
-  if(INFO.contains()){ return INFO.value("netaccess/available").toBool(); }
+  if(INFO.contains("netaccess/available")){ return INFO.value("netaccess/available").toBool(); }
   return false;
 }
 
@@ -113,27 +115,36 @@ void OSInterface::iodeviceAboutToClose(){}
 
 //NetworkAccessManager slots
 void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
-  INFO.setValue("netaccess/available", stat== QNetworkAccessManager::Accessible);
+  INFO.insert("netaccess/available", stat== QNetworkAccessManager::Accessible);
   //Update all the other network status info at the same time
   QNetworkConfiguration active = netman->activeConfiguration();
   //Type of connection
   QString type;
-  switch(active->bearerTypeFamily()){
+  switch(active.bearerTypeFamily()){
     case QNetworkConfiguration::BearerEthernet: type="wired"; break;
-    case QNetworkConfiguration::BearnerWLAN: type="wifi"; break;
+    case QNetworkConfiguration::BearerWLAN: type="wifi"; break;
     case QNetworkConfiguration::Bearer2G: type="cell-2G"; break;
     case QNetworkConfiguration::Bearer3G: type="cell-3G"; break;
     case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
+    default: type="";
   }
-  INFO.setValue("netaccess/type", type);
-  qDebug() << "Detected Device Status:" << active->identifier() << type << stat;
-  QNetworkInterface iface = QNetworkInterface::interfaceFromName(active->identifier());
-  QString address = iface.hardwareAddress();
-  qDebug() << " - Address:" << address;
-  INFO.setValue("netaccess/address", address);
-
+  INFO.insert("netaccess/type", type);
+  qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
+  QNetworkInterface iface = QNetworkInterface::interfaceFromName(active.name());
+  qDebug() << " - Configuration: Name:" << active.name() << active.bearerTypeName() << active.identifier();
+  qDebug() << " - Interface: MAC Address:" << iface.hardwareAddress() << "Name:" << iface.name() << iface.humanReadableName() << iface.isValid();
+  QList<QNetworkAddressEntry> addressList = iface.addressEntries();
+  QStringList address;
+  //NOTE: There are often 2 addresses, IPv4 and IPv6
+  for(int i=0; i<addressList.length(); i++){
+    address << addressList[i].ip().toString();
+  }
+  qDebug() << " - IP Address:" << address;
+  qDebug() << " - Hostname:" << networkHostname();
+  INFO.insert("netaccess/address", address.join(", "));
   emit networkStatusChanged();
 }
 
 void OSInterface::netRequestFinished(QNetworkReply*){}
 void OSInterface::netSslErrors(QNetworkReply*, const QList<QSslError>&){}
+void OSInterface::timerUpdate(){}

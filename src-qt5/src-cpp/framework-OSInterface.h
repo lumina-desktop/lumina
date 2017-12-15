@@ -17,6 +17,7 @@
 #include <QObject>
 #include <QVariant>
 #include <QHash>
+#include <QTimer>
 
 #include <QIODevice>
 #include <QFileSystemWatcher>
@@ -138,7 +139,6 @@ private slots:
 	void timerUpdate();
 
 signals:
-	void interfaceChanged(OSInterface::Interface);
 	void batteryChargeChanged();
 	void batteryChargingChanged();
 	void batterySecondsLeftChanged();
@@ -151,7 +151,7 @@ signals:
 
 private:
 	//Internal persistant data storage, OS-specific usage implementation
-	QHash< QString, QList<QVariant> > INFO;
+	QHash< QString, QVariant> INFO;
 
 	// ============
 	// Internal possibilities for watching the system (OS-Specific usage/implementation)
