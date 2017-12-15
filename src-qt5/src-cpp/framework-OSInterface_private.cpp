@@ -54,7 +54,7 @@ void OSInterface::connectIodevice(){
 void OSInterface::connectNetman(){
   if(netman==0){ return; }
   connect(netman, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(netAccessChanged(QNetworkAccessManager::NetworkAccessibility)) );
-  connect(netman, SIGNAL(requestFinished(QNetworkReply*)), this, SLOT(netRequestFinished(QNetworkReply*)) );
+  connect(netman, SIGNAL(finished(QNetworkReply*)), this, SLOT(netRequestFinished(QNetworkReply*)) );
   connect(netman, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(netSslErrors(QNetworkReply*, const QList<QSslError>&)) );
 }
 
