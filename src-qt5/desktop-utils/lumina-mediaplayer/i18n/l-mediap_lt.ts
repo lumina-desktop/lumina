@@ -280,7 +280,7 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>Norėdami įjungti šį funkcionalumą, įdiekite &quot;pianobar&quot; paslaugų programą</translation>
+        <translation>Norėdami įjungti šį funkcionalumą, įdiekite "pianobar" paslaugų programą</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
@@ -368,7 +368,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
