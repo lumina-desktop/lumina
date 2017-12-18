@@ -171,6 +171,8 @@ share/icons/material-design-dark/scalable/actions/edit-clear.svg
 share/icons/material-design-dark/scalable/actions/edit-copy.svg
 share/icons/material-design-dark/scalable/actions/edit-cut.svg
 share/icons/material-design-dark/scalable/actions/edit-delete.svg
+share/icons/material-design-dark/scalable/actions/edit-find-prev.svg
+share/icons/material-design-dark/scalable/actions/edit-find-next.svg
 share/icons/material-design-dark/scalable/actions/edit-find-page.svg
 share/icons/material-design-dark/scalable/actions/edit-find-replace.svg
 share/icons/material-design-dark/scalable/actions/edit-find.svg
@@ -989,6 +991,8 @@ share/icons/material-design-light/scalable/actions/edit-clear.svg
 share/icons/material-design-light/scalable/actions/edit-copy.svg
 share/icons/material-design-light/scalable/actions/edit-cut.svg
 share/icons/material-design-light/scalable/actions/edit-delete.svg
+share/icons/material-design-light/scalable/actions/edit-find-prev.svg
+share/icons/material-design-light/scalable/actions/edit-find-next.svg
 share/icons/material-design-light/scalable/actions/edit-find-page.svg
 share/icons/material-design-light/scalable/actions/edit-find-replace.svg
 share/icons/material-design-light/scalable/actions/edit-find.svg
