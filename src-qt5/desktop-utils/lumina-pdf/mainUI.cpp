@@ -24,10 +24,11 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
-  presentationLabel = 0;
   this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
+  presentationLabel = 0;
   CurrentPage = 0;
+  ccw = 0;
   lastdir = QDir::homePath();
   Printer = new QPrinter();
   //Create the interface widgets
@@ -63,6 +64,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     progAct->setVisible(false);
   clockAct = ui->toolBar->addWidget(label_clock);
     clockAct->setVisible(false);
+
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
     tmp->setExclusive(true);
@@ -86,6 +88,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionSingle_Page, SIGNAL(triggered()), WIDGET, SLOT(setSinglePageViewMode()) );
   connect(ui->actionDual_Pages, SIGNAL(triggered()), WIDGET, SLOT(setFacingPagesViewMode()) );
   connect(ui->actionAll_Pages, SIGNAL(triggered()), WIDGET, SLOT(setAllPagesViewMode()) );
+  connect(ui->actionScroll_Mode, SIGNAL(toggled(bool)), this, SLOT(setScroll(bool)) );
+  connect(ui->actionZoom_In,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
+  connect(ui->actionZoom_Out, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
+  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { this->rotate(Printer, true); });
+  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { this->rotate(Printer, false); });
 
   //Setup all the icons
   ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
@@ -96,6 +103,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionSingle_Page->setIcon(LXDG::findIcon("format-view-agenda",""));
   ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
   ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-large",""));
+  ui->actionScroll_Mode->setIcon(LXDG::findIcon("cursor-pointer",""));
+  ui->actionZoom_In->setIcon(LXDG::findIcon("zoom-in",""));
+  ui->actionZoom_Out->setIcon(LXDG::findIcon("zoom-out",""));
+  ui->actionRotate_Counterclockwise->setIcon(LXDG::findIcon("object-rotate-left",""));
+  ui->actionRotate_Clockwise->setIcon(LXDG::findIcon("object-rotate-right",""));
 
   //Now set the default state of the menu's and actions
   ui->menuStart_Presentation->setEnabled(false);
@@ -107,8 +119,8 @@ MainUI::~MainUI(){
 }
 
 void MainUI::loadFile(QString path){
-
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
+
   Poppler::Document *TDOC = Poppler::Document::load(path);
   if(TDOC==0){
     qDebug() << "Could not open file:" << path;
@@ -122,6 +134,7 @@ void MainUI::loadFile(QString path){
     }
     if(TDOC->isLocked()){ return; } //Cancelled - still locked
   }
+  //qpdf.processFile(path.toLatin1().data(), pass.toLatin1().data());
 
   if(DOC!=0){
     //Clear out the old document first
@@ -132,10 +145,12 @@ void MainUI::loadFile(QString path){
   numPages = -1;
   DOC = TDOC; //Save this for later
   qDebug() << "Opening File:" << path;
-  this->setWindowTitle(DOC->title());
+  this->setWindowTitle(TDOC->title());
   if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
 
   //Setup the Document
+  //QVector<QPDFObjectHandle> pages = (QVector<QPDFObjectHandle>)pdf.getAllPages();
+  //QPDFObjectHandle page = pages.at(0);
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
@@ -148,7 +163,7 @@ void MainUI::loadFile(QString path){
 	  Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
-    //qDebug() << " - Document Setup : start loading pages now";
+    qDebug() << " - Document Setup : start loading pages now";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
@@ -296,6 +311,8 @@ void MainUI::startLoadingPages(QPrinter *printer){
   progress->setValue(0);
   progAct->setVisible(true);
   QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
+  printer->setPageSize(QPageSize(QSize(pageSize.width()*2, pageSize.height()*2)));
+  qDebug() << "Starting size" << pageSize.size();
   QSize DPI(printer->resolution(),printer->resolution());
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
@@ -304,7 +321,8 @@ void MainUI::startLoadingPages(QPrinter *printer){
   }*/
   for(int i=0; i<numPages; i++){
     //qDebug() << " - Kickoff page load:" << i;
-    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size() );
+    this->ccw = 0;
+    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size());
   }
 }
 
@@ -314,6 +332,7 @@ void MainUI::slotPageLoaded(int page){
   if(finished == numPages){
     progAct->setVisible(false);
     QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    qDebug() << "Updating";
     ui->actionStop_Presentation->setEnabled(false);
     ui->menuStart_Presentation->setEnabled(true);
   }else{
@@ -328,13 +347,21 @@ void MainUI::slotStartPresentation(QAction *act){
 void MainUI::paintOnWidget(QPrinter *PRINTER){
   if(DOC==0){ return; }
   //this->show();
+  qDebug() << "Painting";
+  qDebug() << numPages << loadingHash.keys().length();
   if(loadingHash.keys().length() != numPages){ startLoadingPages(PRINTER); return; }
 
   QPainter painter(PRINTER);
     for(int i=0; i<numPages; i++){
       if(i != 0){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
+      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); qDebug() << PRINTER->pageRect().size();}
       else{ painter.drawImage(0,0, QImage()); }
+      if(ccw != 0) {
+        QTransform transform;
+        transform.rotate((ccw-1) ? 270 : 90);
+        painter.setTransform(transform);
+        //painter.rotate((ccw-1) ? 270 : 90);
+      }
     }
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
 }
@@ -346,7 +373,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
-  bool duplex = (PRINTER->duplex()!=QPrinter::DuplexNone);
+  //bool duplex = (PRINTER->duplex()!=QPrinter::DuplexNone);
   //Determine the first page that needs to be printed, and the range
   if((PRINTER->fromPage() != PRINTER->toPage() || PRINTER->fromPage()!=0 ) && PRINTER->printRange()==QPrinter::PageRange ){
     firstpage = PRINTER->fromPage() - 1;
@@ -408,6 +435,23 @@ void MainUI::OpenNewFile(){
 
 void MainUI::updateClock(){
   label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
+}
+
+void MainUI::setScroll(bool tog) {
+  if(tog) {
+    QApplication::setOverrideCursor(Qt::OpenHandCursor);
+  }else{
+    QApplication::setOverrideCursor(Qt::IBeamCursor);
+  }
+  //WIDGET->
+}
+
+void MainUI::rotate(QPrinter *printer, bool ccw) {
+  QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
+  QSize dpi(printer->resolution(),printer->resolution());
+  this->ccw = ccw+1;
+  for(int i=0; i < numPages; i++)
+    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, dpi, pageSize.size());
 }
 
 void MainUI::updateContextMenu(){

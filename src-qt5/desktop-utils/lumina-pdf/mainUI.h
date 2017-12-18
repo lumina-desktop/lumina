@@ -42,6 +42,8 @@ private:
 	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 
+  int ccw;
+
 	QString lastdir;
 
 	//Other Interface elements
@@ -92,6 +94,9 @@ private slots:
 	void updateClock();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
+
+  void setScroll(bool);
+  void rotate(QPrinter*, bool);
 
 signals:
 	void PageLoaded(int);
