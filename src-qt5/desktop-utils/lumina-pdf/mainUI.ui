@@ -105,6 +105,9 @@
    <addaction name="actionSingle_Page"/>
    <addaction name="actionDual_Pages"/>
    <addaction name="actionAll_Pages"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_In_2"/>
+   <addaction name="actionZoom_Out_2"/>
   </widget>
   <action name="actionOpen_PDF">
    <property name="text">
@@ -250,17 +253,6 @@
     <string>Rotate Clockwise</string>
    </property>
   </action>
-  <action name="actionSelect_Mode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Select Mode</string>
-   </property>
-  </action>
   <action name="actionScroll_Mode">
    <property name="checkable">
     <bool>true</bool>
@@ -273,6 +265,16 @@
    </property>
    <property name="text">
     <string>Scroll Mode</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out_2">
+   <property name="text">
+    <string/>
+   </property>
+  </action>
+  <action name="actionZoom_In_2">
+   <property name="text">
+    <string/>
    </property>
   </action>
  </widget>
