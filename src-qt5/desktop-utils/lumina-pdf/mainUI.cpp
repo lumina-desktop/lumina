@@ -53,7 +53,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
-  connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
+  //connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
 
   //Create the other interface widgets
   progress = new QProgressBar(this);
@@ -87,13 +87,36 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionSingle_Page, SIGNAL(triggered()), WIDGET, SLOT(setSinglePageViewMode()) );
   connect(ui->actionDual_Pages, SIGNAL(triggered()), WIDGET, SLOT(setFacingPagesViewMode()) );
   connect(ui->actionAll_Pages, SIGNAL(triggered()), WIDGET, SLOT(setAllPagesViewMode()) );
-  connect(ui->actionScroll_Mode, SIGNAL(toggled(bool)), this, SLOT(setScroll(bool)) );
+  //connect(ui->actionScroll_Mode,  &QAction::triggered, this, [&] { this->setScroll(true); });
+  //connect(ui->actionSelect_Mode, &QAction::triggered, this, [&] { this->setScroll(false); });
   connect(ui->actionZoom_In,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
   connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { this->rotate(true); });
   connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { this->rotate(false); });
   connect(ui->actionZoom_In_2,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out_2, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
+  connect(ui->actionFirst_Page, SIGNAL(triggered()), this, SLOT(firstPage()) );
+  connect(ui->actionPrevious_Page, SIGNAL(triggered()), this, SLOT(prevPage()) );
+  connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
+  connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
+
+  //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
+  //int lastP = numPages-1;
+  ui->actionFirst_Page->setText(tr("First Page"));
+  ui->actionPrevious_Page->setText(tr("Previous Page"));
+  ui->actionNext_Page->setText(tr("Next Page"));
+  ui->actionLast_Page->setText(tr("Last Page"));
+  /*ui->actionFirst_Page->setEnabled(curP!=0);
+  ui->actionPrevious_Page->setEnabled(curP>0);
+  ui->actionNext_Page->setEnabled(curP<lastP);
+  ui->actionLast_Page->setEnabled(curP!=lastP);*/
+
+  ui->actionStart_Here->setText(tr("Start Presentation (current slide)"));
+  connect(ui->actionStart_Here, SIGNAL(triggered()), this, SLOT(startPresentationHere()) );
+  ui->actionStart_Begin->setText(tr("Start Presentation (at beginning)"));
+  connect(ui->actionStart_Begin, SIGNAL(triggered()), this, SLOT(startPresentationBeginning()) );
+  ui->actionStop_Presentation->setText(tr("Stop Presentation"));
+  connect(ui->actionStop_Presentation, SIGNAL(triggered()), this, SLOT(closePresentation()) );
 
   //Setup all the icons
   ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
@@ -105,16 +128,31 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
   ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-large",""));
   ui->actionScroll_Mode->setIcon(LXDG::findIcon("cursor-pointer",""));
+  ui->actionSelect_Mode->setIcon(LXDG::findIcon("cursor-text",""));
   ui->actionZoom_In->setIcon(LXDG::findIcon("zoom-in",""));
   ui->actionZoom_Out->setIcon(LXDG::findIcon("zoom-out",""));
   ui->actionZoom_In_2->setIcon(LXDG::findIcon("zoom-in",""));
   ui->actionZoom_Out_2->setIcon(LXDG::findIcon("zoom-out",""));
   ui->actionRotate_Counterclockwise->setIcon(LXDG::findIcon("object-rotate-left",""));
   ui->actionRotate_Clockwise->setIcon(LXDG::findIcon("object-rotate-right",""));
+  ui->actionFirst_Page->setIcon(LXDG::findIcon("go-first",""));
+  ui->actionPrevious_Page->setIcon(LXDG::findIcon("go-previous",""));
+  ui->actionNext_Page->setIcon(LXDG::findIcon("go-next",""));
+  ui->actionLast_Page->setIcon(LXDG::findIcon("go-last",""));
+  ui->actionStart_Here->setIcon(LXDG::findIcon("media-playback-start-circled",""));
+  ui->actionStart_Begin->setIcon(LXDG::findIcon("presentation-play",""));
+  ui->actionStop_Presentation->setIcon(LXDG::findIcon("media-playback-stop-circled",""));
+  ui->actionBookmarks->setIcon(LXDG::findIcon("bookmark-new",""));
+  ui->actionFind->setIcon(LXDG::findIcon("edit-find",""));
+  ui->actionFind_Next->setIcon(LXDG::findIcon("edit-find-next",""));
+  ui->actionFind_Previous->setIcon(LXDG::findIcon("edit-find-prev",""));
+  ui->actionProperties->setIcon(LXDG::findIcon("dialog-information",""));
+  ui->actionSettings->setIcon(LXDG::findIcon("document-properties",""));
 
   //Now set the default state of the menu's and actions
-  ui->menuStart_Presentation->setEnabled(false);
   ui->actionStop_Presentation->setEnabled(false);
+  ui->actionStart_Here->setEnabled(false);
+  ui->actionStart_Begin->setEnabled(false);
 }
 
 MainUI::~MainUI(){
@@ -259,7 +297,8 @@ void MainUI::startPresentation(bool atStart){
   presentationLabel->showFullScreen();
 
   ui->actionStop_Presentation->setEnabled(true);
-  ui->menuStart_Presentation->setEnabled(false);
+  ui->actionStart_Here->setEnabled(false);
+  ui->actionStart_Begin->setEnabled(false);
   updateClock();
   clockAct->setVisible(true);
   clockTimer->start();
@@ -299,7 +338,8 @@ void MainUI::endPresentation(){
   if(presentationLabel==0 || !presentationLabel->isVisible()){ return; } //not in presentation mode
   presentationLabel->hide(); //just hide this (no need to re-create the label for future presentations)
   ui->actionStop_Presentation->setEnabled(false);
-  ui->menuStart_Presentation->setEnabled(true);
+  ui->actionStart_Here->setEnabled(true);
+  ui->actionStart_Begin->setEnabled(true);
   clockTimer->stop();
   clockAct->setVisible(false);
   this->releaseKeyboard();
@@ -335,15 +375,16 @@ void MainUI::slotPageLoaded(int page){
     QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
     //qDebug() << "Updating";
     ui->actionStop_Presentation->setEnabled(false);
-    ui->menuStart_Presentation->setEnabled(true);
+    ui->actionStart_Here->setEnabled(true);
+    ui->actionStart_Begin->setEnabled(true);
   }else{
     progress->setValue(finished);
   }
 }
 
-void MainUI::slotStartPresentation(QAction *act){
+/*void MainUI::slotStartPresentation(QAction *act){
   startPresentation(act == ui->actionAt_Beginning);
-}
+}*/
 
 void MainUI::paintOnWidget(QPrinter *PRINTER){
   if(DOC==0){ return; }
@@ -456,20 +497,18 @@ void MainUI::rotate(bool ccw) {
 
 void MainUI::updateContextMenu(){
   contextMenu->clear();
-  int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
-  int lastP = numPages-1;
-  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(curP+1), QString::number(lastP+1) ) );
-  contextMenu->addAction(tr("Next Page"), this, SLOT(nextPage()))->setEnabled(curP<lastP);
-  contextMenu->addAction(tr("Previous Page"), this, SLOT(prevPage()))->setEnabled( curP>0 );
+  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()), QString::number(numPages) ) );
+  contextMenu->addAction(ui->actionPrevious_Page);
+  contextMenu->addAction(ui->actionNext_Page);
   contextMenu->addSeparator();
-  contextMenu->addAction(tr("First Page"), this, SLOT(firstPage()))->setEnabled(curP!=0);
-  contextMenu->addAction(tr("Last Page"), this, SLOT(lastPage()))->setEnabled(curP!=lastP);
+  contextMenu->addAction(ui->actionFirst_Page);
+  contextMenu->addAction(ui->actionLast_Page);
   contextMenu->addSeparator();
   if(presentationLabel==0 || !presentationLabel->isVisible()){
-    contextMenu->addAction(tr("Start Presentation (current slide)"), this, SLOT(startPresentationHere()) );
-    contextMenu->addAction(tr("Start Presentation (at beginning)"), this, SLOT(startPresentationBeginning()) );
+    contextMenu->addAction(ui->actionStart_Begin);
+    contextMenu->addAction(ui->actionStart_Here);
   }else{
-    contextMenu->addAction(tr("Stop Presentation"), this, SLOT(closePresentation()) );
+    contextMenu->addAction(ui->actionStop_Presentation);
   }
 }
 

@@ -33,19 +33,14 @@
     <addaction name="separator"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
-    <addaction name="actionPDF_Info"/>
+    <addaction name="actionProperties"/>
    </widget>
    <widget class="QMenu" name="menuPresentation">
     <property name="title">
      <string>&amp;Presentation</string>
     </property>
-    <widget class="QMenu" name="menuStart_Presentation">
-     <property name="title">
-      <string>Start Presentation</string>
-     </property>
-     <addaction name="actionAt_Beginning"/>
-    </widget>
-    <addaction name="menuStart_Presentation"/>
+    <addaction name="actionStart_Begin"/>
+    <addaction name="actionStart_Here"/>
     <addaction name="actionStop_Presentation"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -59,6 +54,7 @@
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionScroll_Mode"/>
+    <addaction name="actionSelect_Mode"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -173,9 +169,9 @@
     <string>All Pages</string>
    </property>
   </action>
-  <action name="actionAt_Beginning">
+  <action name="actionStart_Begin">
    <property name="text">
-    <string>At Beginning</string>
+    <string>Start Presentation (at beginning)</string>
    </property>
   </action>
   <action name="actionStop_Presentation">
@@ -233,9 +229,9 @@
     <string>Last Page</string>
    </property>
   </action>
-  <action name="actionPDF_Info">
+  <action name="actionProperties">
    <property name="text">
-    <string>PDF Info</string>
+    <string>Properties</string>
    </property>
   </action>
   <action name="actionBookmarks">
@@ -255,7 +251,7 @@
   </action>
   <action name="actionScroll_Mode">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="checked">
     <bool>false</bool>
@@ -275,6 +271,19 @@
   <action name="actionZoom_In_2">
    <property name="text">
     <string/>
+   </property>
+  </action>
+  <action name="actionStart_Here">
+   <property name="text">
+    <string>Start Presentation (current slide)</string>
+   </property>
+  </action>
+  <action name="actionSelect_Mode">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select Mode</string>
    </property>
   </action>
  </widget>

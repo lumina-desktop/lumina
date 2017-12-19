@@ -69,7 +69,7 @@ private:
 private slots:
 	void startLoadingPages(QPrinter *printer);
 	void slotPageLoaded(int);
-	void slotStartPresentation(QAction *act);
+  //void slotStartPresentation(QAction *act);
 
 	//Simplification routines
 	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
