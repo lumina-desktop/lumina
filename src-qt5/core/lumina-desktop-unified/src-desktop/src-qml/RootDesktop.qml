@@ -46,11 +46,12 @@ Rectangle {
   //Create the context menu itself
  QML.ContextMenu { id: contextMenu }
 
-  //Setup the wallpapers
+  //Setup the screens/wallpapers
   Repeater{
     model: RootObject.screens
-    QML.WallpaperImage{
+    QML.Screen{
       screen_id: modelData
+      object: RootObject.screen(modelData)
       z: 0+index
     }
   }

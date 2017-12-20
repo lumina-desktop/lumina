@@ -13,7 +13,7 @@ import Lumina.Backend.ScreenObject 2.0
 AnimatedImage {
     //C++ backend object
     property string screen_id
-    property ScreenObject object: RootObject.screen(screen_id)
+    property ScreenObject object
 
     //Normal geometries/placements
     asynchronous: true
