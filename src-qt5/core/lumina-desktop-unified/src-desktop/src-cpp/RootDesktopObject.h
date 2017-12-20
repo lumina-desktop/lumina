@@ -17,6 +17,7 @@ class RootDesktopObject : public QObject{
 	Q_OBJECT
 	//Define all the QML Properties here (interface between QML and the C++ methods below)
 	Q_PROPERTY( QStringList screens READ screens NOTIFY screensChanged)
+	Q_PROPERTY( QStringList panels READ panels NOTIFY panelsChanged)
 
 public:
 	//main contructor/destructor
@@ -31,13 +32,19 @@ public:
 	//QML Read Functions
 	QStringList screens();
 	Q_INVOKABLE ScreenObject* screen(QString id);
+	Q_INVOKABLE QStringList panels();
+	Q_INVOKABLE PanelObject* panel(QString id);
+
+	void setPanels(QList<PanelObject*> list);
 
 	//QML Access Functions
 	Q_INVOKABLE void logout();
 	Q_INVOKABLE void lockscreen();
 	Q_INVOKABLE void mousePositionChanged();
+
 private:
 	QList<ScreenObject*> s_objects;
+	QList<PanelObject*> panel_objects;
 
 public slots:
 	void updateScreens(); //rescan/update screen objects
@@ -47,6 +54,7 @@ private slots:
 
 signals:
 	void screensChanged();
+	void panelsChanged();
 	void startLogout();
 	void mouseMoved();
 	void lockScreen();
