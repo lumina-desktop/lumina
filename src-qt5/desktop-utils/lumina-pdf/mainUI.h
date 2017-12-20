@@ -21,6 +21,7 @@
 
 #include <poppler/qt5/poppler-qt5.h>
 #include "PresentationLabel.h"
+#include "propDialog.h"
 
 namespace Ui{
 	class MainUI;
@@ -34,11 +35,11 @@ public:
 
 	void loadFile(QString path);
 
-
 private:
 	Poppler::Document *DOC;
 	QPrintPreviewWidget *WIDGET;
 	Ui::MainUI *ui;
+  PropDialog *PROPDIALOG;
 	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
@@ -79,8 +80,9 @@ private slots:
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
+  void showInformation();
 
-
+  void newFocus(QWidget*, QWidget*);
 	void paintOnWidget(QPrinter *PRINTER);
 	void paintToPrinter(QPrinter *PRINTER);
 
@@ -94,12 +96,12 @@ private slots:
 
   void setScroll(bool);
   void rotate(bool);
-  //void rotate(QPrinter*, bool);
 
 signals:
 	void PageLoaded(int);
 
 protected:
   void keyPressEvent(QKeyEvent*);	
+  void wheelEvent(QWheelEvent*);
 };
 #endif

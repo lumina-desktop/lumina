@@ -46,6 +46,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Now put the widgets into the UI
   this->setCentralWidget(WIDGET);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(qApp, SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(newFocus(QWidget*, QWidget*)));
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
   DOC = 0;
@@ -99,6 +100,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionPrevious_Page, SIGNAL(triggered()), this, SLOT(prevPage()) );
   connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
   connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
+  connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(showInformation()));
 
   //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
   //int lastP = numPages-1;
@@ -368,6 +370,7 @@ void MainUI::startLoadingPages(QPrinter *printer){
 }
 
 void MainUI::slotPageLoaded(int page){
+  Q_UNUSED(page);
   //qDebug() << "Page Loaded:" << page;
   int finished = loadingHash.keys().length();
   if(finished == numPages){
@@ -491,13 +494,15 @@ void MainUI::rotate(bool ccw) {
     loadingHash.insert(i, image);
   }
   //Rotates the page as well as the image
-  WIDGET->setOrientation((WIDGET->orientation() == QPrinter::Landscape) ? QPrinter::Portrait : QPrinter::Landscape);
+  WIDGET->setOrientation((WIDGET->orientation() == QPrinter::Landscape) ? 
+    QPrinter::Portrait : QPrinter::Landscape);
   WIDGET->updatePreview();
 }
 
 void MainUI::updateContextMenu(){
   contextMenu->clear();
-  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()), QString::number(numPages) ) );
+  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()),
+    QString::number(numPages) ) );
   contextMenu->addAction(ui->actionPrevious_Page);
   contextMenu->addAction(ui->actionNext_Page);
   contextMenu->addSeparator();
@@ -515,77 +520,47 @@ void MainUI::updateContextMenu(){
 void MainUI::keyPressEvent(QKeyEvent *event){
   //See if this is one of the special hotkeys and act appropriately
   bool inPresentation = (presentationLabel!=0);
-  /*QWheelEvent wEvent( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
-  qDebug() << "KeyPressed";
-  switch(event->key()) {
-    case Qt::Key_Escape:
-    case Qt::Key_Backspace:
-      qDebug() << " - Escape/Backspace";
-      if(inPresentation){ endPresentation(); }
-      break;
-    case Qt::Key_Right:
-    case Qt::Key_Space:
-    case Qt::Key_PageDown:
-      qDebug() << " - Right/Down/Spacebar" << inPresentation;
-      nextPage();
-      break;
-    case Qt::Key_Left:
-    case Qt::Key_PageUp:
-      qDebug() << " - Left/Up";
-      prevPage();
-      break;
-    case Qt::Key_Home:
-      qDebug() << " - Home";
-      firstPage();
-      break;
-    case Qt::Key_End:
-      qDebug() << " - End";
-      lastPage();
-      break;
-    case Qt::Key_F11:
-      qDebug() << " - F11";
-      if(inPresentation){ endPresentation(); }
-      else{ startPresentationHere(); }
-      break;
-    case Qt::Key_Up:
-      break;
-    case Qt::Key_Down:
-      qDebug() << "Send Wheel Event";
-      QApplication::sendEvent(WIDGET, &wEvent);
-      //WIDGET->scrollDown();
-      break;
-    default:
-      QMainWindow::keyPressEvent(event);
-  }*/
   if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
-    qDebug() << " - Escape/Backspace";
     if(inPresentation){ endPresentation(); }
-  }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
-    qDebug() << " - Right/Down/Spacebar" << inPresentation;
+  }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Space ||
+  event->key()==Qt::Key_PageDown){
     nextPage();
   }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_PageUp){
-    qDebug() << " - Left/Up";
     prevPage();
   }else if(event->key()==Qt::Key_Home){
-    qDebug() << " - Home";
     firstPage();
   }else if(event->key()==Qt::Key_End){
-    qDebug() << " - End";
     lastPage();
   }else if(event->key()==Qt::Key_F11){
-    qDebug() << " - F11";
     if(inPresentation){ endPresentation(); }
     else{ startPresentationHere(); }
   }else if(event->key() == Qt::Key_Up) {
-    qDebug() << " - KeyUp";
-    
+    //Scroll the widget up 
   }else if(event->key() == Qt::Key_Down) {
+    //Scroll the widget down
     /*qDebug() << "Send Wheel Event";
     QWheelEvent wEvent( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
     QApplication::sendEvent(WIDGET, &wEvent);*/
-    qDebug() << " - KeyDown";
-    //WIDGET->scroll(0, 30);
   }else{
     QMainWindow::keyPressEvent(event);
   }
+}
+
+void MainUI::wheelEvent(QWheelEvent *event) {
+  //Scroll the window according to the mouse wheel
+  QMainWindow::wheelEvent(event);
+}
+
+void MainUI::newFocus(QWidget *oldW, QWidget *newW) {
+  Q_UNUSED(oldW);
+  //qDebug() << "NEW: " << newW << "OLD: " << oldW;
+  if(newW and newW != this) {
+    newW->setFocusPolicy(Qt::NoFocus);
+    this->setFocus();
+  }
+}
+
+void MainUI::showInformation() {
+  PROPDIALOG = new PropDialog(DOC);
+  PROPDIALOG->show();
 }
