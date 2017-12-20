@@ -49,8 +49,9 @@ Rectangle {
   //Setup the wallpapers
   Repeater{
     model: RootObject.screens
-    QML.WallpaperImage{
+    QML.Screen{
       screen_id: modelData
+      object: RootObject.screen(modelData)
       z: 0+index
     }
   }
