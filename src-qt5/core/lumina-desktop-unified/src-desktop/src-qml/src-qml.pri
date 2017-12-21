@@ -2,7 +2,8 @@
 lupdate_only{
   SOURCES *= $${PWD}/RootDesktop.qml \
 		$${PWD}/ContextMenu.qml \
-		$${PWD}/WallpaperImage.qml
+		$${PWD}/Screen.qml \
+		$${PWD}/Panel.qml
 }
 
 RESOURCES *= $${PWD}/src-qml.qrc

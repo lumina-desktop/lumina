@@ -13,7 +13,12 @@ ScreenObject::ScreenObject(QScreen *scrn, QObject *parent) : QObject(parent){
 }
 
 void ScreenObject::RegisterType(){
+  static bool done = false;
+  if(done){ return; }
+  done=true;
   qmlRegisterType<ScreenObject>("Lumina.Backend.ScreenObject",2,0, "ScreenObject");
+  //Also register any types that are needed by this class
+  PanelObject::RegisterType();
 }
 
 QString ScreenObject::name(){ return bg_screen->name(); }
@@ -28,4 +33,25 @@ void ScreenObject::setBackground(QString fileOrColor){
     bg = fileOrColor;
     emit backgroundChanged();
   }
+}
+
+void ScreenObject::setPanels(QList<PanelObject*> list){
+  panel_objects = list;
+  emit panelsChanged();
+}
+
+//QML Read Functions
+QStringList ScreenObject::panels(){
+  //qDebug() << "Request Panels:" << panel_objects.length();
+  QStringList names;
+  for(int i=0; i<panel_objects.length(); i++){ names << panel_objects[i]->name(); }
+  return names;
+}
+
+PanelObject* ScreenObject::panel(QString id){
+  //qDebug() << "Got Panel Request:" << id;
+  for(int i=0; i<panel_objects.length(); i++){
+    if(panel_objects[i]->name()==id){ return panel_objects[i]; }
+  }
+  return 0;
 }

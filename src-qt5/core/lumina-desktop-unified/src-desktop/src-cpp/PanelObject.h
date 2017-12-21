@@ -4,17 +4,15 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-// This is the base C++ object that is used to pass Screen/Wallpaper info to the QML classes
+// This is the base C++ object that is used to pass Panel info to the QML classes
 //===========================================
-#ifndef _LUMINA_DESKTOP_SCREEN_DESKTOP_OBJECT_H
-#define _LUMINA_DESKTOP_SCREEN_DESKTOP_OBJECT_H
+#ifndef _LUMINA_DESKTOP_PANEL_OBJECT_H
+#define _LUMINA_DESKTOP_PANEL_OBJECT_H
 #include <QObject>
 #include <QString>
 #include <QScreen>
 
-#include "PanelObject.h"
-
-class ScreenObject : public QObject {
+class PanelObject : public QObject {
 	Q_OBJECT
 	Q_PROPERTY( QString name READ name )
 	Q_PROPERTY( QString background READ background NOTIFY backgroundChanged)
@@ -22,15 +20,13 @@ class ScreenObject : public QObject {
 	Q_PROPERTY( int y READ y NOTIFY geomChanged)
 	Q_PROPERTY( int width READ width NOTIFY geomChanged)
 	Q_PROPERTY( int height READ height NOTIFY geomChanged)
-	Q_PROPERTY( QStringList panels READ panels NOTIFY panelsChanged)
 
 private:
-	QScreen *bg_screen;
-	QString bg;
-	QList<PanelObject*> panel_objects;
+	QString panel_id, bg;
+	QRect geom;
 
 public:
-	ScreenObject(QScreen *scrn = 0, QObject *parent = 0);
+	PanelObject(QString id = "", QObject *parent = 0);
 
 	static void RegisterType();
 
@@ -40,18 +36,14 @@ public:
 	Q_INVOKABLE int y();
 	Q_INVOKABLE int width();
 	Q_INVOKABLE int height();
-	Q_INVOKABLE QStringList panels();
-	Q_INVOKABLE PanelObject* panel(QString id);
-
-	void setPanels(QList<PanelObject*> list);
 
 public slots:
 	void setBackground(QString fileOrColor);
+	void setGeometry(QRect newgeom);
 
 signals:
 	void backgroundChanged();
 	void geomChanged();
-	void panelsChanged();
 };
 
 #endif
