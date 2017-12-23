@@ -16,6 +16,7 @@
 #include <QApplication>
 #include <QScreen>
 #include <QTimer>
+#include <iostream>
 
 #include <QtConcurrent>
 
@@ -44,6 +45,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
   //Now put the widgets into the UI
+  ui->bookmarksFrame->setParent(WIDGET);
+  ui->findGroup->setParent(WIDGET);
   this->setCentralWidget(WIDGET);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(qApp, SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(newFocus(QWidget*, QWidget*)));
@@ -101,6 +104,23 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
   connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
   connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(showInformation()));
+  connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(enableFind())); 
+  connect(ui->actionFind_Next,  &QAction::triggered, this,
+    [&] { find(ui->textEdit->toPlainText(), true); });
+  connect(ui->actionFind_Previous,  &QAction::triggered, this,
+    //[&] { find(ui->textEdit->toPlainText(), false); });
+    [&] { find("Revision", false); });
+  connect(ui->findNextB,  &QPushButton::clicked, this,
+    [&] { find(ui->textEdit->toPlainText(), true); });
+  connect(ui->findPrevB,  &QPushButton::clicked, this,
+    [&] { find(ui->textEdit->toPlainText(), false); });
+  connect(ui->matchCase, &QPushButton::clicked, this, 
+    [&] (bool value) { this->matchCase = value; });
+  connect(ui->closeFind, &QPushButton::clicked, this,
+    [&] { ui->findGroup->setVisible(false); this->setFocus(); });
+  connect(ui->actionClearHighlights,  &QAction::triggered, WIDGET,
+    [&] { clearHighlights = true; WIDGET->update(); });
+  connect(ui->actionBookmarks, SIGNAL(triggered()), this, SLOT(showBookmarks()));
 
   //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
   //int lastP = numPages-1;
@@ -150,11 +170,19 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionFind_Previous->setIcon(LXDG::findIcon("edit-find-prev",""));
   ui->actionProperties->setIcon(LXDG::findIcon("dialog-information",""));
   ui->actionSettings->setIcon(LXDG::findIcon("document-properties",""));
+  ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
+  ui->findPrevB->setIcon(LXDG::findIcon("go-up-search"));
+  ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
+  ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
 
   //Now set the default state of the menu's and actions
   ui->actionStop_Presentation->setEnabled(false);
   ui->actionStart_Here->setEnabled(false);
   ui->actionStart_Begin->setEnabled(false);
+
+  qDebug() << "Disabling findGroup" << ui->findGroup;
+  ui->findGroup->setVisible(false);
+  ui->bookmarksFrame->setVisible(false);
 }
 
 MainUI::~MainUI(){
@@ -399,11 +427,22 @@ void MainUI::paintOnWidget(QPrinter *PRINTER){
   QPainter painter(PRINTER);
   for(int i=0; i<numPages; i++){
     if(i != 0){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-    if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
+    if(loadingHash.contains(i)){ 
+      painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), 
+        Qt::KeepAspectRatio, Qt::SmoothTransformation)); 
+      if(!clearHighlights and !results.empty()) {
+        for(int j = 0; j < results.size(); j++) {
+          Poppler::TextBox *currentText = results.keys()[j];
+          if(results.value(currentText) == i)
+            painter.fillRect(currentText->boundingBox(), QColor(255, 255, 179, 128));
+         }
+      }
+    }
     else{ painter.drawImage(0,0, QImage()); }
   }
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   loadingHash.clear();
+  clearHighlights = false;
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
@@ -563,4 +602,61 @@ void MainUI::newFocus(QWidget *oldW, QWidget *newW) {
 void MainUI::showInformation() {
   PROPDIALOG = new PropDialog(DOC);
   PROPDIALOG->show();
+}
+
+void MainUI::find(QString text, bool forward) {
+  qDebug() << "Finding Text";
+  bool newText = results.empty();
+  bool research = false;
+  if(!newText)
+    research = !results.keys()[0]->text().contains(text);
+  //Clear results if the user gives a new search string
+  if(research)
+    results.clear();
+
+
+  if(research or newText) {
+    //combiner.setPen(Qt::NoPen);
+    for(int i = 0; i < numPages; i++) {
+      QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
+      for(int j = 0; j < textList.size(); j++) {
+        if(textList[j]->text().contains(text, (matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
+          results.insert(textList[j], i);
+        }
+      }
+    }
+    currentHighlight = (forward) ? -1 : results.size();
+  }
+
+  qDebug() << "Jumping to next result";
+  if(!results.empty()) {
+    //Jump to the location of the next or previous textbox and highlight
+    if(forward) {
+      currentHighlight = (currentHighlight + 1) % results.size();
+    }else{
+      currentHighlight--;
+      //Ensure currentHighlight will be between 0 and results.size() - 1
+      if(currentHighlight < 0) 
+        currentHighlight = results.size() - 1;
+    }
+
+    //Extra highlight the current text
+    Poppler::TextBox *currentText = results.keys()[currentHighlight];
+    WIDGET->setCurrentPage(results.value(currentText));
+  }else{
+    //Print "No results found" 
+  }
+}
+
+void MainUI::enableFind() {
+  qDebug() << "Enabling";
+  std::cout << ui->findGroup << '\n';
+  WIDGET->setGeometry(QRect(WIDGET->pos(), QSize(WIDGET->width(), WIDGET->height()-ui->findGroup->height())));
+  ui->findGroup->setVisible(true); 
+  ui->findGroup->setFocus();
+  ui->textEdit->setText("");
+}
+
+void MainUI::showBookmarks() {
+  ui->bookmarksFrame->setVisible(true);
 }

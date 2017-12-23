@@ -23,6 +23,8 @@ PropDialog::PropDialog(Poppler::Document *DOC) : QDialog(), ui(new Ui::PropDialo
 
   ui->setupUi(this);
 
+  connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
+
   //Setup translations
   ui->titleL->setText(tr("Title:"));
   ui->subjectL->setText(tr("Subject:"));

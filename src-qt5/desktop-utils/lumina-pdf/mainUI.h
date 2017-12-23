@@ -43,6 +43,9 @@ private:
 	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
+  bool matchCase, clearHighlights;
+  QMap<Poppler::TextBox*, int> results;
+  int currentHighlight;
 
 	//Other Interface elements
 	QProgressBar *progress;
@@ -81,6 +84,9 @@ private slots:
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
   void showInformation();
+  void find(QString text, bool forward);
+  void enableFind();
+  void showBookmarks();
 
   void newFocus(QWidget*, QWidget*);
 	void paintOnWidget(QPrinter *PRINTER);
