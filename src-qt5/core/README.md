@@ -35,6 +35,7 @@ Other Files that get installed if "core" is built directly:
    * libxcb-ewmh
    * libxcb-image
    * libxcb-composite
+   * libxcb-icccm
    * libxcb-damage
    * libxcb-randr
    * libxcb-util
