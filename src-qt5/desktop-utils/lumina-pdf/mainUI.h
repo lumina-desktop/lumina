@@ -43,7 +43,7 @@ private:
 	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
-  bool matchCase, clearHighlights;
+  bool matchCase, highlight;
   QMap<Poppler::TextBox*, int> results;
   int currentHighlight;
 
@@ -61,6 +61,7 @@ private:
 	int numPages;
 
 	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
+  void highlightText(QPrinter *PRINTER);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -89,7 +90,7 @@ private slots:
   void showBookmarks();
 
   void newFocus(QWidget*, QWidget*);
-	void paintOnWidget(QPrinter *PRINTER);
+	void paintOnWidget(QPrinter*, bool);
 	void paintToPrinter(QPrinter *PRINTER);
 
 	//Button Slots
@@ -109,5 +110,6 @@ signals:
 protected:
   void keyPressEvent(QKeyEvent*);	
   void wheelEvent(QWheelEvent*);
+  void resizeEvent(QResizeEvent*);
 };
 #endif
