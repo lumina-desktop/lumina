@@ -22,6 +22,7 @@
 #include <poppler/qt5/poppler-qt5.h>
 #include "PresentationLabel.h"
 #include "propDialog.h"
+#include "PrintWidget.h"
 
 namespace Ui{
 	class MainUI;
@@ -37,7 +38,7 @@ public:
 
 private:
 	Poppler::Document *DOC;
-	QPrintPreviewWidget *WIDGET;
+	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
   PropDialog *PROPDIALOG;
 	QPrinter* Printer;

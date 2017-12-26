@@ -19,10 +19,11 @@ message("Qt Modules Needed: $${QT}")
 
 SOURCES += main.cpp \
         mainUI.cpp \
-        propDialog.cpp
+        propDialog.cpp \
+        PrintWidget.cpp
 
 HEADERS  += mainUI.h \
-		CM_PrintPreviewWidget.h \
+		PrintWidget.h \
 		PresentationLabel.h \
     PropDialog.h
 

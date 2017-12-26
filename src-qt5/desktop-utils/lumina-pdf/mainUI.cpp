@@ -21,7 +21,7 @@
 #include <QtConcurrent>
 
 #include <LuminaXDG.h>
-#include "CM_PrintPreviewWidget.h"
+#include "PrintWidget.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
@@ -33,7 +33,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   lastdir = QDir::homePath();
   Printer = new QPrinter();
   //Create the interface widgets
-  WIDGET = new CM_PrintPreviewWidget(Printer,this);
+  WIDGET = new PrintWidget(Printer,this);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -53,7 +53,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(qApp, SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(newFocus(QWidget*, QWidget*)));
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
-  connect(WIDGET, &QPrintPreviewWidget::paintRequested, this, 
+  connect(WIDGET, &PrintWidget::paintRequested, this, 
     [=](QPrinter *printer) { this->paintOnWidget(printer, this->highlight); });
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
