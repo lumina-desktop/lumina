@@ -21,6 +21,8 @@
 
 #include <poppler/qt5/poppler-qt5.h>
 #include "PresentationLabel.h"
+#include "propDialog.h"
+#include "PrintWidget.h"
 
 namespace Ui{
 	class MainUI;
@@ -34,17 +36,17 @@ public:
 
 	void loadFile(QString path);
 
-
 private:
 	Poppler::Document *DOC;
-	QPrintPreviewWidget *WIDGET;
+	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
+  PropDialog *PROPDIALOG;
 	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
-
-  int ccw;
-
 	QString lastdir;
+  bool matchCase, highlight;
+  QMap<Poppler::TextBox*, int> results;
+  int currentHighlight;
 
 	//Other Interface elements
 	QProgressBar *progress;
@@ -60,6 +62,7 @@ private:
 	int numPages;
 
 	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
+  void highlightText(QPrinter *PRINTER);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -72,7 +75,7 @@ private:
 private slots:
 	void startLoadingPages(QPrinter *printer);
 	void slotPageLoaded(int);
-	void slotStartPresentation(QAction *act);
+  //void slotStartPresentation(QAction *act);
 
 	//Simplification routines
 	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
@@ -82,9 +85,12 @@ private slots:
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
+  void showInformation();
+  void find(QString text, bool forward);
+  void enableFind();
+  void showBookmarks();
 
-
-	void paintOnWidget(QPrinter *PRINTER);
+	void paintOnWidget(QPrinter*, bool);
 	void paintToPrinter(QPrinter *PRINTER);
 
 	//Button Slots
@@ -96,51 +102,14 @@ private slots:
 	void updateContextMenu();
 
   void setScroll(bool);
-  void rotate(QPrinter*, bool);
+  void rotate(bool);
 
 signals:
 	void PageLoaded(int);
 
 protected:
-	void keyPressEvent(QKeyEvent *event){
-	  //See if this is one of the special hotkeys and act appropriately
-	    //qDebug() << "Got Key Press:";
-	  bool inPresentation = (presentationLabel!=0);
- 	  if(!inPresentation){
-	    //Alternate functionality when **not** in presentation mode
-	    /*if(event->key()==Qt::Key_Down){
-	      qDebug() << "Send Wheel Event";
- 	      QWheelEvent event( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
-	      QApplication::sendEvent(WIDGET, &event);
-	      //WIDGET->scrollDown();
- 	      return;
-	    }else if(event->key()==Qt::Key_Up){
-	      return;
-	    }*/
-	  }
-
-	    if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
-	      //qDebug() << " - Escape/Backspace";
-	      if(inPresentation){ endPresentation(); }
-	    }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Down || event->key()==Qt::Key_Space || event->key()==Qt::Key_PageDown){
-	      //qDebug() << " - Right/Down/Spacebar" << inPresentation;
-	      nextPage();
-	    }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_Up || event->key()==Qt::Key_PageUp){
-	      //qDebug() << " - Left/Up";
-	      prevPage();
-	    }else if(event->key()==Qt::Key_Home){
-	      //qDebug() << " - Home";
-	      firstPage();
-	    }else if(event->key()==Qt::Key_End){
-	      //qDebug() << " - End";
-	      lastPage();
-	    }else if(event->key()==Qt::Key_F11){
-	      //qDebug() << " - F11";
-	      if(inPresentation){ endPresentation(); }
-	      else{ startPresentationHere(); }
-            }else{
-	      QMainWindow::keyPressEvent(event);
-	    }
-	}
+  void keyPressEvent(QKeyEvent*);	
+  void wheelEvent(QWheelEvent*);
+  void resizeEvent(QResizeEvent*);
 };
 #endif

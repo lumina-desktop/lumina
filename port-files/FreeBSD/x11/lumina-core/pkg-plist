@@ -134,6 +134,8 @@ share/icons/material-design-dark/scalable/actions/configure.svg
 share/icons/material-design-dark/scalable/actions/contact-mail.svg
 share/icons/material-design-dark/scalable/actions/contact-new.svg
 share/icons/material-design-dark/scalable/actions/contact-phone.svg
+share/icons/material-design-dark/scalable/actions/cursor-pointer.svg
+share/icons/material-design-dark/scalable/actions/cursor-text.svg
 share/icons/material-design-dark/scalable/actions/dashboard-show.svg
 share/icons/material-design-dark/scalable/actions/dialog-cancel.svg
 share/icons/material-design-dark/scalable/actions/dialog-close.svg
@@ -169,6 +171,8 @@ share/icons/material-design-dark/scalable/actions/edit-clear.svg
 share/icons/material-design-dark/scalable/actions/edit-copy.svg
 share/icons/material-design-dark/scalable/actions/edit-cut.svg
 share/icons/material-design-dark/scalable/actions/edit-delete.svg
+share/icons/material-design-dark/scalable/actions/edit-find-prev.svg
+share/icons/material-design-dark/scalable/actions/edit-find-next.svg
 share/icons/material-design-dark/scalable/actions/edit-find-page.svg
 share/icons/material-design-dark/scalable/actions/edit-find-replace.svg
 share/icons/material-design-dark/scalable/actions/edit-find.svg
@@ -276,6 +280,7 @@ share/icons/material-design-dark/scalable/actions/media-playback-slow.svg
 share/icons/material-design-dark/scalable/actions/media-playback-start-circled.svg
 share/icons/material-design-dark/scalable/actions/media-playback-start.svg
 share/icons/material-design-dark/scalable/actions/media-playback-stop.svg
+share/icons/material-design-dark/scalable/actions/media-playback-stop-circled.svg
 share/icons/material-design-dark/scalable/actions/media-record.svg
 share/icons/material-design-dark/scalable/actions/media-seek-backward.svg
 share/icons/material-design-dark/scalable/actions/media-seek-forward.svg
@@ -299,6 +304,7 @@ share/icons/material-design-dark/scalable/actions/object-flip-horizontal.svg
 share/icons/material-design-dark/scalable/actions/object-flip-vertical.svg
 share/icons/material-design-dark/scalable/actions/object-rotate-left.svg
 share/icons/material-design-dark/scalable/actions/object-rotate-right.svg
+share/icons/material-design-dark/scalable/actions/presentation-play.svg
 share/icons/material-design-dark/scalable/actions/process-stop.svg
 share/icons/material-design-dark/scalable/actions/quickopen-file.svg
 share/icons/material-design-dark/scalable/actions/quickopen.svg
@@ -948,6 +954,8 @@ share/icons/material-design-light/scalable/actions/configure.svg
 share/icons/material-design-light/scalable/actions/contact-mail.svg
 share/icons/material-design-light/scalable/actions/contact-new.svg
 share/icons/material-design-light/scalable/actions/contact-phone.svg
+share/icons/material-design-light/scalable/actions/cursor-pointer.svg
+share/icons/material-design-light/scalable/actions/cursor-text.svg
 share/icons/material-design-light/scalable/actions/dashboard-show.svg
 share/icons/material-design-light/scalable/actions/dialog-cancel.svg
 share/icons/material-design-light/scalable/actions/dialog-close.svg
@@ -983,6 +991,8 @@ share/icons/material-design-light/scalable/actions/edit-clear.svg
 share/icons/material-design-light/scalable/actions/edit-copy.svg
 share/icons/material-design-light/scalable/actions/edit-cut.svg
 share/icons/material-design-light/scalable/actions/edit-delete.svg
+share/icons/material-design-light/scalable/actions/edit-find-prev.svg
+share/icons/material-design-light/scalable/actions/edit-find-next.svg
 share/icons/material-design-light/scalable/actions/edit-find-page.svg
 share/icons/material-design-light/scalable/actions/edit-find-replace.svg
 share/icons/material-design-light/scalable/actions/edit-find.svg
@@ -1090,6 +1100,7 @@ share/icons/material-design-light/scalable/actions/media-playback-slow.svg
 share/icons/material-design-light/scalable/actions/media-playback-start-circled.svg
 share/icons/material-design-light/scalable/actions/media-playback-start.svg
 share/icons/material-design-light/scalable/actions/media-playback-stop.svg
+share/icons/material-design-light/scalable/actions/media-playback-stop-circled.svg
 share/icons/material-design-light/scalable/actions/media-record.svg
 share/icons/material-design-light/scalable/actions/media-seek-backward.svg
 share/icons/material-design-light/scalable/actions/media-seek-forward.svg
@@ -1113,6 +1124,7 @@ share/icons/material-design-light/scalable/actions/object-flip-horizontal.svg
 share/icons/material-design-light/scalable/actions/object-flip-vertical.svg
 share/icons/material-design-light/scalable/actions/object-rotate-left.svg
 share/icons/material-design-light/scalable/actions/object-rotate-right.svg
+share/icons/material-design-light/scalable/actions/presentation-play.svg
 share/icons/material-design-light/scalable/actions/process-stop.svg
 share/icons/material-design-light/scalable/actions/quickopen-file.svg
 share/icons/material-design-light/scalable/actions/quickopen.svg
