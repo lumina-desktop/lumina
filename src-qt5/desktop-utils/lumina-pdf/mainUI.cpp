@@ -29,11 +29,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
   this->highlight = false;
   presentationLabel = 0;
-  CurrentPage = 0;
+  CurrentPage = 1;
   lastdir = QDir::homePath();
   Printer = new QPrinter();
   //Create the interface widgets
-  WIDGET = new PrintWidget(Printer,this);
+  WIDGET = new PrintWidget(Printer, this);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -51,7 +51,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   qDebug() << "Setting central widget";
   this->setCentralWidget(WIDGET);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(qApp, SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(newFocus(QWidget*, QWidget*)));
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, &PrintWidget::paintRequested, this, 
     [=](QPrinter *printer) { this->paintOnWidget(printer, this->highlight); });
@@ -59,7 +58,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 
   PrintDLG = new QPrintDialog(this);
-  connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
+  //connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
   //connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
 
   //Create the other interface widgets
@@ -91,7 +90,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->actionPrint, SIGNAL(triggered()), PrintDLG, SLOT(open()) );
   connect(ui->actionFit_Width, SIGNAL(triggered()), WIDGET, SLOT(fitToWidth()) );
-  connect(ui->actionFit_Page, SIGNAL(triggered()), WIDGET, SLOT(fitInView()) );
+  connect(ui->actionFit_Page, SIGNAL(triggered()), WIDGET, SLOT(fitView()) );
   connect(ui->actionOpen_PDF, SIGNAL(triggered()), this, SLOT(OpenNewFile()) );
   connect(ui->actionSingle_Page, SIGNAL(triggered()), WIDGET, SLOT(setSinglePageViewMode()) );
   connect(ui->actionDual_Pages, SIGNAL(triggered()), WIDGET, SLOT(setFacingPagesViewMode()) );
@@ -235,14 +234,15 @@ void MainUI::loadFile(QString path){
     Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) );
     Printer->setPageMargins(QMarginsF(0,0,0,0), QPageLayout::Point);
     switch(PAGE->orientation()){
-	case Poppler::Page::Landscape:
-	  Printer->setOrientation(QPrinter::Landscape); break;
-	default:
-	  Printer->setOrientation(QPrinter::Portrait);
+      case Poppler::Page::Landscape:
+        Printer->setOrientation(QPrinter::Landscape); break;
+      default:
+        Printer->setOrientation(QPrinter::Portrait);
     }
     delete PAGE;
     qDebug() << " - Document Setup : start loading pages now";
-    QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
+    startLoadingPages(Printer);
+    //QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
 }
@@ -253,7 +253,7 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  //qDebug() << " - Render Page:" << num;
+  qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
     //qDebug() << "DPI:" << dpi << "Size:" << page << "Page Size (pt):" << PAGE->pageSize();
@@ -352,7 +352,7 @@ void MainUI::ShowPage(int page){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
-  WIDGET->setCurrentPage(page+1); //page numbers start at 1 for this widget
+  WIDGET->setCurrentPage(page); //page numbers start at 1 for this widget
   //Stop here if no presentation currently running
   if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   CurrentPage = page;
@@ -410,7 +410,9 @@ void MainUI::slotPageLoaded(int page){
   int finished = loadingHash.keys().length();
   if(finished == numPages){
     progAct->setVisible(false);
-    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    qDebug() << "Setting Pictures";
+    WIDGET->setPictures(&loadingHash);
+    QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
     //qDebug() << "Updating";
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
@@ -559,9 +561,10 @@ void MainUI::rotate(bool ccw) {
     loadingHash.insert(i, image);
   }
   //Rotates the page as well as the image
-  WIDGET->setOrientation((WIDGET->orientation() == QPrinter::Landscape) ? 
+  Printer->setOrientation((Printer->orientation() == QPrinter::Landscape) ? 
     QPrinter::Portrait : QPrinter::Landscape);
-  WIDGET->updatePreview();
+
+  QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
 }
 
 void MainUI::updateContextMenu(){
@@ -614,14 +617,6 @@ void MainUI::keyPressEvent(QKeyEvent *event){
 void MainUI::wheelEvent(QWheelEvent *event) {
   //Scroll the window according to the mouse wheel
   QMainWindow::wheelEvent(event);
-}
-
-void MainUI::newFocus(QWidget *oldW, QWidget *newW) {
-  //qDebug() << "NEW: " << newW << "OLD: " << oldW;
-  if(!oldW && newW != this) {
-    newW->setFocusPolicy(Qt::NoFocus);
-    this->setFocus();
-  }
 }
 
 void MainUI::showInformation() {

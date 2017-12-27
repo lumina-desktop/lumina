@@ -90,7 +90,6 @@ private slots:
   void enableFind();
   void showBookmarks();
 
-  void newFocus(QWidget*, QWidget*);
 	void paintOnWidget(QPrinter*, bool);
 	void paintToPrinter(QPrinter *PRINTER);
 
