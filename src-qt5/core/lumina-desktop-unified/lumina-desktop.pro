@@ -24,7 +24,7 @@ include(../libLumina/ExternalProcess.pri)
 include(../../src-cpp/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
 
-include(../../src-cpp/plugins-screensaver.pri)
+include(../../src-cpp/plugins-base.pri)
 
 #include  all the main individual source groups
 include(src-screensaver/screensaver.pri)
