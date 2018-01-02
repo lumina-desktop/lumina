@@ -16,21 +16,24 @@
 #include <QApplication>
 #include <QScreen>
 #include <QTimer>
+#include <iostream>
 
 #include <QtConcurrent>
 
 #include <LuminaXDG.h>
+#include "PrintWidget.h"
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
-  presentationLabel = 0;
   this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
-  CurrentPage = 0;
+  presentationLabel = 0;
+  CurrentPage = 1;
   lastdir = QDir::homePath();
-  Printer = new QPrinter();
   //Create the interface widgets
-  WIDGET = new QPrintPreviewWidget(Printer,this);
+  WIDGET = new PrintWidget(this);
+  WIDGET->setVisible(false);
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -39,15 +42,22 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     label_clock->setAlignment(Qt::AlignCenter );
     label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
+  //Context Menu
+  contextMenu = new QMenu(this);
+    connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
   //Now put the widgets into the UI
+  ui->bookmarksFrame->setParent(WIDGET);
+  ui->findGroup->setParent(WIDGET);
+  qDebug() << "Setting central widget";
   this->setCentralWidget(WIDGET);
-  connect(WIDGET, SIGNAL(paintRequested(QPrinter*)), this, SLOT(paintOnWidget(QPrinter*)) );
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
-  connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
+  //connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
 
   //Create the other interface widgets
   progress = new QProgressBar(this);
@@ -57,6 +67,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     progAct->setVisible(false);
   clockAct = ui->toolBar->addWidget(label_clock);
     clockAct->setVisible(false);
+
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
     tmp->setExclusive(true);
@@ -71,15 +82,66 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     tmp->addAction(ui->actionAll_Pages);
   ui->actionSingle_Page->setChecked(true);
 
+  qDebug() << "Starting connections";
+
   //Connect up the buttons
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
   connect(ui->actionPrint, SIGNAL(triggered()), PrintDLG, SLOT(open()) );
   connect(ui->actionFit_Width, SIGNAL(triggered()), WIDGET, SLOT(fitToWidth()) );
-  connect(ui->actionFit_Page, SIGNAL(triggered()), WIDGET, SLOT(fitInView()) );
+  connect(ui->actionFit_Page, SIGNAL(triggered()), WIDGET, SLOT(fitView()) );
   connect(ui->actionOpen_PDF, SIGNAL(triggered()), this, SLOT(OpenNewFile()) );
   connect(ui->actionSingle_Page, SIGNAL(triggered()), WIDGET, SLOT(setSinglePageViewMode()) );
   connect(ui->actionDual_Pages, SIGNAL(triggered()), WIDGET, SLOT(setFacingPagesViewMode()) );
   connect(ui->actionAll_Pages, SIGNAL(triggered()), WIDGET, SLOT(setAllPagesViewMode()) );
+  //connect(ui->actionScroll_Mode,  &QAction::triggered, this, [&] { this->setScroll(true); });
+  //connect(ui->actionSelect_Mode, &QAction::triggered, this, [&] { this->setScroll(false); });
+  connect(ui->actionZoom_In,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
+  connect(ui->actionZoom_Out, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
+  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { this->rotate(true); });
+  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { this->rotate(false); });
+  connect(ui->actionZoom_In_2,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
+  connect(ui->actionZoom_Out_2, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
+  connect(ui->actionFirst_Page, SIGNAL(triggered()), this, SLOT(firstPage()) );
+  connect(ui->actionPrevious_Page, SIGNAL(triggered()), this, SLOT(prevPage()) );
+  connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
+  connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
+  connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(showInformation()));
+  connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(enableFind())); 
+  connect(ui->actionFind_Next,  &QAction::triggered, this,
+    [&] { find(ui->textEdit->text(), true); });
+  connect(ui->actionFind_Previous,  &QAction::triggered, this,
+    [&] { find(ui->textEdit->text(), false); });
+  connect(ui->findNextB,  &QPushButton::clicked, this,
+    [&] { find(ui->textEdit->text(), true); });
+  connect(ui->findPrevB,  &QPushButton::clicked, this,
+    [&] { find(ui->textEdit->text(), false); });
+  connect(ui->matchCase, &QPushButton::clicked, this, 
+    [&] (bool value) { this->matchCase = value; });
+  connect(ui->closeFind, &QPushButton::clicked, this,
+    [&] { ui->findGroup->setVisible(false); this->setFocus(); });
+  connect(ui->actionClearHighlights,  &QAction::triggered, WIDGET,
+    [&] { WIDGET->updatePreview(); });
+  connect(ui->actionBookmarks, SIGNAL(triggered()), this, SLOT(showBookmarks()));
+
+  qDebug() << "Finished connctions";
+
+  //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
+  //int lastP = numPages-1;
+  ui->actionFirst_Page->setText(tr("First Page"));
+  ui->actionPrevious_Page->setText(tr("Previous Page"));
+  ui->actionNext_Page->setText(tr("Next Page"));
+  ui->actionLast_Page->setText(tr("Last Page"));
+  /*ui->actionFirst_Page->setEnabled(curP!=0);
+  ui->actionPrevious_Page->setEnabled(curP>0);
+  ui->actionNext_Page->setEnabled(curP<lastP);
+  ui->actionLast_Page->setEnabled(curP!=lastP);*/
+
+  ui->actionStart_Here->setText(tr("Start Presentation (current slide)"));
+  connect(ui->actionStart_Here, SIGNAL(triggered()), this, SLOT(startPresentationHere()) );
+  ui->actionStart_Begin->setText(tr("Start Presentation (at beginning)"));
+  connect(ui->actionStart_Begin, SIGNAL(triggered()), this, SLOT(startPresentationBeginning()) );
+  ui->actionStop_Presentation->setText(tr("Stop Presentation"));
+  connect(ui->actionStop_Presentation, SIGNAL(triggered()), this, SLOT(closePresentation()) );
 
   //Setup all the icons
   ui->actionPrint->setIcon( LXDG::findIcon("document-print",""));
@@ -90,10 +152,41 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionSingle_Page->setIcon(LXDG::findIcon("format-view-agenda",""));
   ui->actionDual_Pages->setIcon(LXDG::findIcon("format-view-grid-small",""));
   ui->actionAll_Pages->setIcon(LXDG::findIcon("format-view-grid-large",""));
+  ui->actionScroll_Mode->setIcon(LXDG::findIcon("cursor-pointer",""));
+  ui->actionSelect_Mode->setIcon(LXDG::findIcon("cursor-text",""));
+  ui->actionZoom_In->setIcon(LXDG::findIcon("zoom-in",""));
+  ui->actionZoom_Out->setIcon(LXDG::findIcon("zoom-out",""));
+  ui->actionZoom_In_2->setIcon(LXDG::findIcon("zoom-in",""));
+  ui->actionZoom_Out_2->setIcon(LXDG::findIcon("zoom-out",""));
+  ui->actionRotate_Counterclockwise->setIcon(LXDG::findIcon("object-rotate-left",""));
+  ui->actionRotate_Clockwise->setIcon(LXDG::findIcon("object-rotate-right",""));
+  ui->actionFirst_Page->setIcon(LXDG::findIcon("go-first",""));
+  ui->actionPrevious_Page->setIcon(LXDG::findIcon("go-previous",""));
+  ui->actionNext_Page->setIcon(LXDG::findIcon("go-next",""));
+  ui->actionLast_Page->setIcon(LXDG::findIcon("go-last",""));
+  ui->actionStart_Here->setIcon(LXDG::findIcon("media-playback-start-circled",""));
+  ui->actionStart_Begin->setIcon(LXDG::findIcon("presentation-play",""));
+  ui->actionStop_Presentation->setIcon(LXDG::findIcon("media-playback-stop-circled",""));
+  ui->actionBookmarks->setIcon(LXDG::findIcon("bookmark-new",""));
+  ui->actionFind->setIcon(LXDG::findIcon("edit-find",""));
+  ui->actionFind_Next->setIcon(LXDG::findIcon("edit-find-next",""));
+  ui->actionFind_Previous->setIcon(LXDG::findIcon("edit-find-prev",""));
+  ui->actionProperties->setIcon(LXDG::findIcon("dialog-information",""));
+  ui->actionSettings->setIcon(LXDG::findIcon("document-properties",""));
+  ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
+  ui->findPrevB->setIcon(LXDG::findIcon("go-up-search"));
+  ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
+  ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
+
+  qDebug() << "Finished setting icons";
 
   //Now set the default state of the menu's and actions
-  ui->menuStart_Presentation->setEnabled(false);
   ui->actionStop_Presentation->setEnabled(false);
+  ui->actionStart_Here->setEnabled(false);
+  ui->actionStart_Begin->setEnabled(false);
+
+  ui->findGroup->setVisible(false);
+  ui->bookmarksFrame->setVisible(false);
 }
 
 MainUI::~MainUI(){
@@ -101,8 +194,8 @@ MainUI::~MainUI(){
 }
 
 void MainUI::loadFile(QString path){
-
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
+
   Poppler::Document *TDOC = Poppler::Document::load(path);
   if(TDOC==0){
     qDebug() << "Could not open file:" << path;
@@ -116,44 +209,56 @@ void MainUI::loadFile(QString path){
     }
     if(TDOC->isLocked()){ return; } //Cancelled - still locked
   }
+  //qpdf.processFile(path.toLatin1().data(), pass.toLatin1().data());
 
   if(DOC!=0){
     //Clear out the old document first
     delete DOC;
     DOC=0;
   }
-  loadingHash.clear(); //clear out this hash
+  //loadingHash.clear(); //clear out this hash
   numPages = -1;
   DOC = TDOC; //Save this for later
   qDebug() << "Opening File:" << path;
-  this->setWindowTitle(DOC->title());
+  this->setWindowTitle(TDOC->title());
   if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
 
   //Setup the Document
+  //QVector<QPDFObjectHandle> pages = (QVector<QPDFObjectHandle>)pdf.getAllPages();
+  //QPDFObjectHandle page = pages.at(0);
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
-    Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) );
-    Printer->setPageMargins(QMarginsF(0,0,0,0), QPageLayout::Point);
     switch(PAGE->orientation()){
-	case Poppler::Page::Landscape:
-	  Printer->setOrientation(QPrinter::Landscape); break;
-	default:
-	  Printer->setOrientation(QPrinter::Portrait);
+      case Poppler::Page::Landscape:
+        WIDGET->setOrientation(QPageLayout::Landscape); break;
+      default:
+        WIDGET->setOrientation(QPageLayout::Portrait);
     }
     delete PAGE;
-    //qDebug() << " - Document Setup : start loading pages now";
-    QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
+    qDebug() << " - Document Setup : start loading pages now";
+    startLoadingPages();
+    //QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
 }
 
 void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page){
+  //PERFORMANCE NOTES:
+  // Using Poppler to scale the image (adjust dpi value) helps a bit but you take a large CPU loading hit (and still quite a lot of pixelization)
+  // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
+  // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
+
   //qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
-    //qDebug() << "DPI:" << 4*dpi;
-    loadingHash.insert(num, PAGE->renderToImage(2.5*dpi.width(), 2.5*dpi.height()).scaled(2*page.width(), 2*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    //qDebug() << "DPI:" << dpi << "Size:" << page << "Page Size (pt):" << PAGE->pageSize();
+    float scalefactor = (dpi.width()/72.0); //How different the screen DPI compares to standard page DPI
+    //qDebug() << "Scale Factor:" << scalefactor;
+    QImage raw = PAGE->renderToImage((scalefactor+0.2)*dpi.width(), (scalefactor+0.2)*dpi.height()); //make the raw image a tiny bit larger than the end result
+    //qDebug() << " - Raw Image Size:" << raw.size();
+    loadingHash.insert(num, raw.scaled(scalefactor*page.width(), scalefactor*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
+    raw = QImage(); //clear it
     /*
     QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
     QStringList annoS;
@@ -212,16 +317,20 @@ void MainUI::startPresentation(bool atStart){
   //Now create the full-screen window on the selected screen
   if(presentationLabel == 0){
     //Create the label and any special flags for it
-    presentationLabel = new QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    presentationLabel = new PresentationLabel();
       presentationLabel->setStyleSheet("background-color: black;");
       presentationLabel->setAlignment(Qt::AlignCenter);
+      presentationLabel->setContextMenuPolicy(Qt::CustomContextMenu);
+      connect(presentationLabel, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showContextMenu(const QPoint&)) );
+      connect(presentationLabel, SIGNAL(nextSlide()), this, SLOT(nextPage()) );
   }
   //Now put the label in the proper location
   presentationLabel->setGeometry(screen->geometry());
   presentationLabel->showFullScreen();
 
   ui->actionStop_Presentation->setEnabled(true);
-  ui->menuStart_Presentation->setEnabled(false);
+  ui->actionStart_Here->setEnabled(false);
+  ui->actionStart_Begin->setEnabled(false);
   updateClock();
   clockAct->setVisible(true);
   clockTimer->start();
@@ -238,7 +347,7 @@ void MainUI::ShowPage(int page){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
-  WIDGET->setCurrentPage(page+1); //page numbers start at 1 for this widget
+  WIDGET->setCurrentPage(page); //page numbers start at 1 for this widget
   //Stop here if no presentation currently running
   if(presentationLabel == 0 || !presentationLabel->isVisible()){ return; }
   CurrentPage = page;
@@ -261,57 +370,58 @@ void MainUI::endPresentation(){
   if(presentationLabel==0 || !presentationLabel->isVisible()){ return; } //not in presentation mode
   presentationLabel->hide(); //just hide this (no need to re-create the label for future presentations)
   ui->actionStop_Presentation->setEnabled(false);
-  ui->menuStart_Presentation->setEnabled(true);
+  ui->actionStart_Here->setEnabled(true);
+  ui->actionStart_Begin->setEnabled(true);
   clockTimer->stop();
   clockAct->setVisible(false);
   this->releaseKeyboard();
 }
 
-void MainUI::startLoadingPages(QPrinter *printer){
+void MainUI::startLoadingPages(){
   if(numPages>0){ return; } //currently loaded[ing]
-  //qDebug() << " - Start Loading Pages";
+  qDebug() << " - Start Loading Pages";
   numPages = DOC->numPages();
   //qDebug() << "numPages:" << numPages;
   progress->setRange(0,numPages);
   progress->setValue(0);
   progAct->setVisible(true);
-  QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
-  QSize DPI(printer->resolution(),printer->resolution());
+  QSizeF pageSize = DOC->page(0)->pageSizeF()*2;
+  //QSize DPI(loadingHash[0]->resolution(),loadingHash[0]->resolution());
+  QSize DPI(76,76);
+  /*qDebug() << "Screen Resolutions:";
+  QList<QScreen*> screens = QApplication::screens();
+  for(int i=0; i<screens.length(); i++){
+    qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
+  }*/
+  qDebug() << "Poppler pageSize: " << pageSize;
   for(int i=0; i<numPages; i++){
     //qDebug() << " - Kickoff page load:" << i;
-    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size() );
+    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize);
   }
 }
 
 void MainUI::slotPageLoaded(int page){
+  Q_UNUSED(page);
   //qDebug() << "Page Loaded:" << page;
   int finished = loadingHash.keys().length();
   if(finished == numPages){
     progAct->setVisible(false);
-    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    qDebug() << "Setting Pictures";
+    WIDGET->setPictures(&loadingHash);
+    WIDGET->setVisible(true);
+    //QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+    //qDebug() << "Updating";
     ui->actionStop_Presentation->setEnabled(false);
-    ui->menuStart_Presentation->setEnabled(true);
+    ui->actionStart_Here->setEnabled(true);
+    ui->actionStart_Begin->setEnabled(true);
   }else{
     progress->setValue(finished);
   }
 }
 
-void MainUI::slotStartPresentation(QAction *act){
+/*void MainUI::slotStartPresentation(QAction *act){
   startPresentation(act == ui->actionAt_Beginning);
-}
-
-void MainUI::paintOnWidget(QPrinter *PRINTER){
-  if(DOC==0){ return; }
-  //this->show();
-  if(loadingHash.keys().length() != numPages){ startLoadingPages(PRINTER); return; }
-
-  QPainter painter(PRINTER);
-    for(int i=0; i<numPages; i++){
-      if(i != 0){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      if(loadingHash.contains(i)){ painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation)); }
-      else{ painter.drawImage(0,0, QImage()); }
-    }
-}
+}*/
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
   if(loadingHash.keys().length() != numPages){ return; }
@@ -320,7 +430,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
-  bool duplex = (PRINTER->duplex()!=QPrinter::DuplexNone);
+  //bool duplex = (PRINTER->duplex()!=QPrinter::DuplexNone);
   //Determine the first page that needs to be printed, and the range
   if((PRINTER->fromPage() != PRINTER->toPage() || PRINTER->fromPage()!=0 ) && PRINTER->printRange()==QPrinter::PageRange ){
     firstpage = PRINTER->fromPage() - 1;
@@ -350,7 +460,6 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     }
   }
   //qDebug() << "Final Page Range:" << pageCount;
-  //return;
   //Generate the sizing information for the printer
   QSize sz(PRINTER->pageRect().width(), PRINTER->pageRect().height());
   bool landscape = PRINTER->orientation()==QPrinter::Landscape;
@@ -382,4 +491,167 @@ void MainUI::OpenNewFile(){
 
 void MainUI::updateClock(){
   label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
+}
+
+void MainUI::setScroll(bool tog) {
+  if(tog) {
+    QApplication::setOverrideCursor(Qt::OpenHandCursor);
+  }else{
+    QApplication::setOverrideCursor(Qt::IBeamCursor);
+  }
+}
+
+void MainUI::rotate(bool ccw) {
+  for(int i = 0; i < numPages; i++) {
+    QImage image = loadingHash[i];
+    qDebug() << "Page rotating: " << i;
+    //Setup a rotation matrix that rotates 90 degrees clockwise or counterclockwise
+    QMatrix matrix = (ccw) ? QMatrix(0, -1, 1, 0, 0, 0) : QMatrix(0, 1, -1, 0, 0, 0);
+    image = image.transformed(matrix, Qt::SmoothTransformation);
+    //Updates the image in the hash
+    loadingHash.insert(i, image);
+  }
+  //Rotates the page as well as the image
+  //WIDGET->setOrientation((WIDGET->orientation() == QPageLayout::Landscape) ? 
+    //QPageLayout::Portrait : QPageLayout::Landscape);
+  QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+}
+
+void MainUI::updateContextMenu(){
+  contextMenu->clear();
+  contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()),
+    QString::number(numPages) ) );
+  contextMenu->addAction(ui->actionPrevious_Page);
+  contextMenu->addAction(ui->actionNext_Page);
+  contextMenu->addSeparator();
+  contextMenu->addAction(ui->actionFirst_Page);
+  contextMenu->addAction(ui->actionLast_Page);
+  contextMenu->addSeparator();
+  if(presentationLabel==0 || !presentationLabel->isVisible()){
+    contextMenu->addAction(ui->actionStart_Begin);
+    contextMenu->addAction(ui->actionStart_Here);
+  }else{
+    contextMenu->addAction(ui->actionStop_Presentation);
+  }
+}
+
+void MainUI::keyPressEvent(QKeyEvent *event){
+  //See if this is one of the special hotkeys and act appropriately
+  bool inPresentation = (presentationLabel!=0);
+  if( event->key()==Qt::Key_Escape || event->key()==Qt::Key_Backspace){
+    if(inPresentation){ endPresentation(); }
+  }else if(event->key()==Qt::Key_Right || event->key()==Qt::Key_Space ||
+  event->key()==Qt::Key_PageDown){
+    nextPage();
+  }else if(event->key()==Qt::Key_Left || event->key()==Qt::Key_PageUp){
+    prevPage();
+  }else if(event->key()==Qt::Key_Home){
+    firstPage();
+  }else if(event->key()==Qt::Key_End){
+    lastPage();
+  }else if(event->key()==Qt::Key_F11){
+    if(inPresentation){ endPresentation(); }
+    else{ startPresentationHere(); }
+  }else if(event->key() == Qt::Key_Up) {
+    //Scroll the widget up 
+  }else if(event->key() == Qt::Key_Down) {
+    //Scroll the widget down
+    /*qDebug() << "Send Wheel Event";
+    QWheelEvent wEvent( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
+    QApplication::sendEvent(WIDGET, &wEvent);*/
+  }else{
+    QMainWindow::keyPressEvent(event);
+  }
+}
+
+void MainUI::wheelEvent(QWheelEvent *event) {
+  //Scroll the window according to the mouse wheel
+  QMainWindow::wheelEvent(event);
+}
+
+void MainUI::showInformation() {
+  PROPDIALOG = new PropDialog(DOC);
+  PROPDIALOG->show();
+}
+
+void MainUI::find(QString text, bool forward) {
+  if(!text.isEmpty()) {
+    qDebug() << "Finding Text";
+    bool newText = results.empty();
+    bool research = false;
+    if(!newText)
+      research = !results.keys()[0]->text().contains(text);
+    //Clear results if the user gives a new search string
+    if(research)
+      results.clear();
+
+    if(research or newText) {
+      for(int i = 0; i < numPages; i++) {
+        QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
+        for(int j = 0; j < textList.size(); j++) {
+          if(textList[j]->text().contains(text, (matchCase) 
+              ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
+            results.insert(textList[j], i);
+          }
+        }
+      }
+      currentHighlight = (forward) ? -1 : results.size();
+    }
+
+    qDebug() << "Jumping to next result";
+    if(!results.empty()) {
+      //Jump to the location of the next or previous textbox and highlight
+      if(forward) {
+        currentHighlight = (currentHighlight + 1) % results.size();
+      }else{
+        currentHighlight--;
+        //Ensure currentHighlight will be between 0 and results.size() - 1
+        if(currentHighlight < 0) 
+          currentHighlight = results.size() - 1;
+      }
+
+      qDebug() << "Jump to location: " << currentHighlight;
+
+      Poppler::TextBox *currentText = results.keys()[currentHighlight];
+      WIDGET->setCurrentPage(results.value(currentText));
+      WIDGET->highlightText(currentHighlight, currentText->boundingBox());
+
+      QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+    }else{
+      //Print "No results found" 
+    }
+  }
+}
+
+void MainUI::enableFind() {
+  if(ui->findGroup->isVisible()) {
+    qDebug() << "Disabling Find";
+    ui->findGroup->setVisible(false); 
+    WIDGET->setGeometry(QRect(WIDGET->pos(), 
+      QSize(WIDGET->width(), WIDGET->height()+ui->findGroup->height())));
+    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    this->setFocus();
+  }else{
+    qDebug() << "Enabling Find";
+    ui->findGroup->setGeometry(QRect(QPoint(0, WIDGET->height()-ui->findGroup->height()), 
+      QSize(WIDGET->width()-12, ui->findGroup->height())));
+    ui->findGroup->setVisible(true); 
+    WIDGET->setGeometry(QRect(WIDGET->pos(), 
+      QSize(WIDGET->width(), WIDGET->height()-ui->findGroup->height())));
+
+    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
+    ui->findGroup->setFocus();
+  }
+}
+
+void MainUI::showBookmarks() {
+  ui->bookmarksFrame->setVisible(true);
+}
+
+void MainUI::resizeEvent(QResizeEvent *event) {
+  if(ui->findGroup->isVisible()) {
+    ui->findGroup->setGeometry(QRect(QPoint(0, WIDGET->height()-ui->findGroup->height()), 
+      QSize(WIDGET->width()-10, ui->findGroup->height())));
+  }
+  QMainWindow::resizeEvent(event);
 }

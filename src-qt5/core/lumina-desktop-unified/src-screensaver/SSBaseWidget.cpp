@@ -7,6 +7,9 @@
 
 #include "SSBaseWidget.h"
 
+//Relative directory to search along the XDG paths for screensavers
+#define REL_DIR QString("/lumina-desktop/screensavers")
+
 #define DEBUG 0
 
 // ========
@@ -39,10 +42,10 @@ void SSBaseWidget::startPainting(){
   stopPainting();
   //If a random plugin - grab one of the known plugins
   if(plugType=="random"){
-    QList<SSPlugin> valid = SSPluginSystem::findAllPlugins();
+    QList<SSPlugin> valid = PluginSystem::findAllPlugins<SSPlugin>(REL_DIR);
     if(!valid.isEmpty()){ cplug = valid[ qrand()%valid.length() ]; } //grab a random plugin
   }else if(plugType!="none"){
-    cplug = SSPluginSystem::findPlugin(plugType);
+    cplug = PluginSystem::findPlugin<SSPlugin>(plugType, REL_DIR);
   }
   if(DEBUG){ qDebug() << " - Screen Saver:" << plugType << cplug.scriptURL() << cplug.isValid(); }
   if(cplug.isValid()){

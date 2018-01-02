@@ -77,6 +77,7 @@ void LBattery::updateBattery(bool force){
         label->setPixmap( LXDG::findIcon("battery-unknown", "battery-missing").pixmap(label->size()) );
         break;
     }
+  }
     if(icon<iconOld && icon==0){
       //Play some audio warning chime when
    bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
@@ -96,7 +97,6 @@ void LBattery::updateBattery(bool force){
   if(icon > 9 && icon < 15){ tt = QString(tr("%1 % (Charging)")).arg(QString::number(charge)); }
   else{ tt = QString( tr("%1 % (%2 Remaining)") ).arg(QString::number(charge), getRemainingTime() ); }
   label->setToolTip(tt);
-}
 }
 
 QString LBattery::getRemainingTime(){

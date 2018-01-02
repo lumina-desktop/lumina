@@ -15,8 +15,7 @@ GIT_VERSION=$$system(git describe --always)
 #DEFINES += BUILD_DATE='"\\\"$$system(date)\\\""'
 
 #LuminaOS files
-HEADERS *= $${PWD}/LuminaOS.h \
-	$${PWD}/OSInterface.h
+HEADERS *= $${PWD}/LuminaOS.h
 
 # LuminaOS support functions (or fall back to generic one)
 exists($${PWD}/LuminaOS-$${LINUX_DISTRO}.cpp){
@@ -25,13 +24,6 @@ exists($${PWD}/LuminaOS-$${LINUX_DISTRO}.cpp){
   SOURCES *= $${PWD}/LuminaOS-$${OS}.cpp
 }else{
   SOURCES *= $${PWD}/LuminaOS-template.cpp
-}
-exists($${PWD}/OSInterface-$${LINUX_DISTRO}.cpp){
-  SOURCES *= $${PWD}/OSInterface-$${LINUX_DISTRO}.cpp
-}else:exists($${PWD}/OSInterface-$${OS}.cpp){
-  SOURCES *= $${PWD}/OSInterface-$${OS}.cpp
-}else{
-  SOURCES *= $${PWD}/OSInterface-template.cpp
 }
 
 #LUtils Files

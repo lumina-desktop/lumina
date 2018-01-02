@@ -1,0 +1,44 @@
+//===========================================
+//  Lumina-desktop source code
+//  Copyright (c) 2017-2018, Ken Moore
+//  Available under the 3-clause BSD license
+//  See the LICENSE file for full details
+//===========================================
+// This is the main class that updates the interface objects
+//    on-demand as settings files and other stuff changes
+//===========================================
+#ifndef _LUMINA_DESKTOP_OBJECT_MANAGER_H
+#define _LUMINA_DESKTOP_OBJECT_MANAGER_H
+
+#include <global-includes.h>
+
+class DesktopManager : public QObject {
+	Q_OBJECT
+public:
+	DesktopManager();
+	~DesktopManager();
+
+	void start();
+	void stop();
+
+private:
+	void updateWallpaper(QString screen_id, int wkspace);
+	void updatePanels(QString panel_id);
+	void updatePlugins(QString plugin_id);
+
+public slots:
+	void workspaceChanged(int);
+	void settingsChanged(DesktopSettings::File);
+
+private slots:
+	void updateDesktopSettings();
+	void updatePanelSettings();
+	void updatePluginSettings();
+	void updateMenuSettings();
+	void updateAnimationSettings();
+
+signals:
+	void PanelLocationsChanged(); //reserved screen space changed
+};
+
+#endif

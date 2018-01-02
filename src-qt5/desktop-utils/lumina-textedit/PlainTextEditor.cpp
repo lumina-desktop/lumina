@@ -24,7 +24,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   LNW = new LNWidget(this);
   showLNW = true;
   watcher = new QFileSystemWatcher(this);
-  hasChanges = false;
+  hasChanges = readonly = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
   this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
@@ -76,17 +76,22 @@ void PlainTextEditor::LoadFile(QString filepath){
   bool diffFile = (filepath != this->whatsThis());
   this->setWhatsThis(filepath);
   this->clear();
-  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  /*QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){
     if(files[i].supportsFile(filepath) ){
       files[i].SetupDocument(this);
       SYNTAX->loadRules(files[i]);
       break;
     }
-  }
+  }*/
   //SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1), settings) );
   lastSaveContents = LUtils::readFile(filepath).join("\n");
   if(diffFile){
+    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
+    if(SYNTAX->loadedRules().isEmpty()){
+      SYNTAX->loadRules( Custom_Syntax::ruleForFirstLine( lastSaveContents.section("\n",0,0,QString::SectionSkipEmpty) , settings) );
+    }
+    SYNTAX->setupDocument(this);
     this->setPlainText( lastSaveContents );
   }else{
     //Try to keep the mouse cursor/scroll in the same position
@@ -99,18 +104,34 @@ void PlainTextEditor::LoadFile(QString filepath){
     this->centerCursor(); //scroll until cursor is centered (if possible)
   }
   hasChanges = false;
-  if(QFile::exists(filepath)){ watcher->addPath(filepath); }
+  readonly = false;
+  if(QFile::exists(filepath)){
+    readonly =  !QFileInfo(filepath).isWritable();
+    watcher->addPath(filepath);
+  }else if(filepath.startsWith("/")){
+    //See if the containing directory is writable instead
+    readonly =  !QFileInfo(filepath.section("/",0,-2)).isWritable();
+  }
   emit FileLoaded(this->whatsThis());
 }
 
-void PlainTextEditor::SaveFile(bool newname){
+bool PlainTextEditor::SaveFile(bool newname){
+  //NOTE: This returns true for proper behaviour, and false for a user-cancelled process
   //qDebug() << "Save File:" << this->whatsThis();
+  //Quick check for a non-editable file
+  if(!newname && this->whatsThis().startsWith("/")){
+    if(!QFileInfo(this->whatsThis()).isWritable()){ newname = true; } //cannot save the current file name/location
+  }
   if( !this->whatsThis().startsWith("/") || newname ){
     //prompt for a filename/path
     QString file = QFileDialog::getSaveFileName(this, tr("Save File"), this->whatsThis(), tr("Text File (*)"));
-    if(file.isEmpty()){ return; }
+    if(file.isEmpty()){ return false; } //cancelled
     this->setWhatsThis(file);
     SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
+    if(SYNTAX->loadedRules().isEmpty()){
+      SYNTAX->loadRules( Custom_Syntax::ruleForFirstLine( this->toPlainText().section("\n",0,0,QString::SectionSkipEmpty) , settings) );
+    }
+    SYNTAX->setupDocument(this);
     SYNTAX->rehighlight();
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
@@ -118,6 +139,8 @@ void PlainTextEditor::SaveFile(bool newname){
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
   watcher->addPath(currentFile());
+  readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
+  return true;
   //qDebug() << " - Success:" << ok << hasChanges;
 }
 
@@ -127,6 +150,11 @@ QString PlainTextEditor::currentFile(){
 
 bool PlainTextEditor::hasChange(){
   return hasChanges;
+}
+
+bool PlainTextEditor::readOnlyFile(){
+  //qDebug() << "Read Only File:" << readonly << this->whatsThis();
+  return readonly;
 }
 
 //Functions for managing the line number widget

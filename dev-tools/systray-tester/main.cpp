@@ -22,6 +22,7 @@ int  main(int argc, char *argv[]) {
    }
    
    TrayApp tray;
+   tray.setStyleSheet(background-color: #999999);
    tray.show();
    QApplication::setQuitOnLastWindowClosed(false); 
    return  a.exec();

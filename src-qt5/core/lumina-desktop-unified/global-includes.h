@@ -59,10 +59,6 @@
 #include <QQmlEngine>
 #include <QQuickImageProvider>
 
-// C++ Backend classes for QML interface
-#include <RootDesktopObject.h>
-#include <ScreenObject.h>
-
 // libLumina includes
 #include <LuminaX11.h>
 #include <LuminaXDG.h>
@@ -80,6 +76,9 @@
 #include <LIconCache.h>
 #include <LFileInfo.h>
 
+// C++ Backend classes for QML interface
+#include <RootDesktopObject.h>
+#include <ScreenObject.h>
 
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)
 

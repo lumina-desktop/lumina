@@ -89,13 +89,13 @@ TRANSLATIONS =  i18n/l-fileinfo_af.ts \
                 i18n/l-fileinfo_zu.ts 
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-fileinfo.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-fileinfo.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-fileinfo.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-fileinfo.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-fileinfo.1.gz"
 
 INSTALLS += target desktop manpage
 

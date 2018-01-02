@@ -182,7 +182,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>28</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -224,6 +224,7 @@
     </widget>
     <addaction name="menuSyntax_Highlighting"/>
     <addaction name="menuTabs_Location"/>
+    <addaction name="actionShow_Toolbar"/>
     <addaction name="actionLine_Numbers"/>
     <addaction name="actionWrap_Lines"/>
     <addaction name="actionShow_Popups"/>
@@ -434,6 +435,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionShow_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Toolbar</string>
    </property>
   </action>
  </widget>

@@ -6,21 +6,120 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>659</width>
-    <height>588</height>
+    <width>697</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QFrame" name="findGroup">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>560</y>
+      <width>691</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="closeFind">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="textEdit"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="findPrevB">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="findNextB">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="matchCase">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Find...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QFrame" name="bookmarksFrame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>9</y>
+      <width>81</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Bookmarks</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>659</width>
-     <height>28</height>
+     <width>697</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -32,22 +131,53 @@
     <addaction name="actionOpen_PDF"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
+    <addaction name="separator"/>
+    <addaction name="actionProperties"/>
    </widget>
    <widget class="QMenu" name="menuPresentation">
     <property name="title">
      <string>&amp;Presentation</string>
     </property>
-    <widget class="QMenu" name="menuStart_Presentation">
-     <property name="title">
-      <string>Start Presentation</string>
-     </property>
-     <addaction name="actionAt_Beginning"/>
-    </widget>
-    <addaction name="menuStart_Presentation"/>
+    <addaction name="actionStart_Begin"/>
+    <addaction name="actionStart_Here"/>
     <addaction name="actionStop_Presentation"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionFind"/>
+    <addaction name="actionFind_Next"/>
+    <addaction name="actionFind_Previous"/>
+    <addaction name="actionClearHighlights"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionScroll_Mode"/>
+    <addaction name="actionSelect_Mode"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
+    <addaction name="separator"/>
+    <addaction name="actionFirst_Page"/>
+    <addaction name="actionPrevious_Page"/>
+    <addaction name="actionNext_Page"/>
+    <addaction name="actionLast_Page"/>
+    <addaction name="separator"/>
+    <addaction name="actionBookmarks"/>
+    <addaction name="separator"/>
+    <addaction name="actionRotate_Counterclockwise"/>
+    <addaction name="actionRotate_Clockwise"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPresentation"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -72,6 +202,9 @@
    <addaction name="actionSingle_Page"/>
    <addaction name="actionDual_Pages"/>
    <addaction name="actionAll_Pages"/>
+   <addaction name="separator"/>
+   <addaction name="actionZoom_In_2"/>
+   <addaction name="actionZoom_Out_2"/>
   </widget>
   <action name="actionOpen_PDF">
    <property name="text">
@@ -137,14 +270,126 @@
     <string>All Pages</string>
    </property>
   </action>
-  <action name="actionAt_Beginning">
+  <action name="actionStart_Begin">
    <property name="text">
-    <string>At Beginning</string>
+    <string>Start Presentation (at beginning)</string>
    </property>
   </action>
   <action name="actionStop_Presentation">
    <property name="text">
     <string>Stop Presentation</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="text">
+    <string>Find</string>
+   </property>
+  </action>
+  <action name="actionFind_Next">
+   <property name="text">
+    <string>Find Next</string>
+   </property>
+  </action>
+  <action name="actionFind_Previous">
+   <property name="text">
+    <string>Find Previous</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionZoom_In">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+  </action>
+  <action name="actionFirst_Page">
+   <property name="text">
+    <string>First Page</string>
+   </property>
+  </action>
+  <action name="actionPrevious_Page">
+   <property name="text">
+    <string>Previous Page</string>
+   </property>
+  </action>
+  <action name="actionNext_Page">
+   <property name="text">
+    <string>Next Page</string>
+   </property>
+  </action>
+  <action name="actionLast_Page">
+   <property name="text">
+    <string>Last Page</string>
+   </property>
+  </action>
+  <action name="actionProperties">
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
+  <action name="actionBookmarks">
+   <property name="text">
+    <string>Bookmarks</string>
+   </property>
+  </action>
+  <action name="actionRotate_Counterclockwise">
+   <property name="text">
+    <string>Rotate Counterclockwise</string>
+   </property>
+  </action>
+  <action name="actionRotate_Clockwise">
+   <property name="text">
+    <string>Rotate Clockwise</string>
+   </property>
+  </action>
+  <action name="actionScroll_Mode">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Scroll Mode</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out_2">
+   <property name="text">
+    <string/>
+   </property>
+  </action>
+  <action name="actionZoom_In_2">
+   <property name="text">
+    <string/>
+   </property>
+  </action>
+  <action name="actionStart_Here">
+   <property name="text">
+    <string>Start Presentation (current slide)</string>
+   </property>
+  </action>
+  <action name="actionSelect_Mode">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select Mode</string>
+   </property>
+  </action>
+  <action name="actionClearHighlights">
+   <property name="text">
+    <string>Clear Highlights</string>
    </property>
   </action>
  </widget>

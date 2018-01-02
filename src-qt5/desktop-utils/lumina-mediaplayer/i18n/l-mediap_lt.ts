@@ -19,7 +19,7 @@
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nėra paleisto vaizdo įrašo)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation>šalinti</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora paskyros prisijungimas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Valdymo įgaliotojo serverio URL</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
@@ -224,22 +224,22 @@
     <message>
         <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš esamo atlikėjo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti stotį iš esamo atlikėjo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Iš esamos dainos</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti stotį iš esamos dainos</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="808"/>
@@ -249,23 +249,23 @@
     <message>
         <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti...</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškoti naujos stoties</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora radijas</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Transliuoti iš Pandora radijo</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="839"/>
@@ -280,27 +280,27 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>Norėdami įjungti šį funkcionalumą, įdiekite &quot;pianobar&quot; paslaugų programą</translation>
+        <translation>Norėdami įjungti šį funkcionalumą, įdiekite "pianobar" paslaugų programą</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation type="unfinished"></translation>
+        <translation>Transliuoti muziką iš Pandora internetinio radijo paslaugos</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Žema</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="123"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidutinė</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="124"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukšta</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="358"/>
@@ -316,32 +316,33 @@
         <location filename="../mainUI.cpp" line="471"/>
         <source>[PLAYBACK ERROR]
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[ATKŪRIMO KLAIDA]
+%1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="488"/>
         <source>Media Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medija įkeliama...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="490"/>
         <source>Media Stalled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medija atitrūko...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="492"/>
         <source>Media Buffering...</source>
-        <translation type="unfinished"></translation>
+        <translation>Medijos buferizacija...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Pandora: Create Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora: Sukurti stotį</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Search Term</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieškomas žodis</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="654"/>
@@ -359,7 +360,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="358"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko rasti jokių atitikmenų. Pabandykite kitokį ieškomą žodį</translation>
     </message>
 </context>
 <context>
@@ -367,67 +368,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Programavimas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Švietimas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Žaidimai</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinklas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Raštinė</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Mokslas</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished">Nustatymai</translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Paslaugų programos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesurūšiuota</translation>
     </message>
 </context>
 </TS>
