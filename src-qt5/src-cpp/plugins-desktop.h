@@ -17,13 +17,22 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include <QIcon>
 
 class DTPlugin : public BasePlugin{
+private:
+  QSize gridSize;
+  bool panelPossible;
+  QIcon pluginIcon;
 public:
 	DTPlugin();
 	~DTPlugin();
 
 	virtual bool isValid() Q_DECL_OVERRIDE;
+
+  QSize getSize { return gridSize; }
+  bool getPanelable { return panelPossible; }
+  QIcon getIcon { return pluginIcon; }
 };
 
 #endif
