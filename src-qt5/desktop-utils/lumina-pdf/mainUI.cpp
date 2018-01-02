@@ -27,13 +27,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
-  this->highlight = false;
   presentationLabel = 0;
   CurrentPage = 1;
   lastdir = QDir::homePath();
-  Printer = new QPrinter();
   //Create the interface widgets
-  WIDGET = new PrintWidget(Printer, this);
+  WIDGET = new PrintWidget(this);
+  WIDGET->setVisible(false);
+  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -52,13 +52,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   this->setCentralWidget(WIDGET);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
-  connect(WIDGET, &PrintWidget::paintRequested, this, 
-    [=](QPrinter *printer) { this->paintOnWidget(printer, this->highlight); });
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 
   PrintDLG = new QPrintDialog(this);
-  //connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
+  connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
   //connect(ui->menuStart_Presentation, SIGNAL(triggered(QAction*)), this, SLOT(slotStartPresentation(QAction*)) );
 
   //Create the other interface widgets
@@ -231,17 +229,15 @@ void MainUI::loadFile(QString path){
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
-    Printer->setPageSize( QPageSize(PAGE->pageSize(), QPageSize::Point) );
-    Printer->setPageMargins(QMarginsF(0,0,0,0), QPageLayout::Point);
     switch(PAGE->orientation()){
       case Poppler::Page::Landscape:
-        Printer->setOrientation(QPrinter::Landscape); break;
+        WIDGET->setOrientation(QPageLayout::Landscape); break;
       default:
-        Printer->setOrientation(QPrinter::Portrait);
+        WIDGET->setOrientation(QPageLayout::Portrait);
     }
     delete PAGE;
     qDebug() << " - Document Setup : start loading pages now";
-    startLoadingPages(Printer);
+    startLoadingPages();
     //QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }
 
@@ -253,7 +249,7 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  qDebug() << " - Render Page:" << num;
+  //qDebug() << " - Render Page:" << num;
   Poppler::Page *PAGE = doc->page(num);
   if(PAGE!=0){
     //qDebug() << "DPI:" << dpi << "Size:" << page << "Page Size (pt):" << PAGE->pageSize();
@@ -263,7 +259,6 @@ void MainUI::loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, Q
     //qDebug() << " - Raw Image Size:" << raw.size();
     loadingHash.insert(num, raw.scaled(scalefactor*page.width(), scalefactor*page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
     raw = QImage(); //clear it
-    //qDebug() << "Page Label:" << num << PAGE->label();
     /*
     QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
     QStringList annoS;
@@ -382,7 +377,7 @@ void MainUI::endPresentation(){
   this->releaseKeyboard();
 }
 
-void MainUI::startLoadingPages(QPrinter *printer){
+void MainUI::startLoadingPages(){
   if(numPages>0){ return; } //currently loaded[ing]
   qDebug() << " - Start Loading Pages";
   numPages = DOC->numPages();
@@ -390,17 +385,18 @@ void MainUI::startLoadingPages(QPrinter *printer){
   progress->setRange(0,numPages);
   progress->setValue(0);
   progAct->setVisible(true);
-  QRectF pageSize = printer->pageRect(QPrinter::DevicePixel);
-  QSize DPI(printer->resolution(),printer->resolution());
+  QSizeF pageSize = DOC->page(0)->pageSizeF()*2;
+  //QSize DPI(loadingHash[0]->resolution(),loadingHash[0]->resolution());
+  QSize DPI(76,76);
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
   }*/
+  qDebug() << "Poppler pageSize: " << pageSize;
   for(int i=0; i<numPages; i++){
-    qDebug() << " - Kickoff page load:" << i;
-    //this->ccw = 0;
-    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize.size());
+    //qDebug() << " - Kickoff page load:" << i;
+    QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize);
   }
 }
 
@@ -412,7 +408,8 @@ void MainUI::slotPageLoaded(int page){
     progAct->setVisible(false);
     qDebug() << "Setting Pictures";
     WIDGET->setPictures(&loadingHash);
-    QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+    WIDGET->setVisible(true);
+    //QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
     //qDebug() << "Updating";
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
@@ -425,52 +422,6 @@ void MainUI::slotPageLoaded(int page){
 /*void MainUI::slotStartPresentation(QAction *act){
   startPresentation(act == ui->actionAt_Beginning);
 }*/
-
-void MainUI::paintOnWidget(QPrinter *PRINTER, bool highlight){
-  static bool first = true;
-  static bool shrunk = false;
-  if(DOC==0){ return; }
-  if(loadingHash.keys().length() != numPages){ startLoadingPages(PRINTER); return; }
-  //Increase the resolution of the page to match the image to prevent downscaling
-  if(first)
-    PRINTER->setPageSize(QPageSize(PRINTER->pageRect().size()*2));
-  qDebug() << PRINTER->pageRect().size() << loadingHash[0].size() << WIDGET->size();
-  QPainter painter(PRINTER);
-  painter.setPen(Qt::NoPen);
-  if(ui->findGroup->isVisible()) {
-      QSize size = PRINTER->pageRect().size();
-      size = QSize(size.width(), size.height()-ui->findGroup->height());
-      PRINTER->setPageSize(QPageSize(size));
-      shrunk = true;
-    }else if(shrunk){
-      QSize size = PRINTER->pageRect().size();
-      size = QSize(size.width(), size.height()+ui->findGroup->height());
-      PRINTER->setPageSize(QPageSize(size));
-      shrunk = false;
-  }
-  if(highlight) {
-    Poppler::TextBox *currentText = results.keys()[currentHighlight];
-    int pageNum = results.value(currentText), i;
-
-    for(i = 0; i <= pageNum; i++)
-      if(i != 0){ PRINTER->newPage(); }
-
-    qDebug() << pageNum << i;
-    this->highlight=false;
-  }else {
-    for(int i=0; i<numPages; i++){
-      if(i != 0){ PRINTER->newPage(); } //this is the start of the next page (not needed for first)
-      if(loadingHash.contains(i)){ 
-        painter.drawImage(0,0, loadingHash[i].scaled(PRINTER->pageRect().size(), 
-          Qt::KeepAspectRatio, Qt::SmoothTransformation)); 
-      }
-      else{ painter.drawImage(0,0, QImage()); }
-    }
-    WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
-    //loadingHash.clear();
-    first = false;
-  }
-}
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
   if(loadingHash.keys().length() != numPages){ return; }
@@ -561,9 +512,8 @@ void MainUI::rotate(bool ccw) {
     loadingHash.insert(i, image);
   }
   //Rotates the page as well as the image
-  Printer->setOrientation((Printer->orientation() == QPrinter::Landscape) ? 
-    QPrinter::Portrait : QPrinter::Landscape);
-
+  //WIDGET->setOrientation((WIDGET->orientation() == QPageLayout::Landscape) ? 
+    //QPageLayout::Portrait : QPageLayout::Landscape);
   QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
 }
 
@@ -664,9 +614,9 @@ void MainUI::find(QString text, bool forward) {
 
       Poppler::TextBox *currentText = results.keys()[currentHighlight];
       WIDGET->setCurrentPage(results.value(currentText));
+      WIDGET->highlightText(currentHighlight, currentText->boundingBox());
 
-      QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
-      this->highlight = true;
+      QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
     }else{
       //Print "No results found" 
     }
@@ -704,17 +654,4 @@ void MainUI::resizeEvent(QResizeEvent *event) {
       QSize(WIDGET->width()-10, ui->findGroup->height())));
   }
   QMainWindow::resizeEvent(event);
-}
-
-void MainUI::highlightText(QPrinter *PRINTER) {
-  Poppler::TextBox *currentText = results.keys()[currentHighlight];
-  QPainter painter(PRINTER);
-  painter.setPen(Qt::NoPen);
-  int pageNum = results.value(currentText), i;
-
-  for(i = 0; i <= pageNum; i++)
-    if(i != 0){ PRINTER->newPage(); }
-
-  qDebug() << pageNum << i;
-  this->highlight=false;
 }

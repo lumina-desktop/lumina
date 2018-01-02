@@ -83,6 +83,16 @@ bool SyntaxFile::supportsFile(QString file){
   return false;
 }
 
+bool SyntaxFile::supportsFirstLine(QString line){
+  line = line.simplified();
+  if(metaObj.contains("first_line_match")){
+    return metaObj.value("first_line_match").toArray().contains(line);
+  }else if(metaObj.contains("first_line_regex")){
+    return (QRegExp( metaObj.value("first_line_regex").toString() ).indexIn(line) >=0 );
+  }
+  return false;
+}
+
 bool SyntaxFile::LoadFile(QString file, QSettings *settings){
   QStringList contents = LUtils::readFile(file);
   //Now trim the extra non-JSON off the beginning of the file
@@ -209,6 +219,13 @@ QString Custom_Syntax::ruleForFile(QString filename, QSettings *settings){
   return "";
 }
 
+QString Custom_Syntax::ruleForFirstLine(QString line, QSettings *settings){
+  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  for(int i=0; i<files.length(); i++){
+    if(files[i].supportsFirstLine(line)){ return files[i].name(); }
+  }
+  return "";
+}
 
 void Custom_Syntax::loadRules(QString type){
   QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);

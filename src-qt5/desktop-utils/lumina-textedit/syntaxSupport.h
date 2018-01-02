@@ -46,6 +46,7 @@ public:
 
 	void SetupDocument(QPlainTextEdit *editor);
 	bool supportsFile(QString file); //does this syntax set support the file?
+	bool supportsFirstLine(QString line); //is the type of file defined by the first line of the file? ("#!/bin/<something>" for instance)
 
 	//Main Loading routine (run this before other functions)
 	bool LoadFile(QString file, QSettings *settings);
@@ -66,16 +67,21 @@ public:
 	}
 	~Custom_Syntax(){}
 
+	QString loadedRules(){ return syntax.name(); }
+
 	static QStringList availableRules(QSettings *settings);
 	static QStringList knownColors();
 	static void SetupDefaultColors(QSettings *settings);
 	static QString ruleForFile(QString filename, QSettings *settings);
+	static QString ruleForFirstLine(QString line, QSettings *settings);
 	void loadRules(QString type);
 	void loadRules(SyntaxFile sfile);
 
 	void reloadRules(){
 	  loadRules( syntax.name() );
 	}
+
+	void setupDocument(QPlainTextEdit *edit){ syntax.SetupDocument(edit); } //simple redirect for the function in the currently-loaded rules
 
 protected:
 	void highlightBlock(const QString &text){
@@ -159,7 +165,7 @@ protected:
 	    int last = text.length()-1;
             while(last>=0 && (text[last]==' ' || text[last]=='\t' ) ){ last--; }
 	    if(last < text.length()-1){
-	      setFormat(last+1, text.length()-1-last, fmt);	      
+	      setFormat(last+1, text.length()-1-last, fmt);
 	    }
           }
 	}

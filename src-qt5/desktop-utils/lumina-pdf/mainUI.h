@@ -41,10 +41,9 @@ private:
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
   PropDialog *PROPDIALOG;
-	QPrinter* Printer;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
-  bool matchCase, highlight;
+  bool matchCase;
   QMap<Poppler::TextBox*, int> results;
   int currentHighlight;
 
@@ -62,7 +61,6 @@ private:
 	int numPages;
 
 	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
-  void highlightText(QPrinter *PRINTER);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -73,7 +71,7 @@ private:
 	void endPresentation();
 
 private slots:
-	void startLoadingPages(QPrinter *printer);
+	void startLoadingPages();
 	void slotPageLoaded(int);
   //void slotStartPresentation(QAction *act);
 
@@ -85,12 +83,12 @@ private slots:
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
+
   void showInformation();
   void find(QString text, bool forward);
   void enableFind();
   void showBookmarks();
 
-	void paintOnWidget(QPrinter*, bool);
 	void paintToPrinter(QPrinter *PRINTER);
 
 	//Button Slots

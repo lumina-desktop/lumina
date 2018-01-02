@@ -76,17 +76,22 @@ void PlainTextEditor::LoadFile(QString filepath){
   bool diffFile = (filepath != this->whatsThis());
   this->setWhatsThis(filepath);
   this->clear();
-  QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
+  /*QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){
     if(files[i].supportsFile(filepath) ){
       files[i].SetupDocument(this);
       SYNTAX->loadRules(files[i]);
       break;
     }
-  }
+  }*/
   //SYNTAX->loadRules( Custom_Syntax::ruleForFile(filepath.section("/",-1), settings) );
   lastSaveContents = LUtils::readFile(filepath).join("\n");
   if(diffFile){
+    SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
+    if(SYNTAX->loadedRules().isEmpty()){
+      SYNTAX->loadRules( Custom_Syntax::ruleForFirstLine( lastSaveContents.section("\n",0,0,QString::SectionSkipEmpty) , settings) );
+    }
+    SYNTAX->setupDocument(this);
     this->setPlainText( lastSaveContents );
   }else{
     //Try to keep the mouse cursor/scroll in the same position
@@ -123,14 +128,18 @@ bool PlainTextEditor::SaveFile(bool newname){
     if(file.isEmpty()){ return false; } //cancelled
     this->setWhatsThis(file);
     SYNTAX->loadRules( Custom_Syntax::ruleForFile(this->whatsThis().section("/",-1), settings) );
+    if(SYNTAX->loadedRules().isEmpty()){
+      SYNTAX->loadRules( Custom_Syntax::ruleForFirstLine( this->toPlainText().section("\n",0,0,QString::SectionSkipEmpty) , settings) );
+    }
+    SYNTAX->setupDocument(this);
     SYNTAX->rehighlight();
-    readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
   watcher->addPath(currentFile());
+  readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
   return true;
   //qDebug() << " - Success:" << ok << hasChanges;
 }

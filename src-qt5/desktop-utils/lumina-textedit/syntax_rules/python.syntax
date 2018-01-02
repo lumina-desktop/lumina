@@ -8,7 +8,8 @@
 {
 	"meta": {
 		"name": "Python",
-		"file_suffix": ["py", "pyc"]
+		"file_suffix": ["py", "pyc"],
+		"first_line_regex" : "(#!).+(python)"
 	},
 	"format": {
 		"line_wrap": false,

@@ -1,9 +1,8 @@
 #include "PrintWidget.h"
 
-PrintWidget::PrintWidget(QPrinter* printer, QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1), 
+PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1), 
   viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
 
-  this->printer = printer;
   this->setMouseTracking(true);
   QList<QWidget*> children = this->findChildren<QWidget*>("",Qt::FindChildrenRecursively);
   for(int i=0; i<children.length(); i++){
@@ -68,7 +67,7 @@ void PrintWidget::setViewMode(ViewMode mode) {
 		this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 		fitting = false;
 		zoomMode = CustomZoom;
-		zoomFactor = this->transform().m11() * (double(printer->logicalDpiY()) / logicalDpiY());
+		//zoomFactor = this->transform().m11() * (double(printer->logicalDpiY()) / logicalDpiY());
 	} else {
 		fitting = true;
 		fit();
@@ -121,23 +120,15 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 	}
 }
 
+void PrintWidget::highlightText(int pageNum, QRectF textBox) {
+  PageItem *item = static_cast<PageItem*>(pages[pageNum]);
+  QPainter painter(this);
+  painter.fillRect(textBox, QColor(255, 255, 177, 128));
+}
+
 //Private functions
 
 void PrintWidget::generatePreview() {
-  qDebug() << "generating preview";
-  if(!previewEngine)
-    previewEngine = new QPreviewPaintEngine();
-  if(!pdfEngine) 
-    pdfEngine = new QPdfPrintEngine(QPrinter::HighResolution);
-
-  printer->setEngines(previewEngine, previewEngine);
-  previewEngine->setProxyEngines(pdfEngine, pdfEngine);
-
-	emit paintRequested(printer);
-
-  printer->setEngines(pdfEngine, pdfEngine);
-
-  qDebug() << "Populating Scene";
 	populateScene(); // i.e. setPreviewPrintedPictures() e.l.
 	layoutPages();
 	curPage = qBound(1, curPage, pages.count());
@@ -153,13 +144,9 @@ void PrintWidget::layoutPages() {
 	int numPagePlaces = numPages;
 	int cols = 1; // singleMode and default
 	if (viewMode == AllPagesView) {
-		if (printer->orientation() == QPrinter::Portrait)
-			cols = qCeil(qSqrt(numPages));
-    else
-      cols = qFloor(qSqrt(numPages)); 
+    cols = ((pictures->value(0)).width() > (pictures->value(0)).height()) ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
     cols += cols % 2;  // Nicer with an even number of cols 
-  } 
-  else if (viewMode == FacingPagesView) { 
+  } else if (viewMode == FacingPagesView) { 
     cols = 2;
     numPagePlaces += 1; 
   } 
@@ -186,20 +173,18 @@ void PrintWidget::populateScene()
 		scene->removeItem(pages.at(i));
 	qDeleteAll(pages);
 	pages.clear();
-  qDebug() << "Pages cleared";
 
 	int numPages = pictures->count();
-	QSize paperSize = printer->pageLayout().fullRectPixels(printer->resolution()).size();
-	QRect pageRect = printer->pageLayout().paintRectPixels(printer->resolution());
-  qDebug() << "Fields set";
+  //Replace from loadingHash resolution
+	QSize paperSize = pictures->value(0).size();
+  qDebug() << "Image paperSize" << paperSize;
 
 	for (int i = 0; i < numPages; i++) {
-		PageItem* item = new PageItem(i+1, (*pictures)[i], paperSize, pageRect);
+		PageItem* item = new PageItem(i+1, (*pictures)[i], paperSize);
 		scene->addItem(item);
 		pages.append(item);
 	}
 }
-
 
 //Private Slots
 void PrintWidget::updateCurrentPage() {
@@ -282,9 +267,13 @@ void PrintWidget::fit(bool doFitting) {
 		}
 	}
 
-	zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
+	//zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
 }
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
 } 
+
+void PrintWidget::setOrientation(QPageLayout::Orientation ori) {
+  this->orientation = ori;
+}

@@ -18,18 +18,18 @@
 #include <QScrollBar>
 #include <QStyleOptionGraphicsItem>
 #include <QtMath>
-#include <QPrinter>
+#include <QPageLayout>
+
 namespace {
 class PageItem : public QGraphicsItem
 {
 public:
-    PageItem(int _pageNum, const QImage _pagePicture, QSize _paperSize, QRect _pageRect)
+    PageItem(int _pageNum, const QImage _pagePicture, QSize _paperSize)
         : pageNum(_pageNum), pagePicture(_pagePicture),
-          paperSize(_paperSize), pageRect(_pageRect)
+          paperSize(_paperSize)
     {
-        qreal border = qMax(paperSize.height(), paperSize.width()) / 25;
-        brect = QRectF(QPointF(-border, -border),
-                       QSizeF(paperSize)+QSizeF(2*border, 2*border));
+        brect = QRectF(QPointF(-25, -25),
+                       QSizeF(paperSize)+QSizeF(50, 50));
         setCacheMode(DeviceCoordinateCache);
     }
 
@@ -45,7 +45,6 @@ private:
     int pageNum;
     const QImage pagePicture;
     QSize paperSize;
-    QRect pageRect;
     QRectF brect;
 };
 
@@ -78,17 +77,11 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
   painter->setClipRect(paperRect & option->exposedRect);
   painter->fillRect(paperRect, Qt::white);
-  if (pagePicture.isNull())
-      return;
-  painter->drawImage(pageRect.topLeft(), pagePicture);
-
-  // Effect: make anything drawn in the margins look washed out.
-  QPainterPath path;
-  path.addRect(paperRect);
-  path.addRect(pageRect);
-  painter->setPen(QPen(Qt::NoPen));
-  painter->setBrush(QColor(255, 255, 255, 180));
-  painter->drawPath(path);
+  if (pagePicture.isNull()){
+    qDebug() << "NULL";
+    return;
+  }
+  painter->drawImage(QPoint(0,0), pagePicture);
 }
 }
 
@@ -96,7 +89,7 @@ class PrintWidget : public QGraphicsView
 {
 	Q_OBJECT
 public:
-	PrintWidget(QPrinter *printer, QWidget *parent = 0);
+	PrintWidget(QWidget *parent = 0);
   ~PrintWidget();
 	enum ViewMode {
 		SinglePageView,
@@ -118,23 +111,25 @@ public:
 signals:
 	void resized();
 	void customContextMenuRequested(const QPoint&);
-	void paintRequested(QPrinter*);
 public slots:
 	void zoomIn(double factor=1.2);
   void zoomOut(double factor=1.2);
   void setCurrentPage(int);
   void setVisible(bool) Q_DECL_OVERRIDE;
+  void setOrientation(QPageLayout::Orientation);
+  void highlightText(int, QRectF);
 
+  void updatePreview();
 	void fitView();
   void fitToWidth();
   void setAllPagesViewMode();
   void setSinglePageViewMode();
   void setFacingPagesViewMode();
 
+private slots:
 	void updateCurrentPage();
   int calcCurrentPage();
   void fit(bool doFitting=false);
-  void updatePreview();
 protected:
 	void resizeEvent(QResizeEvent* e) Q_DECL_OVERRIDE {
 		/*{
@@ -156,16 +151,14 @@ private:
   void setViewMode(ViewMode);
   void setZoomMode(ZoomMode);
   QGraphicsScene *scene;
-  QPrinter *printer;
-  QPreviewPaintEngine *previewEngine;
-  QPdfPrintEngine *pdfEngine;
 
   int curPage;
 	ViewMode viewMode;
 	ZoomMode zoomMode;
+  QPageLayout::Orientation orientation;
 	double zoomFactor;
 	bool initialized, fitting;
-	QList<QGraphicsItem *> pages;
+	QList<QGraphicsItem*> pages;
   QHash<int, QImage> *pictures;
 };
 #endif

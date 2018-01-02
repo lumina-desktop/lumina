@@ -22,6 +22,7 @@ QThread* Lumina::EVThread = 0;
 RootWindow* Lumina::ROOTWIN = 0;
 XDGDesktopList* Lumina::APPLIST = 0;
 LShortcutEvents* Lumina::SHORTCUTS = 0;
+DesktopManager* Lumina::DESKMAN = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop-unified"){
   //Initialize the global objects to null pointers
@@ -49,10 +50,11 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
   Lumina::SS = new LScreenSaver();
+  Lumina::DESKMAN = new DesktopManager();
   //Now put the Native Window System into it's own thread to keep things snappy
   Lumina::EVThread = new QThread();
-    //Lumina::NWS->moveToThread(Lumina::EVThread);
-  //Lumina::EVThread->start();
+    Lumina::DESKMAN->moveToThread(Lumina::EVThread);
+  Lumina::EVThread->start();
   Lumina::APPLIST = XDGDesktopList::instance();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
@@ -73,6 +75,7 @@ LSession::~LSession(){
   if(DesktopSettings::instance()!=0){ DesktopSettings::instance()->deleteLater(); }
   if(Lumina::ROOTWIN!=0){ Lumina::ROOTWIN->deleteLater(); }
   if(Lumina::APPLIST!=0){ Lumina::APPLIST->deleteLater(); }
+  if(Lumina::DESKMAN!=0){ Lumina::DESKMAN->deleteLater(); }
 }
 
 void LSession::setupSession(){
@@ -104,6 +107,10 @@ void LSession::setupSession(){
     splash.showScreen("user");
   if(DEBUG){ qDebug() << " - Init User Files:" << timer->elapsed();}
   //checkUserFiles(); //adds these files to the watcher as well
+  Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
+  Lumina::NWS->setRoot_currentWorkspace(0);
+
+  Lumina::DESKMAN->start();
   Lumina::ROOTWIN->start();
   //Initialize the internal variables
   //DESKTOPS.clear();
@@ -124,14 +131,12 @@ void LSession::setupSession(){
 
   //Initialize the desktops
     splash.showScreen("desktop");
-  if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed(); }
+  /*if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed(); }
   QList<QScreen*> scrns= QApplication::screens();
   for(int i=0; i<scrns.length(); i++){
     qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
     RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(),QUrl::fromLocalFile(LOS::LuminaShare()+"desktop-background.jpg").toString() );
-  }
-  Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
-  Lumina::NWS->setRoot_currentWorkspace(0);
+  }*/
 
   if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
 

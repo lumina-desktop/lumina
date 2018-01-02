@@ -8,7 +8,8 @@
 {
 	"meta": {
 		"name": "Shell",
-		"file_suffix": ["sh"]
+		"file_suffix": ["sh"],
+		"first_line_match":["#!/bin/sh", "#!/sbin/openrc-run"]
 	},
 	"format": {
 		"line_wrap": false,
