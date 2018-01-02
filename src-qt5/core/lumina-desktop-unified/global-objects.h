@@ -22,9 +22,10 @@
 //#include "src-events/LXcbEventFilter.h"
 //#endif
 #include "src-events/LShortcutEvents.h"
-
+#include "src-desktop/DesktopManager.h"
 #include "src-screensaver/LScreenSaver.h"
 //#include "src-WM/LWindowManager.h"
+
 #include <RootWindow.h>
 #include "LSession.h"
 
@@ -43,13 +44,13 @@ namespace Lumina{
 
 	//extern EventFilter *EFILTER; //Native Event Watcher
 	extern LShortcutEvents *SHORTCUTS; //Keyboard/mouse shortcut events
-	//extern DesktopSettings *SETTINGS; //All Settings files
+
 	//ScreenSaver
 	extern LScreenSaver *SS;
 	//Root Window
 	extern RootWindow *ROOTWIN;
-	//Window Manager
-	//LWindowManager *WM;
+	//Desktop Manager
+	extern DesktopManager *DESKMAN;
 	//Application List
 	extern XDGDesktopList *APPLIST;
 
