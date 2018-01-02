@@ -39,21 +39,17 @@ bool SSPlugin::isLoaded(){
   return !data.isEmpty();
 }
 
+/**
+ * Check if the plugin is valid as long as the JSON is not empty,
+ * it contains at least a "name", "qml", and "description" object,
+ * and the "name" and "description" objects contain a "default" key. 
+**/
 bool SSPlugin::isValid(){
   if(data.isEmpty()){ return false; }
   bool ok = data.contains("name") && data.contains("qml") && data.contains("description");
-  if(ok){
-    //go to the next name level and see if required sub-items exist
-    QJsonObject tmp = data.value("name").toObject();
-    ok = tmp.contains("default");
-  }
-  if(ok){
-    //go to the next description level and see if required sub-items exist
-    QJsonObject tmp = data.value("description").toObject();
-    ok = tmp.contains("default");
-  }
-if(ok){
-    //go to the next qml level and see if required sub-items exist
+  ok &= containsDefault("name");
+  ok &= containsDefault("description");
+  if(ok) {
     QJsonObject tmp = data.value("qml").toObject();
     QStringList mustexist;
     QString exec = tmp.value("exec").toString();
@@ -62,7 +58,6 @@ if(ok){
     QJsonArray tmpA = data.value("additional_files").toArray();
     for(int i=0; i<tmpA.count(); i++){ mustexist << tmpA[i].toString(); }
     QString reldir = currentfile.section("/",0,-2) + "/";
-    //qDebug() << "Got MustExist:" << mustexist << reldir;
     for(int i=0; i<mustexist.length() && ok; i++){
       if(mustexist[i].startsWith("/")){ ok = QFile::exists(mustexist[i]); }
       else { ok = QFile::exists(reldir+mustexist[i]); }
@@ -71,23 +66,8 @@ if(ok){
   return ok;
 }
 
-QString SSPlugin::translatedName(){
-  QJsonObject tmp = data.value("name").toObject();
-  //Get the current locale
-  QString locale = getenv("LC_ALL");
-  if(locale.isEmpty()){ locale = getenv("LC_MESSAGES"); }
-  if(locale.isEmpty()){ locale = getenv("LANG"); }
-  if(locale.isEmpty()){ locale = "default"; }
-  if(locale.contains(".")){ locale = locale.section(".",0,0); } //chop any charset code off the end
-  //Now find which localized string is available and return it
-  if(tmp.contains(locale)){ return tmp.value(locale).toString(); }
-  locale = locale.section("_",0,0); //full locale not found - look for shortened form
-  if(tmp.contains(locale)){ return tmp.value(locale).toString(); }
-  return tmp.value("default").toString(); //use the default version
-}
-
-QString SSPlugin::translatedDescription(){
-  QJsonObject tmp = data.value("description").toObject();
+QString SSPlugin::translatedObject(QString obj){
+  QJsonObject tmp = data.value(obj).toObject();
   //Get the current locale
   QString locale = getenv("LC_ALL");
   if(locale.isEmpty()){ locale = getenv("LC_MESSAGES"); }
@@ -103,7 +83,6 @@ QString SSPlugin::translatedDescription(){
 
 QUrl SSPlugin::scriptURL(){
   QString exec = data.value("qml").toObject().value("exec").toString();
-  //qDebug() << "got exec:" << exec << data;
   if(!exec.startsWith("/")){ exec.prepend( currentfile.section("/",0,-2)+"/" ); }
   return QUrl::fromLocalFile(exec);
 }
