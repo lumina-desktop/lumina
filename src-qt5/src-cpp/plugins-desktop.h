@@ -4,8 +4,8 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifndef _LUMINA_DESKTOP_SCREENSAVER_PLUGINS_CLASS_H
-#define _LUMINA_DESKTOP_SCREENSAVER_PLUGINS_CLASS_H
+#ifndef _LUMINA_DESKTOP_DESKTOP_PLUGINS_CLASS_H
+#define _LUMINA_DESKTOP_DESKTOP_PLUGINS_CLASS_H
 
 #include "plugins-base.h"
 #include <QJsonObject>
@@ -18,10 +18,10 @@
 #include <QDir>
 #include <QDebug>
 
-class SSPlugin : public BasePlugin {
+class DTPlugin : public BasePlugin{
 public:
-	SSPlugin();
-	~SSPlugin();
+	DTPlugin();
+	~DTPlugin();
 
 	virtual bool isValid() Q_DECL_OVERRIDE;
 };

@@ -4,20 +4,20 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#include "plugins-screensaver.h"
+#include "plugins-desktop.h"
 
 // ============
-//    SS PLUGIN
+//    DT PLUGIN
 // ============
-SSPlugin::SSPlugin(){
+DTPlugin::DTPlugin(){
 
 }
 
-SSPlugin::~SSPlugin(){
+DTPlugin::~DTPlugin(){
 
 }
 
-bool SSPlugin::isValid(){
+bool DTPlugin::isValid(){
   if(data.isEmpty()){ return false; }
   bool ok = data.contains("name") && data.contains("qml") && data.contains("description");
   ok &= containsDefault("name");
