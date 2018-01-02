@@ -23,20 +23,17 @@
 class SSPlugin{
 private:
 	QString currentfile;
+	QJsonObject data; //Hazardous to manually modify
+  bool containsDefault(QString obj) { return data.value(obj).toObject().contains("default"); }
 
 public:
-	QJsonObject data; //Hazardous to manually modify
-
 	SSPlugin();
 	~SSPlugin();
 
 	void loadFile(QString path);
 	bool isLoaded();
-
 	bool isValid();
-
-	QString translatedName();
-	QString translatedDescription();
+	QString translatedObject(QString obj);
 	QUrl scriptURL();
 };
 
