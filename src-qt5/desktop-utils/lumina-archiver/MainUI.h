@@ -26,13 +26,14 @@ public:
 
 	void LoadArguments(QStringList);
 	void loadIcons();
+	bool preservePaths;
 
 private:
 	Ui::MainUI *ui;
-	Backend *BACKEND;
-    QStringList aaFileList, sxList;
-    QString sxPath, sxFile;
-	QTimer *delayClose;
+       Backend *BACKEND;
+       QStringList aaFileList, sxList;
+       QString sxPath, sxFile;
+       QTimer *delayClose;
 
 	QTreeWidgetItem* findItem(QString path, QTreeWidgetItem *start = 0);
 	bool cleanItems(QStringList list, QTreeWidgetItem *start = 0); //returns true if anything gets cleaned

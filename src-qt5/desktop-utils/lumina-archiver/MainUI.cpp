@@ -67,6 +67,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->actionUSB_Image->setEnabled(false);
   loadIcons();
   ui->tree_contents->setHeaderLabels( QStringList() << tr("File") << tr("MimeType") << tr("Size")+" " );
+
+  preservePaths = false;
 }
 
 MainUI::~MainUI(){
@@ -296,7 +298,7 @@ void MainUI::simpleExtractFiles(){
 void MainUI::autoArchiveFiles(){
   qDebug() << "Auto Archive Files:" << aaFileList;
   ui->label_progress->setText(tr("Adding Items..."));
-  BACKEND->startAdd(aaFileList);
+  BACKEND->startAdd(aaFileList, true);
 }
 
 void MainUI::extractSelection(){
