@@ -27,7 +27,6 @@ src-qt5/desktop-utils/lumina-archiver/lumina-archiver
 src-qt5/desktop-utils/lumina-calculator/lumina-calculator
 src-qt5/desktop-utils/lumina-pdf/lumina-pdf
 src-qt5/desktop-utils/lumina-notify/lumina-notify
-
 src-qt5/core/lumina-theme-engine/src/lthemeengine-qtplugin/
 src-qt5/core/lumina-theme-engine/src/lthemeengine-qtplugin/.build/
 src-qt5/core/lumina-theme-engine/src/lthemeengine-qtplugin/Makefile
@@ -40,7 +39,6 @@ src-qt5/core/lumina-theme-engine/src/lthemeengine-style/liblthemeengine-style.so
 src-qt5/core/lumina-theme-engine/src/lthemeengine/Makefile
 src-qt5/core/lumina-theme-engine/src/lthemeengine/lthemeengine
 src-qt5/desktop-utils/lumina-mediaplayer/lumina-mediaplayer
-
 src-qt5/Makefile
 src-qt5/*/Makefile
 src-qt5/*/*/Makefile
@@ -48,7 +46,6 @@ src-qt5/*/*/*/Makefile
 dev-tools/*/Makefile
 dev-tools/systray-tester/test-tray
 dev-tools/test-dbus/test
-
 icon-theme/Makefile
 icon-theme/*/Makefile
 Makefile
