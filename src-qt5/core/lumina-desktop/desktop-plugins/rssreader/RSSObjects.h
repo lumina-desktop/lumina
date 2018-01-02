@@ -51,6 +51,7 @@ struct RSSchannel{
   //Internal data for bookkeeping
   QDateTime lastsync, nextsync;
   QString originalURL; //in case it was redirected to some "fixed" url later
+  bool rss;
 };
 
 class RSSReader : public QObject{
@@ -88,9 +89,12 @@ private:
 	//RSS parsing functions
 	RSSchannel readRSS(QByteArray bytes);
 	RSSchannel readRSSChannel(QXmlStreamReader *rss);
+	RSSchannel readRSSChannelAtom(QXmlStreamReader *rss);
 	RSSitem readRSSItem(QXmlStreamReader *rss);
-        void readRSSImage(RSSchannel *item, QXmlStreamReader *rss);
+	RSSitem readRSSItemAtom(QXmlStreamReader *rss);
+  void readRSSImage(RSSchannel *item, QXmlStreamReader *rss);
 	QDateTime RSSDateTime(QString datetime);
+	QDateTime ATOMDateTime(QString datetime);
 
 private slots:
 	void replyFinished(QNetworkReply *reply);

@@ -114,12 +114,12 @@
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>Эл.почта</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
@@ -154,7 +154,7 @@
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
@@ -164,17 +164,17 @@
     <message>
         <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Пуск</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="738"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Громче</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="751"/>
@@ -199,7 +199,7 @@
     <message>
         <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Тише</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="759"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../mainUI.cpp" line="406"/>
         <source>Now Playing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизводится:</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="471"/>
@@ -341,7 +341,7 @@
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Search Term</source>
-        <translation type="unfinished"></translation>
+        <translation>Что искать</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="654"/>
@@ -359,7 +359,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="358"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type="unfinished"></translation>
+        <translation>Совпадений не найдено. Попробуйте поискать что-то другое</translation>
     </message>
 </context>
 <context>

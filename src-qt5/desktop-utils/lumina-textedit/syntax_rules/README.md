@@ -9,9 +9,11 @@ A small comment section may be placed at the top of the file where every line st
 # Requirements
 1. A "meta" object containing the following variables (meta information about the rules):
    1. "name" : The name that will be shown to the user for this set of syntax rules.
-   2. If this syntax file is to be automatically applied to particular file type, then one of the following options must be set:
+   2. If this syntax file is to be automatically applied to particular file type, then at least one of the following options must be set:
       1. "file_suffix" : An array of file extensions which are supported by this syntax rule set (Example: temp.foo will be matched by "file_suffix"=["foo"] )
       2. "file_regex" : A regular expression which should be used to find if the filename matches this rule set.
+      3. "first_line_match" : *(only used if no filename rules matched)* Exact match for the first line of text in the file (Example: "#!/bin/sh")
+      4. "first_line_regex" : *(only used if no filename rules matched)* Regular expression to use when find a match for the first line of text in the file
 2. A "format" object containing the following variables (file-wide formatting):
    1. "columns_per_line" : (integer, optional) For file formats with line-length restrictions, this will automatically highlight/flag any "overage" of the designated limit.
    2. "highlight_whitespace_eol" : (boolian, optional) Highlight any excess whitespace at the end of a line.

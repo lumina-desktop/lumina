@@ -43,7 +43,7 @@ lthemeenginePlatformTheme::lthemeenginePlatformTheme(){
 #endif
     QGuiApplication::setFont(m_generalFont);
     }
-  qCDebug(llthemeengine) << "using lthemeengine plugin";
+  //qCDebug(llthemeengine) << "using lthemeengine plugin";
 #ifdef QT_WIDGETS_LIB
   if(!QStyleFactory::keys().contains("lthemeengine-style"))
     qCCritical(llthemeengine) << "unable to find lthemeengine proxy style";
@@ -60,7 +60,7 @@ QPlatformMenuBar *lthemeenginePlatformTheme::createPlatformMenuBar() const{
   if(m_checkDBusGlobalMenu){
     QDBusConnection conn = QDBusConnection::sessionBus();
     m_dbusGlobalMenuAvailable = conn.interface()->isServiceRegistered("com.canonical.AppMenu.Registrar");
-    qCDebug(llthemeengine) << "D-Bus global menu:" << (m_dbusGlobalMenuAvailable ? "yes" : "no");
+    //qCDebug(llthemeengine) << "D-Bus global menu:" << (m_dbusGlobalMenuAvailable ? "yes" : "no");
     }
   return (m_dbusGlobalMenuAvailable ? new QDBusMenuBar() : nullptr);
 }

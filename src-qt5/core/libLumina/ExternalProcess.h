@@ -21,6 +21,7 @@ class ExternalProcess : public QProcess{
 	Q_OBJECT
 private:
 	bool cursorRestored;
+	QString logoutput;
 
 private slots:
 	void resetCursor(){
@@ -46,6 +47,9 @@ private slots:
 	  //Clean up this object
           this->deleteLater();
 	}
+	void updateLog(){
+	  logoutput.append( QString(this->readAllStandardOutput()) );
+	}
 
 public:
 	ExternalProcess(QString logfile = "", bool manageCursors = false) : QProcess(){
@@ -53,6 +57,8 @@ public:
 	  cursorRestored = !manageCursors;
 	  if(logfile.isEmpty()){
 	    this->setStandardOutputFile(QProcess::nullDevice());
+	  }else if(logfile=="stdout"){
+	    connect(this, SIGNAL(readyReadStandardOutput()), this, SLOT(updateLog()) );
 	  }else{
 	    this->setStandardOutputFile(logfile);
 	  }
@@ -65,6 +71,11 @@ public:
 	  /*if(this->state() == QProcess::Running){
 	    this->detach(); //about to close down the QProcess - detach the other program so it can continue functioning normally.
 	  }*/
+	}
+
+	QString log(){
+	  //NOTE: This will only contain output if the "stdout" argument is used as the logfile
+	  return logoutput;
 	}
 
 	static void launch(QString program, QStringList args = QStringList(), bool manageCursors = true){

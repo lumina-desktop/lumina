@@ -118,6 +118,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   connect(TRAY, SIGNAL(JobsFinished()), this, SLOT(TrayJobsFinished()) );
   if(DEBUG){ qDebug() << " - Done with init"; }
   ui->actionOpen_as_Root->setVisible(LUtils::isValidBinary("qsudo"));
+  ui->transferTreeView->setVisible(false);
 }
 
 MainUI::~MainUI(){

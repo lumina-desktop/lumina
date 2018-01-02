@@ -4,11 +4,13 @@ import QtGraphicalEffects 1.0
 Rectangle {
   id : canvas
   anchors.fill: parent
-  width: 800
-  height: 600
+  width: Screen.width 
+  height: Screen.height
   color: "black"
 
   //TODO Add orbital trails option
+  //TODO Fix jitteryness and start position
+  //TODO Make orbits more extreme 
 
   //Between 5 and 15 planets, read from settings
   property int planets: Math.round(( Math.random() * 10 ) + 5 )
@@ -30,6 +32,7 @@ Rectangle {
       property double a: Math.sqrt(b*b+c*c)
       //Random angle of rotation
       property double th: Math.random() * Math.PI 
+      property var path: []
 
       //Calculates starting position
       x: Math.round(cx + a * Math.cos(th))
@@ -45,34 +48,40 @@ Rectangle {
       //Give each planet a random color, semi-transparent
       color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.5)
 
-      Timer {
+      /*Timer {
         //Each planet updates between 1ms and 51ms (smaller times=faster)
         interval: Math.round(Math.random() * 50 ) + 1
         repeat: true
         running: true
-        property bool starting: true
         property int time: 0
 
         onTriggered: {
-          //Move a planet 80 pixels away from the sun if the planet is too close
-          if(starting) {
-            if(x > cx && Math.abs(cx-x) < 80) {
-              x+=80
-            }else if(x < cx && Math.abs(cx-x) < 80) {
-              x-=80
-            }
-
-            if(y > cy && Math.abs(cy-y) < 80) {
-              y+=80
-            }else if(y < cy && Math.abs(cy-y) < 80) {
-              y-=80
-            }
-            starting = false;
-          }
           //Parametric equation that calculates the position of the general ellipse. Completes a loop ever 314 cycles. Credit to 
           x = cx+a*Math.cos(2*Math.PI*(time/314.0))*Math.cos(th) - b*Math.sin(2*Math.PI*(time/314.0))*Math.sin(th)
           y = cy+a*Math.cos(2*Math.PI*(time/314.0))*Math.sin(th) + b*Math.sin(2*Math.PI*(time/314.0))*Math.cos(th)
           time++;
+
+          //Move a planet 80 pixels away from the sun if the planet is too close
+          if(x > cx && Math.abs(cx-x) < 80) {
+            x+=80
+          }else if(x < cx && Math.abs(cx-x) < 80) {
+            x-=80
+          }
+
+          if(y > cy && Math.abs(cy-y) < 80) {
+            y+=80
+          }else if(y < cy && Math.abs(cy-y) < 80) {
+            y-=80
+          }
+        }
+      }*/
+
+      Component.onCompleted: {
+        pahtX[0] = x
+        pahtY[0] = y
+        for(int i = 1; i <= 200; i++) {
+          pathX[i] = cx+a*Math.cos(2*Math.PI*(i/200.0)*Math.cos(th) - b*Math.sin(2*Math.PI*(i/200.0)*Math.sin(th)
+          pathY[i] = cy+a*Math.cos(2*Math.PI*(i/200.0)*Math.sin(th) + b*Math.sin(2*Math.PI*(i/200.0)*Math.cos(th)
         }
       }
     }

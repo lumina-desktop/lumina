@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>359</height>
+             <height>161</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -98,6 +98,16 @@
       <widget class="QWidget" name="page_image"/>
      </widget>
     </item>
+    <item>
+     <widget class="QTreeView" name="transferTreeView">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -111,7 +121,7 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="actionNew_Window"/>
     <addaction name="actionNew_Tab"/>
@@ -125,7 +135,7 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuView_Mode">
      <property name="title">
@@ -142,7 +152,7 @@
    </widget>
    <widget class="QMenu" name="menuBookmarks">
     <property name="title">
-     <string>Bookmarks</string>
+     <string>&amp;Bookmarks</string>
     </property>
     <addaction name="actionManage_Bookmarks"/>
     <addaction name="actionAdd_Bookmark"/>
@@ -150,14 +160,14 @@
    </widget>
    <widget class="QMenu" name="menuExternal_Devices">
     <property name="title">
-     <string>External Devices</string>
+     <string>&amp;External Devices</string>
     </property>
     <addaction name="actionScan"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuGit">
     <property name="title">
-     <string>Git</string>
+     <string>&amp;Git</string>
     </property>
     <addaction name="actionRepo_Status"/>
     <addaction name="actionClone_Repository"/>

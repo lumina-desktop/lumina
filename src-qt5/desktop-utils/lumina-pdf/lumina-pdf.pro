@@ -18,14 +18,19 @@ include(../../core/libLumina/LuminaXDG.pri)
 message("Qt Modules Needed: $${QT}")
 
 SOURCES += main.cpp \
-        mainUI.cpp
+        mainUI.cpp \
+        propDialog.cpp \
+        PrintWidget.cpp
 
-HEADERS  += mainUI.h
+HEADERS  += mainUI.h \
+		PrintWidget.h \
+		PresentationLabel.h \
+    PropDialog.h
 
-FORMS += mainUI.ui
+FORMS += mainUI.ui \
+         propDialog.ui
 
 LIBS += -lpoppler-qt5
-INCLUDEPATH+= $${L_INCLUDEDIR}/poppler/qt5
 
 TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_ar.ts \
@@ -95,7 +100,7 @@ TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_zu.ts 
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-pdf.desktop
 desktop.path=$${L_SHAREDIR}/applications/

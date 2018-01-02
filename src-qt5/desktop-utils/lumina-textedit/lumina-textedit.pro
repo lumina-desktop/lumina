@@ -91,7 +91,7 @@ TRANSLATIONS =  i18n/l-te_af.ts \
                 i18n/l-te_zu.ts
 
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
-dotrans.extra=cd i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
 desktop.files=lumina-textedit.desktop
 desktop.path=$${L_SHAREDIR}/applications/
@@ -103,7 +103,7 @@ syntax.path=$${L_SHAREDIR}/lumina-desktop/syntax_rules
 syntax.files=syntax_rules/*
 
 manpage.path=$${L_MANDIR}/man1/
-manpage.extra="$${MAN_ZIP} lumina-textedit.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-textedit.1.gz"
+manpage.extra="$${MAN_ZIP} $$PWD/lumina-textedit.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-textedit.1.gz"
 
 INSTALLS += target desktop link syntax manpage
 

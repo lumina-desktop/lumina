@@ -81,9 +81,6 @@ isEmpty(OS){
       isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/../etc }
       isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
     }
-    equals(LINUX_DISTRO,"Ubuntu"){
-      INCLUDEPATH *= /usr/include/poppler/qt5
-    }
   }else{
     OS="Unknown";
   }

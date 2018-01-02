@@ -91,7 +91,7 @@ QString Backend::linkTo(QString file){
 }
 
 //Modification routines
-void Backend::startAdd(QStringList paths){
+void Backend::startAdd(QStringList paths,  bool absolutePaths){
   //if(paths.isEmpty() && !insertQueue.isEmpty()){ paths = insertQueue; } //load the queue
   if(paths.contains(filepath)){ paths.removeAll(filepath); }
   if(paths.isEmpty()){ return; }
@@ -109,11 +109,12 @@ void Backend::startAdd(QStringList paths){
   args << "-c" << "-a";
   args << flags;
   //Now setup the parent dir
-  for(int i=0; i<paths.length(); i++){
-    paths[i] = paths[i].section(parent,1,-1);
-    if(paths[i].startsWith("/")){ paths[i].remove(0,1); }
-  }
-  args << "-C" << parent;
+  if(!absolutePaths) {
+    for(int i=0; i<paths.length(); i++){
+      paths[i] = paths[i].section(parent,1,-1);
+      if(paths[i].startsWith("/")){ paths[i].remove(0,1); }
+    }
+    args << "-C" << parent; }
   args << paths;
   if(QFile::exists(filepath)){ //append to existing
     args.replaceInStrings(filepath, tmpfilepath);

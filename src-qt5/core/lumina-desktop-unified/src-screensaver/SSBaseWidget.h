@@ -10,6 +10,7 @@
 #define _LUMINA_DESKTOP_SCREEN_SAVER_BASE_WIDGET_H
 
 #include "global-includes.h"
+#include <plugins-base.h>
 #include <plugins-screensaver.h>
 
 class SSBaseWidget : public QQuickView{
@@ -25,8 +26,8 @@ public slots:
 	void stopPainting();
 
 private:
-        QString plugType;
-        SSPlugin cplug;
+  QString plugType;
+  SSPlugin cplug;
 	QTimer *restartTimer;
 
 private slots:

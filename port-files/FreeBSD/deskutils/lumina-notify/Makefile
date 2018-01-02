@@ -1,4 +1,3 @@
-# Created by: Ken Moore <ken@pcbsd.org>
 # $FreeBSD$
 
 PORTNAME=	lumina-notify
@@ -6,7 +5,7 @@ PORTVERSION=	%%CHGVERSION%%
 PORTREVISION=	%%CHGREVISION%%
 CATEGORIES=	deskutils
 
-MAINTAINER=	kmoore@FreeBSD.org
+MAINTAINER=	jt@ixsystems.com
 COMMENT=	Alarm/notification utility from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
@@ -19,9 +18,9 @@ I18N_DESC= Install localization files
 
 MAKE_JOBS_UNSAFE=yes
 
+USES=           qmake
 USE_QT5=	core gui widgets network svg \
 		buildtools_build x11extras concurrent multimedia
-USES=		qmake
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina

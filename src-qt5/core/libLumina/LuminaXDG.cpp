@@ -1294,6 +1294,7 @@ QStringList LXDG::findAvailableAppsForMime(QString mime){
 }
 
 void LXDG::setDefaultAppForMime(QString mime, QString app){
+  //qDebug() << "Set Default App For Mime:" << mime << app;
   QString filepath = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list";
   QStringList cinfo = LUtils::readFile(filepath);
   //If this is a new file, make sure to add the header appropriately
