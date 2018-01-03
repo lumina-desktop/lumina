@@ -129,5 +129,13 @@ void RootDesktopObject::ChangeWallpaper(QString screen, QString value){
   }
 }
 
+QString RootDesktopObject::CurrentWallpaper(QString screen){
+  for(int i=0; i<s_objects.length(); i++){
+    if(s_objects[i]->name()==screen){ return s_objects[i]->background();}
+  }
+  return ""; //unknown
+}
+
+
 
 // === PRIVATE ===

@@ -55,6 +55,7 @@ private:
 public slots:
 	void updateScreens(); //rescan/update screen objects
 	void ChangeWallpaper(QString screen, QString);
+	QString CurrentWallpaper(QString screen);
 
 private slots:
 

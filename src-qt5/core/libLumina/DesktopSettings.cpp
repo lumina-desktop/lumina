@@ -17,6 +17,7 @@
 
 // === PUBLIC ===
 DesktopSettings::DesktopSettings(QObject *parent) : QObject(parent){
+  qRegisterMetaType< DesktopSettings::File >("DesktopSettings::File");
   watcher = 0;
   runmode = DesktopSettings::UserFull;
 }
@@ -275,6 +276,7 @@ QString DesktopSettings::rel_path(DesktopSettings::File file){
 
 //=== PRIVATE SLOTS ===
 void DesktopSettings::fileChanged(QString file){
+  //qDebug() << "Got File Changed:" << file;
   //QFileSystemWatcher change detected
   if(!watcher->files().contains(file)){
     //Make sure this file stays watched for changes
@@ -287,6 +289,7 @@ void DesktopSettings::fileChanged(QString file){
   QList< DesktopSettings::File > types = files.keys();
   for(int i=0; i<types.length(); i++){
     if(files[types[i]].contains(file)){
+      //qDebug() << "Emit File Type Changed:" << types[i];
       emit FileModified(types[i]);
       break;
     }
