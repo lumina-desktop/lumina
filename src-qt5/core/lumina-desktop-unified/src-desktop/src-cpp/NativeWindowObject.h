@@ -17,11 +17,22 @@
 class NativeWindowObject : public QObject{
 	Q_OBJECT
 	// QML-ACCESSIBLE PROPERTIES
+	Q_PROPERTY( QImage winImage READ winImage NOTIFY winImageChanged)
 	Q_PROPERTY( QString name READ name NOTIFY nameChanged)
 	Q_PROPERTY( QString title READ title NOTIFY titleChanged)
 	Q_PROPERTY( QString shortTitle READ shortTitle NOTIFY shortTitleChanged)
 	Q_PROPERTY( QIcon icon READ icon NOTIFY iconChanged)
 	Q_PROPERTY( bool sticky READ isSticky NOTIFY stickyChanged)
+	//Button/Titlebar visibility
+	Q_PROPERTY( bool showCloseButton READ showCloseButton NOTIFY winTypeChanged)
+	Q_PROPERTY( bool showMinButton READ showMinButton NOTIFY winTypeChanged)
+	Q_PROPERTY( bool showMaxButton READ showMaxButton NOTIFY winTypeChanged)
+	Q_PROPERTY( bool showTitlebar READ showTitlebar NOTIFY winTypeChanged)
+	Q_PROPERTY( bool showGenericButton READ showGenericButton NOTIFY winTypeChanged)
+	Q_PROPERTY( bool showWindowFrame READ showWindowFrame NOTIFY winTypeChanged)
+	//Geometry information
+	Q_PROPERTY( QRect frameGeometry READ frameGeometry NOTIFY geomChanged)
+	Q_PROPERTY( QRect imageGeometry READ imageGeometry NOTIFY geomChanged)
 
 public:
 	enum State{ S_MODAL, S_STICKY, S_MAX_VERT, S_MAX_HORZ, S_SHADED, S_SKIP_TASKBAR, S_SKIP_PAGER, S_HIDDEN, S_FULLSCREEN, S_ABOVE, S_BELOW, S_ATTENTION };
@@ -45,7 +56,8 @@ public:
 		FrameExtents=13, 	/*QList<int> : [Left, Right, Top, Bottom] in pixels */
 		RelatedWindows=14, /* QList<WId> - better to use the "isRelatedTo(WId)" function instead of reading this directly*/
 		Active=15, 		/*bool*/
-		Visible=16 		/*bool*/
+		Visible=16, 		/*bool*/
+		WinImage=17	/*QImage*/
 		};
 
 	static QList<NativeWindowObject::Property> allProperties(){
@@ -77,14 +89,27 @@ public:
 	void requestProperty(NativeWindowObject::Property, QVariant, bool force = false);
 	void requestProperties(QList<NativeWindowObject::Property>, QList<QVariant>, bool force = false);
 
-	QRect geometry(); //this returns the "full" geometry of the window (window + frame)
+	Q_INVOKABLE QRect geometry(); //this returns the "full" geometry of the window (window + frame)
 
 	// QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
+	Q_INVOKABLE QImage winImage();
 	Q_INVOKABLE QString name();
 	Q_INVOKABLE QString title();
 	Q_INVOKABLE QString shortTitle();
 	Q_INVOKABLE QIcon icon();
+	//QML Button states
+	Q_INVOKABLE bool showCloseButton();
+	Q_INVOKABLE bool showMaxButton();
+	Q_INVOKABLE bool showMinButton();
+	Q_INVOKABLE bool showTitlebar();
+	Q_INVOKABLE bool showGenericButton();
+	Q_INVOKABLE bool showWindowFrame();
+	//QML Window States
 	Q_INVOKABLE bool isSticky();
+
+	//QML Geometry reporting
+	Q_INVOKABLE QRect frameGeometry();
+	Q_INVOKABLE QRect imageGeometry();
 
 public slots:
 	Q_INVOKABLE void toggleVisibility();
@@ -120,11 +145,14 @@ signals:
 	//void RequestUnEmbed(WId, QWidget*);
 
 	// QML update signals
+	void winImageChanged();
 	void nameChanged();
 	void titleChanged();
 	void shortTitleChanged();
 	void iconChanged();
 	void stickyChanged();
+	void winTypeChanged();
+	void geomChanged();
 };
 
 // Declare the enumerations as Qt MetaTypes

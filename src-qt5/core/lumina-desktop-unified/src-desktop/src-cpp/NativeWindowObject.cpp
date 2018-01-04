@@ -117,6 +117,10 @@ QRect NativeWindowObject::geometry(){
 }
 
 // QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
+QImage NativeWindowObject::winImage(){
+  return this->property(NativeWindowObject::WinImage).value<QImage>();
+}
+
 QString NativeWindowObject::name(){
   return this->property(NativeWindowObject::Name).toString();
 }
@@ -133,8 +137,92 @@ QIcon NativeWindowObject::icon(){
   return this->property(NativeWindowObject::Name).value<QIcon>();
 }
 
+//QML Button states
+bool NativeWindowObject::showCloseButton(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+bool NativeWindowObject::showMaxButton(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+bool NativeWindowObject::showMinButton(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND << NativeWindowObject::T_DIALOG;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+bool NativeWindowObject::showTitlebar(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+bool NativeWindowObject::showGenericButton(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+bool NativeWindowObject::showWindowFrame(){
+  QList<NativeWindowObject::Type> types = this->property(NativeWindowObject::WinTypes).value<QList < NativeWindowObject::Type> >();
+  QList<NativeWindowObject::Type> badtypes;
+  badtypes << NativeWindowObject::T_DESKTOP << NativeWindowObject::T_TOOLBAR << NativeWindowObject::T_MENU \
+	<< NativeWindowObject::T_SPLASH << NativeWindowObject::T_DROPDOWN_MENU << NativeWindowObject::T_POPUP_MENU \
+	<< NativeWindowObject::T_NOTIFICATION << NativeWindowObject::T_COMBO << NativeWindowObject::T_DND;
+  for(int i=0; i<types.length(); i++){
+    if(badtypes.contains(types[i])){ return false; }
+  }
+  return true;
+}
+
+//QML Window States
 bool NativeWindowObject::isSticky(){
   return (this->property(NativeWindowObject::Workspace).toInt()<0 || this->property(NativeWindowObject::States).value<QList<NativeWindowObject::State> >().contains(NativeWindowObject::S_STICKY) );
+}
+
+//QML Geometry reporting
+QRect NativeWindowObject::frameGeometry(){
+  return geometry();
+}
+
+QRect NativeWindowObject::imageGeometry(){
+  QRect geom( this->property(NativeWindowObject::GlobalPos).toPoint(), this->property(NativeWindowObject::Size).toSize() );
+  return geom;
 }
 
 // ==== PUBLIC SLOTS ===
@@ -169,6 +257,10 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 	case NativeWindowObject::Workspace:
 	case NativeWindowObject::States:
 		emit stickyChanged(); break;
+	case NativeWindowObject::WinImage:
+		emit winImageChanged(); break;
+	case NativeWindowObject::WinTypes:
+		emit winTypeChanged(); break;
 	default:
 		break; //do nothing otherwise
   }
