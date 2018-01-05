@@ -49,3 +49,4 @@ dev-tools/test-dbus/test
 icon-theme/Makefile
 icon-theme/*/Makefile
 Makefile
+src-qt5/src-qml/test/*
