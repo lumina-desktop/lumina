@@ -1,4 +1,3 @@
-// vi: ft=qml
 import QtQuick 2.0
 import QtMultimedia 5.7
 import QtQuick.Window 2.2
@@ -22,11 +21,10 @@ Rectangle {
         width: 10
         Text { 
           id: column
-          color: "red" 
+          color: "#ff4d4d" 
           font.pixelSize: 10
           transform: Rotation { origin.x: 0; origin.y: 0; angle: 90 }
           Timer {
-            //interval: Math.random() * ((cR.index % 2) ? 50 : 20) + ((cR.index % 2) ? 90 : 70)  
             interval: 50
             repeat: true
             running: true
@@ -35,7 +33,6 @@ Rectangle {
                 var bottom = column.text.charAt(column.text.length-1)
                 var newString = bottom+column.text.substring(0, column.text.length-1)
                 column.text = newString 
-                //interval = Math.random() * ((cR.index % 2) ? 50 : 20) + ((cR.index % 2) ? 90 : 70)
                 interval = 50
               }else{
                 interval = 1000
