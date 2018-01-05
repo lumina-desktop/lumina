@@ -3,6 +3,7 @@ global.h
 Makefile.Debug
 Makefile.Release 
 *.o 
+*.swp
 *.qmake.stash
 moc_*.cpp
 ui_*.h
