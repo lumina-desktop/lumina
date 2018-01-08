@@ -45,7 +45,11 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
   //Now look for a list that matches any screen/workspace
   if(wpaperList.isEmpty()){ wpaperList= DesktopSettings::instance()->value(DesktopSettings::Desktop, "wallpapers/default", QStringList()).toStringList(); }
   //Now use the failover wallpaper directory
-  if(wpaperList.isEmpty()){ wpaperList << LOS::LuminaShare()+"../wallpapers/lumina-nature"; }
+  if(wpaperList.isEmpty()){
+    QString def = LOS::LuminaShare().section("/",0,-3)+"/wallpapers/lumina-nature"; //Note: LuminaShare() ends with an extra "/"
+    //qDebug() << "Default Wallpaper:" << def;
+    if(QFile::exists(def)){ wpaperList << def; }
+  }
   //Wallpaper selection/randomization
   if(wpaperList.count()==1 && wpaperList.first()==current){ return; } //nothing to do - just the same image
   QString wpaper;
@@ -65,7 +69,7 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
       }
     }
     //Verify that there are files in the list - otherwise use the default
-    if(bgL.isEmpty()){ wpaper="default"; break; }
+    if(bgL.isEmpty()){ wpaper.clear(); break; }
     int index = ( qrand() % bgL.length() );
     if(index== bgL.indexOf(current)){ //if the current wallpaper was selected by the randomization again
       //Go to the next in the list
@@ -75,7 +79,7 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
     wpaper = prefix+bgL[index];
   }
   //Now go ahead and set the wallpaper in the screen object
-  if(wpaper.isEmpty() || wpaper=="default"){ wpaper = LOS::LuminaShare()+"desktop-background.jpg"; } //failover image
+  if(wpaper.isEmpty() || wpaper=="default"){ wpaper = LOS::LuminaShare()+"/desktop-background.jpg"; } //failover image
   //qDebug() << "Updating Wallpaper:" << screen_id << wpaper;
   RootDesktopObject::instance()->ChangeWallpaper(screen_id,QUrl::fromLocalFile(wpaper).toString() );
 }
