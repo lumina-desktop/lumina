@@ -10,7 +10,7 @@
 #include "NativeWindowSystem.h"
 #include <global-objects.h>
 
-#define DISABLE_COMPOSITING 0
+#define DISABLE_COMPOSITING 1
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -556,12 +556,12 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
 
   }
   if(props.contains(NativeWindowObject::Visible)){
-    //qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindowObject::Visible) ];
+    qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindowObject::Visible) ];
     if( vals[ props.indexOf(NativeWindowObject::Visible) ].toBool() ){
-      //qDebug() << " - Map it!";
+      qDebug() << " - Map it!";
       xcb_map_window(QX11Info::connection(), win->id());
     }else{
-      //qDebug() << " - Unmap it!";
+      qDebug() << " - Unmap it!";
       xcb_unmap_window(QX11Info::connection(), win->id());
     }
   }
@@ -783,6 +783,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   registerClientEvents(win->id());
   NWindows << win;
   UpdateWindowProperties(win, NativeWindowObject::allProperties());
+  win->setProperty(NativeWindowObject::FrameExtents, QVariant::fromValue<QList<int> >( QList<int>() << 5 << 5 << 30 << 5 ));
   qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindowObject::Name).toString();
   SetupNewWindow(win);
   //Now setup the connections with this window
@@ -791,6 +792,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   connect(win, SIGNAL(RequestPing(WId)), this, SLOT(RequestPing(WId)) );
   connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
   connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
+  xcb_map_window(QX11Info::connection(), win->id());
   emit NewWindowAvailable(win);
 }
 
@@ -940,11 +942,12 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
 }
 
 void NativeWindowSystem::CheckDamageID(WId win){
+  qDebug() << "Got Damage Event:" << win;
   for(int i=0; i<NWindows.length(); i++){
     if(NWindows[i]->damageId() == win || NWindows[i]->id() == win || NWindows[i]->frameId()==win){
+      qDebug() << " - Found window";
       UpdateWindowImage(NWindows[i]);
       NWindows[i]->emit VisualChanged();
-      //qDebug() << "Got DAMAGE Event";
       return;
     }
   }
