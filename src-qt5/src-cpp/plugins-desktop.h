@@ -20,19 +20,16 @@
 #include <QIcon>
 
 class DTPlugin : public BasePlugin{
-private:
-  QSize gridSize;
-  bool panelPossible;
-  QIcon pluginIcon;
+
 public:
 	DTPlugin();
 	~DTPlugin();
 
 	virtual bool isValid() Q_DECL_OVERRIDE;
 
-  QSize getSize { return gridSize; }
-  bool getPanelable { return panelPossible; }
-  QIcon getIcon { return pluginIcon; }
+	QSize getSize();
+	bool supportsPanel();
+	QString getIcon();
 };
 
 #endif

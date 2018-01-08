@@ -23,6 +23,7 @@ import "." as QML
 
 import Lumina.Backend.RootDesktopObject 2.0
 import Lumina.Backend.ScreenObject 2.0
+import Lumina.Backend.NativeWindowObject 2.0
 
 Rectangle {
   id: rootCanvas
@@ -53,6 +54,16 @@ Rectangle {
       screen_id: modelData
       object: RootObject.screen(modelData)
       z: 0+index
+    }
+  }
+
+  //Setup the windows
+  Repeater{
+    model: RootObject.windows
+    QML.NativeWindow{
+      window_id: modelData
+      object: RootObject.window(modelData)
+      z: 100+index
     }
   }
 }

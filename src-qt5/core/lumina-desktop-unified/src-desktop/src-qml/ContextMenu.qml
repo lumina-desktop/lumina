@@ -13,6 +13,21 @@ import Lumina.Backend.RootDesktopObject 2.0
 Menu { 
     id: contextMenu
     MenuItem {
+      text: "Launch Terminal"
+      iconName: "utilities-terminal"
+      onTriggered: {
+        RootObject.launchApp("application/terminal")
+      }
+    }
+    MenuItem {
+      text: "Launch File Browser"
+      iconName: "user-home"
+      onTriggered: {
+        RootObject.launchApp("inode/directory")
+      }
+    }
+
+    MenuItem {
       text: "Lock Screen"
       iconName: "system-lock-screen"
       onTriggered: {

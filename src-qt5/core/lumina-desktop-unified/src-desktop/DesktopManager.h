@@ -30,6 +30,12 @@ public slots:
 	void workspaceChanged(int);
 	void settingsChanged(DesktopSettings::File);
 
+	void NewWindowAvailable(NativeWindowObject*);
+	void NewTrayWindowAvailable(NativeWindowObject*);
+
+	void syncWindowList();
+	void syncTrayWindowList();
+
 private slots:
 	void updateDesktopSettings();
 	void updatePanelSettings();

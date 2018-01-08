@@ -1,11 +1,11 @@
 include($${PWD}/../../OS-detect.pri)
 
 lessThan(QT_MAJOR_VERSION, 5) {
-  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  message("[ERROR] Qt 5.7+ is required to use the Lumina Desktop!")
   exit
 }
-lessThan(QT_MINOR_VERSION, 4){
-  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+lessThan(QT_MINOR_VERSION, 7){
+  message("[ERROR] Qt 5.7+ is required to use the Lumina Desktop!")
   exit
 }
 
@@ -21,14 +21,13 @@ include(../libLumina/LuminaXDG.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/DesktopSettings.pri)
 include(../libLumina/ExternalProcess.pri)
-include(../../src-cpp/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
 
 include(../../src-cpp/plugins-base.pri)
 
 #include  all the main individual source groups
-include(src-screensaver/screensaver.pri)
 include(src-events/events.pri)
+include(src-screensaver/screensaver.pri)
 include(src-desktop/desktop.pri)
 
 TEMPLATE = app
@@ -43,12 +42,6 @@ HEADERS  += global-includes.h \
 	BootSplash.h
 
 FORMS    +=	BootSplash.ui 
-
-
-
-#Now include all the files for the various plugins
-#include(panel-plugins/panel-plugins.pri)
-#include(desktop-plugins/desktop-plugins.pri)
 
 # Install all the various files for the desktop itself
 desktop.path = $${L_SESSDIR}

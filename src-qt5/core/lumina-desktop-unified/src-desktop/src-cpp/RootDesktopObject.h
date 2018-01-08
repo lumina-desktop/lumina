@@ -8,11 +8,8 @@
 //===========================================
 #ifndef _LUMINA_DESKTOP_QML_BACKEND_ROOT_DESKTOP_OBJECT_H
 #define _LUMINA_DESKTOP_QML_BACKEND_ROOT_DESKTOP_OBJECT_H
-#include <QObject>
-#include <QList>
 #include <global-includes.h>
-
-#include "ScreenObject.h"
+#include <ScreenObject.h>
 
 class RootDesktopObject : public QObject{
 	Q_OBJECT
@@ -37,25 +34,26 @@ public:
 	Q_INVOKABLE QStringList panels();
 	Q_INVOKABLE PanelObject* panel(QString id);
 	Q_INVOKABLE QStringList windows();
-	Q_INVOKABLE NativeWindow* window(QString id);
-
-	void setPanels(QList<PanelObject*> list);
-	void setWindows(QList<NativeWindow*> list);
+	Q_INVOKABLE NativeWindowObject* window(QString id);
 
 	//QML Access Functions
 	Q_INVOKABLE void logout();
 	Q_INVOKABLE void lockscreen();
 	Q_INVOKABLE void mousePositionChanged();
+	Q_INVOKABLE void launchApp(QString appOrPath);
 
 private:
 	QList<ScreenObject*> s_objects;
 	QList<PanelObject*> panel_objects;
-	QList<NativeWindow*> window_objects;
+	QList<NativeWindowObject*> window_objects;
 
 public slots:
 	void updateScreens(); //rescan/update screen objects
 	void ChangeWallpaper(QString screen, QString);
 	QString CurrentWallpaper(QString screen);
+
+	void setPanels(QList<PanelObject*> list);
+	void setWindows(QList<NativeWindowObject*> list);
 
 private slots:
 
@@ -67,6 +65,6 @@ signals:
 	void startLogout();
 	void mouseMoved();
 	void lockScreen();
-
+	void launchApplication(QString);
 };
 #endif

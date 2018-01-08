@@ -1,10 +1,16 @@
-#SOURCES *= $${PWD}/LXcbEventFilter.cpp
+# Files
+QT *= x11extras
+LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lxcb-keysyms -lXdamage 
 
-#HEADERS *= $${PWD}/LXcbEventFilter.h
+SOURCES *= $${PWD}/LShortcutEvents.cpp \
+		$${PWD}/NativeEventFilter.cpp \
+		$${PWD}/NativeKeyToQt.cpp \
+		$${PWD}/NativeWindowSystem.cpp
 
-#Shortcut event files
-SOURCES *= $${PWD}/LShortcutEvents.cpp
-HEADERS *= $${PWD}/LShortcutEvents.h
 
-#update the includepath so we can just (#include <LXcbEventFilter.h>) as needed without paths
+HEADERS *= $${PWD}/LShortcutEvents.h \
+		$${PWD}/NativeEventFilter.h \
+		$${PWD}/NativeWindowSystem.h
+
+#update the includepath so we can just (#include <NativeEventFilter.h>) as needed without paths
 INCLUDEPATH *= ${PWD}

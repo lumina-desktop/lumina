@@ -22,7 +22,7 @@ void ScreenObject::RegisterType(){
 }
 
 QString ScreenObject::name(){ return bg_screen->name(); }
-QString ScreenObject::background(){ qDebug() << "Got Background:" << bg_screen->name() << bg << bg_screen->geometry(); return bg; }
+QString ScreenObject::background(){ return bg; }
 int ScreenObject::x(){ return bg_screen->geometry().x(); }
 int ScreenObject::y(){ return bg_screen->geometry().y(); }
 int ScreenObject::width(){ return bg_screen->geometry().width(); }

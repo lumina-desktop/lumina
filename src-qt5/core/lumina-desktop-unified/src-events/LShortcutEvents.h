@@ -10,7 +10,8 @@
 #ifndef _LUMINA_KEY_SEQUENCE_DETECTION_H
 #define _LUMINA_KEY_SEQUENCE_DETECTION_H
 
-#include "../global-includes.h"
+#include <global-includes.h>
+#include "NativeWindowSystem.h"
 
 class LShortcutEvents : public QObject{
 	Q_OBJECT

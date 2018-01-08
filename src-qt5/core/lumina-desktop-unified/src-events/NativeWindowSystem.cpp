@@ -8,15 +8,7 @@
 //  used for interacting with the X11 display system on BSD/Linux/Unix systems
 //===========================================
 #include "NativeWindowSystem.h"
-
-//Additional Qt includes
-#include <QX11Info>
-#include <QDebug>
-#include <QApplication>
-#include <QScreen>
-#include <QFont>
-#include <QFontMetrics>
-#include <QKeySequence>
+#include <global-objects.h>
 
 
 //XCB Library includes
@@ -282,7 +274,7 @@ void NativeWindowSystem::stop(){
 }
 
 // === PRIVATE ===
-NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
+NativeWindowObject* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
   for(int i=0; i<NWindows.length(); i++){
     if(id==NWindows[i]->id() ){ return NWindows[i]; }
@@ -299,16 +291,16 @@ NativeWindow* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   return 0;
 }
 
-NativeWindow* NativeWindowSystem::findTrayWindow(WId id){
+NativeWindowObject* NativeWindowSystem::findTrayWindow(WId id){
   for(int i=0; i<TWindows.length(); i++){
     if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
   }
   return 0;
 }
 
-void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props){
+void NativeWindowSystem::UpdateWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props){
   //Put the properties in logical groups as appropriate (some XCB calls return multiple properties)
-  if(props.contains(NativeWindow::Title)){
+  if(props.contains(NativeWindowObject::Title)){
     //Try the EWMH standards first
     // _NET_WM_NAME
     QString name;
@@ -338,10 +330,10 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
         xcb_icccm_get_text_property_reply_wipe(&reply);
       }
     }
-    win->setProperty(NativeWindow::Title, name);
+    win->setProperty(NativeWindowObject::Title, name);
   } //end TITLE property
 
-  if(props.contains(NativeWindow::ShortTitle)){
+  if(props.contains(NativeWindowObject::ShortTitle)){
     //Try the EWMH standards first
     // _NET_WM_ICON_NAME
     QString name;
@@ -371,10 +363,10 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
         xcb_icccm_get_text_property_reply_wipe(&reply);
       }
     }
-    win->setProperty(NativeWindow::ShortTitle, name);
+    win->setProperty(NativeWindowObject::ShortTitle, name);
   } //end SHORTTITLE property
 
-  if(props.contains(NativeWindow::Icon)){
+  if(props.contains(NativeWindowObject::Icon)){
     //See if this is a tray icon first (different routine - entire app window is the icon)
     QIcon icon;
     if(win == findTrayWindow(win->id())){
@@ -414,11 +406,11 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
         xcb_ewmh_get_wm_icon_reply_wipe(&reply);
       }
     } //end type of window
-    win->setProperty(NativeWindow::Icon, icon);
+    win->setProperty(NativeWindowObject::Icon, icon);
   } //end ICON property
 
-  if(props.contains(NativeWindow::MinSize) || props.contains(NativeWindow::MaxSize)
-	|| props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
+  if(props.contains(NativeWindowObject::MinSize) || props.contains(NativeWindowObject::MaxSize)
+	|| props.contains(NativeWindowObject::Size) || props.contains(NativeWindowObject::GlobalPos) ){
     //Try the ICCCM "Normal Hints" structure first (newer spec?)
     xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_normal_hints_unchecked(QX11Info::connection(), win->id());
     xcb_size_hints_t reply;
@@ -430,32 +422,32 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
       if(1==xcb_icccm_get_wm_size_hints_reply(QX11Info::connection(), cookie, &reply, NULL) ){ ok = true; }
     }
     if(ok){
-      bool initsize = win->property(NativeWindow::Size).isNull(); //initial window size
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_POSITION)==XCB_ICCCM_SIZE_HINT_US_POSITION ){ win->setProperty(NativeWindow::GlobalPos, QPoint(reply.x,reply.y)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_SIZE)==XCB_ICCCM_SIZE_HINT_US_SIZE ){ win->setProperty(NativeWindow::Size, QSize(reply.width, reply.height)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_POSITION)==XCB_ICCCM_SIZE_HINT_P_POSITION ){ win->setProperty(NativeWindow::GlobalPos, QPoint(reply.x,reply.y)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_SIZE)==XCB_ICCCM_SIZE_HINT_P_SIZE ){ win->setProperty(NativeWindow::Size, QSize(reply.width, reply.height)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MIN_SIZE)==XCB_ICCCM_SIZE_HINT_P_MIN_SIZE ){ win->setProperty(NativeWindow::MinSize, QSize(reply.min_width, reply.min_height)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MAX_SIZE)==XCB_ICCCM_SIZE_HINT_P_MAX_SIZE ){ win->setProperty(NativeWindow::MaxSize, QSize(reply.max_width, reply.max_height)); }
-      if( (reply.flags&XCB_ICCCM_SIZE_HINT_BASE_SIZE)==XCB_ICCCM_SIZE_HINT_BASE_SIZE && initsize ){ win->setProperty(NativeWindow::Size, QSize(reply.base_width, reply.base_height)); }
+      bool initsize = win->property(NativeWindowObject::Size).isNull(); //initial window size
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_POSITION)==XCB_ICCCM_SIZE_HINT_US_POSITION ){ win->setProperty(NativeWindowObject::GlobalPos, QPoint(reply.x,reply.y)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_US_SIZE)==XCB_ICCCM_SIZE_HINT_US_SIZE ){ win->setProperty(NativeWindowObject::Size, QSize(reply.width, reply.height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_POSITION)==XCB_ICCCM_SIZE_HINT_P_POSITION ){ win->setProperty(NativeWindowObject::GlobalPos, QPoint(reply.x,reply.y)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_SIZE)==XCB_ICCCM_SIZE_HINT_P_SIZE ){ win->setProperty(NativeWindowObject::Size, QSize(reply.width, reply.height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MIN_SIZE)==XCB_ICCCM_SIZE_HINT_P_MIN_SIZE ){ win->setProperty(NativeWindowObject::MinSize, QSize(reply.min_width, reply.min_height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_MAX_SIZE)==XCB_ICCCM_SIZE_HINT_P_MAX_SIZE ){ win->setProperty(NativeWindowObject::MaxSize, QSize(reply.max_width, reply.max_height)); }
+      if( (reply.flags&XCB_ICCCM_SIZE_HINT_BASE_SIZE)==XCB_ICCCM_SIZE_HINT_BASE_SIZE && initsize ){ win->setProperty(NativeWindowObject::Size, QSize(reply.base_width, reply.base_height)); }
       //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_RESIZE_INC)==XCB_ICCCM_SIZE_HINT_P_RESIZE_INC ){ hints.width_inc=reply.width_inc; hints.height_inc=reply.height_inc; }
       //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_ASPECT)==XCB_ICCCM_SIZE_HINT_P_ASPECT ){ hints.min_aspect_num=reply.min_aspect_num; hints.min_aspect_den=reply.min_aspect_den; hints.max_aspect_num=reply.max_aspect_num; hints.max_aspect_den=reply.max_aspect_den;}
       //if( (reply.flags&XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY)==XCB_ICCCM_SIZE_HINT_P_WIN_GRAVITY ){ hints.win_gravity=reply.win_gravity; }
     }
   } //end of geometry properties
 
-  if(props.contains(NativeWindow::Name)){
+  if(props.contains(NativeWindowObject::Name)){
     //Put the app/class name here (much more static than the "Title" properties
     xcb_get_property_cookie_t cookie = xcb_icccm_get_wm_class_unchecked(QX11Info::connection(), win->id());
     xcb_icccm_get_wm_class_reply_t reply;
     if(1 == xcb_icccm_get_wm_class_reply(QX11Info::connection(), cookie, &reply, NULL) ){
       //Returns: "<instance name>::::<class name>"
-      win->setProperty(NativeWindow::Name, ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) ));
+      win->setProperty(NativeWindowObject::Name, ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) ));
       xcb_icccm_get_wm_class_reply_wipe(&reply);
     }
   } //end NAME property
 
-  if(props.contains(NativeWindow::Workspace)){
+  if(props.contains(NativeWindowObject::Workspace)){
     xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_desktop_unchecked(&obj->EWMH, win->id());
     uint32_t num = 0;
     int wkspace = -1;
@@ -466,13 +458,13 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
       // - put it on the current screen
       out = WM_Get_Current_Desktop();
     }*/
-    win->setProperty(NativeWindow::Workspace, wkspace);
+    win->setProperty(NativeWindowObject::Workspace, wkspace);
   }
-  if(props.contains(NativeWindow::FrameExtents)){
+  if(props.contains(NativeWindowObject::FrameExtents)){
     //Just assign default values to this - need to automate it later
-    //win->setProperty(NativeWindow::FrameExtents, QVariant::fromValue<QList<int> >(QList<int>() << 5 << 5 << 5+QFontMetrics(QFont()).height() << 5) );
+    //win->setProperty(NativeWindowObject::FrameExtents, QVariant::fromValue<QList<int> >(QList<int>() << 5 << 5 << 5+QFontMetrics(QFont()).height() << 5) );
   }
-  if(props.contains(NativeWindow::RelatedWindows)){
+  if(props.contains(NativeWindowObject::RelatedWindows)){
     WId orig = win->id();
     WId tid = obj->getTransientFor(orig);
     QList<WId> list;
@@ -481,90 +473,90 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindow* win, QList< Native
       orig = tid;
       tid = obj->getTransientFor(orig);
     }
-    win->setProperty(NativeWindow::RelatedWindows, QVariant::fromValue(list));
+    win->setProperty(NativeWindowObject::RelatedWindows, QVariant::fromValue(list));
   }
-  if(props.contains(NativeWindow::Visible)){
+  if(props.contains(NativeWindowObject::Visible)){
     xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), xcb_get_window_attributes(QX11Info::connection(), win->id()) , NULL);
     if(attr != 0){
-      win->setProperty(NativeWindow::Visible, attr->map_state == XCB_MAP_STATE_VIEWABLE);
+      win->setProperty(NativeWindowObject::Visible, attr->map_state == XCB_MAP_STATE_VIEWABLE);
       free(attr);
     }
   }
-  if(props.contains(NativeWindow::WinTypes)){
-    QList< NativeWindow::Type> types;
+  if(props.contains(NativeWindowObject::WinTypes)){
+    QList< NativeWindowObject::Type> types;
     xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_window_type_unchecked(&obj->EWMH, win->id());
     xcb_ewmh_get_atoms_reply_t reply;
     if(1==xcb_ewmh_get_wm_window_type_reply(&obj->EWMH, cookie, &reply, NULL) ){
       for(unsigned int i=0; i<reply.atoms_len; i++){
-        if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ types << NativeWindow::T_DESKTOP; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DOCK){ types << NativeWindow::T_DOCK; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ types << NativeWindow::T_TOOLBAR; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_MENU){ types << NativeWindow::T_MENU; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY){ types << NativeWindow::T_UTILITY; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_SPLASH){ types << NativeWindow::T_SPLASH; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DIALOG){ types << NativeWindow::T_DIALOG; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ types << NativeWindow::T_DROPDOWN_MENU; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ types << NativeWindow::T_POPUP_MENU; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ types << NativeWindow::T_TOOLTIP; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ types << NativeWindow::T_NOTIFICATION; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_COMBO){ types << NativeWindow::T_COMBO; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DND){ types << NativeWindow::T_DND; }
-        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NORMAL){ types << NativeWindow::T_NORMAL; }
+        if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DESKTOP){ types << NativeWindowObject::T_DESKTOP; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DOCK){ types << NativeWindowObject::T_DOCK; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLBAR){ types << NativeWindowObject::T_TOOLBAR; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_MENU){ types << NativeWindowObject::T_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_UTILITY){ types << NativeWindowObject::T_UTILITY; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_SPLASH){ types << NativeWindowObject::T_SPLASH; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DIALOG){ types << NativeWindowObject::T_DIALOG; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU){ types << NativeWindowObject::T_DROPDOWN_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU){ types << NativeWindowObject::T_POPUP_MENU; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_TOOLTIP){ types << NativeWindowObject::T_TOOLTIP; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION){ types << NativeWindowObject::T_NOTIFICATION; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_COMBO){ types << NativeWindowObject::T_COMBO; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_DND){ types << NativeWindowObject::T_DND; }
+        else if(reply.atoms[i]==obj->EWMH._NET_WM_WINDOW_TYPE_NORMAL){ types << NativeWindowObject::T_NORMAL; }
       }
     }
-    if(types.isEmpty()){ types << NativeWindow::T_NORMAL; }
-    win->setProperty(NativeWindow::WinTypes, QVariant::fromValue< QList<NativeWindow::Type> >(types) );
+    if(types.isEmpty()){ types << NativeWindowObject::T_NORMAL; }
+    win->setProperty(NativeWindowObject::WinTypes, QVariant::fromValue< QList<NativeWindowObject::Type> >(types) );
   }
 }
 
-void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals){
+void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props, QList<QVariant> vals){
   if(props.length() == 0 || vals.length()!=props.length()  || win ==0 ){ return; }
   //qDebug() << "Change Window Properties:" << props << vals;
-  if(props.contains(NativeWindow::Title)){
+  if(props.contains(NativeWindowObject::Title)){
 
   }
-  if(props.contains(NativeWindow::ShortTitle)){
+  if(props.contains(NativeWindowObject::ShortTitle)){
 
   }
-  if(props.contains(NativeWindow::Icon)){
+  if(props.contains(NativeWindowObject::Icon)){
 
   }
-  if(props.contains(NativeWindow::Size) || props.contains(NativeWindow::GlobalPos) ){
+  if(props.contains(NativeWindowObject::Size) || props.contains(NativeWindowObject::GlobalPos) ){
     /*xcb_configure_window_value_list_t  valList;
     //valList.x = 0; //Note that this is the relative position - should always be 0,0 relative to the embed widget
     //valList.y = 0;
-    QSize sz = win->property(NativeWindow::Size).toSize();
-    if(props.contains(NativeWindow::Size)){
-      sz = vals[ props.indexOf(NativeWindow::Size) ] .toSize();
+    QSize sz = win->property(NativeWindowObject::Size).toSize();
+    if(props.contains(NativeWindowObject::Size)){
+      sz = vals[ props.indexOf(NativeWindowObject::Size) ] .toSize();
     }
     valList.width = sz.width();
     valList.height = sz.height();
-    if(props.contains(NativeWindow::GlobalPos)){
-      QPoint pt = vals[ props.indexOf(NativeWindow::GlobalPos) ] .toPoint();
+    if(props.contains(NativeWindowObject::GlobalPos)){
+      QPoint pt = vals[ props.indexOf(NativeWindowObject::GlobalPos) ] .toPoint();
       valList.x = pt.x();
       valList.y = pt.y();
     }else{
-      valList.x = win->property(NativeWindow::GlobalPos).toPoint().x();
-      valList.y = win->property(NativeWindow::GlobalPos).toPoint().y();
+      valList.x = win->property(NativeWindowObject::GlobalPos).toPoint().x();
+      valList.y = win->property(NativeWindowObject::GlobalPos).toPoint().y();
     }
     uint16_t mask = 0;
     mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
     //qDebug() << "Configure window Geometry:" << sz;
     xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);*/
   }
-  if(props.contains(NativeWindow::Name)){
+  if(props.contains(NativeWindowObject::Name)){
 
   }
-  if(props.contains(NativeWindow::Workspace)){
-    int num = vals[ props.indexOf(NativeWindow::Workspace) ].toInt();
+  if(props.contains(NativeWindowObject::Workspace)){
+    int num = vals[ props.indexOf(NativeWindowObject::Workspace) ].toInt();
     xcb_ewmh_set_wm_desktop(&obj->EWMH, win->id(), (num<0 ? 0xFFFFFFFF : qAbs(num) ) );
   }
-  if(props.contains(NativeWindow::RelatedWindows)){
+  if(props.contains(NativeWindowObject::RelatedWindows)){
 
   }
-  if(props.contains(NativeWindow::Visible)){
-    //qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindow::Visible) ];
-    if( vals[ props.indexOf(NativeWindow::Visible) ].toBool() ){
+  if(props.contains(NativeWindowObject::Visible)){
+    //qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindowObject::Visible) ];
+    if( vals[ props.indexOf(NativeWindowObject::Visible) ].toBool() ){
       //qDebug() << " - Map it!";
       xcb_map_window(QX11Info::connection(), win->id());
     }else{
@@ -572,9 +564,9 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindow* win, QList< Native
       xcb_unmap_window(QX11Info::connection(), win->id());
     }
   }
-  if(props.contains(NativeWindow::Active)){
+  if(props.contains(NativeWindowObject::Active)){
     //Only one window can be "Active" at a time - so only do anything if this window wants to be active
-    if(vals[props.indexOf(NativeWindow::Active)].toBool() ){
+    if(vals[props.indexOf(NativeWindowObject::Active)].toBool() ){
       //Lower the currently active window (invisible window) to the bottom of the stack
       xcb_window_t cactive;
       if( 1 == xcb_ewmh_get_active_window_reply( &obj->EWMH,
@@ -721,25 +713,25 @@ int NativeWindowSystem::currentWorkspace(){
 //NativeWindowEventFilter interactions
 void NativeWindowSystem::NewWindowDetected(WId id){
   //Make sure this can be managed first
-  if(findWindow(id, false) != 0){ findWindow(id,false)->setProperty(NativeWindow::Visible, true, true); return; } //already managed
+  if(findWindow(id, false) != 0){ findWindow(id,false)->setProperty(NativeWindowObject::Visible, true, true); return; } //already managed
   xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
   xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
   if(attr == 0){ return; } //could not get attributes of window
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
   //Now go ahead and create/populate the container for this window
-  NativeWindow *win = new NativeWindow(id);
+  NativeWindowObject *win = new NativeWindowObject(id);
   //Register for events from this window
   registerClientEvents(win->id());
   NWindows << win;
-  UpdateWindowProperties(win, NativeWindow::allProperties());
-  qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindow::Name).toString();
+  UpdateWindowProperties(win, NativeWindowObject::allProperties());
+  qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindowObject::Name).toString();
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
   connect(win, SIGNAL(RequestPing(WId)), this, SLOT(RequestPing(WId)) );
   connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
-  connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
+  connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
   emit NewWindowAvailable(win);
 }
 
@@ -765,14 +757,14 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
   uint32_t value_list[1] = {TRAY_WIN_EVENT_MASK};
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
-  NativeWindow *win = new NativeWindow(id);
+  NativeWindowObject *win = new NativeWindowObject(id);
   TWindows << win;
-  UpdateWindowProperties(win, NativeWindow::allProperties());
+  UpdateWindowProperties(win, NativeWindowObject::allProperties());
   emit NewTrayWindowAvailable(win);
 }
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
-  NativeWindow *win = findWindow(id, false);
+  NativeWindowObject *win = findWindow(id, false);
   //qDebug() << "Got Window Closed" << id << win;
   //qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
@@ -781,35 +773,37 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
     win->emit WindowClosed(id);
     //qDebug() << "Visible Window Closed!!!";
     //win->deleteLater();
+    emit WindowClosed();
   }else{
     win = findTrayWindow(id);
     if(win!=0){
       TWindows.removeAll(win);
       win->emit WindowClosed(id);
       win->deleteLater();
+      emit TrayWindowClosed();
     }
   }
   //qDebug() << " - Now:" << NWindows.length();
 }
 
-void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop){
+void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindowObject::Property prop){
   //NOTE: This is triggered by the NativeEventFilter - not by changes to the NativeWindow objects themselves
-  NativeWindow *win = findWindow(id, prop!=NativeWindow::Visible);
+  NativeWindowObject *win = findWindow(id, prop!=NativeWindowObject::Visible);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
-    UpdateWindowProperties(win, QList<NativeWindow::Property>() << prop);
+    UpdateWindowProperties(win, QList<NativeWindowObject::Property>() << prop);
   }else if(prop != 0){
     //Could not find the window for a specific property with an undefined value
     //  - update this property for all the windows just in case
     for(int i=0; i<NWindows.length(); i++){
-      UpdateWindowProperties( NWindows[i], QList<NativeWindow::Property>() << prop);
+      UpdateWindowProperties( NWindows[i], QList<NativeWindowObject::Property>() << prop);
     }
   }
 }
 
-void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindow::Property> props){
+void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindowObject::Property> props){
   //NOTE: This is triggered by the NativeEventFilter - not by changes to the NativeWindow objects themselves
-  NativeWindow *win = findWindow(id);
+  NativeWindowObject *win = findWindow(id);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     UpdateWindowProperties(win, props);
@@ -822,31 +816,31 @@ void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindow::Pro
   }
 }
 
-void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindow::Property prop, QVariant val){
-  NativeWindow *win = findWindow(id,prop!=NativeWindow::Visible);
+void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindowObject::Property prop, QVariant val){
+  NativeWindowObject *win = findWindow(id,prop!=NativeWindowObject::Visible);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     win->setProperty(prop, val);
   }
 }
 
-void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindow::Property> props, QList<QVariant> vals){
-  NativeWindow *win = findWindow(id);
+void NativeWindowSystem::WindowPropertiesChanged(WId id, QList<NativeWindowObject::Property> props, QList<QVariant> vals){
+  NativeWindowObject *win = findWindow(id);
   if(win==0){ win = findTrayWindow(id); }
   if(win!=0){
     for(int i=0; i<props.length() && i<vals.length(); i++){ win->setProperty(props[i], vals[i]); }
   }
 }
 
-void NativeWindowSystem::RequestPropertyChange(WId id, NativeWindow::Property prop, QVariant val){
+void NativeWindowSystem::RequestPropertyChange(WId id, NativeWindowObject::Property prop, QVariant val){
   //This is just a simplified version of the multiple-property function
-  RequestPropertiesChange(id, QList<NativeWindow::Property>() << prop, QList<QVariant>() << val);
+  RequestPropertiesChange(id, QList<NativeWindowObject::Property>() << prop, QList<QVariant>() << val);
 }
 
-void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindow::Property> props, QList<QVariant> vals){
+void NativeWindowSystem::RequestPropertiesChange(WId win, QList<NativeWindowObject::Property> props, QList<QVariant> vals){
   //Find the window object associated with this id
   bool istraywin = false; //just in case we care later if it is a tray window or a regular window
-  NativeWindow *WIN = findWindow(win);
+  NativeWindowObject *WIN = findWindow(win);
   if(WIN==0){ istraywin = true; WIN = findTrayWindow(win); }
   if(WIN==0){ return; } //invalid window ID - no longer available
   //Now make any changes as needed
@@ -894,9 +888,9 @@ void NativeWindowSystem::CheckDamageID(WId win){
       return;
     }
   }
-  NativeWindow *WIN = findTrayWindow(win);
+  NativeWindowObject *WIN = findTrayWindow(win);
   if(WIN!=0){
-    UpdateWindowProperties(WIN, QList<NativeWindow::Property>() << NativeWindow::Icon);
+    UpdateWindowProperties(WIN, QList<NativeWindowObject::Property>() << NativeWindowObject::Icon);
   }
 }
 
@@ -936,7 +930,7 @@ void NativeWindowSystem::RequestPing(WId win){
 }
 
 void NativeWindowSystem::RequestReparent(WId win, WId container, QPoint relorigin){
-  NativeWindow *WIN = findWindow(win);
+  NativeWindowObject *WIN = findWindow(win);
   if(WIN==0){ return; } //could not find corresponding window structure
 //Reparent the window into the container
   xcb_reparent_window(QX11Info::connection(), win, container, relorigin.x(), relorigin.y());

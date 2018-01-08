@@ -76,7 +76,7 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
   }
   //Now go ahead and set the wallpaper in the screen object
   if(wpaper.isEmpty() || wpaper=="default"){ wpaper = LOS::LuminaShare()+"desktop-background.jpg"; } //failover image
-  qDebug() << "Updating Wallpaper:" << screen_id << wpaper;
+  //qDebug() << "Updating Wallpaper:" << screen_id << wpaper;
   RootDesktopObject::instance()->ChangeWallpaper(screen_id,QUrl::fromLocalFile(wpaper).toString() );
 }
 
@@ -91,7 +91,7 @@ void DesktopManager::updatePlugins(QString plugin_id){
 // === PUBLIC SLOTS ===
 void DesktopManager::workspaceChanged(int wknum){
   qDebug() << "Got Workspace Changed:" << wknum;
-
+  syncWindowList();
 }
 
 void DesktopManager::settingsChanged(DesktopSettings::File type){
@@ -110,6 +110,35 @@ void DesktopManager::settingsChanged(DesktopSettings::File type){
 	  break;
 	  //Do nothing - not a settings change we care about here
   }
+}
+
+void DesktopManager::NewWindowAvailable(NativeWindowObject* win){
+  //connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(syncWindowList()) );
+  syncWindowList();
+}
+
+void DesktopManager::NewTrayWindowAvailable(NativeWindowObject* win){
+  //connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(syncTrayWindowList()) );
+  syncTrayWindowList();
+}
+
+void DesktopManager::syncWindowList(){
+  QList<NativeWindowObject*> allWins = Lumina::NWS->currentWindows();
+  //Filter out all the windows not in the current workspace
+  QList<NativeWindowObject*> current;
+  QList<NativeWindowObject*> currentStacked;
+  int wkspace = Lumina::NWS->currentWorkspace();
+  for(int i=0; i<allWins.length(); i++){
+    if(allWins[i]->isSticky() || (allWins[i]->workspace() == wkspace)){
+      current << allWins[i];
+    }
+  }
+  //qDebug() << "Synced Window List:" << current.length();
+  RootDesktopObject::instance()->setWindows(current);
+}
+
+void DesktopManager::syncTrayWindowList(){
+
 }
 
 // === PRIVATE SLOTS ===
@@ -136,4 +165,3 @@ void DesktopManager::updateMenuSettings(){
 void DesktopManager::updateAnimationSettings(){
 
 }
-

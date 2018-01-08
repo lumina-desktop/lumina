@@ -7,9 +7,8 @@
 #include "LSession.h"
 #include "global-objects.h"
 
-#include "src-desktop/ContextMenu.h"
-
 #include "BootSplash.h"
+
 #ifndef DEBUG
 #define DEBUG 1
 #endif
@@ -27,8 +26,8 @@ DesktopManager* Lumina::DESKMAN = 0;
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop-unified"){
   //Initialize the global objects to null pointers
   qRegisterMetaType< Qt::Key >("Qt::Key");
-  qRegisterMetaType< NativeWindow::Property >("NativeWindow::Property");
-  qRegisterMetaType< QList< NativeWindow::Property > >("QList<NativeWindow::Property>");
+  qRegisterMetaType< NativeWindowObject::Property >("NativeWindowObject::Property");
+  qRegisterMetaType< QList< NativeWindowObject::Property > >("QList<NativeWindowObject::Property>");
   qRegisterMetaType< NativeWindowSystem::MouseButton >("NativeWindowSystem::MouseButton");
 
   mediaObj = 0; //private object used for playing login/logout chimes
@@ -113,7 +112,7 @@ void LSession::setupSession(){
   Lumina::DESKMAN->start();
   Lumina::ROOTWIN->start();
   //Initialize the internal variables
-  //DESKTOPS.clear();
+
 
   //Start the background system tray
     splash.showScreen("systray");
@@ -122,50 +121,18 @@ void LSession::setupSession(){
     splash.showScreen("apps");
   if(DEBUG){ qDebug() << " - Populate App List:" << timer->elapsed();}
   Lumina::APPLIST->updateList();
-  //appmenu = new AppMenu();
+
     splash.showScreen("menus");
-  //if(DEBUG){ qDebug() << " - Init SettingsMenu:" << timer->elapsed();}
-  //settingsmenu = new SettingsMenu();
-  //if(DEBUG){ qDebug() << " - Init SystemWindow:" << timer->elapsed();}
-  //sysWindow = new SystemWindow();
+
 
   //Initialize the desktops
     splash.showScreen("desktop");
-  /*if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed(); }
-  QList<QScreen*> scrns= QApplication::screens();
-  for(int i=0; i<scrns.length(); i++){
-    qDebug() << "   --- Load Wallpaper for Screen:" << scrns[i]->name();
-    RootDesktopObject::instance()->ChangeWallpaper(scrns[i]->name(),QUrl::fromLocalFile(LOS::LuminaShare()+"desktop-background.jpg").toString() );
-  }*/
 
-  if(DEBUG){ qDebug() << " - Create Desktop Context Menu"; }
-
-  /*DesktopContextMenu *cmenu = new DesktopContextMenu(Lumina::ROOTWIN);
-  connect(cmenu, SIGNAL(showLeaveDialog()), this, SLOT(StartLogout()) );
-  cmenu->start();*/
-
-  //desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
-  //updateDesktops();
   //for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
 
   //Now setup the system watcher for changes
     splash.showScreen("final");
-  //if(DEBUG){ qDebug() << " - Init QFileSystemWatcher:" << timer->elapsed();}
-  /*watcher = new QFileSystemWatcher(this);
-    QString confdir = sessionsettings->fileName().section("/",0,-2);
-    watcherChange(sessionsettings->fileName() );
-    watcherChange( confdir+"/desktopsettings.conf" );
-    watcherChange( confdir+"/fluxbox-init" );
-    watcherChange( confdir+"/fluxbox-keys" );
-    watcherChange( confdir+"/favorites.list" );
-    //Try to watch the localized desktop folder too
-    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
-    watcherChange( QDir::homePath()+"/Desktop" );*/
 
-  //connect internal signals/slots
-  //connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
-  //connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
-  //connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
   if(DEBUG){ qDebug() << " - Start Screen Saver:" << timer->elapsed();}
   Lumina::SS->start();
 
@@ -236,16 +203,17 @@ void LSession::setupGlobalConnections(){
   connect(RootDesktopObject::instance(), SIGNAL(mouseMoved()), Lumina::SS, SLOT(newInputEvent()) );
   connect(RootDesktopObject::instance(), SIGNAL(startLogout()), this, SLOT(StartLogout()) );
   connect(RootDesktopObject::instance(), SIGNAL(lockScreen()), Lumina::SS, SLOT(LockScreenNow()) );
+  connect(RootDesktopObject::instance(), SIGNAL(launchApplication(QString)), this, SLOT(LaunchStandardApplication(QString)) );
 
   //Native Window Class connections
   connect(Lumina::NEF, SIGNAL(WindowCreated(WId)), Lumina::NWS, SLOT(NewWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(WindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
-  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property)));
-  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>)) );
-  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindow::Property, QVariant)));
-  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>)) );
-  connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindow::Property, QVariant)));
-  connect(Lumina::NEF, SIGNAL(RequestWindowPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)), Lumina::NWS, SLOT(RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindowObject::Property)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindowObject::Property)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>)) );
+  connect(Lumina::NEF, SIGNAL(WindowPropertyChanged(WId, NativeWindowObject::Property, QVariant)), Lumina::NWS, SLOT(WindowPropertyChanged(WId, NativeWindowObject::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), Lumina::NWS, SLOT(WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertyChange(WId, NativeWindowObject::Property, QVariant)), Lumina::NWS, SLOT(RequestPropertyChange(WId, NativeWindowObject::Property, QVariant)));
+  connect(Lumina::NEF, SIGNAL(RequestWindowPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), Lumina::NWS, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)));
   connect(Lumina::NEF, SIGNAL(TrayWindowCreated(WId)), Lumina::NWS, SLOT(NewTrayWindowDetected(WId)));
   connect(Lumina::NEF, SIGNAL(TrayWindowDestroyed(WId)), Lumina::NWS, SLOT(WindowCloseDetected(WId)));
   connect(Lumina::NEF, SIGNAL(PossibleDamageEvent(WId)), Lumina::NWS, SLOT(CheckDamageID(WId)));
@@ -273,7 +241,11 @@ void LSession::setupGlobalConnections(){
   connect(Lumina::NWS, SIGNAL(MouseReleaseDetected(WId, NativeWindowSystem::MouseButton)), Lumina::SHORTCUTS, SLOT(MouseRelease(WId, NativeWindowSystem::MouseButton)) );
 
   //NWS Events to the window system
-  connect(Lumina::NWS, SIGNAL(NewWindowAvailable(NativeWindow*)), Lumina::ROOTWIN, SLOT(NewWindow(NativeWindow*)) );
+  connect(Lumina::NWS, SIGNAL(NewWindowAvailable(NativeWindowObject*)), Lumina::DESKMAN, SLOT(NewWindowAvailable(NativeWindowObject*)) );
+  connect(Lumina::NWS, SIGNAL(WindowClosed()), Lumina::DESKMAN, SLOT(syncWindowList()) );
+  connect(Lumina::NWS, SIGNAL(NewTrayWindowAvailable(NativeWindowObject*)), Lumina::DESKMAN, SLOT(NewTrayWindowAvailable(NativeWindowObject*)) );
+  connect(Lumina::NWS, SIGNAL(TrayWindowClosed()), Lumina::DESKMAN, SLOT(syncTrayWindowList()) );
+
 }
 
 //=================

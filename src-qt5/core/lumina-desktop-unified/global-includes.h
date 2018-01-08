@@ -69,15 +69,12 @@
 #include <LuminaSingleApplication.h>
 #include <DesktopSettings.h>
 #include <ExternalProcess.h>
-#include <NativeWindow.h>
-#include <NativeWindowSystem.h>
-#include <NativeEventFilter.h>
 #include <XDGMime.h>
 #include <LIconCache.h>
 #include <LFileInfo.h>
 
 // C++ Backend classes for QML interface
-#include <RootDesktopObject.h>
+#include <NativeWindowObject.h>
 #include <ScreenObject.h>
 
 //Setup any global defines (no classes or global objects: use "global-objects.h" for that)

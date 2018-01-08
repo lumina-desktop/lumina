@@ -7,6 +7,7 @@
 #ifndef _LUMINA_DESKTOP_ROOT_WINDOW_H
 #define _LUMINA_DESKTOP_ROOT_WINDOW_H
 #include <global-includes.h>
+#include "src-cpp/RootDesktopObject.h"
 
 class RootWindow : public QObject{
 	Q_OBJECT

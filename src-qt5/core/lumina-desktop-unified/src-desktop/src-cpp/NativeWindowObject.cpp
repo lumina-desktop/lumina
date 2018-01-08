@@ -7,6 +7,7 @@
 #include "NativeWindowObject.h"
 #include <QQmlEngine>
 #include <QDebug>
+#include <QBuffer>
 
 // == QML Type Registration ==
 void NativeWindowObject::RegisterType(){
@@ -60,6 +61,16 @@ QVariant NativeWindowObject::property(NativeWindowObject::Property prop){
 void NativeWindowObject::setProperty(NativeWindowObject::Property prop, QVariant val, bool force){
   if(prop == NativeWindowObject::RelatedWindows){ relatedTo = val.value< QList<WId> >(); }
   else if(prop == NativeWindowObject::None || (!force && hash.value(prop)==val)){ return; }
+  else if(prop == NativeWindowObject::WinImage){
+    //special case - QImage is passed in, but QString is passed out (needed for QML)
+    QByteArray ba;
+    QBuffer buffer(&ba);
+      buffer.open(QIODevice::WriteOnly);
+      val.value<QImage>().save(&buffer, "PNG");
+    QString img("data:image/png:base64,");
+    img.append(QString::fromLatin1(ba.toBase64().data()));
+    hash.insert(prop, img); //save the string instead
+  }
   else{ hash.insert(prop, val); }
   emitSinglePropChanged(prop);
   emit PropertiesChanged(QList<NativeWindowObject::Property>() << prop, QList<QVariant>() << val);
@@ -68,8 +79,20 @@ void NativeWindowObject::setProperty(NativeWindowObject::Property prop, QVariant
 void NativeWindowObject::setProperties(QList<NativeWindowObject::Property> props, QList<QVariant> vals, bool force){
   for(int i=0; i<props.length(); i++){
     if(i>=vals.length()){ props.removeAt(i); i--; continue; } //no corresponding value for this property
-    if(props[i] == NativeWindowObject::None || (!force && (hash.value(props[i]) == vals[i])) ){ props.removeAt(i); vals.removeAt(i); i--; continue; } //Invalid property or identical value
-    hash.insert(props[i], vals[i]);
+    if(props[i] == NativeWindowObject::None || (!force && (hash.value(props[i]) == vals[i])) ){
+      props.removeAt(i); vals.removeAt(i); i--; continue; //Invalid property or identical value
+    }else if(props[i] == NativeWindowObject::WinImage){
+      //special case - QImage is passed in, but QString is passed out (needed for QML)
+      QByteArray ba;
+      QBuffer buffer(&ba);
+        buffer.open(QIODevice::WriteOnly);
+        vals[i].value<QImage>().save(&buffer, "PNG");
+      QString img("data:image/png:base64,");
+      img.append(QString::fromLatin1(ba.toBase64().data()));
+      hash.insert(props[i], img); //save the string instead
+    }else{
+      hash.insert(props[i], vals[i]);
+    }
     emitSinglePropChanged(props[i]);
   }
   emit PropertiesChanged(props, vals);
@@ -117,8 +140,8 @@ QRect NativeWindowObject::geometry(){
 }
 
 // QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
-QImage NativeWindowObject::winImage(){
-  return this->property(NativeWindowObject::WinImage).value<QImage>();
+QString NativeWindowObject::winImage(){
+  return this->property(NativeWindowObject::WinImage).toString();
 }
 
 QString NativeWindowObject::name(){
@@ -130,7 +153,10 @@ QString NativeWindowObject::title(){
 }
 
 QString NativeWindowObject::shortTitle(){
-  return this->property(NativeWindowObject::ShortTitle).toString();
+  QString tmp = this->property(NativeWindowObject::ShortTitle).toString();
+  if(tmp.isEmpty()){ tmp = title(); }
+  if(tmp.isEmpty()){ tmp = name(); }
+  return tmp;
 }
 
 QIcon NativeWindowObject::icon(){
@@ -213,6 +239,10 @@ bool NativeWindowObject::showWindowFrame(){
 //QML Window States
 bool NativeWindowObject::isSticky(){
   return (this->property(NativeWindowObject::Workspace).toInt()<0 || this->property(NativeWindowObject::States).value<QList<NativeWindowObject::State> >().contains(NativeWindowObject::S_STICKY) );
+}
+
+int NativeWindowObject::workspace(){
+  return this->property(NativeWindowObject::Workspace).toInt();
 }
 
 //QML Geometry reporting

@@ -21,10 +21,14 @@
 //#ifndef USE_WAYLAND
 //#include "src-events/LXcbEventFilter.h"
 //#endif
+
+#include "src-events/NativeWindowSystem.h"
+#include "src-events/NativeEventFilter.h"
+#include "src-desktop/src-cpp/RootDesktopObject.h"
+
 #include "src-events/LShortcutEvents.h"
 #include "src-desktop/DesktopManager.h"
 #include "src-screensaver/LScreenSaver.h"
-//#include "src-WM/LWindowManager.h"
 
 #include <RootWindow.h>
 #include "LSession.h"

@@ -27,6 +27,7 @@ void RootDesktopObject::RegisterType(){
   qmlRegisterType<RootDesktopObject>("Lumina.Backend.RootDesktopObject", 2, 0, "RootDesktopObject");
   //Also register any types that are needed by this class
   ScreenObject::RegisterType();
+  NativeWindowObject::RegisterType();
 }
 
 RootDesktopObject* RootDesktopObject::instance(){
@@ -36,14 +37,14 @@ RootDesktopObject* RootDesktopObject::instance(){
 
 //QML Read Functions
 QStringList RootDesktopObject::screens(){
-  qDebug() << "Request Screens:" << s_objects.length();
+  //qDebug() << "Request Screens:" << s_objects.length();
   QStringList names;
   for(int i=0; i<s_objects.length(); i++){ names << s_objects[i]->name(); }
   return names;
 }
 
 ScreenObject* RootDesktopObject::screen(QString id){
-  qDebug() << "Got Screen Request:" << id;
+  //qDebug() << "Got Screen Request:" << id;
   for(int i=0; i<s_objects.length(); i++){
     if(s_objects[i]->name()==id){ return s_objects[i]; }
   }
@@ -72,7 +73,7 @@ QStringList RootDesktopObject::windows(){
   return names;
 }
 
-NativeWindow* RootDesktopObject::window(QString id){
+NativeWindowObject* RootDesktopObject::window(QString id){
   //qDebug() << "Got Panel Request:" << id;
   WId chk = id.toInt(); //numerical ID's in this case
   for(int i=0; i<window_objects.length(); i++){
@@ -86,7 +87,7 @@ void RootDesktopObject::setPanels(QList<PanelObject*> list){
   emit panelsChanged();
 }
 
-void RootDesktopObject::setWindows(QList<NativeWindow*> list){
+void RootDesktopObject::setWindows(QList<NativeWindowObject*> list){
   window_objects = list;
   emit windowsChanged();
 }
@@ -101,6 +102,10 @@ void RootDesktopObject::lockscreen(){
 
 void RootDesktopObject::mousePositionChanged(){
   emit mouseMoved();
+}
+
+void RootDesktopObject::launchApp(QString appOrPath){
+  emit launchApplication(appOrPath);
 }
 
 // === PUBLIC SLOTS ===

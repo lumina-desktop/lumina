@@ -4,17 +4,20 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4 
 import QtQuick.Layouts 1.3
 
-Rectangle {
-  id: background
-  color: "grey"
+import Lumina.Backend.NativeWindowObject 2.0
 
   Rectangle {
+    property NativeWindowObject object
+    property string window_id
+
     id: windowFrame
     border.width: 5
-    border.color: "black"
-    color: "white"
-    width: 400 
-    height: 300
+    border.color: palette.window 
+    color: palette.window 
+    x: object.frameGeometry.x
+    y: object.frameGeometry.y
+    width: object.frameGeometry.width
+    height: object.frameGeometry.height
 
     MouseArea {
       id: resizeArea
@@ -98,7 +101,7 @@ Rectangle {
     Rectangle {
       id: titleBar
       border.width: 2
-      color: "black" 
+      color: palette.window 
       height: 25
       anchors.top: windowFrame.top
       anchors.right: windowFrame.right
@@ -107,49 +110,59 @@ Rectangle {
       width: parent.width
 
       RowLayout {
-        anchors.right: parent.right
+        anchors.fill: titleBar
         spacing: 0
 
-        Button {
-          iconName: "window-minimize"
-          //action: 
-        }
-
-        Button {
-          iconName: "window-maximize"
-          //action: 
-        }
-
-        Button {
-          iconName: "document-close"
-          //action: 
-        }
-
-      }
-
       Button {
-        iconName: "emblem-synchronized"
+	id: otherButton
         anchors.left: parent.left
-      }
+	Layout.fillHeight: true
+        iconSource: windowFrame.object.icon
 
+      }
       Text {
+	Layout.fillWidth: true
+	Layout.fillHeight: true
+	Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+	anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: "white" 
-        text: "zwelch@trueos~8905:~/lumina/src-qt5/src-qml/test"
-        font.pixelSize: 10
+        color: palette.windowText
+        text: windowFrame.object.shortTitle
+
+        MouseArea {
+          acceptedButtons: Qt.RightButton
+          anchors.fill: parent
+          //onClicked: contextMenu.open()
+        }
       }
 
-      MouseArea {
-        acceptedButtons: Qt.RightButton
-        anchors.fill: parent
-        //onClicked: contextMenu.open()
+        Button {
+	  id: minButton
+	  Layout.fillHeight: true
+          iconName: "window-minimize"
+          onClicked: { windowFrame.object.toggleVisibility() }
+        }
+
+        Button {
+	  id: maxButton
+	  Layout.fillHeight: true
+          iconName: "window-maximize"
+          //onClicked: { windowFrame.object.toggleMaximize() }
+        }
+
+        Button {
+	  id: closeButton
+	  Layout.fillHeight: true
+          iconName: "document-close"
+          onClicked: { windowFrame.object.requestClose() }
+        }
+
       }
     }
 
     Image {
       id: frameContents
-//      source: "balloon.png"
+      source: windowFrame.object.winImage
       anchors.top: titleBar.bottom
       anchors.bottom: parent.bottom
       anchors.left: windowFrame.left
@@ -161,12 +174,11 @@ Rectangle {
       height: parent.height
 
       MouseArea { 
-        width: parent.width; 
-        height: parent.height; 
-        anchors.fill: frameContents; 
+        width: parent.width;
+        height: parent.height
+        anchors.fill: frameContents
         onClicked: { console.log(parent.mapToGlobal(mouse.x, mouse.y)); }
 
       }
     }
   }
-}

@@ -1,31 +1,32 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2017, Ken Moore
+//  Copyright (c) 2017-2018, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
 //  This is a Qt5/Lumina wrapper around native graphics system calls
 //  It is primarily designed around the creation/modification of instances of
-//   the "NativeWindow" class for passing information around
+//   the "NativeWindowObject" class for passing information around
 //===========================================
-#ifndef _LUMINA_NATIVE_WINDOW_SYSTEM_H
-#define _LUMINA_NATIVE_WINDOW_SYSTEM_H
+#ifndef _LUMINA_DESKTOP_NATIVE_WINDOW_SYSTEM_H
+#define _LUMINA_DESKTOP_NATIVE_WINDOW_SYSTEM_H
 
-#include "NativeWindow.h"
-#include <QDateTime>
+#include <NativeWindowObject.h>
+#include <QObject>
+#include <QHash>
 #include <QTimer>
-#include <QDebug>
+
 
 class NativeWindowSystem : public QObject{
 	Q_OBJECT
 private:
-	QList<NativeWindow*> NWindows;
-	QList<NativeWindow*> TWindows;
+	QList<NativeWindowObject*> NWindows;
+	QList<NativeWindowObject*> TWindows;
 
 	//Simplifications to find an already-created window object
-	NativeWindow* findWindow(WId id, bool checkRelated = true);
+	NativeWindowObject* findWindow(WId id, bool checkRelated = true);
 
-	NativeWindow* findTrayWindow(WId id);
+	NativeWindowObject* findTrayWindow(WId id);
 
 	//Now define a simple private_objects class so that each implementation
 	//  has a storage container for defining/placing private objects as needed
@@ -35,6 +36,7 @@ private:
 	//Internal timers/variables for managing pings
 	QTimer *pingTimer;
 	QHash<WId, QDateTime> waitingForPong;
+
 	void checkPings(){
 	  QDateTime cur = QDateTime::currentDateTime();
 	  QList<WId> waiting = waitingForPong.keys();
@@ -42,7 +44,7 @@ private:
 	    if(waitingForPong.value(waiting[i]) < cur){
 	      waitingForPong.remove(waiting[i]); //Timeout on this window
 	      if(waitingForPong.isEmpty() && pingTimer!=0){ pingTimer->stop(); }
-	      NativeWindow *win = findWindow(waiting[i]);
+	      NativeWindowObject *win = findWindow(waiting[i]);
 	      if(win==0){ win = findTrayWindow(waiting[i]); }
 	      if(win!=0){ win->emit WindowNotResponding(waiting[i]); }
 	    }
@@ -51,8 +53,8 @@ private:
 
 	// Since some properties may be easier to update in bulk
 	//   let the native system interaction do them in whatever logical groups are best
-	void UpdateWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props);
-	void ChangeWindowProperties(NativeWindow* win, QList< NativeWindow::Property > props, QList<QVariant> vals);
+	void UpdateWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props);
+	void ChangeWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props, QList<QVariant> vals);
 
 	//Generic private variables
 	bool screenLocked;
@@ -69,8 +71,8 @@ public:
 	void stop();
 
 	//General-purpose listing functions
-	QList<NativeWindow*> currentWindows(){ return NWindows; }
-	QList<NativeWindow*> currentTrayWindows(){ return TWindows; }
+	QList<NativeWindowObject*> currentWindows(){ return NWindows; }
+	QList<NativeWindowObject*> currentTrayWindows(){ return TWindows; }
 
 	//Small simplification functions
 	static Qt::Key KeycodeToQt(int keycode);
@@ -104,12 +106,12 @@ public slots:
 	void NewWindowDetected(WId); //will automatically create the new NativeWindow object
 	void NewTrayWindowDetected(WId); //will automatically create the new NativeWindow object
 	void WindowCloseDetected(WId); //will update the lists and make changes if needed
-	void WindowPropertyChanged(WId, NativeWindow::Property); //will rescan the window and update the object as needed
-	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>);
-	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant); //will save that property/value to the right object
-	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>);
-	void RequestPropertyChange(WId, NativeWindow::Property, QVariant);
-	void RequestPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
+	void WindowPropertyChanged(WId, NativeWindowObject::Property); //will rescan the window and update the object as needed
+	void WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>);
+	void WindowPropertyChanged(WId, NativeWindowObject::Property, QVariant); //will save that property/value to the right object
+	void WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>, QList<QVariant>);
+	void RequestPropertyChange(WId, NativeWindowObject::Property, QVariant);
+	void RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>);
 	void GotPong(WId);
 
 	void NewKeyPress(int keycode, WId win = 0);
@@ -126,8 +128,10 @@ private slots:
 	void RequestReparent(WId, WId, QPoint); //client, parent, relative origin point in parent
 
 signals:
-	void NewWindowAvailable(NativeWindow*);
-	void NewTrayWindowAvailable(NativeWindow*);
+	void NewWindowAvailable(NativeWindowObject*);
+	void WindowClosed();
+	void NewTrayWindowAvailable(NativeWindowObject*);
+	void TrayWindowClosed();
 	void NewInputEvent(); //a mouse or keypress was detected (lock-state independent);
 	void KeyPressDetected(WId, Qt::Key); //only emitted if lockstate = false
 	void KeyReleaseDetected(WId, Qt::Key); //only emitted if lockstate = false

@@ -13,7 +13,7 @@
 #include <QObject>
 #include <QByteArray>
 
-#include "NativeWindow.h"
+#include <NativeWindowObject.h>
 
 
 class NativeEventFilter : public QObject{
@@ -33,12 +33,12 @@ signals:
 	//Window Signals
 	void WindowCreated(WId);
 	void WindowDestroyed(WId);
-	void WindowPropertyChanged(WId, NativeWindow::Property);
-	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>);
-	void WindowPropertyChanged(WId, NativeWindow::Property, QVariant);
-	void WindowPropertiesChanged(WId, QList<NativeWindow::Property>, QList<QVariant>);
-	void RequestWindowPropertyChange(WId, NativeWindow::Property, QVariant);
-	void RequestWindowPropertiesChange(WId, QList<NativeWindow::Property>, QList<QVariant>);
+	void WindowPropertyChanged(WId, NativeWindowObject::Property);
+	void WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>);
+	void WindowPropertyChanged(WId, NativeWindowObject::Property, QVariant);
+	void WindowPropertiesChanged(WId, QList<NativeWindowObject::Property>, QList<QVariant>);
+	void RequestWindowPropertyChange(WId, NativeWindowObject::Property, QVariant);
+	void RequestWindowPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>);
 
 	//System Tray Signals
 	void TrayWindowCreated(WId);

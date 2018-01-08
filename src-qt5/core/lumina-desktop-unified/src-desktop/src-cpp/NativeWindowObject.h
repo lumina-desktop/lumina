@@ -17,7 +17,7 @@
 class NativeWindowObject : public QObject{
 	Q_OBJECT
 	// QML-ACCESSIBLE PROPERTIES
-	Q_PROPERTY( QImage winImage READ winImage NOTIFY winImageChanged)
+	Q_PROPERTY( QString winImage READ winImage NOTIFY winImageChanged)
 	Q_PROPERTY( QString name READ name NOTIFY nameChanged)
 	Q_PROPERTY( QString title READ title NOTIFY titleChanged)
 	Q_PROPERTY( QString shortTitle READ shortTitle NOTIFY shortTitleChanged)
@@ -92,7 +92,7 @@ public:
 	Q_INVOKABLE QRect geometry(); //this returns the "full" geometry of the window (window + frame)
 
 	// QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
-	Q_INVOKABLE QImage winImage();
+	Q_INVOKABLE QString winImage();
 	Q_INVOKABLE QString name();
 	Q_INVOKABLE QString title();
 	Q_INVOKABLE QString shortTitle();
@@ -106,6 +106,7 @@ public:
 	Q_INVOKABLE bool showWindowFrame();
 	//QML Window States
 	Q_INVOKABLE bool isSticky();
+	Q_INVOKABLE int workspace();
 
 	//QML Geometry reporting
 	Q_INVOKABLE QRect frameGeometry();

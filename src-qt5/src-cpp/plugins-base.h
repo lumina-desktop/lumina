@@ -35,12 +35,12 @@ public:
 
 	virtual void loadFile(QString path);
 	bool isLoaded() { return !data.isEmpty(); };
-  bool containsDefault(QString obj) { return data.value(obj).toObject().contains("default"); }
+	bool containsDefault(QString obj) { return data.value(obj).toObject().contains("default"); }
 
   /**
    * Check if the plugin is valid as long as the JSON is not empty,
    * it contains at least a "name", "qml", and "description" object,
-   * and the "name" and "description" objects contain a "default" key. 
+   * and the "name" and "description" objects contain a "default" key.
   **/
 	virtual bool isValid() = 0;
 
@@ -48,7 +48,7 @@ public:
 	virtual QUrl scriptURL();
 
 	QJsonObject data; //Hazardous to manually modify
-  QString relDir;
+	QString relDir;
 };
 
 class PluginSystem{
