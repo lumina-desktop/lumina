@@ -10,6 +10,7 @@
 #include "NativeWindowSystem.h"
 #include <global-objects.h>
 
+#define DISABLE_COMPOSITING 0
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -599,6 +600,63 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
 
 }
 
+void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
+  if(!DISABLE_COMPOSITING){
+    xcb_composite_redirect_window(QX11Info::connection(), win->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+    xcb_composite_redirect_subwindows(QX11Info::connection(), win->id(), XCB_COMPOSITE_REDIRECT_MANUAL); //AUTOMATIC); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
+
+    //Now create/register the damage handler
+    // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
+    //  -- Retested 6/29/17 (no change) Ken Moore
+    //xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
+    //xcb_damage_create(QX11Info::connection(), dmgID, win->id(), XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
+    // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
+    Damage dmgID = XDamageCreate(QX11Info::display(), win->id(), XDamageReportRawRectangles);
+
+    win->addDamageID( (uint) dmgID); //save this for later
+  }else{
+    //xcb_reparent_window(QX11Info::connection(), win->id(), this->winId(), 0, 0);
+    //Also use a partial-composite here - make sure the window pixmap is available even when the window is obscured
+    xcb_composite_redirect_window(QX11Info::connection(), win->id(), XCB_COMPOSITE_REDIRECT_AUTOMATIC);
+    //xcb_composite_redirect_subwindows(QX11Info::connection(), win->id(), XCB_COMPOSITE_REDIRECT_MANUAL);
+    //Also alert us when the window visual changes
+    Damage dmgID = XDamageCreate(QX11Info::display(), win->id(), XDamageReportRawRectangles);
+
+    win->addDamageID( (uint) dmgID); //save this for later
+  }
+  //win->addFrameWinID(this->winId());
+  registerClientEvents(win->id());
+}
+
+void NativeWindowSystem::UpdateWindowImage(NativeWindowObject* win){
+  QImage img;
+  qDebug() << "Update Window Image:" << win->name();
+  QRect geom(QPoint(0,0), win->property(NativeWindowObject::Size).toSize());
+  if(DISABLE_COMPOSITING){
+    QList<QScreen*> screens = static_cast<QApplication*>( QApplication::instance() )->screens();
+    if(!screens.isEmpty()){
+        img = screens[0]->grabWindow(win->id(), geom.x(), geom.y(), geom.width(), geom.height()).toImage();
+    }
+  }else{
+    //Pull the XCB pixmap out of the compositing layer
+    xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
+    xcb_composite_name_window_pixmap(QX11Info::connection(), win->id(), pix);
+    if(pix==0){ qDebug() << "Got blank pixmap!"; return; }
+
+    //Convert this pixmap into a QImage
+    //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+    xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
+    if(ximg == 0){ qDebug() << "Got blank image!"; return; }
+    QImage tmp(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
+    img = tmp.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
+    xcb_image_destroy(ximg);
+
+    //Cleanup the XCB data structures
+    xcb_free_pixmap(QX11Info::connection(), pix);
+  }
+  win->setProperty(NativeWindowObject::WinImage, QVariant::fromValue<QImage>(img) );
+}
+
 // === PUBLIC SLOTS ===
 //These are the slots which are typically only used by the desktop system itself or the NativeEventFilter
 void NativeWindowSystem::RegisterVirtualRoot(WId id){
@@ -726,6 +784,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   NWindows << win;
   UpdateWindowProperties(win, NativeWindowObject::allProperties());
   qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindowObject::Name).toString();
+  SetupNewWindow(win);
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
@@ -883,6 +942,7 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
 void NativeWindowSystem::CheckDamageID(WId win){
   for(int i=0; i<NWindows.length(); i++){
     if(NWindows[i]->damageId() == win || NWindows[i]->id() == win || NWindows[i]->frameId()==win){
+      UpdateWindowImage(NWindows[i]);
       NWindows[i]->emit VisualChanged();
       //qDebug() << "Got DAMAGE Event";
       return;

@@ -56,6 +56,9 @@ private:
 	void UpdateWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props);
 	void ChangeWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props, QList<QVariant> vals);
 
+	void SetupNewWindow(NativeWindowObject *win);
+	void UpdateWindowImage(NativeWindowObject *win);
+
 	//Generic private variables
 	bool screenLocked;
 
