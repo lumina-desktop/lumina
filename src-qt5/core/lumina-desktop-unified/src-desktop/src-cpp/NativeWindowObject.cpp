@@ -67,8 +67,9 @@ void NativeWindowObject::setProperty(NativeWindowObject::Property prop, QVariant
     QBuffer buffer(&ba);
       buffer.open(QIODevice::WriteOnly);
       val.value<QImage>().save(&buffer, "PNG");
-    QString img("data:image/png:base64,");
+    QString img("data:image/png;base64,");
     img.append(QString::fromLatin1(ba.toBase64().data()));
+    qDebug() << "Image Data Header:" << img.section(",",0,0);
     hash.insert(prop, img); //save the string instead
   }
   else{ hash.insert(prop, val); }
@@ -87,8 +88,9 @@ void NativeWindowObject::setProperties(QList<NativeWindowObject::Property> props
       QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
         vals[i].value<QImage>().save(&buffer, "PNG");
-      QString img("data:image/png:base64,");
+      QString img("data:image/png;base64,");
       img.append(QString::fromLatin1(ba.toBase64().data()));
+      qDebug() << "Image Data Header:" << img.section(",",0,0);
       hash.insert(props[i], img); //save the string instead
     }else{
       hash.insert(props[i], vals[i]);
