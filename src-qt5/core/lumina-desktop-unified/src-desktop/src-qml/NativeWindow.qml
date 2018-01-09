@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 
 import Lumina.Backend.NativeWindowObject 2.0
+import Lumina.Backend.RootDesktopObject 2.0
 
 Rectangle {
   property NativeWindowObject object
@@ -24,79 +25,92 @@ Rectangle {
   MouseArea {
     id: resizeArea
     anchors.fill: parent
-    property int positionX: 0
-    property int positionY: 0
-    property int newWidth: 0
-    property int newHeight: 0
+    drag.target: undefined
+    property int resizeDirection: NativeWindowObject.TOP_LEFT
+    property int positionX: -1
+    property int positionY: -1
+
+    onPressed: {
+      var globalP = windowFrame.mapToItem(rootCanvas, mouse.x, mouse.y)
+      positionX = globalP.x
+      positionY = globalP.y
+      if(positionY <= windowFrame.y + 10 ) {
+        if(positionX <= windowFrame.x + 10)
+          resizeDirection = NativeWindowObject.TOP_LEFT
+        else if(positionX >= windowFrame.x + windowFrame.width - 10)
+          resizeDirection = NativeWindowObject.TOP_RIGHT
+        else
+          resizeDirection = NativeWindowObject.TOP
+      }else if(positionY >= windowFrame.y + windowFrame.height - 10) {
+        if(positionX <= windowFrame.x + 10)
+          resizeDirection = NativeWindowObject.BOTTOM_LEFT
+        else if(positionX >= windowFrame.x + windowFrame.width - 10)
+          resizeDirection = NativeWindowObject.BOTTOM_RIGHT
+        else
+          resizeDirection = NativeWindowObject.BOTTOM
+      }else if(positionX <= windowFrame.x + 10) {
+        resizeDirection = NativeWindowObject.LEFT
+      }else if(positionX >= windowFrame.x + windowFrame.width - 10) {
+        resizeDirection = NativeWindowObject.RIGHT
+      }
+      //console.log("Initial X: ", positionX, "Initial Y: ", positionY);
+      //console.log("Initial X Frame: ", windowFrame.x, "Initial Y Frame: ", windowFrame.y);
+    }
+
+    onReleased: {
+      positionX = -1
+      positionY = -1
+    }
 
     onPositionChanged: { 
-      var globalP = windowFrame.mapToGlobal(mouse.x, mouse.y)
-      if(positionY < windowFrame.y + 15 ) {
-        /*if(positionX < windowFrame.x + 15) {
-          console.log("Top Left");
-          //Top Left 
-          newWidth = windowFrame.width + (windowFrame.x - mouse.x) 
-          newHeight = windowFrame.height + (windowFrame.y - mouse.y) 
-          windowFrame.x = mouse.x
-          windowFrame.y = mouse.y
-        }else if(positionX > windowFrame.x + windowFrame.width - 15) {
-          console.log("Top Right");
-          //Top Right
-          newX = positionX - mouse.x
-          newY = positionY - mouse.y
-          newWidth = windowFrame.width - (positionX - mouse.x)
-          newHeight = windowFrame.height + (windowFrame.y - mouse.y)
-          windowFrame.y = mouse.y
-        }else{*/
-          //Top
-          windowFrame.height -= 1
+      if(positionX != -1 && positionY != -1) {
+        var globalP = windowFrame.mapToItem(rootCanvas, mouse.x, mouse.y)
+        /*console.log("Global P: ", globalP);
+        console.log("Position X: ", positionX, "Position Y: ", positionY)
+        console.log("Old Position : ", windowFrame.x, " , ", windowFrame.y)
+        console.log(resizeDirection);*/
+        if(resizeDirection == NativeWindowObject.TOP_LEFT) {
+          windowFrame.height -= globalP.y - positionY
+          windowFrame.width -= globalP.x - positionX
           windowFrame.y = globalP.y
-       // }
+          windowFrame.x = globalP.x
+        }else if(resizeDirection == NativeWindowObject.TOP_RIGHT) {
+          //console.log("TOP RIGHT Old Height: ", windowFrame.height, "Old Width: ", windowFrame.width)
+          windowFrame.height -= globalP.y - positionY
+          windowFrame.width += globalP.x - positionX
+          //console.log("New Height: ", windowFrame.height, "New Width: ", windowFrame.width)
+          windowFrame.y = globalP.y
+          //console.log("New Position : ", windowFrame.x, " , ", windowFrame.y)
+        }else if(resizeDirection == NativeWindowObject.TOP) {
+          windowFrame.height -= globalP.y - positionY
+          windowFrame.y = globalP.y
+        } else if(resizeDirection == NativeWindowObject.RIGHT) {
+          windowFrame.width += globalP.x - positionX
+        } else if(resizeDirection == NativeWindowObject.BOTTOM_RIGHT) {
+          windowFrame.height += globalP.y - positionY
+          windowFrame.width += globalP.x - positionX
+        } else if(resizeDirection == NativeWindowObject.BOTTOM) {
+          windowFrame.height += globalP.y - positionY
+        } else if(resizeDirection == NativeWindowObject.BOTTOM_LEFT) {
+          windowFrame.width -= globalP.x - positionX
+          windowFrame.height += globalP.y - positionY
+          windowFrame.x = globalP.x
+        } else if(resizeDirection == NativeWindowObject.LEFT) {
+          windowFrame.width -= globalP.x - positionX
+          windowFrame.x = globalP.x
+        }
+        //Set a miniumum width and height as 80x50
+        if(windowFrame.width < 80) {
+          windowFrame.width = 80 
+        }
+        if(windowFrame.height < 50) {
+          windowFrame.height = 50 
+        }
+        positionY = globalP.y
+        positionX = globalP.x
       }
-/*else if(mouse.x < windowFrame.x + 15) {
-        if(mouse.y > windowFrame.y + windowFrame.height - 15) {
-          //Bottom Left
-          newX = positionX - mouse.x
-          newWidth = windowFrame.width - newX
-          newHeight = windowFrame.height - newY
-        }else{
-          //Left
-        }
-      }else if(mouse.y > windowFrame.y + windowFrame.height - 15) {
-        if(mouse.x > windowFrame.x + windowFrame.width - 15) {
-          //Bottom Right
-        }else{
-          //Bottom
-        }
-      }else if(mouse.x > windowFrame.x + windowFrame.width - 15) {
-        //Right
-      } else {
-        console.log("Cursor error");
-      }*/
     }
   }
-
-  MouseArea {
-    id: dragArea
-    anchors.fill: titleBar
-    drag.target: windowFrame
-    drag.axis: Drag.XAndYAxis
-    onClicked: { console.log("dragArea"); }
-    //released: { function(); }
-  }
-
-  states: [ 
-    State {
-      when: resizeArea.drag.held
-      PropertyChanges { target: Window; color:"red" }
-    },
-    State {
-      when: dragArea.drag.held
-      AnchorChanges { target: windowFrame; anchors.verticalCenter: undefined; anchors.horizontalCenter: undefined }
-    }
-
-  ]
-
 
   Rectangle {
     id: titleBar
@@ -109,50 +123,47 @@ Rectangle {
     anchors.margins: windowFrame.border.width
     width: parent.width
 
+    MouseArea {
+      id: dragArea
+      anchors.fill: parent
+      drag.target: windowFrame
+      drag.axis: Drag.XAndYAxis
+      //acceptedButtons: Qt.RightButton
+      //onClicked: contextMenu.open()
+      //released: { function(); }
+    }
+
+    Button {
+      id: otherButton
+      anchors.left: parent.left
+      iconSource: windowFrame.object.icon
+    }
+
+    Text {
+      anchors.horizontalCenter: parent.horizontalCenter
+      anchors.verticalCenter: parent.verticalCenter
+      color: palette.windowText
+      text: windowFrame.object.shortTitle
+      fontSizeMode: Text.Fit
+    }
+
     RowLayout {
-      anchors.fill: titleBar
       spacing: 0
-
-      Button {
-        id: otherButton
-        anchors.left: parent.left
-        Layout.fillHeight: true
-        iconSource: windowFrame.object.icon
-      }
-
-      Text {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        color: palette.windowText
-        text: windowFrame.object.shortTitle
-
-        MouseArea {
-          acceptedButtons: Qt.RightButton
-          anchors.fill: parent
-          //onClicked: contextMenu.open()
-        }
-      }
-
+      anchors.right: parent.right
       Button {
         id: minButton
-        Layout.fillHeight: true
         iconName: "window-minimize"
         onClicked: { windowFrame.object.toggleVisibility() }
       }
 
       Button {
         id: maxButton
-        Layout.fillHeight: true
         iconName: "window-maximize"
         //onClicked: { windowFrame.object.toggleMaximize() }
       }
 
       Button {
         id: closeButton
-        Layout.fillHeight: true
         iconName: "document-close"
         onClicked: { windowFrame.object.requestClose() }
       }
@@ -173,11 +184,10 @@ Rectangle {
     height: parent.height
 
     MouseArea { 
-      width: parent.width;
+      width: parent.width
       height: parent.height
       anchors.fill: frameContents
       onClicked: { console.log(parent.mapToGlobal(mouse.x, mouse.y)); }
-
     }
   }
 }

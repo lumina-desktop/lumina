@@ -10,7 +10,7 @@ lessThan(QT_MINOR_VERSION, 7){
 }
 
 QT *= core gui network widgets x11extras multimedia multimediawidgets concurrent svg quick qml
-
+CONFIG += c++11
 
 TARGET = lumina-desktop-unified
 target.path = $${L_BINDIR}
