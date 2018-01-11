@@ -523,7 +523,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
 
   }
   if(props.contains(NativeWindowObject::Size) || props.contains(NativeWindowObject::GlobalPos) ){
-    /*xcb_configure_window_value_list_t  valList;
+    xcb_configure_window_value_list_t  valList;
     //valList.x = 0; //Note that this is the relative position - should always be 0,0 relative to the embed widget
     //valList.y = 0;
     QSize sz = win->property(NativeWindowObject::Size).toSize();
@@ -543,7 +543,7 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
     uint16_t mask = 0;
     mask = mask | XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT | XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y;
     //qDebug() << "Configure window Geometry:" << sz;
-    xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);*/
+    xcb_configure_window_aux(QX11Info::connection(), win->id(), mask, &valList);
   }
   if(props.contains(NativeWindowObject::Name)){
 
@@ -630,7 +630,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
 
 QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
   QImage img;
-  qDebug() << "Update Window Image:" << win->name();
+  //qDebug() << "Update Window Image:" << win->name();
   QRect geom(QPoint(0,0), win->property(NativeWindowObject::Size).toSize());
   if(DISABLE_COMPOSITING){
     QList<QScreen*> screens = static_cast<QApplication*>( QApplication::instance() )->screens();
@@ -641,12 +641,12 @@ QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
     //Pull the XCB pixmap out of the compositing layer
     xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
     xcb_composite_name_window_pixmap(QX11Info::connection(), win->id(), pix);
-    if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
+    if(pix==0){ return QImage(); }
 
     //Convert this pixmap into a QImage
     //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
     xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-    if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
+    if(ximg == 0){ return QImage(); }
     QImage tmp(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
     img = tmp.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
     xcb_image_destroy(ximg);

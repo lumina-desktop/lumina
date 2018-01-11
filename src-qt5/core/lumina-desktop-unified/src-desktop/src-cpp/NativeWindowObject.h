@@ -21,7 +21,7 @@ class NativeWindowObject : public QObject{
 	Q_PROPERTY( QString name READ name NOTIFY nameChanged)
 	Q_PROPERTY( QString title READ title NOTIFY titleChanged)
 	Q_PROPERTY( QString shortTitle READ shortTitle NOTIFY shortTitleChanged)
-	Q_PROPERTY( QIcon icon READ icon NOTIFY iconChanged)
+	Q_PROPERTY( QString icon READ icon NOTIFY iconChanged)
 	Q_PROPERTY( bool sticky READ isSticky NOTIFY stickyChanged)
 	//Button/Titlebar visibility
 	Q_PROPERTY( bool showCloseButton READ showCloseButton NOTIFY winTypeChanged)
@@ -98,7 +98,7 @@ public:
 	Q_INVOKABLE QString name();
 	Q_INVOKABLE QString title();
 	Q_INVOKABLE QString shortTitle();
-	Q_INVOKABLE QIcon icon();
+	Q_INVOKABLE QString icon();
 	//QML Button states
 	Q_INVOKABLE bool showCloseButton();
 	Q_INVOKABLE bool showMaxButton();
@@ -113,6 +113,7 @@ public:
 	//QML Geometry reporting
 	Q_INVOKABLE QRect frameGeometry();
 	Q_INVOKABLE QRect imageGeometry();
+	Q_INVOKABLE void updateGeometry(int x, int y, int width, int height); //For QML to change the current window position
 
 public slots:
 	Q_INVOKABLE void toggleVisibility();
@@ -125,9 +126,15 @@ private:
 	//QWindow *WIN;
 	WId winid, frameid;
 	QList<WId> relatedTo;
-	unsigned int dmgID, dmg;
+	unsigned int dmgID, dmg, icodmg;
+	//Collation/Delay for window resize events
+	QTimer *geomTimer;
+	QRect newgeom;
 
 	void emitSinglePropChanged(NativeWindowObject::Property);
+
+private slots:
+	void sendNewGeom();
 
 signals:
 	//General Notifications

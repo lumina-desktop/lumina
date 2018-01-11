@@ -15,12 +15,20 @@ Rectangle {
 
   id: windowFrame
   border.width: 5
-  //border.color: palette.window 
-  color: palette.window 
+  border.color: palette.highlight
+  radius: 5
+  color: "transparent" //palette.window 
   x: object.frameGeometry.x
   y: object.frameGeometry.y
   width: object.frameGeometry.width
   height: object.frameGeometry.height
+
+  onXChanged: {
+    windowFrame.object.updateGeometry(windowFrame.x, windowFrame.y, windowFrame.width, windowFrame.height)
+  }
+  onYChanged: {
+    windowFrame.object.updateGeometry(windowFrame.x, windowFrame.y, windowFrame.width, windowFrame.height)
+  }
 
   MouseArea {
     id: resizeArea
@@ -31,6 +39,7 @@ Rectangle {
     property int positionY: -1
 
     onPressed: {
+      //NOTE: This is only triggered for resize events
       var globalP = windowFrame.mapToItem(rootCanvas, mouse.x, mouse.y)
       positionX = globalP.x
       positionY = globalP.y
@@ -60,9 +69,11 @@ Rectangle {
     onReleased: {
       positionX = -1
       positionY = -1
+      //windowFrame.object.updateGeometry(windowFrame.x, windowFrame.y, windowFrame.width, windowFrame.height)
     }
 
-    onPositionChanged: { 
+    onPositionChanged: {
+      //NOTE: This is only triggered for resize events
       if(positionX != -1 && positionY != -1) {
         var globalP = windowFrame.mapToItem(rootCanvas, mouse.x, mouse.y)
         /*console.log("Global P: ", globalP);
@@ -109,13 +120,14 @@ Rectangle {
         positionY = globalP.y
         positionX = globalP.x
       }
+      windowFrame.object.updateGeometry(windowFrame.x, windowFrame.y, windowFrame.width, windowFrame.height)
     }
   }
 
   Rectangle {
     id: titleBar
-    border.width: 2
-    color: palette.window 
+    border.width: 0
+    color: palette.window
     height: 25
     anchors.top: windowFrame.top
     anchors.right: windowFrame.right
@@ -133,9 +145,10 @@ Rectangle {
       //released: { function(); }
     }
 
-    Button {
+    ToolButton {
       id: otherButton
       anchors.left: parent.left
+      height: parent.height
       iconSource: windowFrame.object.icon
     }
 
@@ -150,20 +163,25 @@ Rectangle {
     RowLayout {
       spacing: 0
       anchors.right: parent.right
-      Button {
+      height: parent.height
+
+      ToolButton {
         id: minButton
+        Layout.fillHeight: true
         iconName: "window-minimize"
         onClicked: { windowFrame.object.toggleVisibility() }
       }
 
-      Button {
+      ToolButton {
         id: maxButton
+        Layout.fillHeight: true
         iconName: "window-maximize"
         //onClicked: { windowFrame.object.toggleMaximize() }
       }
 
-      Button {
+      ToolButton {
         id: closeButton
+        Layout.fillHeight: true
         iconName: "document-close"
         onClicked: { windowFrame.object.requestClose() }
       }

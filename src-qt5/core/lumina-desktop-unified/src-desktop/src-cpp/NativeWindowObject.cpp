@@ -22,6 +22,10 @@ NativeWindowObject::NativeWindowObject(WId id) : QObject(){
   winid = id;
   frameid = 0;
   dmgID = dmg = 0;
+  geomTimer = new QTimer(this);
+    geomTimer->setSingleShot(true);
+    geomTimer->setInterval(50); //1/20 second
+  connect(geomTimer, SIGNAL(timeout()), this, SLOT(sendNewGeom()) );
 }
 
 NativeWindowObject::~NativeWindowObject(){
@@ -62,17 +66,9 @@ void NativeWindowObject::setProperty(NativeWindowObject::Property prop, QVariant
   if(prop == NativeWindowObject::RelatedWindows){ relatedTo = val.value< QList<WId> >(); }
   else if(prop == NativeWindowObject::None || (!force && hash.value(prop)==val)){ return; }
   else if(prop == NativeWindowObject::WinImage){
-    //special case - QImage is passed in, but QString is passed out (needed for QML)
-    QByteArray ba;
-    QBuffer buffer(&ba);
-      buffer.open(QIODevice::WriteOnly);
-      val.value<QImage>().save(&buffer, "PNG");
-    QString img("data:image/png;base64,");
-    img.append(QString::fromLatin1(ba.toBase64().data()));
-    qDebug() << "Image Data Header:" << img.section(",",0,0);
-    hash.insert(prop, img); //save the string instead
-  }
-  else{ hash.insert(prop, val); }
+      //special case - This should never be actually set in the property hash
+      //  it is loaded dynamically by the QMLImageProvider instead (prevent flickering/caching image)
+  } else{ hash.insert(prop, val); }
   emitSinglePropChanged(prop);
   emit PropertiesChanged(QList<NativeWindowObject::Property>() << prop, QList<QVariant>() << val);
 }
@@ -83,15 +79,8 @@ void NativeWindowObject::setProperties(QList<NativeWindowObject::Property> props
     if(props[i] == NativeWindowObject::None || (!force && (hash.value(props[i]) == vals[i])) ){
       props.removeAt(i); vals.removeAt(i); i--; continue; //Invalid property or identical value
     }else if(props[i] == NativeWindowObject::WinImage){
-      //special case - QImage is passed in, but QString is passed out (needed for QML)
-      QByteArray ba;
-      QBuffer buffer(&ba);
-        buffer.open(QIODevice::WriteOnly);
-        vals[i].value<QImage>().save(&buffer, "PNG");
-      QString img("data:image/png;base64,");
-      img.append(QString::fromLatin1(ba.toBase64().data()));
-      qDebug() << "Image Data Header:" << img.section(",",0,0);
-      hash.insert(props[i], img); //save the string instead
+      //special case - This should never be actually set in the property hash
+      //  it is loaded dynamically by the QMLImageProvider instead (prevent flickering/caching image)
     }else{
       hash.insert(props[i], vals[i]);
     }
@@ -164,8 +153,11 @@ QString NativeWindowObject::shortTitle(){
   return tmp;
 }
 
-QIcon NativeWindowObject::icon(){
-  return this->property(NativeWindowObject::Name).value<QIcon>();
+QString NativeWindowObject::icon(){
+  if(icodmg==0){ icodmg=1; }
+  else{ icodmg = 0; }
+  qDebug() << "Window Icon:" << icodmg << this->property(NativeWindowObject::Icon).value<QIcon>().availableSizes();
+  return "image://native_window/icon:"+QString::number(winid)+":"+QString::number(icodmg);
 }
 
 //QML Button states
@@ -260,6 +252,18 @@ QRect NativeWindowObject::imageGeometry(){
   return geom;
 }
 
+void NativeWindowObject::updateGeometry(int x, int y, int width, int height){
+  // Full frame+window geometry - go ahead and pull it apart and only update the interior window geom
+  QList<int> fgeom = this->property(NativeWindowObject::FrameExtents).value<QList<int> >();
+  if(fgeom.isEmpty()){ fgeom << 0<<0<<0<<0; } //just in case (left/right/top/bottom)
+  QPoint pos(x+fgeom[0], y+fgeom[2]);
+  QSize sz(width-fgeom[0]-fgeom[1], height-fgeom[2]-fgeom[3]);
+  newgeom = QRect(pos, sz);
+  //qDebug() << "Update Geometry:" << fgeom << QRect(x,y,width,height) << pos << sz;
+  //requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << pos << sz);
+  if(!geomTimer->isActive()){ geomTimer->start(); }
+}
+
 // ==== PUBLIC SLOTS ===
 void NativeWindowObject::toggleVisibility(){
   setProperty(NativeWindowObject::Visible, !property(NativeWindowObject::Visible).toBool() );
@@ -284,7 +288,9 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 	case NativeWindowObject::Name:
 		emit nameChanged(); break;
 	case NativeWindowObject::Title:
-		emit titleChanged(); break;
+		emit titleChanged();
+		if(this->property(NativeWindowObject::ShortTitle).toString().isEmpty()){ emit shortTitleChanged(); }
+		break;
 	case NativeWindowObject::ShortTitle:
 		emit shortTitleChanged(); break;
 	case NativeWindowObject::Icon:
@@ -299,4 +305,8 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 	default:
 		break; //do nothing otherwise
   }
+}
+
+void NativeWindowObject::sendNewGeom(){
+requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << newgeom.topLeft() << newgeom.size());
 }

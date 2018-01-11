@@ -27,14 +27,25 @@ QImage QMLImageProvider::requestImage(const QString &id, QSize *size, const QSiz
   QImage img(requestedSize,QImage::Format_RGB32);
   if(win==0){ img.fill("black"); } //invalid window ID (should never happen)
   else if(id.startsWith("image:")){ img = Lumina::NWS->GetWindowImage(win); }
+  else if(id.startsWith("icon:")){
+    QIcon ico = win->property(NativeWindowObject::Icon).value<QIcon>();
+    QList<QSize> sizes = ico.availableSizes();
+    QSize sz(0,0);
+    //Just grab the largest size currently available
+    for(int i=0; i<sizes.length(); i++){
+      if(sz.width()<sizes[i].width() && sz.height()<sizes[i].height()){ sz = sizes[i]; }
+    }
+    qDebug() << "Icon Sizes:" <<sizes;
+    img = ico.pixmap(sz).toImage();
+  }
   //else if(id.startsWith("icon:")){ img = Lumina::NWS->GetWindowIcon(win); }
-  qDebug() << "Got Window Image:" << img.size();
+  //qDebug() << "Got Window Image:" << img.size();
   if(img.size().isNull()){
     if(requestedSize.isValid()){ img = QImage(requestedSize,QImage::Format_RGB32); }
     else{ img = QImage(QSize(64,64), QImage::Format_RGB32); }
     img.fill("black");
   }
-  qDebug() << "Final Window Image:" << img.size();
+  //qDebug() << "Final Window Image:" << img.size();
   if(size!=0){
     size->setHeight(img.height());
     size->setWidth( img.width() );
