@@ -9,6 +9,9 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1
 
 import Lumina.Backend.ScreenObject 2.0
+import Lumina.Backend.PanelObject 2.0
+
+import "." as QML
 
 AnimatedImage {
     //C++ backend object
@@ -23,4 +26,15 @@ AnimatedImage {
     y: object.y
     width: object.width
     height: object.height
+
+  //Setup the Panels
+  Repeater{
+    model: object.panels
+    QML.Panel{
+      panel_id: modelData
+      object: parent.object.panel(panel_id)
+      z: 10000+index
+    }
+  }
+
   }

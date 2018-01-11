@@ -14,13 +14,13 @@
 
 class QMLImageProvider : public QQuickImageProvider{
 public:
-	QMLImageProvider();
+	QMLImageProvider(QQmlImageProviderBase::ImageType);
 	~QMLImageProvider();
 
 	//static QMLImageProvider* instance();
 
 	virtual QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
-
+	virtual QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize);
 };
 
 #endif

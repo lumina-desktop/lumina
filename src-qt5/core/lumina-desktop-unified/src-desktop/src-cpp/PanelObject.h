@@ -40,6 +40,7 @@ public:
 public slots:
 	void setBackground(QString fileOrColor);
 	void setGeometry(QRect newgeom);
+	void syncWithSettings(QRect parent_geom);
 
 signals:
 	void backgroundChanged();

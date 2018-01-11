@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "PanelObject.h"
+#include <global-objects.h>
+
 #include <QQmlEngine>
 #include <QDebug>
 
@@ -41,4 +43,42 @@ void PanelObject::setGeometry( QRect newgeom ){
     geom = newgeom;
     emit geomChanged();
   }
+}
+
+void PanelObject::syncWithSettings(QRect parent_geom){
+  //Read off all the settings
+  //qDebug() << "Sync Panel Settings:" << panel_id << parent_geom;
+  QString anchor = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/anchor", "bottom").toString().toLower();
+  QString align = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/align", "center").toString().toLower();
+  double length = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/length_percent", 100).toDouble()/100.0;
+  double width = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/width_font_percent", 2.1).toDouble();
+    width =  qRound(width * QApplication::fontMetrics().height() );
+  this->setBackground( DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/background", "rgba(0,0,0,120)").toString() );
+ // qDebug() << "Update Panel:" << panel_id << anchor+"/"+align << length << width;
+  //Now calculate the geometry of the panel
+  QRect newgeom;
+  //Figure out the size of the panel
+  if(anchor=="top" || anchor=="bottom"){ newgeom.setWidth( parent_geom.width()*length ); newgeom.setHeight(width); }
+  else{ newgeom.setWidth(width); newgeom.setHeight(parent_geom.height()*length); }
+  //qDebug() << " - Size:" << newgeom;
+  //Now figure out the location of the panel
+  if(align=="left" || align=="top"){
+    if(anchor=="top" || anchor=="left"){ newgeom.moveTopLeft(QPoint(0,0)); }
+    else if(anchor=="right"){ newgeom.moveTopRight(QPoint(parent_geom.width(), 0)); }
+    else{ newgeom.moveBottomLeft(QPoint(0, parent_geom.height()) ); } //bottom by default
+
+  }else if(align=="right" || align=="bottom"){
+    if(anchor=="top"){ newgeom.moveTopRight(QPoint(parent_geom.width(),0)); }
+    else if(anchor=="left"){ newgeom.moveBottomLeft(QPoint(0, parent_geom.height())); }
+    else if(anchor=="right"){ newgeom.moveBottomRight(QPoint(parent_geom.width(), parent_geom.height())); }
+    else{ newgeom.moveBottomRight(QPoint(parent_geom.width(), parent_geom.height()) ); }
+
+  }else{ //center
+    if(anchor=="top"){ newgeom.moveTopLeft(QPoint( (parent_geom.width()-newgeom.width())/2,0)); }
+    else if(anchor=="left"){ newgeom.moveTopLeft(QPoint(0, (parent_geom.height()-newgeom.height())/2 )); }
+    else if(anchor=="right"){ newgeom.moveTopRight(QPoint(parent_geom.width(), (parent_geom.height()-newgeom.height())/2 )); }
+    else{ newgeom.moveBottomLeft(QPoint( (parent_geom.width()-newgeom.width())/2, parent_geom.height()) ); }
+  }
+  //qDebug() << " - Calculated Geometry:" << newgeom;
+  this->setGeometry(newgeom); //Note: This is in parent-relative coordinates (not global)
 }

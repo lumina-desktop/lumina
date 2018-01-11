@@ -10,6 +10,7 @@
 #define _LUMINA_DESKTOP_QML_BACKEND_ROOT_DESKTOP_OBJECT_H
 #include <global-includes.h>
 #include <ScreenObject.h>
+#include <QThread>
 
 class RootDesktopObject : public QObject{
 	Q_OBJECT
@@ -53,6 +54,9 @@ public slots:
 	QString CurrentWallpaper(QString screen);
 
 	void setPanels(QList<PanelObject*> list);
+	void setPanels(QStringList ids);
+	QList<PanelObject*> panelObjectList(){ return panel_objects; }
+
 	void setWindows(QList<NativeWindowObject*> list);
 
 private slots:
@@ -66,5 +70,8 @@ signals:
 	void mouseMoved();
 	void lockScreen();
 	void launchApplication(QString);
+
+	//Internal signals for thread-safety
+	void changePanels(QStringList);
 };
 #endif

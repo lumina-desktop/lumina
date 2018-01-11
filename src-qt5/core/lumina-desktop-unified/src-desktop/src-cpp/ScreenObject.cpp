@@ -10,6 +10,7 @@
 
 ScreenObject::ScreenObject(QScreen *scrn, QObject *parent) : QObject(parent){
   bg_screen = scrn;
+  connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
 }
 
 void ScreenObject::RegisterType(){
@@ -39,6 +40,37 @@ void ScreenObject::setPanels(QList<PanelObject*> list){
   panel_objects = list;
   emit panelsChanged();
 }
+
+void ScreenObject::setPanels(QStringList ids){
+  //Make this thread-safe for object creation
+  if(this->thread() != QThread::currentThread()){
+    //use internal signal/slot combo to change threads
+    this->emit changePanels(ids);
+    return;
+  }
+
+  //First update/remove any current panel objects
+  bool change = false;
+  for(int i=0; i<panel_objects.length(); i++){
+    if(ids.contains(panel_objects[i]->name()) ){
+      ids.removeAll(panel_objects[i]->name()); //already handled
+      panel_objects[i]->syncWithSettings(bg_screen->geometry());
+    }else{
+      panel_objects.takeAt(i)->deleteLater();
+      i--;
+      change = true; //list changed
+    }
+  }
+  //Now create any new panel objects as needed
+  for(int i=0; i<ids.length(); i++){
+    PanelObject *tmp = new PanelObject(ids[i], this);
+    tmp->syncWithSettings(bg_screen->geometry());
+    panel_objects << tmp;
+    change = true; //list changed
+  }
+  if(change){ emit panelsChanged(); }
+}
+
 
 //QML Read Functions
 QStringList ScreenObject::panels(){

@@ -7,7 +7,7 @@
 #include <global-objects.h>
 #include "QMLImageProvider.h"
 
-QMLImageProvider::QMLImageProvider() : QQuickImageProvider(QQmlImageProviderBase::Image, 0){
+QMLImageProvider::QMLImageProvider(QQmlImageProviderBase::ImageType type) : QQuickImageProvider(type, 0){
 
 }
 
@@ -23,7 +23,10 @@ QMLImageProvider::~QMLImageProvider(){
 
 QImage QMLImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize){
   NativeWindowObject *win = Lumina::NWS->findWindow( id.section(":",1,1).toInt(), false);
-  qDebug() << "Request Image:" << id << win << requestedSize;
+  if(win==0){ win = Lumina::NWS->findTrayWindow(id.section(":",1,1).toInt()); }
+
+  if(!id.startsWith("image:")){ qDebug() << "Request Image:" << id << win << requestedSize; }
+
   QImage img(requestedSize,QImage::Format_RGB32);
   if(win==0){ img.fill("black"); } //invalid window ID (should never happen)
   else if(id.startsWith("image:")){ img = Lumina::NWS->GetWindowImage(win); }
@@ -38,7 +41,6 @@ QImage QMLImageProvider::requestImage(const QString &id, QSize *size, const QSiz
     qDebug() << "Icon Sizes:" <<sizes;
     img = ico.pixmap(sz).toImage();
   }
-  //else if(id.startsWith("icon:")){ img = Lumina::NWS->GetWindowIcon(win); }
   //qDebug() << "Got Window Image:" << img.size();
   if(img.size().isNull()){
     if(requestedSize.isValid()){ img = QImage(requestedSize,QImage::Format_RGB32); }
@@ -54,4 +56,10 @@ QImage QMLImageProvider::requestImage(const QString &id, QSize *size, const QSiz
     img = img.scaled(requestedSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   }
   return img;
+}
+
+QPixmap QMLImageProvider::requestPixmap(const QString &id, QSize *size, const QSize &requestedSize){
+  qDebug() << "Pixmap Requested:" << id;
+  QImage img = requestImage(id, size, requestedSize);
+  return QPixmap::fromImage(img);
 }

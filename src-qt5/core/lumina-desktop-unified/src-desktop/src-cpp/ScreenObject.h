@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QString>
 #include <QScreen>
+#include <QThread>
 
 #include "PanelObject.h"
 
@@ -42,16 +43,24 @@ public:
 	Q_INVOKABLE int height();
 	Q_INVOKABLE QStringList panels();
 	Q_INVOKABLE PanelObject* panel(QString id);
+	Q_INVOKABLE QRect geometry(){ return bg_screen->geometry(); }
 
 	void setPanels(QList<PanelObject*> list);
 
+	QList<PanelObject*> panelObjectList(){ return panel_objects; }
+
 public slots:
+	void setPanels(QStringList ids);
 	void setBackground(QString fileOrColor);
 
 signals:
 	void backgroundChanged();
 	void geomChanged();
 	void panelsChanged();
+
+	//Internal signals for thread-safety
+	void changePanels(QStringList);
+
 };
 
 #endif
