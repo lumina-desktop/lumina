@@ -21,7 +21,7 @@ void NativeWindowObject::RegisterType(){
 NativeWindowObject::NativeWindowObject(WId id) : QObject(){
   winid = id;
   frameid = 0;
-  dmgID = 0;
+  dmgID = dmg = 0;
 }
 
 NativeWindowObject::~NativeWindowObject(){
@@ -143,7 +143,10 @@ QRect NativeWindowObject::geometry(){
 
 // QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
 QString NativeWindowObject::winImage(){
-  return this->property(NativeWindowObject::WinImage).toString();
+  //Need to alternate something on the end to ensure that QML knows to fetch the new image (non-cached only)
+  if(dmg==0){ dmg = 1; }
+  else{ dmg = 0; }
+  return "image://native_window/image:"+QString::number(winid)+":"+QString::number(dmg);
 }
 
 QString NativeWindowObject::name(){

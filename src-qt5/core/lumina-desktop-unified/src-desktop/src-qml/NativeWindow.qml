@@ -172,6 +172,7 @@ Rectangle {
 
   Image {
     id: frameContents
+    cache: false
     source: windowFrame.object.winImage
     anchors.top: titleBar.bottom
     anchors.bottom: parent.bottom

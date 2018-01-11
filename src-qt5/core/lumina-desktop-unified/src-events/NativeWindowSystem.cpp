@@ -10,7 +10,7 @@
 #include "NativeWindowSystem.h"
 #include <global-objects.h>
 
-#define DISABLE_COMPOSITING 1
+#define DISABLE_COMPOSITING 0
 
 //XCB Library includes
 #include <xcb/xcb.h>
@@ -628,7 +628,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
   registerClientEvents(win->id());
 }
 
-void NativeWindowSystem::UpdateWindowImage(NativeWindowObject* win){
+QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
   QImage img;
   qDebug() << "Update Window Image:" << win->name();
   QRect geom(QPoint(0,0), win->property(NativeWindowObject::Size).toSize());
@@ -641,12 +641,12 @@ void NativeWindowSystem::UpdateWindowImage(NativeWindowObject* win){
     //Pull the XCB pixmap out of the compositing layer
     xcb_pixmap_t pix = xcb_generate_id(QX11Info::connection());
     xcb_composite_name_window_pixmap(QX11Info::connection(), win->id(), pix);
-    if(pix==0){ qDebug() << "Got blank pixmap!"; return; }
+    if(pix==0){ qDebug() << "Got blank pixmap!"; return QImage(); }
 
     //Convert this pixmap into a QImage
     //xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, 0, 0, this->width(), this->height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
     xcb_image_t *ximg = xcb_image_get(QX11Info::connection(), pix, geom.x(), geom.y(), geom.width(), geom.height(), ~0, XCB_IMAGE_FORMAT_Z_PIXMAP);
-    if(ximg == 0){ qDebug() << "Got blank image!"; return; }
+    if(ximg == 0){ qDebug() << "Got blank image!"; return QImage(); }
     QImage tmp(ximg->data, ximg->width, ximg->height, ximg->stride, QImage::Format_ARGB32_Premultiplied);
     img = tmp.copy(); //detach this image from the XCB data structures before we clean them up, otherwise the QImage will try to clean it up a second time on window close and crash
     xcb_image_destroy(ximg);
@@ -654,7 +654,8 @@ void NativeWindowSystem::UpdateWindowImage(NativeWindowObject* win){
     //Cleanup the XCB data structures
     xcb_free_pixmap(QX11Info::connection(), pix);
   }
-  win->setProperty(NativeWindowObject::WinImage, QVariant::fromValue<QImage>(img) );
+  return img;
+  //win->setProperty(NativeWindowObject::WinImage, QVariant::fromValue<QImage>(img) );
 }
 
 // === PUBLIC SLOTS ===
@@ -942,12 +943,12 @@ void NativeWindowSystem::NewMouseRelease(int buttoncode, WId win){
 }
 
 void NativeWindowSystem::CheckDamageID(WId win){
-  qDebug() << "Got Damage Event:" << win;
+  //qDebug() << "Got Damage Event:" << win;
   for(int i=0; i<NWindows.length(); i++){
     if(NWindows[i]->damageId() == win || NWindows[i]->id() == win || NWindows[i]->frameId()==win){
-      qDebug() << " - Found window";
-      UpdateWindowImage(NWindows[i]);
-      NWindows[i]->emit VisualChanged();
+      //qDebug() << " - Found window";
+      //UpdateWindowImage(NWindows[i]);
+      NWindows[i]->emit winImageChanged();
       return;
     }
   }

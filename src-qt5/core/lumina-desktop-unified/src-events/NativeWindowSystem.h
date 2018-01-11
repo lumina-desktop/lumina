@@ -23,11 +23,6 @@ private:
 	QList<NativeWindowObject*> NWindows;
 	QList<NativeWindowObject*> TWindows;
 
-	//Simplifications to find an already-created window object
-	NativeWindowObject* findWindow(WId id, bool checkRelated = true);
-
-	NativeWindowObject* findTrayWindow(WId id);
-
 	//Now define a simple private_objects class so that each implementation
 	//  has a storage container for defining/placing private objects as needed
 	class p_objects;
@@ -51,20 +46,24 @@ private:
 	  }
 	}
 
-	// Since some properties may be easier to update in bulk
-	//   let the native system interaction do them in whatever logical groups are best
-	void UpdateWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props);
-	void ChangeWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props, QList<QVariant> vals);
-
-	void SetupNewWindow(NativeWindowObject *win);
-	void UpdateWindowImage(NativeWindowObject *win);
-
 	//Generic private variables
 	bool screenLocked;
 
 public:
 	//enum Property{ None, CurrentWorkspace, Workspaces, VirtualRoots, WorkAreas };
 	enum MouseButton{NoButton, LeftButton, RightButton, MidButton, BackButton, ForwardButton, TaskButton, WheelUp, WheelDown, WheelLeft, WheelRight};
+
+	//Simplifications to find an already-created window object
+	NativeWindowObject* findWindow(WId id, bool checkRelated = true);
+
+	NativeWindowObject* findTrayWindow(WId id);
+	// Since some properties may be easier to update in bulk
+	//   let the native system interaction do them in whatever logical groups are best
+	void UpdateWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props);
+	void ChangeWindowProperties(NativeWindowObject* win, QList< NativeWindowObject::Property > props, QList<QVariant> vals);
+
+	void SetupNewWindow(NativeWindowObject *win);
+	QImage GetWindowImage(NativeWindowObject *win);
 
 	NativeWindowSystem();
 	~NativeWindowSystem();
