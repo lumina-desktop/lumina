@@ -308,5 +308,8 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 }
 
 void NativeWindowObject::sendNewGeom(){
-requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << newgeom.topLeft() << newgeom.size());
+  QList<NativeWindowObject::Property> props; props << NativeWindowObject::GlobalPos << NativeWindowObject::Size;
+  QList<QVariant> vals; vals << newgeom.topLeft() << newgeom.size();
+  requestProperties(props, vals);
+  setProperties(props,vals);
 }
