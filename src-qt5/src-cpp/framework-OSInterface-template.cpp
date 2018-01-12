@@ -45,6 +45,11 @@ QString OSInterface::networkType(){
   return "";
 }
 
+QString OSInterface::networkTypeFromDeviceName(QString name){
+  //Return options: wifi, wired, cell, cell-2G, cell-3G, cell-4G
+  return "";
+}
+
 float OSInterface::networkStrength(){ return -1; } //percentage. ("wired" type should always be 100%)
 
 QString OSInterface::networkHostname(){
@@ -126,21 +131,21 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
     case QNetworkConfiguration::Bearer2G: type="cell-2G"; break;
     case QNetworkConfiguration::Bearer3G: type="cell-3G"; break;
     case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
-    default: type="";
+    default: type=networkTypeFromDeviceName(active.name()); //could not be auto-determined - run the OS-specific routine
   }
   INFO.insert("netaccess/type", type);
-  qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
+  //qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
   QNetworkInterface iface = QNetworkInterface::interfaceFromName(active.name());
-  qDebug() << " - Configuration: Name:" << active.name() << active.bearerTypeName() << active.identifier();
-  qDebug() << " - Interface: MAC Address:" << iface.hardwareAddress() << "Name:" << iface.name() << iface.humanReadableName() << iface.isValid();
+  //qDebug() << " - Configuration: Name:" << active.name() << active.bearerTypeName() << active.identifier();
+  //qDebug() << " - Interface: MAC Address:" << iface.hardwareAddress() << "Name:" << iface.name() << iface.humanReadableName() << iface.isValid();
   QList<QNetworkAddressEntry> addressList = iface.addressEntries();
   QStringList address;
   //NOTE: There are often 2 addresses, IPv4 and IPv6
   for(int i=0; i<addressList.length(); i++){
     address << addressList[i].ip().toString();
   }
-  qDebug() << " - IP Address:" << address;
-  qDebug() << " - Hostname:" << networkHostname();
+  //qDebug() << " - IP Address:" << address;
+  //qDebug() << " - Hostname:" << networkHostname();
   INFO.insert("netaccess/address", address.join(", "));
   emit networkStatusChanged();
 }

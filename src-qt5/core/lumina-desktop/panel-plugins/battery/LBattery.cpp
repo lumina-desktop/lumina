@@ -78,19 +78,20 @@ void LBattery::updateBattery(bool force){
         break;
     }
   }
-    if(icon<iconOld && icon==0){
-      //Play some audio warning chime when
-   bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
-   if( playaudio ){ QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
+  if(icon<iconOld && icon==0){
+    //Play some audio warning chime when
+    bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
+    if( playaudio ){
+      QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
       LSession::handle()->playAudioFile(sfile);
-      }
-
-    if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
-    else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
-    else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
-    iconOld = icon;
-
+    }
   }
+
+  if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
+  else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
+  else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
+  iconOld = icon;
+
   //Now update the display
   QString tt;
   //Make sure the tooltip can be properly translated as necessary (Ken Moore 5/9/14)

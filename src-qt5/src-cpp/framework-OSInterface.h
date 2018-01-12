@@ -76,11 +76,12 @@ public:
 	// = Network Information =
 	Q_INVOKABLE bool networkAvailable();
 	Q_INVOKABLE QString networkType(); //"wifi", "wired", "cell", "cell-2G", "cell-3G", "cell-4G"
+	Q_INVOKABLE QString networkTypeFromDeviceName(QString name); //wifi, wired, cell, cell-2G, cell-3G, cell-4G
 	Q_INVOKABLE float networkStrength(); //percentage. ("wired" type should always be 100%)
 	Q_INVOKABLE QString networkHostname();
 	Q_INVOKABLE QHostAddress networkAddress();
 	// = Network Modification =
-
+	
 	// = Media Shortcuts =
 	Q_INVOKABLE QStringList mediaDirectories(); //directory where XDG shortcuts are placed for interacting with media (local/remote)
 	Q_INVOKABLE QStringList mediaShortcuts(); //List of currently-available XDG shortcut file paths
