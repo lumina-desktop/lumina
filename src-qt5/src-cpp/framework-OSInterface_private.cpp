@@ -7,9 +7,6 @@
 // Internal, OS-agnostic functionality for managing the object itself
 //===========================================
 #include <framework-OSInterface.h>
-#include <QFile>
-#include <QDir>
-#include <QVariant>
 
 OSInterface::OSInterface(QObject *parent) : QObject(parent){
   watcher = 0;
@@ -63,6 +60,36 @@ void OSInterface::connectTimer(){
   connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()) );
 }
 
+bool OSInterface::verifyAppOrBin(QString chk){
+  bool valid = !chk.isEmpty();
+  if(valid && chk.endsWith(".desktop")){
+    chk  = LUtils::AppToAbsolute(chk);
+    valid = QFile::exists(chk);
+  }else if(valid){
+    valid = LUtils::isValidBinary(chk);
+  }
+  return valid;
+}
+
+// ===========================
+//  OS SPECIFIC EXISTANCE CHECKS
+// ===========================
+bool OSInterface::hasControlPanel(){
+  return verifyAppOrBin(controlPanelShortcut());
+}
+
+bool OSInterface::hasAudioMixer(){
+  return verifyAppOrBin(audioMixerShortcut());
+}
+
+bool OSInterface::hasAppStore(){
+  return verifyAppOrBin(appStoreShortcut());
+}
+
+// ========================
+//        MEDIA DIRECTORIES
+// ========================
+
 // External Media Management (if system uses *.desktop shortcuts)
 void OSInterface::setupMediaWatcher(){
   //Create/connect the watcher if needed
@@ -99,6 +126,9 @@ QStringList OSInterface::autoHandledMediaFiles(){
   return files;
 }
 
+// =============================
+//  NETWORK INTERFACE FUNCTIONS
+// =============================
 // Qt-based NetworkAccessManager usage
 void OSInterface::setupNetworkManager(){
   if(netman==0){
@@ -107,4 +137,60 @@ void OSInterface::setupNetworkManager(){
   }
   //Load the initial state of the network accessibility
   netAccessChanged(netman->networkAccessible());
+}
+
+bool OSInterface::networkAvailable(){
+  if(INFO.contains("netaccess/available")){ return INFO.value("netaccess/available").toBool(); }
+  return false;
+}
+
+QString OSInterface::networkType(){
+  if(INFO.contains("netaccess/type")){ return INFO.value("netaccess/type").toString(); } //"wifi", "wired", or "cell"
+  return "";
+}
+
+QString OSInterface::networkHostname(){
+  return QHostInfo::localHostName();
+}
+
+QHostAddress OSInterface::networkAddress(){
+  QString addr;
+  if(INFO.contains("netaccess/address")){ addr = INFO.value("netaccess/address").toString(); }
+  return QHostAddress(addr);
+}
+
+bool OSInterface::hasNetworkManager(){
+  return verifyAppOrBin(networkManagerUtility());
+}
+
+//NetworkAccessManager slots
+void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
+  INFO.insert("netaccess/available", stat== QNetworkAccessManager::Accessible);
+  //Update all the other network status info at the same time
+  QNetworkConfiguration active = netman->activeConfiguration();
+  //Type of connection
+  QString type;
+  switch(active.bearerTypeFamily()){
+    case QNetworkConfiguration::BearerEthernet: type="wired"; break;
+    case QNetworkConfiguration::BearerWLAN: type="wifi"; break;
+    case QNetworkConfiguration::Bearer2G: type="cell-2G"; break;
+    case QNetworkConfiguration::Bearer3G: type="cell-3G"; break;
+    case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
+    default: type=networkTypeFromDeviceName(active.name()); //could not be auto-determined - run the OS-specific routine
+  }
+  INFO.insert("netaccess/type", type);
+  //qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
+  QNetworkInterface iface = QNetworkInterface::interfaceFromName(active.name());
+  //qDebug() << " - Configuration: Name:" << active.name() << active.bearerTypeName() << active.identifier();
+  //qDebug() << " - Interface: MAC Address:" << iface.hardwareAddress() << "Name:" << iface.name() << iface.humanReadableName() << iface.isValid();
+  QList<QNetworkAddressEntry> addressList = iface.addressEntries();
+  QStringList address;
+  //NOTE: There are often 2 addresses, IPv4 and IPv6
+  for(int i=0; i<addressList.length(); i++){
+    address << addressList[i].ip().toString();
+  }
+  //qDebug() << " - IP Address:" << address;
+  //qDebug() << " - Hostname:" << networkHostname();
+  INFO.insert("netaccess/address", address.join(", "));
+  emit networkStatusChanged();
 }

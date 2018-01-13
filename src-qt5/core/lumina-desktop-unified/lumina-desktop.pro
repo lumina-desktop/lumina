@@ -24,6 +24,7 @@ include(../libLumina/ExternalProcess.pri)
 include(../libLumina/XDGMime.pri)
 
 include(../../src-cpp/plugins-base.pri)
+include(../../src-cpp/framework-OSInterface.pri)
 
 #include  all the main individual source groups
 include(src-events/events.pri)

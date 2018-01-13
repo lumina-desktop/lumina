@@ -129,6 +129,12 @@ private slots:
 	void RequestPing(WId);
 	void RequestReparent(WId, WId, QPoint); //client, parent, relative origin point in parent
 
+	//Window-mgmt functions (see Window-mgmt.cpp for details)
+	void ArrangeWindows(WId primary, QString type);
+	void TileWindows(WId primary, QString type);
+	void CheckWindowPosition(WId id, bool newwindow = false);
+	void arrangeWindows(NativeWindowObject *primary, QString type, bool primaryonly = false);
+
 signals:
 	void NewWindowAvailable(NativeWindowObject*);
 	void WindowClosed();

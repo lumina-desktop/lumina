@@ -5,7 +5,8 @@ LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damag
 SOURCES *= $${PWD}/LShortcutEvents.cpp \
 		$${PWD}/NativeEventFilter.cpp \
 		$${PWD}/NativeKeyToQt.cpp \
-		$${PWD}/NativeWindowSystem.cpp
+		$${PWD}/NativeWindowSystem.cpp \
+		$${PWD}/Window-mgmt.cpp
 
 
 HEADERS *= $${PWD}/LShortcutEvents.h \

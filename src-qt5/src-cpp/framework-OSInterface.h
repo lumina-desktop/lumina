@@ -18,6 +18,9 @@
 #include <QVariant>
 #include <QHash>
 #include <QTimer>
+#include <QFile>
+#include <QDir>
+#include <QVariant>
 
 #include <QIODevice>
 #include <QFileSystemWatcher>
@@ -26,6 +29,11 @@
 #include <QSslError>
 #include <QHostInfo>
 #include <QHostAddress>
+#include <QNetworkConfiguration>
+#include <QNetworkInterface>
+
+//Lumina Utils class
+#include <LUtils.h>
 
 class OSInterface : public QObject{
 	Q_OBJECT
@@ -81,7 +89,9 @@ public:
 	Q_INVOKABLE QString networkHostname();
 	Q_INVOKABLE QHostAddress networkAddress();
 	// = Network Modification =
-	
+	Q_INVOKABLE bool hasNetworkManager();
+	Q_INVOKABLE QString networkManagerUtility(); //binary name or *.desktop filename (if registered on the system)
+
 	// = Media Shortcuts =
 	Q_INVOKABLE QStringList mediaDirectories(); //directory where XDG shortcuts are placed for interacting with media (local/remote)
 	Q_INVOKABLE QStringList mediaShortcuts(); //List of currently-available XDG shortcut file paths
@@ -126,6 +136,7 @@ private slots:
 	// ================
 	// SEMI-VIRTUAL FUNCTIONS - NEED TO BE DEFINED IN THE OS-SPECIFIC FILES
 	// ================
+
 	//FileSystemWatcher slots
 	void watcherFileChanged(QString);
 	void watcherDirChanged(QString);
@@ -173,6 +184,9 @@ private:
 	void connectNetman(); //setup the internal connections *only*
 	void connectTimer(); //setup the internal connections *only*
 
+	//Internal simplification routines
+	bool verifyAppOrBin(QString chk);
+
 	// External Media Management (if system uses *.desktop shortcuts only)
 	void setupMediaWatcher();
 	bool handleMediaDirChange(QString dir); //returns true if directory was handled
@@ -180,6 +194,11 @@ private:
 
 	// Qt-based NetworkAccessManager usage
 	void setupNetworkManager();
+	//void setupBatteryMonitor(int update_ms);
+	//void setupUpdateMonitor(int update_ms);
+	//void setupBrightnessMonitor(int update_ms);
+	//void setupVolumeMonitor(int update_ms);
+	//void 
 
 public:
 	OSInterface(QObject *parent = 0);

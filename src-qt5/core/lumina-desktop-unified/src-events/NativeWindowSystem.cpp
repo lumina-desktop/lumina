@@ -784,15 +784,19 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   registerClientEvents(win->id());
   NWindows << win;
   UpdateWindowProperties(win, NativeWindowObject::allProperties());
-  win->setProperty(NativeWindowObject::FrameExtents, QVariant::fromValue<QList<int> >( QList<int>() << 5 << 5 << 30 << 5 ));
+  if(win->showWindowFrame()){
+    win->setProperty(NativeWindowObject::FrameExtents, QVariant::fromValue<QList<int> >( QList<int>() << 5 << 5 << 30 << 5 ));
+  }
   qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindowObject::Name).toString();
   SetupNewWindow(win);
+  CheckWindowPosition(id, true); //first time placement
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
   connect(win, SIGNAL(RequestPing(WId)), this, SLOT(RequestPing(WId)) );
   connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
   connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
+  connect(win, SIGNAL(VerifyNewGeometry(WId)), this, SLOT(CheckWindowPosition(WId)) );
   xcb_map_window(QX11Info::connection(), win->id());
   emit NewWindowAvailable(win);
 }
