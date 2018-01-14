@@ -5,24 +5,6 @@
 //  See the LICENSE file for full details
 //===========================================
 #include <framework-OSInterface.h>
-#include <QNetworkConfiguration>
-#include <QNetworkInterface>
-
-//Start/stop interface watchers/notifications
-void OSInterface::start(){
-  setupMediaWatcher(); //will create/connect the filesystem watcher automatically
-  setupNetworkManager(); //will create/connect the network monitor automatically
-
-}
-
-void OSInterface::stop(){
-  if(isRunning()){
-    watcher->deleteLater();
-    watcher = 0;
-  }
-}
-
-bool OSInterface::isRunning(){ return (watcher!=0); } //status of the object - whether it has been started yet
 
 // = Battery =
 bool OSInterface::batteryAvailable(){ return false; }
@@ -31,7 +13,7 @@ bool OSInterface::batteryCharging(){ return false; }
 double OSInterface::batterySecondsLeft(){ return -1; }
 
 // = Volume =
-bool OSInterface::volumeAvailable(){ return false; }
+bool OSInterface::volumeSupported(){ return false; }
 int OSInterface::volume(){ return -1; }
 void OSInterface::setVolume(int){}
 
@@ -51,6 +33,7 @@ QStringList OSInterface::mediaDirectories(){ return QStringList() << "/media"; }
 QStringList OSInterface::mediaShortcuts(){ return autoHandledMediaFiles(); } //List of currently-available XDG shortcut file paths
 
 // = Updates =
+bool OSInterface::updatesSupported(){ return false; }
 bool OSInterface::updatesAvailable(){ return false; }
 QString OSInterface::updateDetails(){ return QString(); }	//Information about any available updates
 bool OSInterface::updatesRunning(){ return false; }
@@ -59,6 +42,7 @@ bool OSInterface::updatesFinished(){ return false; }
 QString OSInterface::updateResults(){ return QString(); }	//Information about any finished update
 void OSInterface::startUpdates(){}
 bool OSInterface::updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
+bool OSInterface::updateCausesReboot(){ return false; }
 QDateTime OSInterface::lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
 QString OSInterface::lastUpdateResults(){ return QString(); } //Information about the previously-finished update
 
@@ -71,15 +55,21 @@ bool OSInterface::canSuspend(){ return false; }
 void OSInterface::startSuspend(){}
 
 // = Screen Brightness =
+bool OSInterface::brightnessSupported(){ return false; }
 int OSInterface::brightness(){ return -1; } //percentage: 0-100 with -1 for errors
 void OSInterface::setBrightness(int){}
 
 // = System Status Monitoring
+bool OSInterface::cpuSupported(){ return false; }
 QList<int> OSInterface::cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
 QStringList OSInterface::cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
+
+bool OSInterface::memorySupported(){ return false; }
 int OSInterface::memoryUsedPercentage(){ return -1; } //percentage: 0-100 with -1 for errors
 QString OSInterface::memoryTotal(){ return QString(); } //human-readable form - does not tend to change within a session
 QStringList OSInterface::diskIO(){ return QStringList(); } //Returns list of current read/write stats for each device
+
+bool OSInterface::diskSupported(){ return false; }
 int OSInterface::fileSystemPercentage(QString dir){ return -1; } //percentage of capacity used: 0-100 with -1 for errors
 QString OSInterface::fileSystemCapacity(QString dir){ return QString(); } //human-readable form - total capacity
 
@@ -101,4 +91,3 @@ void OSInterface::iodeviceAboutToClose(){}
 
 void OSInterface::netRequestFinished(QNetworkReply*){}
 void OSInterface::netSslErrors(QNetworkReply*, const QList<QSslError>&){}
-void OSInterface::timerUpdate(){}
