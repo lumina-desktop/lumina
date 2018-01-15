@@ -92,6 +92,7 @@ public:
 	void requestProperties(QList<NativeWindowObject::Property>, QList<QVariant>, bool force = false);
 
 	Q_INVOKABLE QRect geometry(); //this returns the "full" geometry of the window (window + frame)
+	void setGeometryNow(QRect geom);
 
 	// QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
 	Q_INVOKABLE QString winImage();
@@ -113,7 +114,7 @@ public:
 	//QML Geometry reporting
 	Q_INVOKABLE QRect frameGeometry();
 	Q_INVOKABLE QRect imageGeometry();
-	Q_INVOKABLE void updateGeometry(int x, int y, int width, int height); //For QML to change the current window position
+	Q_INVOKABLE void updateGeometry(int x, int y, int width, int height, bool now = false); //For QML to change the current window position
 
 public slots:
 	Q_INVOKABLE void toggleVisibility();

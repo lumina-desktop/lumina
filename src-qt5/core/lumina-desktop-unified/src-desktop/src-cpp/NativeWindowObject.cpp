@@ -130,6 +130,10 @@ QRect NativeWindowObject::geometry(){
   return geom;
 }
 
+void NativeWindowObject::setGeometryNow(QRect geom){
+  updateGeometry(geom.x(), geom.y(), geom.width(), geom.height(), true);
+}
+
 // QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
 QString NativeWindowObject::winImage(){
   //Need to alternate something on the end to ensure that QML knows to fetch the new image (non-cached only)
@@ -252,16 +256,21 @@ QRect NativeWindowObject::imageGeometry(){
   return geom;
 }
 
-void NativeWindowObject::updateGeometry(int x, int y, int width, int height){
+void NativeWindowObject::updateGeometry(int x, int y, int width, int height, bool now){
   // Full frame+window geometry - go ahead and pull it apart and only update the interior window geom
   QList<int> fgeom = this->property(NativeWindowObject::FrameExtents).value<QList<int> >();
   if(fgeom.isEmpty()){ fgeom << 0<<0<<0<<0; } //just in case (left/right/top/bottom)
   QPoint pos(x+fgeom[0], y+fgeom[2]);
   QSize sz(width-fgeom[0]-fgeom[1], height-fgeom[2]-fgeom[3]);
-  newgeom = QRect(pos, sz);
-  //qDebug() << "Update Geometry:" << fgeom << QRect(x,y,width,height) << pos << sz;
-  //requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << pos << sz);
-  if(!geomTimer->isActive()){ geomTimer->start(); }
+  if(!now){
+    newgeom = QRect(pos, sz);
+    //qDebug() << "Update Geometry:" << fgeom << QRect(x,y,width,height) << pos << sz;
+    //requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << pos << sz);
+    if(!geomTimer->isActive()){ geomTimer->start(); }
+  }else{
+   requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size , QList<QVariant>() << pos << sz );
+   setProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size , QList<QVariant>() << pos << sz );
+  }
 }
 
 // ==== PUBLIC SLOTS ===
@@ -308,5 +317,8 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 }
 
 void NativeWindowObject::sendNewGeom(){
-requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << newgeom.topLeft() << newgeom.size());
+  QList<NativeWindowObject::Property> props; props << NativeWindowObject::GlobalPos << NativeWindowObject::Size;
+  QList<QVariant> vals; vals << newgeom.topLeft() << newgeom.size();
+  requestProperties(props, vals);
+  setProperties(props,vals);
 }
