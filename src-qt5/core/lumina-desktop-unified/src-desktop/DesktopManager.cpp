@@ -84,10 +84,6 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
   RootDesktopObject::instance()->ChangeWallpaper(screen_id,QUrl::fromLocalFile(wpaper).toString() );
 }
 
-void DesktopManager::updatePanels(QString panel_id){
-
-}
-
 void DesktopManager::updatePlugins(QString plugin_id){
 
 }
@@ -103,13 +99,13 @@ void DesktopManager::settingsChanged(DesktopSettings::File type){
 	case DesktopSettings::Desktop:
 	  QTimer::singleShot(0, this, SLOT(updateDesktopSettings()) );
 	case DesktopSettings::Panels:
-	  QTimer::singleShot(0, this, SLOT(updatePanelSettings()) );
+	  QTimer::singleShot(1, this, SLOT(updatePanelSettings()) );
 	case DesktopSettings::Plugins:
-	  QTimer::singleShot(0, this, SLOT(updatePluginSettings()) );
+	  QTimer::singleShot(2, this, SLOT(updatePluginSettings()) );
 	case DesktopSettings::ContextMenu:
-	  QTimer::singleShot(0, this, SLOT(updateMenuSettings()) );
+	  QTimer::singleShot(3, this, SLOT(updateMenuSettings()) );
 	case DesktopSettings::Animation:
-	  QTimer::singleShot(0, this, SLOT(updateAnimationSettings()) );
+	  QTimer::singleShot(4, this, SLOT(updateAnimationSettings()) );
 	default:
 	  break;
 	  //Do nothing - not a settings change we care about here
@@ -148,14 +144,28 @@ void DesktopManager::syncTrayWindowList(){
 // === PRIVATE SLOTS ===
 void DesktopManager::updateDesktopSettings(){
   qDebug() << "Update Desktop Settings...";
-  QList<QScreen*> scrns= QApplication::screens();
+  QList<QScreen*> scrns = QGuiApplication::screens();
   int wkspace = Lumina::NWS->currentWorkspace();
   for(int i=0; i<scrns.length(); i++){ updateWallpaper(scrns[i]->name(), wkspace); }
 
 }
 
 void DesktopManager::updatePanelSettings(){
-
+  QList<QScreen*> scrns = QGuiApplication::screens();
+  int primary = QApplication::desktop()->primaryScreen();
+  for(int i=0; i<scrns.length(); i++){
+    ScreenObject *sObj = RootDesktopObject::instance()->screen(scrns[i]->name());
+    if(sObj == 0){ continue; } //screen is not managed directly - skip it
+    QStringList ids = DesktopSettings::instance()->value(DesktopSettings::Panels, scrns[i]->name().replace("-","_")+"/active_ids", QStringList()).toStringList();
+    if(ids.isEmpty() && (scrns.length()==1 || i==primary)){
+      //Also look for the "default" panel id's for the primary/default screen
+      ids = DesktopSettings::instance()->value(DesktopSettings::Panels, "default/active_ids", QStringList()).toStringList();
+    }
+    sObj->setPanels(ids);
+  }
+  //Now do the global-session panels
+  QStringList ids = DesktopSettings::instance()->value(DesktopSettings::Panels, "session/active_ids", QStringList()).toStringList();
+  RootDesktopObject::instance()->setPanels(ids); //put the new ones in place
 }
 
 void DesktopManager::updatePluginSettings(){

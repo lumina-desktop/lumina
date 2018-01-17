@@ -21,7 +21,7 @@ class NativeWindowObject : public QObject{
 	Q_PROPERTY( QString name READ name NOTIFY nameChanged)
 	Q_PROPERTY( QString title READ title NOTIFY titleChanged)
 	Q_PROPERTY( QString shortTitle READ shortTitle NOTIFY shortTitleChanged)
-	Q_PROPERTY( QIcon icon READ icon NOTIFY iconChanged)
+	Q_PROPERTY( QString icon READ icon NOTIFY iconChanged)
 	Q_PROPERTY( bool sticky READ isSticky NOTIFY stickyChanged)
 	//Button/Titlebar visibility
 	Q_PROPERTY( bool showCloseButton READ showCloseButton NOTIFY winTypeChanged)
@@ -38,6 +38,8 @@ public:
 	enum State{ S_MODAL, S_STICKY, S_MAX_VERT, S_MAX_HORZ, S_SHADED, S_SKIP_TASKBAR, S_SKIP_PAGER, S_HIDDEN, S_FULLSCREEN, S_ABOVE, S_BELOW, S_ATTENTION };
 	enum Type{T_DESKTOP, T_DOCK, T_TOOLBAR, T_MENU, T_UTILITY, T_SPLASH, T_DIALOG, T_DROPDOWN_MENU, T_POPUP_MENU, T_TOOLTIP, T_NOTIFICATION, T_COMBO, T_DND, T_NORMAL };
 	enum Action {A_MOVE, A_RESIZE, A_MINIMIZE, A_SHADE, A_STICK, A_MAX_VERT, A_MAX_HORZ, A_FULLSCREEN, A_CHANGE_DESKTOP, A_CLOSE, A_ABOVE, A_BELOW};
+  enum Location { TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT };
+  Q_ENUM(Location)
 
 	enum Property{ 	 /*QVariant Type*/
 		None=0, 		/*null*/
@@ -90,13 +92,14 @@ public:
 	void requestProperties(QList<NativeWindowObject::Property>, QList<QVariant>, bool force = false);
 
 	Q_INVOKABLE QRect geometry(); //this returns the "full" geometry of the window (window + frame)
+	void setGeometryNow(QRect geom);
 
 	// QML ACCESS FUNCTIONS (shortcuts for particular properties in a format QML can use)
 	Q_INVOKABLE QString winImage();
 	Q_INVOKABLE QString name();
 	Q_INVOKABLE QString title();
 	Q_INVOKABLE QString shortTitle();
-	Q_INVOKABLE QIcon icon();
+	Q_INVOKABLE QString icon();
 	//QML Button states
 	Q_INVOKABLE bool showCloseButton();
 	Q_INVOKABLE bool showMaxButton();
@@ -111,6 +114,7 @@ public:
 	//QML Geometry reporting
 	Q_INVOKABLE QRect frameGeometry();
 	Q_INVOKABLE QRect imageGeometry();
+	Q_INVOKABLE void updateGeometry(int x, int y, int width, int height, bool now = false); //For QML to change the current window position
 
 public slots:
 	Q_INVOKABLE void toggleVisibility();
@@ -123,9 +127,15 @@ private:
 	//QWindow *WIN;
 	WId winid, frameid;
 	QList<WId> relatedTo;
-	unsigned int dmgID;
+	unsigned int dmgID, dmg, icodmg;
+	//Collation/Delay for window resize events
+	QTimer *geomTimer;
+	QRect newgeom;
 
 	void emitSinglePropChanged(NativeWindowObject::Property);
+
+private slots:
+	void sendNewGeom();
 
 signals:
 	//General Notifications
@@ -133,7 +143,6 @@ signals:
 	void RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>);
 	void WindowClosed(WId);
 	void WindowNotResponding(WId); //will be sent out if a window does not respond to a ping request
-	void VisualChanged();
 
 	//Action Requests (not automatically emitted - typically used to ask the WM to do something)
 	//Note: "WId" should be the NativeWindowObject id()

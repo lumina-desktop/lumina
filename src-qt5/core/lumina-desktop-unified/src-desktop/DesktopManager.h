@@ -23,7 +23,6 @@ public:
 
 private:
 	void updateWallpaper(QString screen_id, int wkspace);
-	void updatePanels(QString panel_id);
 	void updatePlugins(QString plugin_id);
 
 public slots:

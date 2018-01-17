@@ -10,15 +10,13 @@ import QtQuick.Controls 1
 
 import Lumina.Backend.PanelObject 2.0
 
-AnimatedImage {
+Rectangle {
     //C++ backend object
-    property string screen_id
+    property string panel_id
     property PanelObject object
 
     //Normal geometries/placements
-    asynchronous: true
-    clip: true
-    source: object.background
+    color: object.background
     x: object.x
     y: object.y
     width: object.width

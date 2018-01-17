@@ -114,7 +114,10 @@ void Backend::startAdd(QStringList paths,  bool absolutePaths){
       paths[i] = paths[i].section(parent,1,-1);
       if(paths[i].startsWith("/")){ paths[i].remove(0,1); }
     }
-    args << "-C" << parent; }
+    args << "-C" << parent;
+  }else{
+    args << "-C" << "/";
+  }
   args << paths;
   if(QFile::exists(filepath)){ //append to existing
     args.replaceInStrings(filepath, tmpfilepath);

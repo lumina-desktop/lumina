@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "RootWindow.h"
+#include "QMLImageProvider.h"
+#include <QQmlImageProviderBase>
 
 RootWindow::RootWindow() : QObject(){
   root_win = QWindow::fromWinId( QX11Info::appRootWindow() ); //
@@ -16,6 +18,8 @@ RootWindow::RootWindow() : QObject(){
   //Now setup the QQuickView
   root_view->setResizeMode(QQuickView::SizeRootObjectToView);
   root_view->engine()->rootContext()->setContextProperty("RootObject", root_obj);
+  root_view->engine()->addImageProvider("native_window", new QMLImageProvider(QQmlImageProviderBase::Image) );
+  //root_view->engine()->addImageProvider("native_window_icon", new QMLImageProvider(QQmlImageProviderBase::Pixmap) );
   RootDesktopObject::RegisterType(); //make sure object classes are registered with the QML subsystems
 }
 

@@ -66,4 +66,14 @@ Rectangle {
       z: 100+index
     }
   }
+
+  //Setup the Panels
+  Repeater{
+    model: RootObject.panels
+    QML.Panel{
+      panel_id: modelData
+      object: RootObject.panel(panel_id)
+      z: 10100+index
+    }
+  }
 }
