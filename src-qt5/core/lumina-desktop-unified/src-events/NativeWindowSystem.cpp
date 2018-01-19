@@ -629,9 +629,10 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
 }
 
 QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
-  QImage img;
   //qDebug() << "Update Window Image:" << win->name();
   QRect geom(QPoint(0,0), win->property(NativeWindowObject::Size).toSize());
+  QImage img; //(geom.width(), geom.height(), QImage::Format_ARGB32);
+  //img.fill(QGuiApplication::palette().window());
   if(DISABLE_COMPOSITING){
     QList<QScreen*> screens = static_cast<QApplication*>( QApplication::instance() )->screens();
     if(!screens.isEmpty()){
