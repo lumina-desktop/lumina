@@ -153,19 +153,32 @@ void DesktopManager::updateDesktopSettings(){
 void DesktopManager::updatePanelSettings(){
   QList<QScreen*> scrns = QGuiApplication::screens();
   int primary = QApplication::desktop()->primaryScreen();
+  qDebug() << "Panel  Settings Changed:" << primary << scrns.length();
+  QStringList total_ids;
   for(int i=0; i<scrns.length(); i++){
+    //qDebug() << " - Check Screen Name:" << scrns[i]->name();
     ScreenObject *sObj = RootDesktopObject::instance()->screen(scrns[i]->name());
     if(sObj == 0){ continue; } //screen is not managed directly - skip it
     QStringList ids = DesktopSettings::instance()->value(DesktopSettings::Panels, scrns[i]->name().replace("-","_")+"/active_ids", QStringList()).toStringList();
     if(ids.isEmpty() && (scrns.length()==1 || i==primary)){
+      //qDebug() << "  --  PRIMARY";
       //Also look for the "default" panel id's for the primary/default screen
       ids = DesktopSettings::instance()->value(DesktopSettings::Panels, "default/active_ids", QStringList()).toStringList();
     }
-    sObj->setPanels(ids);
+    ids.removeAll("");
+    //qDebug() << " -- settings:" << ids;
+    for(int j=0; j<ids.length(); j++){
+      total_ids << scrns[i]->name()+"/"+ids[j];
+    }
   }
   //Now do the global-session panels
   QStringList ids = DesktopSettings::instance()->value(DesktopSettings::Panels, "session/active_ids", QStringList()).toStringList();
-  RootDesktopObject::instance()->setPanels(ids); //put the new ones in place
+  ids.removeAll("");
+  for(int i=0; i<ids.length(); i++){
+      total_ids << "session/"+ids[i];
+  }
+  //qDebug() << "Panel Settings Changed:" << total_ids;
+  RootDesktopObject::instance()->setPanels(total_ids); //put the new ones in place
 }
 
 void DesktopManager::updatePluginSettings(){

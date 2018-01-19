@@ -788,8 +788,6 @@ void NativeWindowSystem::NewWindowDetected(WId id){
     win->setProperty(NativeWindowObject::FrameExtents, QVariant::fromValue<QList<int> >( QList<int>() << 5 << 5 << 30 << 5 ));
   }
   qDebug() << "New Window [& associated ID's]:" << win->id()  << win->property(NativeWindowObject::Name).toString();
-  SetupNewWindow(win);
-  CheckWindowPosition(id, true); //first time placement
   //Now setup the connections with this window
   connect(win, SIGNAL(RequestClose(WId)), this, SLOT(RequestClose(WId)) );
   connect(win, SIGNAL(RequestKill(WId)), this, SLOT(RequestKill(WId)) );
@@ -797,6 +795,8 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
   connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
   connect(win, SIGNAL(VerifyNewGeometry(WId)), this, SLOT(CheckWindowPosition(WId)) );
+  SetupNewWindow(win);
+  CheckWindowPosition(id, true); //first time placement
   xcb_map_window(QX11Info::connection(), win->id());
   emit NewWindowAvailable(win);
 }
@@ -831,22 +831,22 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindowObject *win = findWindow(id, false);
+  if(win==0){ win = findWindow(id, true); }
   //qDebug() << "Got Window Closed" << id << win;
   //qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
     NWindows.removeAll(win);
-    //RequestReparent(id, QX11Info::appRootWindow(), QPoint(0,0));
     win->emit WindowClosed(id);
     //qDebug() << "Visible Window Closed!!!";
-    //win->deleteLater();
     emit WindowClosed();
+    win->deleteLater();
   }else{
     win = findTrayWindow(id);
     if(win!=0){
       TWindows.removeAll(win);
       win->emit WindowClosed(id);
-      win->deleteLater();
       emit TrayWindowClosed();
+      win->deleteLater();
     }
   }
   //qDebug() << " - Now:" << NWindows.length();
