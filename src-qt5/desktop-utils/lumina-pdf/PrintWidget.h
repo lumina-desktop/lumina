@@ -131,6 +131,7 @@ public:
 signals:
 	void resized();
 	void customContextMenuRequested(const QPoint&);
+	void currentPageChanged();
 
 public slots:
 	void zoomIn(double factor=1.2);

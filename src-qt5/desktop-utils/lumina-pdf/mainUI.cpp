@@ -31,9 +31,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 1;
   lastdir = QDir::homePath();
   //Create the interface widgets
-  WIDGET = new PrintWidget(this);
+  WIDGET = new PrintWidget(this->centralWidget());
   WIDGET->setVisible(false);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -42,6 +43,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     label_clock->setAlignment(Qt::AlignCenter );
     label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
+
+  label_page = new QLabel(this);
+    label_page->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    label_page->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   //Context Menu
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
@@ -49,9 +54,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->bookmarksFrame->setParent(WIDGET);
   ui->findGroup->setParent(WIDGET);
   qDebug() << "Setting central widget";
-  this->setCentralWidget(WIDGET);
+  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET); //setCentralWidget(WIDGET);
+  ui->label_replaceme->setVisible(false);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
+  connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 
@@ -67,6 +74,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     progAct->setVisible(false);
   clockAct = ui->toolBar->addWidget(label_clock);
     clockAct->setVisible(false);
+  pageAct = ui->toolBar->addWidget(label_page);
+    pageAct->setVisible(false);
 
   //Put the various actions into logical groups
   QActionGroup *tmp = new QActionGroup(this);
@@ -115,7 +124,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     [&] { find(ui->textEdit->text(), true); });
   connect(ui->findPrevB,  &QPushButton::clicked, this,
     [&] { find(ui->textEdit->text(), false); });
-  connect(ui->matchCase, &QPushButton::clicked, this, 
+  connect(ui->matchCase, &QPushButton::clicked, this,
     [&] (bool value) { this->matchCase = value; });
   connect(ui->closeFind, &QPushButton::clicked, this,
     [&] { ui->findGroup->setVisible(false); this->setFocus(); });
@@ -123,7 +132,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     [&] { WIDGET->updatePreview(); });
   connect(ui->actionBookmarks, SIGNAL(triggered()), this, SLOT(showBookmarks()));
 
-  qDebug() << "Finished connctions";
+  //qDebug() << "Finished connctions";
 
   //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
   //int lastP = numPages-1;
@@ -190,7 +199,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 }
 
 MainUI::~MainUI(){
-
 }
 
 void MainUI::loadFile(QString path){
@@ -303,7 +311,7 @@ void MainUI::startPresentation(bool atStart){
   bool cancelled = false;
   QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
   if(cancelled){ return;}
-  int page = 0;
+  int page = 1;
   if(!atStart){ page = WIDGET->currentPage(); }
   //PDPI = QSize(SCALEFACTOR*screen->physicalDotsPerInchX(), SCALEFACTOR*screen->physicalDotsPerInchY());
   //Now create the full-screen window on the selected screen
@@ -324,6 +332,7 @@ void MainUI::startPresentation(bool atStart){
   ui->actionStart_Here->setEnabled(false);
   ui->actionStart_Begin->setEnabled(false);
   updateClock();
+  updatePageNumber();
   clockAct->setVisible(true);
   clockTimer->start();
   QApplication::processEvents();
@@ -369,6 +378,7 @@ void MainUI::endPresentation(){
   clockTimer->stop();
   clockAct->setVisible(false);
   this->releaseKeyboard();
+  updatePageNumber();
 }
 
 void MainUI::startLoadingPages(){
@@ -380,17 +390,18 @@ void MainUI::startLoadingPages(){
   progress->setRange(0,numPages);
   progress->setValue(0);
   progAct->setVisible(true);
-
+  pageAct->setVisible(false);
   //PERFORMANCE NOTES:
   // Using Poppler to scale the image (adjust dpi value) helps a bit but you take a larger CPU loading hit (and still quite a lot of pixelization)
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  double scalefactor = 2.0;
+  double scalefactor = 2.5;
   QSizeF pageSize = DOC->page(0)->pageSizeF()*scalefactor;
   //QSize DPI(loadingHash[0]->resolution(),loadingHash[0]->resolution());
-  QSize DPI(76,76);
-  DPI = DPI*(scalefactor+1); //need this a bit higher than the page scaling
+  //QSize DPI(76,76);
+  //DPI = DPI*(scalefactor+1); //need this a bit higher than the page scaling
+  QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
@@ -419,6 +430,7 @@ void MainUI::slotPageLoaded(int page){
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
+    pageAct->setVisible(true);
   }else{
     progress->setValue(finished);
   }
@@ -431,6 +443,14 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
+  qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
+  return;
+  if(PRINTER->resolution() < 300){
+    //Try to get 300 DPI resolution at least
+    PRINTER->setResolution(300);
+    qDebug() << "Trying to change print resolution to 300 minimum";
+    qDebug() << "  -- Resolutions listed as supported:" << PRINTER->supportedResolutions();
+  }
   //bool duplex = (PRINTER->duplex()!=QPrinter::DuplexNone);
   //Determine the first page that needs to be printed, and the range
   if((PRINTER->fromPage() != PRINTER->toPage() || PRINTER->fromPage()!=0 ) && PRINTER->printRange()==QPrinter::PageRange ){
@@ -467,6 +487,11 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   if(landscape){ sz = QSize(sz.height(), sz.width() ); } //flip the size dimensions as needed
   //Now send out the pages in the right order/format
   QPainter painter(PRINTER);
+    //Ensure all the antialiasing/smoothing options are turned on
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+
   QTransform transF;
   transF.rotate(90);
   //Show the progress bar
@@ -492,6 +517,13 @@ void MainUI::OpenNewFile(){
 
 void MainUI::updateClock(){
   label_clock->setText( QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>") );
+}
+
+void MainUI::updatePageNumber(){
+  QString text;
+  if(presentationLabel==0 || !presentationLabel->isVisible()){ text = tr("Page %1 of %2"); }
+  else{ text = "%1/%2"; }
+  label_page->setText( text.arg( QString::number(WIDGET->currentPage()), QString::number(numPages) ));
 }
 
 void MainUI::setScroll(bool tog) {

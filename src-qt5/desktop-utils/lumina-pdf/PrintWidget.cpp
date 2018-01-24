@@ -36,10 +36,12 @@ PrintWidget::~PrintWidget() {
 
 void PrintWidget::fitView() {
   setZoomMode(FitInView);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::fitToWidth() {
   setZoomMode(FitToWidth);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::setZoomMode(ZoomMode mode) {
@@ -103,6 +105,7 @@ void PrintWidget::setVisible(bool visible) {
 void PrintWidget::setCurrentPage(int pageNumber) {
 	if(pageNumber < 0 || pageNumber > (pages.count()+1) ){ return; }
 	publicPageNum = pageNumber; //publicly requested page number (+/- 1 from actual page range)
+	emit currentPageChanged();
 	if(pageNumber < 1 || pageNumber > pages.count())
 		return;
 	int lastPage = curPage;
@@ -134,6 +137,7 @@ void PrintWidget::generatePreview() {
 	layoutPages();
 	curPage = qBound(1, curPage, pages.count());
 	publicPageNum = curPage;
+	emit currentPageChanged();
 	if (fitting){ fit(); }
 }
 
@@ -196,6 +200,7 @@ void PrintWidget::updateCurrentPage() {
 	if (newPage != curPage) {
 		curPage = newPage;
 		publicPageNum = curPage;
+		emit currentPageChanged();
 	}
 }
 

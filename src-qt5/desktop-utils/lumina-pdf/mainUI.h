@@ -40,12 +40,12 @@ private:
 	Poppler::Document *DOC;
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
-  PropDialog *PROPDIALOG;
+	PropDialog *PROPDIALOG;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
-  bool matchCase;
-  QMap<Poppler::TextBox*, int> results;
-  int currentHighlight;
+	bool matchCase;
+	QMap<Poppler::TextBox*, int> results;
+	int currentHighlight;
 
 	//Other Interface elements
 	QProgressBar *progress;
@@ -53,8 +53,8 @@ private:
 	QTimer *clockTimer;
 	QMenu *contextMenu;
 	//QFrame *frame_presenter;
-	QLabel *label_clock;
-	QAction *clockAct;
+	QLabel *label_clock, *label_page;
+	QAction *clockAct, *pageAct;
 
 	//PDF Page Loading cache variables
 	QHash<int, QImage> loadingHash;
@@ -95,11 +95,13 @@ private slots:
 
 	//Other interface slots
 	void updateClock();
+	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
 
 	void setScroll(bool);
 	void rotate(bool);
+
 
 signals:
 	void PageLoaded(int);
@@ -108,5 +110,9 @@ protected:
 	void keyPressEvent(QKeyEvent*);
 	void wheelEvent(QWheelEvent*);
 	void resizeEvent(QResizeEvent*);
+	void closeEvent(QCloseEvent *ev){
+	  endPresentation();
+	  QMainWindow::closeEvent(ev);
+	}
 };
 #endif
