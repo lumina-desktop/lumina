@@ -73,21 +73,20 @@ private:
 private slots:
 	void startLoadingPages();
 	void slotPageLoaded(int);
-  //void slotStartPresentation(QAction *act);
 
 	//Simplification routines
-	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
-	void prevPage(){ ShowPage( WIDGET->currentPage()-2 ); } //currentPage() starts at 1 rather than 0
-	void firstPage(){ ShowPage(0); }
-	void lastPage(){ ShowPage(numPages-1); }
+	void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
+	void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
+	void firstPage(){ ShowPage(1); }
+	void lastPage(){ ShowPage(numPages); }
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
 
-  void showInformation();
-  void find(QString text, bool forward);
-  void enableFind();
-  void showBookmarks();
+	void showInformation();
+	void find(QString text, bool forward);
+	void enableFind();
+	void showBookmarks();
 
 	void paintToPrinter(QPrinter *PRINTER);
 
@@ -99,15 +98,15 @@ private slots:
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
 
-  void setScroll(bool);
-  void rotate(bool);
+	void setScroll(bool);
+	void rotate(bool);
 
 signals:
 	void PageLoaded(int);
 
 protected:
-  void keyPressEvent(QKeyEvent*);	
-  void wheelEvent(QWheelEvent*);
-  void resizeEvent(QResizeEvent*);
+	void keyPressEvent(QKeyEvent*);
+	void wheelEvent(QWheelEvent*);
+	void resizeEvent(QResizeEvent*);
 };
 #endif
