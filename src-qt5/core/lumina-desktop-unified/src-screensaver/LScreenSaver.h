@@ -21,9 +21,10 @@ public:
 	bool isLocked();
 
 private:
-	QTimer *starttimer, *locktimer, *hidetimer;
+	QTimer *starttimer, *locktimer, *hidetimer, *mouseCheckTimer;
 	QList<SSBaseWidget*> BASES;
 	LLockScreen *LOCKER;
+	QPoint lastMousePos;
 	int cBright;
 	bool SSRunning, SSLocked, updating;
 
@@ -36,6 +37,7 @@ public slots:
 	void LockScreenNow();
 
 private slots:
+	void checkMousePosition();
 	void ShowScreenSaver();
 	void ShowLockScreen();
 	void HideScreenSaver();
