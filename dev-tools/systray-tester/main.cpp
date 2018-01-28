@@ -2,6 +2,8 @@
 #include <QSystemTrayIcon>
 #include "Trayapp.h"
 
+#include <unistd.h>
+
 int  main(int argc, char *argv[]) {
 
    QApplication a(argc, argv);
@@ -20,6 +22,7 @@ int  main(int argc, char *argv[]) {
    }
    
    TrayApp tray;
+   tray.setStyleSheet(background-color: #999999);
    tray.show();
    QApplication::setQuitOnLastWindowClosed(false); 
    return  a.exec();

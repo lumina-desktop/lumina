@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=lumina-config
+Icon=preferences-desktop
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Settings;
+Name=Desktop Configuration
+Comment=Modify the desktop
+OnlyShowIn=Lumina;

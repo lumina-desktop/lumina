@@ -1,0 +1,46 @@
+#0  0x00000008037dbd2a in thr_kill () from /lib/libc.so.7
+#1  0x00000008037dbc96 in raise () from /lib/libc.so.7
+#2  0x00000008037da489 in abort () from /lib/libc.so.7
+#3  0x000000080e16d6ef in ?? () from /usr/local/lib/libdbus-1.so.3
+#4  0x000000080e16395f in ?? () from /usr/local/lib/libdbus-1.so.3
+#5  0x000000080e163edc in ?? () from /usr/local/lib/libdbus-1.so.3
+#6  0x000000080e16b494 in ?? () from /usr/local/lib/libdbus-1.so.3
+#7  0x000000080e160d1a in ?? () from /usr/local/lib/libdbus-1.so.3
+#8  0x000000080e16017d in ?? () from /usr/local/lib/libdbus-1.so.3
+#9  0x000000080e148f80 in ?? () from /usr/local/lib/libdbus-1.so.3
+#10 0x000000080e1463c2 in ?? () from /usr/local/lib/libdbus-1.so.3
+#11 0x000000080d463af3 in q_dbus_bus_get_private (type=DBUS_BUS_SESSION, 
+    error=0x7fffffffe418) at ./qdbus_symbols_p.h:174
+#12 0x000000080d4639dd in QDBusConnection::connectToBus (
+    type=QDBusConnection::SessionBus, name=...) at qdbusconnection.cpp:319
+#13 0x000000080d4676f5 in QDBusDefaultConnection::QDBusDefaultConnection (
+    this=0x80d6fb330 <(anonymous namespace)::Q_QGS__q_sessionBus::innerFunction()::holder>, type=QDBusConnection::SessionBus, 
+    name=0x80d4d0f20 <_q_sessionBusName> "qt_default_session_bus")
+    at qdbusconnection.cpp:1063
+#14 0x000000080d466271 in (anonymous namespace)::Q_QGS__q_sessionBus::Holder::Holder (
+    this=0x80d6fb330 <(anonymous namespace)::Q_QGS__q_sessionBus::innerFunction()::holder>) at qdbusconnection.cpp:1079
+#15 0x000000080d4661d8 in (anonymous namespace)::Q_QGS__q_sessionBus::innerFunction () at qdbusconnection.cpp:1079
+#16 0x000000080d465e54 in QGlobalStatic<QDBusDefaultConnection, (anonymous namespace)::Q_QGS__q_sessionBus::innerFunction(), (anonymous namespace)::Q_QGS__q_sessionBus::guard>::operator()() (this=0x80d6fb310 <_q_sessionBus>)
+    at ../../include/QtCore/../../src/corelib/global/qglobalstatic.h:129
+#17 0x000000080d465e02 in QDBusConnection::sessionBus ()
+    at qdbusconnection.cpp:1093
+#18 0x000000080aec0439 in DBusConnection::DBusConnection (this=0x80a8e8a30, 
+    parent=0x0) at linuxaccessibility/dbusconnection.cpp:61
+#19 0x000000080aeb1b7a in QSpiAccessibleBridge::QSpiAccessibleBridge (this=
+    0x80a9567c0) at linuxaccessibility/bridge.cpp:60
+#20 0x000000080ae4fa40 in QXcbIntegration::accessibility (this=0x80a817510)
+    at qxcbintegration.cpp:316
+#21 0x00000008016df8ff in platformAccessibility ()
+    at accessible/qaccessible.cpp:480
+#22 0x00000008016e021d in QAccessible::isActive ()
+    at accessible/qaccessible.cpp:783
+#23 0x00000008016e0371 in QAccessible::updateAccessibility (
+    event=0x7fffffffe748) at accessible/qaccessible.cpp:850
+#24 0x0000000800cbd566 in QAbstractButton::setText (this=0x80a8e8bb0, text=...)
+    at widgets/qabstractbutton.cpp:650
+#25 0x0000000000404216 in Ui_Test::retranslateUi (this=0x80a8e8f10, Test=
+    0x7fffffffea88) at ./ui_test.h:71
+#26 0x0000000000403e55 in Ui_Test::setupUi (this=0x80a8e8f10, 
+    Test=0x7fffffffea88) at ./ui_test.h:63
+#27 0x000000000040367f in Test::Test (this=0x7fffffffea88) at ./test.h:22
+#28 0x00000000004034cf in main (argc=1, argv=0x7fffffffeb40) at main.cpp:7

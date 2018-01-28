@@ -1,9 +1,0 @@
-[Desktop Entry]
-Exec=lumina-screenshot
-Icon=camera-web
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Utility;
-Name=Lumina Screenshot
-Comment=Take Screenshot

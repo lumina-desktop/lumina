@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+DH_VERBOSE = 1
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+#
+# you may want to comment-out --parallel if build breaks for
+# no visible reason or without meaningful error message
+#
+
+%:
+	dh $@ --parallel
+
+# For Debian GNU/Linux which does not offer manually compiled
+# libxcb-xinput0/libxcb-xinput0-dev, add the following flag:
+#
+# CONFIG+=NO_XINPUT
+#
+# also remove
+#
+# libxcb-xinput0-dev
+#
+# from dependencies in debian/rules (obviously)
+
+override_dh_auto_configure:
+	/usr/lib/$(DEB_HOST_MULTIARCH)/qt5/bin/qmake \
+		PREFIX=/usr \
+		LIBPREFIX=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		L_LIBDIR=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		L_ETCDIR=/etc \
+		QMAKE_CXXFLAGS="$(CXXFLAGS) $(CPPFLAGS)" \
+		QMAKE_LFLAGS="$(LDFLAGS) -Wl,--as-needed" \
+		CONFIG+=nostrip \
+		CONFIG+=WITH_I18N \
+		QMAKE_CFLAGS_ISYSTEM=
+
+override_dh_auto_clean:
+	dh_auto_clean
+	-find $(CURDIR) -name *.qm -delete
+
+override_dh_install:
+	dh_install --list-missing

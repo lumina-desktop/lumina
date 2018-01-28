@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="qml">
+    <file>RootDesktop.qml</file>
+    <file>ContextMenu.qml</file>
+    <file>Screen.qml</file>
+    <file>Panel.qml</file>
+    <file>NativeWindow.qml</file>
+  </qresource>
+</RCC>

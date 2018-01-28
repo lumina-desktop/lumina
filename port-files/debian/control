@@ -1,0 +1,128 @@
+Source: lumina-desktop
+Section: x11
+Priority: optional
+Maintainer: Christopher Roy Bratusek <nano@jpberlin.de>
+Uploaders: Valentin OVD <vovd.tanglu@gmail.com>
+Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
+               libxcb1-dev, libx11-xcb-dev, libxcb-composite0-dev, libxcb-ewmh-dev,
+               libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
+               libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
+               libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev,
+               libxcb-composite0-dev, qtdeclarative5-dev, libqt5svg5-dev,
+               libxcb-xinput0-dev
+Standards-Version: 3.9.6
+Homepage: https://github.com/trueos/lumina
+
+Package: lumina-desktop
+Architecture: any
+Replaces: lumina-core (<< 0.8.3.372)
+Depends: ${misc:Depends}, ${shlibs:Depends},
+         lumina-config, lumina-fm, oxygen-icon-theme,
+         lumina-open, lumina-screenshot, lumina-search, lumina-info,
+         lumina-xconfig, lumina-fileinfo, lxpolkit, lumina-data,
+         lumina-textedit, lumina-archiver, lumina-calculator,
+         fluxbox, numlockx, xbacklight, xscreensaver, alsa-utils, acpi,
+         gstreamer1.0-plugins-base, procps, sysstat, phonon4qt5-backend-gstreamer
+Recommends: qt5-configuration-tool, usbmount, xarchiver, pavucontrol, compton
+Description: Lightweight Qt5-based desktop environment
+ Metapackage depending on all other lumina packages.
+
+Package: lumina-config
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Configuration utility for the lumina desktop environment
+ lumina-config allows to change various aspects of lumina and fluxbox, like
+ the wallpaper beeing used, theme, icons, panel (and plugins), startup and 
+ default applications, desktop-menu and more.
+
+Package: lumina-fm
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Filemanager for the lumina desktop environment
+ Simple filemanager for lumina with support for multiple view modes, tabbed browsing,
+ including an integrated slideshow-based picture viewer.
+
+Package: lumina-open
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: xdg-open like utility for the lumina desktop environment
+ lumina-open handles opening of files and urls according to the system wide
+ mime type association. It also provides an optional selector if more than one
+ application is assigned with the given url or file type.
+
+Package: lumina-screenshot
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Screenshot utility for the lumina desktop environment
+ Simple screenshot utility that allows to snapshot the whole desktop or a
+ single window after a configurable delay.
+ .
+ Optionally the window border can be hidden when taking a screenshot of a
+ single window.
+
+Package: lumina-search
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Search utility for the lumina desktop environment
+ Simple search utility that allows to search for applications or files and
+ directories in the user's HOME directory and launch or open them.
+
+Package: lumina-info
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Basic information utility for Lumina
+ lumina-info display various information about the Lumina installation,
+ like paths, contributors, license or version.
+
+Package: lumina-xconfig
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Display configuration tool for the lumina desktop environment
+ Simple multi-head aware display configuration tool for Lumina
+
+Package: lumina-fileinfo
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Desktop file editor for the lumina desktop environment
+ Advanced desktop file (menu) editor for Lumina
+
+Package: lumina-textedit
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Texteditor for the lumina desktop environment
+ Simple Texteditor for for Lumina, featuring
+ - tabs for multiple files
+ - syntax highlighting
+ - line wrapping
+
+Package: lumina-archiver
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Archiver for the lumina desktop environment
+ Simple Archiver for for Lumina
+
+Package: lumina-calculator
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Calculator for the lumina desktop environment
+ Simple Calculator for for Lumina
+
+Package: lumina-data
+Architecture: all
+Depends: ${misc:Depends}
+Replaces: lumina-core (<< 0.8.3.372)
+Description: Data files for the lumina Desktop environment
+ This package provides
+  * Lumina Wallpapers
+  * Lumina Themes
+  * Lumina Translations
+  * Lumina Sounds
+  * Fallback fluxbox configuration

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=lumina-screencast
+Icon=screencast
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+Name=Lumina Screencast
+Comment=Record Screen

@@ -1,16 +1,26 @@
-# List of projects we want to make available as PO files in the
-# lumina-i18n git repo
+# List of projects we want to make available in the
+#    web-based translation interface
+# NOTE: Format is as follows:
+# "<Visible Project Name> <Directory within the source tree>"
+# Files which contain translation strings are named "<Some_Name>_<Locale_Code>.ts"
+#   within the listed directory
 
-# XXXXXX_LANG.ts <Qt project dir>
-# ^^^^^^ File prefix for .ts file
 
-lumina-config lumina-config 
-lumina-desktop lumina-desktop
-lumina-fm lumina-fm
-lumina-open lumina-open
-lumina-screenshot lumina-screenshot
-lumina-search lumina-search
-lumina-info lumina-info
-lumina-fileinfo lumina-fileinfo
-lumina-xconfig lumina-xconfig
+#Core
+lumina-desktop src-qt5/core/lumina-desktop/i18n
+lumina-info src-qt5/core/lumina-info/i18n
+lumina-open src-qt5/core/lumina-open/i18n
 
+#Core Utilities
+lumina-config src-qt5/core-utils/lumina-config/i18n
+lumina-search src-qt5/core-utils/lumina-search/i18n
+lumina-xconfig src-qt5/core-utils/lumina-xconfig/i18n
+
+#Desktop Utilities
+lumina-archiver src-qt5/desktop-utils/lumina-archiver/i18n
+lumina-calculator src-qt5/desktop-utils/lumina-calculator/i18n
+lumina-fileinfo src-qt5/desktop-utils/lumina-fileinfo/i18n
+lumina-fm src-qt5/desktop-utils/lumina-fm/i18n
+lumina-mediaplayer src-qt5/desktop-utils/lumina-mediaplayer/i18n
+lumina-screenshot src-qt5/desktop-utils/lumina-screenshot/i18n
+lumina-textedit src-qt5/desktop-utils/lumina-textedit/i18n

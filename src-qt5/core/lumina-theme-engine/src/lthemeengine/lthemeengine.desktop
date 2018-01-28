@@ -1,0 +1,9 @@
+[Desktop Entry]
+X-Desktop-File-Install-Version=0.11
+Name=Lumina Theme Engine
+Comment=Lumina Theme Engine 
+Exec=lthemeengine
+Icon=preferences-desktop-theme
+Terminal=false
+Type=Application
+Categories=Settings;DesktopSettings;Qt;

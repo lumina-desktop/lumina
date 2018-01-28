@@ -1,0 +1,106 @@
+.Dd November 6, 2017
+.Dt LUMINA-CONFIG 1
+.Os 1.3.3
+
+.Sh NAME
+.Nm lumina-config
+.Nd modifies different desktop settings.
+
+.Sh SYNOPSIS
+.Nm
+
+.Sh DESCRIPTION
+Appearance, desktop defaults, interface configuration, system settings,
+and user settings are adjustable.
+Different configuration options for each category are listed in the GUI
+configuration section below.
+
+.Sh GUI CONFIGURABLES
+Each category contains different configurables.
+.Pp
+.Sy Appearance:
+.Pp
+.Bl -offset indent -tag -width "Window Manager"
+.It Ic Theme
+Change the interface of fonts and colors.
+.It Ic Window Effects
+Adjust transparency levels and window effects.
+.It Ic Wallpaper
+Change background image.
+.It Ic Window Manager
+Change window settings and appearances.
+.El
+.Pp
+.Sy Desktop Defaults:
+.Pp
+.Bl -offset indent -tag -width "Keyboard Shortcuts"
+.It Ic Applications
+Change default applications.
+.It Ic Keyboard Shortcuts
+Change keyboard shortcuts.
+.It Ic Autostart
+Automatically start applications or services.
+.El
+.Pp
+.Sy Interface Configuration:
+.Pp
+.Bl -offset indent -tag -width "Desktop"
+.It Ic Desktop
+Change what icons or tools are embedded on the desktop.
+.It Ic Panels
+Change any floating panels and what they show.
+.It Ic Menu
+Change what options are shown on the desktop context menu.
+.El
+.Pp
+.Sy System Settings:
+.Pp
+.Bl -offset indent -tag -width "Lumina Screen Configuration"
+.It Ic AppCafe
+Manage system applications
+.It Ic Fcitx Configuration
+Change Fcitx configuration.
+.It Ic Lumina Screen Configuration
+Setup monitors and screens.
+.It Ic Mouse Configuration
+Change mouse sensitivty and orientation.
+.It Ic Screensaver
+Change screensaver properties.
+.It Ic System Updates
+Check and apply updates or change update settings.
+.It Ic User Configuration
+Change user details and groups.
+.It Ic XScreenSaver Lock
+Lock the screen with XScreenSaver.
+.It Ic XScreenSaver Stop
+Stop XscreenSaver daemon.
+.It Ic Device Manager
+Manage devices connected to the system.
+.It Ic PulseAudio Preferences
+View and modify the configuration of the local sound server.
+.It Ic Service Manager
+Run or enable start on boot for various services.
+.It Ic Task Manager
+View or stop a currently running process.
+.It Ic XScreenSaver Blank
+Blank the screen with (activate) XScreenSaver.
+.It Ic XScreenSaver Start
+Start XScreenSaver daemon.
+.El
+.Pp
+.Sy User Settings:
+.Pp
+.Bl -offset indent -tag -width "General Options"
+.It Ic General Options
+Change basic user settings such as time and date formats.
+.It Ic Localization
+Change the default locale settings for this user.
+
+.Sh FILES
+.Bl -tag -indent width
+.It Pa /usr/local/bin/lumina-config
+.El
+
+.Sh AUTHORS
+.An Aaron St. John and Tim Moore
+.Aq aaron@ixsystems.com

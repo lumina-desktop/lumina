@@ -1,0 +1,17 @@
+usr/share/applications/lumina-support.desktop
+usr/share/pixmaps/Lumina-DE.png
+usr/share/lumina-desktop/compton.conf
+usr/share/lumina-desktop/colors/
+usr/share/lumina-desktop/themes/
+usr/share/lumina-desktop/desktop-background.jpg
+usr/share/lumina-desktop/fluxbox-init-rc
+usr/share/lumina-desktop/fluxbox-keys
+usr/share/lumina-desktop/Login.ogg
+usr/share/lumina-desktop/Logout.ogg
+usr/share/lumina-desktop/menu-scripts/ls.json.sh
+usr/share/lumina-desktop/luminaDesktop.conf
+usr/share/lumina-desktop/i18n/lumina-desktop*.qm
+usr/share/wallpapers/Lumina-DE/
+usr/share/xsessions/Lumina-DE.desktop
+usr/share/lumina-desktop/globs2
+usr/share/lumina-desktop/low-battery.ogg

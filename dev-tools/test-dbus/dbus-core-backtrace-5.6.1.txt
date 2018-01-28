@@ -1,0 +1,44 @@
+#0  0x0000000802d2335a in thr_kill () from /lib/libc.so.7
+#1  0x0000000802d23346 in raise () from /lib/libc.so.7
+#2  0x0000000802d232c9 in abort () from /lib/libc.so.7
+#3  0x000000080c92c6ef in dbus_shutdown () from /usr/local/lib/libdbus-1.so.3
+#4  0x000000080c92295f in dbus_watch_handle ()
+   from /usr/local/lib/libdbus-1.so.3
+#5  0x000000080c922edc in dbus_watch_handle ()
+   from /usr/local/lib/libdbus-1.so.3
+#6  0x000000080c92a494 in dbus_shutdown () from /usr/local/lib/libdbus-1.so.3
+#7  0x000000080c91fd1a in dbus_threads_init ()
+   from /usr/local/lib/libdbus-1.so.3
+#8  0x000000080c91f17d in dbus_threads_init ()
+   from /usr/local/lib/libdbus-1.so.3
+#9  0x000000080c907f80 in dbus_connection_open ()
+   from /usr/local/lib/libdbus-1.so.3
+#10 0x000000080c9053c2 in dbus_bus_get () from /usr/local/lib/libdbus-1.so.3
+#11 0x000000080083b5f6 in ?? () from /usr/local/lib/libQt5DBus.so.5
+#12 0x0000000801a8c3a8 in QObject::event () from /usr/local/lib/libQt5Core.so.5
+#13 0x00000008018a7c07 in QThread::event () from /usr/local/lib/libQt5Core.so.5
+#14 0x0000000801a60f5c in QCoreApplicationPrivate::notify_helper ()
+   from /usr/local/lib/libQt5Core.so.5
+#15 0x0000000801a60b50 in QCoreApplication::notifyInternal2 ()
+   from /usr/local/lib/libQt5Core.so.5
+#16 0x0000000801a61757 in QCoreApplicationPrivate::sendPostedEvents ()
+   from /usr/local/lib/libQt5Core.so.5
+#17 0x0000000801ab5358 in QEventDispatcherGlib::QEventDispatcherGlib ()
+   from /usr/local/lib/libQt5Core.so.5
+#18 0x0000000804715458 in g_main_context_dispatch ()
+   from /usr/local/lib/libglib-2.0.so.0
+#19 0x0000000804715794 in g_main_context_pending ()
+   from /usr/local/lib/libglib-2.0.so.0
+#20 0x0000000804715824 in g_main_context_iteration ()
+   from /usr/local/lib/libglib-2.0.so.0
+#21 0x0000000801ab48cb in QEventDispatcherGlib::processEvents ()
+   from /usr/local/lib/libQt5Core.so.5
+#22 0x0000000801a5cbc2 in QEventLoop::exec ()
+   from /usr/local/lib/libQt5Core.so.5
+#23 0x00000008018a77b5 in QThread::exec () from /usr/local/lib/libQt5Core.so.5
+#24 0x000000080083b903 in qDBusBindToApplication ()
+   from /usr/local/lib/libQt5DBus.so.5
+#25 0x00000008018ab27a in QThreadStorageData::finish ()
+   from /usr/local/lib/libQt5Core.so.5
+#26 0x0000000802a47855 in pthread_create () from /lib/libthr.so.3
+#27 0x0000000000000000 in ?? ()

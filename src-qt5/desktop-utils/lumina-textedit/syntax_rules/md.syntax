@@ -1,0 +1,103 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Markdown language support rules
+#  Written by Zackary Welch <zwelch@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Markdown",
+		"file_suffix": ["md", "markdown"]
+	},
+	"format": {
+		"line_wrap": true,
+		"highlight_whitespace_eol" : false,
+		"tab_width" : 4
+	},
+	"rules": [{
+			"name": "links",
+			"regex": "\\[[^\\[\\]]+\\]\\(#?[^\\s\\]\\)\\[\\(]*\\)",
+			"foreground": "colors/keyword"
+		},
+		{
+			"name": "bold and italic",
+			"regex" : "[\\*]{3}(?!\\s)[^\\*\\_]+(?!\\s)[\\*]{3}",
+			"foreground": "colors/altkeyword",
+			"font_weight" : "bold",
+			"font_style" : "italic"
+		},
+		{
+			"name": "bold",
+			"regex" : "[\\*]{2}(?!\\s)[^\\*\\_]+(?!\\s)[\\*]{2}",
+			"foreground": "colors/altkeyword",
+			"font_weight" : "bold"
+		},
+		{
+			"name": "italic",
+			"regex" : "[\\*](?!\\s){1}[^\\*\\_]+(?!\\s)[\\*]{1}",
+			"foreground": "colors/altkeyword",
+			"font_style" : "italic"
+		},
+		{
+			"name": "bold and italic",
+			"regex" : "[_]{3}(?!\\s)[^\\*\\_]+(?!\\s)[_]{3}",
+			"foreground": "colors/altkeyword",
+			"font_weight" : "bold",
+			"font_style" : "italic"
+		},
+		{
+			"name": "bold",
+			"regex" : "[_]{2}(?!\\s)[^\\*\\_]+(?!\\s)[_]{2}",
+			"foreground": "colors/altkeyword",
+			"font_weight" : "bold"
+		},
+		{
+			"name": "italic",
+			"regex" : "[_]{1}(?!\\s)[^\\*\\_]+(?!\\s)[_]{1}",
+			"foreground": "colors/altkeyword",
+			"font_style" : "italic"
+		},
+		{
+			"name" : "markup",
+			"regex": "<[a-z].*><\\/[a-z]>",
+			"foreground" : "colors/class"
+		},
+		{
+			"name" : "heading",
+			"regex": "^#+ (.)*$",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "horizontal rule",
+			"regex": "^((\\-\\s*\\-\\s*\\-\\s*)|(\\*\\s*\\*\\s*\\*)|(\\_\\s*\\_\\s*\\_\\s*))$",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "multi-line code block",
+			"regex_start" : "^```$",
+			"regex_end" : "^```$",
+			"foreground" : "colors/comment"
+		},
+		{
+			"name" : "in-line code block",
+			"regex" : "`([^`])+`",
+			"foreground" : "colors/comment"
+		},
+		{
+			"name" : "block quote",
+			"regex" : "^(\\> )+",
+			"foreground" : "colors/keyword"
+		},
+		{
+			"name" : "lists",
+			"regex" : "^\\s*([0-9].|[\\*\\+\\-]{1})\\s+",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
+		}
+	]
+}

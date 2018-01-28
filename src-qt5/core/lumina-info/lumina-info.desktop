@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=lumina-info
+Icon=Lumina-DE
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;
+OnlyShowIn=Lumina;
+Name=Desktop Information
+GenericName=Version and Legal Information
+Comment=View information about the Lumina Desktop Environment
+

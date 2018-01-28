@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/media">
+        <file alias="alarm.svg">media/ic_alarm_48px.svg</file>
+        <file alias="alarm_add.svg">media/ic_alarm_add_48px.svg</file>
+        <file alias="alarm_off.svg">media/ic_alarm_off_48px.svg</file>
+        <file alias="alarm_on.svg">media/ic_alarm_on_48px.svg</file>
+	<file alias="alarm.mp3">media/alarm.mp3</file>
+    </qresource>
+</RCC>

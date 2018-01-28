@@ -1,0 +1,49 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Go language support rules
+#  Written by Zackary Welch <zwelch@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Go",
+		"file_suffix": ["go"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : false
+	},
+	"rules": [{
+			"name": "keywords",
+			"words": ["break", "default", "func", "interface", "select", "case", "defer", "go", "map", "struct", "chan", "else", "goto", "package", "switch", "const", "fallthrough", "if", "range", "type", "continue", "for", "import", "return", "var", "uint32", "uint64", "float32", "float64"],
+			"foreground": "colors/keyword"
+		},
+		{
+			"name": "single-line comment",
+			"regex": "//[^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "multi-line comment",
+			"regex_start": "/\\*",
+			"regex_end": "\\*/",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "numbers",
+			"regex": "\\b[0-9]+\\.?[0-9]*\\b|[0-9]+e[\\+\\-]?[0-9]+",
+			"foreground": "colors/altkeyword"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/class"
+		},
+		{
+			"name" : "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
+		}
+	]
+}

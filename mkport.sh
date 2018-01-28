@@ -2,65 +2,101 @@
 # Helper script which will create the port / distfiles
 # from a checked out git repo
 
-# Set the distfile URL we will fetch from
-DURL="http://www.pcbsd.org/~kris/software/"
+# Set the port
+dfile="lumina"
+VERSION="1.4.1"
 
-get_last_rev_git()
-{
-   oPWD=`pwd`
-   cd "${1}"
-   rev=0
-   rev=`git log -n 1 --date=raw | grep 'Date:' | awk '{print $2}'`
-   cd $oPWD
-   if [ $rev -ne 0 ] ; then
-     echo "$rev"
-     return 0
-   fi
-   return 1
+massage_subdir() {
+  cd "$1"
+  if [ $? -ne 0 ] ; then
+     echo "SKIPPING $i"
+     continue
+  fi
+
+comment="`cat Makefile | grep 'COMMENT ='`"
+
+  echo "# \$FreeBSD\$
+#
+
+$comment
+" > Makefile.tmp
+
+  for d in `ls`
+  do
+    if [ "$d" = ".." ]; then continue ; fi
+    if [ "$d" = "." ]; then continue ; fi
+    if [ "$d" = "Makefile" ]; then continue ; fi
+    if [ ! -f "$d/Makefile" ]; then continue ; fi
+    echo "    SUBDIR += $d" >> Makefile.tmp
+  done
+  echo "" >> Makefile.tmp
+  echo ".include <bsd.port.subdir.mk>" >> Makefile.tmp
+  mv Makefile.tmp Makefile
+
 }
 
 if [ -z "$1" ] ; then
-   echo "Usage: ./mkports.sh <outdir>"
+   echo "Usage: ./mkports.sh <portstree> <distfiles>"
    exit 1
 fi
 
-if [ ! -d "${1}" ] ; then
+if [ ! -d "${1}/Mk" ] ; then
    echo "Invalid directory: $1"
    exit 1
 fi
 
 portsdir="${1}"
-distdir="${1}/distfiles"
-if [ ! -d "$portsdir" ] ; then
-  mkdir ${portsdir}
+if [ -z "$portsdir" -o "${portsdir}" = "/" ] ; then
+  portsdir="/usr/ports"
 fi
-if [ ! -d "$portsdir/sysutils" ] ; then
-  mkdir ${portsdir}/sysutils
+
+if [ -z "$2" ] ; then
+  distdir="${portsdir}/distfiles"
+else
+  distdir="${2}"
 fi
 if [ ! -d "$distdir" ] ; then
-  mkdir ${distdir}
+  mkdir -p ${distdir}
 fi
 
-REV=`get_last_rev_git "."`
+# Get the GIT tag
+ghtag=`git log -n 1 . | grep '^commit ' | awk '{print $2}'`
 
-# Make the dist files
-rm ${distdir}/lumina*.tar.bz2 2>/dev/null
-echo "Creating lumina dist file for version: $REV"
-cd ..
-tar cvjf ${distdir}/lumina-${REV}.tar.bz2 --exclude .git --exclude Artwork lumina 2>/dev/null
-cd lumina
+# Get the version
+verTag="${VERSION}"
+dateTag=$(date '+%Y%m%d%H%M')
+
+# Cleanup old distfiles
+rm ${distdir}/${dfile}-* 2>/dev/null
 
 # Copy ports files
-rm -rf ${portsdir}/x11/lumina 2>/dev/null
-cp -r port-files ${portsdir}/x11/lumina
+orig_dir=`pwd`
+for port in `find port-files/FreeBSD | grep Makefile | cut -d / -f 3-4`
+do
+  cd ${orig_dir}
+  echo "Updating port: ${port}"
+  if [ -d "${portsdir}/${port}" ] ; then
+    rm -rf ${portsdir}/${port} 2>/dev/null
+  fi
+  cp -r port-files/FreeBSD/${port} ${portsdir}/${port}
 
-# Set the version numbers
-sed -i '' "s|CHGVERSION|${REV}|g" ${portsdir}/x11/lumina/Makefile
+  # Set the version numbers
+  sed -i '' "s|%%CHGVERSION%%|${verTag}|g" ${portsdir}/${port}/Makefile
+  sed -i '' "s|%%CHGREVISION%%|${dateTag}|g" ${portsdir}/${port}/Makefile
+  sed -i '' "s|%%GHTAG%%|${ghtag}|g" ${portsdir}/${port}/Makefile
 
-# Set the mirror to use
-sed -i '' "s|http://www.pcbsd.org/~kris/software/|${DURL}|g" ${portsdir}/x11/lumina/Makefile
+  # Create the makesums / distinfo file
+  cd "${portsdir}/${port}"
+  make makesum
+  if [ $? -ne 0 ] ; then
+    echo "Failed makesum"
+    exit 1
+  fi
 
-# Create the makesums / distinfo file
-cd ${distdir}
-sha256 lumina-${REV}.tar.bz2 > ${portsdir}/x11/lumina/distinfo
-echo "SIZE (lumina-${REV}.tar.bz2) = `stat -f \"%z\" lumina-${REV}.tar.bz2`" >> ${portsdir}/x11/lumina/distinfo
+  # Update port cat Makefile
+  tcat=$(echo $port | cut -d '/' -f 1)
+  massage_subdir ${portsdir}/${tcat}
+done
+#Set a couple variables for the TrueOS build cluster to know which is the "overall" port
+port="x11/lumina" #reset this variable in case something else needs it
+export bPort="x11/lumina"
