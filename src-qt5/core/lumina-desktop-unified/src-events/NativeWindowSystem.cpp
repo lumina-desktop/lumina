@@ -962,6 +962,17 @@ void NativeWindowSystem::CheckDamageID(WId win){
   }
 }
 
+void NativeWindowSystem::raiseWindow(NativeWindowObject *win){
+  qDebug() << "Raise Window:" << win->name();
+  xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST ,win->id());
+}
+
+
+void NativeWindowSystem::lowerWindow(NativeWindowObject *win){
+  qDebug() << "Lower Window:" << win->name();
+  xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_LOWER_HIGHEST ,win->id());
+}
+
 // === PRIVATE SLOTS ===
 //These are the slots which are built-in and automatically connected when a new NativeWindow is created
 

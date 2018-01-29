@@ -47,6 +47,7 @@ private:
 	QList<ScreenObject*> s_objects;
 	QList<PanelObject*> panel_objects;
 	QList<NativeWindowObject*> window_objects;
+	QPointer<NativeWindowObject> last_window_up;
 
 public slots:
 	void updateScreens(); //rescan/update screen objects

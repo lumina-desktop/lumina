@@ -207,6 +207,9 @@ Rectangle {
       height: parent.height
       anchors.fill: frameContents
       onClicked: { console.log(parent.mapToGlobal(mouse.x, mouse.y)); }
+      onPositionChanged: {
+        RootObject.mousePositionChanged()
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
 #include <QQmlEngine>
 #include <QApplication>
 #include <QScreen>
-
+#include <global-objects.h>
 #include <QDebug>
 
 // === PUBLIC ===
@@ -138,6 +138,21 @@ void RootDesktopObject::lockscreen(){
 
 void RootDesktopObject::mousePositionChanged(){
   emit mouseMoved();
+  // Go through the transparent windows (in order of high->low in stack)
+  // and raise/lower the transparent overlays as needed
+  QPoint pos = QCursor::pos();
+  for(int i=window_objects.length()-1; i>=0; i--){
+    if(window_objects[i]->geometry().contains(pos) ){
+      if(last_window_up!= window_objects[i]){
+        if(last_window_up!=0){ Lumina::NWS->lowerWindow(last_window_up); }
+	Lumina::NWS->raiseWindow(window_objects[i]);
+        last_window_up = window_objects[i];
+      }
+      return; //found the currently-hovered window
+    }
+  }
+  //failover for when no window has the mouse over it (lower all of them)
+  if(last_window_up!=0){ Lumina::NWS->lowerWindow(last_window_up); }
 }
 
 void RootDesktopObject::launchApp(QString appOrPath){

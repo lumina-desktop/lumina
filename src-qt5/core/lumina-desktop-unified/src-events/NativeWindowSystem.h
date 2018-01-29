@@ -80,6 +80,9 @@ public:
 	static Qt::Key KeycodeToQt(int keycode);
 	static NativeWindowSystem::MouseButton MouseToQt(int button);
 
+	void raiseWindow(NativeWindowObject *win);
+	void lowerWindow(NativeWindowObject *win);
+
 public slots:
 	//These are the slots which are typically only used by the desktop system itself or the NativeWindowEventFilter
 
