@@ -66,7 +66,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation>Lajittelematta</translation>
+        <translation>Lajittelemattomat</translation>
     </message>
 </context>
 <context>
