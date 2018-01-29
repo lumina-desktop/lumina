@@ -8,7 +8,7 @@
 {
 	"meta": {
 		"name": "Javascript",
-		"file_suffix": ["js"]
+		"file_suffix": ["js", "qml"]
 	},
 	"format": {
 		"line_wrap": false,

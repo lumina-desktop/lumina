@@ -242,6 +242,10 @@ bool NativeWindowObject::isSticky(){
   return (this->property(NativeWindowObject::Workspace).toInt()<0 || this->property(NativeWindowObject::States).value<QList<NativeWindowObject::State> >().contains(NativeWindowObject::S_STICKY) );
 }
 
+bool NativeWindowObject::isVisible(){
+  return (this->property(NativeWindowObject::Visible).toBool() );
+}
+
 int NativeWindowObject::workspace(){
   return this->property(NativeWindowObject::Workspace).toInt();
 }
@@ -262,14 +266,13 @@ void NativeWindowObject::updateGeometry(int x, int y, int width, int height, boo
   if(fgeom.isEmpty()){ fgeom << 0<<0<<0<<0; } //just in case (left/right/top/bottom)
   QPoint pos(x+fgeom[0], y+fgeom[2]);
   QSize sz(width-fgeom[0]-fgeom[1], height-fgeom[2]-fgeom[3]);
+  newgeom = QRect(pos, sz);
   if(!now){
-    newgeom = QRect(pos, sz);
     //qDebug() << "Update Geometry:" << fgeom << QRect(x,y,width,height) << pos << sz;
     //requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << pos << sz);
     if(!geomTimer->isActive()){ geomTimer->start(); }
   }else{
-   requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size , QList<QVariant>() << pos << sz );
-   setProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size , QList<QVariant>() << pos << sz );
+   sendNewGeom();
   }
 }
 
@@ -311,6 +314,8 @@ void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop
 		emit winImageChanged(); break;
 	case NativeWindowObject::WinTypes:
 		emit winTypeChanged(); break;
+	case NativeWindowObject::Visible:
+		emit visibilityChanged(); break;
 	default:
 		break; //do nothing otherwise
   }
@@ -321,4 +326,5 @@ void NativeWindowObject::sendNewGeom(){
   QList<QVariant> vals; vals << newgeom.topLeft() << newgeom.size();
   requestProperties(props, vals);
   setProperties(props,vals);
+  emit VerifyNewGeometry(winid);
 }

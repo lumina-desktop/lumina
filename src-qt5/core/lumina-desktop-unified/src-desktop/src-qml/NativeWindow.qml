@@ -14,10 +14,11 @@ Rectangle {
   SystemPalette { id:palette }
 
   id: windowFrame
+  visible: object.isVisible
   border.width: 5
   border.color: palette.highlight
   radius: 5
-  color: "transparent" //palette.window 
+  color: palette.window //"transparent"
   x: object.frameGeometry.x
   y: object.frameGeometry.y
   width: object.frameGeometry.width
@@ -201,6 +202,13 @@ Rectangle {
     anchors.bottomMargin: windowFrame.border.width
     width: parent.width
     height: parent.height
+    //color: palette.window
+
+    //Image {
+      //anchors.fill: frameContents
+      //cache: false
+      //source: windowFrame.object.winImage
+    //}
 
     MouseArea { 
       width: parent.width

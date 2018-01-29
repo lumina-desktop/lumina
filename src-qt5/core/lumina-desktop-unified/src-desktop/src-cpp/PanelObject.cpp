@@ -47,14 +47,15 @@ void PanelObject::setGeometry( QRect newgeom ){
 
 void PanelObject::syncWithSettings(QRect parent_geom){
   //Read off all the settings
-  //qDebug() << "Sync Panel Settings:" << panel_id << parent_geom;
-  QString anchor = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/anchor", "bottom").toString().toLower();
-  QString align = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/align", "center").toString().toLower();
-  double length = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/length_percent", 100).toDouble()/100.0;
-  double width = DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/width_font_percent", 2.1).toDouble();
+  QString id = panel_id.section("/",-1); //last section (allow for prefixes to distinguish multiple monitors with the same profile but different screens)
+  //qDebug() << "Sync Panel Settings:" << panel_id << id << parent_geom;
+  QString anchor = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/anchor", "bottom").toString().toLower();
+  QString align = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/align", "center").toString().toLower();
+  double length = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/length_percent", 100).toDouble()/100.0;
+  double width = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/width_font_percent", 2.1).toDouble();
     width =  qRound(width * QApplication::fontMetrics().height() );
-  this->setBackground( DesktopSettings::instance()->value(DesktopSettings::Panels, panel_id+"/background", "rgba(0,0,0,120)").toString() );
- // qDebug() << "Update Panel:" << panel_id << anchor+"/"+align << length << width;
+  this->setBackground( DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/background", "rgba(0,0,0,120)").toString() );
+ // qDebug() << "Update Panel:" << panel_id << id << anchor+"/"+align << length << width;
   //Now calculate the geometry of the panel
   QRect newgeom;
   //Figure out the size of the panel
@@ -79,6 +80,9 @@ void PanelObject::syncWithSettings(QRect parent_geom){
     else if(anchor=="right"){ newgeom.moveTopRight(QPoint(parent_geom.width(), (parent_geom.height()-newgeom.height())/2 )); }
     else{ newgeom.moveBottomLeft(QPoint( (parent_geom.width()-newgeom.width())/2, parent_geom.height()) ); }
   }
-  //qDebug() << " - Calculated Geometry:" << newgeom;
-  this->setGeometry(newgeom); //Note: This is in parent-relative coordinates (not global)
+  //qDebug() << " - Calculated Geometry (relative to parent):" << newgeom;
+  //Note: newgeom is currently in parent-relative coordinates (not global)
+  newgeom.translate(parent_geom.x(), parent_geom.y());
+  //qDebug() << " - Calculated Geometry (global):" << newgeom;
+  this->setGeometry(newgeom); //shift to global coordinates
 }

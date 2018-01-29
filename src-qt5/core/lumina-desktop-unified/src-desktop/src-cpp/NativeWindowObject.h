@@ -23,6 +23,7 @@ class NativeWindowObject : public QObject{
 	Q_PROPERTY( QString shortTitle READ shortTitle NOTIFY shortTitleChanged)
 	Q_PROPERTY( QString icon READ icon NOTIFY iconChanged)
 	Q_PROPERTY( bool sticky READ isSticky NOTIFY stickyChanged)
+	Q_PROPERTY(bool isVisible READ isVisible NOTIFY visibilityChanged)
 	//Button/Titlebar visibility
 	Q_PROPERTY( bool showCloseButton READ showCloseButton NOTIFY winTypeChanged)
 	Q_PROPERTY( bool showMinButton READ showMinButton NOTIFY winTypeChanged)
@@ -109,6 +110,7 @@ public:
 	Q_INVOKABLE bool showWindowFrame();
 	//QML Window States
 	Q_INVOKABLE bool isSticky();
+	Q_INVOKABLE bool isVisible();
 	Q_INVOKABLE int workspace();
 
 	//QML Geometry reporting
@@ -150,6 +152,7 @@ signals:
 	void RequestKill(WId);					//Kill the window/app (usually from being unresponsive)
 	void RequestPing(WId);				//Verify that the window is still active (such as not closing after a request
 	void RequestReparent(WId, WId, QPoint); //client window, frame window, relative origin point in frame
+	void VerifyNewGeometry(WId);
 	// System Tray Icon Embed/Unembed Requests
 	//void RequestEmbed(WId, QWidget*);
 	//void RequestUnEmbed(WId, QWidget*);
@@ -163,6 +166,7 @@ signals:
 	void stickyChanged();
 	void winTypeChanged();
 	void geomChanged();
+	void visibilityChanged();
 };
 
 // Declare the enumerations as Qt MetaTypes

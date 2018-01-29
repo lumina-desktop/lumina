@@ -1,6 +1,6 @@
 #include "PrintWidget.h"
 
-PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1), 
+PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1),
   viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
 
   this->setMouseTracking(true);
@@ -36,10 +36,12 @@ PrintWidget::~PrintWidget() {
 
 void PrintWidget::fitView() {
   setZoomMode(FitInView);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::fitToWidth() {
   setZoomMode(FitToWidth);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::setZoomMode(ZoomMode mode) {
@@ -101,9 +103,11 @@ void PrintWidget::setVisible(bool visible) {
 }
 
 void PrintWidget::setCurrentPage(int pageNumber) {
+	if(pageNumber < 0 || pageNumber > (pages.count()+1) ){ return; }
+	publicPageNum = pageNumber; //publicly requested page number (+/- 1 from actual page range)
+	emit currentPageChanged();
 	if(pageNumber < 1 || pageNumber > pages.count())
 		return;
-
 	int lastPage = curPage;
 	curPage = pageNumber;
 
@@ -132,8 +136,9 @@ void PrintWidget::generatePreview() {
 	populateScene(); // i.e. setPreviewPrintedPictures() e.l.
 	layoutPages();
 	curPage = qBound(1, curPage, pages.count());
-	if (fitting)
-			fit();
+	publicPageNum = curPage;
+	emit currentPageChanged();
+	if (fitting){ fit(); }
 }
 
 void PrintWidget::layoutPages() {
@@ -145,22 +150,22 @@ void PrintWidget::layoutPages() {
 	int cols = 1; // singleMode and default
 	if (viewMode == AllPagesView) {
     cols = ((pictures->value(0)).width() > (pictures->value(0)).height()) ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
-    cols += cols % 2;  // Nicer with an even number of cols 
-  } else if (viewMode == FacingPagesView) { 
+    cols += cols % 2;  // Nicer with an even number of cols
+  } else if (viewMode == FacingPagesView) {
     cols = 2;
-    numPagePlaces += 1; 
-  } 
+    numPagePlaces += 1;
+  }
   int rows = qCeil(double(numPagePlaces) / cols);
 
-  double itemWidth = pages.at(0)->boundingRect().width(); 
-  double itemHeight = pages.at(0)->boundingRect().height(); 
-  int pageNum = 1; for (int i = 0; i < rows && pageNum <= numPages; i++) { 
-    for (int j = 0; j < cols && pageNum <= numPages; j++) { 
+  double itemWidth = pages.at(0)->boundingRect().width();
+  double itemHeight = pages.at(0)->boundingRect().height();
+  int pageNum = 1; for (int i = 0; i < rows && pageNum <= numPages; i++) {
+    for (int j = 0; j < cols && pageNum <= numPages; j++) {
       if (!i && !j && viewMode == FacingPagesView) {
-          continue; 
-      } else { 
-        pages.at(pageNum-1)->setPos(QPointF(j*itemWidth, i*itemHeight)); 
-        pageNum++; 
+          continue;
+      } else {
+        pages.at(pageNum-1)->setPos(QPointF(j*itemWidth, i*itemHeight));
+        pageNum++;
       }
 		}
 	}
@@ -180,7 +185,7 @@ void PrintWidget::populateScene()
   qDebug() << "Image paperSize" << paperSize;
 
 	for (int i = 0; i < numPages; i++) {
-		PageItem* item = new PageItem(i+1, (*pictures)[i], paperSize);
+		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize);
 		scene->addItem(item);
 		pages.append(item);
 	}
@@ -194,6 +199,8 @@ void PrintWidget::updateCurrentPage() {
 	int newPage = calcCurrentPage();
 	if (newPage != curPage) {
 		curPage = newPage;
+		publicPageNum = curPage;
+		emit currentPageChanged();
 	}
 }
 
@@ -272,7 +279,7 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
-} 
+}
 
 void PrintWidget::setOrientation(QPageLayout::Orientation ori) {
   this->orientation = ori;

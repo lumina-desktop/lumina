@@ -95,31 +95,45 @@ void RootDesktopObject::setPanels(QStringList ids){
     this->emit changePanels(ids);
     return;
   }
-
+  //qDebug() << "GOT PANEL CHANGE:" << ids;
   //Get the current bounding rectangle for the session
   QRect total;
-  for(int i=0; i<s_objects.length(); i++){
-    total = total.united(s_objects[i]->geometry());
-  }
-  //First update/remove any current panel objects
   bool change = false;
-  for(int i=0; i<panel_objects.length(); i++){
-    if(ids.contains(panel_objects[i]->name()) ){
-      ids.removeAll(panel_objects[i]->name()); //already handled
-      panel_objects[i]->syncWithSettings(total);
+  for(int i=0; i<=s_objects.length(); i++){
+    QRect geom;
+    QString prefix;
+    if(i==s_objects.length()){
+      geom = total; //session geometry
+      prefix="session/";
     }else{
-      panel_objects.takeAt(i)->deleteLater();
-      i--;
+      geom = s_objects[i]->geometry();
+      total = total.united(geom);
+      prefix=s_objects[i]->name()+"/";
+    }
+    QStringList newids = ids.filter(prefix);
+    //qDebug() << " Check Panel IDs:" << prefix << newids << ids;
+    //First update/remove any current panel objects
+    for(int i=0; i<panel_objects.length(); i++){
+      if(newids.contains(panel_objects[i]->name()) ){
+        //qDebug() << " - Update Existing Panel:" << panel_objects[i]->name();
+        newids.removeAll(panel_objects[i]->name()); //already handled
+        panel_objects[i]->syncWithSettings(geom);
+      }else if(panel_objects[i]->name().startsWith(prefix) ){
+        //qDebug() << " - Remove Existing Panel:" << panel_objects[i]->name();
+        panel_objects.takeAt(i)->deleteLater();
+        i--;
+        change = true; //list changed
+      }
+    }
+    //Now create any new panel objects as needed
+    for(int i=0; i<newids.length(); i++){
+      //qDebug() << " - Create Panel:" << newids[i];
+      PanelObject *tmp = new PanelObject(newids[i], this);
+      tmp->syncWithSettings(geom);
+      panel_objects << tmp;
       change = true; //list changed
     }
-  }
-  //Now create any new panel objects as needed
-  for(int i=0; i<ids.length(); i++){
-    PanelObject *tmp = new PanelObject(ids[i], this);
-    tmp->syncWithSettings(total);
-    panel_objects << tmp;
-    change = true; //list changed
-  }
+  } //end loop over screens+session
   if(change){ emit panelsChanged(); }
 }
 

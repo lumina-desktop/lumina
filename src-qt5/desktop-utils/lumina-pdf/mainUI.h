@@ -40,12 +40,12 @@ private:
 	Poppler::Document *DOC;
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
-  PropDialog *PROPDIALOG;
+	PropDialog *PROPDIALOG;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
-  bool matchCase;
-  QMap<Poppler::TextBox*, int> results;
-  int currentHighlight;
+	bool matchCase;
+	QMap<Poppler::TextBox*, int> results;
+	int currentHighlight;
 
 	//Other Interface elements
 	QProgressBar *progress;
@@ -53,8 +53,8 @@ private:
 	QTimer *clockTimer;
 	QMenu *contextMenu;
 	//QFrame *frame_presenter;
-	QLabel *label_clock;
-	QAction *clockAct;
+	QLabel *label_clock, *label_page;
+	QAction *clockAct, *pageAct;
 
 	//PDF Page Loading cache variables
 	QHash<int, QImage> loadingHash;
@@ -73,21 +73,20 @@ private:
 private slots:
 	void startLoadingPages();
 	void slotPageLoaded(int);
-  //void slotStartPresentation(QAction *act);
 
 	//Simplification routines
-	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
-	void prevPage(){ ShowPage( WIDGET->currentPage()-2 ); } //currentPage() starts at 1 rather than 0
-	void firstPage(){ ShowPage(0); }
-	void lastPage(){ ShowPage(numPages-1); }
+	void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
+	void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
+	void firstPage(){ ShowPage(1); }
+	void lastPage(){ ShowPage(numPages); }
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
 
-  void showInformation();
-  void find(QString text, bool forward);
-  void enableFind();
-  void showBookmarks();
+	void showInformation();
+	void find(QString text, bool forward);
+	void enableFind();
+	void showBookmarks();
 
 	void paintToPrinter(QPrinter *PRINTER);
 
@@ -96,18 +95,24 @@ private slots:
 
 	//Other interface slots
 	void updateClock();
+	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
 
-  void setScroll(bool);
-  void rotate(bool);
+	void setScroll(bool);
+	void rotate(bool);
+
 
 signals:
 	void PageLoaded(int);
 
 protected:
-  void keyPressEvent(QKeyEvent*);	
-  void wheelEvent(QWheelEvent*);
-  void resizeEvent(QResizeEvent*);
+	void keyPressEvent(QKeyEvent*);
+	void wheelEvent(QWheelEvent*);
+	void resizeEvent(QResizeEvent*);
+	void closeEvent(QCloseEvent *ev){
+	  endPresentation();
+	  QMainWindow::closeEvent(ev);
+	}
 };
 #endif
