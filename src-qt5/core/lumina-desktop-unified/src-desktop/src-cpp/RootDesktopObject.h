@@ -40,7 +40,7 @@ public:
 	//QML Access Functions
 	Q_INVOKABLE void logout();
 	Q_INVOKABLE void lockscreen();
-	Q_INVOKABLE void mousePositionChanged();
+	Q_INVOKABLE void mousePositionChanged(bool lowerall = false);
 	Q_INVOKABLE void launchApp(QString appOrPath);
 
 private:
