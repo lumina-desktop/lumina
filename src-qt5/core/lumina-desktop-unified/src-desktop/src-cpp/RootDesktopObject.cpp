@@ -13,6 +13,7 @@
 
 // === PUBLIC ===
 RootDesktopObject::RootDesktopObject(QObject *parent) : QObject(parent){
+  last_window_up = 0;
   updateScreens(); //make sure the internal list is updated right away
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
 }
@@ -140,6 +141,7 @@ void RootDesktopObject::setPanels(QStringList ids){
 void RootDesktopObject::setWindows(QList<NativeWindowObject*> list){
   window_objects = list;
   emit windowsChanged();
+  mousePositionChanged(true);
 }
 
 void RootDesktopObject::logout(){
@@ -150,7 +152,7 @@ void RootDesktopObject::lockscreen(){
   emit lockScreen();
 }
 
-void RootDesktopObject::mousePositionChanged(){
+void RootDesktopObject::mousePositionChanged(bool lowerall){
   emit mouseMoved();
   // Go through the transparent windows (in order of high->low in stack)
   // and raise/lower the transparent overlays as needed
@@ -162,11 +164,13 @@ void RootDesktopObject::mousePositionChanged(){
 	Lumina::NWS->raiseWindow(window_objects[i]);
         last_window_up = window_objects[i];
       }
-      return; //found the currently-hovered window
+      if(!lowerall){ return; } //found the currently-hovered window
+    }else if(lowerall){
+      Lumina::NWS->lowerWindow(window_objects[i]);
     }
   }
   //failover for when no window has the mouse over it (lower all of them)
-  if(last_window_up!=0){ Lumina::NWS->lowerWindow(last_window_up); }
+  if(last_window_up!=0 && !lowerall){ Lumina::NWS->lowerWindow(last_window_up); }
 }
 
 void RootDesktopObject::launchApp(QString appOrPath){

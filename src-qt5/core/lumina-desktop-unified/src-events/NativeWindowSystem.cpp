@@ -779,8 +779,10 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   if(attr == 0){ return; } //could not get attributes of window
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
+  xcb_reparent_window(QX11Info::connection(), id, QX11Info::appRootWindow(), 0, 0);
   //Now go ahead and create/populate the container for this window
   NativeWindowObject *win = new NativeWindowObject(id);
+
   //Register for events from this window
   registerClientEvents(win->id());
   NWindows << win;
@@ -964,13 +966,13 @@ void NativeWindowSystem::CheckDamageID(WId win){
 }
 
 void NativeWindowSystem::raiseWindow(NativeWindowObject *win){
-  qDebug() << "Raise Window:" << win->name();
+  qDebug() << "Raise Window:" << win->name() << win->id();
   xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST ,win->id());
 }
 
 
 void NativeWindowSystem::lowerWindow(NativeWindowObject *win){
-  qDebug() << "Lower Window:" << win->name();
+  qDebug() << "Lower Window:" << win->name() << win->id();
   xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_LOWER_HIGHEST ,win->id());
 }
 
