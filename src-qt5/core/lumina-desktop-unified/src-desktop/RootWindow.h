@@ -22,6 +22,8 @@ public:
 
 	void start();
 
+	WId viewID(){ return root_view->winId(); }
+
 public slots:
 	void syncRootSize();
 

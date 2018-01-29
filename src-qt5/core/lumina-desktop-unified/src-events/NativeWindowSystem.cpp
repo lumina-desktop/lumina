@@ -965,6 +965,8 @@ void NativeWindowSystem::CheckDamageID(WId win){
 
 void NativeWindowSystem::raiseWindow(NativeWindowObject *win){
   qDebug() << "Raise Window:" << win->name();
+  //Note: Always ensure the desktop canvas is right under the main window that is raised
+  xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST, Lumina::ROOTWIN->viewID());
   xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST ,win->id());
 }
 
