@@ -29,7 +29,7 @@ private:
 	QTranslator *currTranslator;
 
 	//Extra background threads for individual objects
-	QThread *OSThread; //OSInterface thread
+
 
 public slots:
 	void setupSession();  //called during startup only

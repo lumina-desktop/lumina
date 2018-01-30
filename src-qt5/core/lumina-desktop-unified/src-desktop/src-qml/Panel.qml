@@ -7,8 +7,10 @@
 import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtQuick.Controls 1
+import QtQuick.Layouts 1.3
 
 import Lumina.Backend.PanelObject 2.0
+import "./plugins" as PLUGINS
 
 Rectangle {
     //C++ backend object
@@ -21,4 +23,17 @@ Rectangle {
     y: object.y
     width: object.width
     height: object.height
-  }
+
+    GridLayout{
+	id: layout
+	anchors.fill: parent;
+	columns: (object.width>object.height) ? -1 : 1
+	rows: (object.width>object.height) ? 1 : -1
+
+	//hardcode the "status_tray" plugin at the moment
+	PLUGINS.StatusTray{
+		id: "statustray"
+	}
+    }
+
+}

@@ -195,18 +195,24 @@ QString OSInterface::networkHostname(){
   return QHostInfo::localHostName();
 }
 
-QHostAddress OSInterface::networkAddress(){
+QStringList OSInterface::networkAddress(){
   QString addr;
   if(INFO.contains("netaccess/address")){ addr = INFO.value("netaccess/address").toString(); }
-  return QHostAddress(addr);
+  return addr.split(", ");
 }
 
 bool OSInterface::hasNetworkManager(){
   return verifyAppOrBin(networkManagerUtility());
 }
 
+QString OSInterface::networkStatus(){
+  QString stat = "<b>%1</b><br>%2<br>%3";
+  return stat.arg(networkHostname(), networkType(), networkAddress().join("<br>"));
+}
+
 //NetworkAccessManager slots
 void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
+  qDebug() << "[DEBUG] Got Net Access Changed";
   INFO.insert("netaccess/available", stat== QNetworkAccessManager::Accessible);
   //Update all the other network status info at the same time
   QNetworkConfiguration active = netman->activeConfiguration();
@@ -265,6 +271,7 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
     icon = "network-workgroup"; //failover to a generic "network" icon
   }
   INFO.insert("netaccess/icon",icon);
+  qDebug() << "[DEBUG] Emit NetworkStatusChanged";
   emit networkStatusChanged();
 }
 
