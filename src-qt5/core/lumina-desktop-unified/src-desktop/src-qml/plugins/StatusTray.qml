@@ -15,7 +15,7 @@ import "./status_tray" as QML
 Rectangle {
 	property int prefsize: (parent.width < parent.height) ? parent.width : parent.height
 	id: "status_tray"
-	//color: "transparent"
+	color: "transparent"
 	Layout.fillHeight: true
 	Layout.fillWidth: true
 
@@ -38,7 +38,6 @@ Rectangle {
 		}
 		//Battery Status
 		QML.BatteryButton{
-			id: "batButton"
 			Layout.preferredHeight: status_tray.prefsize
 			Layout.preferredWidth: status_tray.prefsize
 		}
