@@ -5,8 +5,16 @@
 //  See the LICENSE file for full details
 //===========================================
 import QtQuick 2.2
-import QtQuick.Controls 2
+import QtQuick.Controls 1
 
-Rectangle{
-	color: "red"
+import Lumina.Backend.RootDesktopObject 2.0
+import Lumina.Backend.OSInterface 2.0
+
+ToolButton{
+	property OSInterface os: RootObject.os_interface()
+	id: "batButton"
+	iconName: os.icon
+	tooltip: os.batteryCharge+"%: "+os.batteryRemaining
+	visible: os.batteryAvailable()
+	enabled: false
 }
