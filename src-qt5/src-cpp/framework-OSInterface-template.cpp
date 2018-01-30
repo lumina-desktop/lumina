@@ -7,71 +7,70 @@
 #include <framework-OSInterface.h>
 
 // = Battery =
-bool OSInterface::batteryAvailable(){ return false; }
-float OSInterface::batteryCharge(){ return -1; }
-bool OSInterface::batteryCharging(){ return false; }
-double OSInterface::batterySecondsLeft(){ return -1; }
+bool OSInterface::OS_batteryAvailable(){ return false; }
+float OSInterface::OS_batteryCharge(){ return -1; }
+bool OSInterface::OS_batteryCharging(){ return false; }
+double OSInterface::OS_batterySecondsLeft(){ return -1; }
 
 // = Volume =
-bool OSInterface::volumeSupported(){ return false; }
-int OSInterface::volume(){ return -1; }
-void OSInterface::setVolume(int){}
+bool OSInterface::OS_volumeSupported(){ return false; }
+int OSInterface::OS_volume(){ return -1; }
+void OSInterface::OS_setVolume(int){}
 
 // = Network Information =
-QString OSInterface::networkTypeFromDeviceName(QString name){
+QString OSInterface::OS_networkTypeFromDeviceName(QString name){
   //Return options: wifi, wired, cell, cell-2G, cell-3G, cell-4G
   return "";
 }
 
-float OSInterface::networkStrength(){
-  //QString device = INFO.value("netaccess/devicename");
-  return -1; //percentage. ("wired" type should always be 100%)
+float OSInterface::OS_networkStrengthFromDeviceName(QString name){
+  //NOTE: This will only run for non-wired devices (wifi, cell[-*])
+  return -1; //percentage
 }
 
 // = Media Shortcuts =
-QStringList OSInterface::mediaDirectories(){ return QStringList() << "/media"; } //directory where XDG shortcuts are placed for interacting with media (local/remote)
-QStringList OSInterface::mediaShortcuts(){ return autoHandledMediaFiles(); } //List of currently-available XDG shortcut file paths
+QStringList OSInterface::OS_mediaDirectories(){ return QStringList() << "/media"; } //directory where XDG shortcuts are placed for interacting with media (local/remote)
 
 // = Updates =
-bool OSInterface::updatesSupported(){ return false; }
-bool OSInterface::updatesAvailable(){ return false; }
-QString OSInterface::updateDetails(){ return QString(); }	//Information about any available updates
-bool OSInterface::updatesRunning(){ return false; }
-QString OSInterface::updateLog(){ return QString(); }		//Information about any currently-running update
-bool OSInterface::updatesFinished(){ return false; }
-QString OSInterface::updateResults(){ return QString(); }	//Information about any finished update
-void OSInterface::startUpdates(){}
-bool OSInterface::updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
-bool OSInterface::updateCausesReboot(){ return false; }
-QDateTime OSInterface::lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
-QString OSInterface::lastUpdateResults(){ return QString(); } //Information about the previously-finished update
+bool OSInterface::OS_updatesSupported(){ return false; }
+bool OSInterface::OS_updatesAvailable(){ return false; }
+QString OSInterface::OS_updateDetails(){ return QString(); }	//Information about any available updates
+bool OSInterface::OS_updatesRunning(){ return false; }
+QString OSInterface::OS_updateLog(){ return QString(); }		//Information about any currently-running update
+bool OSInterface::OS_updatesFinished(){ return false; }
+QString OSInterface::OS_updateResults(){ return QString(); }	//Information about any finished update
+void OSInterface::OS_startUpdates(){}
+bool OSInterface::OS_updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
+bool OSInterface::OS_updateCausesReboot(){ return false; }
+QDateTime OSInterface::OS_lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
+QString OSInterface::OS_lastUpdateResults(){ return QString(); } //Information about the previously-finished update
 
 // = System Power =
-bool OSInterface::canReboot(){ return false; }
-void OSInterface::startReboot(){}
-bool OSInterface::canShutdown(){ return false; }
-void OSInterface::startShutdown(){}
-bool OSInterface::canSuspend(){ return false; }
-void OSInterface::startSuspend(){}
+bool OSInterface::OS_canReboot(){ return false; }
+void OSInterface::OS_startReboot(){}
+bool OSInterface::OS_canShutdown(){ return false; }
+void OSInterface::OS_startShutdown(){}
+bool OSInterface::OS_canSuspend(){ return false; }
+void OSInterface::OS_startSuspend(){}
 
 // = Screen Brightness =
-bool OSInterface::brightnessSupported(){ return false; }
-int OSInterface::brightness(){ return -1; } //percentage: 0-100 with -1 for errors
-void OSInterface::setBrightness(int){}
+bool OSInterface::OS_brightnessSupported(){ return false; }
+int OSInterface::OS_brightness(){ return -1; } //percentage: 0-100 with -1 for errors
+void OSInterface::OS_setBrightness(int){}
 
 // = System Status Monitoring
-bool OSInterface::cpuSupported(){ return false; }
-QList<int> OSInterface::cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
-QStringList OSInterface::cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
+bool OSInterface::OS_cpuSupported(){ return false; }
+QList<int> OSInterface::OS_cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
+QStringList OSInterface::OS_cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
 
-bool OSInterface::memorySupported(){ return false; }
-int OSInterface::memoryUsedPercentage(){ return -1; } //percentage: 0-100 with -1 for errors
-QString OSInterface::memoryTotal(){ return QString(); } //human-readable form - does not tend to change within a session
-QStringList OSInterface::diskIO(){ return QStringList(); } //Returns list of current read/write stats for each device
+bool OSInterface::OS_memorySupported(){ return false; }
+int OSInterface::OS_memoryUsedPercentage(){ return -1; } //percentage: 0-100 with -1 for errors
+QString OSInterface::OS_memoryTotal(){ return QString(); } //human-readable form - does not tend to change within a session
+QStringList OSInterface::OS_diskIO(){ return QStringList(); } //Returns list of current read/write stats for each device
 
-bool OSInterface::diskSupported(){ return false; }
-int OSInterface::fileSystemPercentage(QString dir){ return -1; } //percentage of capacity used: 0-100 with -1 for errors
-QString OSInterface::fileSystemCapacity(QString dir){ return QString(); } //human-readable form - total capacity
+bool OSInterface::OS_diskSupported(){ return false; }
+int OSInterface::OS_fileSystemPercentage(QString dir){ return -1; } //percentage of capacity used: 0-100 with -1 for errors
+QString OSInterface::OS_fileSystemCapacity(QString dir){ return QString(); } //human-readable form - total capacity
 
 // = OS-Specific Utilities =
 QString OSInterface::controlPanelShortcut(){ return QString(); } //relative *.desktop shortcut name (Example: "some_utility.desktop")

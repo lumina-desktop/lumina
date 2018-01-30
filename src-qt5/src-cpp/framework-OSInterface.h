@@ -39,9 +39,10 @@ class OSInterface : public QObject{
 	Q_OBJECT
 	// == QML ACCESSIBLE PROPERTIES ==
 	//Battery
-	Q_PROPERTY( float batteryCharge READ batteryCharge NOTIFY batteryChargeChanged)
-	Q_PROPERTY( bool batteryCharging READ batteryCharging NOTIFY batteryChargingChanged)
-	Q_PROPERTY( double batterySecondsLeft READ batterySecondsLeft NOTIFY batterySecondsLeftChanged)
+	Q_PROPERTY( float batteryCharge READ batteryCharge NOTIFY batteryChanged)
+	Q_PROPERTY( bool batteryCharging READ batteryCharging NOTIFY batteryChanged)
+	Q_PROPERTY( QString batteryRemaining READ batteryRemaining NOTIFY batteryChanged)
+	Q_PROPERTY( QString batteryIcon READ batteryIcon NOTIFY batteryChanged)
 	//Volume
 	Q_PROPERTY( int volume READ volume WRITE setVolume NOTIFY volumeChanged)
 	//Network
@@ -76,7 +77,8 @@ public:
 	Q_INVOKABLE bool batteryAvailable();
 	Q_INVOKABLE float batteryCharge();
 	Q_INVOKABLE bool batteryCharging();
-	Q_INVOKABLE double batterySecondsLeft();
+	Q_INVOKABLE QString batteryRemaining();
+	Q_INVOKABLE QString batteryIcon();
 
 	// = Volume =
 	Q_INVOKABLE bool volumeSupported();
@@ -86,8 +88,8 @@ public:
 	// = Network Information =
 	Q_INVOKABLE bool networkAvailable();
 	Q_INVOKABLE QString networkType(); //"wifi", "wired", "cell", "cell-2G", "cell-3G", "cell-4G"
-	Q_INVOKABLE QString networkTypeFromDeviceName(QString name); //wifi, wired, cell, cell-2G, cell-3G, cell-4G
 	Q_INVOKABLE float networkStrength(); //percentage. ("wired" type should always be 100%)
+	Q_INVOKABLE QString networkIcon();
 	Q_INVOKABLE QString networkHostname();
 	Q_INVOKABLE QHostAddress networkAddress();
 
@@ -149,7 +151,56 @@ public:
 	Q_INVOKABLE QString appStoreShortcut(); //relative *.desktop shortcut name (Example: "some_utility.desktop")
 
 
-	// QML-Accessible properties/functions
+	// = DIRECT OS INTERACTIONS = (properties above are cached/gated)
+	// = Battery =
+	bool OS_batteryAvailable();
+	float OS_batteryCharge();
+	bool OS_batteryCharging();
+	double OS_batterySecondsLeft();
+	// = Volume =
+	bool OS_volumeSupported();
+	int OS_volume();
+	void OS_setVolume(int);
+	// = Network Information =
+	QString OS_networkTypeFromDeviceName(QString name);
+	float OS_networkStrengthFromDeviceName(QString name);
+	// = Media Shortcuts =
+	QStringList OS_mediaDirectories();
+	// = Updates =
+	bool OS_updatesSupported();
+	bool OS_updatesAvailable();
+	QString OS_updateDetails();
+	bool OS_updatesRunning();
+	QString OS_updateLog();
+	bool OS_updatesFinished();
+	QString OS_updateResults();
+	void OS_startUpdates();
+	bool OS_updateOnlyOnReboot();
+	bool OS_updateCausesReboot();
+	QDateTime OS_lastUpdate();
+	QString OS_lastUpdateResults();
+	// = System Power =
+	bool OS_canReboot();
+	void OS_startReboot();
+	bool OS_canShutdown();
+	void OS_startShutdown();
+	bool OS_canSuspend();
+	void OS_startSuspend();
+	// = Screen Brightness =
+	bool OS_brightnessSupported();
+	int OS_brightness();
+	void OS_setBrightness(int);
+	// = System Status Monitoring
+	bool OS_cpuSupported();
+	QList<int> OS_cpuPercentage();
+	QStringList OS_cpuTemperatures();
+	bool OS_memorySupported();
+	int OS_memoryUsedPercentage();
+	QString OS_memoryTotal();
+	QStringList OS_diskIO();
+	bool OS_diskSupported();
+	int OS_fileSystemPercentage(QString dir);
+	QString OS_fileSystemCapacity(QString dir);
 
 private slots:
 	// ================
@@ -176,15 +227,17 @@ private slots:
 	void DiskTimerUpdate();
 
 signals:
-	void batteryChargeChanged();
-	void batteryChargingChanged();
-	void batterySecondsLeftChanged();
+	void batteryChanged();
 	void volumeChanged();
 	void networkStatusChanged();
 	void mediaShortcutsChanged();
 	void updateStatusChanged();
 	void powerAvailableChanged();
 	void brightnessChanged();
+
+	//Internal alert signals
+	void BatteryFullAlert();
+	void BatteryEmptyAlert();
 
 private:
 	//Internal persistant data storage, OS-specific usage implementation

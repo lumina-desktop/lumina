@@ -181,6 +181,16 @@ QString OSInterface::networkType(){
   return "";
 }
 
+float OSInterface::networkStrength(){
+  if(INFO.contains("netaccess/strength")){ return INFO.value("netaccess/strength").toFloat(); } //percentage
+  return -1;
+}
+
+QString OSInterface::networkIcon(){
+  if(INFO.contains("netaccess/icon")){ return INFO.value("netaccess/icon").toString(); }
+  return "";
+}
+
 QString OSInterface::networkHostname(){
   return QHostInfo::localHostName();
 }
@@ -208,9 +218,13 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
     case QNetworkConfiguration::Bearer2G: type="cell-2G"; break;
     case QNetworkConfiguration::Bearer3G: type="cell-3G"; break;
     case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
-    default: type=networkTypeFromDeviceName(active.name()); //could not be auto-determined - run the OS-specific routine
+    default: type=OS_networkTypeFromDeviceName(active.name()); //could not be auto-determined - run the OS-specific routine
   }
   INFO.insert("netaccess/type", type);
+  float strength = 100;
+  if(type!="wired"){ strength = OS_networkStrengthFromDeviceName(active.name()); }
+  INFO.insert("netaccess/strength", strength);
+
   //qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
   QNetworkInterface iface = QNetworkInterface::interfaceFromName(active.name());
   //qDebug() << " - Configuration: Name:" << active.name() << active.bearerTypeName() << active.identifier();
@@ -224,6 +238,33 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
   //qDebug() << " - IP Address:" << address;
   //qDebug() << " - Hostname:" << networkHostname();
   INFO.insert("netaccess/address", address.join(", "));
+
+  //Figure out the icon used for this type/strnegth
+  QString icon;
+  if(type.startsWith("cell")){
+    if(address.isEmpty()){ icon = "network-cell-off"; }
+    else if(strength>80){ icon = "network-cell-connected-100"; }
+    else if(strength>60){ icon = "network-cell-connected-75"; }
+    else if(strength>40){ icon = "network-cell-connected-50"; }
+    else if(strength>10){ icon = "network-cell-connected-25"; }
+    else if(strength >=0){ icon = "network-cell-connected-00"; }
+    else{ icon = "network-cell"; } //unknown strength - just use generic icon so we at least get off/on visibility
+  }else if(type=="wifi"){
+    if(address.isEmpty()){ icon = "network-wireless-off"; }
+    else if(strength>80){ icon = "network-wireless-100"; }
+    else if(strength>60){ icon = "network-wireless-75"; }
+    else if(strength>40){ icon = "network-wireless-50"; }
+    else if(strength>10){ icon = "network-wireless-25"; }
+    else if(strength >=0){ icon = "network-wireless-00"; }
+    else{ icon = "network-wireless"; } //unknown strength - just use generic icon so we at least get off/on visibility
+  }else if(type=="wired"){
+    if(strength==100 && !address.isEmpty()){ icon = "network-wired-connected"; }
+    else if(strength==100){ icon = "network-wired-pending"; }
+    else{ icon = "network-wired-disconnected"; }
+  }else{
+    icon = "network-workgroup"; //failover to a generic "network" icon
+  }
+  INFO.insert("netaccess/icon",icon);
   emit networkStatusChanged();
 }
 
@@ -313,7 +354,39 @@ void OSInterface::setupDiskMonitor(int update_ms, int delay_ms){
 
 // Timer-based monitor update routines (NOTE: these are all run in a separate thread!!)
 void OSInterface::syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
+  float charge = OS_batteryCharge();
+  bool charging = OS_batteryCharging();
+  double secs = OS_batterySecondsLeft();
+  //Check for any alert generations
+  if(charging && hash->value("battery/percent",100).toFloat() <= 99 && charge>99){ os->emit BatteryFullAlert(); }
+  else if(!charging && hash->value("battery/percent", 50).toFloat()>10 && charge<10){ os->emit BatteryEmptyAlert(); }
 
+  hash->insert("battery/percent",charge);
+  hash->insert("battery/charging",charging);
+  //Convert the seconds to human-readable
+  QString time;
+  hash->insert("battery/time", time);
+  //Determine the icon which should be used for this status
+  QString icon;
+  if(charging){
+    if(charge>=99){ icon="battery-charging"; }
+    else if(charge>80){ icon="battery-charging-80"; }
+    else if(charge >60){ icon="battery-charging-60"; }
+    else if(charge >30){ icon="battery-charging-40"; }
+    else if(charge >0){ icon="battery-charging-20"; }
+    else{ icon="battery-unknown"; }
+  }else{
+    if(charge>90){ icon="battery"; }
+    else if(charge>80){ icon="battery-80"; }
+    else if(charge >60){ icon="battery-60"; }
+    else if(charge >30){ icon="battery-40"; }
+    else if(charge >10){ icon="battery-20"; }
+    else if(charge >0){ icon="battery-alert"; }
+    else{ icon="battery-unknown"; }
+  }
+  hash->insert("battery/icon",icon);
+  //Now emit the change signal and restart the timer
+  os->emit batteryChanged();
   QTimer::singleShot(0, timer, SLOT(start()));
 }
 
@@ -346,3 +419,72 @@ void OSInterface::syncDiskInfo(OSInterface *os, QHash<QString, QVariant> *hash, 
 
   QTimer::singleShot(0, timer, SLOT(start()));
 }
+
+// = Battery =
+bool OSInterface::batteryAvailable(){ return OS_batteryAvailable(); }
+float OSInterface::batteryCharge(){
+  if(INFO.contains("battery/percent")){ return INFO.value("battery/percent").toFloat(); }
+  return -1;
+}
+bool OSInterface::batteryCharging(){
+  if(INFO.contains("battery/charging")){ return INFO.value("battery/charging").toBool(); }
+  return false;
+}
+QString OSInterface::batteryRemaining(){
+  if(INFO.contains("battery/time")){ return INFO.value("battery/time").toString(); }
+  return "";
+}
+QString OSInterface::batteryIcon(){
+  if(INFO.contains("battery/icon")){ return INFO.value("battery/icon").toString(); }
+  return "";
+}
+
+// = Volume =
+bool OSInterface::volumeSupported(){ return OS_volumeSupported(); }
+int OSInterface::volume(){ return -1; }
+void OSInterface::setVolume(int){}
+
+// = Media =
+QStringList OSInterface::mediaDirectories(){ return OS_mediaDirectories(); }
+QStringList OSInterface::mediaShortcuts(){ return autoHandledMediaFiles(); } //List of currently-available XDG shortcut file paths
+
+// = Updates =
+bool OSInterface::updatesSupported(){ return false; }
+bool OSInterface::updatesAvailable(){ return false; }
+QString OSInterface::updateDetails(){ return QString(); }	//Information about any available updates
+bool OSInterface::updatesRunning(){ return false; }
+QString OSInterface::updateLog(){ return QString(); }		//Information about any currently-running update
+bool OSInterface::updatesFinished(){ return false; }
+QString OSInterface::updateResults(){ return QString(); }	//Information about any finished update
+void OSInterface::startUpdates(){}
+bool OSInterface::updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
+bool OSInterface::updateCausesReboot(){ return false; }
+QDateTime OSInterface::lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
+QString OSInterface::lastUpdateResults(){ return QString(); } //Information about the previously-finished update
+
+// = System Power =
+bool OSInterface::canReboot(){ return false; }
+void OSInterface::startReboot(){}
+bool OSInterface::canShutdown(){ return false; }
+void OSInterface::startShutdown(){}
+bool OSInterface::canSuspend(){ return false; }
+void OSInterface::startSuspend(){}
+
+// = Screen Brightness =
+bool OSInterface::brightnessSupported(){ return false; }
+int OSInterface::brightness(){ return -1; } //percentage: 0-100 with -1 for errors
+void OSInterface::setBrightness(int){}
+
+// = System Status Monitoring
+bool OSInterface::cpuSupported(){ return false; }
+QList<int> OSInterface::cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
+QStringList OSInterface::cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
+
+bool OSInterface::memorySupported(){ return false; }
+int OSInterface::memoryUsedPercentage(){ return -1; } //percentage: 0-100 with -1 for errors
+QString OSInterface::memoryTotal(){ return QString(); } //human-readable form - does not tend to change within a session
+QStringList OSInterface::diskIO(){ return QStringList(); } //Returns list of current read/write stats for each device
+
+bool OSInterface::diskSupported(){ return false; }
+int OSInterface::fileSystemPercentage(QString dir){ return -1; } //percentage of capacity used: 0-100 with -1 for errors
+QString OSInterface::fileSystemCapacity(QString dir){ return QString(); } //human-readable form - total capacity
