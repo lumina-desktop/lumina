@@ -34,5 +34,8 @@ int main(int argc, char** argv){
   timer->start();
   int ret = A.exec();
     qDebug() << " - Finished";
+  qDebug() << "Ending Status:";
+  qDebug() << "OS.networkAvailable:" << OS.networkAvailable();
+  qDebug() << " - " << OS.networkType() << OS.networkStrength() << OS.networkIcon() << OS.networkHostname() << OS.networkAddress();
   return ret;
 }

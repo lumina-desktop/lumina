@@ -50,7 +50,9 @@ class OSInterface : public QObject{
 	Q_PROPERTY( QString networkType READ networkType NOTIFY networkStatusChanged)
 	Q_PROPERTY( float networkStrength READ networkStrength NOTIFY networkStatusChanged)
 	Q_PROPERTY( QString networkHostname READ networkHostname NOTIFY networkStatusChanged)
-	Q_PROPERTY( QHostAddress networkAddress READ networkAddress NOTIFY networkStatusChanged)
+	Q_PROPERTY( QStringList networkAddress READ networkAddress NOTIFY networkStatusChanged)
+	Q_PROPERTY( QString networkIcon READ networkIcon NOTIFY networkStatusChanged);
+	Q_PROPERTY( QString networkStatus READ networkStatus NOTIFY networkStatusChanged);
 	//Media
 	Q_PROPERTY( QStringList mediaShortcuts READ mediaShortcuts NOTIFY mediaShortcutsChanged)
 	//Updates
@@ -91,7 +93,8 @@ public:
 	Q_INVOKABLE float networkStrength(); //percentage. ("wired" type should always be 100%)
 	Q_INVOKABLE QString networkIcon();
 	Q_INVOKABLE QString networkHostname();
-	Q_INVOKABLE QHostAddress networkAddress();
+	Q_INVOKABLE QStringList networkAddress();
+	Q_INVOKABLE QString networkStatus(); //combines a bunch of the above info into a single string
 
 	// = Network Modification =
 	Q_INVOKABLE bool hasNetworkManager();

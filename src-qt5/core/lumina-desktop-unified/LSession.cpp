@@ -31,7 +31,6 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   qRegisterMetaType< NativeWindowSystem::MouseButton >("NativeWindowSystem::MouseButton");
 
   mediaObj = 0; //private object used for playing login/logout chimes
-  OSThread = 0;
  if(this->isPrimaryProcess()){
   //Setup the global registrations
   qsrand(QDateTime::currentMSecsSinceEpoch());
@@ -58,9 +57,6 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   Lumina::APPLIST = XDGDesktopList::instance();
   Lumina::ROOTWIN = new RootWindow();
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
-  OSThread = new QThread();
-  OSInterface::instance()->moveToThread(OSThread);
-  OSThread->start();
   setupGlobalConnections();
  } //end check for primary process
 }
@@ -80,10 +76,6 @@ LSession::~LSession(){
   if(Lumina::DESKMAN!=0){ Lumina::DESKMAN->deleteLater(); }
   if(OSInterface::instance()->isRunning()){ OSInterface::instance()->stop(); }
   OSInterface::instance()->deleteLater();
-  if(OSThread!=0){
-    if(OSThread->isRunning()){ OSThread->quit(); }
-    OSThread->deleteLater();
-  }
 }
 
 void LSession::setupSession(){
@@ -117,7 +109,7 @@ void LSession::setupSession(){
   //checkUserFiles(); //adds these files to the watcher as well
   Lumina::NWS->setRoot_numberOfWorkspaces(QStringList() << "one" << "two");
   Lumina::NWS->setRoot_currentWorkspace(0);
-  if(!OSInterface::instance()->isRunning()){ OSInterface::instance()->start(); }
+  OSInterface::instance()->start();
 
   Lumina::DESKMAN->start();
   Lumina::ROOTWIN->start();

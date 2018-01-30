@@ -5,5 +5,10 @@
     <file>Screen.qml</file>
     <file>Panel.qml</file>
     <file>NativeWindow.qml</file>
+    <file>plugins/StatusTray.qml</file>
+    <file>plugins/status_tray/TrayIcon.qml</file>
+    <file>plugins/status_tray/VolumeButton.qml</file>
+    <file>plugins/status_tray/NetworkButton.qml</file>
+    <file>plugins/status_tray/BatteryButton.qml</file>
   </qresource>
 </RCC>

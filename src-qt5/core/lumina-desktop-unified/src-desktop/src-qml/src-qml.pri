@@ -6,5 +6,6 @@ lupdate_only{
 		$${PWD}/Panel.qml \
 		$${PWD}/NativeWindow.qml
 }
+include(plugins/plugins.pri)
 
 RESOURCES *= $${PWD}/src-qml.qrc
