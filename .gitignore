@@ -51,3 +51,4 @@ icon-theme/Makefile
 icon-theme/*/Makefile
 Makefile
 src-qt5/src-qml/test/*
+src-qt5/desktop-utils/lumina-pdf/fontconfig/*

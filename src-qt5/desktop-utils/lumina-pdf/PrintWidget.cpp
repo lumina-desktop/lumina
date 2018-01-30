@@ -125,7 +125,7 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 }
 
 void PrintWidget::highlightText(int pageNum, QRectF textBox) {
-  PageItem *item = static_cast<PageItem*>(pages[pageNum]);
+  //PageItem *item = static_cast<PageItem*>(pages[pageNum]);
   QPainter painter(this);
   painter.fillRect(textBox, QColor(255, 255, 177, 128));
 }
@@ -182,10 +182,10 @@ void PrintWidget::populateScene()
 	int numPages = pictures->count();
   //Replace from loadingHash resolution
 	QSize paperSize = pictures->value(0).size();
-  qDebug() << "Image paperSize" << paperSize;
+  //qDebug() << "Image paperSize" << paperSize;
 
 	for (int i = 0; i < numPages; i++) {
-		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize);
+		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize, degrees);
 		scene->addItem(item);
 		pages.append(item);
 	}
@@ -281,6 +281,12 @@ void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
 }
 
-void PrintWidget::setOrientation(QPageLayout::Orientation ori) {
-  this->orientation = ori;
+void PrintWidget::receiveDocument(Poppler::Document *DOC) {
+  this->doc = DOC;
+  this->setVisible(true);
+}
+
+void PrintWidget::setDegrees(int degrees) {
+  this->degrees = degrees;
+  this->updatePreview();
 }

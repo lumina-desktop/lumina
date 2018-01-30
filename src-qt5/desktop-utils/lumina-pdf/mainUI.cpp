@@ -61,6 +61,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
+  connect(this, SIGNAL(sendDocument(Poppler::Document*)), WIDGET, SLOT(receiveDocument(Poppler::Document*)));
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -91,7 +92,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     tmp->addAction(ui->actionAll_Pages);
   ui->actionSingle_Page->setChecked(true);
 
-  qDebug() << "Starting connections";
+  //qDebug() << "Starting connections";
 
   //Connect up the buttons
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
@@ -106,8 +107,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //connect(ui->actionSelect_Mode, &QAction::triggered, this, [&] { this->setScroll(false); });
   connect(ui->actionZoom_In,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
-  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { this->rotate(true); });
-  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { this->rotate(false); });
+  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { WIDGET->setDegrees(-90); });
+  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { WIDGET->setDegrees(90); });
   connect(ui->actionZoom_In_2,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out_2, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
   connect(ui->actionFirst_Page, SIGNAL(triggered()), this, SLOT(firstPage()) );
@@ -187,7 +188,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
   ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
 
-  qDebug() << "Finished setting icons";
+  //qDebug() << "Finished setting icons";
 
   //Now set the default state of the menu's and actions
   ui->actionStop_Presentation->setEnabled(false);
@@ -237,12 +238,12 @@ void MainUI::loadFile(QString path){
   Poppler::Page *PAGE = DOC->page(0);
   if(PAGE!=0){
     lastdir = path.section("/",0,-2); //save this for later
-    switch(PAGE->orientation()){
+    /*switch(PAGE->orientation()){
       case Poppler::Page::Landscape:
         WIDGET->setOrientation(QPageLayout::Landscape); break;
       default:
         WIDGET->setOrientation(QPageLayout::Portrait);
-    }
+    }*/
     delete PAGE;
     qDebug() << " - Document Setup : start loading pages now";
     startLoadingPages();
@@ -422,11 +423,8 @@ void MainUI::slotPageLoaded(int page){
   //qDebug() << " - finished:" << finished;
   if(finished == numPages){
     progAct->setVisible(false);
-    //qDebug() << "Setting Pictures";
     WIDGET->setPictures(&loadingHash);
-    WIDGET->setVisible(true);
-    QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
-    //qDebug() << "Updating";
+    emit sendDocument(DOC);
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
@@ -526,29 +524,13 @@ void MainUI::updatePageNumber(){
   label_page->setText( text.arg( QString::number(WIDGET->currentPage()), QString::number(numPages) ));
 }
 
-void MainUI::setScroll(bool tog) {
+/*void MainUI::setScroll(bool tog) {
   if(tog) {
     QApplication::setOverrideCursor(Qt::OpenHandCursor);
   }else{
     QApplication::setOverrideCursor(Qt::IBeamCursor);
   }
-}
-
-void MainUI::rotate(bool ccw) {
-  for(int i = 0; i < numPages; i++) {
-    QImage image = loadingHash[i];
-    qDebug() << "Page rotating: " << i;
-    //Setup a rotation matrix that rotates 90 degrees clockwise or counterclockwise
-    QMatrix matrix = (ccw) ? QMatrix(0, -1, 1, 0, 0, 0) : QMatrix(0, 1, -1, 0, 0, 0);
-    image = image.transformed(matrix, Qt::SmoothTransformation);
-    //Updates the image in the hash
-    loadingHash.insert(i, image);
-  }
-  //Rotates the page as well as the image
-  //WIDGET->setOrientation((WIDGET->orientation() == QPageLayout::Landscape) ?
-    //QPageLayout::Portrait : QPageLayout::Landscape);
-  QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
-}
+}*/
 
 void MainUI::updateContextMenu(){
   contextMenu->clear();

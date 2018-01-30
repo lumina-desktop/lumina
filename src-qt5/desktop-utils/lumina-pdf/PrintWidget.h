@@ -20,10 +20,12 @@
 #include <QtMath>
 #include <QPageLayout>
 
+#include <poppler/qt5/poppler-qt5.h>
+
 class PageItem : public QGraphicsItem {
 public:
-	PageItem(int _pageNum, const QImage _pagePicture, QSize _paperSize)
-        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize)
+	PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize, int _degrees)
+        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize), degrees(_degrees)
 	{
           brect = QRectF(QPointF(-25, -25),
                       QSizeF(paperSize)+QSizeF(50, 50));
@@ -68,20 +70,37 @@ public:
 	  cgrad.setColorAt(1.0, QColor(0,0,0,0));
 	  painter->fillRect(cshadow, QBrush(cgrad));
 
+		QMatrix matrix;
+		switch(degrees) {
+			case -90:
+				matrix = QMatrix(0, -1, 1, 0, 0, 0); 
+				break;
+			case 90:
+				matrix = QMatrix(0, 1, -1, 0, 0, 0);
+				break;
+			default:
+				matrix = QMatrix(1, 0, 0, 1, 0 ,0); 
+		}
+
 	  painter->setClipRect(paperRect & option->exposedRect);
 	  painter->fillRect(paperRect, Qt::white);
 	  if (pagePicture.isNull()){
 	    qDebug() << "NULL";
 	    return;
 	  }
+
+		if(degrees != 0)
+			pagePicture = pagePicture.transformed(matrix, Qt::SmoothTransformation);
+
 	  painter->drawImage(QPoint(0,0), pagePicture);
 	}
 
 private:
-    int pageNum;
-    const QImage pagePicture;
-    QSize paperSize;
-    QRectF brect;
+  int pageNum;
+  QImage pagePicture;
+  QSize paperSize;
+  QRectF brect;
+  int degrees;
 };
 
 
@@ -118,6 +137,8 @@ private:
 	bool initialized, fitting;
 	QList<QGraphicsItem*> pages;
 	QHash<int, QImage> *pictures;
+  Poppler::Document *doc;
+  int degrees;
 
 public:
 	PrintWidget(QWidget *parent = 0);
@@ -138,8 +159,9 @@ public slots:
 	void zoomOut(double factor=1.2);
 	void setCurrentPage(int);
 	void setVisible(bool) Q_DECL_OVERRIDE;
-	void setOrientation(QPageLayout::Orientation);
 	void highlightText(int, QRectF);
+  void receiveDocument(Poppler::Document*);
+  void setDegrees(int);
 
 	void updatePreview();
 	void fitView();
