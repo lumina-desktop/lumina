@@ -612,6 +612,7 @@ void MainUI::find(QString text, bool forward) {
       results.clear();
 
     if(research or newText) {
+      ui->resultsLabel->setText("");
       for(int i = 0; i < numPages; i++) {
         QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
         for(int j = 0; j < textList.size(); j++) {
@@ -628,7 +629,9 @@ void MainUI::find(QString text, bool forward) {
     if(!results.empty()) {
       //Jump to the location of the next or previous textbox and highlight
       if(forward) {
-        currentHighlight = (currentHighlight + 1) % results.size();
+        currentHighlight++;
+        if(currentHighlight >= results.size())
+        currentHighlight %= results.size();
       }else{
         currentHighlight--;
         //Ensure currentHighlight will be between 0 and results.size() - 1
@@ -636,13 +639,17 @@ void MainUI::find(QString text, bool forward) {
           currentHighlight = results.size() - 1;
       }
 
-      qDebug() << "Jump to location: " << currentHighlight;
+
+      ui->resultsLabel->setText(QString::number(currentHighlight+1) + " of " + QString::number(results.size()) + " results");
 
       Poppler::TextBox *currentText = results.keys()[currentHighlight];
-      WIDGET->setCurrentPage(results.value(currentText));
+      WIDGET->setCurrentPage(results.value(currentText)+1);
+
+      qDebug() << "Jump to location: " << results.value(currentText);
+
       WIDGET->highlightText(currentHighlight, currentText->boundingBox());
 
-      QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+      //QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
     }else{
       //Print "No results found"
     }
