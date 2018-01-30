@@ -16,7 +16,6 @@ PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), cur
 	QObject::connect(this->verticalScrollBar(), SIGNAL(valueChanged(int)),
 									 this, SLOT(updateCurrentPage()));
 	QObject::connect(this, SIGNAL(resized()), this, SLOT(fit()));
-  QObject::connect(parent, SIGNAL(sendDocument(Poppler::Document*)), this, SLOT(receiveDocument(Poppler::Document*)));
 
 	scene = new QGraphicsScene(this);
 	scene->setBackgroundBrush(Qt::gray);
@@ -183,7 +182,7 @@ void PrintWidget::populateScene()
 	int numPages = pictures->count();
   //Replace from loadingHash resolution
 	QSize paperSize = pictures->value(0).size();
-  qDebug() << "Image paperSize" << paperSize;
+  //qDebug() << "Image paperSize" << paperSize;
 
 	for (int i = 0; i < numPages; i++) {
 		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize, degrees);

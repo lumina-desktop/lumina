@@ -61,6 +61,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   DOC = 0;
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
+  connect(this, SIGNAL(sendDocument(Poppler::Document*)), WIDGET, SLOT(receiveDocument(Poppler::Document*)));
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -91,7 +92,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     tmp->addAction(ui->actionAll_Pages);
   ui->actionSingle_Page->setChecked(true);
 
-  qDebug() << "Starting connections";
+  //qDebug() << "Starting connections";
 
   //Connect up the buttons
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
@@ -187,7 +188,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
   ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
 
-  qDebug() << "Finished setting icons";
+  //qDebug() << "Finished setting icons";
 
   //Now set the default state of the menu's and actions
   ui->actionStop_Presentation->setEnabled(false);
