@@ -51,8 +51,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
   //Now put the widgets into the UI
-  ui->bookmarksFrame->setParent(WIDGET);
-  ui->findGroup->setParent(WIDGET);
+  //ui->bookmarksFrame->setParent(WIDGET);
+  //ui->findGroup->setParent(WIDGET);
   qDebug() << "Setting central widget";
   this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET); //setCentralWidget(WIDGET);
   ui->label_replaceme->setVisible(false);
@@ -116,7 +116,15 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
   connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
   connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(showInformation()));
-  connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(enableFind()));
+  connect(ui->actionFind, &QAction::triggered, this, [&] {
+    if(ui->findGroup->isVisible()) {
+      ui->findGroup->setVisible(false);
+      this->setFocus();
+    }else{
+      ui->findGroup->setVisible(true);
+      ui->findGroup->setFocus();
+    }
+  });
   connect(ui->actionFind_Next,  &QAction::triggered, this,
     [&] { find(ui->textEdit->text(), true); });
   connect(ui->actionFind_Previous,  &QAction::triggered, this,
@@ -129,6 +137,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     [&] (bool value) { this->matchCase = value; });
   connect(ui->closeFind, &QPushButton::clicked, this,
     [&] { ui->findGroup->setVisible(false); this->setFocus(); });
+  connect(ui->closeBookmarks, &QPushButton::clicked, this,
+    [&] { ui->bookmarksFrame->setVisible(false); this->setFocus(); });
   connect(ui->actionClearHighlights,  &QAction::triggered, WIDGET,
     [&] { WIDGET->updatePreview(); });
   connect(ui->actionBookmarks, SIGNAL(triggered()), this, SLOT(showBookmarks()));
@@ -187,6 +197,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->findPrevB->setIcon(LXDG::findIcon("go-up-search"));
   ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
   ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
+  ui->closeBookmarks->setIcon(LXDG::findIcon("dialog-close"));
 
   //qDebug() << "Finished setting icons";
 
@@ -638,35 +649,6 @@ void MainUI::find(QString text, bool forward) {
   }
 }
 
-void MainUI::enableFind() {
-  if(ui->findGroup->isVisible()) {
-    qDebug() << "Disabling Find";
-    ui->findGroup->setVisible(false);
-    WIDGET->setGeometry(QRect(WIDGET->pos(),
-      QSize(WIDGET->width(), WIDGET->height()+ui->findGroup->height())));
-    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
-    this->setFocus();
-  }else{
-    qDebug() << "Enabling Find";
-    ui->findGroup->setGeometry(QRect(QPoint(0, WIDGET->height()-ui->findGroup->height()),
-      QSize(WIDGET->width()-12, ui->findGroup->height())));
-    ui->findGroup->setVisible(true);
-    WIDGET->setGeometry(QRect(WIDGET->pos(),
-      QSize(WIDGET->width(), WIDGET->height()-ui->findGroup->height())));
-
-    QTimer::singleShot(0, WIDGET, SLOT(updatePreview()));
-    ui->findGroup->setFocus();
-  }
-}
-
 void MainUI::showBookmarks() {
   ui->bookmarksFrame->setVisible(true);
-}
-
-void MainUI::resizeEvent(QResizeEvent *event) {
-  if(ui->findGroup->isVisible()) {
-    ui->findGroup->setGeometry(QRect(QPoint(0, WIDGET->height()-ui->findGroup->height()),
-      QSize(WIDGET->width()-10, ui->findGroup->height())));
-  }
-  QMainWindow::resizeEvent(event);
 }

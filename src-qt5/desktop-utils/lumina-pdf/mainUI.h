@@ -85,7 +85,6 @@ private slots:
 
 	void showInformation();
 	void find(QString text, bool forward);
-	void enableFind();
 	void showBookmarks();
 
 	void paintToPrinter(QPrinter *PRINTER);
@@ -107,7 +106,6 @@ signals:
 protected:
 	void keyPressEvent(QKeyEvent*);
 	void wheelEvent(QWheelEvent*);
-	void resizeEvent(QResizeEvent*);
 	void closeEvent(QCloseEvent *ev){
 	  endPresentation();
 	  QMainWindow::closeEvent(ev);

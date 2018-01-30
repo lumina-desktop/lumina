@@ -20,6 +20,7 @@ PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), cur
 	scene = new QGraphicsScene(this);
 	scene->setBackgroundBrush(Qt::gray);
 	this->setScene(scene);
+  this->degrees = 0;
 
 	/*QVBoxLayout *layout = new QVBoxLayout;
 	setLayout(layout);
@@ -184,6 +185,10 @@ void PrintWidget::populateScene()
 	QSize paperSize = pictures->value(0).size();
   //qDebug() << "Image paperSize" << paperSize;
 
+  //Changes the paper orientation if rotated by 90 or 270 degrees
+  if(degrees == 90 or degrees == 270) 
+    paperSize.transpose();
+
 	for (int i = 0; i < numPages; i++) {
 		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize, degrees);
 		scene->addItem(item);
@@ -286,7 +291,9 @@ void PrintWidget::receiveDocument(Poppler::Document *DOC) {
   this->setVisible(true);
 }
 
+//Sets how much to rotate the image, by either 90, 180, or 270 degrees. Adds 90 degrees for cw and -90 for ccw.
 void PrintWidget::setDegrees(int degrees) {
-  this->degrees = degrees;
+  //Mods by 360, but adds and remods because of how C++ treats negative mods
+  this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
   this->updatePreview();
 }
