@@ -9,8 +9,8 @@
 #include <QQmlImageProviderBase>
 
 RootWindow::RootWindow() : QObject(){
-  root_win = QWindow::fromWinId( QX11Info::appRootWindow() ); //
-  root_view = new QQuickView(root_win); //make it a child of the root window
+  root_win = QWindow::fromWinId( QX11Info::appRootWindow() );
+  root_view = new QQuickView(new QWindow()); //make it a child of the root window
   root_obj = RootDesktopObject::instance();
   syncRootSize();
   connect(root_win, SIGNAL(widthChanged(int)), this, SLOT(syncRootSize()) );
@@ -31,6 +31,7 @@ RootWindow::~RootWindow(){
 void RootWindow::start(){
   root_view->setSource(QUrl("qrc:///qml/RootDesktop.qml"));
   root_win->show();
+  root_view->parent()->show();
   root_view->show();
 }
 
@@ -40,6 +41,7 @@ void RootWindow::syncRootSize(){
   QRect unif;
   for(int i=0; i<screens.length(); i++){ unif = unif.united(screens[i]->geometry()); }
   if(unif.width() != root_view->width() || unif.height() != root_view->height()){
+    root_view->parent()->setGeometry(0,0,unif.width(), unif.height());
     root_view->setGeometry(0, 0, unif.width(), unif.height() );
     emit RootResized(root_view->geometry());
   }

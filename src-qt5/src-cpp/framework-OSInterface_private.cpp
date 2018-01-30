@@ -9,6 +9,8 @@
 #include <framework-OSInterface.h>
 #include <QtConcurrent>
 
+#include <QQmlEngine>
+
 OSInterface::OSInterface(QObject *parent) : QObject(parent){
   watcher = 0;
   iodevice = 0;
@@ -36,6 +38,13 @@ OSInterface* OSInterface::instance(){
     m_os_object = new OSInterface();
   }
   return m_os_object;
+}
+
+void OSInterface::RegisterType(){
+  static bool done = false;
+  if(done){ return; }
+  done=true;
+  qmlRegisterType<OSInterface>("Lumina.Backend.OSInterface", 2, 0, "OSInterface");
 }
 
 //Start/stop interface systems

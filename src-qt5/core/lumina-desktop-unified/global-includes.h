@@ -72,6 +72,7 @@
 #include <XDGMime.h>
 #include <LIconCache.h>
 #include <LFileInfo.h>
+#include <framework-OSInterface.h>
 
 // C++ Backend classes for QML interface
 #include <NativeWindowObject.h>

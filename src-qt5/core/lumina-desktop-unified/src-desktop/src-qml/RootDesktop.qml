@@ -34,9 +34,9 @@ Rectangle {
     anchors.fill: rootCanvas
     acceptedButtons: Qt.RightButton
     onClicked: { 
-      /*contextMenu.x = mouseX
-      contextMenu.y = mouseY
-      contextMenu.open() */
+      //contextMenu.x = mouseX
+      //contextMenu.y = mouseY
+      //contextMenu.open() 
       contextMenu.popup()
     }
     onPositionChanged: {

@@ -30,6 +30,7 @@ void RootDesktopObject::RegisterType(){
   //Also register any types that are needed by this class
   ScreenObject::RegisterType();
   NativeWindowObject::RegisterType();
+  OSInterface::RegisterType();
 }
 
 RootDesktopObject* RootDesktopObject::instance(){
@@ -82,6 +83,10 @@ NativeWindowObject* RootDesktopObject::window(QString id){
     if(window_objects[i]->id()==chk){ return window_objects[i]; }
   }
   return 0;
+}
+
+OSInterface* RootDesktopObject::os_interface(){
+  return OSInterface::instance();
 }
 
 void RootDesktopObject::setPanels(QList<PanelObject*> list){

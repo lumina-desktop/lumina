@@ -243,6 +243,6 @@ public:
 	~OSInterface();
 
 	static OSInterface* instance(); //Get the currently-active instance of this class (or make a new one)
-
+	static void RegisterType(); //Register this object for QML access
 };
 #endif

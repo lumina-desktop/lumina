@@ -37,6 +37,9 @@ public:
 	Q_INVOKABLE QStringList windows();
 	Q_INVOKABLE NativeWindowObject* window(QString id);
 
+	//QML Globals Access
+	Q_INVOKABLE OSInterface* os_interface();
+
 	//QML Access Functions
 	Q_INVOKABLE void logout();
 	Q_INVOKABLE void lockscreen();
