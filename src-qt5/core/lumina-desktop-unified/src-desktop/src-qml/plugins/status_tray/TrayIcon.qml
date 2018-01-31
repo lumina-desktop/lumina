@@ -6,6 +6,7 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Controls 2
+
 import Lumina.Backend.NativeWindowObject 2.0
 
 Rectangle{

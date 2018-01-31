@@ -7,7 +7,19 @@
 import QtQuick 2.2
 import QtQuick.Controls 1
 
+import Lumina.Backend.RootDesktopObject 2.0
+import Lumina.Backend.OSInterface 2.0
+
 ToolButton{
-	text: "volume"
-	tooltip: "volume"
+	property OSInterface os: RootObject.os_interface()
+	id: "volButton"
+	iconName: os.volumeIcon
+	tooltip: os.volume+"%"
+	visible: os.volumeSupported()
+	enabled: os.hasAudioMixer()
+	//Simple launch of mixer at the moment - make this popup a menu later
+	onClicked: {
+		RootObject.launchApplication( os.audioMixerShortcut() )
+	}
+	
 }

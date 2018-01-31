@@ -212,7 +212,7 @@ QString OSInterface::networkStatus(){
 
 //NetworkAccessManager slots
 void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
-  qDebug() << "[DEBUG] Got Net Access Changed";
+  //qDebug() << "[DEBUG] Got Net Access Changed";
   INFO.insert("netaccess/available", stat== QNetworkAccessManager::Accessible);
   //Update all the other network status info at the same time
   QNetworkConfiguration active = netman->activeConfiguration();
@@ -271,7 +271,7 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
     icon = "network-workgroup"; //failover to a generic "network" icon
   }
   INFO.insert("netaccess/icon",icon);
-  qDebug() << "[DEBUG] Emit NetworkStatusChanged";
+  //qDebug() << "[DEBUG] Emit NetworkStatusChanged";
   emit networkStatusChanged();
 }
 
@@ -281,30 +281,37 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
 // ========================
 //Timer slots
 void OSInterface::BatteryTimerUpdate(){
+  if(batteryTimer->isActive()){ batteryTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncBatteryInfo, this, &INFO, batteryTimer);
 }
 
 void OSInterface::UpdateTimerUpdate(){
+  if(updateTimer->isActive()){ updateTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncUpdateInfo, this, &INFO, updateTimer);
 }
 
 void OSInterface::BrightnessTimerUpdate(){
+  if(brightnessTimer->isActive()){ brightnessTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncBrightnessInfo, this, &INFO, brightnessTimer);
 }
 
 void OSInterface::VolumeTimerUpdate(){
+  if(volumeTimer->isActive()){ volumeTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncVolumeInfo, this, &INFO, volumeTimer);
 }
 
 void OSInterface::CpuTimerUpdate(){
+  if(cpuTimer->isActive()){ cpuTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncCpuInfo, this, &INFO, cpuTimer);
 }
 
 void OSInterface::MemTimerUpdate(){
+  if(memTimer->isActive()){ memTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncMemoryInfo, this, &INFO, memTimer);
 }
 
 void OSInterface::DiskTimerUpdate(){
+  if(diskTimer->isActive()){ diskTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncDiskInfo, this, &INFO, diskTimer);
 }
 
@@ -408,7 +415,18 @@ void OSInterface::syncBrightnessInfo(OSInterface *os, QHash<QString, QVariant> *
 }
 
 void OSInterface::syncVolumeInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
-
+  int oldvol = volume();
+  int newvol = OS_volume();
+  if(oldvol!=newvol){
+    hash->insert("volume/current",newvol);
+    QString icon;
+    if(newvol>66){ icon = "audio-volume-high"; }
+    else if(newvol>33){ icon = "audio-volume-medium"; }
+    else if(newvol>0){ icon = "audio-volume-low"; }
+    else{ icon = "audio-volume-muted"; }
+    hash->insert("volume/icon",icon);
+    os->emit volumeChanged();
+  }
   QTimer::singleShot(0, timer, SLOT(start()));
 }
 
@@ -448,8 +466,20 @@ QString OSInterface::batteryIcon(){
 
 // = Volume =
 bool OSInterface::volumeSupported(){ return OS_volumeSupported(); }
-int OSInterface::volume(){ return -1; }
-void OSInterface::setVolume(int){}
+int OSInterface::volume(){
+  if(INFO.contains("volume/current")){ return INFO.value("volume/current").toInt(); }
+  return 0;
+}
+
+void OSInterface::setVolume(int vol){
+  OS_setVolume(vol);
+  VolumeTimerUpdate(); //update the internal cache
+}
+
+QString OSInterface::volumeIcon(){
+  if(INFO.contains("volume/icon")){ return INFO.value("volume/icon").toString(); }
+  return "";
+}
 
 // = Media =
 QStringList OSInterface::mediaDirectories(){ return OS_mediaDirectories(); }

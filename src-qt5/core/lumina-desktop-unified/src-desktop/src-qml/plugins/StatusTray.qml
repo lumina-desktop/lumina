@@ -27,7 +27,6 @@ Rectangle {
 
 		//Volume Status
 		QML.VolumeButton{
-			id: "volButton"
 			Layout.preferredHeight: status_tray.prefsize
 			Layout.preferredWidth: status_tray.prefsize
 		}

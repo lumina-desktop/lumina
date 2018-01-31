@@ -13,7 +13,7 @@ import Lumina.Backend.OSInterface 2.0
 ToolButton{
 	property OSInterface os: RootObject.os_interface()
 	id: "batButton"
-	iconName: os.icon
+	iconName: os.batteryIcon
 	tooltip: os.batteryCharge+"%: "+os.batteryRemaining
 	visible: os.batteryAvailable()
 	enabled: false

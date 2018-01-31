@@ -45,6 +45,7 @@ class OSInterface : public QObject{
 	Q_PROPERTY( QString batteryIcon READ batteryIcon NOTIFY batteryChanged)
 	//Volume
 	Q_PROPERTY( int volume READ volume WRITE setVolume NOTIFY volumeChanged)
+	Q_PROPERTY( QString volumeIcon READ volumeIcon NOTIFY volumeChanged)
 	//Network
 	Q_PROPERTY( bool networkAvailable READ networkAvailable NOTIFY networkStatusChanged)
 	Q_PROPERTY( QString networkType READ networkType NOTIFY networkStatusChanged)
@@ -86,6 +87,7 @@ public:
 	Q_INVOKABLE bool volumeSupported();
 	Q_INVOKABLE int volume();
 	Q_INVOKABLE void setVolume(int);
+	Q_INVOKABLE QString volumeIcon();
 
 	// = Network Information =
 	Q_INVOKABLE bool networkAvailable();
