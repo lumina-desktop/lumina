@@ -138,7 +138,9 @@ void DesktopManager::syncWindowList(){
 }
 
 void DesktopManager::syncTrayWindowList(){
-
+  QList<NativeWindowObject*> allWins = Lumina::NWS->currentTrayWindows();
+  qDebug() << "Synced Tray Window List:" << allWins.length();
+  RootDesktopObject::instance()->setTrayWindows(allWins);
 }
 
 // === PRIVATE SLOTS ===

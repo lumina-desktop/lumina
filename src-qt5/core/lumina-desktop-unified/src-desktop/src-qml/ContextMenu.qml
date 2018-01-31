@@ -6,22 +6,25 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Window 2.2
-import QtQuick.Controls 1
+import QtQuick.Controls 2
 
 import Lumina.Backend.RootDesktopObject 2.0
 
+
+
 Menu { 
     id: contextMenu
+
     MenuItem {
       text: "Launch Terminal"
-      iconName: "utilities-terminal"
+      //iconName: "utilities-terminal"
       onTriggered: {
         RootObject.launchApp("application/terminal")
       }
     }
     MenuItem {
       text: "Launch File Browser"
-      iconName: "user-home"
+      //iconName: "user-home"
       onTriggered: {
         RootObject.launchApp("inode/directory")
       }
@@ -29,7 +32,7 @@ Menu {
 
     MenuItem {
       text: "Lock Screen"
-      iconName: "system-lock-screen"
+      //iconName: "system-lock-screen"
       onTriggered: {
         RootObject.lockscreen()
       }
@@ -37,7 +40,7 @@ Menu {
 
     MenuItem {
       text: "Logout"
-      iconName: "system-log-out"
+      //iconName: "system-log-out"
       onTriggered: {
         RootObject.logout()
       }

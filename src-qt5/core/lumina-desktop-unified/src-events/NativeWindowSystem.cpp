@@ -294,7 +294,8 @@ NativeWindowObject* NativeWindowSystem::findWindow(WId id, bool checkRelated){
 
 NativeWindowObject* NativeWindowSystem::findTrayWindow(WId id){
   for(int i=0; i<TWindows.length(); i++){
-    if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
+    if(TWindows[i]->id()==id){ return TWindows[i]; }
+    else if(TWindows[i]->isRelatedTo(id)){ return TWindows[i]; }
   }
   return 0;
 }
@@ -806,29 +807,31 @@ void NativeWindowSystem::NewWindowDetected(WId id){
 
 void NativeWindowSystem::NewTrayWindowDetected(WId id){
   //Make sure this can be managed first
+  qDebug() << "New Tray Window Detected:" << id;
   if(findTrayWindow(id) != 0){ return; } //already managed
-  xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
+  qDebug() << " - Setup new tray window";
+  /*xcb_get_window_attributes_cookie_t cookie = xcb_get_window_attributes(QX11Info::connection(), id);
   xcb_get_window_attributes_reply_t *attr = xcb_get_window_attributes_reply(QX11Info::connection(), cookie, NULL);
-  if(attr == 0){ return; } //could not get attributes of window
-  if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
-  free(attr);
+  if(attr == 0){ qDebug() << " - [WARN] No tray window attributes"; return; } //could not get attributes of window
+  if(attr->override_redirect){ qDebug() << " - [WARN] Override Redirect"; free(attr); return; } //window has override redirect set (do not manage)
+  qDebug() << " - free attr";
+  free(attr);*/
   //Register for events from this window
-  #define TRAY_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
-                          XCB_EVENT_MASK_BUTTON_RELEASE | 	\
-                          XCB_EVENT_MASK_POINTER_MOTION |	\
-			  XCB_EVENT_MASK_BUTTON_MOTION |	\
-                          XCB_EVENT_MASK_EXPOSURE |		\
+  #define TRAY_WIN_EVENT_MASK (XCB_EVENT_MASK_EXPOSURE |		\
                           XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |	\
                           XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
                           XCB_EVENT_MASK_ENTER_WINDOW)
 
   uint32_t value_list[1] = {TRAY_WIN_EVENT_MASK};
+  qDebug() << " - change tray window attributes";
   xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, value_list);
   //Now go ahead and create/populate the container for this window
   NativeWindowObject *win = new NativeWindowObject(id);
   TWindows << win;
+  qDebug() << " - update tray window properties";
   UpdateWindowProperties(win, NativeWindowObject::allProperties());
+  qDebug() << " - emit new tray window signal";
   emit NewTrayWindowAvailable(win);
 }
 

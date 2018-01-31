@@ -17,7 +17,7 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Window 2.2
-import QtQuick.Controls 1
+import QtQuick.Controls 2
 
 import "." as QML
 
@@ -34,10 +34,10 @@ Rectangle {
     anchors.fill: rootCanvas
     acceptedButtons: Qt.RightButton
     onClicked: { 
-      //contextMenu.x = mouseX
-      //contextMenu.y = mouseY
-      //contextMenu.open() 
-      contextMenu.popup()
+      contextMenu.x = mouseX
+      contextMenu.y = mouseY
+      contextMenu.open() 
+      //contextMenu.popup()
     }
     onPositionChanged: {
       RootObject.mousePositionChanged()

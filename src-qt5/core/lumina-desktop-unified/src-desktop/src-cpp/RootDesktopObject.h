@@ -17,7 +17,9 @@ class RootDesktopObject : public QObject{
 	//Define all the QML Properties here (interface between QML and the C++ methods below)
 	Q_PROPERTY( QStringList screens READ screens NOTIFY screensChanged)
 	Q_PROPERTY( QStringList panels READ panels NOTIFY panelsChanged)
-	Q_PROPERTY( QStringList windows READ windows NOTIFY windowsChanged);
+	Q_PROPERTY( QStringList windows READ windows NOTIFY windowsChanged)
+	Q_PROPERTY( QStringList trayWindows READ trayWindows NOTIFY trayWindowsChanged)
+	Q_PROPERTY( bool hasTrayWindows READ hasTrayWindows NOTIFY trayWindowsChanged)
 
 public:
 	//main contructor/destructor
@@ -36,6 +38,9 @@ public:
 	Q_INVOKABLE PanelObject* panel(QString id);
 	Q_INVOKABLE QStringList windows();
 	Q_INVOKABLE NativeWindowObject* window(QString id);
+	Q_INVOKABLE QStringList trayWindows();
+	Q_INVOKABLE NativeWindowObject* trayWindow(QString id);
+	Q_INVOKABLE bool hasTrayWindows();
 
 	//QML Globals Access
 	Q_INVOKABLE OSInterface* os_interface();
@@ -50,6 +55,7 @@ private:
 	QList<ScreenObject*> s_objects;
 	QList<PanelObject*> panel_objects;
 	QList<NativeWindowObject*> window_objects;
+	QList<NativeWindowObject*> tray_window_objects;
 	QPointer<NativeWindowObject> last_window_up;
 
 public slots:
@@ -62,6 +68,7 @@ public slots:
 	QList<PanelObject*> panelObjectList(){ return panel_objects; }
 
 	void setWindows(QList<NativeWindowObject*> list);
+	void setTrayWindows(QList<NativeWindowObject*> list);
 
 private slots:
 
@@ -69,6 +76,7 @@ signals:
 	void screensChanged();
 	void panelsChanged();
 	void windowsChanged();
+	void trayWindowsChanged();
 
 	void startLogout();
 	void mouseMoved();

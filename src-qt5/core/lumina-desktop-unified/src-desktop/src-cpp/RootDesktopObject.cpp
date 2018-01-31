@@ -85,6 +85,26 @@ NativeWindowObject* RootDesktopObject::window(QString id){
   return 0;
 }
 
+QStringList RootDesktopObject::trayWindows(){
+  //qDebug() << "Request Panels:" << panel_objects.length();
+  QStringList names;
+  for(int i=0; i<tray_window_objects.length(); i++){ names << QString::number(tray_window_objects[i]->id()); }
+  return names;
+}
+
+NativeWindowObject* RootDesktopObject::trayWindow(QString id){
+  //qDebug() << "Got Panel Request:" << id;
+  WId chk = id.toInt(); //numerical ID's in this case
+  for(int i=0; i<tray_window_objects.length(); i++){
+    if(tray_window_objects[i]->id()==chk){ return tray_window_objects[i]; }
+  }
+  return 0;
+}
+
+bool RootDesktopObject::hasTrayWindows(){
+  return !tray_window_objects.isEmpty();
+}
+
 OSInterface* RootDesktopObject::os_interface(){
   return OSInterface::instance();
 }
@@ -149,8 +169,16 @@ void RootDesktopObject::setWindows(QList<NativeWindowObject*> list){
   mousePositionChanged(true);
 }
 
+void RootDesktopObject::setTrayWindows(QList<NativeWindowObject*> list){
+  tray_window_objects = list;
+  emit trayWindowsChanged();
+  mousePositionChanged(true);
+}
+
+
 void RootDesktopObject::logout(){
-  emit startLogout();
+  //Emit the logout signal in a few ms (let the display close/sync first)
+  QTimer::singleShot(50, this, SIGNAL(startLogout()));
 }
 
 void RootDesktopObject::lockscreen(){
