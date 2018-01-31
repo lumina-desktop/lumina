@@ -4,6 +4,7 @@ lupdate_only{
 		$${PWD}/status_tray/TrayIcon.qml \
 		$${PWD}/status_tray/VolumeButton.qml \
 		$${PWD}/status_tray/NetworkButton.qml \
-		$${PWD}/status_tray/BatteryButton.qml
+		$${PWD}/status_tray/BatteryButton.qml \
+		$${PWD}/status_tray/UpdateButton.qml
 
 }

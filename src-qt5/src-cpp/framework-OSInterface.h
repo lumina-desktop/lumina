@@ -57,9 +57,9 @@ class OSInterface : public QObject{
 	//Media
 	Q_PROPERTY( QStringList mediaShortcuts READ mediaShortcuts NOTIFY mediaShortcutsChanged)
 	//Updates
-	Q_PROPERTY( bool updatesAvailable READ updatesAvailable NOTIFY updateStatusChanged)
-	Q_PROPERTY( bool updatesRunning READ updatesRunning NOTIFY updateStatusChanged)
-	Q_PROPERTY( bool updatesFinished READ updatesFinished NOTIFY updateStatusChanged)
+	Q_PROPERTY( QString updateStatus READ updateStatus NOTIFY updateStatusChanged)
+	Q_PROPERTY( QString updateIcon READ updateIcon NOTIFY updateStatusChanged)
+
 	//Power options
 	Q_PROPERTY( bool canReboot READ canReboot NOTIFY powerAvailableChanged)
 	Q_PROPERTY( bool canShutdown READ canShutdown NOTIFY powerAvailableChanged)
@@ -108,11 +108,11 @@ public:
 
 	// = Updates =
 	Q_INVOKABLE bool updatesSupported(); //is thie subsystem supported for the OS?
-	Q_INVOKABLE bool updatesAvailable();
+	Q_INVOKABLE QString updateStatus();	//Current status ["","available","running","finished"]
+	Q_INVOKABLE QString updateIcon();
+	Q_INVOKABLE QString updateStatusInfo(); //Extra information corresponding to the current status
 	Q_INVOKABLE QString updateDetails();	//Information about any available updates
-	Q_INVOKABLE bool updatesRunning();
 	Q_INVOKABLE QString updateLog();		//Information about any currently-running update
-	Q_INVOKABLE bool updatesFinished();
 	Q_INVOKABLE QString updateResults();	//Information about any finished update
 	Q_INVOKABLE void startUpdates();
 	Q_INVOKABLE bool updateOnlyOnReboot(); //Should the startUpdates function be called only when rebooting the system?

@@ -405,7 +405,21 @@ void OSInterface::syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *has
 }
 
 void OSInterface::syncUpdateInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
-
+  //Get the current status
+  QString status, icon;
+  if(OS_updatesRunning()){
+    status="running"; icon="sync";
+  }else if(OS_updatesFinished()){
+    status="finished"; icon="security-high";
+  }else if(OS_updatesAvailable()){
+    status="available"; icon="security-medium";
+  }
+  //Save the current info into the hash (if different)
+  if(status != updateStatus()){
+    hash->insert("updates/status", status);
+    hash->insert("updates/icon", icon);
+    os->emit updateStatusChanged();
+  }
   QTimer::singleShot(0, timer, SLOT(start()));
 }
 
@@ -486,34 +500,65 @@ QStringList OSInterface::mediaDirectories(){ return OS_mediaDirectories(); }
 QStringList OSInterface::mediaShortcuts(){ return autoHandledMediaFiles(); } //List of currently-available XDG shortcut file paths
 
 // = Updates =
-bool OSInterface::updatesSupported(){ return false; }
-bool OSInterface::updatesAvailable(){ return false; }
-QString OSInterface::updateDetails(){ return QString(); }	//Information about any available updates
-bool OSInterface::updatesRunning(){ return false; }
-QString OSInterface::updateLog(){ return QString(); }		//Information about any currently-running update
-bool OSInterface::updatesFinished(){ return false; }
-QString OSInterface::updateResults(){ return QString(); }	//Information about any finished update
-void OSInterface::startUpdates(){}
-bool OSInterface::updateOnlyOnReboot(){ return false; } //Should the startUpdates function be called only when rebooting the system?
-bool OSInterface::updateCausesReboot(){ return false; }
-QDateTime OSInterface::lastUpdate(){ return QDateTime(); }	//The date/time of the previous updates
-QString OSInterface::lastUpdateResults(){ return QString(); } //Information about the previously-finished update
+bool OSInterface::updatesSupported(){ return OS_updatesSupported(); }
+QString OSInterface::updateStatus(){
+  if(INFO.contains("updates/status")){ return INFO.value("updates/status").toString(); }
+  return "";
+}
+
+QString OSInterface::updateIcon(){
+  if(INFO.contains("updates/icon")){ return INFO.value("updates/icon").toString(); }
+  return "";
+}
+
+QString OSInterface::updateStatusInfo(){
+  QString status = updateStatus();
+  if(status=="available"){ return updateDetails(); }
+  else if(status=="running"){ return updateLog(); }
+  else if(status=="finished"){ return updateResults(); }
+  return "";
+}
+
+QString OSInterface::updateDetails(){
+  return OS_updateDetails(); //don't cache these types of logs - too large
+}
+
+QString OSInterface::updateLog(){
+  return OS_updateLog(); //don't cache these types of logs - too large and change too often
+}
+
+QString OSInterface::updateResults(){
+  return OS_updateResults(); //don't cache these types of logs - too large
+}
+
+void OSInterface::startUpdates(){ OS_startUpdates(); }
+bool OSInterface::updateOnlyOnReboot(){ return OS_updateOnlyOnReboot(); }
+bool OSInterface::updateCausesReboot(){ return OS_updateCausesReboot(); }
+
+QDateTime OSInterface::lastUpdate(){ return OS_lastUpdate(); }
+QString OSInterface::lastUpdateResults(){ return OS_lastUpdateResults(); }
 
 // = System Power =
-bool OSInterface::canReboot(){ return false; }
-void OSInterface::startReboot(){}
-bool OSInterface::canShutdown(){ return false; }
-void OSInterface::startShutdown(){}
-bool OSInterface::canSuspend(){ return false; }
-void OSInterface::startSuspend(){}
+bool OSInterface::canReboot(){ return OS_canReboot(); }
+void OSInterface::startReboot(){ OS_startReboot(); }
+bool OSInterface::canShutdown(){ return OS_canShutdown(); }
+void OSInterface::startShutdown(){ OS_startShutdown(); }
+bool OSInterface::canSuspend(){ return OS_canSuspend(); }
+void OSInterface::startSuspend(){ OS_startSuspend(); }
 
 // = Screen Brightness =
-bool OSInterface::brightnessSupported(){ return false; }
-int OSInterface::brightness(){ return -1; } //percentage: 0-100 with -1 for errors
-void OSInterface::setBrightness(int){}
+bool OSInterface::brightnessSupported(){ return OS_brightnessSupported(); }
+int OSInterface::brightness(){
+  if(INFO.contains("brightness/percent")){ return INFO.value("brightness/percent").toInt(); }
+  return 100;
+}
+void OSInterface::setBrightness(int percent){
+  OS_setBrightness(percent);
+  BrightnessTimerUpdate(); //update internal cache ASAP
+}
 
 // = System Status Monitoring
-bool OSInterface::cpuSupported(){ return false; }
+bool OSInterface::cpuSupported(){ return OS_cpuSupported(); }
 QList<int> OSInterface::cpuPercentage(){ return QList<int>(); } // (one per CPU) percentage: 0-100 with empty list for errors
 QStringList OSInterface::cpuTemperatures(){ return QStringList(); } // (one per CPU) Temperature of CPU ("50C" for example)
 

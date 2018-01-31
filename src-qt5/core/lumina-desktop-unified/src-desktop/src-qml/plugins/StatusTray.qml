@@ -40,6 +40,11 @@ Rectangle {
 			Layout.preferredHeight: status_tray.prefsize
 			Layout.preferredWidth: status_tray.prefsize
 		}
+		//Update Status
+		QML.UpdateButton{
+			Layout.preferredHeight: status_tray.prefsize
+			Layout.preferredWidth: status_tray.prefsize
+		}
 		//System Tray Menu Popup
 	
 	} //end of layout
