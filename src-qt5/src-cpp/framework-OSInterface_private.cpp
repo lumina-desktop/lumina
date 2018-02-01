@@ -50,7 +50,7 @@ void OSInterface::RegisterType(){
 //Start/stop interface systems
 void OSInterface::start(){
   if(!mediaDirectories().isEmpty()){ setupMediaWatcher(); }//will create/connect the filesystem watcher automatically
-  setupNetworkManager(); //will create/connect the network monitor automatically
+  setupNetworkManager(60000, 1); //will create/connect the network monitor automatically
   if(batteryAvailable()){ setupBatteryMonitor(30000, 1); } //30 second updates, 1 ms init delay
   if(brightnessSupported()){ setupBrightnessMonitor(60000, 1); } //1 minute updates, 1 ms init delay
   if(volumeSupported()){ setupVolumeMonitor(60000, 2); } //1 minute updates, 2 ms init delay
@@ -87,20 +87,98 @@ void OSInterface::connectIodevice(){
 
 void OSInterface::connectNetman(){
   if(netman==0){ return; }
-  connect(netman, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(netAccessChanged(QNetworkAccessManager::NetworkAccessibility)) );
+  connect(netman, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(netAccessChanged()) );
   connect(netman, SIGNAL(finished(QNetworkReply*)), this, SLOT(netRequestFinished(QNetworkReply*)) );
   connect(netman, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(netSslErrors(QNetworkReply*, const QList<QSslError>&)) );
 }
 
 bool OSInterface::verifyAppOrBin(QString chk){
   bool valid = !chk.isEmpty();
+  if(chk.contains(" ")){ chk = chk.section(" ",0,0); }
   if(valid && chk.endsWith(".desktop")){
-    chk  = LUtils::AppToAbsolute(chk);
-    valid = QFile::exists(chk);
+    if(chk.startsWith("/")){ return QFile::exists(chk); }
+    valid = false;
+    QStringList paths;
+      paths << QString(getenv("XDG_DATA_HOME")) << QString(getenv("XDG_DATA_DIRS")).split(":");
+    for(int i=0; i<paths.length() && !valid; i++){
+      if(QFile::exists(paths[i]+"/applications")){ valid = findInDirectory(chk, paths[i]+"/applications", true); }
+    }
   }else if(valid){
-    valid = LUtils::isValidBinary(chk);
+    //Find the absolute path for this binary
+    if(!chk.startsWith("/")){
+      QStringList paths = QString(getenv("PATH")).split(":");
+      for(int i=0; i<paths.length(); i++){
+        if(QFile::exists(paths[i]+"/"+chk)){ chk = paths[i]+"/"+chk; break; }
+      }
+      if(!chk.startsWith("/")){ return false; } //could not find the file
+    }else if(!QFile::exists(chk)){
+      return false; //file does not exist
+    }
+    //Make sure it is executable by the user
+    valid = QFileInfo(chk).isExecutable();
   }
   return valid;
+}
+
+QString OSInterface::runProcess(int &retcode, QString command, QStringList arguments, QString workdir, QStringList env){
+  QProcess proc;
+    proc.setProcessChannelMode(QProcess::MergedChannels); //need output
+  //First setup the process environment as necessary
+  QProcessEnvironment PE = QProcessEnvironment::systemEnvironment();
+    if(!env.isEmpty()){
+      for(int i=0; i<env.length(); i++){
+    if(!env[i].contains("=")){ continue; }
+        PE.insert(env[i].section("=",0,0), env[i].section("=",1,100));
+      }
+    }
+    proc.setProcessEnvironment(PE);
+  //if a working directory is specified, check it and use it
+  if(!workdir.isEmpty()){
+    proc.setWorkingDirectory(workdir);
+  }
+  //Now run the command (with any optional arguments)
+  if(arguments.isEmpty()){ proc.start(command); }
+  else{ proc.start(command, arguments); }
+  //Wait for the process to finish (but don't block the event loop)
+  for(int i=0; i<10 && !proc.waitForFinished(500); i++){ //maximum of 5 seconds for command to finish
+    if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal - go ahead and stop now
+  }
+  if(proc.state() != QProcess::NotRunning){ proc.terminate(); } //just in case - make sure to kill off the process
+  QString info = proc.readAllStandardOutput();
+  retcode = proc.exitCode(); //return success/failure
+  return info;
+}
+
+int OSInterface::runCmd(QString command, QStringList args){
+  int retcode;
+  runProcess(retcode, command, args);
+  return retcode;
+}
+
+QStringList OSInterface::getCmdOutput(QString command, QStringList args){
+  int retcode;
+  return runProcess(retcode, command, args).split("\n");
+}
+
+bool OSInterface::findInDirectory(QString file, QString dirpath, bool recursive){
+  bool found = QFile::exists(dirpath+"/"+file);
+  if(!found && recursive){
+    QDir dir(dirpath);
+    QStringList dirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    for(int i=0; i<dirs.length() && !found; i++){ found = findInDirectory(file, dir.absoluteFilePath(dirs[i]), recursive); }
+  }
+  return found;
+}
+
+QString OSInterface::readFile(QString path){
+  QFile file(path);
+  QString info;
+  if(file.open(QIODevice::ReadOnly)){
+    QTextStream out(&file);
+    info = out.readAll();
+    file.close();
+  }
+  return info;
 }
 
 // ===========================
@@ -162,13 +240,16 @@ QStringList OSInterface::autoHandledMediaFiles(){
 //  NETWORK INTERFACE FUNCTIONS
 // =============================
 // Qt-based NetworkAccessManager usage
-void OSInterface::setupNetworkManager(){
+void OSInterface::setupNetworkManager(int update_ms, int delay_ms){
   if(netman==0){
     netman = new QNetworkAccessManager(this);
     connectNetman();
   }
-  //Load the initial state of the network accessibility
-  netAccessChanged(netman->networkAccessible());
+  networkTimer = new QTimer(this);
+    networkTimer->setSingleShot(true);
+    networkTimer->setInterval(update_ms);
+    connect(networkTimer, SIGNAL(timeout()), this, SLOT(NetworkTimerUpdate()) );
+  QTimer::singleShot(delay_ms, this, SLOT(NetworkTimerUpdate()) );
 }
 
 bool OSInterface::networkAvailable(){
@@ -211,9 +292,9 @@ QString OSInterface::networkStatus(){
 }
 
 //NetworkAccessManager slots
-void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility stat){
+void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
   //qDebug() << "[DEBUG] Got Net Access Changed";
-  INFO.insert("netaccess/available", stat== QNetworkAccessManager::Accessible);
+  hash->insert("netaccess/available", netman->networkAccessible()== QNetworkAccessManager::Accessible);
   //Update all the other network status info at the same time
   QNetworkConfiguration active = netman->activeConfiguration();
   //Type of connection
@@ -226,10 +307,10 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
     case QNetworkConfiguration::Bearer4G: type="cell-4G"; break;
     default: type=OS_networkTypeFromDeviceName(active.name()); //could not be auto-determined - run the OS-specific routine
   }
-  INFO.insert("netaccess/type", type);
+  hash->insert("netaccess/type", type);
   float strength = 100;
   if(type!="wired"){ strength = OS_networkStrengthFromDeviceName(active.name()); }
-  INFO.insert("netaccess/strength", strength);
+  hash->insert("netaccess/strength", strength);
 
   //qDebug() << "Detected Device Status:" << active.identifier() << type << stat;
   QNetworkInterface iface = QNetworkInterface::interfaceFromName(active.name());
@@ -243,7 +324,7 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
   }
   //qDebug() << " - IP Address:" << address;
   //qDebug() << " - Hostname:" << networkHostname();
-  INFO.insert("netaccess/address", address.join(", "));
+  hash->insert("netaccess/address", address.join(", "));
 
   //Figure out the icon used for this type/strnegth
   QString icon;
@@ -270,9 +351,10 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
   }else{
     icon = "network-workgroup"; //failover to a generic "network" icon
   }
-  INFO.insert("netaccess/icon",icon);
+  hash->insert("netaccess/icon",icon);
   //qDebug() << "[DEBUG] Emit NetworkStatusChanged";
-  emit networkStatusChanged();
+  os->emit networkStatusChanged();
+  timer->start();
 }
 
 
@@ -280,6 +362,12 @@ void OSInterface::netAccessChanged(QNetworkAccessManager::NetworkAccessibility s
 //     TIMER-BASED MONITORS
 // ========================
 //Timer slots
+
+void OSInterface::NetworkTimerUpdate(){
+  if(networkTimer->isActive()){ networkTimer->stop(); } //just in case this was manually triggered
+  QtConcurrent::run(this, &OSInterface::syncNetworkInfo, this, &INFO, networkTimer);
+}
+
 void OSInterface::BatteryTimerUpdate(){
   if(batteryTimer->isActive()){ batteryTimer->stop(); } //just in case this was manually triggered
   QtConcurrent::run(this, &OSInterface::syncBatteryInfo, this, &INFO, batteryTimer);
@@ -431,7 +519,7 @@ void OSInterface::syncBrightnessInfo(OSInterface *os, QHash<QString, QVariant> *
 void OSInterface::syncVolumeInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
   int oldvol = volume();
   int newvol = OS_volume();
-  if(oldvol!=newvol){
+  if(oldvol!=newvol && newvol>=0){
     hash->insert("volume/current",newvol);
     QString icon;
     if(newvol>66){ icon = "audio-volume-high"; }

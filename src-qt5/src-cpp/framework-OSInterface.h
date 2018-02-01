@@ -33,7 +33,7 @@
 #include <QNetworkInterface>
 
 //Lumina Utils class
-#include <LUtils.h>
+//#include <LUtils.h>
 
 class OSInterface : public QObject{
 	Q_OBJECT
@@ -165,7 +165,7 @@ public:
 	// = Volume =
 	bool OS_volumeSupported();
 	int OS_volume();
-	void OS_setVolume(int);
+	bool OS_setVolume(int);
 	// = Network Information =
 	QString OS_networkTypeFromDeviceName(QString name);
 	float OS_networkStrengthFromDeviceName(QString name);
@@ -194,7 +194,7 @@ public:
 	// = Screen Brightness =
 	bool OS_brightnessSupported();
 	int OS_brightness();
-	void OS_setBrightness(int);
+	bool OS_setBrightness(int);
 	// = System Status Monitoring
 	bool OS_cpuSupported();
 	QList<int> OS_cpuPercentage();
@@ -219,10 +219,10 @@ private slots:
 	void iodeviceReadyRead();
 	void iodeviceAboutToClose();
 	//NetworkAccessManager slots
-	void netAccessChanged(QNetworkAccessManager::NetworkAccessibility);
 	void netRequestFinished(QNetworkReply*);
 	void netSslErrors(QNetworkReply*, const QList<QSslError>&);
 	//Timer slots
+	void NetworkTimerUpdate();
 	void BatteryTimerUpdate();
 	void UpdateTimerUpdate();
 	void BrightnessTimerUpdate();
@@ -259,7 +259,7 @@ private:
 	//Network Access Manager (check network connectivity, etc)
 	QNetworkAccessManager *netman;
 	//Timer for regular probes/updates
-	QTimer *batteryTimer, *updateTimer, *brightnessTimer, *volumeTimer, *cpuTimer, *memTimer, *diskTimer;
+	QTimer *networkTimer, *batteryTimer, *updateTimer, *brightnessTimer, *volumeTimer, *cpuTimer, *memTimer, *diskTimer;
 
 	// Internal implifications for connecting the various watcher objects to their respective slots
 	// (OS-agnostic - defined in the "OSInterface_private.cpp" file)
@@ -269,16 +269,19 @@ private:
 
 	//Internal simplification routines
 	bool verifyAppOrBin(QString chk);
+	QString runProcess(int &retcode, QString command, QStringList arguments, QString workdir = "", QStringList env = QStringList());
+	int runCmd(QString command, QStringList args = QStringList());
+	QStringList getCmdOutput(QString command, QStringList args = QStringList());
+	bool findInDirectory(QString file, QString dirpath, bool recursive=true);
+	QString readFile(QString path);
 
 	// External Media Management (if system uses *.desktop shortcuts only)
 	void setupMediaWatcher();
 	bool handleMediaDirChange(QString dir); //returns true if directory was handled
 	QStringList autoHandledMediaFiles();
 
-	// Qt-based NetworkAccessManager usage
-	void setupNetworkManager();
-
-	// Timer-based monitors
+	// Timer-based setups
+	void setupNetworkManager(int update_ms, int delay_ms);
 	void setupBatteryMonitor(int update_ms, int delay_ms);
 	void setupUpdateMonitor(int update_ms, int delay_ms);
 	void setupBrightnessMonitor(int update_ms, int delay_ms);
@@ -288,6 +291,7 @@ private:
 	void setupDiskMonitor(int update_ms, int delay_ms);
 
 	// Timer-based monitor update routines (NOTE: these are all run in a separate thread!!)
+	void syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer);
 	void syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer);
 	void syncUpdateInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer);
 	void syncBrightnessInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer);

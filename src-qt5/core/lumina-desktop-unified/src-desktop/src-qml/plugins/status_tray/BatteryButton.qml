@@ -16,5 +16,5 @@ ToolButton{
 	iconName: os.batteryIcon
 	tooltip: os.batteryCharge+"%: "+os.batteryRemaining
 	visible: os.batteryAvailable()
-	enabled: false
+	//enabled: false
 }

@@ -4,6 +4,12 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+// USEFUL INTERNAL FUNCTIONS: (See framework-OSInterface.h for all possibilities);
+//----------------------------------------------
+//	bool verifyAppOrBin(QString chk) : Returns true is the check is a valid binary or application (*.desktop)
+//	int runCmd(QString command, QStringList arguments) : return code of command is returned
+//	QStringList getCmdOutput(QString command, QStringList arguments) : returns standard output of command
+//===========================================
 #include <framework-OSInterface.h>
 
 // = Battery =
@@ -15,7 +21,7 @@ double OSInterface::OS_batterySecondsLeft(){ return -1; }
 // = Volume =
 bool OSInterface::OS_volumeSupported(){ return false; }
 int OSInterface::OS_volume(){ return -1; }
-void OSInterface::OS_setVolume(int){}
+bool OSInterface::OS_setVolume(int){ return false;}
 
 // = Network Information =
 QString OSInterface::OS_networkTypeFromDeviceName(QString name){
@@ -56,7 +62,7 @@ void OSInterface::OS_startSuspend(){}
 // = Screen Brightness =
 bool OSInterface::OS_brightnessSupported(){ return false; }
 int OSInterface::OS_brightness(){ return -1; } //percentage: 0-100 with -1 for errors
-void OSInterface::OS_setBrightness(int){}
+bool OSInterface::OS_setBrightness(int){ return false; }
 
 // = System Status Monitoring
 bool OSInterface::OS_cpuSupported(){ return false; }
