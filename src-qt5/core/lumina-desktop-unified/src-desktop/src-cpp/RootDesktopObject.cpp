@@ -16,6 +16,8 @@ RootDesktopObject::RootDesktopObject(QObject *parent) : QObject(parent){
   last_window_up = 0;
   updateScreens(); //make sure the internal list is updated right away
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
+  currentTimeTimer = new QTimer(this);
+  connect(currentTimeTimer, SIGNAL(timeout()), this, SLOT(updateCurrentTime()) );
 }
 
 RootDesktopObject::~RootDesktopObject(){
@@ -105,6 +107,10 @@ bool RootDesktopObject::hasTrayWindows(){
   return !tray_window_objects.isEmpty();
 }
 
+QString RootDesktopObject::currentTime(){
+  return currentTimeString;
+}
+
 OSInterface* RootDesktopObject::os_interface(){
   return OSInterface::instance();
 }
@@ -175,6 +181,18 @@ void RootDesktopObject::setTrayWindows(QList<NativeWindowObject*> list){
   mousePositionChanged(true);
 }
 
+void RootDesktopObject::updateCurrentTimeFormat(QString fmt){
+  currentTimeFormat = fmt.simplified();
+  if(currentTimeTimer->isActive()){ currentTimeTimer->stop(); }
+  //sanitize the time format as needed
+  if(fmt.contains("z")){ currentTimeFormat.replace("z",""); } //do not allow millisecond updates - too fast for the desktop
+  //Adjust the refresh time for the clock based on the smallest unit requested
+  if(fmt.contains("s")){ currentTimeTimer->setInterval(500); } //1/2 second pings for 1-second displays
+  else if(fmt.contains("m") || currentTimeFormat.isEmpty()){ currentTimeTimer->setInterval(5000); } //5 second pings for 1-minute displays
+  else{ currentTimeTimer->setInterval(60000); } //1 minute pings for 1-hour displays
+  updateCurrentTime(); //refresh the currently-available time
+  currentTimeTimer->start();//start the update timer
+}
 
 void RootDesktopObject::logout(){
   //Emit the logout signal in a few ms (let the display close/sync first)
@@ -246,3 +264,14 @@ QString RootDesktopObject::CurrentWallpaper(QString screen){
 
 
 // === PRIVATE ===
+
+// === PRIVATE SLOTS ===
+void RootDesktopObject::updateCurrentTime(){
+  QString tmp;
+  if(currentTimeFormat.isEmpty()){ tmp = QDateTime::currentDateTime().toString(Qt::DefaultLocaleShortDate); }
+  else{ tmp = QDateTime::currentDateTime().toString(currentTimeFormat); }
+  if(tmp!=currentTimeString){ //prevent sending signals to update the interface if nothing changed
+    currentTimeString = tmp;
+    emit currentTimeChanged();
+  }
+}
