@@ -111,6 +111,10 @@ QString RootDesktopObject::currentTime(){
   return currentTimeString;
 }
 
+QDateTime RootDesktopObject::currentDateTime(){
+  return currentDateTimeStruct;
+}
+
 OSInterface* RootDesktopObject::os_interface(){
   return OSInterface::instance();
 }
@@ -182,14 +186,19 @@ void RootDesktopObject::setTrayWindows(QList<NativeWindowObject*> list){
 }
 
 void RootDesktopObject::updateCurrentTimeFormat(QString fmt){
-  currentTimeFormat = fmt.simplified();
-  if(currentTimeTimer->isActive()){ currentTimeTimer->stop(); }
   //sanitize the time format as needed
-  if(fmt.contains("z")){ currentTimeFormat.replace("z",""); } //do not allow millisecond updates - too fast for the desktop
+  if(fmt.contains("z")){ fmt.replace("z",""); } //do not allow millisecond updates - too fast for the desktop
+  fmt = fmt.simplified();
+  //Verify that anything has changed first
+  if(currentTimeFormat == fmt && currentTimeTimer->isActive()){ return; } //nothing changed
+  if(currentTimeTimer->isActive()){ currentTimeTimer->stop(); } //make sure this does not trigger during the changeover
+  currentTimeFormat = fmt;
+  int interval = 1000; //default to 1 second intervals
   //Adjust the refresh time for the clock based on the smallest unit requested
-  if(fmt.contains("s")){ currentTimeTimer->setInterval(500); } //1/2 second pings for 1-second displays
-  else if(fmt.contains("m") || currentTimeFormat.isEmpty()){ currentTimeTimer->setInterval(5000); } //5 second pings for 1-minute displays
-  else{ currentTimeTimer->setInterval(60000); } //1 minute pings for 1-hour displays
+  if(fmt.contains("s")){ interval=500; } //1/2 second pings for 1-second displays
+  else if(fmt.contains("m") || currentTimeFormat.isEmpty()){ interval = 5000; } //5 second pings for 1-minute displays
+  else if(fmt.contains("h")){ interval = 30000; } //30 second pings for 1-hour displays
+  currentTimeTimer->setInterval(interval);
   updateCurrentTime(); //refresh the currently-available time
   currentTimeTimer->start();//start the update timer
 }
@@ -267,10 +276,12 @@ QString RootDesktopObject::CurrentWallpaper(QString screen){
 
 // === PRIVATE SLOTS ===
 void RootDesktopObject::updateCurrentTime(){
+  QDateTime DT = QDateTime::currentDateTime();
   QString tmp;
-  if(currentTimeFormat.isEmpty()){ tmp = QDateTime::currentDateTime().toString(Qt::DefaultLocaleShortDate); }
-  else{ tmp = QDateTime::currentDateTime().toString(currentTimeFormat); }
+  if(currentTimeFormat.isEmpty()){ tmp = DT.toString(Qt::DefaultLocaleShortDate); }
+  else{ tmp = DT.toString(currentTimeFormat); }
   if(tmp!=currentTimeString){ //prevent sending signals to update the interface if nothing changed
+    currentDateTimeStruct = DT;
     currentTimeString = tmp;
     emit currentTimeChanged();
   }

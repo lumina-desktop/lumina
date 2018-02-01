@@ -20,6 +20,7 @@ DesktopManager::~DesktopManager(){
 void DesktopManager::start(){
   connect(DesktopSettings::instance(), SIGNAL(FileModified(DesktopSettings::File)), this, SLOT(settingsChanged(DesktopSettings::File)) );
   //Perform the initial load of the settings files
+  QTimer::singleShot(0, this, SLOT(updateSessionSettings()) );
   QTimer::singleShot(0, this, SLOT(updateDesktopSettings()) );
   QTimer::singleShot(0, this, SLOT(updatePanelSettings()) );
   QTimer::singleShot(0, this, SLOT(updatePluginSettings()) );
@@ -96,16 +97,18 @@ void DesktopManager::workspaceChanged(int wknum){
 
 void DesktopManager::settingsChanged(DesktopSettings::File type){
   switch(type){
+	case DesktopSettings::Session:
+	  QTimer::singleShot(0, this, SLOT(updateSessionSettings()) );
 	case DesktopSettings::Desktop:
-	  QTimer::singleShot(0, this, SLOT(updateDesktopSettings()) );
+	  QTimer::singleShot(1, this, SLOT(updateDesktopSettings()) );
 	case DesktopSettings::Panels:
-	  QTimer::singleShot(1, this, SLOT(updatePanelSettings()) );
+	  QTimer::singleShot(2, this, SLOT(updatePanelSettings()) );
 	case DesktopSettings::Plugins:
-	  QTimer::singleShot(2, this, SLOT(updatePluginSettings()) );
+	  QTimer::singleShot(3, this, SLOT(updatePluginSettings()) );
 	case DesktopSettings::ContextMenu:
-	  QTimer::singleShot(3, this, SLOT(updateMenuSettings()) );
+	  QTimer::singleShot(4, this, SLOT(updateMenuSettings()) );
 	case DesktopSettings::Animation:
-	  QTimer::singleShot(4, this, SLOT(updateAnimationSettings()) );
+	  QTimer::singleShot(5, this, SLOT(updateAnimationSettings()) );
 	default:
 	  break;
 	  //Do nothing - not a settings change we care about here
@@ -144,6 +147,12 @@ void DesktopManager::syncTrayWindowList(){
 }
 
 // === PRIVATE SLOTS ===
+void DesktopManager::updateSessionSettings(){
+  qDebug() << "Update Session Settings...";
+
+  RootDesktopObject::instance()->updateCurrentTimeFormat(DesktopSettings::instance()->value(DesktopSettings::Session, "datetime_format", "").toString());
+}
+
 void DesktopManager::updateDesktopSettings(){
   qDebug() << "Update Desktop Settings...";
   QList<QScreen*> scrns = QGuiApplication::screens();

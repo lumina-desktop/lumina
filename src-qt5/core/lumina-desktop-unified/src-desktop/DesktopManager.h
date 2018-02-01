@@ -36,6 +36,7 @@ public slots:
 	void syncTrayWindowList();
 
 private slots:
+	void updateSessionSettings();
 	void updateDesktopSettings();
 	void updatePanelSettings();
 	void updatePluginSettings();

@@ -21,6 +21,7 @@ class RootDesktopObject : public QObject{
 	Q_PROPERTY( QStringList trayWindows READ trayWindows NOTIFY trayWindowsChanged)
 	Q_PROPERTY( bool hasTrayWindows READ hasTrayWindows NOTIFY trayWindowsChanged)
 	Q_PROPERTY( QString currentTime READ currentTime NOTIFY currentTimeChanged);
+	Q_PROPERTY( QDateTime currentDateTime READ currentDateTime NOTIFY currentTimeChanged);
 
 public:
 	//main contructor/destructor
@@ -43,6 +44,7 @@ public:
 	Q_INVOKABLE NativeWindowObject* trayWindow(QString id);
 	Q_INVOKABLE bool hasTrayWindows();
 	Q_INVOKABLE QString currentTime();
+	Q_INVOKABLE QDateTime currentDateTime();
 
 	//QML Globals Access
 	Q_INVOKABLE OSInterface* os_interface();
@@ -61,6 +63,7 @@ private:
 	QPointer<NativeWindowObject> last_window_up;
 	QTimer *currentTimeTimer;
 	QString currentTimeFormat, currentTimeString;
+	QDateTime currentDateTimeStruct;
 
 public slots:
 	void updateScreens(); //rescan/update screen objects
