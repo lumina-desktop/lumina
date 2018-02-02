@@ -106,7 +106,7 @@ float OSInterface::OS_networkStrengthFromDeviceName(QString name){
   // Step 2: Scan access point to get signal/noise
   info = getCmdOutput("ifconfig", QStringList() << name << "list" << "scan").filter(bssid);
   if(info.isEmpty()){ return -1; }
-  QString signoise =info.first().section(" ", 4,4).simplified();
+  QString signoise =info.first().section(" ", 4,4, QString::SectionSkipEmpty).simplified();
   int sig = signoise.section(":",0,0).toInt();
   int noise = signoise.section(":",1,1).toInt();
   // Step 3: Turn signal/noise ratio into a percentage

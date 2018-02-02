@@ -87,7 +87,7 @@ void OSInterface::connectIodevice(){
 
 void OSInterface::connectNetman(){
   if(netman==0){ return; }
-  connect(netman, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(netAccessChanged()) );
+  connect(netman, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)), this, SLOT(NetworkTimerUpdate()) );
   connect(netman, SIGNAL(finished(QNetworkReply*)), this, SLOT(netRequestFinished(QNetworkReply*)) );
   connect(netman, SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError>&)), this, SLOT(netSslErrors(QNetworkReply*, const QList<QSslError>&)) );
 }
@@ -307,7 +307,8 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
       if( addressList[j].ip().isLoopback() ){ continue; }
       addressList[j].ip().toIPv4Address(&ok);
     }
-    if(ok){ active = netconfigL[i]; break; }
+    if(ok){ active = netconfigL[i]; break; } //found a good one with a valid IPv4
+    else if(active.
   }
   if(!active.isValid()){ active = netman->activeConfiguration(); } //use the default Qt-detected interface
   //Type of connection
@@ -367,7 +368,7 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
   hash->insert("netaccess/icon",icon);
   //qDebug() << "[DEBUG] Emit NetworkStatusChanged";
   os->emit networkStatusChanged();
-  timer->start();
+  QTimer::singleShot(0, timer, SLOT(start()));
 }
 
 
