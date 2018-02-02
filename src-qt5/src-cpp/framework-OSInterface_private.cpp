@@ -296,7 +296,20 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
   //qDebug() << "[DEBUG] Got Net Access Changed";
   hash->insert("netaccess/available", netman->networkAccessible()== QNetworkAccessManager::Accessible);
   //Update all the other network status info at the same time
-  QNetworkConfiguration active = netman->activeConfiguration();
+  QNetworkConfiguration active;
+  QList<QNetworkConfiguration> netconfigL = netman->configuration().children();
+  for(int i=0; i<netconfigL.length(); i++){
+    if(!netconfigL[i].state().testFlag(QNetworkConfiguration::Discovered) ){ continue; } //skip this interface
+    QList<QNetworkAddressEntry> addressList = QNetworkInterface::interfaceFromName(netconfigL[i].name()).addressEntries();
+    //NOTE: There are often 2 addresses, IPv4 and IPv6
+    bool ok = false;
+    for(int j=0; j<addressList.length() && !ok; j++){
+      if( addressList[j].ip().isLoopback() ){ continue; }
+      addressList[j].ip().toIPv4Address(&ok);
+    }
+    if(ok){ active = netconfigL[i]; break; }
+  }
+  if(!active.isValid()){ active = netman->activeConfiguration(); } //use the default Qt-detected interface
   //Type of connection
   QString type;
   switch(active.bearerTypeFamily()){
