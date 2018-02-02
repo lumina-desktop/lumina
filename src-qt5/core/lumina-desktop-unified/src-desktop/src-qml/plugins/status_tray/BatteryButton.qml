@@ -14,7 +14,7 @@ ToolButton{
 	property OSInterface os: RootObject.os_interface()
 	id: "batButton"
 	iconName: os.batteryIcon
-	tooltip: os.batteryCharge+"%: "+os.batteryRemaining
+	tooltip: os.batteryStatus
 	visible: os.batteryAvailable()
 	//enabled: false
 }

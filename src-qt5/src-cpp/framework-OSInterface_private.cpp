@@ -467,6 +467,13 @@ void OSInterface::syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *has
   hash->insert("battery/charging",charging);
   //Convert the seconds to human-readable
   QString time;
+    if(secs>3600){
+      time = QString::number( qRound(secs/360.0)/10.0 )+" h";
+    }else if(secs>60){
+      time = QString::number( qRound(secs/6.0)/10.0 )+" m";
+    }else if(secs>0){
+      time = QString::number(secs)+" s";
+    }
   hash->insert("battery/time", time);
   //Determine the icon which should be used for this status
   QString icon;
@@ -564,6 +571,17 @@ QString OSInterface::batteryRemaining(){
 QString OSInterface::batteryIcon(){
   if(INFO.contains("battery/icon")){ return INFO.value("battery/icon").toString(); }
   return "";
+}
+
+QString OSInterface::batteryStatus(){
+  QString text = QString::number(batteryCharge())+"%";
+  if(!batteryCharging()){
+    QString time = batteryRemaining();
+    if(!time.isEmpty()){
+      text.append(" ("+time+")");
+    }
+  }
+  return text;
 }
 
 // = Volume =

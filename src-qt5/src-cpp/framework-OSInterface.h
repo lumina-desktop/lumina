@@ -43,6 +43,7 @@ class OSInterface : public QObject{
 	Q_PROPERTY( bool batteryCharging READ batteryCharging NOTIFY batteryChanged)
 	Q_PROPERTY( QString batteryRemaining READ batteryRemaining NOTIFY batteryChanged)
 	Q_PROPERTY( QString batteryIcon READ batteryIcon NOTIFY batteryChanged)
+	Q_PROPERTY( QString batteryStatus READ batteryStatus NOTIFY batteryChanged)
 	//Volume
 	Q_PROPERTY( int volume READ volume WRITE setVolume NOTIFY volumeChanged)
 	Q_PROPERTY( QString volumeIcon READ volumeIcon NOTIFY volumeChanged)
@@ -82,6 +83,7 @@ public:
 	Q_INVOKABLE bool batteryCharging();
 	Q_INVOKABLE QString batteryRemaining();
 	Q_INVOKABLE QString batteryIcon();
+	Q_INVOKABLE QString batteryStatus();
 
 	// = Volume =
 	Q_INVOKABLE bool volumeSupported();
