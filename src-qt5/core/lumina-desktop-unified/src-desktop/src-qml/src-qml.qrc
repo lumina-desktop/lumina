@@ -11,5 +11,6 @@
     <file>plugins/status_tray/NetworkButton.qml</file>
     <file>plugins/status_tray/BatteryButton.qml</file>
     <file>plugins/status_tray/UpdateButton.qml</file>
+    <file>plugins/Clock_Digital.qml</file>
   </qresource>
 </RCC>

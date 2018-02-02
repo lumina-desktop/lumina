@@ -30,6 +30,9 @@ int PanelObject::x(){ return geom.x(); }
 int PanelObject::y(){ return geom.y(); }
 int PanelObject::width(){ return geom.width(); }
 int PanelObject::height(){ return geom.height(); }
+bool PanelObject::isVertical(){
+  return ( geom.width() < geom.height() );
+}
 
 void PanelObject::setBackground(QString fileOrColor){
   if(bg!=fileOrColor){

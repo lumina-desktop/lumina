@@ -20,6 +20,7 @@ class PanelObject : public QObject {
 	Q_PROPERTY( int y READ y NOTIFY geomChanged)
 	Q_PROPERTY( int width READ width NOTIFY geomChanged)
 	Q_PROPERTY( int height READ height NOTIFY geomChanged)
+	Q_PROPERTY( bool isVertical READ isVertical NOTIFY geomChanged)
 
 private:
 	QString panel_id, bg;
@@ -36,6 +37,7 @@ public:
 	Q_INVOKABLE int y();
 	Q_INVOKABLE int width();
 	Q_INVOKABLE int height();
+	Q_INVOKABLE bool isVertical();
 
 public slots:
 	void setBackground(QString fileOrColor);

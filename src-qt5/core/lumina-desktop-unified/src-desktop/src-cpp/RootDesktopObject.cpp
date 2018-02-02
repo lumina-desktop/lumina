@@ -200,7 +200,7 @@ void RootDesktopObject::updateCurrentTimeFormat(QString fmt){
   else if(fmt.contains("h")){ interval = 30000; } //30 second pings for 1-hour displays
   currentTimeTimer->setInterval(interval);
   updateCurrentTime(); //refresh the currently-available time
-  currentTimeTimer->start();//start the update timer
+  QTimer::singleShot(0,currentTimeTimer, SLOT(start()) );//start the update timer
 }
 
 void RootDesktopObject::logout(){

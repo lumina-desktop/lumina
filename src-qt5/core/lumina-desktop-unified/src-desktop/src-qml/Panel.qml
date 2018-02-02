@@ -33,6 +33,14 @@ Rectangle {
 	//hardcode the "status_tray" plugin at the moment
 	PLUGINS.StatusTray{
 		id: "statustray"
+		Layout.fillHeight: layout.parent.object.isVertical ? false : true
+		Layout.fillWidth: layout.parent.object.isVertical ? true : false
+
+	}
+	PLUGINS.Clock_Digital{
+		id: "clock"
+		Layout.fillHeight: layout.parent.object.isVertical ? false : true
+		Layout.fillWidth: layout.parent.object.isVertical ? true : false
 	}
     }
 

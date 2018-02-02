@@ -308,7 +308,7 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
       addressList[j].ip().toIPv4Address(&ok);
     }
     if(ok){ active = netconfigL[i]; break; } //found a good one with a valid IPv4
-    //else if(active.
+    //else if(!active.isValid()){
   }
   if(!active.isValid()){ active = netman->activeConfiguration(); } //use the default Qt-detected interface
   //Type of connection
