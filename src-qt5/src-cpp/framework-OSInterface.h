@@ -60,6 +60,7 @@ class OSInterface : public QObject{
 	//Updates
 	Q_PROPERTY( QString updateStatus READ updateStatus NOTIFY updateStatusChanged)
 	Q_PROPERTY( QString updateIcon READ updateIcon NOTIFY updateStatusChanged)
+	Q_PROPERTY( bool updateInfoAvailable READ updateInfoAvailable NOTIFY updateStatusChanged)
 
 	//Power options
 	Q_PROPERTY( bool canReboot READ canReboot NOTIFY powerAvailableChanged)
@@ -111,6 +112,7 @@ public:
 	// = Updates =
 	Q_INVOKABLE bool updatesSupported(); //is thie subsystem supported for the OS?
 	Q_INVOKABLE QString updateStatus();	//Current status ["","available","running","finished"]
+	Q_INVOKABLE bool updateInfoAvailable();
 	Q_INVOKABLE QString updateIcon();
 	Q_INVOKABLE QString updateStatusInfo(); //Extra information corresponding to the current status
 	Q_INVOKABLE QString updateDetails();	//Information about any available updates

@@ -14,8 +14,8 @@ ToolButton{
 	id: "updateButton"
 	property OSInterface os: RootObject.os_interface()
 	iconName: os.updateIcon
-	tooltip: os.networkStatus
-	visible: (os.updateStatus == "")
+	tooltip: os.updateStatus
+	visible: os.updateInfoAvailable
 	/*enabled: os.hasUpdateManager()
 	onClicked: {
 		RootObject.launchApplication(os.updateManagerUtility())

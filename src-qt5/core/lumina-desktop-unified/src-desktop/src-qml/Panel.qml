@@ -27,21 +27,29 @@ Rectangle {
     GridLayout{
 	id: layout
 	anchors.fill: parent;
-	columns: (object.width>object.height) ? -1 : 1
-	rows: (object.width>object.height) ? 1 : -1
+	columns: parent.object.isVertical ? 1 : -1
+	rows: parent.object.isVertical ? -1 : 1
 
-	//hardcode the "status_tray" plugin at the moment
+	//hardcode some plugins for the moment
+	//PLUGINS.Spacer{}
+
 	PLUGINS.StatusTray{
 		id: "statustray"
-		Layout.fillHeight: layout.parent.object.isVertical ? false : true
-		Layout.fillWidth: layout.parent.object.isVertical ? true : false
-
+		vertical: layout.parent.object.isVertical
+		//Layout.fillWidth: layout.parent.object.isVertical ? true : false
+		//Layout.fillHeight: layout.parent.object.isVertical ? false : true
 	}
+
+	//PLUGINS.Spacer{}
+
 	PLUGINS.Clock_Digital{
 		id: "clock"
-		Layout.fillHeight: layout.parent.object.isVertical ? false : true
-		Layout.fillWidth: layout.parent.object.isVertical ? true : false
+		vertical: layout.parent.object.isVertical
+		//Layout.fillWidth: layout.parent.object.isVertical ? true : false
+		//Layout.fillHeight: layout.parent.object.isVertical ? false : true
 	}
-    }
 
+	//PLUGINS.Spacer{}
+
+    } //end of grid layout
 }

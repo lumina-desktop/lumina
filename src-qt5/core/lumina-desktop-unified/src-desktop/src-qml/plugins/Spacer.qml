@@ -8,14 +8,9 @@
 //===========================================
 import QtQuick 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1
 
-import Lumina.Backend.RootDesktopObject 2.0
 
-Label{
-	property bool vertical
-	text: RootObject.currentTime
-	wrapMode: Text.WrapWord
-	rotation: vertical ? 90 : 0
-	transformOrigin: Item.Center
+Item{
+	Layout.fillWidth: true
+	Layout.fillHeight: true
 }

@@ -625,6 +625,9 @@ QString OSInterface::updateStatus(){
   if(INFO.contains("updates/status")){ return INFO.value("updates/status").toString(); }
   return "";
 }
+bool OSInterface::updateInfoAvailable(){
+  return !updateStatus().isEmpty();
+}
 
 QString OSInterface::updateIcon(){
   if(INFO.contains("updates/icon")){ return INFO.value("updates/icon").toString(); }

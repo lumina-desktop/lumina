@@ -6,5 +6,6 @@ lupdate_only{
 		$${PWD}/status_tray/NetworkButton.qml \
 		$${PWD}/status_tray/BatteryButton.qml \
 		$${PWD}/status_tray/UpdateButton.qml \
-		$${PWD}/Clock_Digital.qml
+		$${PWD}/Clock_Digital.qml \
+		$${PWD}/Spacer.qml
 }
