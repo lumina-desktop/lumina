@@ -46,7 +46,7 @@ FORMS    +=	BootSplash.ui
 
 # Install all the various files for the desktop itself
 desktop.path = $${L_SESSDIR}
-desktop.files = lumina-desktop.desktop
+desktop.files = lumina-desktop-unified.desktop
 
 defaults.path = $${L_SHAREDIR}/lumina-desktop
 defaults.files = defaults/*

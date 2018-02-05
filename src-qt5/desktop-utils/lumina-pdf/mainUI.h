@@ -97,11 +97,11 @@ private slots:
 	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
-  //void setScroll(bool);
+	//void setScroll(bool);
 
 signals:
 	void PageLoaded(int);
-  void sendDocument(Poppler::Document*);
+	void sendDocument(Poppler::Document*);
 
 protected:
 	void keyPressEvent(QKeyEvent*);
