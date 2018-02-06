@@ -162,6 +162,7 @@ void TerminalWidget::applyANSI(QByteArray code){
     //KEYPAD MODES
     if(code.at(0)=='='){ altkeypad = true; }
     else if(code.at(0)=='>'){ altkeypad = false; }
+    else if(code.at(0)=='H'){ InsertText("\t"); }
     else{
       qDebug() << "Unhandled ANSI Code:" << code;
     }
@@ -176,42 +177,63 @@ void TerminalWidget::applyANSI(QByteArray code){
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor Up:" << num;
     cur.movePosition(QTextCursor::Up, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("B")){ //Move Down
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
-        QTextCursor cur = this->textCursor();
-    cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, num);
+    QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor Down:" << num;
+    for(int i=1; i<num; i++){
+        if(!cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1)){
+          //Need to add a new line(row) to the editor
+          this->document()->setPlainText(this->document()->toPlainText()+"\n");
+          cur.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); //now move the cursor down to the new line
+        }
+      }
+    //cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("C")){ //Move Forward
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
-    cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, num);
+    qDebug() << "Move Cursor Forward:" << num;
+    for(int i=1; i<num; i++){
+        if(!cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1)){
+          //Need to add a new line(row) to the editor
+          this->document()->setPlainText(this->document()->toPlainText()+" ");
+          cur.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); //now move the cursor down to the new line
+        }
+      }
+    //cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("D")){ //Move Back
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor Back:" << num;
     cur.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("E")){ //Move Next/down Lines (go toward end)
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor NextRow:" << num;
     cur.movePosition(QTextCursor::NextRow, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("F")){ //Move Previous/up Lines (go to beginning)
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor PrevRow:" << num;
     cur.movePosition(QTextCursor::PreviousRow, QTextCursor::MoveAnchor, num);
     this->setTextCursor(cur);
   }else if(code.endsWith("G")){ //Move to specific column
     int num = 1;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
     QTextCursor cur = this->textCursor();
+    qDebug() << "Move Cursor To Column:" << num;
     cur.setPosition(num);
     this->setTextCursor(cur);
   }else if(code.endsWith("H") || code.endsWith("f") ){ //Move to specific position (row/column)
@@ -220,20 +242,35 @@ void TerminalWidget::applyANSI(QByteArray code){
       int numR, numC; numR = numC = 1;
       if(mid >=2){ numR = code.mid(1,mid-1).toInt(); }
       if(mid < code.size()-1){ numC = code.mid(mid+1,code.size()-mid-2).toInt(); }
-      
+      //qDebug() << "NumR:" << numR << startrow << endrow << this->document()->lineCount() -1;
+      //qDebug() << "NumC:" << numC;
       if(startrow>=0 && endrow>=0){
 	if(numR == startrow){ numR = 0;}
 	else if(numR==endrow){ numR = this->document()->lineCount()-1; }
       }
-      qDebug() << "Set Text Position (absolute):" << "Code:" << code << "Row:" << numR << "Col:" << numC;
+      //qDebug() << "Set Text Position (absolute):" << "Code:" << code << "Row:" << numR << "Col:" << numC;
       //qDebug() << " - Current Pos:" << this->textCursor().position() << "Line Count:" << this->document()->lineCount();
       //if(!this->textCursor().movePosition(QTextCursor::Start, QTextCursor::MoveAnchor,1) ){ qDebug() << "Could not go to start"; }
       QTextCursor cur(this->textCursor());
       cur.setPosition(QTextCursor::Start, QTextCursor::MoveAnchor); //go to start of document
        //qDebug() << " - Pos After Start Move:" << cur.position();
-      if( !cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, numR) ){ qDebug() << "Could not go to row:" << numR; }
+      for(int i=1; i<numR; i++){
+        if(!cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, 1)){
+          //Need to add a new line(row) to the editor
+          this->document()->setPlainText(this->document()->toPlainText()+"\n");
+          cur.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); //now move the cursor down to the new line
+        }
+      }
+      //if( !cur.movePosition(QTextCursor::Down, QTextCursor::MoveAnchor, numR) ){ qDebug() << "Could not go to row:" << numR; }
        //qDebug() << " - Pos After Down Move:" << cur.position();
-      if( !cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }
+      for(int i=1; i<numC; i++){
+        if(!cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, 1)){
+          //Need to add a new line(row) to the editor
+          this->document()->setPlainText(this->document()->toPlainText()+" ");
+          cur.movePosition(QTextCursor::End, QTextCursor::MoveAnchor); //now move the cursor down to the new line
+        }
+      }
+      //if( !cur.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }
       /*this->textCursor().setPosition( this->document()->findBlockByLineNumber(numR).position() );
       qDebug() << " - Pos After Row Move:" << this->textCursor().position();
       if( !this->textCursor().movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, numC) ){ qDebug() << "Could not go to col:" << numC; }*/
@@ -274,7 +311,7 @@ void TerminalWidget::applyANSI(QByteArray code){
 	cur.movePosition(QTextCursor::End, QTextCursor::KeepAnchor, 1);
 	cur.removeSelectedText();
       this->setTextCursor(cur);
-    }	    
+    }
   }else if(code.endsWith("K")){ //EL - Erase in Line
     int num = 0;
     if(code.size()>2){ num = code.mid(1, code.size()-2).toInt(); } //everything in the middle
@@ -312,12 +349,12 @@ void TerminalWidget::applyANSI(QByteArray code){
     }else if(num==3){ //clear all
       this->clear();
     }
-   //SCROLL MOVEMENT CODES 
+   //SCROLL MOVEMENT CODES
   //}else if(code.endsWith("S")){ // SU - Scroll Up
     //qDebug() << "Scroll Up:" << code;
   //}else if(code.endsWith("T")){ // SD - Scroll Down
     //qDebug() << "Scroll Down:" << code;
-	  
+
   // GRAPHICS RENDERING
   }else if(code.endsWith("m")){
     //Format: "[<number>;<number>m" (no limit to sections separated by ";")
@@ -339,17 +376,17 @@ void TerminalWidget::applyANSI(QByteArray code){
     //qDebug() << "Color Code:" << code << start << end << code.mid(start, end-start);
     if(end>start){ applyANSIColor(code.mid(start, end-start).toInt());}
     else{ applyANSIColor(0); }
-    
-    
+
+
   // GRAPHICS MODES
   //}else if(code.endsWith("h")){
-	  
+
   //}else if(code.endsWith("l")){
-	  
+
   }else{
     qDebug() << "Unhandled Control Code:" << code;
   }
-  
+
   } //End VT100 control codes
   else{
     qDebug() << "Unhandled Control Code:" << code;
@@ -437,7 +474,7 @@ void TerminalWidget::sendKeyPress(int key){
 	ba.append("\e[3~");
         break;
     case Qt::Key_Backspace:
-	ba.append("\x08");    
+	ba.append("\x08");
         break;
     case Qt::Key_Left:
 	if(altkeypad){ ba.append("^[D"); }
@@ -457,10 +494,10 @@ void TerminalWidget::sendKeyPress(int key){
         break;
     case Qt::Key_Home:
         ba.append("\x1b[H");
-        break;	    
+        break;
     case Qt::Key_End:
 	ba.append("\x1b[F");
-        break;	    
+        break;
   }
    //qDebug() << "Forward Input:" << ba;
   if(!ba.isEmpty()){ PROC->writeTTY(ba); }
@@ -490,19 +527,20 @@ void TerminalWidget::copySelection(){
 
 void TerminalWidget::pasteSelection(){
   QString text = QApplication::clipboard()->text();
-  if(!text.isEmpty()){ 
+  if(!text.isEmpty()){
     QByteArray ba; ba.append(text); //avoid any byte conversions
-    PROC->writeTTY(ba); 
+    PROC->writeTTY(ba);
   }
 }
 
 void TerminalWidget::updateTermSize(){
  if(!PROC->isOpen()){ return; }
   QSize pix = this->size(); //pixels
-  QSize chars; 
+  QSize chars;
     chars.setWidth( pix.width()/this->fontMetrics().width("W") );
     chars.setHeight( pix.height()/this->fontMetrics().lineSpacing() );
-  
+  //qDebug() << "Set Terminal Size:" << chars << pix;
+  if(chars.width() <2 || chars.height() <2){ return; } //skip this - cannot go less than 2 characters wide/high
   PROC->setTerminalSize(chars,pix);
 }
 
@@ -510,7 +548,7 @@ void TerminalWidget::updateTermSize(){
 //       PROTECTED
 // ==================
 void TerminalWidget::keyPressEvent(QKeyEvent *ev){
-	
+
   if(ev->text().isEmpty() || ev->text()=="\b" ){
     sendKeyPress(ev->key());
   }else{
@@ -518,7 +556,7 @@ void TerminalWidget::keyPressEvent(QKeyEvent *ev){
     //qDebug() << "Forward Input:" << ba;
     PROC->writeTTY(ba);
   }
-  
+
   ev->ignore();
 }
 
@@ -526,7 +564,7 @@ void TerminalWidget::mousePressEvent(QMouseEvent *ev){
   this->setFocus();
   this->activateWindow();
   if(ev->button()==Qt::RightButton){
-    QTextEdit::mousePressEvent(ev);	  
+    QTextEdit::mousePressEvent(ev);
   }else if(ev->button()==Qt::MiddleButton){
     pasteSelection();
   }else if(ev->button()==Qt::LeftButton){
@@ -555,16 +593,17 @@ void TerminalWidget::mouseReleaseEvent(QMouseEvent *ev){
   }else if(ev->button()==Qt::RightButton){
     copyA->setEnabled( selCursor.hasSelection() );
     pasteA->setEnabled( !QApplication::clipboard()->text().isEmpty() );
-    contextMenu->popup( this->mapToGlobal(ev->pos()) );	  
+    contextMenu->popup( this->mapToGlobal(ev->pos()) );
   }
   Q_UNUSED(ev);
 }
 
 void TerminalWidget::mouseDoubleClickEvent(QMouseEvent *ev){
-  Q_UNUSED(ev);	
+  Q_UNUSED(ev);
 }
 
 void TerminalWidget::resizeEvent(QResizeEvent *ev){
+  if(resizeTimer->isActive()){ resizeTimer->stop(); }
   resizeTimer->start();
   QTextEdit::resizeEvent(ev);
 }
