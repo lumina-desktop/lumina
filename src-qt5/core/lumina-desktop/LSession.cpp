@@ -272,7 +272,7 @@ void LSession::NewCommunication(QStringList list){
       screensChanged();
     }else if(list[i]=="--show-start"){
       emit StartButtonActivated();
-    }
+    }else if(list[i]=="--logout"){ QTimer::singleShot(1000, this, SLOT(StartLogout()));}
   }
 }
 
