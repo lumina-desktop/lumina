@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=start-lumina-desktop --unified
+TryExec=lumina-desktop-unified
+Icon=Lumina-DE
+Type=Application
+Name=Lumina 2
+Comment=Illuminating the desktop

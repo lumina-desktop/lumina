@@ -142,19 +142,19 @@ void DesktopManager::syncWindowList(){
 
 void DesktopManager::syncTrayWindowList(){
   QList<NativeWindowObject*> allWins = Lumina::NWS->currentTrayWindows();
-  qDebug() << "Synced Tray Window List:" << allWins.length();
+  //qDebug() << "Synced Tray Window List:" << allWins.length();
   RootDesktopObject::instance()->setTrayWindows(allWins);
 }
 
 // === PRIVATE SLOTS ===
 void DesktopManager::updateSessionSettings(){
-  qDebug() << "Update Session Settings...";
+  //qDebug() << "Update Session Settings...";
 
   RootDesktopObject::instance()->updateCurrentTimeFormat(DesktopSettings::instance()->value(DesktopSettings::Session, "datetime_format", "").toString());
 }
 
 void DesktopManager::updateDesktopSettings(){
-  qDebug() << "Update Desktop Settings...";
+  //qDebug() << "Update Desktop Settings...";
   QList<QScreen*> scrns = QGuiApplication::screens();
   int wkspace = Lumina::NWS->currentWorkspace();
   for(int i=0; i<scrns.length(); i++){ updateWallpaper(scrns[i]->name(), wkspace); }
@@ -164,7 +164,7 @@ void DesktopManager::updateDesktopSettings(){
 void DesktopManager::updatePanelSettings(){
   QList<QScreen*> scrns = QGuiApplication::screens();
   int primary = QApplication::desktop()->primaryScreen();
-  qDebug() << "Panel  Settings Changed:" << primary << scrns.length();
+  //qDebug() << "Panel  Settings Changed:" << primary << scrns.length();
   QStringList total_ids;
   for(int i=0; i<scrns.length(); i++){
     //qDebug() << " - Check Screen Name:" << scrns[i]->name();
