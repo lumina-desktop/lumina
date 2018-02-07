@@ -172,8 +172,6 @@ TRANSLATIONS =  i18n/lumina-desktop_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-link.extra=ln -sf "lumina-desktop --logout"  $(INSTALL_ROOT)$${L_BINDIR}/llogout
-
 manpage.path=$${L_MANDIR}/man1/
 manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
