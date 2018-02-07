@@ -4,6 +4,7 @@ bin/lumina-desktop
 bin/lumina-info
 bin/lumina-open
 bin/start-lumina-desktop
+bin/llogout
 etc/luminaDesktop.conf.dist
 lib/qt5/plugins/platformthemes/liblthemeengine.so
 lib/qt5/plugins/styles/liblthemeengine-style.so
