@@ -36,13 +36,14 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:multimedia/gstreamer1-plugins-core
 .endif
 
 MAKE_JOBS_UNSAFE=yes
+USES=		qmake
 
 USE_GL=		gl
 USE_XORG=	x11 xdamage xcb
 USE_LDCONFIG=	yes
 USE_QT5=	core gui widgets network svg multimedia imageformats \
 		buildtools_build x11extras concurrent
-USES=		qmake
+
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
