@@ -1,4 +1,5 @@
 #include "PrintWidget.h"
+#include <QTimer>
 
 PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1),
   viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
@@ -186,7 +187,7 @@ void PrintWidget::populateScene()
   //qDebug() << "Image paperSize" << paperSize;
 
   //Changes the paper orientation if rotated by 90 or 270 degrees
-  if(degrees == 90 or degrees == 270) 
+  if(degrees == 90 or degrees == 270)
     paperSize.transpose();
 
 	for (int i = 0; i < numPages; i++) {
@@ -284,6 +285,8 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
+  setCurrentPage(1);
+  QTimer::singleShot(0,this, SLOT(updatePreview()));
 }
 
 void PrintWidget::receiveDocument(Poppler::Document *DOC) {

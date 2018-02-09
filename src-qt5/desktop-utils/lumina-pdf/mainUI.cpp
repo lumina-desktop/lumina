@@ -23,6 +23,8 @@
 #include <LuminaXDG.h>
 #include "PrintWidget.h"
 
+#define TESTING false
+
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   this->setWindowTitle(tr("Lumina PDF Viewer"));
@@ -208,6 +210,16 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 
   ui->findGroup->setVisible(false);
   ui->bookmarksFrame->setVisible(false);
+
+  // Disable/Hide all the things currently still being implemented
+  ui->menuSettings->setEnabled(TESTING);
+  ui->menuSettings->setVisible(TESTING);
+
+  ui->actionBookmarks->setEnabled(TESTING);
+  ui->actionRotate_Counterclockwise->setEnabled(TESTING);
+  ui->actionRotate_Clockwise->setEnabled(TESTING);
+  ui->actionProperties->setEnabled(TESTING);
+  ui->actionProperties->setVisible(TESTING);
 }
 
 MainUI::~MainUI(){

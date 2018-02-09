@@ -73,7 +73,7 @@ public:
 		QMatrix matrix;
 		switch(degrees) {
 			case 270:
-				matrix = QMatrix(0, -1, 1, 0, 0, 0); 
+				matrix = QMatrix(0, -1, 1, 0, 0, 0);
 				break;
 			case 90:
 				matrix = QMatrix(0, 1, -1, 0, 0, 0);
@@ -82,7 +82,7 @@ public:
 				matrix = QMatrix(-1, 0, 0, -1, 0, 0);
 				break;
 			default:
-				matrix = QMatrix(1, 0, 0, 1, 0 ,0); 
+				matrix = QMatrix(1, 0, 0, 1, 0 ,0);
 		}
 
 	  painter->setClipRect(paperRect & option->exposedRect);
