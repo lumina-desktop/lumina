@@ -40,8 +40,9 @@ private:
 	QFileSystemWatcher *watcher;
 	QMap<QString, QPixmap> videoImages;
 	bool showHidden, showThumbs;
-	QStringList imageFormats, videoFormats, oldFiles;
+	QStringList imageFormats, videoFormats, oldFiles, updateList;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
+	QTimer *updateTimer;
 
 	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
 	QIcon* loadIcon(QString icon); //simplification for using/populating the mimIcons cache
@@ -50,6 +51,7 @@ private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
 	void futureFinished(QString, QImage);
+	void updateRequested();
 
 public slots:
 	void loadDirectory(QString dir = "", bool force = false);
