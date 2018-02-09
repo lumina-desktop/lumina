@@ -29,6 +29,7 @@ XCBEventFilter *evFilter = 0;
 LIconCache *ICONS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
+ xchange = false;
  if(this->isPrimaryProcess()){
   connect(this, SIGNAL(InputsAvailable(QStringList)), this, SLOT(NewCommunication(QStringList)) );
   this->setApplicationName("Lumina Desktop Environment");
