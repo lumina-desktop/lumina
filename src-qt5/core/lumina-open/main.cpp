@@ -185,17 +185,33 @@ return;
 LaunchAutoStart();
 return;
     }else if(QString(argv[i]).simplified() == "-volumeup"){
-int vol = LOS::audioVolume()+5; //increase 5%
-if(vol>100){ vol=100; }
-LOS::setAudioVolume(vol);
-showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
-return;
+        bool isInt = false;
+        int volupVal = 5;
+        if(argc > i){
+            int parse = QString(argv[i+1]).toInt(&isInt,10);
+            if(isInt && 0 < parse && parse <= 20){
+                volupVal = parse;
+            }
+        }
+        int vol = LOS::audioVolume()+volupVal;
+        if(vol>100){ vol=100; }
+        LOS::setAudioVolume(vol);
+        showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
+        return;
     }else if(QString(argv[i]).simplified() == "-volumedown"){
-int vol = LOS::audioVolume()-5; //decrease 5%
-if(vol<0){ vol=0; }
-LOS::setAudioVolume(vol);
-showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
-return;
+        bool isInt = false;
+        int voldownVal = 5;
+        if(argc > i){
+            int parse = QString(argv[i+1]).toInt(&isInt,10);
+            if(isInt && 0 < parse && parse <= 20){
+                voldownVal = parse;
+            }
+        }
+        int vol = LOS::audioVolume()-voldownVal; //decrease 5%
+        if(vol<0){ vol=0; }
+        LOS::setAudioVolume(vol);
+        showOSD(argc,argv, QString(QObject::tr("Audio Volume %1%")).arg(QString::number(vol)) );
+        return;
     }else if(QString(argv[i]).simplified() == "-brightnessup"){
 int bright = LOS::ScreenBrightness();
 if(bright > 0){ //brightness control available
