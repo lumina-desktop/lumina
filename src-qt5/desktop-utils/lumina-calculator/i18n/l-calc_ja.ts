@@ -80,7 +80,7 @@
     <message>
         <location filename="../mainUI.ui" line="657"/>
         <source>Advanced Operations</source>
-        <translation type="unfinished">高度な演算</translation>
+        <translation>高度な計算</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="83"/>
@@ -90,22 +90,22 @@
     <message>
         <location filename="../mainUI.cpp" line="85"/>
         <source>Power %1</source>
-        <translation type="unfinished">冪 %1</translation>
+        <translation>べき乗 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="87"/>
         <source>Base-10 Exponential %1</source>
-        <translation type="unfinished"></translation>
+        <translation>10が底の指数関数 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="89"/>
         <source>Exponential %1</source>
-        <translation type="unfinished">指数 %1</translation>
+        <translation>指数関数 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="91"/>
         <source>Constant Pi %1</source>
-        <translation type="unfinished">円周率 %1</translation>
+        <translation>円周率π %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="94"/>
@@ -125,7 +125,7 @@
     <message>
         <location filename="../mainUI.cpp" line="101"/>
         <source>Sine %1</source>
-        <translation type="unfinished">正弦 %1</translation>
+        <translation>正弦 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="103"/>
@@ -140,37 +140,37 @@
     <message>
         <location filename="../mainUI.cpp" line="108"/>
         <source>Arc Sine %1</source>
-        <translation type="unfinished">Arc Sine %1</translation>
+        <translation>逆正弦 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="110"/>
         <source>Arc Cosine %1</source>
-        <translation type="unfinished">Arc Cosine %1</translation>
+        <translation>逆余弦 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="112"/>
         <source>Arc Tangent %1</source>
-        <translation type="unfinished">Arc Tangent %1</translation>
+        <translation>逆正接 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="115"/>
         <source>Hyperbolic Sine %1</source>
-        <translation type="unfinished">Hyperbolic Sine %1</translation>
+        <translation>双曲線正弦 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="117"/>
         <source>Hyperbolic Cosine %1</source>
-        <translation type="unfinished">Hyperbolic Cosine %1</translation>
+        <translation>双曲線余弦 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="119"/>
         <source>Hyperbolic Tangent %1</source>
-        <translation type="unfinished">Hyperbolic Tangent %1</translation>
+        <translation>双曲線正接 %1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="182"/>
         <source>Save Calculator History</source>
-        <translation type="unfinished">電卓の歴史を保存</translation>
+        <translation>計算履歴を保存</translation>
     </message>
 </context>
 </TS>
