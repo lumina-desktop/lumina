@@ -11,6 +11,7 @@ COMMENT=	Alarm/notification utility from the Lumina Desktop
 LICENSE=	BSD3CLAUSE
 
 OPTIONS_DEFINE=	I18N
+OPTIONS_SUB=		yes
 OPTIONS_DEFAULT=	I18N
 I18N_DESC= Install localization files
 

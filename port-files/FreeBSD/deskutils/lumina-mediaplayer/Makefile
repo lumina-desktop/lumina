@@ -14,6 +14,7 @@ RUN_DEPENDS=	gstreamer1-qt5>=0:multimedia/gstreamer1-qt5 \
 		gstreamer1-plugins-gl>=0:graphics/gstreamer1-plugins-gl
 
 OPTIONS_DEFINE=	I18N
+OPTIONS_SUB=		yes
 OPTIONS_DEFAULT=	I18N
 I18N_DESC= Install localization files
 

@@ -15,6 +15,7 @@ LIB_DEPENDS=	libpoppler-qt5.so:graphics/poppler-qt5
 CONFLICTS_INSTALL=	lumina-1.2.*
 
 OPTIONS_DEFINE=	I18N
+OPTIONS_SUB=		yes
 OPTIONS_DEFAULT=	I18N
 I18N_DESC= Install localization files
 

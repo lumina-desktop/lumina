@@ -18,6 +18,7 @@ LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 CONFLICTS_INSTALL=	lumina-1.2.*
 
 OPTIONS_DEFINE=	I18N
+OPTIONS_SUB=		yes
 OPTIONS_DEFAULT=	I18N
 I18N_DESC= Install localization files
 

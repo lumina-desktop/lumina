@@ -24,6 +24,7 @@ LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 CONFLICTS_INSTALL=	lumina-1.2.*
 
 OPTIONS_DEFINE=	MULTIMEDIA TRUEOS I18N
+OPTIONS_SUB=		yes
 OPTIONS_DEFAULT=	MULTIMEDIA I18N
 MULTIMEDIA_DESC=	Install multimedia support backend (gstreamer)
 TRUEOS_DESC=	Use the TrueOS system interface settings.
