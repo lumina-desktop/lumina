@@ -853,9 +853,12 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   QIcon tmp;
   if(!iconName.contains("libreoffice")){ //libreoffice is stupid - their svg icons are un-renderable with Qt
     tmp = QIcon::fromTheme(iconName);
+    /*if(iconName.contains("start-here")){
+      qDebug() << "[ICON]" << iconName << "found:" << !tmp.isNull() << tmp.name();
+    }*/
     //if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
   }
-  if(!tmp.isNull()){ return tmp; } //found one in the theme
+  if(!tmp.isNull() && tmp.name()==iconName){ return tmp; } //found this in the theme
 
 
   //NOTE: This was re-written on 11/10/15 to avoid using the QIcon::fromTheme() framework
@@ -964,6 +967,8 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     else if(iconName.contains("-x-") && !iconName.endsWith("-x-generic")){
       //mimetype - try to use the generic type icon
       ico = LXDG::findIcon(iconName.section("-x-",0,0)+"-x-generic", "");
+    }else if(iconName.contains("-")){
+      ico = LXDG::findIcon(iconName.section("-",0,-2), ""); //chop the last modifier off the end and try again
     }
   }
   if(ico.isNull()){
