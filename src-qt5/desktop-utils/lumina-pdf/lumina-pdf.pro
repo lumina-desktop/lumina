@@ -25,7 +25,8 @@ SOURCES += main.cpp \
 HEADERS  += mainUI.h \
 		PrintWidget.h \
 		PresentationLabel.h \
-    PropDialog.h
+    PropDialog.h \
+    textData.h
 
 FORMS += mainUI.ui \
          propDialog.ui

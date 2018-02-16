@@ -20,6 +20,7 @@
 #include <QtMath>
 #include <QPageLayout>
 
+#include "textData.h"
 #include <mupdf/fitz.h>
 
 class PageItem : public QGraphicsItem {
@@ -137,7 +138,7 @@ public slots:
 	void zoomOut(double factor=1.2);
 	void setCurrentPage(int);
 	void setVisible(bool) Q_DECL_OVERRIDE;
-	void highlightText(int, fz_rect&);
+	void highlightText(TextData*);
   void receiveDocument(fz_document*);
   void setDegrees(int);
 

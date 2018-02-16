@@ -25,7 +25,7 @@
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
-  this->setWindowTitle(tr("Lumina PDF Viewer"));
+  //this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon( LXDG::findIcon("application-pdf","unknown"));
   presentationLabel = 0;
   CurrentPage = 1;
@@ -53,7 +53,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Now put the widgets into the UI
   //ui->bookmarksFrame->setParent(WIDGET);
   //ui->findGroup->setParent(WIDGET);
-  qDebug() << "Setting central widget";
+  //qDebug() << "Setting central widget";
   this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET); //setCentralWidget(WIDGET);
   ui->label_replaceme->setVisible(false);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -196,6 +196,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionSettings->setIcon(LXDG::findIcon("document-properties",""));
   ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
   ui->findPrevB->setIcon(LXDG::findIcon("go-up-search"));
+  ui->actionClearHighlights->setIcon(LXDG::findIcon("format-text-clear",""));
+  ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
   ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
   ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
   ui->closeBookmarks->setIcon(LXDG::findIcon("dialog-close"));
@@ -210,9 +212,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->findGroup->setVisible(false);
   ui->bookmarksFrame->setVisible(false);
 
-  ui->menuSettings->setEnabled(TESTING);
-  ui->menuSettings->setVisible(TESTING);
+  ui->actionSettings->setEnabled(TESTING);
+  ui->actionSettings->setVisible(TESTING);
 	ui->actionBookmarks->setEnabled(TESTING);
+	ui->actionBookmarks->setVisible(TESTING);
 	ui->actionScroll_Mode->setEnabled(TESTING);
 	ui->actionScroll_Mode->setVisible(TESTING);
 	ui->actionSelect_Mode->setEnabled(TESTING);
@@ -259,7 +262,6 @@ void MainUI::loadFile(QString path){
     if(pdf_obj *obj = pdf_dict_gets(CTX, info, (char *)"Title"))
       this->setWindowTitle(pdf_to_utf8(CTX, obj));
   }
-  qDebug() << this->windowTitle();
   if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
 
   //Setup the Document
@@ -468,6 +470,7 @@ void MainUI::slotPageLoaded(int page){
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
     pageAct->setVisible(true);
+    qDebug() << " - Document Setup: All pages loaded";
   }else{
     progress->setValue(finished);
   }
@@ -625,39 +628,50 @@ void MainUI::wheelEvent(QWheelEvent *event) {
 
 void MainUI::find(QString text, bool forward) {
   if(!text.isEmpty()) {
-    qDebug() << "Finding Text";
-    bool newText = results.empty();
-    bool research = false;
-    if(!newText)
-	    research = !(results[0].text == text);
-    //Clear results if the user gives a new search string
-    if(research)
-      results.clear();
+    static bool previousMatchCase = matchCase;
+    //qDebug() << "Finding Text";
+    //Detemine if it is the first time searching or a new search string
+    bool newSearch = results.empty() || !(results[0]->text() == text);
 
-    if(research or newText) {
+    //Also search again if match case is turned on/off
+    if(previousMatchCase != matchCase) {
+      newSearch = true;
+      previousMatchCase = matchCase;
+    }
+
+    //Clear results and highlights if the user gives a new search string
+    if(newSearch) {
+      if(!results.empty()) {
+        foreach (TextData* td, results)
+          delete td;
+        results.clear();
+      }
+      QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
       ui->resultsLabel->setText("");
       fz_rect rectBuffer[1000];
       for(int i = 0; i < numPages; i++) {
 				int count = fz_search_page_number(CTX, DOC, i, text.toLatin1().data(), rectBuffer, 1000);
-        qDebug() << count;
+        //qDebug() << "Page " << i+1 << ": Count, " << count;
 				for(int j = 0; j < count; j++) {
-          textData t;
-          t.loc = rectBuffer[j];
-          t.text = text;
-          t.page = i;
-          /*fz_stext_sheet *sheet = fz_new_stext_sheet(CTX);
-          fz_stext_page *sPage = fz_new_stext_page_from_page_number(CTX, DOC, results.first(), sheet, NULL);
-					if(QString(fz_copy_selection(CTX, sPage, rectBuffer[j])).contains(
-							text, (matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {*/
-					  results.append(t);
-				  //}
-			  }
+          TextData *t = new TextData(rectBuffer[j], i+1, text);
+
+          //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
+          if(matchCase){
+            fz_stext_sheet *sheet = fz_new_stext_sheet(CTX);
+            fz_stext_page *sPage = fz_new_stext_page_from_page_number(CTX, DOC, i, sheet, NULL);
+            QString currentStr = QString(fz_copy_selection(CTX, sPage, rectBuffer[j]));
+            if(currentStr.contains(text, Qt::CaseSensitive))
+              results.append(t);
+          }else{
+              results.append(t);
+          }
+        }
 			}
-      qDebug() << results.size();
+      //qDebug() << "Total Results: " << results.size();
       currentHighlight = (forward) ? -1 : results.size();
     }
 
-    qDebug() << "Jumping to next result";
+    //qDebug() << "Jumping to next result";
     if(!results.empty()) {
       //Jump to the location of the next or previous textbox and highlight
       if(forward) {
@@ -674,16 +688,15 @@ void MainUI::find(QString text, bool forward) {
 
       ui->resultsLabel->setText(QString::number(currentHighlight+1) + " of " + QString::number(results.size()) + " results");
 
-      textData currentText = results[currentHighlight];
-      WIDGET->setCurrentPage(currentText.page);
+      TextData *currentText = results[currentHighlight];
+      WIDGET->setCurrentPage(currentText->page());
 
-      qDebug() << "Jump to location: " << currentText.page;
+      //qDebug() << "Jump to page: " << currentText.page;
 
-      WIDGET->highlightText(currentHighlight, currentText.loc);
-
-      //QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+      //Current Bug: Does not highlight results[0]
+      WIDGET->highlightText(currentText);
     }else{
-      //Print "No results found"
+      ui->resultsLabel->setText("No results found");
     }
   }
 }

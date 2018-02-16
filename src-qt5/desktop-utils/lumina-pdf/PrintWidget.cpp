@@ -126,10 +126,18 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 	}
 }
 
-void PrintWidget::highlightText(int pageNum, fz_rect &rect) {
-  //PageItem *item = static_cast<PageItem*>(pages[pageNum]);
-  QPainter painter(this);
-  painter.fillRect(QRectF(QPointF(rect.x0, rect.y0), QPointF(rect.x1, rect.y1)), QColor(255, 255, 177, 128));
+void PrintWidget::highlightText(TextData *text) {
+  //Creates a rectangle around the text if the text has not already been highlighted
+  if(!text->highlighted()) {
+    //qDebug() << "Highlighting text: " << text->text() << "At page: " << text->page();
+    fz_rect rect = text->loc();
+    double pageHeight = pages.at(0)->boundingRect().height();
+    QRectF textRect(QPointF(rect.x0, rect.y0+(pageHeight*(text->page()-1))), QPointF(rect.x1, rect.y1 + (pageHeight*(text->page()-1))));
+    QBrush highlightFill(QColor(255, 255, 177, 50));
+    QPen highlightOutline(QColor(255, 255, 100, 98));
+    scene->addRect(textRect, highlightOutline, highlightFill);
+    text->highlighted(true);
+  }
 }
 
 //Private functions
@@ -194,7 +202,7 @@ void PrintWidget::populateScene()
     QImage pagePicture = pictures->value(i);
     if(degrees != 0) {
       pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
-      qDebug() << "Rotating by: " << degrees << " degrees";
+      //qDebug() << "Rotating by: " << degrees << " degrees";
     }
     if(pagePicture.isNull()) {
       qDebug() << "NULL IMAGE ON PAGE " << i;

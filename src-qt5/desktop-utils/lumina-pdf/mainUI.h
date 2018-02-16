@@ -24,16 +24,11 @@
 #include "PresentationLabel.h"
 #include "propDialog.h"
 #include "PrintWidget.h"
+#include "textData.h"
 
 namespace Ui{
 	class MainUI;
 };
-
-typedef struct textData {
-    fz_rect loc;
-    int page;
-    QString text; 
-}textData;
 
 class MainUI : public QMainWindow{
 	Q_OBJECT
@@ -54,7 +49,7 @@ private:
 	QPrintDialog *PrintDLG;
 	QString lastdir;
 	bool matchCase;
-  QList<textData> results;
+  QList<TextData*> results;
 	int currentHighlight;
 
 	//Other Interface elements
