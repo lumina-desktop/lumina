@@ -19,7 +19,8 @@
 #include <QApplication>
 #include <QMenu>
 
-#include <poppler/qt5/poppler-qt5.h>
+#include <mupdf/fitz.h>
+#include <mupdf/pdf.h>
 #include "PresentationLabel.h"
 #include "propDialog.h"
 #include "PrintWidget.h"
@@ -27,6 +28,12 @@
 namespace Ui{
 	class MainUI;
 };
+
+typedef struct textData {
+    fz_rect loc;
+    int page;
+    QString text; 
+}textData;
 
 class MainUI : public QMainWindow{
 	Q_OBJECT
@@ -37,14 +44,17 @@ public:
 	void loadFile(QString path);
 
 private:
-	Poppler::Document *DOC;
+	fz_document *DOC;
+	pdf_document *PDOC;
+  fz_context *CTX;
+  QSizeF pageSize;
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
 	PropDialog *PROPDIALOG;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
 	bool matchCase;
-	QMap<Poppler::TextBox*, int> results;
+  QList<textData> results;
 	int currentHighlight;
 
 	//Other Interface elements
@@ -60,7 +70,7 @@ private:
 	QHash<int, QImage> loadingHash;
 	int numPages;
 
-	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
+	void loadPage(int num, fz_document *doc, MainUI *obj, QSize dpi);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -83,7 +93,6 @@ private slots:
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
 
-	void showInformation();
 	void find(QString text, bool forward);
 	void showBookmarks();
 
@@ -97,11 +106,11 @@ private slots:
 	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
-	//void setScroll(bool);
+  //void setScroll(bool);
 
 signals:
 	void PageLoaded(int);
-	void sendDocument(Poppler::Document*);
+  void sendDocument(fz_document*);
 
 protected:
 	void keyPressEvent(QKeyEvent*);

@@ -8,7 +8,9 @@
 #define _LUMINA_PDF_VIEWER_PROP_DIALOG_H
 
 #include <QDialog>
-#include <poppler/qt5/poppler-qt5.h>
+#include <QTextEdit>
+#include <mupdf/fitz.h>
+#include <mupdf/pdf.h>
 
 namespace Ui{
 	class PropDialog;
@@ -17,9 +19,13 @@ namespace Ui{
 class PropDialog : public QDialog {
   Q_OBJECT
   public:
-    PropDialog(Poppler::Document*);
+    PropDialog(fz_context*, pdf_document*);
+    
+    void setSize(QSizeF);
 
   private:
+    void setInfo(fz_context*, pdf_obj*, QTextEdit*, QString);
+
     Ui::PropDialog *ui;
 };
 #endif

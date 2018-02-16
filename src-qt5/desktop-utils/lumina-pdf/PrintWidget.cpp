@@ -1,5 +1,4 @@
 #include "PrintWidget.h"
-#include <QTimer>
 
 PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1),
   viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
@@ -22,6 +21,7 @@ PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), cur
 	scene->setBackgroundBrush(Qt::gray);
 	this->setScene(scene);
   this->degrees = 0;
+  this->rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0); 
 
 	/*QVBoxLayout *layout = new QVBoxLayout;
 	setLayout(layout);
@@ -126,10 +126,10 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 	}
 }
 
-void PrintWidget::highlightText(int pageNum, QRectF textBox) {
+void PrintWidget::highlightText(int pageNum, fz_rect &rect) {
   //PageItem *item = static_cast<PageItem*>(pages[pageNum]);
   QPainter painter(this);
-  painter.fillRect(textBox, QColor(255, 255, 177, 128));
+  painter.fillRect(QRectF(QPointF(rect.x0, rect.y0), QPointF(rect.x1, rect.y1)), QColor(255, 255, 177, 128));
 }
 
 //Private functions
@@ -187,11 +187,20 @@ void PrintWidget::populateScene()
   //qDebug() << "Image paperSize" << paperSize;
 
   //Changes the paper orientation if rotated by 90 or 270 degrees
-  if(degrees == 90 or degrees == 270)
+  if(degrees == 90 or degrees == 270) 
     paperSize.transpose();
 
 	for (int i = 0; i < numPages; i++) {
-		PageItem* item = new PageItem(i+1, (*pictures)[i].scaled( paperSize, Qt::KeepAspectRatio, Qt::SmoothTransformation), paperSize, degrees);
+    QImage pagePicture = pictures->value(i);
+    if(degrees != 0) {
+      pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
+      qDebug() << "Rotating by: " << degrees << " degrees";
+    }
+    if(pagePicture.isNull()) {
+      qDebug() << "NULL IMAGE ON PAGE " << i;
+      continue;
+    }
+		PageItem* item = new PageItem(i+1, pagePicture, paperSize);
 		scene->addItem(item);
 		pages.append(item);
 	}
@@ -285,11 +294,9 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
-  setCurrentPage(1);
-  QTimer::singleShot(0,this, SLOT(updatePreview()));
 }
 
-void PrintWidget::receiveDocument(Poppler::Document *DOC) {
+void PrintWidget::receiveDocument(fz_document *DOC) {
   this->doc = DOC;
   this->setVisible(true);
 }
@@ -298,5 +305,18 @@ void PrintWidget::receiveDocument(Poppler::Document *DOC) {
 void PrintWidget::setDegrees(int degrees) {
   //Mods by 360, but adds and remods because of how C++ treats negative mods
   this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
+  switch(this->degrees) {
+    case 270:
+      rotMatrix = QMatrix(0, -1, 1, 0, 0, 0); 
+      break;
+    case 90:
+      rotMatrix = QMatrix(0, 1, -1, 0, 0, 0);
+      break;
+    case 180:
+      rotMatrix = QMatrix(-1, 0, 0, -1, 0, 0);
+      break;
+    default:
+      rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0); 
+  }
   this->updatePreview();
 }

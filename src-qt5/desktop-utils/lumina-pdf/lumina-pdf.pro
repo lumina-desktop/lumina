@@ -30,7 +30,7 @@ HEADERS  += mainUI.h \
 FORMS += mainUI.ui \
          propDialog.ui
 
-LIBS += -lpoppler-qt5
+LIBS += -lpoppler-qt5 -lmupdf -lmujs
 
 TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_ar.ts \

@@ -10,16 +10,16 @@
 
 #include <LuminaXDG.h>
 
-PropDialog::PropDialog(Poppler::Document *DOC) : QDialog(), ui(new Ui::PropDialog()){
+void PropDialog::setInfo(fz_context *CTX, pdf_obj *info, QTextEdit *widget, QString str) {
+  pdf_obj *obj = pdf_dict_gets(CTX, info, str.toLatin1().data());
+  if(obj)
+    widget->setText(pdf_to_utf8(CTX, obj));
+}
+
+PropDialog::PropDialog(fz_context *CTX, pdf_document *DOC) : QDialog(), ui(new Ui::PropDialog()){
   this->setWindowTitle(tr("PDF Information"));
   this->setWindowIcon( LXDG::findIcon("dialog-information","unknown"));
-  int verMa, verMi;
-  QString version;
-  QSize size = DOC->page(0)->pageSize();
-
-  //Grab the version
-  DOC->getPdfVersion(&verMa, &verMi);
-  version = QString::number(verMa)+"."+QString::number(verMi);
+  pdf_obj *info = pdf_dict_gets(CTX, pdf_trailer(CTX, DOC), "Info");
 
   ui->setupUi(this);
 
@@ -34,23 +34,34 @@ PropDialog::PropDialog(Poppler::Document *DOC) : QDialog(), ui(new Ui::PropDialo
   ui->keywordsL->setText(tr("Keywords:"));
   ui->createdL->setText(tr("Created:"));
   ui->modifiedL->setText(tr("Modified:"));
-  ui->versionL->setText(tr("PDF Version:"));
-  ui->sizeL->setText(tr("Page Size:"));
-  ui->numberL->setText(tr("Number of Pages:"));
+  ui->sizeL->setText(tr("Page Size: "));
+  ui->numberL->setText(tr("Number of Pages: "));
   ui->saveButton->setText(tr("Save"));
   ui->closeButton->setText(tr("Close"));
 
   //Fill the text boxes with information from the document
-  ui->titleE->setText(DOC->title());
-  ui->subjectE->setText(DOC->subject());
-  ui->authorE->setText(DOC->author());
-  ui->creatorE->setText(DOC->creator());
-  ui->producerE->setText(DOC->producer());
-  ui->keywordE->setText(DOC->keywords());
-  ui->createdEntry->setText(DOC->creationDate().toString(Qt::TextDate));
-  ui->modifiedEntry->setText(DOC->modificationDate().toString(Qt::TextDate));
-  ui->versionL->setText(ui->versionL->text()+version);
-  ui->sizeL->setText(ui->sizeL->text()+QString::number(size.height())+
-    ", "+QString::number(size.width()));
-  ui->numberL->setText(ui->numberL->text()+QString::number(DOC->numPages()));
+  if(info) {
+    setInfo(CTX, info, ui->titleE, "Title");
+    setInfo(CTX, info, ui->subjectE, "Subject");
+    setInfo(CTX, info, ui->authorE, "Author");
+    setInfo(CTX, info, ui->creatorE, "Creator");
+    setInfo(CTX, info, ui->producerE, "Producer");
+    setInfo(CTX, info, ui->keywordE, "Keywords");
+    pdf_obj *obj = pdf_dict_gets(CTX, info, (char *)"CreationDate");
+    char *str = pdf_to_utf8(CTX, obj);
+    if(obj)
+      ui->createdEntry->setText(QDateTime::fromString(QString(str).left(16), "'D:'yyyyMMddHHmmss").toString());
+    //ModDate not displaying when should, possibly broken
+    obj = pdf_dict_gets(CTX, info, (char *)"ModDate");
+    str = pdf_to_utf8(CTX, obj);
+    if(obj)
+      ui->modifiedEntry->setText(QDateTime::fromString(QString(str).left(16), "'D:'yyyyMMddHHmmss").toString());
+    ui->numberL->setText(ui->numberL->text()+QString::number(pdf_count_pages(CTX, DOC)));
+    free(str);
+  }
+}
+
+//Load size from mainUI after pages have loaded
+void PropDialog::setSize(QSizeF pageSize) { 
+  ui->sizeL->setText(ui->sizeL->text()+QString::number(pageSize.width())+", "+QString::number(pageSize.height()));
 }

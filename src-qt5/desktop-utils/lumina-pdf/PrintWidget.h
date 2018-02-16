@@ -20,12 +20,12 @@
 #include <QtMath>
 #include <QPageLayout>
 
-#include <poppler/qt5/poppler-qt5.h>
+#include <mupdf/fitz.h>
 
 class PageItem : public QGraphicsItem {
 public:
-	PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize, int _degrees)
-        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize), degrees(_degrees)
+	PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize)
+        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize)
 	{
           brect = QRectF(QPointF(-25, -25),
                       QSizeF(paperSize)+QSizeF(50, 50));
@@ -69,33 +69,9 @@ public:
 	  cgrad.setColorAt(0.0, QColor(0,0,0,255));
 	  cgrad.setColorAt(1.0, QColor(0,0,0,0));
 	  painter->fillRect(cshadow, QBrush(cgrad));
-
-		QMatrix matrix;
-		switch(degrees) {
-			case 270:
-				matrix = QMatrix(0, -1, 1, 0, 0, 0);
-				break;
-			case 90:
-				matrix = QMatrix(0, 1, -1, 0, 0, 0);
-				break;
-      case 180:
-				matrix = QMatrix(-1, 0, 0, -1, 0, 0);
-				break;
-			default:
-				matrix = QMatrix(1, 0, 0, 1, 0 ,0);
-		}
-
 	  painter->setClipRect(paperRect & option->exposedRect);
 	  painter->fillRect(paperRect, Qt::white);
-	  if (pagePicture.isNull()){
-	    qDebug() << "NULL";
-	    return;
-	  }
-
-		if(degrees != 0)
-			pagePicture = pagePicture.transformed(matrix, Qt::SmoothTransformation);
-
-	  painter->drawImage(QPoint(0,0), pagePicture);
+    painter->drawImage(QPoint(0,0), pagePicture);
 	}
 
 private:
@@ -103,7 +79,6 @@ private:
   QImage pagePicture;
   QSize paperSize;
   QRectF brect;
-  int degrees;
 };
 
 
@@ -131,7 +106,7 @@ private:
 	void setZoomMode(ZoomMode);
 
 	QGraphicsScene *scene;
-
+  QMatrix rotMatrix;
 	int curPage, publicPageNum;
 	ViewMode viewMode;
 	ZoomMode zoomMode;
@@ -140,7 +115,7 @@ private:
 	bool initialized, fitting;
 	QList<QGraphicsItem*> pages;
 	QHash<int, QImage> *pictures;
-  Poppler::Document *doc;
+  fz_document *doc;
   int degrees;
 
 public:
@@ -162,8 +137,8 @@ public slots:
 	void zoomOut(double factor=1.2);
 	void setCurrentPage(int);
 	void setVisible(bool) Q_DECL_OVERRIDE;
-	void highlightText(int, QRectF);
-  void receiveDocument(Poppler::Document*);
+	void highlightText(int, fz_rect&);
+  void receiveDocument(fz_document*);
   void setDegrees(int);
 
 	void updatePreview();
