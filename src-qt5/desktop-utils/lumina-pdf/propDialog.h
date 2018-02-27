@@ -9,8 +9,7 @@
 
 #include <QDialog>
 #include <QTextEdit>
-#include <mupdf/fitz.h>
-#include <mupdf/pdf.h>
+#include "Renderer.h"
 
 namespace Ui{
 	class PropDialog;
@@ -19,12 +18,12 @@ namespace Ui{
 class PropDialog : public QDialog {
   Q_OBJECT
   public:
-    PropDialog(fz_context*, pdf_document*);
-    
+    PropDialog(Renderer *Backend);
+
     void setSize(QSizeF);
 
   private:
-    void setInfo(fz_context*, pdf_obj*, QTextEdit*, QString);
+    //void setInfo(fz_context*, pdf_obj*, QTextEdit*, QString);
 
     Ui::PropDialog *ui;
 };

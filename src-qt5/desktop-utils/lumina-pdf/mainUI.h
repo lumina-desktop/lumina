@@ -19,8 +19,7 @@
 #include <QApplication>
 #include <QMenu>
 
-#include <mupdf/fitz.h>
-#include <mupdf/pdf.h>
+#include "Renderer.h"
 #include "PresentationLabel.h"
 #include "propDialog.h"
 #include "PrintWidget.h"
@@ -39,17 +38,14 @@ public:
 	void loadFile(QString path);
 
 private:
-	fz_document *DOC;
-	pdf_document *PDOC;
-  fz_context *CTX;
-  QSizeF pageSize;
+	QSizeF pageSize;
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
 	PropDialog *PROPDIALOG;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
 	bool matchCase;
-  QList<TextData*> results;
+	QList<TextData*> results;
 	int currentHighlight;
 
 	//Other Interface elements
@@ -62,10 +58,10 @@ private:
 	QAction *clockAct, *pageAct;
 
 	//PDF Page Loading cache variables
+	Renderer *BACKEND;
 	QHash<int, QImage> loadingHash;
-	int numPages;
 
-	void loadPage(int num, fz_document *doc, MainUI *obj, QSize dpi);
+	void loadPage(int num, MainUI *obj, QSize dpi);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -83,7 +79,7 @@ private slots:
 	void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
 	void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
 	void firstPage(){ ShowPage(1); }
-	void lastPage(){ ShowPage(numPages); }
+	void lastPage(){ ShowPage(BACKEND->numPages()); }
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
@@ -101,11 +97,11 @@ private slots:
 	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
-  //void setScroll(bool);
+	//void setScroll(bool);
 
 signals:
 	void PageLoaded(int);
-  void sendDocument(fz_document*);
+	void sendDocument(fz_document*);
 
 protected:
 	void keyPressEvent(QKeyEvent*);

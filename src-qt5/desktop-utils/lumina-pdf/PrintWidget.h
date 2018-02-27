@@ -21,7 +21,6 @@
 #include <QPageLayout>
 
 #include "textData.h"
-#include <mupdf/fitz.h>
 
 class PageItem : public QGraphicsItem {
 public:
@@ -72,7 +71,7 @@ public:
 	  painter->fillRect(cshadow, QBrush(cgrad));
 	  painter->setClipRect(paperRect & option->exposedRect);
 	  painter->fillRect(paperRect, Qt::white);
-    painter->drawImage(QPoint(0,0), pagePicture);
+	  painter->drawImage(QPoint(0,0), pagePicture);
 	}
 
 private:
@@ -139,8 +138,7 @@ public slots:
 	void setCurrentPage(int);
 	void setVisible(bool) Q_DECL_OVERRIDE;
 	void highlightText(TextData*);
-  void receiveDocument(fz_document*);
-  void setDegrees(int);
+	void setDegrees(int);
 
 	void updatePreview();
 	void fitView();

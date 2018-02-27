@@ -10,18 +10,10 @@
 
 #include <LuminaXDG.h>
 
-void PropDialog::setInfo(fz_context *CTX, pdf_obj *info, QTextEdit *widget, QString str) {
-  pdf_obj *obj = pdf_dict_gets(CTX, info, str.toLatin1().data());
-  if(obj)
-    widget->setText(pdf_to_utf8(CTX, obj));
-}
-
-PropDialog::PropDialog(fz_context *CTX, pdf_document *DOC) : QDialog(), ui(new Ui::PropDialog()){
+PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
+  ui->setupUi(this);
   this->setWindowTitle(tr("PDF Information"));
   this->setWindowIcon( LXDG::findIcon("dialog-information","unknown"));
-  pdf_obj *info = pdf_dict_gets(CTX, pdf_trailer(CTX, DOC), "Info");
-
-  ui->setupUi(this);
 
   connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -39,29 +31,21 @@ PropDialog::PropDialog(fz_context *CTX, pdf_document *DOC) : QDialog(), ui(new U
   ui->saveButton->setText(tr("Save"));
   ui->closeButton->setText(tr("Close"));
 
+  QJsonObject info = Backend->properties();
   //Fill the text boxes with information from the document
-  if(info) {
-    setInfo(CTX, info, ui->titleE, "Title");
-    setInfo(CTX, info, ui->subjectE, "Subject");
-    setInfo(CTX, info, ui->authorE, "Author");
-    setInfo(CTX, info, ui->creatorE, "Creator");
-    setInfo(CTX, info, ui->producerE, "Producer");
-    setInfo(CTX, info, ui->keywordE, "Keywords");
-    pdf_obj *obj = pdf_dict_gets(CTX, info, (char *)"CreationDate");
-    char *str = pdf_to_utf8(CTX, obj);
-    if(obj)
-      ui->createdEntry->setText(QDateTime::fromString(QString(str).left(16), "'D:'yyyyMMddHHmmss").toString());
-    //ModDate not displaying when should, possibly broken
-    obj = pdf_dict_gets(CTX, info, (char *)"ModDate");
-    str = pdf_to_utf8(CTX, obj);
-    if(obj)
-      ui->modifiedEntry->setText(QDateTime::fromString(QString(str).left(16), "'D:'yyyyMMddHHmmss").toString());
-    ui->numberL->setText(ui->numberL->text()+QString::number(pdf_count_pages(CTX, DOC)));
-    free(str);
-  }
+  ui->titleE->setText( info.value("title").toString() );
+  ui->subjectE->setText( info.value("subject").toString() );
+  ui->authorE->setText( info.value("author").toString() );
+  ui->creatorE->setText( info.value("creator").toString() );
+  ui->producerE->setText( info.value("producer").toString() );
+  ui->keywordE->setText( info.value("keywords").toString() );
+  ui->createdEntry->setText( info.value("dt_created").toString() );
+  ui->modifiedEntry->setText( info.value("dt_modified").toString() );
+  ui->numberL->setText( QString::number(Backend->numPages()) );
+
 }
 
 //Load size from mainUI after pages have loaded
-void PropDialog::setSize(QSizeF pageSize) { 
+void PropDialog::setSize(QSizeF pageSize) {
   ui->sizeL->setText(ui->sizeL->text()+QString::number(pageSize.width())+", "+QString::number(pageSize.height()));
 }

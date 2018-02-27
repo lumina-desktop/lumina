@@ -21,7 +21,7 @@ PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), cur
 	scene->setBackgroundBrush(Qt::gray);
 	this->setScene(scene);
   this->degrees = 0;
-  this->rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0); 
+  this->rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
 
 	/*QVBoxLayout *layout = new QVBoxLayout;
 	setLayout(layout);
@@ -184,21 +184,23 @@ void PrintWidget::layoutPages() {
 
 void PrintWidget::populateScene()
 {
-	for (int i = 0; i < pages.size(); i++)
-		scene->removeItem(pages.at(i));
-	qDeleteAll(pages);
-	pages.clear();
-
-	int numPages = pictures->count();
+  for (int i = 0; i < pages.size(); i++){
+	scene->removeItem(pages.at(i));
+  }
+  qDeleteAll(pages);
+  pages.clear();
+  //qDebug() << "populateScene";
+  if(pictures==0){ return; } //nothing to show yet
+  int numPages = pictures->count();
   //Replace from loadingHash resolution
-	QSize paperSize = pictures->value(0).size();
+  QSize paperSize = pictures->value(0).size();
   //qDebug() << "Image paperSize" << paperSize;
 
   //Changes the paper orientation if rotated by 90 or 270 degrees
-  if(degrees == 90 or degrees == 270) 
+  if(degrees == 90 or degrees == 270)
     paperSize.transpose();
 
-	for (int i = 0; i < numPages; i++) {
+  for (int i = 0; i < numPages; i++) {
     QImage pagePicture = pictures->value(i);
     if(degrees != 0) {
       pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
@@ -211,7 +213,7 @@ void PrintWidget::populateScene()
 		PageItem* item = new PageItem(i+1, pagePicture, paperSize);
 		scene->addItem(item);
 		pages.append(item);
-	}
+  }
 }
 
 //Private Slots
@@ -302,11 +304,7 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
-}
-
-void PrintWidget::receiveDocument(fz_document *DOC) {
-  this->doc = DOC;
-  this->setVisible(true);
+  this->setVisible(hash!=0);
 }
 
 //Sets how much to rotate the image, by either 90, 180, or 270 degrees. Adds 90 degrees for cw and -90 for ccw.
@@ -315,7 +313,7 @@ void PrintWidget::setDegrees(int degrees) {
   this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
   switch(this->degrees) {
     case 270:
-      rotMatrix = QMatrix(0, -1, 1, 0, 0, 0); 
+      rotMatrix = QMatrix(0, -1, 1, 0, 0, 0);
       break;
     case 90:
       rotMatrix = QMatrix(0, 1, -1, 0, 0, 0);
@@ -324,7 +322,7 @@ void PrintWidget::setDegrees(int degrees) {
       rotMatrix = QMatrix(-1, 0, 0, -1, 0, 0);
       break;
     default:
-      rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0); 
+      rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
   }
   this->updatePreview();
 }

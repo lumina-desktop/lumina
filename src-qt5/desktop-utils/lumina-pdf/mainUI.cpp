@@ -30,6 +30,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   presentationLabel = 0;
   CurrentPage = 1;
   lastdir = QDir::homePath();
+  BACKEND = new Renderer();
   //Create the interface widgets
   WIDGET = new PrintWidget(this->centralWidget());
   WIDGET->setVisible(false);
@@ -59,10 +60,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
-  DOC = 0;
-  CTX = fz_new_context(NULL, NULL, FZ_STORE_UNLIMITED);
   connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
-  connect(this, SIGNAL(sendDocument(fz_document*)), WIDGET, SLOT(receiveDocument(fz_document*)));
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -223,97 +221,33 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 }
 
 MainUI::~MainUI(){
-  //fz_free(CTX, CTX);
+  delete BACKEND;
 }
 
 void MainUI::loadFile(QString path){
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
-  fz_register_document_handlers(CTX);
-  fz_document *TDOC = fz_open_document(CTX, path.toLocal8Bit().data());
-  PDOC = pdf_open_document(CTX, path.toLocal8Bit().data());
-  if(TDOC==0){
-    qDebug() << "Could not open file:" << path;
-    return;
-  }else if(fz_needs_password(CTX, TDOC) != 0){
-    //Prompt for password to unlock the document
-    QString pass = "";
-    bool ok = true; //flag this to go into the loop the first time (if password prompt is cancelled - this becomes false)
-
-    while( (ok ? true : !fz_authenticate_password(CTX, TDOC, pass.toLocal8Bit())) ){ //make sure the unlock function is only called when ok is true
-      pass = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
-    }
-    if(fz_needs_password(CTX, TDOC) != 0){ return; }
+  QString password;
+  bool ok = true;
+  while( ok && !BACKEND->loadDocument(path, password) && BACKEND->needPassword() ){
+    password = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
+    if(!ok){ break; } //cancelled
   }
-  //qpdf.processFile(path.toLatin1().data(), pass.toLatin1().data());
-
-  if(DOC!=0){
-    //fz_close_document(DOC);
-    //Clear out the old document first
-    delete DOC;
-    DOC=0;
-  }
-  //loadingHash.clear(); //clear out this hash
-
-  numPages = -1;
-  DOC = TDOC; //Save this for later
-  qDebug() << "Opening File:" << path;
-  pdf_obj *info = pdf_dict_gets(CTX, pdf_trailer(CTX, (pdf_document*)DOC), "Info");
-  if(info) {
-    if(pdf_obj *obj = pdf_dict_gets(CTX, info, (char *)"Title"))
-      this->setWindowTitle(pdf_to_utf8(CTX, obj));
-  }
-  if(this->windowTitle().isEmpty()){ this->setWindowTitle(path.section("/",-1)); }
-
-  //Setup the Document
-  //QVector<QPDFObjectHandle> pages = (QVector<QPDFObjectHandle>)pdf.getAllPages();
-  //QPDFObjectHandle page = pages.at(0);
-  fz_page *PAGE = fz_load_page(CTX, TDOC, 0);
-  if(PAGE!=0){
-    lastdir = path.section("/",0,-2); //save this for later
-    /*switch(PAGE->orientation()){
-      case Poppler::Page::Landscape:
-        WIDGET->setOrientation(QPageLayout::Landscape); break;
-      default:
-        WIDGET->setOrientation(QPageLayout::Portrait);
-    }*/
-    delete PAGE;
-    qDebug() << " - Document Setup : start loading pages now";
-    startLoadingPages();
-    //QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
-  }
-
+  //Clear the current display
+  WIDGET->setPictures(0); //Turn off the loadingHash in the preview widget for now
+  loadingHash.clear();
+  QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
+  //Load the new document info
+  this->setWindowTitle( BACKEND->title());
+  if(BACKEND->needPassword()){ return; } //cancelled;
+  //qDebug() << " - Document Setup : start loading pages now";
+  //startLoadingPages();
+  QTimer::singleShot(50, this, SLOT(startLoadingPages()) );
 }
 
-void MainUI::loadPage(int num, fz_document *doc, MainUI *obj, QSize dpi){
+void MainUI::loadPage(int num, MainUI *obj, QSize dpi){
   //qDebug() << " - Render Page:" << num;
-  fz_page *PAGE = fz_load_page(CTX, doc, num);
-  if(PAGE!=0){
-    fz_matrix matrix;
-
-    //double scaleFactorW = dpi.width()/72.0;
-    //double scaleFactorH = dpi.height()/72.0;
-    //fz_scale(&matrix, scaleFactorW, scaleFactorH);
-    fz_scale(&matrix, 4.0, 4.0);
-    fz_rotate(&matrix, 0.0);
-    fz_pixmap *pixmap = fz_new_pixmap_from_page_number(CTX, doc, num, &matrix, fz_device_rgb(CTX), 0);
-    //unsigned char *samples = fz_pixmap_samples(CTX, pixmap);
-    QImage raw(pixmap->samples, pixmap->w, pixmap->h, QImage::Format_RGB888); //make the raw image a bit larger than the end result
-    //loadingHash.insert(num, raw.scaled(page.width(), page.height(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) );
-    loadingHash.insert(num, raw);
-    //raw = QImage(); //clear it
-    //fz_drop_pixmap(CTX, pixmap);
-    /*
-    QList<Annotation*> anno = PAGE->annotations(Annotations::AText );
-    QStringList annoS;
-    for(int i=0; i<anno.length(); i++){
-      annoS << static_cast<TextAnnotation*>(anno[i])->???
-    }
-    annotateHash.insert(num, PAGE->
-    */
-  }else{
-    loadingHash.insert(num, QImage());
-  }
-  if(PAGE!=0){ delete PAGE; }
+  QImage img = BACKEND->renderPage(num, dpi);
+  loadingHash.insert(num, img);
   obj->emit PageLoaded(num);
 }
 
@@ -350,7 +284,7 @@ QScreen* MainUI::getScreen(bool current, bool &cancelled){
 }
 
 void MainUI::startPresentation(bool atStart){
-  if(DOC==0){ return; } //just in case
+  if(loadingHash.isEmpty()){ return; } //just in case
   bool cancelled = false;
   QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
   if(cancelled){ return;}
@@ -386,8 +320,8 @@ void MainUI::startPresentation(bool atStart){
 
 void MainUI::ShowPage(int page){
   //Check for valid document/page
-  //qDebug() << "Load Page:" << page << "/" << numPages << "Index:" << page;
-  if(page <= 0 || page > numPages || (page==numPages && CurrentPage==page) ){
+  //qDebug() << "Load Page:" << page << "/" << BACKEND->numPages() << "Index:" << page;
+  if(page <= 0 || page > BACKEND->numPages() || (page==BACKEND->numPages() && CurrentPage==page) ){
     endPresentation();
     return; //invalid - no document loaded or invalid page specified
   }
@@ -398,7 +332,7 @@ void MainUI::ShowPage(int page){
   //qDebug() << "Show Page:" << page << "/" << numPages;
   CurrentPage = page;
   QImage PAGEIMAGE;
-  if(page<numPages+1){ PAGEIMAGE = loadingHash[page-1]; }
+  if(page<BACKEND->numPages()+1){ PAGEIMAGE = loadingHash[page-1]; }
 
   //Now scale the image according to the user-designations and show it
   if(!PAGEIMAGE.isNull()){
@@ -425,22 +359,23 @@ void MainUI::endPresentation(){
 }
 
 void MainUI::startLoadingPages(){
-  if(numPages>0){ return; } //currently loaded[ing]
-  loadingHash.clear();
-  numPages = fz_count_pages(CTX, DOC);
-  progress->setRange(0,numPages);
+  //qDebug() <<"Start Loading Pages";
+  if(!loadingHash.isEmpty()){ return; } //currently loaded[ing]
+  //loadingHash.clear();
+  //qDebug() << "Update Progress Bar";
+  progress->setRange(0, BACKEND->numPages());
   progress->setValue(0);
   progAct->setVisible(true);
   pageAct->setVisible(false);
   //PERFORMANCE NOTES:
-  // Using MuPdf to scale the image (adjust dpi value) helps a bit but you take a larger CPU loading hit (and still quite a lot of pixelization)
+  // Using Poppler to scale the image (adjust dpi value) helps a bit but you take a larger CPU loading hit (and still quite a lot of pixelization)
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
   //double scalefactor = 2.5;
-  fz_rect page_rect;
-  fz_bound_page(CTX, fz_load_page(CTX, DOC, 0), &page_rect);
-  pageSize = QSizeF((page_rect.x1 - page_rect.x0)/72.0, (page_rect.y1 - page_rect.y0)/72.0);
+  //fz_rect page_rect;
+  //fz_bound_page(CTX, fz_load_page(CTX, DOC, 0), &page_rect);
+  //pageSize = QSizeF((page_rect.x1 - page_rect.x0)/72.0, (page_rect.y1 - page_rect.y0)/72.0);
   QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
@@ -448,11 +383,16 @@ void MainUI::startLoadingPages(){
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
   }*/
-  for(int i=0; i<numPages; i++){
+  bool async = BACKEND->loadMultiThread();
+  for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
-    loadPage(i, DOC, this, DPI);
-    //QtConcurrent::run(this, &MainUI::loadPage, i, DOC, this, DPI, pageSize);
+    if(async){
+      QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
+    }else{
+      loadPage(i, this, DPI);
+    }
   }
+  //qDebug() << "Finish page loading kickoff";
 }
 
 void MainUI::slotPageLoaded(int page){
@@ -460,26 +400,27 @@ void MainUI::slotPageLoaded(int page){
   //qDebug() << "Page Loaded:" << page;
   int finished = loadingHash.keys().length();
   //qDebug() << " - finished:" << finished;
-  if(finished == numPages){
+  if(finished == BACKEND->numPages()){
     progAct->setVisible(false);
     WIDGET->setPictures(&loadingHash);
-    emit sendDocument(DOC);
-    PROPDIALOG = new PropDialog(CTX, PDOC);
+    WIDGET->setCurrentPage(1);
+    PROPDIALOG = new PropDialog(BACKEND);
     PROPDIALOG->setSize(pageSize);
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
     pageAct->setVisible(true);
-    qDebug() << " - Document Setup: All pages loaded";
+    //qDebug() << " - Document Setup: All pages loaded";
+    QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }else{
     progress->setValue(finished);
   }
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
-  if(loadingHash.keys().length() != numPages){ return; }
-
-  int pages = fz_count_pages(CTX, DOC);
+  if(loadingHash.keys().length() != BACKEND->numPages()){ return; }
+  //qDebug() << "paintToPrinter";
+  int pages = BACKEND->numPages();
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
@@ -560,10 +501,11 @@ void MainUI::updateClock(){
 }
 
 void MainUI::updatePageNumber(){
+  //qDebug() << "UpdatePageNumber";
   QString text;
   if(presentationLabel==0 || !presentationLabel->isVisible()){ text = tr("Page %1 of %2"); }
   else{ text = "%1/%2"; }
-  label_page->setText( text.arg( QString::number(WIDGET->currentPage()), QString::number(numPages) ));
+  label_page->setText( text.arg( QString::number(WIDGET->currentPage()), QString::number(BACKEND->numPages()) ));
 }
 
 /*void MainUI::setScroll(bool tog) {
@@ -575,9 +517,10 @@ void MainUI::updatePageNumber(){
 }*/
 
 void MainUI::updateContextMenu(){
+  //qDebug() << "UpdateContextMenu";
   contextMenu->clear();
   contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()),
-    QString::number(numPages) ) );
+    QString::number(BACKEND->numPages()) ) );
   contextMenu->addAction(ui->actionPrevious_Page);
   contextMenu->addAction(ui->actionNext_Page);
   contextMenu->addSeparator();
@@ -641,6 +584,7 @@ void MainUI::find(QString text, bool forward) {
 
     //Clear results and highlights if the user gives a new search string
     if(newSearch) {
+      //clear out the old results
       if(!results.empty()) {
         foreach (TextData* td, results)
           delete td;
@@ -648,25 +592,8 @@ void MainUI::find(QString text, bool forward) {
       }
       QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
       ui->resultsLabel->setText("");
-      fz_rect rectBuffer[1000];
-      for(int i = 0; i < numPages; i++) {
-				int count = fz_search_page_number(CTX, DOC, i, text.toLatin1().data(), rectBuffer, 1000);
-        //qDebug() << "Page " << i+1 << ": Count, " << count;
-				for(int j = 0; j < count; j++) {
-          TextData *t = new TextData(rectBuffer[j], i+1, text);
-
-          //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
-          if(matchCase){
-            fz_stext_sheet *sheet = fz_new_stext_sheet(CTX);
-            fz_stext_page *sPage = fz_new_stext_page_from_page_number(CTX, DOC, i, sheet, NULL);
-            QString currentStr = QString(fz_copy_selection(CTX, sPage, rectBuffer[j]));
-            if(currentStr.contains(text, Qt::CaseSensitive))
-              results.append(t);
-          }else{
-              results.append(t);
-          }
-        }
-			}
+      //Get the new search results
+      results = BACKEND->searchDocument(text, matchCase);
       //qDebug() << "Total Results: " << results.size();
       currentHighlight = (forward) ? -1 : results.size();
     }
