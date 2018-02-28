@@ -13,9 +13,11 @@ import QtQuick.Controls 1
 import Lumina.Backend.RootDesktopObject 2.0
 
 Label{
-	property bool vertical
+	anchors.fill: parent
 	text: RootObject.currentTime
-	wrapMode: Text.WrapWord
-	rotation: vertical ? 90 : 0
+	wrapMode: Text.WordWrap
+	verticalAlignment: Text.AlignVCenter
+	horizontalAlignment: Text.AlignHCenter
+	rotation: parent.vertical ? 90 : 0
 	transformOrigin: Item.Center
 }

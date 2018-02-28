@@ -17,42 +17,47 @@ import "./status_tray" as QML
 
 
 Item {
-	property bool vertical
-	property int prefsize: vertical ? parent.width : parent.height
+	property int prefsize: parent.vertical ? parent.width : parent.height
 	id: "status_tray"
+	anchors.fill: parent
 
 	GridLayout{
 		anchors.fill: parent
-		flow: parent.vertical ? GridLayout.TopToBottom : GridLayout.LeftToRight
-		columns: vertical ? 2 : -1
-		rows: vertical ? -1 : 2
-		//columnSpacing: 2
-		//rowSpacing: 2
+		flow: status_tray.parent.vertical ? GridLayout.TopToBottom : GridLayout.LeftToRight
+		//columns: vertical ? 1 : -1
+		//rows: vertical ? -1 : 1
+		columnSpacing: 2
+		rowSpacing: 2
 
 		//Volume Status
 		QML.VolumeButton{
 			//Layout.preferredHeight: status_tray.prefsize
 			//Layout.preferredWidth: status_tray.prefsize
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 		}
 		//Network Status
 		QML.NetworkButton{
 			//Layout.preferredHeight: status_tray.prefsize
 			//Layout.preferredWidth: status_tray.prefsize
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 		}
 		//Battery Status
 		QML.BatteryButton{
 			//Layout.preferredHeight: status_tray.prefsize
 			//Layout.preferredWidth: status_tray.prefsize
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 		}
 		//Update Status
 		QML.UpdateButton{
 			//Layout.preferredHeight: status_tray.prefsize
 			//Layout.preferredWidth: status_tray.prefsize
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 		}
 		//System Tray Menu Button
 		ToolButton{
 			id: "trayButton"
 			text: "Tray"
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
 			//iconName: "view-more-vertical"
 			visible: RootObject.hasTrayWindows
 			onClicked: trayMenu.open()
@@ -60,7 +65,7 @@ Item {
 				id: "trayMenu"
 				//MenuItem{ text: "sample" }
 				//MenuItem{ text: "sample2" }
-				//Rectangle{ color: "blue"; width: 50; height: 50 }
+				Rectangle{ color: "blue"; width: 48; height: 48 }
 				GridLayout{ 
 					columns: 4
 					Repeater{
