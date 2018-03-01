@@ -79,6 +79,8 @@ public:
 	//Small simplification functions
 	static Qt::Key KeycodeToQt(int keycode);
 	static NativeWindowSystem::MouseButton MouseToQt(int button);
+	void RegisterEventShortcut(Qt::Key key, bool set);
+	void RegisterEventShortcut(int keycode, bool set);
 
 	void raiseWindow(NativeWindowObject *win);
 	void lowerWindow(NativeWindowObject *win);

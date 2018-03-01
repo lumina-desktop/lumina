@@ -274,6 +274,15 @@ void NativeWindowSystem::stop(){
 
 }
 
+void NativeWindowSystem::RegisterEventShortcut(Qt::Key key, bool set){
+//RegisterEventShortcut( , set);
+}
+
+void NativeWindowSystem::RegisterEventShortcut(int keycode, bool set){
+ //xcb_input_grab_device_button_checked
+ //xcb_input_xi_passive_grab_device_unchecked
+}
+
 // === PRIVATE ===
 NativeWindowObject* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   //qDebug() << "Find Window:" << id;
