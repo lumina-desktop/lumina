@@ -104,12 +104,12 @@ QImage Renderer::renderPage(int pagenum, QSize DPI){
     //double scaleFactorH = dpi.height()/72.0;
     //fz_scale(&matrix, scaleFactorW, scaleFactorH);
     fz_scale(&matrix, 4.0, 4.0); //need to adjust this later according to DPI
-    fz_rotate(&matrix, 0.0);
+    fz_pre_rotate(&matrix, 0.0);
     fz_pixmap *pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
     //unsigned char *samples = fz_pixmap_samples(CTX, pixmap);
     img = QImage(pixmap->samples, pixmap->w, pixmap->h, QImage::Format_RGB888); //make the raw image a bit larger than the end result
+		delete PAGE;
   }
-  if(PAGE!=0){ delete PAGE; }
   qDebug() << "Render Page:" << pagenum << img.size();
   return img;
 }
