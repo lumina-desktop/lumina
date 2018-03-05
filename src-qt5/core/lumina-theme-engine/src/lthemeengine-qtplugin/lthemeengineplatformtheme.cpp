@@ -7,14 +7,18 @@
 #include <QTimer>
 #include <QIcon>
 #include <QRegExp>
+
 #ifdef QT_WIDGETS_LIB
 #include <QStyle>
 #include <QStyleFactory>
 #include <QApplication>
 #include <QWidget>
 #endif
+
 #include <QFile>
 #include <QFileSystemWatcher>
+#include <QDir>
+#include <QTextStream>
 
 #include <stdlib.h>
 
@@ -28,7 +32,11 @@
 #include <private/qdbustrayicon_p.h>
 #endif
 
-
+#include <QX11Info>
+#include <QCursor>
+//Need access to the private QCursor header so we can refresh the mouse cursor cache
+//#include <private/qcursor_p.h> //Does not work - looks like we need to use X11 stuff instead
+#include <X11/Xcursor/Xcursor.h>
 
 Q_LOGGING_CATEGORY(llthemeengine, "lthemeengine")
 
@@ -37,10 +45,11 @@ Q_LOGGING_CATEGORY(llthemeengine, "lthemeengine")
 lthemeenginePlatformTheme::lthemeenginePlatformTheme(){
   if(QGuiApplication::desktopSettingsAware()){
     readSettings();
-    QMetaObject::invokeMethod(this, "applySettings", Qt::QueuedConnection);
 #ifdef QT_WIDGETS_LIB
     QMetaObject::invokeMethod(this, "createFSWatcher", Qt::QueuedConnection);
 #endif
+    QMetaObject::invokeMethod(this, "applySettings", Qt::QueuedConnection);
+
     QGuiApplication::setFont(m_generalFont);
     }
   //qCDebug(llthemeengine) << "using lthemeengine plugin";
@@ -168,16 +177,26 @@ void lthemeenginePlatformTheme::applySettings(){
     }
 #endif
   if(!m_update){ m_update = true; }
+
+  //Mouse Cursor syncronization
+  QString mthemefile = QDir::homePath()+"/.icons/default/index.theme";
+  if(!watcher->files().contains(mthemefile) && QFile::exists(mthemefile)){
+    watcher->addPath(mthemefile); //X11 mouse cursor theme file
+    //qDebug() << "Add Mouse Cursor File to Watcher";
+    syncMouseCursorTheme(mthemefile);
+  }
 }
 #ifdef QT_WIDGETS_LIB
 
 void lthemeenginePlatformTheme::createFSWatcher(){
-  QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
-  watcher->addPath(lthemeengine::configPath());
+  watcher = new QFileSystemWatcher(this);
+  watcher->addPath(lthemeengine::configPath()); //theme engine settings directory
+  watcher->addPath(QDir::homePath()+"/.icons/default/index.theme"); //X11 mouse cursor theme file
   QTimer *timer = new QTimer(this);
   timer->setSingleShot(true);
   timer->setInterval(500);
   connect(watcher, SIGNAL(directoryChanged(QString)), timer, SLOT(start()));
+  connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(fileChanged(QString)) );
   connect(timer, SIGNAL(timeout()), SLOT(updateSettings()));
 }
 
@@ -187,6 +206,13 @@ void lthemeenginePlatformTheme::updateSettings(){
   applySettings();
 }
 #endif
+
+void lthemeenginePlatformTheme::fileChanged(QString path){
+  if(path.endsWith("default/index.theme")){
+    //qDebug() << "Mouse Cursor File Changed";
+    syncMouseCursorTheme(path);
+  }
+}
 
 void lthemeenginePlatformTheme::readSettings(){
  if(m_customPalette){
@@ -293,4 +319,58 @@ QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
     }
   else{ customPalette = *QPlatformTheme::palette(SystemPalette); } //load fallback palette
   return customPalette;
+}
+
+void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
+  //Read the index file and pull out the theme name
+  QFile file(indexfile);
+  QString newtheme;
+  if(file.open(QIODevice::ReadOnly)){
+    QTextStream stream(&file);
+    QString tmp;
+    while(!stream.atEnd()){
+      tmp = stream.readLine().simplified();
+      if(tmp.startsWith("Inherits=")){ newtheme = tmp.section("=",1,-1).simplified(); break; }
+    }
+    file.close();
+  }
+  if(newtheme.isEmpty()){ return; } //nothing to do
+  QString curtheme = QString(XcursorGetTheme(QX11Info::display()) ); //currently-used theme
+  //qDebug() << "Sync Mouse Cursur Theme:" << curtheme << newtheme;
+  if(curtheme!=newtheme){
+    qDebug() << " - Setting new cursor theme:" << newtheme;
+    XcursorSetTheme(QX11Info::display(), newtheme.toLocal8Bit().data()); //save the new theme name
+  }else{
+    return;
+  }
+  qDebug() << "Qt Stats:";
+  qDebug() << " TopLevelWindows:" << QGuiApplication::topLevelWindows().length();
+  qDebug() << " AllWindows:" << QGuiApplication::allWindows().length();
+  qDebug() << " AllWidgets:" << QApplication::allWidgets().length();
+
+  //XcursorSetThemeCore( QX11Info::display(), XcursorGetThemeCore(QX11Info::display()) ); //reset the theme core
+  //Load the cursors from the new theme
+  int defsize = XcursorGetDefaultSize(QX11Info::display());
+  qDebug() << "Default cursor size:" << defsize;
+  XcursorImages *imgs = XcursorLibraryLoadImages("left_ptr", NULL, defsize);
+  qDebug() << "imgs:" << imgs << imgs->nimage;
+  XcursorCursors *curs = XcursorImagesLoadCursors(QX11Info::display(), imgs);
+  if(curs==0){ return; } //not found
+  qDebug() << "Got Cursors:" << curs->ncursor;
+  //Now re-set the cursors for the current top-level X windows
+  QWindowList wins = QGuiApplication::allWindows(); //QGuiApplication::topLevelWindows();
+  qDebug() << "Got Windows:" << wins.length();
+  for(int i=0; i<curs->ncursor; i++){
+    for(int w=0; w<wins.length(); w++){
+      XDefineCursor(curs->dpy, wins[w]->winId(), curs->cursors[i]);
+    }
+  }
+  XcursorCursorsDestroy(curs); //finished with this temporary structure
+
+  /*QWidgetList wlist = QApplication::allWidgets();
+  qDebug() << "Widget List:" << wlist.length();
+  for(int i=0; i<wlist.length(); i++){
+    QCursor cur(wlist[i]->cursor().shape());
+    wlist[i]->cursor().swap( cur );
+  }*/
 }

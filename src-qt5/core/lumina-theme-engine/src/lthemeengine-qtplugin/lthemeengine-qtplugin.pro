@@ -21,6 +21,9 @@ SOURCES += \
 
 OTHER_FILES += lthemeengine.json
 
+LIBS += -lXcursor
+QT += x11extras
+
 INCLUDEPATH += ../
 
 HEADERS += \
