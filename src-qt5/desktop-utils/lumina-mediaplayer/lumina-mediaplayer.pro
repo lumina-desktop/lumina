@@ -92,7 +92,8 @@ TRANSLATIONS =  i18n/l-mediap_af.ts \
 dotrans.path=$${L_SHAREDIR}/lumina-desktop/i18n/
 dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)$${L_SHAREDIR}/lumina-desktop/i18n/
 
-desktop.files=lumina-mediaplayer.desktop
+desktop.files=lumina-mediaplayer.desktop \
+	lumina-mediaplayer-pandora.desktop
 desktop.path=$${L_SHAREDIR}/applications/
 
 #link.path=$${L_BINDIR}
