@@ -343,23 +343,23 @@ void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
   }else{
     return;
   }
-  qDebug() << "Qt Stats:";
-  qDebug() << " TopLevelWindows:" << QGuiApplication::topLevelWindows().length();
-  qDebug() << " AllWindows:" << QGuiApplication::allWindows().length();
-  qDebug() << " AllWidgets:" << QApplication::allWidgets().length();
+  //qDebug() << "Qt Stats:";
+  //qDebug() << " TopLevelWindows:" << QGuiApplication::topLevelWindows().length();
+  //qDebug() << " AllWindows:" << QGuiApplication::allWindows().length();
+  //qDebug() << " AllWidgets:" << QApplication::allWidgets().length();
 
   //XcursorSetThemeCore( QX11Info::display(), XcursorGetThemeCore(QX11Info::display()) ); //reset the theme core
   //Load the cursors from the new theme
   int defsize = XcursorGetDefaultSize(QX11Info::display());
-  qDebug() << "Default cursor size:" << defsize;
+  //qDebug() << "Default cursor size:" << defsize;
   XcursorImages *imgs = XcursorLibraryLoadImages("left_ptr", NULL, defsize);
-  qDebug() << "imgs:" << imgs << imgs->nimage;
+  //qDebug() << "imgs:" << imgs << imgs->nimage;
   XcursorCursors *curs = XcursorImagesLoadCursors(QX11Info::display(), imgs);
   if(curs==0){ return; } //not found
-  qDebug() << "Got Cursors:" << curs->ncursor;
+  //qDebug() << "Got Cursors:" << curs->ncursor;
   //Now re-set the cursors for the current top-level X windows
   QWindowList wins = QGuiApplication::allWindows(); //QGuiApplication::topLevelWindows();
-  qDebug() << "Got Windows:" << wins.length();
+  //qDebug() << "Got Windows:" << wins.length();
   for(int i=0; i<curs->ncursor; i++){
     for(int w=0; w<wins.length(); w++){
       XDefineCursor(curs->dpy, wins[w]->winId(), curs->cursors[i]);
