@@ -106,7 +106,7 @@ private:
 	void setZoomMode(ZoomMode);
 
 	QGraphicsScene *scene;
-  QMatrix rotMatrix;
+	QMatrix rotMatrix;
 	int curPage, publicPageNum;
 	ViewMode viewMode;
 	ZoomMode zoomMode;
@@ -115,8 +115,7 @@ private:
 	bool initialized, fitting;
 	QList<QGraphicsItem*> pages;
 	QHash<int, QImage> *pictures;
-  fz_document *doc;
-  int degrees;
+	int degrees;
 
 public:
 	PrintWidget(QWidget *parent = 0);

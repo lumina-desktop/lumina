@@ -121,7 +121,8 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
     int count = fz_search_page_number(CTX, DOC, i, text.toLatin1().data(), rectBuffer, 1000);
     //qDebug() << "Page " << i+1 << ": Count, " << count;
     for(int j = 0; j < count; j++) {
-      TextData *t = new TextData(rectBuffer[j], i+1, text);
+      QRect rect(rectBuffer[j].x0, rectBuffer[j].y0, rectBuffer[j].x1-rectBuffer[j].x0, rectBuffer[j].y1 - rectBuffer[j].y0);
+      TextData *t = new TextData(rect, i+1, text);
       //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
       if(matchCase){
         fz_stext_page *sPage = fz_new_stext_page_from_page_number(CTX, DOC, i, NULL);

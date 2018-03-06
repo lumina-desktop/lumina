@@ -130,9 +130,9 @@ void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
   if(!text->highlighted()) {
     //qDebug() << "Highlighting text: " << text->text() << "At page: " << text->page();
-    fz_rect rect = text->loc();
+    QRect rect = text->loc();
     double pageHeight = pages.at(0)->boundingRect().height();
-    QRectF textRect(QPointF(rect.x0, rect.y0+(pageHeight*(text->page()-1))), QPointF(rect.x1, rect.y1 + (pageHeight*(text->page()-1))));
+    QRectF textRect = rect.adjusted(0, pageHeight*(text->page()-1), 0, 0); //move the rectangle onto the right page
     QBrush highlightFill(QColor(255, 255, 177, 50));
     QPen highlightOutline(QColor(255, 255, 100, 98));
     scene->addRect(textRect, highlightOutline, highlightFill);

@@ -101,7 +101,6 @@ private slots:
 
 signals:
 	void PageLoaded(int);
-	void sendDocument(fz_document*);
 
 protected:
 	void keyPressEvent(QKeyEvent*);

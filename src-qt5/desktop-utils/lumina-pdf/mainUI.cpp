@@ -1,5 +1,6 @@
-//=========================================== //  Lumina Desktop source code
-//  Copyright (c) 2017, Ken Moore
+//===========================================
+//  Lumina Desktop source code
+//  Copyright (c) 2017-2018, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
