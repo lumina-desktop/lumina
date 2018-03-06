@@ -19,7 +19,8 @@ RUN_DEPENDS=	fluxbox>=0:x11-wm/fluxbox \
 LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
 		libxcb-icccm.so:x11/xcb-util-wm \
 		libxcb-image.so:x11/xcb-util-image \
-		libxcb-util.so:x11/xcb-util
+		libxcb-util.so:x11/xcb-util \
+		libXcursor.so:x11/libXcursor
 
 CONFLICTS_INSTALL=	lumina-1.2.*
 
