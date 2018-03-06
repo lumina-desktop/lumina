@@ -147,59 +147,59 @@
         <translation>Faili viga</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="191"/>
-        <location filename="../main.cpp" line="197"/>
+        <location filename="../main.cpp" line="199"/>
+        <location filename="../main.cpp" line="213"/>
         <source>Audio Volume %1%</source>
         <translation>Helitugevus %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="205"/>
-        <location filename="../main.cpp" line="214"/>
+        <location filename="../main.cpp" line="221"/>
+        <location filename="../main.cpp" line="230"/>
         <source>Screen Brightness %1%</source>
         <translation>Ekraani heledus %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="246"/>
+        <location filename="../main.cpp" line="262"/>
         <source>Invalid file or URL: %1</source>
         <translation>Vigane fail või aadress: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="267"/>
+        <location filename="../main.cpp" line="283"/>
         <source>Application entry is invalid: %1</source>
         <translation>Rakenduse %1 kirje on vigane.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="278"/>
+        <location filename="../main.cpp" line="294"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>Rakenduse otseteel puudub käivitamise info (vigane otsetee): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="307"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>Aadressi otseteel puudub aadress: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="302"/>
+        <location filename="../main.cpp" line="318"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>Kausta otseteel puudub kausta rada: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="307"/>
+        <location filename="../main.cpp" line="323"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Teadmata tüüpi otsetee: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="370"/>
+        <location filename="../main.cpp" line="386"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>Ei leidnud &quot;%1&quot; . Palun veendu et see on paigaldatud.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="419"/>
+        <location filename="../main.cpp" line="435"/>
         <source>Application Error</source>
         <translation>Programmi viga</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="419"/>
+        <location filename="../main.cpp" line="435"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>See rakendus sulgus, kuna esines viga:</translation>
     </message>

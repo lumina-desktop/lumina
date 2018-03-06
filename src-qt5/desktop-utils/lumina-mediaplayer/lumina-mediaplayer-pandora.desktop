@@ -1,0 +1,11 @@
+[Desktop Entry]
+Exec=lumina-mediaplayer --pandora
+TryExec=pianobar
+Icon=pandora
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+MimeType=
+Name=Pandora Internet Radio
+Comment=Listen to Free Music You'll Love

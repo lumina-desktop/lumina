@@ -100,16 +100,6 @@
         <translation>Skrýt volby pro najít/nahradit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="193"/>
-        <source>File</source>
-        <translation>Soubor</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="207"/>
-        <source>View</source>
-        <translation>Zobrazit</translation>
-    </message>
-    <message>
         <location filename="../MainUI.ui" line="211"/>
         <source>Syntax Highlighting</source>
         <translation>Zvýrazňovat syntaxi</translation>
@@ -120,176 +110,196 @@
         <translation>Umístění karet</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="235"/>
-        <source>Edit</source>
-        <translation>Upravit</translation>
+        <location filename="../MainUI.ui" line="193"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="273"/>
+        <location filename="../MainUI.ui" line="207"/>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="236"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="274"/>
         <source>Show Line Numbers</source>
         <translation>Zobrazovat čísla řádků</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="278"/>
+        <location filename="../MainUI.ui" line="279"/>
         <source>None</source>
         <translation>Žádný</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="283"/>
-        <location filename="../MainUI.cpp" line="192"/>
+        <location filename="../MainUI.ui" line="284"/>
+        <location filename="../MainUI.cpp" line="219"/>
         <source>New File</source>
         <translation>Nový soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="286"/>
+        <location filename="../MainUI.ui" line="287"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="294"/>
+        <location filename="../MainUI.ui" line="295"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="297"/>
+        <location filename="../MainUI.ui" line="298"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="305"/>
+        <location filename="../MainUI.ui" line="306"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="308"/>
+        <location filename="../MainUI.ui" line="309"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="316"/>
+        <location filename="../MainUI.ui" line="317"/>
         <source>Save File As</source>
         <translation>Uložit soubor jako</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="322"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="324"/>
+        <location filename="../MainUI.ui" line="325"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="332"/>
+        <location filename="../MainUI.ui" line="333"/>
         <source>Close File</source>
         <translation>Zavřít soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="335"/>
+        <location filename="../MainUI.ui" line="336"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="343"/>
+        <location filename="../MainUI.ui" line="344"/>
         <source>Customize Colors</source>
         <translation>Přizpůsobit barvy</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="354"/>
+        <location filename="../MainUI.ui" line="355"/>
         <source>Wrap Lines</source>
         <translation>Zalamovat řádky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="359"/>
+        <location filename="../MainUI.ui" line="360"/>
         <source>Find</source>
         <translation>Najít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="362"/>
+        <location filename="../MainUI.ui" line="363"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="370"/>
+        <location filename="../MainUI.ui" line="371"/>
         <source>Replace</source>
         <translation>Nahradit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="373"/>
+        <location filename="../MainUI.ui" line="374"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="387"/>
+        <location filename="../MainUI.ui" line="388"/>
         <source>Show Popup Warnings</source>
         <translation>Zobrazovat vyskakovací varování</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="390"/>
-        <location filename="../MainUI.ui" line="393"/>
+        <location filename="../MainUI.ui" line="391"/>
+        <location filename="../MainUI.ui" line="394"/>
         <source>Show warnings about unsaved changes</source>
         <translation>Zobrazovat varování o neuložených změnách</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="404"/>
+        <location filename="../MainUI.ui" line="405"/>
         <source>Top</source>
         <translation>Nahoře</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="412"/>
+        <location filename="../MainUI.ui" line="413"/>
         <source>Bottom</source>
         <translation>Dole</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="420"/>
+        <location filename="../MainUI.ui" line="421"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="428"/>
+        <location filename="../MainUI.ui" line="429"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="433"/>
+        <location filename="../MainUI.ui" line="434"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="436"/>
+        <location filename="../MainUI.ui" line="437"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="64"/>
+        <location filename="../MainUI.ui" line="448"/>
+        <source>Show Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="34"/>
+        <source>Read-Only File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="75"/>
         <source>Text Editor</source>
         <translation>Textový editor</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="226"/>
         <source>Open File(s)</source>
         <translation>Otevřít soubory</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="226"/>
         <source>Text Files (*)</source>
         <translation>Textové soubory (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="252"/>
+        <location filename="../MainUI.cpp" line="290"/>
         <source>Print Content</source>
         <translation>Vytisknout obsah</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="383"/>
-        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="428"/>
+        <location filename="../MainUI.cpp" line="439"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Ztratit neuložené změny?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="383"/>
-        <location filename="../MainUI.cpp" line="394"/>
+        <location filename="../MainUI.cpp" line="428"/>
+        <location filename="../MainUI.cpp" line="439"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -300,12 +310,12 @@ Přesto jej chcete zavřít?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="546"/>
         <source>Save Changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="547"/>
         <source>There are unsaved changes.
 Do you want save them before you close the editor?
 
@@ -316,32 +326,32 @@ Do you want save them before you close the editor?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="110"/>
+        <location filename="../PlainTextEditor.cpp" line="127"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="110"/>
+        <location filename="../PlainTextEditor.cpp" line="127"/>
         <source>Text File (*)</source>
         <translation>Textový soubor (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="318"/>
+        <location filename="../PlainTextEditor.cpp" line="346"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Řádek číslo: %1, sloupec číslo: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="327"/>
+        <location filename="../PlainTextEditor.cpp" line="355"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>Následující soubor byl změněn jiným programem. Chcete jej načíst znovu?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="329"/>
+        <location filename="../PlainTextEditor.cpp" line="357"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Poznámka: Ztratíte všechny doposud neuložené změny)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="333"/>
+        <location filename="../PlainTextEditor.cpp" line="361"/>
         <source>File Modified</source>
         <translation>Soubor byl změněn</translation>
     </message>

@@ -57,52 +57,52 @@
 <context>
     <name>BrowserWidget</name>
     <message>
-        <location filename="../BrowserWidget.cpp" line="251"/>
+        <location filename="../BrowserWidget.cpp" line="257"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="252"/>
+        <location filename="../BrowserWidget.cpp" line="258"/>
         <source>Size</source>
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="253"/>
+        <location filename="../BrowserWidget.cpp" line="259"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="254"/>
+        <location filename="../BrowserWidget.cpp" line="260"/>
         <source>Date Modified</source>
         <translation>Data modyfikacji</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="255"/>
+        <location filename="../BrowserWidget.cpp" line="261"/>
         <source>Date Created</source>
         <translation>Data utworzenia</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="430"/>
+        <location filename="../BrowserWidget.cpp" line="438"/>
         <source>Capacity: %1</source>
         <translation>Pojemność: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="455"/>
+        <location filename="../BrowserWidget.cpp" line="463"/>
         <source>Files: %1 (%2)</source>
         <translation>Pliki: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="457"/>
+        <location filename="../BrowserWidget.cpp" line="465"/>
         <source>Files: %1</source>
         <translation>Pliki: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="463"/>
+        <location filename="../BrowserWidget.cpp" line="471"/>
         <source>Dirs: %1</source>
         <translation>Katalogi : %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="419"/>
+        <location filename="../BrowserWidget.cpp" line="427"/>
         <source>No Directory Contents</source>
         <translation>Brak zawartości katalogu</translation>
     </message>
@@ -193,42 +193,42 @@
         <translation>Widok kolumny podwójnej</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="682"/>
+        <location filename="../widgets/DirWidget2.cpp" line="691"/>
         <source>(Limited Access) </source>
         <translation>(Ograniczony dostęp) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="704"/>
-        <location filename="../widgets/DirWidget2.cpp" line="752"/>
+        <location filename="../widgets/DirWidget2.cpp" line="713"/>
+        <location filename="../widgets/DirWidget2.cpp" line="761"/>
         <source>New Document</source>
         <translation>Nowy dokument</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="704"/>
-        <location filename="../widgets/DirWidget2.cpp" line="729"/>
-        <location filename="../widgets/DirWidget2.cpp" line="752"/>
+        <location filename="../widgets/DirWidget2.cpp" line="713"/>
+        <location filename="../widgets/DirWidget2.cpp" line="738"/>
+        <location filename="../widgets/DirWidget2.cpp" line="761"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="721"/>
+        <location filename="../widgets/DirWidget2.cpp" line="730"/>
         <source>Error Creating Document</source>
         <translation>Błąd podczas tworzenia dokumentu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="721"/>
+        <location filename="../widgets/DirWidget2.cpp" line="730"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Nie udało się utworzyć dokumentu. Upewnij się czy masz właściwe uprawnienia.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="729"/>
+        <location filename="../widgets/DirWidget2.cpp" line="738"/>
         <source>New Directory</source>
         <translation>Nowy katalog</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="712"/>
-        <location filename="../widgets/DirWidget2.cpp" line="739"/>
-        <location filename="../widgets/DirWidget2.cpp" line="761"/>
+        <location filename="../widgets/DirWidget2.cpp" line="721"/>
+        <location filename="../widgets/DirWidget2.cpp" line="748"/>
+        <location filename="../widgets/DirWidget2.cpp" line="770"/>
         <source>Invalid Name</source>
         <translation>Nieprawidłowa nazwa</translation>
     </message>
@@ -238,44 +238,44 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="561"/>
+        <location filename="../widgets/DirWidget2.cpp" line="570"/>
         <source>File Operations</source>
         <translation>Operacje na plikach</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="598"/>
+        <location filename="../widgets/DirWidget2.cpp" line="607"/>
         <source>Directory Operations</source>
         <translation>Operacje na katalogach</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="646"/>
+        <location filename="../widgets/DirWidget2.cpp" line="655"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="654"/>
+        <location filename="../widgets/DirWidget2.cpp" line="663"/>
         <source>Loading...</source>
         <translation>Wczytywanie...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="712"/>
-        <location filename="../widgets/DirWidget2.cpp" line="739"/>
-        <location filename="../widgets/DirWidget2.cpp" line="761"/>
+        <location filename="../widgets/DirWidget2.cpp" line="721"/>
+        <location filename="../widgets/DirWidget2.cpp" line="748"/>
+        <location filename="../widgets/DirWidget2.cpp" line="770"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Plik lub katalog o podanej nazwie już istnieje! Proszę wybrać inną nazwę.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="743"/>
+        <location filename="../widgets/DirWidget2.cpp" line="752"/>
         <source>Error Creating Directory</source>
         <translation>Błąd podczas tworzenia katalogu</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="743"/>
+        <location filename="../widgets/DirWidget2.cpp" line="752"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Nie udało się stworzyć katalogu. Proszę upewnij się czy masz właściwe uprawnienia by móc modyfikować ten katalog.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="385"/>
+        <location filename="../widgets/DirWidget2.cpp" line="384"/>
         <source>Current</source>
         <translation>Bieżący</translation>
     </message>
@@ -315,93 +315,108 @@
         <translation>Odtwarzacz multimedialny</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="292"/>
+        <location filename="../widgets/DirWidget2.cpp" line="293"/>
         <source>Open Current Dir as Root</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="295"/>
+        <location filename="../widgets/DirWidget2.cpp" line="297"/>
         <source>Archive Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="318"/>
+        <location filename="../widgets/DirWidget2.cpp" line="320"/>
         <source>Open with...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="324"/>
+        <location filename="../widgets/DirWidget2.cpp" line="326"/>
         <source>View Files...</source>
         <translation>Podgląd...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="326"/>
+        <location filename="../widgets/DirWidget2.cpp" line="328"/>
         <source>Checksums</source>
         <translation>Suma kontrolna</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="328"/>
+        <location filename="../widgets/DirWidget2.cpp" line="330"/>
         <source>Properties</source>
         <translation>Właściwości</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="519"/>
+        <location filename="../widgets/DirWidget2.cpp" line="520"/>
         <source>File Checksums:</source>
         <translation>Suma kontrolna:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="531"/>
+        <location filename="../widgets/DirWidget2.cpp" line="532"/>
         <source>Missing Utility</source>
         <translation>Brak odpowiedniego narzędzia</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="531"/>
+        <location filename="../widgets/DirWidget2.cpp" line="532"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Nie udało się w systemie odnaleźć narzędzia &quot;lumina-fileinfo&quot;. Proszę je najpierw zainstalować.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="557"/>
+        <location filename="../widgets/DirWidget2.cpp" line="558"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="566"/>
+        <location filename="../widgets/DirWidget2.cpp" line="567"/>
+        <source>Set as Wallpaper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="575"/>
         <source>Rename...</source>
         <translation>Zmień nazwę...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="567"/>
+        <location filename="../widgets/DirWidget2.cpp" line="576"/>
         <source>Cut Selection</source>
         <translation>Wytnij</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="568"/>
+        <location filename="../widgets/DirWidget2.cpp" line="577"/>
         <source>Copy Selection</source>
         <translation>Kopiuj</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="571"/>
+        <location filename="../widgets/DirWidget2.cpp" line="580"/>
         <source>Paste</source>
         <translation>Wklej</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="575"/>
+        <location filename="../widgets/DirWidget2.cpp" line="584"/>
         <source>Delete Selection</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="588"/>
+        <location filename="../widgets/DirWidget2.cpp" line="597"/>
         <source>Extract Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="590"/>
+        <location filename="../widgets/DirWidget2.cpp" line="599"/>
         <source>Archive Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="898"/>
+        <location filename="../widgets/DirWidget2.cpp" line="907"/>
         <source>Select Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="921"/>
+        <source>Set Wallpaper on Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/DirWidget2.cpp" line="921"/>
+        <source>Screen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -648,197 +663,197 @@ Nowa lokalizacja: %2</translation>
         <translation>Shift+prawo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="114"/>
-        <source>File</source>
-        <translation>Plik</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="128"/>
-        <source>View</source>
-        <translation>Widok</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="132"/>
+        <location filename="../MainUI.ui" line="142"/>
         <source>View Mode</source>
         <translation>Tryb widoku</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="145"/>
-        <source>Bookmarks</source>
-        <translation>Zakładki</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="153"/>
-        <source>External Devices</source>
-        <translation>Urządzenia zewnętrzne</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="160"/>
-        <source>Git</source>
-        <translation>Git</translation>
-    </message>
-    <message>
-        <location filename="../MainUI.ui" line="174"/>
+        <location filename="../MainUI.ui" line="184"/>
         <source>New Tab</source>
         <translation>Nowa zakładka</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="177"/>
+        <location filename="../MainUI.ui" line="187"/>
         <source>New Browser</source>
         <translation>Nowa przeglądarka</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="248"/>
+        <location filename="../MainUI.ui" line="258"/>
         <source>Show Image Previews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="253"/>
+        <location filename="../MainUI.ui" line="263"/>
         <source>Search Directory...</source>
         <translation>Przeszukaj katalog...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="286"/>
+        <location filename="../MainUI.ui" line="296"/>
         <source>Increase Icon Size</source>
         <translation>Zwiększ rozmiaru ikon</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="291"/>
+        <location filename="../MainUI.ui" line="301"/>
         <source>Decrease Icon Size</source>
         <translation>Zmniejsz rozmiar ikon</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="296"/>
+        <location filename="../MainUI.ui" line="306"/>
         <source>Larger Icons</source>
         <translation>Większe ikony</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="299"/>
+        <location filename="../MainUI.ui" line="309"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="307"/>
+        <location filename="../MainUI.ui" line="317"/>
         <source>Smaller Icons</source>
         <translation>Mniejsze ikony</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="310"/>
+        <location filename="../MainUI.ui" line="320"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="318"/>
+        <location filename="../MainUI.ui" line="328"/>
         <source>New Window</source>
         <translation>Nowe okno</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="321"/>
+        <location filename="../MainUI.ui" line="331"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="329"/>
+        <location filename="../MainUI.ui" line="339"/>
         <source>Add Bookmark</source>
         <translation>Dodaj zakładkę</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="332"/>
+        <location filename="../MainUI.ui" line="342"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="384"/>
+        <location filename="../MainUI.ui" line="394"/>
         <source>Delete Selection</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="387"/>
+        <location filename="../MainUI.ui" line="397"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="395"/>
+        <location filename="../MainUI.ui" line="405"/>
         <source>Refresh</source>
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="406"/>
+        <location filename="../MainUI.ui" line="416"/>
         <source>Close Tab</source>
         <translation>Zamknij zakładkę</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="417"/>
+        <location filename="../MainUI.ui" line="427"/>
         <source>Repo Status</source>
         <translation>Stan repozytorium</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="422"/>
+        <location filename="../MainUI.ui" line="432"/>
         <source>Clone Repository</source>
         <translation>Klonuj repozytorium</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="430"/>
+        <location filename="../MainUI.ui" line="440"/>
         <source>Show Directory Tree Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="433"/>
+        <location filename="../MainUI.ui" line="443"/>
         <source>Show Directory Tree Pane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="436"/>
+        <location filename="../MainUI.ui" line="446"/>
         <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="441"/>
+        <location filename="../MainUI.ui" line="451"/>
         <source>Open as Root</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="180"/>
+        <location filename="../MainUI.ui" line="190"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="188"/>
+        <location filename="../MainUI.ui" line="124"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="138"/>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="155"/>
+        <source>&amp;Bookmarks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="163"/>
+        <source>&amp;External Devices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="170"/>
+        <source>&amp;Git</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="198"/>
         <source>Exit</source>
         <translation>Wyjście</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="191"/>
+        <location filename="../MainUI.ui" line="201"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="199"/>
+        <location filename="../MainUI.ui" line="209"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Ustawienia</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="210"/>
+        <location filename="../MainUI.ui" line="220"/>
         <source>Show Hidden Files</source>
         <translation>Pokaż ukryte pliki</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="215"/>
+        <location filename="../MainUI.ui" line="225"/>
         <source>Scan for Devices</source>
         <translation>Wyszukaj urządzenia</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="223"/>
+        <location filename="../MainUI.ui" line="233"/>
         <source>Manage Bookmarks</source>
         <translation>Zarządzaj zakładkami</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="237"/>
+        <location filename="../MainUI.ui" line="247"/>
         <source>Show Action Buttons</source>
         <translation>Pokaż przyciski akcji</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="256"/>
+        <location filename="../MainUI.ui" line="266"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
@@ -853,132 +868,132 @@ Nowa lokalizacja: %2</translation>
         <translation>Lista podstawowa</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="409"/>
+        <location filename="../MainUI.ui" line="419"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="398"/>
+        <location filename="../MainUI.ui" line="408"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="365"/>
+        <location filename="../MainUI.ui" line="375"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="340"/>
+        <location filename="../MainUI.ui" line="350"/>
         <source>Rename...</source>
         <translation>Zmień nazwę...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="343"/>
+        <location filename="../MainUI.ui" line="353"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="351"/>
+        <location filename="../MainUI.ui" line="361"/>
         <source>Cut Selection</source>
         <translation>Wytnij</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="362"/>
+        <location filename="../MainUI.ui" line="372"/>
         <source>Copy Selection</source>
         <translation>Kopiuj</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="373"/>
+        <location filename="../MainUI.ui" line="383"/>
         <source>Paste</source>
         <translation>Wklej</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="376"/>
+        <location filename="../MainUI.ui" line="386"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="354"/>
+        <location filename="../MainUI.ui" line="364"/>
         <source>Ctrl+X</source>
         <translation>Ctrl-X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="203"/>
+        <location filename="../MainUI.cpp" line="204"/>
         <source>Invalid Directories</source>
         <translation>Nieprawidłowe katalogi</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="203"/>
+        <location filename="../MainUI.cpp" line="204"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>Następujące katalogi są nieprawidłowe i nie można ich otworzyć:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="237"/>
+        <location filename="../MainUI.cpp" line="238"/>
         <source>CTRL+B</source>
         <translation>CTRL+B</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="246"/>
+        <location filename="../MainUI.cpp" line="247"/>
         <source>CTRL+E</source>
         <translation>CTRL+E</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="364"/>
+        <location filename="../MainUI.cpp" line="365"/>
         <source>Root</source>
         <translation>Katalog główny</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="371"/>
+        <location filename="../MainUI.cpp" line="372"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Wpisz: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="375"/>
+        <location filename="../MainUI.cpp" line="376"/>
         <source>Filesystem: %1</source>
         <translation>System plików: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="611"/>
+        <location filename="../MainUI.cpp" line="612"/>
         <source>New Bookmark</source>
         <translation>Nowa zakładka</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="611"/>
+        <location filename="../MainUI.cpp" line="612"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="616"/>
+        <location filename="../MainUI.cpp" line="617"/>
         <source>Invalid Name</source>
         <translation>Nieprawidłowa nazwa</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="616"/>
+        <location filename="../MainUI.cpp" line="617"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Taka zakładka już istnieje. Proszę wybrać inną.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="637"/>
+        <location filename="../MainUI.cpp" line="638"/>
         <source>Git Repository Status</source>
         <translation>Stan repozytorium Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="727"/>
+        <location filename="../MainUI.cpp" line="728"/>
         <source>Multimedia</source>
         <translation>Multimedia</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="745"/>
+        <location filename="../MainUI.cpp" line="746"/>
         <source>Slideshow</source>
         <translation>Pokaz slajdów</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="925"/>
+        <location filename="../MainUI.cpp" line="926"/>
         <source>Items to be removed:</source>
         <translation>Elementy do usunięcia:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="451"/>
+        <location filename="../MainUI.cpp" line="452"/>
         <source>Verify Quit</source>
         <translation>Potwierdzenie zamknięcia</translation>
     </message>
@@ -993,42 +1008,42 @@ Nowa lokalizacja: %2</translation>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="451"/>
+        <location filename="../MainUI.cpp" line="452"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Otwartych jest wiele kart. Na pewno zakończyć?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="924"/>
+        <location filename="../MainUI.cpp" line="925"/>
         <source>Verify Removal</source>
         <translation>Potwierdź usuwanie</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="924"/>
+        <location filename="../MainUI.cpp" line="925"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>OSTRZEŻENIE: Ta operacja trwale usunie plik(i) z systemu!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="924"/>
+        <location filename="../MainUI.cpp" line="925"/>
         <source>Are you sure you want to continue?</source>
         <translation>Na pewno kontynuować?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="884"/>
+        <location filename="../MainUI.cpp" line="885"/>
         <source>Rename File</source>
         <translation>Zmień nazwę pliku</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="884"/>
+        <location filename="../MainUI.cpp" line="885"/>
         <source>New Name:</source>
         <translation>Nowa nazwa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="898"/>
+        <location filename="../MainUI.cpp" line="899"/>
         <source>Overwrite File?</source>
         <translation>Nadpisać plik?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="898"/>
+        <location filename="../MainUI.cpp" line="899"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Istniejący plik o tej samej nazwie zostanie nadpisany. Na pewno kontynuować?</translation>
     </message>
