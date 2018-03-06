@@ -62,7 +62,7 @@ private slots:
 	void DeactivateScreen();
 	void ActivateScreen();
 	void ApplyChanges(); //config changes
-	void SaveSettings();
+	void SaveSettings(bool quiet = false);
 	void RestartFluxbox();
 
 	void removeProfile();
