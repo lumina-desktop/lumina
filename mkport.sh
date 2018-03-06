@@ -99,6 +99,8 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
+echo "All ports updated: ${allports}"
 #Set a couple variables for the TrueOS build cluster to know which is the "overall" port
-port=${allports} #reset this variable in case something else needs it
-export bPort=${allports}
+port="${allports}" #reset this variable in case something else needs it
+bPort="${allports}"
+export bPort
