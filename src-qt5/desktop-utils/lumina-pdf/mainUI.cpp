@@ -210,14 +210,23 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->findGroup->setVisible(false);
   ui->bookmarksFrame->setVisible(false);
 
+  //TESTING features/functionality
   ui->actionSettings->setEnabled(TESTING);
   ui->actionSettings->setVisible(TESTING);
-	ui->actionBookmarks->setEnabled(TESTING);
-	ui->actionBookmarks->setVisible(TESTING);
-	ui->actionScroll_Mode->setEnabled(TESTING);
-	ui->actionScroll_Mode->setVisible(TESTING);
-	ui->actionSelect_Mode->setEnabled(TESTING);
-	ui->actionSelect_Mode->setVisible(TESTING);
+  ui->actionBookmarks->setEnabled(TESTING);
+  ui->actionBookmarks->setVisible(TESTING);
+  ui->actionScroll_Mode->setEnabled(TESTING);
+  ui->actionScroll_Mode->setVisible(TESTING);
+  ui->actionSelect_Mode->setEnabled(TESTING);
+  ui->actionSelect_Mode->setVisible(TESTING);
+  ui->actionProperties->setEnabled(TESTING);
+  ui->actionProperties->setVisible(TESTING);
+  ui->menuSettings->setEnabled(TESTING);
+  ui->menuSettings->setVisible(TESTING);
+  if(!TESTING){
+    ui->menubar->removeAction(ui->menuSettings->menuAction() );
+  }
+
 }
 
 MainUI::~MainUI(){
