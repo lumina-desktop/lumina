@@ -101,4 +101,4 @@ do
 done
 #Set a couple variables for the TrueOS build cluster to know which is the "overall" port
 port=${allports} #reset this variable in case something else needs it
-export bPort="x11/lumina"
+export bPort=${allports}
