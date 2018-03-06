@@ -71,10 +71,12 @@ rm ${distdir}/${dfile}-* 2>/dev/null
 
 # Copy ports files
 orig_dir=`pwd`
+allports=""
 for port in `find port-files/FreeBSD | grep Makefile | cut -d / -f 3-4`
 do
   cd ${orig_dir}
   echo "Updating port: ${port}"
+  allports="${allports} ${port}" #add this port to the list
   if [ -d "${portsdir}/${port}" ] ; then
     rm -rf ${portsdir}/${port} 2>/dev/null
   fi
@@ -98,5 +100,5 @@ do
   massage_subdir ${portsdir}/${tcat}
 done
 #Set a couple variables for the TrueOS build cluster to know which is the "overall" port
-port="x11/lumina" #reset this variable in case something else needs it
+port=${allports} #reset this variable in case something else needs it
 export bPort="x11/lumina"
