@@ -21,7 +21,7 @@ private:
 	QMenu *appMenu, *winMenu;
 	bool usewinmenu;
 
-	void AddWindowToMenu(NativeWindow*);
+	void AddWindowToMenu(NativeWindowObject*);
 
 public:
 	DesktopContextMenu(QWidget *parent = 0);

@@ -22,6 +22,7 @@ include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/DesktopSettings.pri)
 include(../libLumina/ExternalProcess.pri)
 include(../libLumina/XDGMime.pri)
+include(../libLumina/LIconCache.pri)
 
 include(../../src-cpp/plugins-base.pri)
 include(../../src-cpp/framework-OSInterface.pri)
@@ -40,7 +41,8 @@ SOURCES += main.cpp \
 HEADERS  += global-includes.h \
 	global-objects.h \
 	LSession.h \
-	BootSplash.h
+	BootSplash.h \
+	JsonMenu.h
 
 FORMS    +=	BootSplash.ui 
 

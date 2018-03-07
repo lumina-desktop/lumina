@@ -55,6 +55,9 @@ public:
 	Q_INVOKABLE void mousePositionChanged(bool lowerall = false);
 	Q_INVOKABLE void launchApp(QString appOrPath);
 
+	//C++ Access Functions (simplifications for the QML ones)
+	QList<NativeWindowObject*> windowObjects();
+
 private:
 	QList<ScreenObject*> s_objects;
 	QList<PanelObject*> panel_objects;

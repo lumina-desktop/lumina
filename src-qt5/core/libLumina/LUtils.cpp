@@ -273,13 +273,15 @@ QStringList LUtils::videoExtensions() {
 QStringList LUtils::imageExtensions(bool wildcards){
   //Note that all the image extensions are lowercase!!
   static QStringList imgExtensions;
+  static QStringList imgExtensionsWC;
   if(imgExtensions.isEmpty()){
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
     for(int i=0; i<fmt.length(); i++){
-      if(wildcards){ imgExtensions << "*."+QString::fromLocal8Bit(fmt[i]);  }
-      else{ imgExtensions << QString::fromLocal8Bit(fmt[i]); }
+      imgExtensionsWC << "*."+QString::fromLocal8Bit(fmt[i]);
+      imgExtensions << QString::fromLocal8Bit(fmt[i]);
     }
   }
+  if(wildcards){ return imgExtensionsWC; }
   return imgExtensions;
 }
 

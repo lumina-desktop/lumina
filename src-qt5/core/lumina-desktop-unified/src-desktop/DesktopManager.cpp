@@ -41,16 +41,20 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
   QStringList wpaperList = DesktopSettings::instance()->value(DesktopSettings::Desktop, "wallpapers/"+screen_id+"_wk_"+QString::number(wkspace), QStringList()).toStringList();
   //Next look for a list that matches this exact workspace
   if(wpaperList.isEmpty()){ wpaperList= DesktopSettings::instance()->value(DesktopSettings::Desktop, "wallpapers/default_wk_"+QString::number(wkspace), QStringList()).toStringList(); }
+  wpaperList.removeAll("");
   //Next look for a list that matches this exact screen
   if(wpaperList.isEmpty()){ wpaperList= DesktopSettings::instance()->value(DesktopSettings::Desktop, "wallpapers/"+screen_id, QStringList()).toStringList(); }
+  wpaperList.removeAll("");
   //Now look for a list that matches any screen/workspace
   if(wpaperList.isEmpty()){ wpaperList= DesktopSettings::instance()->value(DesktopSettings::Desktop, "wallpapers/default", QStringList()).toStringList(); }
+  wpaperList.removeAll("");
   //Now use the failover wallpaper directory
   if(wpaperList.isEmpty()){
     QString def = LOS::LuminaShare().section("/",0,-3)+"/wallpapers/lumina-nature"; //Note: LuminaShare() ends with an extra "/"
     //qDebug() << "Default Wallpaper:" << def;
     if(QFile::exists(def)){ wpaperList << def; }
   }
+  //qDebug() << "Got wallpaper list:" << screen_id << wkspace << wpaperList;
   //Wallpaper selection/randomization
   if(wpaperList.count()==1 && wpaperList.first()==current){ return; } //nothing to do - just the same image
   QString wpaper;
@@ -60,6 +64,7 @@ void DesktopManager::updateWallpaper(QString screen_id, int wkspace){
     if(!wpaper.isEmpty()){
       //Got a directory - update the list of files and re-randomize the selection
       QStringList imgs = LUtils::imageExtensions(true);
+	//qDebug() << " - Got Dir: " << imgs;
       QDir tdir(wpaper);
       prefix=wpaper+"/";
       bgL = tdir.entryList(imgs, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
@@ -91,7 +96,7 @@ void DesktopManager::updatePlugins(QString plugin_id){
 
 // === PUBLIC SLOTS ===
 void DesktopManager::workspaceChanged(int wknum){
-  qDebug() << "Got Workspace Changed:" << wknum;
+  //qDebug() << "Got Workspace Changed:" << wknum;
   syncWindowList();
 }
 
@@ -117,6 +122,9 @@ void DesktopManager::settingsChanged(DesktopSettings::File type){
 
 void DesktopManager::NewWindowAvailable(NativeWindowObject* win){
   //connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(syncWindowList()) );
+#ifdef USE_WIDGETS
+  qDebug() << "Got New Widget Window:" << win->name();
+#endif
   syncWindowList();
 }
 

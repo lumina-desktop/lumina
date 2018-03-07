@@ -237,6 +237,11 @@ void RootDesktopObject::launchApp(QString appOrPath){
   emit launchApplication(appOrPath);
 }
 
+//C++ Access Functions (simplifications for the QML ones)
+QList<NativeWindowObject*> RootDesktopObject::windowObjects(){
+  return window_objects;
+}
+
 // === PUBLIC SLOTS ===
 void RootDesktopObject::updateScreens(){
   QList<QScreen*> scrns = QApplication::screens();
