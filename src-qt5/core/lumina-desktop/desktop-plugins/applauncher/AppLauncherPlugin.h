@@ -18,6 +18,8 @@
 #include <QTimer>
 #include <QMenu>
 #include <QCursor>
+#include <QDrag>
+#include <QMimeData>
 
 #include "../LDPlugin.h"
 
@@ -38,6 +40,7 @@ private:
 	QInputDialog *inputDLG;
 	QString iconID;
 	int icosize;
+	QPoint dragstartpos;
 
 private slots:
 	void loadButton();
@@ -73,6 +76,34 @@ protected:
 	  LDPlugin::changeEvent(ev);
 	  QEvent::Type tmp = ev->type();
 	  if(tmp == QEvent::StyleChange || tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){ loadButton(); }
+	}
+
+	void mousePressEvent(QMouseEvent *ev){
+	  if(ev->button()==Qt::LeftButton){
+	    dragstartpos = ev->pos();
+	  }
+	}
+
+	void mouseMoveEvent(QMouseEvent *ev){
+	  if( (ev->buttons() & Qt::LeftButton) ){
+	    if((ev->pos() - dragstartpos).manhattanLength() > (this->width()/4) ){
+	      //Start the drag event for this file
+	      QDrag *drag = new QDrag(this);
+	      QMimeData *md = new QMimeData;
+	        md->setUrls( QList<QUrl>() << QUrl::fromLocalFile(button->whatsThis()) );
+	        drag->setMimeData(md);
+	      //Now perform the drag and react appropriately
+	      Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+	      if(dropAction == Qt::MoveAction){
+	        // File Moved, remove it from here
+	        //qDebug() << "File Moved:" << button->whatsThis();
+	        //DO NOT DELETE FILES - return code often is wrong (browser drops for instance)
+	      }
+	    }
+	  }else{
+	    LDPlugin::mouseMoveEvent(ev);
+	  }
+
 	}
 };
 #endif
