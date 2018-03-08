@@ -20,6 +20,7 @@
 #include <QCursor>
 #include <QDrag>
 #include <QMimeData>
+#include <QtConcurrent>
 
 #include "../LDPlugin.h"
 
@@ -62,6 +63,8 @@ private slots:
 	void fileRename();
 	void renameFinished(int result);
 
+	void fileDrop(bool copy, QList<QUrl> urls);
+
 public slots:
 	void LocaleChange(){
 	  loadButton(); //force reload
@@ -103,7 +106,25 @@ protected:
 	  }else{
 	    LDPlugin::mouseMoveEvent(ev);
 	  }
+	}
 
+	void dragEnterEvent(QDragEnterEvent *ev){
+	  if(ev->mimeData()->hasUrls() && this->acceptDrops()){ ev->acceptProposedAction(); }
+	}
+
+	void dropEvent(QDropEvent *ev){
+	  QList<QUrl> urls = ev->mimeData()->urls();
+	  bool ok = !urls.isEmpty() && this->acceptDrops();
+	  if(ok){
+	    if(ev->proposedAction() == Qt::MoveAction){
+	      ev->setDropAction(Qt::MoveAction);
+	      QtConcurrent::run(this, &AppLauncherPlugin::fileDrop, false, urls);
+	    }else if(ev->proposedAction() == Qt::CopyAction){
+	      ev->setDropAction(Qt::CopyAction);
+	      QtConcurrent::run(this, &AppLauncherPlugin::fileDrop, true, urls);
+	    }else{ ok = false; }
+	  }
+	  if(ok){ ev->acceptProposedAction(); }
 	}
 };
 #endif
