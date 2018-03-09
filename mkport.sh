@@ -6,6 +6,9 @@
 dfile="lumina"
 VERSION="1.4.2"
 
+#Debugging of build failures
+exit 1
+
 massage_subdir() {
   cd "$1"
   if [ $? -ne 0 ] ; then
