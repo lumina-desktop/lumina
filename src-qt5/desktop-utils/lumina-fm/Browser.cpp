@@ -17,6 +17,11 @@ Browser::Browser(QObject *parent) : QObject(parent){
   watcher = new QFileSystemWatcher(this);
   connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged(QString)) );
   connect(watcher, SIGNAL(directoryChanged(const QString&)), this, SLOT(dirChanged(QString)) );
+  updateTimer = new QTimer(this);
+    updateTimer->setInterval(500);
+    updateTimer->setSingleShot(true);
+  connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateRequested()) );
+
   showHidden = false;
   showThumbs = false;
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
@@ -84,8 +89,12 @@ QIcon* Browser::loadIcon(QString icon){
 void Browser::fileChanged(QString file){
   //qDebug() << "Got File Changed:" << file;
   if(file.section("/",0,-2) == currentDir){
-    if(QFile::exists(file) ){ QtConcurrent::run(this, &Browser::loadItem, file, this); } //file modified but not removed
-    else if(oldFiles.contains(file) ){
+    if(QFile::exists(file) ){
+      updateList << file;
+      if(!updateTimer->isActive()){ updateTimer->start(); }
+      //QtConcurrent::run(this, &Browser::loadItem, file, this); //file modified but not removed
+
+    }else if(oldFiles.contains(file) ){
       oldFiles.removeAll(file);
       emit itemRemoved(file);
     }
@@ -94,8 +103,10 @@ void Browser::fileChanged(QString file){
 
 void Browser::dirChanged(QString dir){
   //qDebug() << "Got Dir Changed:" << dir;
-  if(dir==currentDir){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
-  else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
+  updateList << dir;
+  if(!updateTimer->isActive()){ updateTimer->start(); }
+  //if(dir==currentDir){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
+  //else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
 void Browser::futureFinished(QString name, QImage icon){
@@ -125,11 +136,27 @@ void Browser::futureFinished(QString name, QImage icon){
     //qDebug() << " -- done:" << name;
 }
 
+void Browser::updateRequested(){
+  //Clear the cache list ASAP
+  QStringList list = updateList;
+  updateList.clear();
+  list.removeDuplicates();
+  //Now look to see if an all-dir update is needed
+  if(list.contains(currentDir)){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
+  else{
+    //individual file updates
+    for(int i=0; i<list.length(); i++){
+      if(QFile::exists(list[i])){ QtConcurrent::run(this, &Browser::loadItem, list[i], this); }
+    }
+  }
+}
+
 // PUBLIC SLOTS
 void Browser::loadDirectory(QString dir, bool force){
   if(force){ lastcheck = QDateTime(); } //reset check time to force reloads
   if(dir.isEmpty()){ dir = currentDir; } //reload current directory
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
+  updateList.clear();
   //qDebug() << "Load Directory" << dir;
   bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)

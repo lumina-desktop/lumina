@@ -153,12 +153,12 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
-        <source>File</source>
+        <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
-        <source>View</source>
+        <source>&amp;View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

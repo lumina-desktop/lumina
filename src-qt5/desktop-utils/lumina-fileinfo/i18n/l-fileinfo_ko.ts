@@ -98,7 +98,7 @@
     </message>
     <message>
         <location filename="../MainUI.ui" line="617"/>
-        <source>File</source>
+        <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

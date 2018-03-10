@@ -25,12 +25,23 @@ SOURCES += main.cpp \
 HEADERS  += mainUI.h \
 		PrintWidget.h \
 		PresentationLabel.h \
-    PropDialog.h
+		PropDialog.h \
+		Renderer.h \
+		textData.h
 
 FORMS += mainUI.ui \
          propDialog.ui
 
-LIBS += -lpoppler-qt5
+isEmpty(USE_MUPDF){
+	message("Using Poppler-Qt5 Backend")
+	LIBS += -lpoppler-qt5
+	SOURCES += Renderer-poppler.cpp
+}else{
+	message("Using MuPDF Backend")
+	LIBS += -lmupdf -lmupdfthird
+	SOURCES += Renderer-mupdf.cpp
+
+}
 
 TRANSLATIONS =  i18n/l-pdf_af.ts \
                 i18n/l-pdf_ar.ts \

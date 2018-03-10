@@ -18,6 +18,9 @@
 #include <QTimer>
 #include <QMenu>
 #include <QCursor>
+#include <QDrag>
+#include <QMimeData>
+#include <QtConcurrent>
 
 #include "../LDPlugin.h"
 
@@ -38,6 +41,7 @@ private:
 	QInputDialog *inputDLG;
 	QString iconID;
 	int icosize;
+	QPoint dragstartpos;
 
 private slots:
 	void loadButton();
@@ -59,6 +63,8 @@ private slots:
 	void fileRename();
 	void renameFinished(int result);
 
+	void fileDrop(bool copy, QList<QUrl> urls);
+
 public slots:
 	void LocaleChange(){
 	  loadButton(); //force reload
@@ -73,6 +79,52 @@ protected:
 	  LDPlugin::changeEvent(ev);
 	  QEvent::Type tmp = ev->type();
 	  if(tmp == QEvent::StyleChange || tmp==QEvent::ThemeChange || tmp==QEvent::LanguageChange || tmp==QEvent::LocaleChange){ loadButton(); }
+	}
+
+	void mousePressEvent(QMouseEvent *ev){
+	  if(ev->button()==Qt::LeftButton){
+	    dragstartpos = ev->pos();
+	  }
+	}
+
+	void mouseMoveEvent(QMouseEvent *ev){
+	  if( (ev->buttons() & Qt::LeftButton) ){
+	    if((ev->pos() - dragstartpos).manhattanLength() > (this->width()/4) ){
+	      //Start the drag event for this file
+	      QDrag *drag = new QDrag(this);
+	      QMimeData *md = new QMimeData;
+	        md->setUrls( QList<QUrl>() << QUrl::fromLocalFile(button->whatsThis()) );
+	        drag->setMimeData(md);
+	      //Now perform the drag and react appropriately
+	      Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+	      if(dropAction == Qt::MoveAction){
+	        // File Moved, remove it from here
+	        //qDebug() << "File Moved:" << button->whatsThis();
+	        //DO NOT DELETE FILES - return code often is wrong (browser drops for instance)
+	      }
+	    }
+	  }else{
+	    LDPlugin::mouseMoveEvent(ev);
+	  }
+	}
+
+	void dragEnterEvent(QDragEnterEvent *ev){
+	  if(ev->mimeData()->hasUrls() && this->acceptDrops()){ ev->acceptProposedAction(); }
+	}
+
+	void dropEvent(QDropEvent *ev){
+	  QList<QUrl> urls = ev->mimeData()->urls();
+	  bool ok = !urls.isEmpty() && this->acceptDrops();
+	  if(ok){
+	    if(ev->proposedAction() == Qt::MoveAction){
+	      ev->setDropAction(Qt::MoveAction);
+	      QtConcurrent::run(this, &AppLauncherPlugin::fileDrop, false, urls);
+	    }else if(ev->proposedAction() == Qt::CopyAction){
+	      ev->setDropAction(Qt::CopyAction);
+	      QtConcurrent::run(this, &AppLauncherPlugin::fileDrop, true, urls);
+	    }else{ ok = false; }
+	  }
+	  if(ok){ ev->acceptProposedAction(); }
 	}
 };
 #endif

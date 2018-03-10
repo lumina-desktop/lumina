@@ -13,6 +13,7 @@
 #include <QTimer>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QMessageBox>
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -403,9 +404,15 @@ void MainUI::ApplyChanges(){
   QTimer::singleShot(1000, this, SLOT(RestartFluxbox()) );
 }
 
-void MainUI::SaveSettings(){
+void MainUI::SaveSettings(bool quiet){
   SyncBackend();
-  RRSettings::SaveScreens(SCREENS);
+  bool ok = RRSettings::SaveScreens(SCREENS);
+  if(quiet){ return; } //do not show the popup info boxes.
+  if(ok){
+    QMessageBox::information(this, tr("Settings Saved"), tr("Screen configuration saved as the default for future use"));
+  }else{
+    QMessageBox::warning(this, tr("Settings Error"), tr("Screen configuration could not be saved. Please check file permissions and try again."));
+  }
 }
 
 void MainUI::RestartFluxbox(){
@@ -452,6 +459,9 @@ void MainUI::saveAsProfile(QAction *act){
       if(!ok || profile.isEmpty()){ return; } //cancelled
     }
   }
-  RRSettings::SaveScreens(SCREENS, profile);
+  bool ok = RRSettings::SaveScreens(SCREENS, profile);
   updateProfiles();
+  if(ok){
+    QMessageBox::information(this, tr("Profile Created"), tr("Current screen configuration saved as profile:")+"\n\n"+profile);
+  }
 }

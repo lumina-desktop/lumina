@@ -153,13 +153,13 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
-        <source>File</source>
-        <translation>Tiedosto</translation>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
-        <source>View</source>
-        <translation>Näytä</translation>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
@@ -407,7 +407,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Asetukset</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>

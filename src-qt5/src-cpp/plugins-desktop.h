@@ -17,13 +17,19 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include <QIcon>
 
 class DTPlugin : public BasePlugin{
+
 public:
 	DTPlugin();
 	~DTPlugin();
 
 	virtual bool isValid() Q_DECL_OVERRIDE;
+
+	QSize getSize();
+	bool supportsPanel();
+	QString getIcon();
 };
 
 #endif

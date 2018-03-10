@@ -1,6 +1,6 @@
 #include "PrintWidget.h"
 
-PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1), 
+PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1),
   viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
 
   this->setMouseTracking(true);
@@ -20,6 +20,8 @@ PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), cur
 	scene = new QGraphicsScene(this);
 	scene->setBackgroundBrush(Qt::gray);
 	this->setScene(scene);
+  this->degrees = 0;
+  this->rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
 
 	/*QVBoxLayout *layout = new QVBoxLayout;
 	setLayout(layout);
@@ -36,10 +38,12 @@ PrintWidget::~PrintWidget() {
 
 void PrintWidget::fitView() {
   setZoomMode(FitInView);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::fitToWidth() {
   setZoomMode(FitToWidth);
+  setCurrentPage(publicPageNum); //Make sure we stay on the same page
 }
 
 void PrintWidget::setZoomMode(ZoomMode mode) {
@@ -101,9 +105,11 @@ void PrintWidget::setVisible(bool visible) {
 }
 
 void PrintWidget::setCurrentPage(int pageNumber) {
+	if(pageNumber < 0 || pageNumber > (pages.count()+1) ){ return; }
+	publicPageNum = pageNumber; //publicly requested page number (+/- 1 from actual page range)
+	emit currentPageChanged();
 	if(pageNumber < 1 || pageNumber > pages.count())
 		return;
-
 	int lastPage = curPage;
 	curPage = pageNumber;
 
@@ -120,10 +126,18 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 	}
 }
 
-void PrintWidget::highlightText(int pageNum, QRectF textBox) {
-  PageItem *item = static_cast<PageItem*>(pages[pageNum]);
-  QPainter painter(this);
-  painter.fillRect(textBox, QColor(255, 255, 177, 128));
+void PrintWidget::highlightText(TextData *text) {
+  //Creates a rectangle around the text if the text has not already been highlighted
+  if(!text->highlighted()) {
+    //qDebug() << "Highlighting text: " << text->text() << "At page: " << text->page();
+    QRect rect = text->loc();
+    double pageHeight = pages.at(0)->boundingRect().height();
+    QRectF textRect = rect.adjusted(0, pageHeight*(text->page()-1), 0, 0); //move the rectangle onto the right page
+    QBrush highlightFill(QColor(255, 255, 177, 50));
+    QPen highlightOutline(QColor(255, 255, 100, 98));
+    scene->addRect(textRect, highlightOutline, highlightFill);
+    text->highlighted(true);
+  }
 }
 
 //Private functions
@@ -132,8 +146,9 @@ void PrintWidget::generatePreview() {
 	populateScene(); // i.e. setPreviewPrintedPictures() e.l.
 	layoutPages();
 	curPage = qBound(1, curPage, pages.count());
-	if (fitting)
-			fit();
+	publicPageNum = curPage;
+	emit currentPageChanged();
+	if (fitting){ fit(); }
 }
 
 void PrintWidget::layoutPages() {
@@ -145,22 +160,22 @@ void PrintWidget::layoutPages() {
 	int cols = 1; // singleMode and default
 	if (viewMode == AllPagesView) {
     cols = ((pictures->value(0)).width() > (pictures->value(0)).height()) ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
-    cols += cols % 2;  // Nicer with an even number of cols 
-  } else if (viewMode == FacingPagesView) { 
+    cols += cols % 2;  // Nicer with an even number of cols
+  } else if (viewMode == FacingPagesView) {
     cols = 2;
-    numPagePlaces += 1; 
-  } 
+    numPagePlaces += 1;
+  }
   int rows = qCeil(double(numPagePlaces) / cols);
 
-  double itemWidth = pages.at(0)->boundingRect().width(); 
-  double itemHeight = pages.at(0)->boundingRect().height(); 
-  int pageNum = 1; for (int i = 0; i < rows && pageNum <= numPages; i++) { 
-    for (int j = 0; j < cols && pageNum <= numPages; j++) { 
+  double itemWidth = pages.at(0)->boundingRect().width();
+  double itemHeight = pages.at(0)->boundingRect().height();
+  int pageNum = 1; for (int i = 0; i < rows && pageNum <= numPages; i++) {
+    for (int j = 0; j < cols && pageNum <= numPages; j++) {
       if (!i && !j && viewMode == FacingPagesView) {
-          continue; 
-      } else { 
-        pages.at(pageNum-1)->setPos(QPointF(j*itemWidth, i*itemHeight)); 
-        pageNum++; 
+          continue;
+      } else {
+        pages.at(pageNum-1)->setPos(QPointF(j*itemWidth, i*itemHeight));
+        pageNum++;
       }
 		}
 	}
@@ -169,21 +184,36 @@ void PrintWidget::layoutPages() {
 
 void PrintWidget::populateScene()
 {
-	for (int i = 0; i < pages.size(); i++)
-		scene->removeItem(pages.at(i));
-	qDeleteAll(pages);
-	pages.clear();
-
-	int numPages = pictures->count();
+  for (int i = 0; i < pages.size(); i++){
+	scene->removeItem(pages.at(i));
+  }
+  qDeleteAll(pages);
+  pages.clear();
+  //qDebug() << "populateScene";
+  if(pictures==0){ return; } //nothing to show yet
+  int numPages = pictures->count();
   //Replace from loadingHash resolution
-	QSize paperSize = pictures->value(0).size();
-  qDebug() << "Image paperSize" << paperSize;
+  QSize paperSize = pictures->value(0).size();
+  //qDebug() << "Image paperSize" << paperSize;
 
-	for (int i = 0; i < numPages; i++) {
-		PageItem* item = new PageItem(i+1, (*pictures)[i], paperSize);
+  //Changes the paper orientation if rotated by 90 or 270 degrees
+  if(degrees == 90 or degrees == 270)
+    paperSize.transpose();
+
+  for (int i = 0; i < numPages; i++) {
+    QImage pagePicture = pictures->value(i);
+    if(degrees != 0) {
+      pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
+      //qDebug() << "Rotating by: " << degrees << " degrees";
+    }
+    if(pagePicture.isNull()) {
+      qDebug() << "NULL IMAGE ON PAGE " << i;
+      continue;
+    }
+		PageItem* item = new PageItem(i+1, pagePicture, paperSize);
 		scene->addItem(item);
 		pages.append(item);
-	}
+  }
 }
 
 //Private Slots
@@ -194,6 +224,8 @@ void PrintWidget::updateCurrentPage() {
 	int newPage = calcCurrentPage();
 	if (newPage != curPage) {
 		curPage = newPage;
+		publicPageNum = curPage;
+		emit currentPageChanged();
 	}
 }
 
@@ -272,8 +304,25 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::setPictures(QHash<int, QImage> *hash) {
   pictures = hash;
-} 
+  this->setVisible(hash!=0);
+}
 
-void PrintWidget::setOrientation(QPageLayout::Orientation ori) {
-  this->orientation = ori;
+//Sets how much to rotate the image, by either 90, 180, or 270 degrees. Adds 90 degrees for cw and -90 for ccw.
+void PrintWidget::setDegrees(int degrees) {
+  //Mods by 360, but adds and remods because of how C++ treats negative mods
+  this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
+  switch(this->degrees) {
+    case 270:
+      rotMatrix = QMatrix(0, -1, 1, 0, 0, 0);
+      break;
+    case 90:
+      rotMatrix = QMatrix(0, 1, -1, 0, 0, 0);
+      break;
+    case 180:
+      rotMatrix = QMatrix(-1, 0, 0, -1, 0, 0);
+      break;
+    default:
+      rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
+  }
+  this->updatePreview();
 }

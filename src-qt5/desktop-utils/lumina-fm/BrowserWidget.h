@@ -40,6 +40,7 @@ public:
 	~BrowserWidget();
 
 	QString id(){ return ID; }
+	void stop();
 
 	void changeDirectory(QString dir);
 	QString currentDirectory(){ return BROWSER->currentDirectory(); }

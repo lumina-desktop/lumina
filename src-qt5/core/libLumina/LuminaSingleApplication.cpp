@@ -22,7 +22,10 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
   QString username = QString::number(getuid());
   //For locking the process use the official process name - not the user input (no masking)
   appname = this->applicationName();
-  cfile = cfile.arg( username, appname, QString::number(QX11Info::appScreen()) );
+  QString display = QString(getenv("DISPLAY"));
+  if(display.startsWith(":")){ display.remove(0,1); }
+  display = display.section(".",0,0);
+  cfile = cfile.arg( username, appname, display );
   lockfile = new QLockFile(cfile+"-lock");
     lockfile->setStaleLockTime(0); //long-lived processes
   for(int i=1; i<argc; i++){

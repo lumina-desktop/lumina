@@ -1,16 +1,16 @@
 include($${PWD}/../../OS-detect.pri)
 
 lessThan(QT_MAJOR_VERSION, 5) {
-  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+  message("[ERROR] Qt 5.7+ is required to use the Lumina Desktop!")
   exit
 }
-lessThan(QT_MINOR_VERSION, 4){
-  message("[ERROR] Qt 5.4+ is required to use the Lumina Desktop!")
+lessThan(QT_MINOR_VERSION, 7){
+  message("[ERROR] Qt 5.7+ is required to use the Lumina Desktop!")
   exit
 }
 
 QT *= core gui network widgets x11extras multimedia multimediawidgets concurrent svg quick qml
-
+CONFIG += c++11
 
 TARGET = lumina-desktop-unified
 target.path = $${L_BINDIR}
@@ -21,14 +21,15 @@ include(../libLumina/LuminaXDG.pri)
 include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/DesktopSettings.pri)
 include(../libLumina/ExternalProcess.pri)
-include(../../src-cpp/NativeWindow.pri)
 include(../libLumina/XDGMime.pri)
+include(../libLumina/LIconCache.pri)
 
 include(../../src-cpp/plugins-base.pri)
+include(../../src-cpp/framework-OSInterface.pri)
 
 #include  all the main individual source groups
-include(src-screensaver/screensaver.pri)
 include(src-events/events.pri)
+include(src-screensaver/screensaver.pri)
 include(src-desktop/desktop.pri)
 
 TEMPLATE = app
@@ -40,19 +41,14 @@ SOURCES += main.cpp \
 HEADERS  += global-includes.h \
 	global-objects.h \
 	LSession.h \
-	BootSplash.h
+	BootSplash.h \
+	JsonMenu.h
 
 FORMS    +=	BootSplash.ui 
 
-
-
-#Now include all the files for the various plugins
-#include(panel-plugins/panel-plugins.pri)
-#include(desktop-plugins/desktop-plugins.pri)
-
 # Install all the various files for the desktop itself
 desktop.path = $${L_SESSDIR}
-desktop.files = lumina-desktop.desktop
+desktop.files = lumina-desktop-unified.desktop
 
 defaults.path = $${L_SHAREDIR}/lumina-desktop
 defaults.files = defaults/*

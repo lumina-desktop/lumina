@@ -66,45 +66,48 @@ static xcb_atom_t _NET_SYSTEM_TRAY_OPCODE = 0;
 
 inline void ParsePropertyEvent(xcb_property_notify_event_t *ev, NativeEventFilter *obj){
   //qDebug() << "Got Property Event:" << ev->window << ev->atom;
-  NativeWindow::Property prop = NativeWindow::None;
+  NativeWindowObject::Property prop = NativeWindowObject::None;
   //Now determine which properties are getting changed, and update the native window as appropriate
-  if(ev->atom == EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
-  else if(ev->atom == EWMH._NET_WM_ICON){ prop = NativeWindow::Icon; }
-  else if(ev->atom == EWMH._NET_WM_ICON_NAME){ prop = NativeWindow::ShortTitle; }
-  else if(ev->atom == EWMH._NET_WM_DESKTOP){ prop = NativeWindow::Workspace; }
-  else if(ev->atom == EWMH._NET_WM_WINDOW_TYPE ){ prop = NativeWindow::WinTypes; }
-  else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
+  if(ev->atom == EWMH._NET_WM_NAME){ prop = NativeWindowObject::Title; }
+  else if(ev->atom == EWMH._NET_WM_ICON){ prop = NativeWindowObject::Icon; }
+  else if(ev->atom == EWMH._NET_WM_ICON_NAME){ prop = NativeWindowObject::ShortTitle; }
+  else if(ev->atom == EWMH._NET_WM_DESKTOP){ prop = NativeWindowObject::Workspace; }
+  else if(ev->atom == EWMH._NET_WM_WINDOW_TYPE ){ prop = NativeWindowObject::WinTypes; }
+  else if( ev->atom == EWMH._NET_WM_STATE){ prop = NativeWindowObject::States; }
   //Send out the signal if necessary
-  if(prop!=NativeWindow::None){
+  if(prop!=NativeWindowObject::None){
     //if(DEBUG){
       //qDebug() << "Detected Property Change:" << ev->window << prop;
     //}
     obj->emit WindowPropertyChanged(ev->window, prop);
   }else{
     //Quick re-check of the simple properties (nothing like the icon or other graphics)
-    obj->emit WindowPropertiesChanged(ev->window, QList<NativeWindow::Property>() << NativeWindow::Title
-		<< NativeWindow::ShortTitle << NativeWindow::Workspace );
+    obj->emit WindowPropertiesChanged(ev->window, QList<NativeWindowObject::Property>() << NativeWindowObject::Title
+		<< NativeWindowObject::ShortTitle << NativeWindowObject::Workspace );
     //qDebug() << "Unknown Property Change:" << ev->window << ev->atom;
   }
 }
 
 inline void ParseClientMessageEvent(xcb_client_message_event_t *ev, NativeEventFilter *obj){
-  NativeWindow::Property prop = NativeWindow::None;
+  NativeWindowObject::Property prop = NativeWindowObject::None;
   QVariant val;
-  if(ev->type==EWMH._NET_WM_NAME){ prop = NativeWindow::Title; }
-  else if(ev->type==EWMH._NET_WM_ICON){ prop = NativeWindow::Icon; }
-  else if(ev->type==EWMH._NET_WM_ICON_NAME){ prop = NativeWindow::ShortTitle; }
+  if(ev->type==EWMH._NET_WM_NAME){ prop = NativeWindowObject::Title; }
+  else if(ev->type==EWMH._NET_WM_ICON){ prop = NativeWindowObject::Icon; }
+  else if(ev->type==EWMH._NET_WM_ICON_NAME){ prop = NativeWindowObject::ShortTitle; }
   else if(ev->type==EWMH._NET_WM_DESKTOP){
-		prop = NativeWindow::Workspace;
+		prop = NativeWindowObject::Workspace;
 		val = QVariant( (int) ev->data.data32[0] );
-  }else if(ev->type==EWMH._NET_WM_WINDOW_TYPE){ prop = NativeWindow::WinTypes; }
-  else if(ev->type==EWMH._NET_WM_STATE){ prop = NativeWindow::States; }
+  }else if(ev->type==EWMH._NET_WM_WINDOW_TYPE){ prop = NativeWindowObject::WinTypes; }
+  else if(ev->type==EWMH._NET_WM_STATE){ prop = NativeWindowObject::States; }
 
-  if(prop!=NativeWindow::None){
-    //if(DEBUG){
-      qDebug() << "Detected Property Change Request:" << ev->window << prop; //}
+  if(prop!=NativeWindowObject::None){
+    if(DEBUG){ qDebug() << "Detected Property Change Request:" << ev->window << prop << val; }
     if(val.isNull()){ obj->emit WindowPropertyChanged(ev->window, prop); }
     else{ obj->emit RequestWindowPropertyChange(ev->window, prop, val); }
+  }else{
+    //Quick re-check of the simple properties (nothing like the icon or other graphics)
+    obj->emit WindowPropertiesChanged(ev->window, QList<NativeWindowObject::Property>() << NativeWindowObject::Title
+		<< NativeWindowObject::ShortTitle << NativeWindowObject::Workspace );
   }
 
 }
@@ -204,7 +207,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 //==============================
 	    case XCB_MAP_NOTIFY:
 		//qDebug() << "Window Map Event:" << ((xcb_map_notify_event_t *)ev)->window;
-                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, true);
+                   obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindowObject::Visible, true);
 		break; //This is just a notification that a window was mapped - nothing needs to change here
 	    case XCB_MAP_REQUEST:
 		//qDebug() << "Window Map Request Event";
@@ -217,7 +220,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 //==============================
 	    case XCB_UNMAP_NOTIFY:
 		//qDebug() << "Window Unmap Event:" << ((xcb_unmap_notify_event_t *)ev)->window;
-                  obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindow::Visible, false);
+                  obj->emit WindowPropertyChanged( ((xcb_map_notify_event_t *)ev)->window, NativeWindowObject::Visible, false);
 		break;
 //==============================
 	    case XCB_DESTROY_NOTIFY:
@@ -256,17 +259,17 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 	    case XCB_CONFIGURE_NOTIFY:
 		//qDebug() << "Configure Notify Event";
 		/*obj->emit WindowPropertiesChanged( ((xcb_configure_notify_event_t*)ev)->window,
-			QList<NativeWindow::Property>() << NativeWindow::GlobalPos << NativeWindow::Size,
+			QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size,
 			QList<QVariant>() << QPoint(((xcb_configure_notify_event_t*)ev)->x, ((xcb_configure_notify_event_t*)ev)->y) <<
 				QSize(((xcb_configure_notify_event_t*)ev)->width, ((xcb_configure_notify_event_t*)ev)->height) );*/
-		obj->emit WindowPropertyChanged( ((xcb_configure_notify_event_t*)ev)->window, NativeWindow::Size,
+		obj->emit WindowPropertyChanged( ((xcb_configure_notify_event_t*)ev)->window, NativeWindowObject::Size,
 			QSize(((xcb_configure_notify_event_t*)ev)->width, ((xcb_configure_notify_event_t*)ev)->height) );
 	        break;
 //==============================
 	    case XCB_CONFIGURE_REQUEST:
 		//qDebug() << "Configure Request Event";
 		obj->emit RequestWindowPropertiesChange( ((xcb_configure_request_event_t*)ev)->window,
-			QList<NativeWindow::Property>() << NativeWindow::GlobalPos << NativeWindow::Size,
+			QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size,
 			QList<QVariant>() << QPoint(((xcb_configure_request_event_t*)ev)->x, ((xcb_configure_request_event_t*)ev)->y) <<
 				QSize(((xcb_configure_request_event_t*)ev)->width, ((xcb_configure_request_event_t*)ev)->height) );
 	        break;
@@ -274,7 +277,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 	    case XCB_RESIZE_REQUEST:
 		//qDebug() << "Resize Request Event";
 		obj->emit RequestWindowPropertyChange( ((xcb_resize_request_event_t*)ev)->window,
-			NativeWindow::Size, QSize(((xcb_resize_request_event_t*)ev)->width, ((xcb_resize_request_event_t*)ev)->height) );
+			NativeWindowObject::Size, QSize(((xcb_resize_request_event_t*)ev)->width, ((xcb_resize_request_event_t*)ev)->height) );
 		break;
 //==============================
 	    case XCB_SELECTION_CLEAR:

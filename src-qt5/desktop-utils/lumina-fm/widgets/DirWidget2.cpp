@@ -473,9 +473,11 @@ void DirWidget::on_actionSingleColumn_triggered(bool checked){
   if(!checked){ return; }
   if(RCBW==0){ return; } //nothing to do
   ui->browser_layout->removeWidget(RCBW);
-  RCBW->deleteLater();
+  RCBW->stop();
+  BrowserWidget *tmp = RCBW;
   RCBW = 0;
   setCurrentBrowser(""); //reset back to the remaining browser
+  QTimer::singleShot(10000, tmp, SLOT(deleteLater()));
 }
 
 void DirWidget::on_actionDualColumn_triggered(bool checked){

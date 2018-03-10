@@ -39,11 +39,11 @@ int main(int argc, char ** argv)
     QTime *timer=0;
     if(DEBUG){ timer = new QTime(); timer->start(); }
     if(DEBUG){ qDebug() << "Theme Init:" << timer->elapsed(); }
-    LuminaThemeEngine theme(&a);
-    QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );
+    /*LuminaThemeEngine theme(&a);
+    QObject::connect(&theme, SIGNAL(updateIcons()), &a, SLOT(reloadIconTheme()) );*/
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     QTimer::singleShot(0, &a, SLOT(setupSession()) );
-    theme.refresh();
+    //theme.refresh();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
     int retCode = a.exec();
     qDebug() << "Finished Closing Down Unified Lumina";

@@ -19,10 +19,11 @@
 #include <QApplication>
 #include <QMenu>
 
-#include <poppler/qt5/poppler-qt5.h>
+#include "Renderer.h"
 #include "PresentationLabel.h"
 #include "propDialog.h"
 #include "PrintWidget.h"
+#include "textData.h"
 
 namespace Ui{
 	class MainUI;
@@ -37,15 +38,15 @@ public:
 	void loadFile(QString path);
 
 private:
-	Poppler::Document *DOC;
+	QSizeF pageSize;
 	PrintWidget *WIDGET;
 	Ui::MainUI *ui;
-  PropDialog *PROPDIALOG;
+	PropDialog *PROPDIALOG;
 	QPrintDialog *PrintDLG;
 	QString lastdir;
-  bool matchCase;
-  QMap<Poppler::TextBox*, int> results;
-  int currentHighlight;
+	bool matchCase;
+	QList<TextData*> results;
+	int currentHighlight;
 
 	//Other Interface elements
 	QProgressBar *progress;
@@ -53,14 +54,14 @@ private:
 	QTimer *clockTimer;
 	QMenu *contextMenu;
 	//QFrame *frame_presenter;
-	QLabel *label_clock;
-	QAction *clockAct;
+	QLabel *label_clock, *label_page;
+	QAction *clockAct, *pageAct;
 
 	//PDF Page Loading cache variables
+	Renderer *BACKEND;
 	QHash<int, QImage> loadingHash;
-	int numPages;
 
-	void loadPage(int num, Poppler::Document *doc, MainUI *obj, QSize dpi, QSizeF page);
+	void loadPage(int num, MainUI *obj, QSize dpi);
 
 	//Functions/variables for the presentation mode
 	PresentationLabel *presentationLabel;
@@ -73,21 +74,18 @@ private:
 private slots:
 	void startLoadingPages();
 	void slotPageLoaded(int);
-  //void slotStartPresentation(QAction *act);
 
 	//Simplification routines
-	void nextPage(){ ShowPage( WIDGET->currentPage() ); } //currentPage() starts at 1 rather than 0
-	void prevPage(){ ShowPage( WIDGET->currentPage()-2 ); } //currentPage() starts at 1 rather than 0
-	void firstPage(){ ShowPage(0); }
-	void lastPage(){ ShowPage(numPages-1); }
+	void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
+	void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
+	void firstPage(){ ShowPage(1); }
+	void lastPage(){ ShowPage(BACKEND->numPages()); }
 	void startPresentationHere(){ startPresentation(false); }
 	void startPresentationBeginning(){ startPresentation(true); }
 	void closePresentation(){ endPresentation(); }
 
-  void showInformation();
-  void find(QString text, bool forward);
-  void enableFind();
-  void showBookmarks();
+	void find(QString text, bool forward);
+	void showBookmarks();
 
 	void paintToPrinter(QPrinter *PRINTER);
 
@@ -96,18 +94,20 @@ private slots:
 
 	//Other interface slots
 	void updateClock();
+	void updatePageNumber();
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
-
-  void setScroll(bool);
-  void rotate(bool);
+	//void setScroll(bool);
 
 signals:
 	void PageLoaded(int);
 
 protected:
-  void keyPressEvent(QKeyEvent*);	
-  void wheelEvent(QWheelEvent*);
-  void resizeEvent(QResizeEvent*);
+	void keyPressEvent(QKeyEvent*);
+	void wheelEvent(QWheelEvent*);
+	void closeEvent(QCloseEvent *ev){
+	  endPresentation();
+	  QMainWindow::closeEvent(ev);
+	}
 };
 #endif

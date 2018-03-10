@@ -17,7 +17,7 @@ TTYProcess::TTYProcess(QObject *parent) : QObject(parent){
 TTYProcess::~TTYProcess(){
   closeTTY(); //make sure everything is closed properly
 }
-		
+
 // === PUBLIC ===
 bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   if(workdir=="~"){ workdir = QDir::homePath(); }
@@ -71,9 +71,9 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
   //Launch the process attached to a new PTY
   int FD = 0;
   pid_t tmp = LaunchProcess(FD, cprog, cargs);
-  if(DEBUG){ 
-    qDebug() << " - PID:" << tmp; 
-    qDebug() << " - FD:" << FD; 
+  if(DEBUG){
+    qDebug() << " - PID:" << tmp;
+    qDebug() << " - FD:" << FD;
   }
   if(tmp<0){ return false; } //error
   else{
@@ -94,7 +94,7 @@ bool TTYProcess::startTTY(QString prog, QStringList args, QString workdir){
 void TTYProcess::closeTTY(){
   int junk;
   if(0==waitpid(childProc, &junk, WNOHANG)){
-    kill(childProc, SIGKILL);	
+    kill(childProc, SIGKILL);
   }
   if(ttyfd!=0 && sn!=0){
     sn->setEnabled(false);
@@ -130,13 +130,13 @@ QByteArray TTYProcess::readTTY(){
   BA = CleanANSI(BA, bad);
   if(bad){
     //incomplete fragent - read some more first
-    fragBA = BA; 
+    fragBA = BA;
     return readTTY();
   }else{
     if(DEBUG){ qDebug() << "Read Data:" << BA; }
     //BUG BYPASS - 12/7/16
     //If the PTY gets input fairly soon after starting, the PTY will re-print the initial line(s)
-    if(starting && !BA.contains("\n") ){
+    /*if(starting && !BA.contains("\n") ){
       //qDebug() << "Starting phase 1:" << BA;
        writeTTY("tset\n"); //Terminal Setup utility (uses the TERM env variable)
       BA.clear();
@@ -144,7 +144,7 @@ QByteArray TTYProcess::readTTY(){
       //qDebug() << "Starting phase 2:" << BA;
       BA.remove(0, BA.indexOf("\n")+1);
       starting = false;
-    }
+    }*/
     //Apply known fixes for replies to particular inputs (mostly related to cursor position *within* the current line)
     // This appears to be primarily from the concept that the cursor position is always at the end of the line (old VT limitation?)
     //  so almost all these fixes are for cursor positioning within the current line
@@ -187,15 +187,16 @@ QByteArray TTYProcess::readTTY(){
 }
 
 void TTYProcess::setTerminalSize(QSize chars, QSize pixels){
-  if(ttyfd==0){ return; }
+  if(ttyfd==0 || chars.isNull() || chars.width()<2 || chars.height()<2 ){ return; }
   struct winsize c_sz;
     c_sz.ws_row = chars.height();
     c_sz.ws_col = chars.width();
     c_sz.ws_xpixel = pixels.width();
     c_sz.ws_ypixel = pixels.height();
-  if( ioctl(ttyfd, TIOCSWINSZ, &ws) ){
-    qDebug() << "Error settings terminal size";
+  if( ioctl(ttyfd, TIOCGWINSZ, &ws) ){
+    qDebug() << "Error settings terminal size:" << chars << pixels;
   }else{
+
     //qDebug() <<"Set Terminal Size:" << pixels << chars;
   }
 }
@@ -209,7 +210,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
   //qDebug() << "Clean ANSI Data:" << raw;
   //IN_LINE TERMINAL COLOR CODES (ANSI Escape Codes) "\x1B[<colorcode>m"
   //  - Just remove them for now
-	
+
   //Special XTERM encoding (legacy support)
   int index = raw.indexOf("\x1B]");
   while(index>=0){
@@ -234,49 +235,49 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
     }
     index = raw.indexOf("\x1B",index+1); //now find the next one
   }
-  
+
   // SYSTEM BELL
   index = raw.indexOf("\x07");
-  while(index>=0){ 
+  while(index>=0){
     //qDebug() << "Remove Bell:" << index;
-    raw = raw.remove(index,1); 
+    raw = raw.remove(index,1);
     index = raw.indexOf("\x07");
   }
   //VT220(?) print character code (cut out the code, leave the character)
   index=raw.indexOf("\x1b[@");
-  while(index>=0){ 
-    raw = raw.remove(index,3); 
+  while(index>=0){
+    raw = raw.remove(index,3);
     index = raw.indexOf("\x1b[@");
   }
 
   //VT102 Identify request
   index = raw.indexOf("\x1b[Z");
-  while(index>=0){ 
-    raw = raw.remove(index,3); 
+  while(index>=0){
+    raw = raw.remove(index,3);
     index = raw.indexOf("\x1b[Z");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[/Z");
   }
  //Terminal Status request
   index = raw.indexOf("\x1b[5n");
-  while(index>=0){ 
-    raw = raw.remove(index,4); 
+  while(index>=0){
+    raw = raw.remove(index,4);
     index = raw.indexOf("\x1b[5n");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[c"); //everything ok
    }
   //Terminal Identify request
   index = raw.indexOf("\x1b[c");
-  while(index>=0){ 
-    raw = raw.remove(index,3); 
+  while(index>=0){
+    raw = raw.remove(index,3);
     index = raw.indexOf("\x1b[c");
     //Also send the proper reply to this identify request right away
     writeTTY("\x1b[1c"); //VT220 reply code
   }
   //Terminal Identify request (xterm/termcap?)
   /*index = raw.indexOf("\x1b[P");
-  while(index>=0){ 
-    raw = raw.remove(index,3); 
+  while(index>=0){
+    raw = raw.remove(index,3);
     index = raw.indexOf("\x1b[P");
     //Also send the proper reply to this identify request right away
     qDebug() << " - Got XTERM/TERMCAP identify request ([P)";
@@ -289,7 +290,7 @@ QByteArray TTYProcess::CleanANSI(QByteArray raw, bool &incomplete){
 
 // === PRIVATE ===
 pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
-  //Returns: -1 for errors, positive value (file descriptor) for the master side of the TTY to watch	
+  //Returns: -1 for errors, positive value (file descriptor) for the master side of the TTY to watch
   //First open/setup a new pseudo-terminal file/device on the system (master side)
   //fd = posix_openpt(O_RDWR | O_NOCTTY); //open read/write
   pid_t PID = forkpty( &fd, 0, 0, 0);
@@ -300,7 +301,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     exit(rc);
   }else{
     //Master process
-    return PID; 
+    return PID;
   }
   /*if(fd<0){ return -1; } //could not create pseudo-terminal
   int rc = grantpt(fd); //set permissions
@@ -308,7 +309,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
   rc = unlockpt(fd); //unlock file (ready for use)
   //rc = fchown(fd, getuid(), getgid());
   setupTtyFd(fd);
-  if(rc!=0){ return -1; }	
+  if(rc!=0){ return -1; }
   //Now fork, return the Master device and setup the child
   pid_t PID = fork();
   if(PID==0){
@@ -316,7 +317,7 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     int fds = ::open(ptsname(fd), O_RDWR | O_NOCTTY); //open slave side read/write
     rc = fchown(fds, getuid(), getgid());
     ::close(fd); //close the master side from the slave thread
-	  
+
     //Adjust the slave side mode to SANE
     setupTtyFd(fds);
     //Change the controlling terminal in child thread to the slave PTY
@@ -326,10 +327,10 @@ pid_t TTYProcess::LaunchProcess(int& fd, char *prog, char **child_args){
     dup(fds); // Set slave PTY as standard input (0);
     dup(fds); // Set slave PTY as standard output (1);
     dup(fds); // Set slave PTY as standard error (2);
-	  
+
     setsid();  //Make current process new session leader (so we can set controlling terminal)
     ioctl(0,TIOCSCTTY, 1); //Set the controlling terminal to the slave PTY
-	  
+
     //Execute the designated program
     //rc = execvp("tset", NULL);
     rc = execvp(prog, child_args);
@@ -349,7 +350,7 @@ void TTYProcess::setupTtyFd(int fd){
     //TSET.c_iflag &= ~(IGNBRK | PARMRK | ISTRIP | ICRNL | IXON | IXANY | IXOFF); //ignore special characters
     //TSET.c_iflag &= IUTF8; //enable UTF-8 support
     //Set Local Modes
-    //TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
+    TSET.c_lflag &= (ECHO | ECHONL | ECHOKE); //Echo inputs (normal, newline, and KILL character line break)
     //TSET.c_lflag &= ~ICANON ;  //non-canonical mode (individual inputs - not a line-at-a-time)
     //Set Control Modes
     //TSET.c_cflag |= CLOCAL; //Local Terminal Connection (non-modem)
@@ -369,7 +370,7 @@ void TTYProcess::setupTtyFd(int fd){
 void TTYProcess::checkStatus(int sock){
   //This is run when the socket gets activated
   if(sock!=ttyfd){
-	  
+
   }
   //Make sure the child PID is still active
   int junk;

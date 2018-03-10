@@ -153,13 +153,13 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
-        <source>File</source>
-        <translation>Failas</translation>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
-        <source>View</source>
-        <translation>Rodinys</translation>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>Norėdami įjungti šį funkcionalumą, įdiekite "pianobar" paslaugų programą</translation>
+        <translation>Norėdami įjungti šį funkcionalumą, įdiekite &quot;pianobar&quot; paslaugų programą</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>

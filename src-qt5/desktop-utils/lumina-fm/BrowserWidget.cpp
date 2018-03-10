@@ -39,9 +39,15 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
 }
 
 BrowserWidget::~BrowserWidget(){
+  if(bThread->isRunning()){ bThread->exit(); }
   BROWSER->deleteLater();
-  bThread->exit();
   bThread->deleteLater();
+}
+
+void BrowserWidget::stop(){
+  bThread->exit();
+  this->setVisible(false);
+  this->disconnect();
 }
 
 void BrowserWidget::changeDirectory(QString dir){
@@ -305,8 +311,10 @@ void BrowserWidget::itemRemoved(QString item){
 }
 
 void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
+  if(info==0){ return; }
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
+  if(info->absolutePath() != BROWSER->currentDirectory()){ return; } //leftover item from a previous load
   //qDebug() << "Item Data Available:" << info->fileName();
   int num = 0;
   if(listWidget!=0){

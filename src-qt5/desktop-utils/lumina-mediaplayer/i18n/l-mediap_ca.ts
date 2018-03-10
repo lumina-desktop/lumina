@@ -59,12 +59,12 @@
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation>M'agrada aquesta cançó</translation>
+        <translation>M&apos;agrada aquesta cançó</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation>Cansat d'aquesta cançó (no sonarà durant un mes)</translation>
+        <translation>Cansat d&apos;aquesta cançó (no sonarà durant un mes)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
@@ -84,7 +84,7 @@
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation>Suprimeix l'emissora actual</translation>
+        <translation>Suprimeix l&apos;emissora actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
@@ -129,17 +129,17 @@
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation>Qualitat de l'àudio</translation>
+        <translation>Qualitat de l&apos;àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation>URL de l'intermediari</translation>
+        <translation>URL de l&apos;intermediari</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation>Control de l'URL de l'intermediari</translation>
+        <translation>Control de l&apos;URL de l&apos;intermediari</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
@@ -149,17 +149,17 @@
     <message>
         <location filename="../mainUI.ui" line="656"/>
         <source>Audio Driver</source>
-        <translation>Controlador d'àudio</translation>
+        <translation>Controlador d&apos;àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
-        <source>File</source>
-        <translation>Fitxer</translation>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
-        <source>View</source>
-        <translation>Vista</translation>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
@@ -194,7 +194,7 @@
     <message>
         <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
-        <translation>Apuja el volum de l'àudio</translation>
+        <translation>Apuja el volum de l&apos;àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="756"/>
@@ -204,12 +204,12 @@
     <message>
         <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
-        <translation>Abaixa el volum de l'àudio</translation>
+        <translation>Abaixa el volum de l&apos;àudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
-        <translation>Tanca l'aplicació</translation>
+        <translation>Tanca l&apos;aplicació</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="767"/>
@@ -224,12 +224,12 @@
     <message>
         <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
-        <translation>De l'artista actual</translation>
+        <translation>De l&apos;artista actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
-        <translation>Crea una emissora de l'artista actual</translation>
+        <translation>Crea una emissora de l&apos;artista actual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="794"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>Si us plau, instal·leu la utilitat "pianobar" per habilitar aquesta funcionalitat.</translation>
+        <translation>Si us plau, instal·leu la utilitat &quot;pianobar&quot; per habilitar aquesta funcionalitat.</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
@@ -332,7 +332,7 @@
     <message>
         <location filename="../mainUI.cpp" line="492"/>
         <source>Media Buffering...</source>
-        <translation>S'omple la memòria intermèdia...</translation>
+        <translation>S&apos;omple la memòria intermèdia...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>

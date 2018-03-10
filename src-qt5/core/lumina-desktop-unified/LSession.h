@@ -28,6 +28,9 @@ private:
 
 	QTranslator *currTranslator;
 
+	//Extra background threads for individual objects
+
+
 public slots:
 	void setupSession();  //called during startup only
 

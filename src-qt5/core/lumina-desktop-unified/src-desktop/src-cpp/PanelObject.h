@@ -20,10 +20,13 @@ class PanelObject : public QObject {
 	Q_PROPERTY( int y READ y NOTIFY geomChanged)
 	Q_PROPERTY( int width READ width NOTIFY geomChanged)
 	Q_PROPERTY( int height READ height NOTIFY geomChanged)
+	Q_PROPERTY( bool isVertical READ isVertical NOTIFY geomChanged)
+	Q_PROPERTY( QStringList plugins READ plugins NOTIFY pluginsChanged)
 
 private:
 	QString panel_id, bg;
 	QRect geom;
+	QStringList panel_plugins;
 
 public:
 	PanelObject(QString id = "", QObject *parent = 0);
@@ -36,14 +39,19 @@ public:
 	Q_INVOKABLE int y();
 	Q_INVOKABLE int width();
 	Q_INVOKABLE int height();
+	Q_INVOKABLE bool isVertical();
+	Q_INVOKABLE QStringList plugins();
 
 public slots:
 	void setBackground(QString fileOrColor);
 	void setGeometry(QRect newgeom);
+	void syncWithSettings(QRect parent_geom);
+	void setPlugins(QStringList plist);
 
 signals:
 	void backgroundChanged();
 	void geomChanged();
+	void pluginsChanged();
 };
 
 #endif

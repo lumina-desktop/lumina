@@ -7,6 +7,7 @@
 #include "ContextMenu.h"
 #include <global-objects.h>
 #include <JsonMenu.h>
+#include <LIconCache.h>
 
 void DesktopContextMenu::SettingsChanged(DesktopSettings::File file){
   if(file == DesktopSettings::ContextMenu){ UpdateMenu(false); }
@@ -78,11 +79,11 @@ void DesktopContextMenu::UpdateMenu(bool fast){
 }
 
 // === PRIVATE ===
-void DesktopContextMenu::AddWindowToMenu(NativeWindow *win){
-  QString label = win->property(NativeWindow::ShortTitle).toString();
-  if(label.isEmpty()){ label = win->property(NativeWindow::Title).toString(); }
-  if(label.isEmpty()){ label = win->property(NativeWindow::Name).toString(); }
-  QAction *tmp = winMenu->addAction( win->property(NativeWindow::Icon).value<QIcon>(), label, win, SLOT(toggleVisibility()) );
+void DesktopContextMenu::AddWindowToMenu(NativeWindowObject *win){
+  QString label = win->property(NativeWindowObject::ShortTitle).toString();
+  if(label.isEmpty()){ label = win->property(NativeWindowObject::Title).toString(); }
+  if(label.isEmpty()){ label = win->property(NativeWindowObject::Name).toString(); }
+  QAction *tmp = winMenu->addAction( win->property(NativeWindowObject::Icon).value<QIcon>(), label, win, SLOT(toggleVisibility()) );
   //Need to change the visual somehow to indicate whether it is visible or not
   //bool visible = win->property(NativeWindow::Visible).toBool();
   // TODO
@@ -176,14 +177,8 @@ void DesktopContextMenu::updateWinMenu(){
     LIconCache::instance()->loadIcon( winMenu, "preferences-system-windows");
   }
   winMenu->clear();
-  QList<NativeWindow*> wins = Lumina::NWS->currentWindows();
-  unsigned int wkspace = Lumina::NWS->currentWorkspace();
+  QList<NativeWindowObject*> wins = RootDesktopObject::instance()->windowObjects();
   for(int i=0; i<wins.length(); i++){
-    //First check if this window is in the current workspace (or is "sticky")
-    if(wins.at(i)->property(NativeWindow::Workspace).toUInt() != wkspace
-	      && wins.at(i)->property(NativeWindow::States).value< QList<NativeWindow::State> >().contains(NativeWindow::S_STICKY) ){
-      continue;
-    }
     AddWindowToMenu(wins.at(i));
   }
 }

@@ -17,6 +17,8 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
     locktimer->setSingleShot(true);
   hidetimer = new QTimer(this);
     hidetimer->setSingleShot(true);
+  mouseCheckTimer = new QTimer(this);
+    mouseCheckTimer->setInterval(10000); //10 seconds - fallback timer for mouse movement detection
 
   LOCKER = new LLockScreen(this);
 	LOCKER->hide();
@@ -27,6 +29,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
   connect(starttimer, SIGNAL(timeout()), this, SLOT(ShowScreenSaver()) );
   connect(locktimer, SIGNAL(timeout()), this, SLOT(LockScreen()) );
   connect(hidetimer, SIGNAL(timeout()), this, SLOT(HideLockScreen()) );
+  connect(mouseCheckTimer, SIGNAL(timeout()), this, SLOT(checkMousePosition()) );
   connect(LOCKER, SIGNAL(ScreenUnlocked()), this, SLOT(SSFinished()) );
   connect(LOCKER, SIGNAL(InputDetected()), this, SLOT(newInputEvent()) );
 }
@@ -56,6 +59,7 @@ void LScreenSaver::UpdateTimers(){
 void LScreenSaver::start(){
   reloadSettings(); //setup all the initial time frames
   starttimer->start();
+  mouseCheckTimer->start();
 }
 
 void LScreenSaver::reloadSettings(){
@@ -76,6 +80,7 @@ void LScreenSaver::newInputEvent(){
     //Only running, not locked
     HideScreenSaver();
   }
+  lastMousePos = QCursor::pos(); //update the internal point
   UpdateTimers();
 }
 
@@ -87,6 +92,13 @@ void LScreenSaver::LockScreenNow(){
 // ===========
 //  PRIVATE SLOTS
 // ===========
+void LScreenSaver::checkMousePosition(){
+  QPoint pos = QCursor::pos();
+  if(pos != lastMousePos){
+    newInputEvent(); //this will update the internal position automatically
+  }
+}
+
 void LScreenSaver::ShowScreenSaver(){
   if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
   //QApplication::setOverrideCursor(QCursor::BlankCursor);

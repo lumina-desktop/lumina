@@ -29,6 +29,7 @@ XCBEventFilter *evFilter = 0;
 LIconCache *ICONS = 0;
 
 LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lumina-desktop"){
+ xchange = false;
  if(this->isPrimaryProcess()){
   connect(this, SIGNAL(InputsAvailable(QStringList)), this, SLOT(NewCommunication(QStringList)) );
   this->setApplicationName("Lumina Desktop Environment");
@@ -272,7 +273,7 @@ void LSession::NewCommunication(QStringList list){
       screensChanged();
     }else if(list[i]=="--show-start"){
       emit StartButtonActivated();
-    }
+    }else if(list[i]=="--logout"){ QTimer::singleShot(1000, this, SLOT(StartLogout()));}
   }
 }
 
@@ -346,6 +347,8 @@ void LSession::watcherChange(QString changed){
       //qDebug() << "Set Qt5 theme engine: " << engine;
       if(engine.isEmpty()){ unsetenv("QT_QPA_PLATFORMTHEME"); }
       else{ setenv("QT_QPA_PLATFORMTHEME", engine.toUtf8().data(),1); }
+    }else{
+      setenv("QT_QPA_PLATFORMTHEME", "lthemeengine",1); //ensure the lumina theme engine is always enabled
     }
     emit SessionConfigChanged();
   }else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }

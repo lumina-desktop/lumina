@@ -4,7 +4,7 @@
 
 # Set the port
 dfile="lumina"
-VERSION="1.4.1"
+VERSION="1.4.2"
 
 massage_subdir() {
   cd "$1"
@@ -71,10 +71,12 @@ rm ${distdir}/${dfile}-* 2>/dev/null
 
 # Copy ports files
 orig_dir=`pwd`
+allports=""
 for port in `find port-files/FreeBSD | grep Makefile | cut -d / -f 3-4`
 do
   cd ${orig_dir}
   echo "Updating port: ${port}"
+  allports="${allports} ${port}" #add this port to the list
   if [ -d "${portsdir}/${port}" ] ; then
     rm -rf ${portsdir}/${port} 2>/dev/null
   fi
@@ -97,6 +99,8 @@ do
   tcat=$(echo $port | cut -d '/' -f 1)
   massage_subdir ${portsdir}/${tcat}
 done
+echo "All ports updated: ${allports}"
 #Set a couple variables for the TrueOS build cluster to know which is the "overall" port
-port="x11/lumina" #reset this variable in case something else needs it
-export bPort="x11/lumina"
+bPort="${allports}" #reset this variable in case something else needs it
+port="x11/lumina-core x11/lumina-coreutils deskutils/lumina-archiver deskutils/lumina-mediaplayer deskutils/lumina-pdf deskutils/lumina-fm deskutils/lumina-textedit deskutils/lumina-screenshot deskutils/lumina-calculator deskutils/lumina-fileinfo x11/lumina"
+export bPort

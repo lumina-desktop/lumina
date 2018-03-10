@@ -664,12 +664,12 @@
 <context>
     <name>LBattery</name>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="96"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="98"/>
         <source>%1 % (Charging)</source>
         <translation>%1 % (Kraunama)</translation>
     </message>
     <message>
-        <location filename="../panel-plugins/battery/LBattery.cpp" line="97"/>
+        <location filename="../panel-plugins/battery/LBattery.cpp" line="99"/>
         <source>%1 % (%2 Remaining)</source>
         <translation>%1 % (Liko %2)</translation>
     </message>
@@ -855,8 +855,8 @@
 <context>
     <name>LSession</name>
     <message>
-        <location filename="../LSession.cpp" line="165"/>
-        <location filename="../LSession.cpp" line="352"/>
+        <location filename="../LSession.cpp" line="166"/>
+        <location filename="../LSession.cpp" line="355"/>
         <source>Desktop</source>
         <translation>Darbalaukis</translation>
     </message>
@@ -1301,37 +1301,37 @@
         <translation>Lumina darbalaukio RSS</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="143"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="145"/>
         <source>Feed URL: %1</source>
         <translation>Kanalo URL: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="144"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="146"/>
         <source>Title: %1</source>
         <translation>Pavadinimas: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="145"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Description: %1</source>
         <translation>Aprašas: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="146"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
         <source>Website: %1</source>
         <translation>Svetainė: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
         <source>Last Build Date: %1</source>
         <translation>Paskutinio darinio data: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="150"/>
         <source>Last Sync: %1</source>
         <translation>Paskutinis sinchronizavimas: %1</translation>
     </message>
     <message>
-        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
+        <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="151"/>
         <source>Next Sync: %1</source>
         <translation>Kitas sinchronizavimas: %1</translation>
     </message>
@@ -1517,43 +1517,43 @@
         <translation>Sistemos parinktys</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="55"/>
+        <location filename="../SystemWindow.ui" line="68"/>
         <source>Log Out</source>
         <translation>Atsijungti</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="71"/>
+        <location filename="../SystemWindow.ui" line="84"/>
         <source>Restart</source>
         <translation>Paleisti iš naujo</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="87"/>
+        <location filename="../SystemWindow.ui" line="100"/>
         <source>Power Off</source>
         <translation>Išjungti</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="132"/>
+        <location filename="../SystemWindow.ui" line="145"/>
         <source>Update Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="154"/>
+        <location filename="../SystemWindow.ui" line="167"/>
         <source>Updates ready to install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="192"/>
+        <location filename="../SystemWindow.ui" line="205"/>
         <location filename="../SystemWindow.cpp" line="63"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="221"/>
+        <location filename="../SystemWindow.ui" line="234"/>
         <source>Lock</source>
         <translation>Užrakinti</translation>
     </message>
     <message>
-        <location filename="../SystemWindow.ui" line="237"/>
+        <location filename="../SystemWindow.ui" line="250"/>
         <source>Suspend</source>
         <translation>Pristabdyti</translation>
     </message>

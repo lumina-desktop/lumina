@@ -47,6 +47,7 @@ void AppLauncherPlugin::loadButton(){
   bool ok = info.canonicalPath().startsWith("/net/");
   if(!ok){ ok = QFile::exists(path); } //do it this way to ensure the file existance check never runs for /net/ files
   if(!ok){ emit RemovePlugin(this->ID()); return;}
+  this->setAcceptDrops( info.isDir() );
   icosize = this->height()-4 - 2.2*button->fontMetrics().height();
   button->setFixedSize( this->width()-4, this->height()-4);
   button->setIconSize( QSize(icosize,icosize) );
@@ -314,5 +315,20 @@ void AppLauncherPlugin::renameFinished(int result){
   if( QFile::rename(button->whatsThis(), newpath) ){
     //No special actions here yet - TODO
     qDebug() << " - SUCCESS";
+  }
+}
+
+void AppLauncherPlugin::fileDrop(bool copy, QList<QUrl> urls){
+  for(int i=0; i<urls.length(); i++){
+    QString oldpath = urls[i].toLocalFile();
+    if(!QFile::exists(oldpath)){ continue; } //not a local file?
+    QString filename = oldpath.section("/",-1);
+    if(copy){
+      qDebug() << "Copying File:" << oldpath << "->" << button->whatsThis()+"/"+filename;
+      QFile::copy(oldpath, button->whatsThis()+"/"+filename);
+    }else{
+      qDebug() << "Moving File:" << oldpath << "->" << button->whatsThis()+"/"+filename;
+      QFile::rename(oldpath, button->whatsThis()+"/"+filename);
+    }
   }
 }

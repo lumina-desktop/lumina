@@ -147,59 +147,59 @@
         <translation>Error del fitxer</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="191"/>
-        <location filename="../main.cpp" line="197"/>
+        <location filename="../main.cpp" line="199"/>
+        <location filename="../main.cpp" line="213"/>
         <source>Audio Volume %1%</source>
         <translation>Volum de l&apos;àudio: %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="205"/>
-        <location filename="../main.cpp" line="214"/>
+        <location filename="../main.cpp" line="221"/>
+        <location filename="../main.cpp" line="230"/>
         <source>Screen Brightness %1%</source>
         <translation>Brillantor de la pantalla: %1%</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="246"/>
+        <location filename="../main.cpp" line="262"/>
         <source>Invalid file or URL: %1</source>
         <translation>Fitxer o URL no vàlids: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="267"/>
+        <location filename="../main.cpp" line="283"/>
         <source>Application entry is invalid: %1</source>
         <translation>L&apos;entrada de l&apos;aplicació no és vàlida: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="278"/>
+        <location filename="../main.cpp" line="294"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
         <translation>La drecera de l&apos;aplicació no té la informació de llançament (drecera malformada): %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="291"/>
+        <location filename="../main.cpp" line="307"/>
         <source>URL shortcut is missing the URL: %1</source>
         <translation>La drecera de l&apos;URL no té l&apos;URL: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="302"/>
+        <location filename="../main.cpp" line="318"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
         <translation>La drecera del directori no té el camí cap al directori: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="307"/>
+        <location filename="../main.cpp" line="323"/>
         <source>Unknown type of shortcut : %1</source>
         <translation>Tipus de drecera desconegut: %1</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="370"/>
+        <location filename="../main.cpp" line="386"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
         <translation>No s&apos;ha pogut trobar &quot;%1&quot;. Si us plau, assegureu-vos que estigui instal·lat.</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="419"/>
+        <location filename="../main.cpp" line="435"/>
         <source>Application Error</source>
         <translation>Error de l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="419"/>
+        <location filename="../main.cpp" line="435"/>
         <source>The following application experienced an error and needed to close:</source>
         <translation>L&apos;aplicació següent ha tingut un error i s&apos;ha hagut de tancar:</translation>
     </message>

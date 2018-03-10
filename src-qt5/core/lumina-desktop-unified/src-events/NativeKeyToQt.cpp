@@ -1,5 +1,5 @@
 
-#include <NativeWindowSystem.h>
+#include "NativeWindowSystem.h"
 
 #include <QKeySequence>
 #include <QX11Info>

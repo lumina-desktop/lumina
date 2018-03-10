@@ -52,7 +52,7 @@ public:
 
 	//Status update checks
 	bool isOpen();
-	
+
 	//Functions for handling ANSI escape codes (typically not used by hand)
 	QByteArray CleanANSI(QByteArray, bool &incomplete);
 
@@ -63,7 +63,7 @@ private:
 	QByteArray fragBA; //fragment ByteArray
 	bool starting;
 	int fixReply; //flag for detecting particular inputs and "fixing" the reply to it as needed
-	
+
 	//====================================
 	// C Library function for setting up the PTY
 	// Inputs:
@@ -73,7 +73,7 @@ private:
 	// Returns:
 	//    -1 for errors, child process PID (positive integer) if successful
 	//====================================
-	pid_t LaunchProcess(int& fd, char *prog, char **child_args); 
+	pid_t LaunchProcess(int& fd, char *prog, char **child_args);
 	void setupTtyFd(pid_t fd);
 
 private slots:

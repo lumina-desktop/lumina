@@ -3,6 +3,7 @@ global.h
 Makefile.Debug
 Makefile.Release 
 *.o 
+*.swp
 *.qmake.stash
 moc_*.cpp
 ui_*.h
@@ -49,3 +50,5 @@ dev-tools/test-dbus/test
 icon-theme/Makefile
 icon-theme/*/Makefile
 Makefile
+src-qt5/src-qml/test/*
+src-qt5/desktop-utils/lumina-pdf/fontconfig/*

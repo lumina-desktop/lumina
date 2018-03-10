@@ -7,6 +7,9 @@
 // This is a simple class for loading/serving icon files
 // from the icon theme or local filesystem
 //===========================================
+#ifndef _LUMINA_LIBRARY_ICON_CACHE_H
+#define _LUMINA_LIBRARY_ICON_CACHE_H
+
 #include <QHash>
 #include <QIcon>
 #include <QPixmap>
@@ -79,3 +82,5 @@ signals:
 	void InternalIconLoaded(QString, QDateTime, QByteArray*); //INTERNAL SIGNAL - DO NOT USE in other classes/objects
 	void IconAvailable(QString); //way for classes to listen/reload icons as they change
 };
+
+#endif

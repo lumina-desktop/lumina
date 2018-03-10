@@ -6,15 +6,15 @@
 //===========================================
 #include "plugins-desktop.h"
 
+#include <LuminaXDG.h>
+
 // ============
 //    DT PLUGIN
 // ============
 DTPlugin::DTPlugin(){
-
 }
 
 DTPlugin::~DTPlugin(){
-
 }
 
 bool DTPlugin::isValid(){
@@ -22,8 +22,10 @@ bool DTPlugin::isValid(){
   bool ok = data.contains("name") && data.contains("qml") && data.contains("description");
   ok &= containsDefault("name");
   ok &= containsDefault("description");
+  ok &= containsDefault("data");
   if(ok) {
     QJsonObject tmp = data.value("qml").toObject();
+
     QStringList mustexist;
     QString exec = tmp.value("exec").toString();
     if(exec.isEmpty() || !exec.endsWith(".qml")){ return false; }
@@ -37,4 +39,34 @@ bool DTPlugin::isValid(){
     }
   }
   return ok;
+}
+
+QSize DTPlugin::getSize(){
+  QString gridS = data.value("data").toObject().value("grid_size").toString();
+  QSize gridSize(0,0);
+  if(!gridS.isEmpty()) {
+    QStringList gridList = gridS.split("x");
+    if(gridList.size() == 2) {
+      int width = gridList[0].toInt();
+      int height = gridList[1].toInt();
+      if(width > 0 && height > 0)
+        gridSize = QSize(width, height);
+    }
+  }
+  return gridSize;
+}
+
+bool DTPlugin::supportsPanel(){
+  QString possibleS = data.value("data").toObject().value("panel_possible").toString().toLower();
+  bool panelPossible = false;
+  if(!possibleS.isEmpty() && (possibleS == "yes" || possibleS == "true")){
+    panelPossible = true;
+  }
+  return panelPossible;
+}
+
+QString DTPlugin::getIcon(){
+    QString iconS = data.value("data").toObject().value("plugin_icon").toString();
+    if(iconS.isEmpty()){ iconS = "preferences-plugin"; }
+    return iconS;
 }

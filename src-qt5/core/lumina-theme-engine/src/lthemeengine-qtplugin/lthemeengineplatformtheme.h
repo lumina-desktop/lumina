@@ -6,6 +6,7 @@
 #include <QFont>
 #include <QPalette>
 #include <QLoggingCategory>
+#include <QFileSystemWatcher>
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 5, 0))
 #ifndef QT_NO_SYSTEMTRAYICON
@@ -58,6 +59,7 @@ private slots:
     void createFSWatcher();
     void updateSettings();
 #endif
+    void fileChanged(QString);
 
 private:
     void readSettings();
@@ -77,6 +79,7 @@ private:
     bool m_usePalette = true;
     int m_toolButtonStyle = Qt::ToolButtonFollowStyle;
     int m_wheelScrollLines = 3;
+    QFileSystemWatcher *watcher;
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)) && !defined(QT_NO_DBUS)
     mutable bool m_dbusGlobalMenuAvailable = false;
     mutable bool m_checkDBusGlobalMenu = true;
@@ -86,6 +89,7 @@ private:
     mutable bool m_checkDBusTray = true;
 #endif
 
+	void syncMouseCursorTheme(QString indexfile);
 };
 
 Q_DECLARE_LOGGING_CATEGORY(llthemeengine)

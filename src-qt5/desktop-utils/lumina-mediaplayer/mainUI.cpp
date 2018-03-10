@@ -256,7 +256,7 @@ void MainUI::loadFile(QString file){
 // ==== PRIVATE SLOTS ====
 void MainUI::closeApplication(){
   closing = true;
-  if(PANDORA->currentState()!= PianoBarProcess::Stopped){ 
+  if(PANDORA->currentState()!= PianoBarProcess::Stopped){
     PANDORA->closePianoBar();
     this->hide();
     QTimer::singleShot(500, this, SLOT(close()) );
@@ -452,7 +452,7 @@ void MainUI::LocalListMediaRemoved(int start, int end){
 void MainUI::LocalVideoAvailable(bool avail){
   qDebug() << "Local VideoAvailable:" << avail;
   if(DISABLE_VIDEO){ avail = false; } //TEMPORARY DISABLE while working out gstreamer issues when video widget is hidden
-  //if(ui->tabWidget_local->currentWidget()==ui->tab_local_playing && avail){ 
+  //if(ui->tabWidget_local->currentWidget()==ui->tab_local_playing && avail){
     VIDEO->setVisible(avail);
   //}
   ui->label_player_novideo->setVisible(!avail);
@@ -549,7 +549,7 @@ void MainUI::changePandoraStation(QString station){
 }
 
 void MainUI::checkPandoraSettings(){
-  bool changes = (PANDORA->email() != ui->line_pandora_email->text()) 
+  bool changes = (PANDORA->email() != ui->line_pandora_email->text())
 	|| (PANDORA->password() != ui->line_pandora_pass->text())
 	|| (PANDORA->audioQuality() != ui->combo_pandora_quality->currentData().toString())
 	|| (PANDORA->proxy() != ui->line_pandora_proxy->text())
@@ -575,7 +575,7 @@ void MainUI::createPandoraStation(){
   //Prompt for a search string
   QString srch = QInputDialog::getText(this, tr("Pandora: Create Station"),"", QLineEdit::Normal, tr("Search Term"));
   if(srch.isEmpty()){ return; } //cancelled
-  PANDORA->createNewStation(srch); 
+  PANDORA->createNewStation(srch);
 }
 
 //Pandora Process Feedback
@@ -604,9 +604,9 @@ void MainUI::NewPandoraInfo(QString info){
 void MainUI::PandoraStationChanged(QString station){
   //qDebug() << "[STATION CHANGE]" << station;
   int index = ui->combo_pandora_station->findText( station );
-  if(index>=0){ 
+  if(index>=0){
     //qDebug() <<"   [FOUND]" << ui->combo_pandora_station->itemText(index);
-    ui->combo_pandora_station->setCurrentIndex(index); 
+    ui->combo_pandora_station->setCurrentIndex(index);
   }else{
     //Could not find the station in the current list - need to update that first
     //qDebug() <<"   [NOT FOUND]";

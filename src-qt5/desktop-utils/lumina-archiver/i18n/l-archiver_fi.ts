@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="239"/>
+        <location filename="../TarBackend.cpp" line="243"/>
         <source>Could not read archive</source>
         <translation>Arkistoa ei voitu lukea</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="241"/>
+        <location filename="../TarBackend.cpp" line="245"/>
         <source>Archive Loaded</source>
         <translation>Arkisto ladattu</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="274"/>
+        <location filename="../TarBackend.cpp" line="278"/>
         <source>Extraction Finished</source>
         <translation>Purku valmis</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="276"/>
+        <location filename="../TarBackend.cpp" line="280"/>
         <source>Modification Finished</source>
         <translation>Muutos valmis</translation>
     </message>
@@ -32,21 +32,25 @@
         <translation>Arkisto:</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="125"/>
         <location filename="../MainUI.cpp" line="69"/>
-        <location filename="../MainUI.cpp" line="329"/>
+        <location filename="../MainUI.cpp" line="331"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
     <message>
+        <location filename="../MainUI.ui" line="125"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../MainUI.ui" line="134"/>
-        <source>Edit</source>
-        <translation>Muokkaa</translation>
+        <source>&amp;Edit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
-        <source>Burn to Disk</source>
-        <translation>Polta levylle</translation>
+        <source>&amp;Burn to Disk</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
@@ -165,184 +169,184 @@
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
-        <location filename="../MainUI.cpp" line="329"/>
+        <location filename="../MainUI.cpp" line="331"/>
         <source>MimeType</source>
         <translation>MIME-tyyppi</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
-        <location filename="../MainUI.cpp" line="329"/>
+        <location filename="../MainUI.cpp" line="331"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="92"/>
-        <location filename="../MainUI.cpp" line="234"/>
+        <location filename="../MainUI.cpp" line="94"/>
+        <location filename="../MainUI.cpp" line="236"/>
         <source>Opening Archive...</source>
         <translation>Avataan arkistoa...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="178"/>
+        <location filename="../MainUI.cpp" line="180"/>
         <source>All Types %1</source>
         <translation>Kaikki tyypit %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="179"/>
-        <location filename="../MainUI.cpp" line="197"/>
+        <location filename="../MainUI.cpp" line="181"/>
+        <location filename="../MainUI.cpp" line="199"/>
         <source>Uncompressed Archive (*.tar)</source>
         <translation>Pakkaamaton arkisto (*.tar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="180"/>
-        <location filename="../MainUI.cpp" line="198"/>
+        <location filename="../MainUI.cpp" line="182"/>
+        <location filename="../MainUI.cpp" line="200"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
         <translation>GZip-pakattu arkisto (*.tar.gz *.tgz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="181"/>
-        <location filename="../MainUI.cpp" line="199"/>
+        <location filename="../MainUI.cpp" line="183"/>
+        <location filename="../MainUI.cpp" line="201"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
         <translation>BZip-pakattu arkisto (*.tar.bz *.tbz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="182"/>
-        <location filename="../MainUI.cpp" line="200"/>
+        <location filename="../MainUI.cpp" line="184"/>
+        <location filename="../MainUI.cpp" line="202"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
         <translation>BZip2-pakattu arkisto (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="183"/>
-        <location filename="../MainUI.cpp" line="202"/>
+        <location filename="../MainUI.cpp" line="185"/>
+        <location filename="../MainUI.cpp" line="204"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
         <translation>LMZA-pakattu arkisto (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="184"/>
-        <location filename="../MainUI.cpp" line="201"/>
+        <location filename="../MainUI.cpp" line="186"/>
+        <location filename="../MainUI.cpp" line="203"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
         <translation>XZ-pakattu arkisto (*.tar.xz *.txz)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="185"/>
-        <location filename="../MainUI.cpp" line="203"/>
+        <location filename="../MainUI.cpp" line="187"/>
+        <location filename="../MainUI.cpp" line="205"/>
         <source>CPIO Archive (*.cpio)</source>
         <translation>CPIO-arkisto (*.cpio)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="186"/>
-        <location filename="../MainUI.cpp" line="204"/>
+        <location filename="../MainUI.cpp" line="188"/>
+        <location filename="../MainUI.cpp" line="206"/>
         <source>PAX Archive (*.pax)</source>
         <translation>PAX-arkisto (*.pax)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="187"/>
-        <location filename="../MainUI.cpp" line="205"/>
+        <location filename="../MainUI.cpp" line="189"/>
+        <location filename="../MainUI.cpp" line="207"/>
         <source>AR Archive (*.ar)</source>
         <translation>AR-arkisto (*.ar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="188"/>
-        <location filename="../MainUI.cpp" line="206"/>
+        <location filename="../MainUI.cpp" line="190"/>
+        <location filename="../MainUI.cpp" line="208"/>
         <source>SHAR Archive (*.shar)</source>
         <translation>SHAR-arkisto (*.shar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="189"/>
-        <location filename="../MainUI.cpp" line="207"/>
+        <location filename="../MainUI.cpp" line="191"/>
+        <location filename="../MainUI.cpp" line="209"/>
         <source>Zip Archive (*.zip)</source>
         <translation>Zip-arkisto (*.zip)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="190"/>
-        <location filename="../MainUI.cpp" line="208"/>
+        <location filename="../MainUI.cpp" line="192"/>
+        <location filename="../MainUI.cpp" line="210"/>
         <source>7-Zip Archive (*.7z)</source>
         <translation>7-Zip-arkisto (*.7z)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="196"/>
+        <location filename="../MainUI.cpp" line="198"/>
         <source>All Known Types %1</source>
         <translation>Kaikki tunnetut tyypit %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="209"/>
+        <location filename="../MainUI.cpp" line="211"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
         <translation>VAIN LUKU: ISO-levykuva (*.iso *.img)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="210"/>
+        <location filename="../MainUI.cpp" line="212"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
         <translation>VAIN LUKU: XAR-arkisto (*.xar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="211"/>
+        <location filename="../MainUI.cpp" line="213"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
         <translation>VAIN LUKU: Java-arkisto (*.jar)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="212"/>
+        <location filename="../MainUI.cpp" line="214"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
         <translation>VAIN LUKU: RedHat-paketti (*.rpm)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="213"/>
+        <location filename="../MainUI.cpp" line="215"/>
         <source>Show All Files (*)</source>
         <translation>Näytä kaikki tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="221"/>
+        <location filename="../MainUI.cpp" line="223"/>
         <source>Create Archive</source>
         <translation>Luo arkisto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="224"/>
+        <location filename="../MainUI.cpp" line="226"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="224"/>
+        <location filename="../MainUI.cpp" line="226"/>
         <source>Could not overwrite file:</source>
         <translation>Ei voitu korvata tiedostoa:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="232"/>
+        <location filename="../MainUI.cpp" line="234"/>
         <source>Open Archive</source>
         <translation>Avaa arkisto</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="240"/>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="242"/>
+        <location filename="../MainUI.cpp" line="249"/>
         <source>Add to Archive</source>
         <translation>Lisää arkistoon</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="242"/>
-        <location filename="../MainUI.cpp" line="249"/>
-        <location filename="../MainUI.cpp" line="298"/>
+        <location filename="../MainUI.cpp" line="244"/>
+        <location filename="../MainUI.cpp" line="251"/>
+        <location filename="../MainUI.cpp" line="300"/>
         <source>Adding Items...</source>
         <translation>Lisätään kohteita...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="260"/>
+        <location filename="../MainUI.cpp" line="262"/>
         <source>Removing Items...</source>
         <translation>Poistetaan kohteita...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="265"/>
-        <location filename="../MainUI.cpp" line="309"/>
+        <location filename="../MainUI.cpp" line="267"/>
+        <location filename="../MainUI.cpp" line="311"/>
         <source>Extract Into Directory</source>
         <translation>Pura kansioon</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="267"/>
-        <location filename="../MainUI.cpp" line="285"/>
-        <location filename="../MainUI.cpp" line="292"/>
-        <location filename="../MainUI.cpp" line="311"/>
-        <location filename="../MainUI.cpp" line="323"/>
+        <location filename="../MainUI.cpp" line="269"/>
+        <location filename="../MainUI.cpp" line="287"/>
+        <location filename="../MainUI.cpp" line="294"/>
+        <location filename="../MainUI.cpp" line="313"/>
+        <location filename="../MainUI.cpp" line="325"/>
         <source>Extracting...</source>
         <translation>Puretaan...</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="343"/>
+        <location filename="../MainUI.cpp" line="345"/>
         <source>Link To: %1</source>
         <translation>Linkki kohteeseen: %1</translation>
     </message>

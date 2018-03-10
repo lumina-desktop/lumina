@@ -153,13 +153,13 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
-        <source>File</source>
-        <translation>Bestand</translation>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
-        <source>View</source>
-        <translation>Weergave</translation>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>Installeer alstublieft de 'pianobar' toepassing om deze functionaliteit te kunnen gebruiken</translation>
+        <translation>Installeer alstublieft de &apos;pianobar&apos; toepassing om deze functionaliteit te kunnen gebruiken</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
@@ -407,7 +407,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voorkeuren</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
