@@ -11,6 +11,7 @@
 #include <QImage>
 #include <QDebug>
 #include <QJsonObject>
+#include <QMutex>
 #include "textData.h"
 
 class Renderer{
@@ -19,10 +20,11 @@ private:
 	bool needpass;
 	QString docpath; //save the path for the currently-loaded document
 	QString doctitle;
+	QMutex *mutex;
 public:
 	Renderer();
 	~Renderer();
-	bool loadMultiThread();
+	//bool loadMultiThread();
 
 	//Information functions (usually needs to be loaded first)
 	int numPages(){ return pnum; }

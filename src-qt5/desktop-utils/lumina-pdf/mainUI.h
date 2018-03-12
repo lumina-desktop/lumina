@@ -18,6 +18,7 @@
 #include <QWheelEvent>
 #include <QApplication>
 #include <QMenu>
+#include <QTimer>
 
 #include "Renderer.h"
 #include "PresentationLabel.h"

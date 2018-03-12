@@ -15,7 +15,6 @@
 #include <QDebug>
 #include <QApplication>
 #include <QScreen>
-#include <QTimer>
 #include <iostream>
 #include <QtConcurrent>
 
@@ -382,10 +381,6 @@ void MainUI::startLoadingPages(){
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  //double scalefactor = 2.5;
-  //fz_rect page_rect;
-  //fz_bound_page(CTX, fz_load_page(CTX, DOC, 0), &page_rect);
-  //pageSize = QSizeF((page_rect.x1 - page_rect.x0)/72.0, (page_rect.y1 - page_rect.y0)/72.0);
   QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
@@ -393,14 +388,9 @@ void MainUI::startLoadingPages(){
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
   }*/
-  bool async = BACKEND->loadMultiThread();
   for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
-    if(async){
-      QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
-    }else{
-      loadPage(i, this, DPI);
-    }
+		QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
   }
   //qDebug() << "Finish page loading kickoff";
 }

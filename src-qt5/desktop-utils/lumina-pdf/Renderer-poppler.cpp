@@ -13,7 +13,7 @@ Renderer::~Renderer(){
 
 }
 
-bool Renderer::loadMultiThread(){ return true; }
+//bool Renderer::loadMultiThread(){ return true; }
 
 QJsonObject Renderer::properties(){
   return QJsonObject(); //TO-DO
@@ -27,11 +27,13 @@ bool Renderer::loadDocument(QString path, QString password){
     DOC=0;
     needpass = false;
     pnum=0;
+		docpath = path;
   }
   //Load the Document (if needed);
   if(DOC==0){
     //qDebug() << "Loading Document";
     DOC = Poppler::Document::load(path);
+		docpath = path;
   }
 
   if(DOC==0){
