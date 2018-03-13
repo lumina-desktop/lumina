@@ -435,7 +435,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
   qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
-  return;
+  //return;
   if(PRINTER->resolution() < 300){
     //Try to get 300 DPI resolution at least
     PRINTER->setResolution(300);
