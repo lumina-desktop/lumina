@@ -185,23 +185,23 @@ void PrintWidget::layoutPages() {
 void PrintWidget::populateScene()
 {
   for (int i = 0; i < pages.size(); i++){
-	scene->removeItem(pages.at(i));
+		scene->removeItem(pages.at(i));
   }
   qDeleteAll(pages);
   pages.clear();
   //qDebug() << "populateScene";
   if(pictures==0){ return; } //nothing to show yet
   int numPages = pictures->count();
-  //Replace from loadingHash resolution
-  QSize paperSize = pictures->value(0).size();
-  //qDebug() << "Image paperSize" << paperSize;
-
-  //Changes the paper orientation if rotated by 90 or 270 degrees
-  if(degrees == 90 or degrees == 270)
-    paperSize.transpose();
 
   for (int i = 0; i < numPages; i++) {
     QImage pagePicture = pictures->value(i);
+
+		QSize paperSize = pictures->value(i).size();
+
+		//Changes the paper orientation if rotated by 90 or 270 degrees
+		if(degrees == 90 or degrees == 270)
+			paperSize.transpose();
+
     if(degrees != 0) {
       pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
       //qDebug() << "Rotating by: " << degrees << " degrees";

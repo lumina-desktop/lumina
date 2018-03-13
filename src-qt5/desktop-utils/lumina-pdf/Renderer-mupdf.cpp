@@ -1,23 +1,43 @@
 #include "Renderer.h"
-#include <mupdf/fitz.h>
-#include <mupdf/pdf.h>
-
 #include <QDateTime>
+#include <mupdf/fitz.h>
+//#include <pthread.h>
 
 fz_document *DOC;
-pdf_document *PDOC;
 fz_context *CTX;
 
-inline QString getTextInfo(pdf_obj *info, QString str) {
-  pdf_obj *obj = pdf_dict_gets(CTX, info, str.toLatin1().data());
-  if(obj){ return pdf_to_utf8(CTX, obj); }
+inline QString getTextInfo(QString str) {
+	char infoBuff[1000];
+	int size = DOC->lookup_metadata(CTX, DOC, ("info:"+str).toLocal8Bit().data(), infoBuff, 1000);
+  if(size != -1){ return QString::fromLatin1(infoBuff); }
   return "";
 }
 
+/*void lock_mutex(void *user, int lock) {
+	pthread_mutex_t *mutex = (pthread_mutex_t *) user;
+	pthread_mutex_lock(&mutex[lock]);
+}
+
+void unlock_mutex(void *user, int lock) {
+	pthread_mutex_t *mutex = (pthread_mutex_t *) user;
+	pthread_mutex_unlock(&mutex[lock]);
+}*/
+
 Renderer::Renderer(){
+	/*pthread_mutex_t mutex[FZ_LOCK_MAX];
+	fz_locks_context locks;
+	locks.user = mutex;
+	locks.lock = lock_mutex;
+	locks.unlock = unlock_mutex;
+
+	for (int i = 0; i < FZ_LOCK_MAX; i++)
+		pthread_mutex_init(&mutex[i], NULL);*/
+
+	mutex = new QMutex();
   DOC = 0;
+  //CTX = fz_new_context(NULL, &locks, FZ_STORE_UNLIMITED);
   CTX = fz_new_context(NULL, NULL, FZ_STORE_UNLIMITED);
-  PDOC = 0;
+	qDebug() << "Context created";
   needpass = false;
 }
 
@@ -25,42 +45,44 @@ Renderer::~Renderer(){
 
 }
 
-bool Renderer::loadMultiThread(){ return false; }
+//bool Renderer::loadMultiThread(){ return true; }
 
 QJsonObject Renderer::properties(){
   QJsonObject jobj;
-  pdf_obj *info = pdf_dict_gets(CTX, pdf_trailer(CTX, PDOC), "Info");
-  jobj.insert("title", getTextInfo(info, "Title") );
-  jobj.insert("subject", getTextInfo(info, "Subject") );
-  jobj.insert("author", getTextInfo(info, "Author") );
-  jobj.insert("creator", getTextInfo(info, "Creator") );
-  jobj.insert("producer", getTextInfo(info, "Producer") );
-  jobj.insert("keywords", getTextInfo(info, "Keywords") );
-  jobj.insert("dt_created", QDateTime::fromString( getTextInfo(info, "CreationDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
-  jobj.insert("dt_modified", QDateTime::fromString( getTextInfo(info, "ModDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
+  jobj.insert("title", getTextInfo("Title") );
+  jobj.insert("subject", getTextInfo("Subject") );
+  jobj.insert("author", getTextInfo("Author") );
+  jobj.insert("creator", getTextInfo("Creator") );
+  jobj.insert("producer", getTextInfo("Producer") );
+  jobj.insert("keywords", getTextInfo("Keywords") );
+  jobj.insert("dt_created", QDateTime::fromString( getTextInfo("CreationDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
+  jobj.insert("dt_modified", QDateTime::fromString( getTextInfo("ModDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
   return jobj;
 }
 
 bool Renderer::loadDocument(QString path, QString password){
-  if(DOC==0){ fz_register_document_handlers(CTX); } //first time through
-  else if(path!=docpath){
+	//first time through
+  if(DOC==0){ 
+		fz_register_document_handlers(CTX); 
+		qDebug() << "Document handlers registered";
+	}else if(path!=docpath){
     //fz_close_document(DOC);
     //Clear out the old document first
     delete DOC;
     DOC=0;
-    if(PDOC!=0){ delete PDOC; PDOC=0; }
     needpass = false;
+		docpath = path;
   }
+
   if(DOC==0){
     DOC = fz_open_document(CTX, path.toLocal8Bit().data());
+		docpath = path;
+		qDebug() << "File opened";
     if(DOC==0){
       qDebug() << "Could not open file:" << path;
       return false;
     }
     needpass = (fz_needs_password(CTX, DOC) != 0);
-  }
-  if(PDOC==0){
-    PDOC = pdf_open_document(CTX, path.toLocal8Bit().data());
   }
 
   if(needpass && password.isEmpty()){ return false; }
@@ -69,48 +91,47 @@ bool Renderer::loadDocument(QString path, QString password){
     if(needpass){ return false; } //incorrect password
   }
 
+	qDebug() << "Password Check cleared";
+
   //Could read/access the PDF - go ahead and load the info now
   pnum = -1;
   doctitle.clear();
   //qDebug() << "Opening File:" << path;
-  pdf_obj *info = pdf_dict_gets(CTX, pdf_trailer(CTX, (pdf_document*)DOC), "Info");
-  if(info) {
-    if(pdf_obj *obj = pdf_dict_gets(CTX, info, (char *)"Title")){ doctitle = pdf_to_utf8(CTX, obj); }
-  }
-  if(doctitle.isEmpty()){ doctitle = path.section("/",-1); }
+	QString title = getTextInfo("Subject");
+	if(!title.isNull())
+		doctitle = title;
+	else
+		doctitle = path.section("/",-1);
   pnum = fz_count_pages(CTX, DOC);
   //Setup the Document
   fz_page *PAGE = fz_load_page(CTX, DOC, 0);
-  if(PAGE!=0){
-    /*switch(PAGE->orientation()){
-      case Poppler::Page::Landscape:
-        WIDGET->setOrientation(QPageLayout::Landscape); break;
-      default:
-        WIDGET->setOrientation(QPageLayout::Portrait);
-    }*/
-    delete PAGE;
-    return true; //could see the first page
-  }
-  return false;
+	qDebug() << "Page Loaded";
+	//Possibly check Page orientation";
+
+  return (PAGE);
 }
 
+//Consider rendering through a display list
 QImage Renderer::renderPage(int pagenum, QSize DPI){
-  //MuPDF uses a scaling factor, not DPI
-  fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
-  QImage img;
-  if(PAGE!=0){
-    fz_matrix matrix;
-    //double scaleFactorW = dpi.width()/72.0;
-    //double scaleFactorH = dpi.height()/72.0;
-    //fz_scale(&matrix, scaleFactorW, scaleFactorH);
-    fz_scale(&matrix, 4.0, 4.0); //need to adjust this later according to DPI
-    fz_pre_rotate(&matrix, 0.0);
-    fz_pixmap *pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
-    //unsigned char *samples = fz_pixmap_samples(CTX, pixmap);
-    img = QImage(pixmap->samples, pixmap->w, pixmap->h, QImage::Format_RGB888); //make the raw image a bit larger than the end result
-		delete PAGE;
-  }
-  qDebug() << "Render Page:" << pagenum << img.size();
+	QImage img;
+	fz_matrix matrix;
+	fz_pixmap *pixmap = nullptr;
+
+	fz_scale(&matrix, DPI.width()/96.0, DPI.height()/96.0);
+
+	//fz_context *ctx = fz_clone_context(CTX);
+	mutex->lock();
+
+	fz_try(CTX) {
+		pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
+	}fz_catch(CTX){
+		qDebug() << "Error when rendering page using MuPDF";
+	}
+
+	mutex->unlock();
+
+	img = QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888);
+  qDebug() << "Render Page:" << pagenum;
   return img;
 }
 
