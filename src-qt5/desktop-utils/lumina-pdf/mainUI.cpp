@@ -424,6 +424,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
+  bool reverse = (PRINTER->pageOrder()==QPrinter::LastPageFirst);
   qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
   //return;
   if(PRINTER->resolution() < 300){
@@ -438,29 +439,35 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     firstpage = PRINTER->fromPage() - 1;
     pages = PRINTER->toPage();
   }
-  qDebug() << "Start Printing PDF: Pages" << PRINTER->fromPage() <<" to "<< PRINTER->toPage()<< " Copies:" << copies << "  collate:" << collate;
+  qDebug() << "Start Printing PDF: Pages" << PRINTER->fromPage() <<" to "<< PRINTER->toPage()<< " Copies:" << copies << "  collate:" << collate << " Reverse Order:" << reverse;
   QList<int> pageCount;
   //Assemble the page order/count based on printer settings
   for(int i=firstpage; i<pages; i++){
     //Make sure even/odd pages are not selected as desired
     //Qt 5.7.1 does not seem to have even/odd page selections - 8/11/2017
     pageCount << i; //add this page to the list
-    for(int c=1; c<copies && !collate; c++){ pageCount << i; } //add any copies of this page as needed
+    //QT 5.9+ : Do not need to manually stack "copies". Already handled internally
+    //for(int c=1; c<copies && !collate; c++){ pageCount << i; } //add any copies of this page as needed
   }
   //qDebug() << "Got Page Range:" << pageCount;
-  if(PRINTER->pageOrder()==QPrinter::LastPageFirst){
+
+  //QT 5.9+ : Do not need to manually reverse the pages (already handled internally)
+  if(reverse){
     //Need to reverse the order of the list
     QList<int> tmp = pageCount;
     pageCount.clear();
     for(int i=tmp.length()-1; i>=0; i--){ pageCount << tmp[i]; }
     //qDebug() << " - reversed:" << pageCount;
   }
-  if(collate && copies>0){
+
+  //QT 5.9+ : Do not need to manually stack "copies". Already handled internally
+  /*if(collate && copies>0){
     QList<int> orig = pageCount; //original array of pages
     for(int c=1; c<copies; c++){
       pageCount << orig; //add a new copy of the entire page range
     }
-  }
+  }*/
+
   //qDebug() << "Final Page Range:" << pageCount;
   //Generate the sizing information for the printer
   QSize sz(PRINTER->pageRect().width(), PRINTER->pageRect().height());
@@ -480,6 +487,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   progress->setRange(0, pageCount.length()-1);
   for(int i=0; i<pageCount.length(); i++){
     if(i!=0){ PRINTER->newPage(); }
+    //qDebug() << "Printing Page:" << pageCount[i];
     progress->setValue(i);
     QApplication::processEvents();
     QImage img = loadingHash[pageCount[i]].scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
