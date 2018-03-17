@@ -12,8 +12,8 @@ Renderer::Renderer(){
 }
 
 Renderer::~Renderer(){
-	//qDeleteAll(loadingHash);
-	loadingHash.clear();
+  //qDeleteAll(loadingHash);
+  loadingHash.clear();
 }
 
 bool Renderer::loadMultiThread(){ return true; }
@@ -30,13 +30,13 @@ bool Renderer::loadDocument(QString path, QString password){
     DOC=0;
     needpass = false;
     pnum=0;
-		docpath = path;
+    docpath = path;
   }
   //Load the Document (if needed);
   if(DOC==0){
     //qDebug() << "Loading Document";
     DOC = Poppler::Document::load(path);
-		docpath = path;
+    docpath = path;
   }
 
   if(DOC==0){
@@ -73,45 +73,45 @@ void Renderer::cleanup() {}
 void Renderer::renderPage(int pagenum, QSize DPI){
   //qDebug() << "Render Page:" << pagenum << DPI;
   if(DOC!=0){
-		Poppler::Page *PAGE = DOC->page(pagenum);
-		QImage img;
-		if(PAGE!=0){
-			//qDebug() << "Render Page:" << pagenum;
-			img = PAGE->renderToImage(DPI.width(),DPI.height());
-			loadingHash.insert(pagenum, img);
-			//qDebug() << "Image after creation:" << img.isNull();
-			delete PAGE;
-		}
-		//qDebug() << "Done Render Page:" << pagenum << img.size();
-	}else{
-		loadingHash.insert(pagenum, QImage());
-	}
-	emit PageLoaded(pagenum);
+    Poppler::Page *PAGE = DOC->page(pagenum);
+    QImage img;
+    if(PAGE!=0){
+      //qDebug() << "Render Page:" << pagenum;
+      img = PAGE->renderToImage(DPI.width(),DPI.height());
+      loadingHash.insert(pagenum, img);
+      //qDebug() << "Image after creation:" << img.isNull();
+      delete PAGE;
+    }
+    //qDebug() << "Done Render Page:" << pagenum << img.size();
+  }else{
+    loadingHash.insert(pagenum, QImage());
+  }
+  emit PageLoaded(pagenum);
 }
 
 QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
   QList<TextData*> results;
   for(int i = 0; i < pnum; i++) {
-		QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
+    QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
     for(int j = 0; j < textList.size(); j++) {
-			if(textList[j]->text().contains(text, 
-			(matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
-				TextData *t = new TextData(textList[j]->boundingBox(), i+1, text);
-				results.append(t);
-			}
+      if(textList[j]->text().contains(text, 
+      (matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
+        TextData *t = new TextData(textList[j]->boundingBox(), i+1, text);
+        results.append(t);
+      }
     }
   }
   return results;
 }
 
 QImage Renderer::imageHash(int pagenum) {
-	return loadingHash[pagenum];
+  return loadingHash[pagenum];
 }
 
 int Renderer::hashSize() {
-	return loadingHash.keys().length();
+  return loadingHash.keys().length();
 }
 
 void Renderer::clearHash() {
-	loadingHash.clear();
+  loadingHash.clear();
 }

@@ -36,7 +36,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   WIDGET->setVisible(false);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	loadingQueue.clear();
+  loadingQueue.clear();
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -241,8 +241,8 @@ void MainUI::loadFile(QString path){
   }
   //Clear the current display
 
-	WIDGET->setVisible(false);
-	BACKEND->clearHash();
+  WIDGET->setVisible(false);
+  BACKEND->clearHash();
   QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
   //Load the new document info
   this->setWindowTitle( BACKEND->title());
@@ -254,7 +254,7 @@ void MainUI::loadFile(QString path){
 void MainUI::loadPage(int num, MainUI *obj, QSize dpi){
   //qDebug() << " - Render Page:" << num;
   BACKEND->renderPage(num, dpi);
-	//qDebug() << "Image at" << num << "accessed outside:" << BACKEND->imageHash(num).isNull();
+  //qDebug() << "Image at" << num << "accessed outside:" << BACKEND->imageHash(num).isNull();
 }
 
 QScreen* MainUI::getScreen(bool current, bool &cancelled){
@@ -367,7 +367,7 @@ void MainUI::endPresentation(){
 void MainUI::startLoadingPages(){
   //qDebug() <<"Start Loading Pages";
   if(BACKEND->hashSize() != 0) { return; } //currently loaded[ing]
-	loadingQueue.clear();
+  loadingQueue.clear();
   //qDebug() << "Update Progress Bar";
   progress->setRange(0, BACKEND->numPages());
   progress->setValue(0);
@@ -387,24 +387,24 @@ void MainUI::startLoadingPages(){
   }
   for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
-		if(BACKEND->loadMultiThread()) {
-			QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
-		}else{
-			BACKEND->renderPage(i, DPI);
-		}
+    if(BACKEND->loadMultiThread()) {
+      QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
+    }else{
+      BACKEND->renderPage(i, DPI);
+    }
   }
   //qDebug() << "Finish page loading kickoff";
 }
 
 void MainUI::slotPageLoaded(int page){
-	loadingQueue.push_back(page);	
+  loadingQueue.push_back(page);  
   int finished = loadingQueue.size();
   //qDebug() << "Page Loaded:" << page << finished;
   if(finished == BACKEND->numPages()){
-		BACKEND->cleanup();
-		//qDebug() << " - finished:" << finished;
+    BACKEND->cleanup();
+    //qDebug() << " - finished:" << finished;
     progAct->setVisible(false);
-	  WIDGET->setVisible(true);
+    WIDGET->setVisible(true);
     WIDGET->setCurrentPage(1);
     PROPDIALOG = new PropDialog(BACKEND);
     PROPDIALOG->setSize(pageSize);
@@ -426,7 +426,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int firstpage = 0;
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
-	bool reverse = (PRINTER->pageOrder()==QPrinter::LastPageFirst);
+  bool reverse = (PRINTER->pageOrder()==QPrinter::LastPageFirst);
   qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
   if(PRINTER->resolution() < 300){
     //Try to get 300 DPI resolution at least
@@ -447,11 +447,11 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     //Make sure even/odd pages are not selected as desired
     //Qt 5.7.1 does not seem to have even/odd page selections - 8/11/2017
     pageCount << i; //add this page to the list
-		//QT 5.9+ : Do not need to manually stack "copies". Already handled internally
+    //QT 5.9+ : Do not need to manually stack "copies". Already handled internally
     //for(int c=1; c<copies && !collate; c++){ pageCount << i; } //add any copies of this page as needed
   }
   //qDebug() << "Got Page Range:" << pageCount;
-	//QT 5.9+ : Do not need to manually reverse the pages (already handled internally)
+  //QT 5.9+ : Do not need to manually reverse the pages (already handled internally)
   if(reverse) {
     //Need to reverse the order of the list
     QList<int> tmp = pageCount;
@@ -459,7 +459,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     for(int i=tmp.length()-1; i>=0; i--){ pageCount << tmp[i]; }
     //qDebug() << " - reversed:" << pageCount;
   }
-	//QT 5.9+ : Do not need to manually stack "copies". Already handled internally;
+  //QT 5.9+ : Do not need to manually stack "copies". Already handled internally;
   /*if(collate && copies>0){
     QList<int> orig = pageCount; //original array of pages
     for(int c=1; c<copies; c++){
@@ -485,7 +485,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   progress->setRange(0, pageCount.length()-1);
   for(int i=0; i<pageCount.length(); i++){
     if(i!=0){ PRINTER->newPage(); }
-		//qDebug() << "Printing Page:" << pageCount[i];
+    //qDebug() << "Printing Page:" << pageCount[i];
     progress->setValue(i);
     QApplication::processEvents();
     QImage img = BACKEND->imageHash(pageCount[i]).scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
@@ -566,10 +566,10 @@ void MainUI::keyPressEvent(QKeyEvent *event){
     QWheelEvent wEvent( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
     QApplication::sendEvent(WIDGET, &wEvent);*/
   }else if(event->key() == Qt::Key_Enter) {
-		/*if(ui->findGroup->hasFocus()) {
-			find(ui->textEdit->text(), true);
-		}*/
-	}else{
+    /*if(ui->findGroup->hasFocus()) {
+      find(ui->textEdit->text(), true);
+    }*/
+  }else{
     QMainWindow::keyPressEvent(event);
   }
 }
@@ -600,7 +600,7 @@ void MainUI::find(QString text, bool forward) {
           delete td;
         results.clear();
       }
-			WIDGET->updatePreview();
+      WIDGET->updatePreview();
       ui->resultsLabel->setText("");
       //Get the new search results
       results = BACKEND->searchDocument(text, matchCase);

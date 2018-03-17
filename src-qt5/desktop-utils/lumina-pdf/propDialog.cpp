@@ -42,7 +42,6 @@ PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
   ui->createdEntry->setText( info.value("dt_created").toString() );
   ui->modifiedEntry->setText( info.value("dt_modified").toString() );
   ui->numberL->setText( ui->numberL->text() + QString::number(Backend->numPages()) );
-
 }
 
 //Load size from mainUI after pages have loaded

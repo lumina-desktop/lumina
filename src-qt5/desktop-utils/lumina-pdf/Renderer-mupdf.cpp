@@ -6,28 +6,28 @@
 #include <QtConcurrent>
 
 class Data {
-	public:
-		Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_pixmap *_pix, fz_matrix _ctm, double _sf) :
-			pagenumber(_pagenum),
-			ctx(_ctx),
-			list(_list),
-			bbox(_bbox),
-			pix(_pix),
-			ctm(_ctm),
-			sf(_sf)
-		{ }
+  public:
+    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_pixmap *_pix, fz_matrix _ctm, double _sf) :
+      pagenumber(_pagenum),
+      ctx(_ctx),
+      list(_list),
+      bbox(_bbox),
+      pix(_pix),
+      ctm(_ctm),
+      sf(_sf)
+    { }
 
-		~Data() { }
+    ~Data() { }
 
-		int pagenumber;
-		fz_context *ctx;
-		fz_display_list *list;
-		fz_rect bbox;
-		fz_pixmap *pix;
-		fz_matrix ctm;
-		QImage img;
-		QFuture<void> renderThread;
-		double sf;
+    int pagenumber;
+    fz_context *ctx;
+    fz_display_list *list;
+    fz_rect bbox;
+    fz_pixmap *pix;
+    fz_matrix ctm;
+    QImage img;
+    QFuture<void> renderThread;
+    double sf;
 };
 
 fz_document *DOC;
@@ -37,167 +37,167 @@ QMutex mutex[FZ_LOCK_MAX];
 fz_locks_context locks;
 
 inline QString getTextInfo(QString str) {
-	char infoBuff[1000];
-	int size = DOC->lookup_metadata(CTX, DOC, ("info:"+str).toLocal8Bit().data(), infoBuff, 1000);
+  char infoBuff[1000];
+  int size = DOC->lookup_metadata(CTX, DOC, ("info:"+str).toLocal8Bit().data(), infoBuff, 1000);
   if(size != -1){ return QString::fromLatin1(infoBuff); }
   return "";
 }
 
 void lock_mutex(void *user, int lock) {
-	QMutex *mutex = (QMutex*) user;
-	mutex[lock].lock();
+  QMutex *mutex = (QMutex*) user;
+  mutex[lock].lock();
 }
 
 void unlock_mutex(void *user, int lock) {
-	QMutex *mutex = (QMutex*) user;
-	mutex[lock].unlock();
+  QMutex *mutex = (QMutex*) user;
+  mutex[lock].unlock();
 }
 
 Renderer::Renderer(){
-	locks.user = mutex;
-	locks.lock = lock_mutex;
-	locks.unlock = unlock_mutex;
+  locks.user = mutex;
+  locks.lock = lock_mutex;
+  locks.unlock = unlock_mutex;
 
   DOC = 0;
-	qDebug() << "Creating Context";
+  qDebug() << "Creating Context";
   CTX = fz_new_context(NULL, &locks, FZ_STORE_UNLIMITED);
   needpass = false;
 }
 
 Renderer::~Renderer(){
-	qDebug() << "Calling destructor";
-	qDeleteAll(dataHash);
-	dataHash.clear();
-	fz_drop_document(CTX, DOC);
-	DOC = NULL;
-	fz_drop_context(CTX);
-	CTX = NULL;
+  qDebug() << "Calling destructor";
+  qDeleteAll(dataHash);
+  dataHash.clear();
+  fz_drop_document(CTX, DOC);
+  DOC = NULL;
+  fz_drop_context(CTX);
+  CTX = NULL;
 }
 
 bool Renderer::loadMultiThread(){ return false; }
 
 void Renderer::cleanup() {
-	/*for(int i = 0; i < dataHash.size(); i++) {
-		fz_drop_pixmap(CTX, dataHash[i]->pix);
-		fz_drop_display_list(CTX, dataHash[i]->list);
-	}
-	fz_drop_document(CTX, DOC);
-	fz_drop_context(CTX);*/
+  /*for(int i = 0; i < dataHash.size(); i++) {
+    fz_drop_pixmap(CTX, dataHash[i]->pix);
+    fz_drop_display_list(CTX, dataHash[i]->list);
+  }
+  fz_drop_document(CTX, DOC);
+  fz_drop_context(CTX);*/
 }
 
 bool Renderer::loadDocument(QString path, QString password){
-	//first time through
-	if(path != docpath) {
-		if(DOC != 0) {
-			qDebug() << "New document";
-			fz_drop_document(CTX, DOC);
-			DOC = NULL;
-			needpass = false;
-			docpath = path;
-		}else if(DOC==0){ 
-			fz_register_document_handlers(CTX); 
-			qDebug() << "Document handlers registered";
-		}
+  //first time through
+  if(path != docpath) {
+    if(DOC != 0) {
+      qDebug() << "New document";
+      fz_drop_document(CTX, DOC);
+      DOC = NULL;
+      needpass = false;
+      docpath = path;
+    }else if(DOC==0){ 
+      fz_register_document_handlers(CTX); 
+      qDebug() << "Document handlers registered";
+    }
 
-		DOC = fz_open_document(CTX, path.toLocal8Bit().data());
-		docpath = path;
-		qDebug() << "File opened" << DOC;
-		if(DOC==0){
-			qDebug() << "Could not open file:" << path;
-			return false;
-		}
-		needpass = (fz_needs_password(CTX, DOC) != 0);
+    DOC = fz_open_document(CTX, path.toLocal8Bit().data());
+    docpath = path;
+    qDebug() << "File opened" << DOC;
+    if(DOC==0){
+      qDebug() << "Could not open file:" << path;
+      return false;
+    }
+    needpass = (fz_needs_password(CTX, DOC) != 0);
 
-		if(needpass && password.isEmpty()){ 
-			return false; 
-		}else if(needpass){
-			needpass = !fz_authenticate_password(CTX, DOC, password.toLocal8Bit());
-			if(needpass){ return false; } //incorrect password
-		}
+    if(needpass && password.isEmpty()){ 
+      return false; 
+    }else if(needpass){
+      needpass = !fz_authenticate_password(CTX, DOC, password.toLocal8Bit());
+      if(needpass){ return false; } //incorrect password
+    }
 
-		//qDebug() << "Password Check cleared";
-		pnum = fz_count_pages(CTX, DOC);
-		qDebug() << "Page count: " << pnum;
+    //qDebug() << "Password Check cleared";
+    pnum = fz_count_pages(CTX, DOC);
+    qDebug() << "Page count: " << pnum;
 
-		doctitle.clear();
-		//qDebug() << "Opening File:" << path;
-		jobj.insert("title", getTextInfo("Title") );
-		jobj.insert("subject", getTextInfo("Subject") );
-		jobj.insert("author", getTextInfo("Author") );
-		jobj.insert("creator", getTextInfo("Creator") );
-		jobj.insert("producer", getTextInfo("Producer") );
-		jobj.insert("keywords", getTextInfo("Keywords") );
-		jobj.insert("dt_created", QDateTime::fromString( getTextInfo("CreationDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
-		jobj.insert("dt_modified", QDateTime::fromString( getTextInfo("ModDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
+    doctitle.clear();
+    //qDebug() << "Opening File:" << path;
+    jobj.insert("title", getTextInfo("Title") );
+    jobj.insert("subject", getTextInfo("Subject") );
+    jobj.insert("author", getTextInfo("Author") );
+    jobj.insert("creator", getTextInfo("Creator") );
+    jobj.insert("producer", getTextInfo("Producer") );
+    jobj.insert("keywords", getTextInfo("Keywords") );
+    jobj.insert("dt_created", QDateTime::fromString( getTextInfo("CreationDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
+    jobj.insert("dt_modified", QDateTime::fromString( getTextInfo("ModDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
 
-		if(!jobj["title"].isNull())
-			doctitle = jobj["title"].toString();
-		else
-			doctitle = path.section("/",-1);
+    if(!jobj["title"].isNull())
+      doctitle = jobj["title"].toString();
+    else
+      doctitle = path.section("/",-1);
 
-		qDebug() << "Page Loaded";
-		//Possibly check Page orientation
-		return true;
-	}
-	return false;
+    qDebug() << "Page Loaded";
+    //Possibly check Page orientation
+    return true;
+  }
+  return false;
 }
 
 void renderer(Data *data, Renderer *obj)
 {
-	int pagenum = data->pagenumber;
-	fz_context *ctx = data->ctx;
-	fz_display_list *list = data->list;
-	fz_rect bbox = data->bbox;
-	fz_pixmap *pixmap = data->pix;
-	fz_matrix ctm = data->ctm;
-	fz_device *dev;
+  int pagenum = data->pagenumber;
+  fz_context *ctx = data->ctx;
+  fz_display_list *list = data->list;
+  fz_rect bbox = data->bbox;
+  fz_pixmap *pixmap = data->pix;
+  fz_matrix ctm = data->ctm;
+  fz_device *dev;
 
-	ctx = fz_clone_context(ctx);
-	dev = fz_new_draw_device(ctx, &fz_identity, pixmap);
-	fz_run_display_list(ctx, list, dev, &ctm, &bbox, NULL);
+  ctx = fz_clone_context(ctx);
+  dev = fz_new_draw_device(ctx, &fz_identity, pixmap);
+  fz_run_display_list(ctx, list, dev, &ctm, &bbox, NULL);
 
-	data->img = QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888);	 
-	fz_close_device(ctx, dev);
-	fz_drop_device(ctx, dev);
+  data->img = QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888);   
+  fz_close_device(ctx, dev);
+  fz_drop_device(ctx, dev);
 
-	fz_drop_context(ctx);
+  fz_drop_context(ctx);
 
-	dataHash.insert(pagenum, data);
-	emit obj->PageLoaded(pagenum);
+  dataHash.insert(pagenum, data);
+  emit obj->PageLoaded(pagenum);
 }
 
 //Consider rendering through a display list
 void Renderer::renderPage(int pagenum, QSize DPI){
-	//qDebug() << "- Rendering Page:" << pagenum;
-	fz_matrix matrix;
-	fz_rect bbox;
-	fz_irect rbox;
-	fz_pixmap *pixmap;
-	fz_display_list *list;
+  //qDebug() << "- Rendering Page:" << pagenum;
+  fz_matrix matrix;
+  fz_rect bbox;
+  fz_irect rbox;
+  fz_pixmap *pixmap;
+  fz_display_list *list;
 
-	double pageDPI = 96.0;
-	double sf = DPI.width() / pageDPI;
-	fz_scale(&matrix, DPI.width()/pageDPI, DPI.height()/pageDPI);
+  double pageDPI = 96.0;
+  double sf = DPI.width() / pageDPI;
+  fz_scale(&matrix, DPI.width()/pageDPI, DPI.height()/pageDPI);
 
-	fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
-	fz_bound_page(CTX, PAGE, &bbox);
-	emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
+  fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
+  fz_bound_page(CTX, PAGE, &bbox);
+  emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
 
-	fz_transform_rect(&bbox, &matrix);
-	list = fz_new_display_list(CTX, &bbox);
-	fz_device *dev = fz_new_list_device(CTX, list);
-	fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);	
+  fz_transform_rect(&bbox, &matrix);
+  list = fz_new_display_list(CTX, &bbox);
+  fz_device *dev = fz_new_list_device(CTX, list);
+  fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
 
-	fz_close_device(CTX, dev);
-	fz_drop_device(CTX, dev);
-	fz_drop_page(CTX, PAGE);
+  fz_close_device(CTX, dev);
+  fz_drop_device(CTX, dev);
+  fz_drop_page(CTX, PAGE);
 
-	pixmap = fz_new_pixmap_with_bbox(CTX, fz_device_rgb(CTX), fz_round_rect(&rbox, &bbox), NULL, 0);
-	fz_clear_pixmap_with_value(CTX, pixmap, 0xff);
+  pixmap = fz_new_pixmap_with_bbox(CTX, fz_device_rgb(CTX), fz_round_rect(&rbox, &bbox), NULL, 0);
+  fz_clear_pixmap_with_value(CTX, pixmap, 0xff);
 
-	//pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
-	Data *data = new Data(pagenum, CTX, list, bbox, pixmap, matrix, sf);
-	data->renderThread = QtConcurrent::run(&renderer, data, this);
+  //pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
+  Data *data = new Data(pagenum, CTX, list, bbox, pixmap, matrix, sf);
+  data->renderThread = QtConcurrent::run(&renderer, data, this);
 }
 
 QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
@@ -207,7 +207,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
     int count = fz_search_display_list(CTX, dataHash[i]->list, text.toLatin1().data(), rectBuffer, 1000);
     //qDebug() << "Page " << i+1 << ": Count, " << count;
     for(int j = 0; j < count; j++) {
-			double sf = dataHash[i]->sf;
+      double sf = dataHash[i]->sf;
       QRectF rect(rectBuffer[j].x0*sf, rectBuffer[j].y0*sf, (rectBuffer[j].x1-rectBuffer[j].x0)*sf, (rectBuffer[j].y1 - rectBuffer[j].y0)*sf);
       TextData *t = new TextData(rect, i+1, text);
       //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
@@ -224,13 +224,13 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
 }
 
 QImage Renderer::imageHash(int pagenum) {
-	return dataHash[pagenum]->img;
+  return dataHash[pagenum]->img;
 }
 
 int Renderer::hashSize() {
-	return dataHash.size();
+  return dataHash.size();
 }
 
 void Renderer::clearHash() {
-	dataHash.clear();
+  dataHash.clear();
 }

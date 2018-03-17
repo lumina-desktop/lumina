@@ -27,85 +27,85 @@
 #include "textData.h"
 
 namespace Ui{
-	class MainUI;
+  class MainUI;
 };
 
 class MainUI : public QMainWindow{
-	Q_OBJECT
+  Q_OBJECT
 public:
-	MainUI();
-	~MainUI();
+  MainUI();
+  ~MainUI();
 
-	void loadFile(QString path);
+  void loadFile(QString path);
 
 private:
-	QSizeF pageSize;
-	PrintWidget *WIDGET;
-	Ui::MainUI *ui;
-	PropDialog *PROPDIALOG;
-	QPrintDialog *PrintDLG;
-	QString lastdir;
-	bool matchCase;
-	QList<TextData*> results;
-	QList<int> loadingQueue;
-	int currentHighlight;
+  QSizeF pageSize;
+  PrintWidget *WIDGET;
+  Ui::MainUI *ui;
+  PropDialog *PROPDIALOG;
+  QPrintDialog *PrintDLG;
+  QString lastdir;
+  bool matchCase;
+  QList<TextData*> results;
+  QList<int> loadingQueue;
+  int currentHighlight;
 
-	//Other Interface elements
-	QProgressBar *progress;
-	QAction *progAct; //action associated with the progressbar
-	QTimer *clockTimer;
-	QMenu *contextMenu;
-	//QFrame *frame_presenter;
-	QLabel *label_clock, *label_page;
-	QAction *clockAct, *pageAct;
+  //Other Interface elements
+  QProgressBar *progress;
+  QAction *progAct; //action associated with the progressbar
+  QTimer *clockTimer;
+  QMenu *contextMenu;
+  //QFrame *frame_presenter;
+  QLabel *label_clock, *label_page;
+  QAction *clockAct, *pageAct;
 
-	//PDF Page Loading cache variables
-	Renderer *BACKEND;
+  //PDF Page Loading cache variables
+  Renderer *BACKEND;
 
-	void loadPage(int num, MainUI *obj, QSize dpi);
+  void loadPage(int num, MainUI *obj, QSize dpi);
 
-	//Functions/variables for the presentation mode
-	PresentationLabel *presentationLabel;
-	QScreen *getScreen(bool current, bool &cancelled);
-	int CurrentPage;
-	void startPresentation(bool atStart);
-	void ShowPage(int page);
-	void endPresentation();
+  //Functions/variables for the presentation mode
+  PresentationLabel *presentationLabel;
+  QScreen *getScreen(bool current, bool &cancelled);
+  int CurrentPage;
+  void startPresentation(bool atStart);
+  void ShowPage(int page);
+  void endPresentation();
 
 private slots:
-	void startLoadingPages();
-	void slotPageLoaded(int);
+  void startLoadingPages();
+  void slotPageLoaded(int);
 
-	//Simplification routines
-	void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
-	void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
-	void firstPage(){ ShowPage(1); }
-	void lastPage(){ ShowPage(BACKEND->numPages()); }
-	void startPresentationHere(){ startPresentation(false); }
-	void startPresentationBeginning(){ startPresentation(true); }
-	void closePresentation(){ endPresentation(); }
+  //Simplification routines
+  void nextPage(){ ShowPage( WIDGET->currentPage()+1 ); } //currentPage() starts at 1 rather than 0
+  void prevPage(){ ShowPage( WIDGET->currentPage()-1 ); } //currentPage() starts at 1 rather than 0
+  void firstPage(){ ShowPage(1); }
+  void lastPage(){ ShowPage(BACKEND->numPages()); }
+  void startPresentationHere(){ startPresentation(false); }
+  void startPresentationBeginning(){ startPresentation(true); }
+  void closePresentation(){ endPresentation(); }
 
-	void find(QString text, bool forward);
-	void showBookmarks();
+  void find(QString text, bool forward);
+  void showBookmarks();
 
-	void paintToPrinter(QPrinter *PRINTER);
+  void paintToPrinter(QPrinter *PRINTER);
 
-	//Button Slots
-	void OpenNewFile();
+  //Button Slots
+  void OpenNewFile();
 
-	//Other interface slots
-	void updateClock();
-	void updatePageNumber();
-	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
-	void updateContextMenu();
-	//void setScroll(bool);
+  //Other interface slots
+  void updateClock();
+  void updatePageNumber();
+  void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
+  void updateContextMenu();
+  //void setScroll(bool);
 
 protected:
-	void keyPressEvent(QKeyEvent*);
-	void wheelEvent(QWheelEvent*);
-	void closeEvent(QCloseEvent *ev){
-	  endPresentation();
-	  QMainWindow::closeEvent(ev);
-	}
+  void keyPressEvent(QKeyEvent*);
+  void wheelEvent(QWheelEvent*);
+  void closeEvent(QCloseEvent *ev){
+    endPresentation();
+    QMainWindow::closeEvent(ev);
+  }
 };
 #endif
