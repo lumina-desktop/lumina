@@ -106,7 +106,6 @@ private:
   void setZoomMode(ZoomMode);
 
   QGraphicsScene *scene;
-  QMatrix rotMatrix;
   int curPage, publicPageNum;
   ViewMode viewMode;
   ZoomMode zoomMode;
@@ -136,7 +135,6 @@ public slots:
   void setCurrentPage(int);
   void setVisible(bool) Q_DECL_OVERRIDE;
   void highlightText(TextData*);
-  void setDegrees(int);
 
   void updatePreview();
   void fitView();

@@ -62,6 +62,7 @@ Renderer::Renderer(){
   qDebug() << "Creating Context";
   CTX = fz_new_context(NULL, &locks, FZ_STORE_UNLIMITED);
   needpass = false;
+	degrees = 0;
 }
 
 Renderer::~Renderer(){
@@ -75,15 +76,6 @@ Renderer::~Renderer(){
 }
 
 bool Renderer::loadMultiThread(){ return false; }
-
-void Renderer::cleanup() {
-  /*for(int i = 0; i < dataHash.size(); i++) {
-    fz_drop_pixmap(CTX, dataHash[i]->pix);
-    fz_drop_display_list(CTX, dataHash[i]->list);
-  }
-  fz_drop_document(CTX, DOC);
-  fz_drop_context(CTX);*/
-}
 
 bool Renderer::loadDocument(QString path, QString password){
   //first time through
@@ -145,6 +137,7 @@ bool Renderer::loadDocument(QString path, QString password){
 void renderer(Data *data, Renderer *obj)
 {
   int pagenum = data->pagenumber;
+	//qDebug() << "Rendering:" << pagenum;
   fz_context *ctx = data->ctx;
   fz_display_list *list = data->list;
   fz_rect bbox = data->bbox;
@@ -162,41 +155,45 @@ void renderer(Data *data, Renderer *obj)
 
   fz_drop_context(ctx);
 
-  dataHash.insert(pagenum, data);
+	if(dataHash.find(pagenum) == dataHash.end())
+		dataHash.insert(pagenum, data);
+	else
+		dataHash[pagenum] = data;
   emit obj->PageLoaded(pagenum);
 }
 
 //Consider rendering through a display list
-void Renderer::renderPage(int pagenum, QSize DPI){
-  //qDebug() << "- Rendering Page:" << pagenum;
-  fz_matrix matrix;
-  fz_rect bbox;
-  fz_irect rbox;
-  fz_pixmap *pixmap;
-  fz_display_list *list;
+void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
+  qDebug() << "- Rendering Page:" << pagenum << degrees;
+	Data *data;
+	fz_matrix matrix;
+	fz_rect bbox;
+	fz_irect rbox;
+	fz_pixmap *pixmap;
+	fz_display_list *list;
 
-  double pageDPI = 96.0;
-  double sf = DPI.width() / pageDPI;
-  fz_scale(&matrix, DPI.width()/pageDPI, DPI.height()/pageDPI);
+	double pageDPI = 96.0;
+	double sf = DPI.width() / pageDPI;
+	fz_scale(&matrix, sf, sf);
+	fz_pre_rotate(&matrix, degrees);
 
-  fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
-  fz_bound_page(CTX, PAGE, &bbox);
-  emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
+	fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
+	fz_bound_page(CTX, PAGE, &bbox);
+	emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
 
-  fz_transform_rect(&bbox, &matrix);
-  list = fz_new_display_list(CTX, &bbox);
-  fz_device *dev = fz_new_list_device(CTX, list);
-  fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
+	fz_transform_rect(&bbox, &matrix);
+	list = fz_new_display_list(CTX, &bbox);
+	fz_device *dev = fz_new_list_device(CTX, list);
+	fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
 
-  fz_close_device(CTX, dev);
-  fz_drop_device(CTX, dev);
-  fz_drop_page(CTX, PAGE);
+	fz_close_device(CTX, dev);
+	fz_drop_device(CTX, dev);
+	fz_drop_page(CTX, PAGE);
 
-  pixmap = fz_new_pixmap_with_bbox(CTX, fz_device_rgb(CTX), fz_round_rect(&rbox, &bbox), NULL, 0);
-  fz_clear_pixmap_with_value(CTX, pixmap, 0xff);
+	pixmap = fz_new_pixmap_with_bbox(CTX, fz_device_rgb(CTX), fz_round_rect(&rbox, &bbox), NULL, 0);
+	fz_clear_pixmap_with_value(CTX, pixmap, 0xff);
 
-  //pixmap = fz_new_pixmap_from_page_number(CTX, DOC, pagenum, &matrix, fz_device_rgb(CTX), 0);
-  Data *data = new Data(pagenum, CTX, list, bbox, pixmap, matrix, sf);
+	data = new Data(pagenum, CTX, list, bbox, pixmap, matrix, sf);
   data->renderThread = QtConcurrent::run(&renderer, data, this);
 }
 
@@ -232,5 +229,10 @@ int Renderer::hashSize() {
 }
 
 void Renderer::clearHash() {
-  dataHash.clear();
+  for(int i = 0; i < dataHash.size(); i++) {
+    fz_drop_pixmap(CTX, dataHash[i]->pix);
+    fz_drop_display_list(CTX, dataHash[i]->list);
+  }
+	qDeleteAll(dataHash);
+	dataHash.clear();
 }

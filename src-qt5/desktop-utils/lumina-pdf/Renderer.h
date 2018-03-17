@@ -1,5 +1,4 @@
-// ================================
-// Simple abstraction class between backend renderers
+// ================================ // Simple abstraction class between backend renderers
 // ================================
 // Written by Ken Moore: Feb 26, 2018
 // Available under the 3-Clause BSD License
@@ -22,6 +21,7 @@ private:
   QString docpath; //save the path for the currently-loaded document
   QString doctitle;
   QJsonObject jobj;
+	int degrees;
 
 public:
   Renderer();
@@ -33,20 +33,27 @@ public:
   bool needPassword(){ return needpass; }
   QString title(){ return doctitle; }
   QJsonObject properties() { return jobj; }
+  int hashSize();
+  QImage imageHash(int pagenum);
+	int rotatedDegrees() { return degrees; }
 
   //Main access functions
   bool loadDocument(QString path, QString password);
-  void renderPage(int pagenum, QSize DPI);
+  void renderPage(int pagenum, QSize DPI, int degrees=0);
   QList<TextData*> searchDocument(QString text, bool matchCase);
-  void cleanup();
 
-  QImage imageHash(int pagenum);
-  int hashSize();
-  void clearHash();
+	void clearHash();
+  //Makes sure degrees is between 0 and 360 then rotates the matrix and 
+  void setDegrees(int degrees) {
+    //Mods by 360, but adds and remods because of how C++ treats negative mods
+    this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
+    emit reloadPages(this->degrees);
+  }
 
 signals:
   void PageLoaded(int);
   void OrigSize(QSizeF);
+	void reloadPages(int);
 };
 
 #endif

@@ -21,8 +21,6 @@ PrintWidget::PrintWidget(Renderer *backend, QWidget *parent) :
   scene = new QGraphicsScene(this);
   scene->setBackgroundBrush(Qt::gray);
   this->setScene(scene);
-  this->degrees = 0;
-  this->rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
 
   /*QVBoxLayout *layout = new QVBoxLayout;
   setLayout(layout);
@@ -132,13 +130,16 @@ void PrintWidget::highlightText(TextData *text) {
   if(!text->highlighted()) {
     double pageHeight = pages.at(text->page()-1)->boundingRect().height();
     QRectF rect = text->loc();
-    if(degrees != 0) {
+    if(BACKEND->rotatedDegrees() != 0) {
       QSize center = BACKEND->imageHash(text->page()-1).size()/2;
       //Rotates the rectangle by the page's center
+			//Currently broken when degrees are 90 or 270
       double cx = center.width(), cy = center.height();
       rect.adjust(-cx, -cy, -cx, -cy);
-      rect = rotMatrix.mapRect(rect);
-      if(degrees == 180)
+			QMatrix matrix;
+			matrix.rotate(BACKEND->rotatedDegrees());
+      rect = matrix.mapRect(rect);
+      if(BACKEND->rotatedDegrees() == 180)
         rect.adjust(cx, cy, cx, cy);
       else
         rect.adjust(cy, cx, cy, cx);
@@ -210,18 +211,9 @@ void PrintWidget::populateScene()
 
   for (int i = 0; i < numPages; i++) {
     QImage pagePicture = BACKEND->imageHash(i);
-    //qDebug() << "Loading Image:" << i;
 
-    QSize paperSize = BACKEND->imageHash(i).size();
+    QSize paperSize = pagePicture.size();
 
-    //Changes the paper orientation if rotated by 90 or 270 degrees
-    if(degrees == 90 or degrees == 270)
-      paperSize.transpose();
-
-    if(degrees != 0) {
-      pagePicture = pagePicture.transformed(rotMatrix, Qt::SmoothTransformation);
-      //qDebug() << "Rotating by: " << degrees << " degrees";
-    }
     if(pagePicture.isNull()) {
       qDebug() << "NULL IMAGE ON PAGE " << i;
       continue;
@@ -316,12 +308,4 @@ void PrintWidget::fit(bool doFitting) {
   }
 
   //zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
-}
-
-//Makes sure degrees is between 0 and 360 then rotates the matrix and 
-void PrintWidget::setDegrees(int degrees) {
-  //Mods by 360, but adds and remods because of how C++ treats negative mods
-  this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
-  rotMatrix.rotate(degrees);
-  this->updatePreview();
 }

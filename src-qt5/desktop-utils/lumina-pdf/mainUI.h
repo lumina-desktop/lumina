@@ -62,7 +62,7 @@ private:
   //PDF Page Loading cache variables
   Renderer *BACKEND;
 
-  void loadPage(int num, MainUI *obj, QSize dpi);
+  void loadPage(int num, MainUI *obj, QSize dpi, int degrees);
 
   //Functions/variables for the presentation mode
   PresentationLabel *presentationLabel;
@@ -73,7 +73,7 @@ private:
   void endPresentation();
 
 private slots:
-  void startLoadingPages();
+  void startLoadingPages(int degrees = 0);
   void slotPageLoaded(int);
 
   //Simplification routines

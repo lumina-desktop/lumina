@@ -9,6 +9,7 @@ Renderer::Renderer(){
   DOC = 0;
   needpass = false;
   pnum = 0;
+	degrees = 0;
 }
 
 Renderer::~Renderer(){
@@ -68,18 +69,28 @@ bool Renderer::loadDocument(QString path, QString password){
   return false; //nothing to load
 }
 
-void Renderer::cleanup() {}
-
-void Renderer::renderPage(int pagenum, QSize DPI){
-  //qDebug() << "Render Page:" << pagenum << DPI;
+void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
+  //qDebug() << "Render Page:" << pagenum << DPI << degrees;
   if(DOC!=0){
     Poppler::Page *PAGE = DOC->page(pagenum);
     QImage img;
     if(PAGE!=0){
-      //qDebug() << "Render Page:" << pagenum;
-      img = PAGE->renderToImage(DPI.width(),DPI.height());
+			Poppler::Page::Rotation rotation;
+			switch(degrees) {
+				case 90:
+					rotation = Poppler::Page::Rotation::Rotate90;
+					break;
+				case 180:
+					rotation = Poppler::Page::Rotation::Rotate180;
+					break;
+				case 270:
+					rotation = Poppler::Page::Rotation::Rotate270;
+					break;
+				default:
+					rotation = Poppler::Page::Rotation::Rotate0;
+			}
+      img = PAGE->renderToImage(DPI.width(),DPI.height(), -1, -1, -1, -1, rotation);
       loadingHash.insert(pagenum, img);
-      //qDebug() << "Image after creation:" << img.isNull();
       delete PAGE;
     }
     //qDebug() << "Done Render Page:" << pagenum << img.size();
@@ -96,7 +107,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
     for(int j = 0; j < textList.size(); j++) {
       if(textList[j]->text().contains(text, 
       (matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
-        TextData *t = new TextData(textList[j]->boundingBox(), i+1, text);
+        TextData *t = new TextData(textList[j]->boundingBox(), i+1, text, degrees);
         results.append(t);
       }
     }
