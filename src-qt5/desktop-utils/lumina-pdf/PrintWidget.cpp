@@ -1,7 +1,8 @@
 #include "PrintWidget.h"
 
-PrintWidget::PrintWidget(QWidget *parent) : QGraphicsView(parent), scene(0), curPage(1),
-  viewMode(SinglePageView), zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true) {
+PrintWidget::PrintWidget(Renderer *backend, QWidget *parent) : 
+	QGraphicsView(parent), scene(0), curPage(1), viewMode(SinglePageView), 
+	zoomMode(FitInView), zoomFactor(1), initialized(false), fitting(true), BACKEND(backend) {
 
   this->setMouseTracking(true);
   QList<QWidget*> children = this->findChildren<QWidget*>("",Qt::FindChildrenRecursively);
@@ -129,13 +130,24 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
   if(!text->highlighted()) {
-    //qDebug() << "Highlighting text: " << text->text() << "At page: " << text->page();
-    QRect rect = text->loc();
-    double pageHeight = pages.at(0)->boundingRect().height();
-    QRectF textRect = rect.adjusted(0, pageHeight*(text->page()-1), 0, 0); //move the rectangle onto the right page
-    QBrush highlightFill(QColor(255, 255, 177, 50));
-    QPen highlightOutline(QColor(255, 255, 100, 98));
-    scene->addRect(textRect, highlightOutline, highlightFill);
+    double pageHeight = pages.at(text->page()-1)->boundingRect().height();
+    QRectF rect = text->loc();
+		if(degrees != 0) {
+			QSize center = BACKEND->imageHash(text->page()-1).size()/2;
+			//Rotates the rectangle by the page's center
+			double cx = center.width(), cy = center.height();
+			rect.adjust(-cx, -cy, -cx, -cy);
+			rect = rotMatrix.mapRect(rect);
+			if(degrees == 180)
+				rect.adjust(cx, cy, cx, cy);
+			else
+				rect.adjust(cy, cx, cy, cx);
+		}
+		//Moves the rectangle onto the right page
+		rect.moveTop(rect.y() + pageHeight*(text->page()-1));
+    QBrush highlightFill(QColor(255, 255, 177, 100));
+    QPen highlightOutline(QColor(255, 255, 100, 125));
+    scene->addRect(rect, highlightOutline, highlightFill);
     text->highlighted(true);
   }
 }
@@ -143,6 +155,7 @@ void PrintWidget::highlightText(TextData *text) {
 //Private functions
 
 void PrintWidget::generatePreview() {
+	qDebug() << "Generating Preview";
 	populateScene(); // i.e. setPreviewPrintedPictures() e.l.
 	layoutPages();
 	curPage = qBound(1, curPage, pages.count());
@@ -158,8 +171,9 @@ void PrintWidget::layoutPages() {
 
 	int numPagePlaces = numPages;
 	int cols = 1; // singleMode and default
+	QSize pageSize = BACKEND->imageHash(0).size();
 	if (viewMode == AllPagesView) {
-    cols = ((pictures->value(0)).width() > (pictures->value(0)).height()) ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
+    cols = pageSize.width() > pageSize.height() ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
     cols += cols % 2;  // Nicer with an even number of cols
   } else if (viewMode == FacingPagesView) {
     cols = 2;
@@ -180,6 +194,7 @@ void PrintWidget::layoutPages() {
 		}
 	}
 	scene->setSceneRect(scene->itemsBoundingRect());
+	qDebug() << "Finished Page Layout";
 }
 
 void PrintWidget::populateScene()
@@ -189,14 +204,15 @@ void PrintWidget::populateScene()
   }
   qDeleteAll(pages);
   pages.clear();
-  //qDebug() << "populateScene";
-  if(pictures==0){ return; } //nothing to show yet
-  int numPages = pictures->count();
+  qDebug() << "populateScene";
+  int numPages = BACKEND->numPages();
+  if(BACKEND->hashSize() < numPages){ return; } //nothing to show yet
 
   for (int i = 0; i < numPages; i++) {
-    QImage pagePicture = pictures->value(i);
+    QImage pagePicture = BACKEND->imageHash(i);
+	  //qDebug() << "Loading Image:" << i;
 
-		QSize paperSize = pictures->value(i).size();
+		QSize paperSize = BACKEND->imageHash(i).size();
 
 		//Changes the paper orientation if rotated by 90 or 270 degrees
 		if(degrees == 90 or degrees == 270)
@@ -302,27 +318,10 @@ void PrintWidget::fit(bool doFitting) {
 	//zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
 }
 
-void PrintWidget::setPictures(QHash<int, QImage> *hash) {
-  pictures = hash;
-  this->setVisible(hash!=0);
-}
-
-//Sets how much to rotate the image, by either 90, 180, or 270 degrees. Adds 90 degrees for cw and -90 for ccw.
+//Makes sure degrees is between 0 and 360 then rotates the matrix and 
 void PrintWidget::setDegrees(int degrees) {
   //Mods by 360, but adds and remods because of how C++ treats negative mods
   this->degrees = ( ( ( this->degrees + degrees ) % 360 ) + 360 ) % 360;
-  switch(this->degrees) {
-    case 270:
-      rotMatrix = QMatrix(0, -1, 1, 0, 0, 0);
-      break;
-    case 90:
-      rotMatrix = QMatrix(0, 1, -1, 0, 0, 0);
-      break;
-    case 180:
-      rotMatrix = QMatrix(-1, 0, 0, -1, 0, 0);
-      break;
-    default:
-      rotMatrix = QMatrix(1, 0, 0, 1, 0 ,0);
-  }
-  this->updatePreview();
+	rotMatrix.rotate(degrees);
+	this->updatePreview();
 }

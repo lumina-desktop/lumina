@@ -41,7 +41,7 @@ PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
   ui->keywordE->setText( info.value("keywords").toString() );
   ui->createdEntry->setText( info.value("dt_created").toString() );
   ui->modifiedEntry->setText( info.value("dt_modified").toString() );
-  ui->numberL->setText( QString::number(Backend->numPages()) );
+  ui->numberL->setText( ui->numberL->text() + QString::number(Backend->numPages()) );
 
 }
 

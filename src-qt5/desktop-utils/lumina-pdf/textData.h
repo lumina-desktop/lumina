@@ -5,19 +5,19 @@
 
 class TextData {
     private:
-      QRect _loc;
+      QRectF _loc;
       bool _highlighted=false;
       int _page=0;
       QString _text="";
 
     public:
-      TextData(QRect _loc, int _page, QString _text) {
+      TextData(QRectF _loc, int _page, QString _text) {
         this->_loc = _loc;
         this->_page = _page;
         this->_text = _text;
       }
 
-      QRect loc() { return this->_loc; }
+      QRectF loc() { return this->_loc; }
       bool highlighted() { return this->_highlighted; }
       int page() { return this->_page; }
       QString text() { return this->_text; }

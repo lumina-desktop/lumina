@@ -47,6 +47,7 @@ private:
 	QString lastdir;
 	bool matchCase;
 	QList<TextData*> results;
+	QList<int> loadingQueue;
 	int currentHighlight;
 
 	//Other Interface elements
@@ -60,7 +61,6 @@ private:
 
 	//PDF Page Loading cache variables
 	Renderer *BACKEND;
-	QHash<int, QImage> loadingHash;
 
 	void loadPage(int num, MainUI *obj, QSize dpi);
 
@@ -99,9 +99,6 @@ private slots:
 	void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
 	void updateContextMenu();
 	//void setScroll(bool);
-
-signals:
-	void PageLoaded(int);
 
 protected:
 	void keyPressEvent(QKeyEvent*);

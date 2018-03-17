@@ -1,7 +1,9 @@
 #include "Renderer.h"
 #include <poppler/qt5/poppler-qt5.h>
+#include <QThread>
 
 static Poppler::Document *DOC;
+QHash<int, QImage> loadingHash;
 
 Renderer::Renderer(){
   DOC = 0;
@@ -10,14 +12,15 @@ Renderer::Renderer(){
 }
 
 Renderer::~Renderer(){
-
+	//qDeleteAll(loadingHash);
+	loadingHash.clear();
 }
 
-//bool Renderer::loadMultiThread(){ return true; }
+bool Renderer::loadMultiThread(){ return true; }
 
-QJsonObject Renderer::properties(){
+/*QJsonObject Renderer::properties(){
   return QJsonObject(); //TO-DO
-}
+}*/
 
 bool Renderer::loadDocument(QString path, QString password){
   //qDebug() << "Load Document:" << path;
@@ -65,36 +68,50 @@ bool Renderer::loadDocument(QString path, QString password){
   return false; //nothing to load
 }
 
-QImage Renderer::renderPage(int pagenum, QSize DPI){
+void Renderer::cleanup() {}
+
+void Renderer::renderPage(int pagenum, QSize DPI){
   //qDebug() << "Render Page:" << pagenum << DPI;
-  if(DOC==0){ return QImage(); }
-  Poppler::Page *PAGE = DOC->page(pagenum);
-  QImage img;
-  if(PAGE!=0){
-    //qDebug() << "Render Page:" << pagenum;
-    img = PAGE->renderToImage(DPI.width(),DPI.height());
-    delete PAGE;
-  }
-  //qDebug() << "Done Render Page:" << pagenum << img.size();
-  return img;
+  if(DOC!=0){
+		Poppler::Page *PAGE = DOC->page(pagenum);
+		QImage img;
+		if(PAGE!=0){
+			//qDebug() << "Render Page:" << pagenum;
+			img = PAGE->renderToImage(DPI.width(),DPI.height());
+			loadingHash.insert(pagenum, img);
+			//qDebug() << "Image after creation:" << img.isNull();
+			delete PAGE;
+		}
+		//qDebug() << "Done Render Page:" << pagenum << img.size();
+	}else{
+		loadingHash.insert(pagenum, QImage());
+	}
+	emit PageLoaded(pagenum);
 }
 
 QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
   QList<TextData*> results;
-  /*for(int i = 0; i < pnum; i++) {
-    int count = fz_search_page_number(CTX, DOC, i, text.toLatin1().data(), rectBuffer, 1000);
-    //qDebug() << "Page " << i+1 << ": Count, " << count;
-    for(int j = 0; j < count; j++) {
-      TextData *t = new TextData(rectBuffer[j], i+1, text);
-      //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
-      if(matchCase){
-        fz_stext_page *sPage = fz_new_stext_page_from_page_number(CTX, DOC, i, NULL);
-        QString currentStr = QString(fz_copy_selection(CTX, sPage, *fz_rect_min(&rectBuffer[j]), *fz_rect_max(&rectBuffer[j]), false));
-        if(currentStr.contains(text, Qt::CaseSensitive)){ results.append(t); }
-      }else{
-          results.append(t);
-      }
+  for(int i = 0; i < pnum; i++) {
+		QList<Poppler::TextBox*> textList = DOC->page(i)->textList();
+    for(int j = 0; j < textList.size(); j++) {
+			if(textList[j]->text().contains(text, 
+			(matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
+				TextData *t = new TextData(textList[j]->boundingBox(), i+1, text);
+				results.append(t);
+			}
     }
-  }*/
+  }
   return results;
+}
+
+QImage Renderer::imageHash(int pagenum) {
+	return loadingHash[pagenum];
+}
+
+int Renderer::hashSize() {
+	return loadingHash.keys().length();
+}
+
+void Renderer::clearHash() {
+	loadingHash.clear();
 }

@@ -19,6 +19,7 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtMath>
 #include <QPageLayout>
+#include "Renderer.h"
 
 #include "textData.h"
 
@@ -47,7 +48,6 @@ public:
 	  painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
 	  QRectF paperRect(0,0, paperSize.width(), paperSize.height());
-
 	  // Draw shadow
 	  painter->setClipRect(option->exposedRect);
 	  qreal shWidth = paperRect.width()/100;
@@ -114,17 +114,16 @@ private:
 	double zoomFactor;
 	bool initialized, fitting;
 	QList<QGraphicsItem*> pages;
-	QHash<int, QImage> *pictures;
 	int degrees;
+	Renderer *BACKEND;
 
 public:
-	PrintWidget(QWidget *parent = 0);
+	PrintWidget(Renderer *backend, QWidget *parent = 0);
 	~PrintWidget();
 
 	double getZoomFactor() const { return this->zoomFactor; };
 	ZoomMode getZoomMode() const { return this->zoomMode; };
 	int currentPage() const { return publicPageNum; };
-	void setPictures(QHash<int, QImage>*);
 
 signals:
 	void resized();
