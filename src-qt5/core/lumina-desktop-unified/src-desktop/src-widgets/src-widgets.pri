@@ -2,7 +2,9 @@
 INCLUDEPATH *= $${PWD}
 
 SOURCES *= $${PWD}/RootDesktop.cpp \
-		$${PWD}/ContextMenu.cpp
+		$${PWD}/ContextMenu.cpp \
+		$${PWD}/NativeWindow.cpp
 
 HEADERS *= $${PWD}/RootDesktop.h \
-		$${PWD}/ContextMenu.h
+		$${PWD}/ContextMenu.h \
+		$${PWD}/NativeWindow.h

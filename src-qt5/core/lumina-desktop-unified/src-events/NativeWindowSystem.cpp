@@ -581,13 +581,17 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
     //Only one window can be "Active" at a time - so only do anything if this window wants to be active
     if(vals[props.indexOf(NativeWindowObject::Active)].toBool() ){
       //Lower the currently active window (invisible window) to the bottom of the stack
-      xcb_window_t cactive;
+      /*xcb_window_t cactive;
       if( 1 == xcb_ewmh_get_active_window_reply( &obj->EWMH,
 		 xcb_ewmh_get_active_window_unchecked(&obj->EWMH, QX11Info::appScreen()),
 		&cactive, NULL) ){
           uint32_t val = XCB_STACK_MODE_BELOW;
           xcb_configure_window(QX11Info::connection(),  cactive, XCB_CONFIG_WINDOW_STACK_MODE, &val);
-      }
+      }*/
+
+      /*uint32_t val = XCB_STACK_MODE_ABOVE;
+      if(win->frameId()!=0){ xcb_configure_window(QX11Info::connection(),  win->frameId(), XCB_CONFIG_WINDOW_STACK_MODE, &val); }
+      xcb_configure_window(QX11Info::connection(),  win->id(), XCB_CONFIG_WINDOW_STACK_MODE, &val);*/
 
       xcb_ewmh_set_active_window(&obj->EWMH, QX11Info::appScreen(), win->id() );
       //Also send the active window a message to take input focus
@@ -982,7 +986,8 @@ void NativeWindowSystem::CheckDamageID(WId win){
 void NativeWindowSystem::raiseWindow(NativeWindowObject *win){
   qDebug() << "Raise Window:" << win->name() << win->id();
   //Note: Always ensure the desktop canvas is right under the main window that is raised
-  xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST, Lumina::ROOTWIN->viewID());
+  //xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST, Lumina::ROOTWIN->viewID());
+  if(win->frameId()!=0){ xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST ,win->frameId()); }
   xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_RAISE_LOWEST ,win->id());
 }
 
@@ -990,6 +995,7 @@ void NativeWindowSystem::raiseWindow(NativeWindowObject *win){
 void NativeWindowSystem::lowerWindow(NativeWindowObject *win){
   qDebug() << "Lower Window:" << win->name() << win->id();
   xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_LOWER_HIGHEST ,win->id());
+  if(win->frameId()!=0){ xcb_circulate_window(QX11Info::connection(), XCB_CIRCULATE_LOWER_HIGHEST ,win->frameId()); }
 }
 
 // === PRIVATE SLOTS ===
@@ -1029,11 +1035,14 @@ void NativeWindowSystem::RequestPing(WId win){
 
 void NativeWindowSystem::RequestReparent(WId win, WId container, QPoint relorigin){
   NativeWindowObject *WIN = findWindow(win);
+  qDebug() << "Got reparent request:" << win;
   if(WIN==0){ return; } //could not find corresponding window structure
-//Reparent the window into the container
-  xcb_reparent_window(QX11Info::connection(), win, container, relorigin.x(), relorigin.y());
-  //xcb_map_window(QX11Info::connection(), win);
+  qDebug() << "Reparent Window into container:" << WIN->name();
 
+  //Reparent the window into the container
+  xcb_reparent_window(QX11Info::connection(), win, container, relorigin.x(), relorigin.y());
+  xcb_map_window(QX11Info::connection(), win);
+  return;
   //Now send the embed event to the app
   //qDebug() << " - send _XEMBED event";
   xcb_client_message_event_t event;
@@ -1051,20 +1060,20 @@ void NativeWindowSystem::RequestReparent(WId win, WId container, QPoint relorigi
 
   //Now setup any redirects and return
   //this->SelectInput(win, true); //Notify of structure changes
-  registerClientEvents(win);
+  //registerClientEvents(win);
   //xcb_composite_redirect_window(QX11Info::connection(), win, XCB_COMPOSITE_REDIRECT_MANUAL); //XCB_COMPOSITE_REDIRECT_[MANUAL/AUTOMATIC]);
 
   //Now map the window (will be a transparent child of the container)
-  xcb_map_window(QX11Info::connection(), win);
-  xcb_map_window(QX11Info::connection(), container);
+  //xcb_map_window(QX11Info::connection(), win);
+  //xcb_map_window(QX11Info::connection(), container);
   //Now create/register the damage handler
   // -- XCB (Note: The XCB damage registration is completely broken at the moment - 9/15/15, Ken Moore)
   //  -- Retested 6/29/17 (no change) Ken Moore
   //xcb_damage_damage_t dmgID = xcb_generate_id(QX11Info::connection()); //This is a typedef for a 32-bit unsigned integer
   //xcb_damage_create(QX11Info::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);
   // -- XLib (Note: This is only used because the XCB routine above does not work - needs to be fixed upstream in XCB itself).
-  Damage dmgID = XDamageCreate(QX11Info::display(), win, XDamageReportRawRectangles);
-  WIN->addDamageID( (uint) dmgID); //save this for later
+  //Damage dmgID = XDamageCreate(QX11Info::display(), win, XDamageReportRawRectangles);
+  //WIN->addDamageID( (uint) dmgID); //save this for later
   //qDebug() << " - Done";
   //return ( (uint) dmgID );
 }

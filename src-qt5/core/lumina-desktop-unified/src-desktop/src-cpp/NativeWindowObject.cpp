@@ -26,6 +26,7 @@ NativeWindowObject::NativeWindowObject(WId id) : QObject(){
     geomTimer->setSingleShot(true);
     geomTimer->setInterval(50); //1/20 second
   connect(geomTimer, SIGNAL(timeout()), this, SLOT(sendNewGeom()) );
+  qRegisterMetaType<WId>("WId");
 }
 
 NativeWindowObject::~NativeWindowObject(){
@@ -279,6 +280,33 @@ void NativeWindowObject::updateGeometry(int x, int y, int width, int height, boo
 // ==== PUBLIC SLOTS ===
 void NativeWindowObject::toggleVisibility(){
   setProperty(NativeWindowObject::Visible, !property(NativeWindowObject::Visible).toBool() );
+}
+
+void NativeWindowObject::toggleMaximize(){
+  //Find the screen containing this window (center of window)
+  QRect curgeom = frameGeometry();
+  QPoint ctr = curgeom.center();
+  QList<QScreen*> scrns = QApplication::screens();
+  QRect max;
+  for(int i=0; i<scrns.length(); i++){
+    if(scrns[i]->geometry().contains(ctr)){
+      max = scrns[i]->availableGeometry();
+      break;
+    }
+  }
+  //Now compare the current geometry to the screen geometry
+  if(curgeom!=max){
+    setGeometryNow(max); //will set newgeom to max
+    newgeom = curgeom; //now reset newgeom
+  }else{
+    //Already maximized, look at the old geometry and figure out how to restore it
+    if(newgeom.isNull()){
+      //no old info available - center the window at half maximum size
+      newgeom = QRect(max.x()-max.width()/2, max.y()-max.height()/2, max.width()/2, max.height()/2);
+    }
+    setGeometryNow(newgeom);
+  }
+  emit geomChanged();
 }
 
 void NativeWindowObject::requestClose(){

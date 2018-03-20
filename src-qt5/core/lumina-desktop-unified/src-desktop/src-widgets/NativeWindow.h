@@ -8,6 +8,7 @@
 #define _LUMINA_DESKTOP_NATIVE_WINDOW_WIDGET_H
 
 #include <global-includes.h>
+#include <NativeWindowObject.h>
 
 class NativeWindow : public QFrame{
 	Q_OBJECT
@@ -20,6 +21,8 @@ private:
 	NativeWindowObject *WIN;
 	// Interface items
 	void createFrame();
+	void loadIcons();
+
 	QToolButton *closeB, *minB, *maxB, *otherB;
 	QHBoxLayout *toolbarL;
 	QVBoxLayout *vlayout;

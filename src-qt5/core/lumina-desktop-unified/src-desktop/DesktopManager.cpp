@@ -8,6 +8,10 @@
 
 #include "global-objects.h"
 
+#ifdef USE_WIDGETS
+#include "src-widgets/NativeWindow.h"
+#endif
+
 // === PUBLIC ===
 DesktopManager::DesktopManager(){
 
@@ -124,6 +128,7 @@ void DesktopManager::NewWindowAvailable(NativeWindowObject* win){
   //connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(syncWindowList()) );
 #ifdef USE_WIDGETS
   qDebug() << "Got New Widget Window:" << win->name();
+  NativeWindow *tmp = new NativeWindow(win);
 #endif
   syncWindowList();
 }

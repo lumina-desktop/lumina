@@ -120,6 +120,7 @@ public:
 
 public slots:
 	Q_INVOKABLE void toggleVisibility();
+	Q_INVOKABLE void toggleMaximize();
 	Q_INVOKABLE void requestClose(); //ask the app to close the window (may/not depending on activity)
 	Q_INVOKABLE void requestKill();	//ask the WM to kill the app associated with this window (harsh - only use if not responding)
 	Q_INVOKABLE void requestPing();	//ask the app if it is still active (a WindowNotResponding signal will get sent out if there is no reply);
