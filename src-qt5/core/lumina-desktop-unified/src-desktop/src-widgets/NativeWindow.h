@@ -29,6 +29,15 @@ private:
 
 private slots:
 
+	//Property Change slots
+	void syncWinImage();
+	void syncName();
+	void syncTitle();
+	void syncIcon();
+	void syncSticky();
+	void syncVisibility();
+	void syncWinType();
+	void syncGeom();
 };
 
 #endif

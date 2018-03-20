@@ -22,6 +22,7 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
+#include <xcb/screensaver.h>
 
 //XLib includes (XCB Damage lib does not appear to register for damage events properly)
 #include <X11/extensions/Xdamage.h>
@@ -84,7 +85,8 @@ inline void registerClientEvents(WId id, bool client = true){
 			| XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
 			| XCB_EVENT_MASK_ENTER_WINDOW)
 			};*/
-  xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, values);
+  //xcb_change_window_attributes(QX11Info::connection(), id, XCB_CW_EVENT_MASK, values);
+  xcb_screensaver_select_input(QX11Info::connection(), id, values[0]);
 }
 
 /*inline void registerClientEvents(WId id){

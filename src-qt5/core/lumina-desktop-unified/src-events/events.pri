@@ -1,6 +1,6 @@
 # Files
 QT *= x11extras
-LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lxcb-keysyms -lXdamage 
+LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lxcb-keysyms -lxcb-screensaver -lXdamage 
 
 SOURCES *= $${PWD}/LShortcutEvents.cpp \
 		$${PWD}/NativeEventFilter.cpp \
