@@ -21,8 +21,6 @@
 #include <LuminaXDG.h>
 #include "PrintWidget.h"
 
-#define TESTING 0
-
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   //this->setWindowTitle(tr("Lumina PDF Viewer"));
@@ -210,6 +208,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->bookmarksFrame->setVisible(false);
 
   //TESTING features/functionality
+  bool TESTING = BACKEND->supportsExtraFeatures();
   ui->actionSettings->setEnabled(TESTING);
   ui->actionSettings->setVisible(TESTING);
   ui->actionBookmarks->setEnabled(TESTING);
@@ -218,14 +217,20 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionScroll_Mode->setVisible(TESTING);
   ui->actionSelect_Mode->setEnabled(TESTING);
   ui->actionSelect_Mode->setVisible(TESTING);
-  //ui->actionProperties->setEnabled(TESTING);
-  //ui->actionProperties->setVisible(TESTING);
-  //ui->menuSettings->setEnabled(TESTING);
-  //ui->menuSettings->setVisible(TESTING);
+  ui->actionProperties->setEnabled(TESTING);
+  ui->actionProperties->setVisible(TESTING);
+  ui->menuSettings->setEnabled(TESTING);
+  ui->menuSettings->setVisible(TESTING);
   if(!TESTING){
-    //ui->menubar->removeAction(ui->menuSettings->menuAction() );
+    ui->menubar->removeAction(ui->menuSettings->menuAction() );
   }
 
+  ui->actionSettings->setEnabled(false);
+  ui->actionSettings->setVisible(false);
+  ui->actionScroll_Mode->setEnabled(false);
+  ui->actionScroll_Mode->setVisible(false);
+  ui->actionSelect_Mode->setEnabled(false);
+  ui->actionSelect_Mode->setVisible(false);
 }
 
 MainUI::~MainUI(){
@@ -236,6 +241,7 @@ void MainUI::loadFile(QString path){
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
   QString password;
   bool ok = true;
+    
   while( ok && !BACKEND->loadDocument(path, password) && BACKEND->needPassword() ){
     password = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
     if(!ok){ break; } //cancelled

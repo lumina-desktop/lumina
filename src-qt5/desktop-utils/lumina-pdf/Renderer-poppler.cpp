@@ -107,7 +107,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
     for(int j = 0; j < textList.size(); j++) {
       if(textList[j]->text().contains(text, 
       (matchCase) ? Qt::CaseSensitive : Qt::CaseInsensitive)) {
-        TextData *t = new TextData(textList[j]->boundingBox(), i+1, text, degrees);
+        TextData *t = new TextData(textList[j]->boundingBox(), i+1, text);
         results.append(t);
       }
     }
@@ -126,3 +126,5 @@ int Renderer::hashSize() {
 void Renderer::clearHash() {
   loadingHash.clear();
 }
+
+bool Renderer::supportsExtraFeatures() { return false; }

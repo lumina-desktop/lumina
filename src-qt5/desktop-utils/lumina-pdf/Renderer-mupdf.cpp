@@ -236,3 +236,5 @@ void Renderer::clearHash() {
   qDeleteAll(dataHash);
   dataHash.clear();
 }
+
+bool Renderer::supportsExtraFeatures() { return true; }

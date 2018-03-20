@@ -50,6 +50,8 @@ public:
     emit reloadPages(this->degrees);
   }
 
+  bool supportsExtraFeatures();
+
 signals:
   void PageLoaded(int);
   void OrigSize(QSizeF);
