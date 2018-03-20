@@ -129,15 +129,20 @@ void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
   if(!text->highlighted()) {
     double pageHeight = pages.at(text->page()-1)->boundingRect().height();
+    int degrees = BACKEND->rotatedDegrees();
+    //Shows the text's location on a non-rotated page
     QRectF rect = text->loc();
-    if(BACKEND->rotatedDegrees() != 0) {
+    //Rotates the rectangle by the page's center and gets the right calculation for text's new location
+    if(degrees != 0) {
       QSize center = BACKEND->imageHash(text->page()-1).size()/2;
-      //Rotates the rectangle by the page's center
-			//Currently broken when degrees are 90 or 270
+
+      if(degrees == 90 or degrees == 270)
+        center.transpose();
+
       double cx = center.width(), cy = center.height();
       rect.adjust(-cx, -cy, -cx, -cy);
-			QMatrix matrix;
-			matrix.rotate(BACKEND->rotatedDegrees());
+      QMatrix matrix;
+      matrix.rotate(BACKEND->rotatedDegrees());
       rect = matrix.mapRect(rect);
       if(BACKEND->rotatedDegrees() == 180)
         rect.adjust(cx, cy, cx, cy);
@@ -146,6 +151,7 @@ void PrintWidget::highlightText(TextData *text) {
     }
     //Moves the rectangle onto the right page
     rect.moveTop(rect.y() + pageHeight*(text->page()-1));
+    //Transparent yellow for the highlight box
     QBrush highlightFill(QColor(255, 255, 177, 100));
     QPen highlightOutline(QColor(255, 255, 100, 125));
     scene->addRect(rect, highlightOutline, highlightFill);
