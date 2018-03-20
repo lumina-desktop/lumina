@@ -12,19 +12,16 @@
 #include "Renderer.h"
 
 namespace Ui{
-	class PropDialog;
+  class PropDialog;
 };
 
 class PropDialog : public QDialog {
   Q_OBJECT
   public:
     PropDialog(Renderer *Backend);
-
     void setSize(QSizeF);
 
   private:
-    //void setInfo(fz_context*, pdf_obj*, QTextEdit*, QString);
-
     Ui::PropDialog *ui;
 };
 #endif

@@ -21,8 +21,6 @@
 #include <LuminaXDG.h>
 #include "PrintWidget.h"
 
-#define TESTING 0
-
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->setupUi(this);
   //this->setWindowTitle(tr("Lumina PDF Viewer"));
@@ -31,11 +29,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 1;
   lastdir = QDir::homePath();
   BACKEND = new Renderer();
+  PROPDIALOG=nullptr;
   //Create the interface widgets
-  WIDGET = new PrintWidget(this->centralWidget());
-  WIDGET->setVisible(false);
+  WIDGET = new PrintWidget(BACKEND, this->centralWidget());
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  loadingQueue.clear();
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
@@ -51,16 +50,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //Context Menu
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
-  //Now put the widgets into the UI
-  //ui->bookmarksFrame->setParent(WIDGET);
-  //ui->findGroup->setParent(WIDGET);
-  //qDebug() << "Setting central widget";
-  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET); //setCentralWidget(WIDGET);
+  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET);
   ui->label_replaceme->setVisible(false);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
-  connect(this, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
+  connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
+	connect(BACKEND, SIGNAL(reloadPages(int)), this, SLOT(startLoadingPages(int)));
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -106,8 +102,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   //connect(ui->actionSelect_Mode, &QAction::triggered, this, [&] { this->setScroll(false); });
   connect(ui->actionZoom_In,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
-  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { WIDGET->setDegrees(-90); });
-  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { WIDGET->setDegrees(90); });
+  connect(ui->actionRotate_Counterclockwise, &QAction::triggered, this, [&] { if(results.size() != 0) { foreach(TextData *x, results) { x->highlighted(false); } } BACKEND->setDegrees(-90); });
+  connect(ui->actionRotate_Clockwise, &QAction::triggered, this, [&] { if(results.size() != 0) { foreach(TextData *x, results) { x->highlighted(false); } } BACKEND->setDegrees(90); });
   connect(ui->actionZoom_In_2,  &QAction::triggered, WIDGET, [&] { WIDGET->zoomIn(1.2);  });
   connect(ui->actionZoom_Out_2, &QAction::triggered, WIDGET, [&] { WIDGET->zoomOut(1.2); });
   connect(ui->actionFirst_Page, SIGNAL(triggered()), this, SLOT(firstPage()) );
@@ -115,6 +111,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(ui->actionNext_Page, SIGNAL(triggered()), this, SLOT(nextPage()) );
   connect(ui->actionLast_Page, SIGNAL(triggered()), this, SLOT(lastPage()) );
   connect(ui->actionProperties, &QAction::triggered, WIDGET, [&] { PROPDIALOG->show(); });
+  connect(BACKEND, &Renderer::OrigSize, this, [&](QSizeF _pageSize) { pageSize = _pageSize; });
   connect(ui->actionFind, &QAction::triggered, this, [&] {
     if(ui->findGroup->isVisible()) {
       ui->findGroup->setVisible(false);
@@ -211,6 +208,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->bookmarksFrame->setVisible(false);
 
   //TESTING features/functionality
+  bool TESTING = BACKEND->supportsExtraFeatures();
   ui->actionSettings->setEnabled(TESTING);
   ui->actionSettings->setVisible(TESTING);
   ui->actionBookmarks->setEnabled(TESTING);
@@ -227,6 +225,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     ui->menubar->removeAction(ui->menuSettings->menuAction() );
   }
 
+  ui->actionSettings->setEnabled(false);
+  ui->actionSettings->setVisible(false);
+  ui->actionScroll_Mode->setEnabled(false);
+  ui->actionScroll_Mode->setVisible(false);
+  ui->actionSelect_Mode->setEnabled(false);
+  ui->actionSelect_Mode->setVisible(false);
 }
 
 MainUI::~MainUI(){
@@ -237,27 +241,25 @@ void MainUI::loadFile(QString path){
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
   QString password;
   bool ok = true;
+    
   while( ok && !BACKEND->loadDocument(path, password) && BACKEND->needPassword() ){
     password = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
     if(!ok){ break; } //cancelled
   }
   //Clear the current display
-  WIDGET->setPictures(0); //Turn off the loadingHash in the preview widget for now
-  loadingHash.clear();
-  QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
+	WIDGET->setVisible(false);
+  QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
   //Load the new document info
   this->setWindowTitle( BACKEND->title());
   if(BACKEND->needPassword()){ return; } //cancelled;
-  //qDebug() << " - Document Setup : start loading pages now";
-  //startLoadingPages();
-  QTimer::singleShot(50, this, SLOT(startLoadingPages()) );
+  qDebug() << " - Document Setup : start loading pages now";
+  QTimer::singleShot(50, [&]() { startLoadingPages(0); } );
 }
 
-void MainUI::loadPage(int num, MainUI *obj, QSize dpi){
+void MainUI::loadPage(int num, MainUI *obj, QSize dpi, int degrees){
   //qDebug() << " - Render Page:" << num;
-  QImage img = BACKEND->renderPage(num, dpi);
-  loadingHash.insert(num, img);
-  obj->emit PageLoaded(num);
+  BACKEND->renderPage(num, dpi, degrees);
+  //qDebug() << "Image at" << num << "accessed outside:" << BACKEND->imageHash(num).isNull();
 }
 
 QScreen* MainUI::getScreen(bool current, bool &cancelled){
@@ -293,7 +295,7 @@ QScreen* MainUI::getScreen(bool current, bool &cancelled){
 }
 
 void MainUI::startPresentation(bool atStart){
-  if(loadingHash.isEmpty()){ return; } //just in case
+  if(BACKEND->hashSize() == 0){ return; } //just in case
   bool cancelled = false;
   QScreen *screen = getScreen(false, cancelled); //let the user select which screen to use (if multiples)
   if(cancelled){ return;}
@@ -341,7 +343,7 @@ void MainUI::ShowPage(int page){
   //qDebug() << "Show Page:" << page << "/" << numPages;
   CurrentPage = page;
   QImage PAGEIMAGE;
-  if(page<BACKEND->numPages()+1){ PAGEIMAGE = loadingHash[page-1]; }
+  if(page<BACKEND->numPages()+1){ PAGEIMAGE = BACKEND->imageHash(page-1); }
 
   //Now scale the image according to the user-designations and show it
   if(!PAGEIMAGE.isNull()){
@@ -367,10 +369,14 @@ void MainUI::endPresentation(){
   updatePageNumber();
 }
 
-void MainUI::startLoadingPages(){
-  //qDebug() <<"Start Loading Pages";
-  if(!loadingHash.isEmpty()){ return; } //currently loaded[ing]
-  //loadingHash.clear();
+void MainUI::startLoadingPages(int degrees){
+  qDebug() <<"Start Loading Pages";
+  //if(BACKEND->hashSize() != 0) { return; } //currently loaded[ing]
+  loadingQueue.clear();
+  if(PROPDIALOG)
+    delete PROPDIALOG;
+	BACKEND->clearHash();
+  WIDGET->setVisible(false);
   //qDebug() << "Update Progress Bar";
   progress->setRange(0, BACKEND->numPages());
   progress->setValue(0);
@@ -383,26 +389,30 @@ void MainUI::startLoadingPages(){
 
   QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
 
-  /*qDebug() << "Screen Resolutions:";
+  qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
-  }*/
+  }
   for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
-		QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI);
+    if(BACKEND->loadMultiThread()) {
+      QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI, degrees);
+    }else{
+      BACKEND->renderPage(i, DPI, degrees);
+    }
   }
   //qDebug() << "Finish page loading kickoff";
 }
 
 void MainUI::slotPageLoaded(int page){
-  Q_UNUSED(page);
-  //qDebug() << "Page Loaded:" << page;
-  int finished = loadingHash.keys().length();
-  //qDebug() << " - finished:" << finished;
+  loadingQueue.push_back(page);  
+  int finished = loadingQueue.size();
+  //qDebug() << "Page Loaded:" << page << finished;
   if(finished == BACKEND->numPages()){
+    //qDebug() << " - finished:" << finished;
     progAct->setVisible(false);
-    WIDGET->setPictures(&loadingHash);
+    WIDGET->setVisible(true);
     WIDGET->setCurrentPage(1);
     PROPDIALOG = new PropDialog(BACKEND);
     PROPDIALOG->setSize(pageSize);
@@ -410,7 +420,7 @@ void MainUI::slotPageLoaded(int page){
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
     pageAct->setVisible(true);
-    //qDebug() << " - Document Setup: All pages loaded";
+    qDebug() << " - Document Setup: All pages loaded";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }else{
     progress->setValue(finished);
@@ -418,7 +428,7 @@ void MainUI::slotPageLoaded(int page){
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER){
-  if(loadingHash.keys().length() != BACKEND->numPages()){ return; }
+  if(BACKEND->hashSize() != BACKEND->numPages()){ return; }
   //qDebug() << "paintToPrinter";
   int pages = BACKEND->numPages();
   int firstpage = 0;
@@ -426,7 +436,6 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   bool collate = PRINTER->collateCopies();
   bool reverse = (PRINTER->pageOrder()==QPrinter::LastPageFirst);
   qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
-  //return;
   if(PRINTER->resolution() < 300){
     //Try to get 300 DPI resolution at least
     PRINTER->setResolution(300);
@@ -450,24 +459,21 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     //for(int c=1; c<copies && !collate; c++){ pageCount << i; } //add any copies of this page as needed
   }
   //qDebug() << "Got Page Range:" << pageCount;
-
   //QT 5.9+ : Do not need to manually reverse the pages (already handled internally)
-  if(reverse){
+  if(reverse) {
     //Need to reverse the order of the list
     QList<int> tmp = pageCount;
     pageCount.clear();
     for(int i=tmp.length()-1; i>=0; i--){ pageCount << tmp[i]; }
     //qDebug() << " - reversed:" << pageCount;
   }
-
-  //QT 5.9+ : Do not need to manually stack "copies". Already handled internally
+  //QT 5.9+ : Do not need to manually stack "copies". Already handled internally;
   /*if(collate && copies>0){
     QList<int> orig = pageCount; //original array of pages
     for(int c=1; c<copies; c++){
       pageCount << orig; //add a new copy of the entire page range
     }
   }*/
-
   //qDebug() << "Final Page Range:" << pageCount;
   //Generate the sizing information for the printer
   QSize sz(PRINTER->pageRect().width(), PRINTER->pageRect().height());
@@ -490,7 +496,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     //qDebug() << "Printing Page:" << pageCount[i];
     progress->setValue(i);
     QApplication::processEvents();
-    QImage img = loadingHash[pageCount[i]].scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QImage img = BACKEND->imageHash(pageCount[i]).scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     //Now draw the image
     painter.drawImage(0,0,img);
   }
@@ -567,6 +573,10 @@ void MainUI::keyPressEvent(QKeyEvent *event){
     /*qDebug() << "Send Wheel Event";
     QWheelEvent wEvent( WIDGET->mapFromGlobal(QCursor::pos()), QCursor::pos(),QPoint(0,0), QPoint(0,30), 0, Qt::Vertical, Qt::LeftButton, Qt::NoModifier);
     QApplication::sendEvent(WIDGET, &wEvent);*/
+  }else if(event->key() == Qt::Key_Enter) {
+    /*if(ui->findGroup->hasFocus()) {
+      find(ui->textEdit->text(), true);
+    }*/
   }else{
     QMainWindow::keyPressEvent(event);
   }
@@ -598,7 +608,7 @@ void MainUI::find(QString text, bool forward) {
           delete td;
         results.clear();
       }
-      QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+      WIDGET->updatePreview();
       ui->resultsLabel->setText("");
       //Get the new search results
       results = BACKEND->searchDocument(text, matchCase);
@@ -628,7 +638,6 @@ void MainUI::find(QString text, bool forward) {
 
       //qDebug() << "Jump to page: " << currentText.page;
 
-      //Current Bug: Does not highlight results[0]
       WIDGET->highlightText(currentText);
     }else{
       ui->resultsLabel->setText("No results found");

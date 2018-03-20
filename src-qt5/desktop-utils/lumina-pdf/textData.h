@@ -4,28 +4,32 @@
 #include <QRect>
 
 class TextData {
-    private:
-      QRect _loc;
-      bool _highlighted=false;
-      int _page=0;
-      QString _text="";
+  private:
+    QRectF p_loc;
+    bool p_highlighted=false;
+    int p_page=0;
+    QString p_text="";
+		//int p_degrees=0;
 
-    public:
-      TextData(QRect _loc, int _page, QString _text) {
-        this->_loc = _loc;
-        this->_page = _page;
-        this->_text = _text;
-      }
+  public:
+    TextData(QRectF _loc, int _page, QString _text) :
+				p_loc(_loc),
+        p_page(_page),
+        p_text(_text)
+			  //p_degrees(_degrees)
+    { }
 
-      QRect loc() { return this->_loc; }
-      bool highlighted() { return this->_highlighted; }
-      int page() { return this->_page; }
-      QString text() { return this->_text; }
-      
-      void loc(QRect loc) { this->_loc = loc; }
-      void highlighted(bool highlighted) { this->_highlighted = highlighted; }
-      void page(int page) { this->_page = page; }
-      void text(QString text) { this->_text = text; }
+    QRectF loc() { return p_loc; }
+    bool highlighted() { return p_highlighted; }
+    int page() { return p_page; }
+    QString text() { return p_text; }
+    //int degrees() { return p_degrees; }
+    
+    void loc(QRect loc) { p_loc = loc; }
+    void highlighted(bool highlighted) { p_highlighted = highlighted; }
+    void page(int page) { p_page = page; }
+    void text(QString text) { p_text = text; }
+    //void degrees(int degrees) { p_degrees = degrees; }
 };
 
 #endif

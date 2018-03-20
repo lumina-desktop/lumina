@@ -15,21 +15,21 @@
 #include <QDebug>
 
 class PresentationLabel : public QLabel{
-	Q_OBJECT
+  Q_OBJECT
 
 signals:
-	void nextSlide();
+  void nextSlide();
 
 public:
-	PresentationLabel() : QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint){
-	  this->setContextMenuPolicy(Qt::CustomContextMenu);
-	}
+  PresentationLabel() : QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint){
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+  }
 
 protected:
-	void mousePressEvent(QMouseEvent *ev){
-	  QLabel::mousePressEvent(ev);
-	  if(ev->button()==Qt::LeftButton){ emit nextSlide(); }
-	}
+  void mousePressEvent(QMouseEvent *ev){
+    QLabel::mousePressEvent(ev);
+    if(ev->button()==Qt::LeftButton){ emit nextSlide(); }
+  }
 };
 
 #endif
