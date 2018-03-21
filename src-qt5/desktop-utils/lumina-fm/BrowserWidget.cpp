@@ -19,6 +19,7 @@
 BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   //Setup the Widget/UI
   this->setLayout( new QVBoxLayout(this) );
+  this->layout()->setContentsMargins(0,0,0,0);
   ID = objID;
   //Setup the backend browser object
   bThread = new QThread();
