@@ -15,8 +15,8 @@
 #include <QDebug>
 #include <QApplication>
 #include <QScreen>
-#include <iostream>
 #include <QtConcurrent>
+#include <QSplitter>
 
 #include <LuminaXDG.h>
 #include "PrintWidget.h"
@@ -29,44 +29,35 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 1;
   lastdir = QDir::homePath();
   BACKEND = new Renderer();
-  PROPDIALOG = new PropDialog(BACKEND);
-  BOOKMARKS = new BookmarkMenu(BACKEND, this->centralWidget());
-  BOOKMARKS->setContextMenuPolicy(Qt::CustomContextMenu);
-  //BOOKMARKS->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
   //Create the interface widgets
-  WIDGET = new PrintWidget(BACKEND, this->centralWidget());
+  PROPDIALOG = new PropDialog(BACKEND);
+  BOOKMARKS = new BookmarkMenu(BACKEND, ui->splitter);
+  BOOKMARKS->setContextMenuPolicy(Qt::CustomContextMenu);
+  WIDGET = new PrintWidget(BACKEND, ui->splitter);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
-  //WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  loadingQueue.clear();
+  ui->splitter->setCollapsible(0, true);
+  ui->splitter->setCollapsible(1, false);
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
     connect(clockTimer, SIGNAL(timeout()), this, SLOT(updateClock()) );
-  //frame_presenter = new QFrame(this);
   label_clock = new QLabel(this);
     label_clock->setAlignment(Qt::AlignCenter );
     label_clock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     label_clock->setStyleSheet("QLabel{color: palette(highlight-text); background-color: palette(highlight); border-radius: 5px; }");
-
   label_page = new QLabel(this);
     label_page->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     label_page->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-  //Context Menu
+
   contextMenu = new QMenu(this);
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
-  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET);
-  ui->label_replaceme->setVisible(false);
-  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme2, BOOKMARKS);
-  ui->label_replaceme2->setVisible(false);
-  QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  policy.setHorizontalStretch(1);
-  BOOKMARKS->setSizePolicy(policy);
-  policy.setHorizontalStretch(4);
-  WIDGET->setSizePolicy(policy);
+
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 	connect(BACKEND, SIGNAL(reloadPages(int)), this, SLOT(startLoadingPages(int)));
 	connect(BACKEND, SIGNAL(goToPosition(int, float, float)), WIDGET, SLOT(goToPosition(int, float, float)));
+  connect(ui->splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved()) );
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -96,8 +87,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     tmp->addAction(ui->actionDual_Pages);
     tmp->addAction(ui->actionAll_Pages);
   ui->actionSingle_Page->setChecked(true);
-
-  //qDebug() << "Starting connections";
 
   //Connect up the buttons
   connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()) );
@@ -145,9 +134,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     [&] { ui->findGroup->setVisible(false); this->setFocus(); });
   connect(ui->actionClearHighlights,  &QAction::triggered, WIDGET,
     [&] { WIDGET->updatePreview(); });
-  connect(ui->actionBookmarks, &QAction::triggered, this, [=] () { BOOKMARKS->setVisible(true); });
-
-  //qDebug() << "Finished connctions";
+  connect(ui->actionBookmarks, &QAction::triggered, this, [=] () { ui->splitter->setSizes( QList<int>() << this->width()/4 << 3*this->width()/4); });
 
   //int curP = WIDGET->currentPage()-1; //currentPage reports pages starting at 1
   //int lastP = numPages-1;
@@ -371,6 +358,7 @@ void MainUI::startLoadingPages(int degrees){
   loadingQueue.clear();
 	BACKEND->clearHash();
   WIDGET->setVisible(false);
+  BOOKMARKS->setVisible(false);
   //qDebug() << "Update Progress Bar";
   progress->setRange(0, BACKEND->numPages());
   progress->setValue(0);
@@ -408,6 +396,8 @@ void MainUI::slotPageLoaded(int page){
   if(finished == BACKEND->numPages()){
     progAct->setVisible(false);
     WIDGET->setVisible(true);
+    BOOKMARKS->setVisible(true);
+    ui->splitter->setSizes(QList<int>() << 0 << this->width());
     WIDGET->setCurrentPage(1);
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
@@ -628,9 +618,6 @@ void MainUI::find(QString text, bool forward) {
       ui->resultsLabel->setText(QString::number(currentHighlight+1) + " of " + QString::number(results.size()) + " results");
 
       TextData *currentText = results[currentHighlight];
-      WIDGET->setCurrentPage(currentText->page());
-
-      //qDebug() << "Jump to page: " << currentText.page;
 
       if(BACKEND->supportsExtraFeatures())
         WIDGET->highlightText(currentText);
@@ -638,4 +625,10 @@ void MainUI::find(QString text, bool forward) {
       ui->resultsLabel->setText("No results found");
     }
   }
+}
+
+void MainUI::splitterMoved() {
+  float percent = (ui->splitter->sizes().first() / ( (float) this->width()) )*100.0;
+  percent = percent > 33.3 ? 33.3 : percent;
+  ui->splitter->setSizes( QList<int>() << this->width()*(percent/100.0) << this->width() * ((100.0-percent)/100.0) );
 }

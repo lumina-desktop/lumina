@@ -98,6 +98,7 @@ private slots:
   void showContextMenu(const QPoint&){ contextMenu->popup(QCursor::pos()); }
   void updateContextMenu();
   //void setScroll(bool);
+  void splitterMoved();
 
 protected:
   void keyPressEvent(QKeyEvent*);

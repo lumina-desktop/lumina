@@ -156,6 +156,7 @@ void PrintWidget::highlightText(TextData *text) {
     QPen highlightOutline(QColor(255, 255, 100, 125));
     scene->addRect(rect, highlightOutline, highlightFill);
     text->highlighted(true);
+    goToPosition(text->page(), rect.x(), rect.y());
   }
 }
 
@@ -316,16 +317,12 @@ void PrintWidget::fit(bool doFitting) {
 
 void PrintWidget::goToPosition(int pagenum, float x, float y) {
   setCurrentPage(pagenum+1);
-  QPointF pt = this->transform().map(pages.at(pagenum)->pos());
-
-  if (zoomMode != FitInView) {
-    if(x != 0)  { 
-      QScrollBar *hsc = this->horizontalScrollBar();
-      hsc->setValue(int(pt.x() + x) - 10);
-    } 
-    if(y != 0) {
-      QScrollBar *vsc = this->verticalScrollBar();
-      vsc->setValue(int(pt.y() + y) - 10);
-    } 
+  if(x != 0)  { 
+    QScrollBar *hsc = this->horizontalScrollBar();
+    hsc->setValue((int)x - 10);
+  } 
+  if(y != 0) {
+    QScrollBar *vsc = this->verticalScrollBar();
+    vsc->setValue((int)y - 10);
   } 
 }
