@@ -34,7 +34,7 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->check_autoapplinks, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_watch_app_procs, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->mywindowmanager, SIGNAL(currentIndexChanged(int)), this, SLOT(settingChanged()));
-  updateIcons(); 
+  updateIcons();
 }
 
 page_session_options::~page_session_options(){
@@ -54,12 +54,12 @@ void page_session_options::SaveSettings(){
   sessionsettings.setValue("DateFormat", ui->line_session_date->text());
   sessionsettings.setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
 
-  QString my_win = ui->mywindowmanager->currentText();
+  QString my_win = ui->mywindowmanager->currentData().toString();
   // Warn user if they select a non-default window manager
-  if (! my_win.contains("Lumina") ) 
+  if (! my_win.isEmpty() )
       QMessageBox::information(this, tr("Window manager"), "Warning: Please note window managers other than Lumina are not supported." );
   // If we selected "Lumina" as the window manager, leave the field blank to get default
-  if (! my_win.compare("Lumina"))
+  if ( my_win.isEmpty() )
      sessionsettings.remove("WindowManager");
   else
      sessionsettings.setValue("WindowManager", my_win);
@@ -109,16 +109,16 @@ void page_session_options::LoadSettings(int){
   // Check to see if old window manager is in our list and, if not, add it
   if ( old_wm.length() > 0 )
   {
-      index = ui->mywindowmanager->findText( old_wm );
+      index = ui->mywindowmanager->findData( old_wm );
       if (index == -1)  // did not find existing option in list, so add it
       {
-           ui->mywindowmanager->addItem( old_wm );
+           ui->mywindowmanager->addItem( old_wm, old_wm);
           // Past window manager is now in list so we can select it, even if it did not exist before
-          index = ui->mywindowmanager->findText( old_wm );
+          index = ui->mywindowmanager->findData( old_wm );
       }
   }
   else   // there was no "old" window manager, default to using Lumina/default
-     index = ui->mywindowmanager->findText( "Lumina" );
+     index = 0;
 
   ui->mywindowmanager->setCurrentIndex(index);
 
@@ -139,14 +139,23 @@ void page_session_options::updateIcons(){
 }
 
 //=================
-//         PRIVATE 
+//         PRIVATE
 //=================
 
 void page_session_options::FindWindowManagerOptions(){
     // Try to find all available window managers and add them to drop-down box.
     ui->mywindowmanager->clear();
-    ui->mywindowmanager->addItem("Lumina"); // make sure there is a default
-    if (QFileInfo::exists("/usr/bin/fluxbox"))
+    ui->mywindowmanager->addItem("Default (fluxbox)"); // make sure there is a default at position 0
+    QStringList wms; wms << "kwin" << "openbox" << "i3";
+    //NOTE: the "fluxbox" window manager is already assumed by the selection of the "Lumina" default
+    wms.sort();
+    for(int i=0; i<wms.length(); i++){
+      QString path = wms[i];
+      if(LUtils::isValidBinary(path)){ //This will change the "path" variable to the full path if it exists
+        ui->mywindowmanager->addItem(wms[i], path);
+      }
+    }
+    /*if (QFileInfo::exists("/usr/bin/fluxbox"))
         ui->mywindowmanager->addItem("/usr/bin/fluxbox");
     else if (QFileInfo::exists("/usr/local/bin/fluxbox"))
         ui->mywindowmanager->addItem("/usr/local/bin/fluxbox");
@@ -157,9 +166,13 @@ void page_session_options::FindWindowManagerOptions(){
     if (QFileInfo::exists("/usr/bin/openbox"))
         ui->mywindowmanager->addItem("/usr/bin/openbox");
     else if (QFileInfo::exists("/usr/local/bin/openbox"))
-        ui->mywindowmanager->addItem("/usr/local/bin/openbox");
+        ui->mywindowmanager->addItem("/usr/local/bin/openbox");*/
 }
 
+bool page_session_options::verifySettingsReset(){
+  bool ok =(QMessageBox::Yes ==  QMessageBox::warning(this, tr("Verify Settings Reset"), tr("Are you sure you want to reset your desktop settings? This change cannot be reversed!"), QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel) );
+  return ok;
+}
 
 //=================
 //    PRIVATE SLOTS
@@ -184,7 +197,7 @@ void page_session_options::sessionChangeUserIcon(){
       }
     }
   }else{
-    ui->push_session_setUserIcon->setWhatsThis(filepath);	
+    ui->push_session_setUserIcon->setWhatsThis(filepath);
   }
   //Now re-load the icon in the UI
   QString path = ui->push_session_setUserIcon->whatsThis();
@@ -195,13 +208,15 @@ void page_session_options::sessionChangeUserIcon(){
 }
 
 void page_session_options::sessionResetSys(){
+  if( !verifySettingsReset() ){ return; } //cancelled
   LDesktopUtils::LoadSystemDefaults();
   QTimer::singleShot(500,this, SLOT(LoadSettings()) );
 }
 
 void page_session_options::sessionResetLumina(){
+  if( !verifySettingsReset() ){ return; } //cancelled
   LDesktopUtils::LoadSystemDefaults(true); //skip OS customizations
-  QTimer::singleShot(500,this, SLOT(LoadSettings()) );	
+  QTimer::singleShot(500,this, SLOT(LoadSettings()) );
 }
 
 void page_session_options::sessionLoadTimeSample(){

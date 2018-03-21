@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>512</width>
     <height>300</height>
    </rect>
   </property>
@@ -204,9 +204,9 @@
        </property>
       </widget>
      </item>
-      <item row="4" column="1">
-       <widget class="QComboBox" name="combo_session_datetimeorder"/>
-      </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="combo_session_datetimeorder"/>
+     </item>
      <item row="5" column="1">
       <widget class="QComboBox" name="mywindowmanager">
        <property name="toolTip">
@@ -221,7 +221,7 @@
        </property>
       </widget>
      </item>
-     </layout>
+    </layout>
    </item>
    <item row="1" column="0">
     <spacer name="verticalSpacer_2">
@@ -264,14 +264,14 @@
       <item>
        <widget class="QPushButton" name="push_session_resetSysDefaults">
         <property name="text">
-         <string>Return to system defaults</string>
+         <string>Restore system defaults</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="push_session_resetLuminaDefaults">
         <property name="text">
-         <string>Return to Lumina defaults</string>
+         <string>Restore Lumina defaults</string>
         </property>
        </widget>
       </item>

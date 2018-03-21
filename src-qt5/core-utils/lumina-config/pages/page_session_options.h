@@ -2,7 +2,7 @@
 //  Lumina Desktop Source Code
 //  Copyright (c) 2016, Ken Moore
 //  Available under the 3-clause BSD license
-//  See the LICENSE file for full details 
+//  See the LICENSE file for full details
 //===========================================
 #ifndef _LUMINA_CONFIG_PAGE_SESSION_OPTIONS_H
 #define _LUMINA_CONFIG_PAGE_SESSION_OPTIONS_H
@@ -31,6 +31,7 @@ private:
 	Ui::page_session_options *ui;
 	bool loading;
         void FindWindowManagerOptions();
+	bool verifySettingsReset();
 
 private slots:
 	void sessionChangeUserIcon();
