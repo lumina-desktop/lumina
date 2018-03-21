@@ -315,3 +315,19 @@ void PrintWidget::fit(bool doFitting) {
 
   //zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
 }
+
+void PrintWidget::goToPosition(int pagenum, float x, float y) {
+  setCurrentPage(pagenum+1);
+  QPointF pt = this->transform().map(pages.at(pagenum)->pos());
+
+  if (zoomMode != FitInView) {
+    if(x != 0)  { 
+      QScrollBar *hsc = this->horizontalScrollBar();
+      hsc->setValue(int(pt.x() + x) - 10);
+    } 
+    if(y != 0) {
+      QScrollBar *vsc = this->verticalScrollBar();
+      vsc->setValue(int(pt.y() + y) - 10);
+    } 
+  } 
+}

@@ -4,24 +4,24 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifndef _LUMINA_PDF_VIEWER_PROP_DIALOG_H
-#define _LUMINA_PDF_VIEWER_PROP_DIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QTextEdit>
 #include "Renderer.h"
 
 namespace Ui{
-  class PropDialog;
+  class BookmarkMenu;
 };
 
-class PropDialog : public QDialog {
+class BookmarkMenu : public QWidget{
   Q_OBJECT
   public:
-    PropDialog(Renderer *Backend);
-    void setSize(QSizeF);
+    BookmarkMenu(Renderer *Backend, QWidget *parent=NULL);
+  public slots:
+    void loadBookmarks();
 
   private:
-    Ui::PropDialog *ui;
+    Ui::BookmarkMenu *ui;
+    Renderer *BACKEND;
 };
-#endif

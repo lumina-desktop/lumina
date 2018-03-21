@@ -19,18 +19,22 @@ message("Qt Modules Needed: $${QT}")
 
 SOURCES += main.cpp \
         mainUI.cpp \
-        propDialog.cpp \
-        PrintWidget.cpp
+        PropDialog.cpp \
+        PrintWidget.cpp \
+        BookmarkMenu.cpp
 
 HEADERS  += mainUI.h \
 		PrintWidget.h \
 		PresentationLabel.h \
 		PropDialog.h \
 		Renderer.h \
-		textData.h
+		TextData.h \
+    Bookmark.h \
+    BookmarkMenu.h
 
 FORMS += mainUI.ui \
-         propDialog.ui
+         PropDialog.ui \
+         BookmarkMenu.ui
 
 isEmpty(USE_MUPDF){
 	message("Using Poppler-Qt5 Backend")

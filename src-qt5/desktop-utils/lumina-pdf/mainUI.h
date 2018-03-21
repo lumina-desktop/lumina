@@ -21,10 +21,11 @@
 #include <QTimer>
 
 #include "Renderer.h"
+#include "BookmarkMenu.h"
 #include "PresentationLabel.h"
-#include "propDialog.h"
+#include "PropDialog.h"
 #include "PrintWidget.h"
-#include "textData.h"
+#include "TextData.h"
 
 namespace Ui{
   class MainUI;
@@ -43,6 +44,7 @@ private:
   PrintWidget *WIDGET;
   Ui::MainUI *ui;
   PropDialog *PROPDIALOG;
+  BookmarkMenu *BOOKMARKS;
   QPrintDialog *PrintDLG;
   QString lastdir;
   bool matchCase;
@@ -61,8 +63,6 @@ private:
 
   //PDF Page Loading cache variables
   Renderer *BACKEND;
-
-  void loadPage(int num, MainUI *obj, QSize dpi, int degrees);
 
   //Functions/variables for the presentation mode
   PresentationLabel *presentationLabel;
@@ -86,7 +86,6 @@ private slots:
   void closePresentation(){ endPresentation(); }
 
   void find(QString text, bool forward);
-  void showBookmarks();
 
   void paintToPrinter(QPrinter *PRINTER);
 

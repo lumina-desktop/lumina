@@ -10,7 +10,8 @@
 #include <QImage>
 #include <QDebug>
 #include <QJsonObject>
-#include "textData.h"
+#include "TextData.h"
+#include "Bookmark.h"
 
 class Renderer : public QObject {
 Q_OBJECT
@@ -22,6 +23,7 @@ private:
   QString doctitle;
   QJsonObject jobj;
 	int degrees;
+  QList<Bookmark*> bookmarks;
 
 public:
   Renderer();
@@ -36,11 +38,14 @@ public:
   int hashSize();
   QImage imageHash(int pagenum);
 	int rotatedDegrees() { return degrees; }
+  QList<Bookmark*> getBookmarks() { return bookmarks; }
 
   //Main access functions
   bool loadDocument(QString path, QString password);
   void renderPage(int pagenum, QSize DPI, int degrees=0);
   QList<TextData*> searchDocument(QString text, bool matchCase);
+  void traverseOutline(void *, int);
+  void handleLink(QString);
 
 	void clearHash();
   //Makes sure degrees is between 0 and 360 then rotates the matrix and 
@@ -56,6 +61,7 @@ signals:
   void PageLoaded(int);
   void OrigSize(QSizeF);
 	void reloadPages(int);
+  void goToPosition(int, float, float);
 };
 
 #endif

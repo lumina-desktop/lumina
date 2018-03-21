@@ -1,14 +1,14 @@
 #include "Renderer.h"
 #include <QDateTime>
 #include <mupdf/fitz.h>
+#include <mupdf/pdf.h>
 #include <QMutex>
 #include <QFuture>
 #include <QtConcurrent>
 
 class Data {
   public:
-    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_pixmap *_pix, fz_matrix _ctm, double _sf) :
-      pagenumber(_pagenum),
+    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_pixmap *_pix, fz_matrix _ctm, double _sf) : pagenumber(_pagenum),
       ctx(_ctx),
       list(_list),
       bbox(_bbox),
@@ -66,9 +66,8 @@ Renderer::Renderer(){
 }
 
 Renderer::~Renderer(){
-  qDebug() << "Calling destructor";
-  qDeleteAll(dataHash);
-  dataHash.clear();
+  qDebug() << "Dropping Context";
+  clearHash();
   fz_drop_document(CTX, DOC);
   DOC = NULL;
   fz_drop_context(CTX);
@@ -76,6 +75,33 @@ Renderer::~Renderer(){
 }
 
 bool Renderer::loadMultiThread(){ return false; }
+
+void Renderer::handleLink(QString link) {
+  float xp = 0.0, yp = 0.0;
+  int pagenum = 0;
+
+  QByteArray linkData = link.toLocal8Bit();
+  char *uri = linkData.data();
+
+  if(!link.isEmpty()) {
+    pagenum = fz_resolve_link(CTX, DOC, uri, &xp, &yp);
+    emit goToPosition(pagenum, xp, yp);
+  }
+}
+
+//Traverse the outline tree through Preorder traversal
+void Renderer::traverseOutline(void *link, int level) {
+  fz_outline *olink = (fz_outline*)link;
+
+  Bookmark *bm = new Bookmark(olink->title, olink->uri, olink->page, level);
+  bookmarks.push_back(bm);
+
+  if(olink->down)
+    traverseOutline(olink->down, level+1);
+  
+  if(olink->next)
+    traverseOutline(olink->next, level); 
+}
 
 bool Renderer::loadDocument(QString path, QString password){
   //first time through
@@ -86,13 +112,17 @@ bool Renderer::loadDocument(QString path, QString password){
       DOC = NULL;
       needpass = false;
       docpath = path;
+      if(bookmarks.size() > 0) {
+        qDeleteAll(bookmarks);
+        bookmarks.clear();
+      }
     }else if(DOC==0){ 
       fz_register_document_handlers(CTX); 
       qDebug() << "Document handlers registered";
     }
 
-    DOC = fz_open_document(CTX, path.toLocal8Bit().data());
     docpath = path;
+    DOC = fz_open_document(CTX, path.toLocal8Bit().data());
     qDebug() << "File opened" << DOC;
     if(DOC==0){
       qDebug() << "Could not open file:" << path;
@@ -107,13 +137,13 @@ bool Renderer::loadDocument(QString path, QString password){
       if(needpass){ return false; } //incorrect password
     }
 
-    //qDebug() << "Password Check cleared";
+    qDebug() << "Password Check cleared";
     pnum = fz_count_pages(CTX, DOC);
     qDebug() << "Page count: " << pnum;
 
     doctitle.clear();
-    //qDebug() << "Opening File:" << path;
-    jobj.insert("title", getTextInfo("Title") );
+
+    qDebug() << "Opening File:" << path;
     jobj.insert("subject", getTextInfo("Subject") );
     jobj.insert("author", getTextInfo("Author") );
     jobj.insert("creator", getTextInfo("Creator") );
@@ -122,13 +152,21 @@ bool Renderer::loadDocument(QString path, QString password){
     jobj.insert("dt_created", QDateTime::fromString( getTextInfo("CreationDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
     jobj.insert("dt_modified", QDateTime::fromString( getTextInfo("ModDate").left(16), "'D:'yyyyMMddHHmmss").toString() );
 
-    if(!jobj["title"].isNull())
+    if(!jobj["title"].toString().isEmpty())
       doctitle = jobj["title"].toString();
     else
       doctitle = path.section("/",-1);
 
-    qDebug() << "Page Loaded";
     //Possibly check Page orientation
+
+    fz_outline *outline = fz_load_outline(CTX, DOC);
+    if(outline) 
+      traverseOutline(outline, 0);
+    else
+      qDebug() << "No Bookmarks";
+
+    fz_drop_outline(CTX, outline);
+
     return true;
   }
   return false;
@@ -162,7 +200,6 @@ void renderer(Data *data, Renderer *obj)
   emit obj->PageLoaded(pagenum);
 }
 
-//Consider rendering through a display list
 void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   //qDebug() << "- Rendering Page:" << pagenum << degrees;
   Data *data;
@@ -172,7 +209,7 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   fz_pixmap *pixmap;
   fz_display_list *list;
 
-  double pageDPI = 96.0;
+  double pageDPI = 150.0;
   double sf = DPI.width() / pageDPI;
   fz_scale(&matrix, sf, sf);
   fz_pre_rotate(&matrix, degrees);
@@ -185,6 +222,17 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   list = fz_new_display_list(CTX, &bbox);
   fz_device *dev = fz_new_list_device(CTX, list);
   fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
+  /*fz_annot *annot = fz_first_annot(CTX, PAGE);
+
+  while(annot) {
+    fz_run_annot(CTX, annot, dev, &fz_identity, NULL);
+    fz_rect bbox;
+    fz_bound_annot(CTX, annot, &bbox);
+    
+    QRectF rect(bbox.x0, bbox.y0, (bbox.x1-bbox.x0), (bbox.y1 - bbox.y0));
+    qDebug() << "Annotation:" << rect << "at" << pagenum;
+    annot = fz_next_annot(CTX, annot);
+  }*/
 
   fz_close_device(CTX, dev);
   fz_drop_device(CTX, dev);
@@ -201,7 +249,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
   fz_rect rectBuffer[1000];
   QList<TextData*> results;
   for(int i = 0; i < pnum; i++) {
-    int count = fz_search_display_list(CTX, dataHash[i]->list, text.toLatin1().data(), rectBuffer, 1000);
+    int count = fz_search_display_list(CTX, dataHash[i]->list, text.toLocal8Bit().data(), rectBuffer, 1000);
     //qDebug() << "Page " << i+1 << ": Count, " << count;
     for(int j = 0; j < count; j++) {
       double sf = dataHash[i]->sf;

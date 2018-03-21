@@ -5,12 +5,11 @@
 //  See the LICENSE file for full details
 //===========================================
 
-#include "propDialog.h"
-#include "ui_propDialog.h"
-
+#include "PropDialog.h"
+#include "ui_PropDialog.h"
 #include <LuminaXDG.h>
 
-PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
+PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()), BACKEND(Backend){
   ui->setupUi(this);
   this->setWindowTitle(tr("PDF Information"));
   this->setWindowIcon( LXDG::findIcon("dialog-information","unknown"));
@@ -26,13 +25,18 @@ PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
   ui->keywordsL->setText(tr("Keywords:"));
   ui->createdL->setText(tr("Created:"));
   ui->modifiedL->setText(tr("Modified:"));
-  ui->sizeL->setText(tr("Page Size: "));
-  ui->numberL->setText(tr("Number of Pages: "));
   ui->saveButton->setText(tr("Save"));
   ui->closeButton->setText(tr("Close"));
+}
 
-  QJsonObject info = Backend->properties();
-  //Fill the text boxes with information from the document
+//Load size from mainUI after pages have loaded
+void PropDialog::setSize(QSizeF pageSize) {
+  ui->sizeL->setText(tr("Page Size: ") + QString::number(pageSize.width())+", "+QString::number(pageSize.height()));
+}
+
+//Fill the text boxes with information from the document
+void PropDialog::setInformation() {
+  QJsonObject info = BACKEND->properties();
   ui->titleE->setText( info.value("title").toString() );
   ui->subjectE->setText( info.value("subject").toString() );
   ui->authorE->setText( info.value("author").toString() );
@@ -41,10 +45,5 @@ PropDialog::PropDialog(Renderer *Backend) : QDialog(), ui(new Ui::PropDialog()){
   ui->keywordE->setText( info.value("keywords").toString() );
   ui->createdEntry->setText( info.value("dt_created").toString() );
   ui->modifiedEntry->setText( info.value("dt_modified").toString() );
-  ui->numberL->setText( ui->numberL->text() + QString::number(Backend->numPages()) );
-}
-
-//Load size from mainUI after pages have loaded
-void PropDialog::setSize(QSizeF pageSize) {
-  ui->sizeL->setText(ui->sizeL->text()+QString::number(pageSize.width())+", "+QString::number(pageSize.height()));
+  ui->numberL->setText( tr("Number of Pages: ") + QString::number(BACKEND->numPages()) );
 }

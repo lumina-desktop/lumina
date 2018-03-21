@@ -20,8 +20,7 @@
 #include <QtMath>
 #include <QPageLayout>
 #include "Renderer.h"
-
-#include "textData.h"
+#include "TextData.h"
 
 class PageItem : public QGraphicsItem {
 public:
@@ -135,6 +134,7 @@ public slots:
   void setCurrentPage(int);
   void setVisible(bool) Q_DECL_OVERRIDE;
   void highlightText(TextData*);
+  void goToPosition(int, float, float);
 
   void updatePreview();
   void fitView();

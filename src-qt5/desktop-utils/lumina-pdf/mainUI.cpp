@@ -29,7 +29,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   CurrentPage = 1;
   lastdir = QDir::homePath();
   BACKEND = new Renderer();
-  PROPDIALOG=nullptr;
+  PROPDIALOG = new PropDialog(BACKEND);
+  BOOKMARKS = new BookmarkMenu(BACKEND, this->centralWidget());
+  BOOKMARKS->setContextMenuPolicy(Qt::CustomContextMenu);
+  BOOKMARKS->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   //Create the interface widgets
   WIDGET = new PrintWidget(BACKEND, this->centralWidget());
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -52,11 +55,13 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     connect(contextMenu, SIGNAL(aboutToShow()), this, SLOT(updateContextMenu()));
   this->centralWidget()->layout()->replaceWidget(ui->label_replaceme, WIDGET);
   ui->label_replaceme->setVisible(false);
-  WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
+  this->centralWidget()->layout()->replaceWidget(ui->label_replaceme2, BOOKMARKS);
+  ui->label_replaceme2->setVisible(false);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 	connect(BACKEND, SIGNAL(reloadPages(int)), this, SLOT(startLoadingPages(int)));
+	connect(BACKEND, SIGNAL(goToPosition(int, float, float)), WIDGET, SLOT(goToPosition(int, float, float)));
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -133,11 +138,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
     [&] (bool value) { this->matchCase = value; });
   connect(ui->closeFind, &QPushButton::clicked, this,
     [&] { ui->findGroup->setVisible(false); this->setFocus(); });
-  connect(ui->closeBookmarks, &QPushButton::clicked, this,
-    [&] { ui->bookmarksFrame->setVisible(false); this->setFocus(); });
   connect(ui->actionClearHighlights,  &QAction::triggered, WIDGET,
     [&] { WIDGET->updatePreview(); });
-  connect(ui->actionBookmarks, SIGNAL(triggered()), this, SLOT(showBookmarks()));
+  connect(ui->actionBookmarks, &QAction::triggered, this, [=] () { BOOKMARKS->setVisible(true); });
 
   //qDebug() << "Finished connctions";
 
@@ -195,9 +198,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
   ui->matchCase->setIcon(LXDG::findIcon("format-text-italic"));
   ui->closeFind->setIcon(LXDG::findIcon("dialog-close"));
-  ui->closeBookmarks->setIcon(LXDG::findIcon("dialog-close"));
-
-  //qDebug() << "Finished setting icons";
 
   //Now set the default state of the menu's and actions
   ui->actionStop_Presentation->setEnabled(false);
@@ -205,7 +205,6 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionStart_Begin->setEnabled(false);
 
   ui->findGroup->setVisible(false);
-  ui->bookmarksFrame->setVisible(false);
 
   //TESTING features/functionality
   bool TESTING = BACKEND->supportsExtraFeatures();
@@ -234,6 +233,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 }
 
 MainUI::~MainUI(){
+  if(BOOKMARKS!=0){ BOOKMARKS->deleteLater(); }
+  if(PROPDIALOG!=0) { PROPDIALOG->deleteLater(); }
   delete BACKEND;
 }
 
@@ -247,19 +248,18 @@ void MainUI::loadFile(QString path){
     if(!ok){ break; } //cancelled
   }
   //Clear the current display
+
 	WIDGET->setVisible(false);
-  QTimer::singleShot(10, WIDGET, SLOT(updatePreview()));
+  BOOKMARKS->setVisible(false);
   //Load the new document info
   this->setWindowTitle( BACKEND->title());
   if(BACKEND->needPassword()){ return; } //cancelled;
   qDebug() << " - Document Setup : start loading pages now";
-  QTimer::singleShot(50, [&]() { startLoadingPages(0); } );
-}
 
-void MainUI::loadPage(int num, MainUI *obj, QSize dpi, int degrees){
-  //qDebug() << " - Render Page:" << num;
-  BACKEND->renderPage(num, dpi, degrees);
-  //qDebug() << "Image at" << num << "accessed outside:" << BACKEND->imageHash(num).isNull();
+  //Populate or repopulate the Bookmarks menu and Properties Dialog
+  QTimer::singleShot(10, BOOKMARKS, SLOT(loadBookmarks()) );
+  QTimer::singleShot(10, PROPDIALOG, SLOT(setInformation()) );
+  QTimer::singleShot(50, [&]() { startLoadingPages(0); } );
 }
 
 QScreen* MainUI::getScreen(bool current, bool &cancelled){
@@ -373,8 +373,6 @@ void MainUI::startLoadingPages(int degrees){
   qDebug() <<"Start Loading Pages";
   //if(BACKEND->hashSize() != 0) { return; } //currently loaded[ing]
   loadingQueue.clear();
-  if(PROPDIALOG)
-    delete PROPDIALOG;
 	BACKEND->clearHash();
   WIDGET->setVisible(false);
   //qDebug() << "Update Progress Bar";
@@ -389,15 +387,15 @@ void MainUI::startLoadingPages(int degrees){
 
   QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
 
-  qDebug() << "Screen Resolutions:";
+  /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
-  }
+  }*/
   for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
     if(BACKEND->loadMultiThread()) {
-      QtConcurrent::run(this, &MainUI::loadPage, i, this, DPI, degrees);
+      QtConcurrent::run(BACKEND, &Renderer::renderPage, i, DPI, degrees);
     }else{
       BACKEND->renderPage(i, DPI, degrees);
     }
@@ -406,20 +404,18 @@ void MainUI::startLoadingPages(int degrees){
 }
 
 void MainUI::slotPageLoaded(int page){
-  loadingQueue.push_back(page);  
+  loadingQueue.push_back(page);
   int finished = loadingQueue.size();
   //qDebug() << "Page Loaded:" << page << finished;
   if(finished == BACKEND->numPages()){
-    //qDebug() << " - finished:" << finished;
     progAct->setVisible(false);
     WIDGET->setVisible(true);
     WIDGET->setCurrentPage(1);
-    PROPDIALOG = new PropDialog(BACKEND);
-    PROPDIALOG->setSize(pageSize);
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
     pageAct->setVisible(true);
+    PROPDIALOG->setSize(pageSize);
     qDebug() << " - Document Setup: All pages loaded";
     QTimer::singleShot(10, WIDGET, SLOT(updatePreview())); //start loading the file preview
   }else{
@@ -643,8 +639,4 @@ void MainUI::find(QString text, bool forward) {
       ui->resultsLabel->setText("No results found");
     }
   }
-}
-
-void MainUI::showBookmarks() {
-  ui->bookmarksFrame->setVisible(true);
 }

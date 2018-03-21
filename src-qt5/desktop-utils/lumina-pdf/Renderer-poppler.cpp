@@ -128,3 +128,7 @@ void Renderer::clearHash() {
 }
 
 bool Renderer::supportsExtraFeatures() { return false; }
+
+void Renderer::traverseOutline(void *, int) { }
+
+void Renderer::handleLink(QString link) { }
