@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>567</width>
-    <height>415</height>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>161</height>
+             <height>137</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -116,7 +116,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>28</height>
+     <height>38</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -145,9 +145,10 @@
     </widget>
     <addaction name="actionRefresh"/>
     <addaction name="separator"/>
-    <addaction name="actionView_Hidden_Files"/>
-    <addaction name="separator"/>
     <addaction name="actionShow_Thumbnails"/>
+    <addaction name="actionView_Hidden_Files"/>
+    <addaction name="actionVerify_File_Delete"/>
+    <addaction name="separator"/>
     <addaction name="menuView_Mode"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
@@ -449,6 +450,17 @@
   <action name="actionOpen_as_Root">
    <property name="text">
     <string>Open as Root</string>
+   </property>
+  </action>
+  <action name="actionVerify_File_Delete">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Verify File Delete</string>
    </property>
   </action>
  </widget>

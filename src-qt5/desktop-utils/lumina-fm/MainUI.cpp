@@ -302,7 +302,7 @@ void MainUI::loadSettings(){
     on_actionShow_Thumbnails_triggered(); //make sure to update models too
     //ui->actionView_showDirTreePane->setChecked( settings->value("showdirtree", false).toBool());
     //on_actionView_showDirTreePane_triggered(); //make sure to update the models too
-
+  ui->actionVerify_File_Delete->setChecked( settings->value("showdeleteprompt", true).toBool());
   //ui->actionShow_Action_Buttons->setChecked(settings->value("showactions", true).toBool() );
     //on_actionShow_Action_Buttons_triggered(); //make sure to update the UI
   //ui->actionShow_Thumbnails->setChecked( settings->value("showthumbnails", true).toBool() );
@@ -470,6 +470,11 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
   //Re-load the current browsers
   for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->showHidden( ui->actionView_Hidden_Files->isChecked() ); }//DWLIST[i]->refresh(); }
 
+}
+
+void MainUI::on_actionVerify_File_Delete_triggered(){
+//Now save this setting for later
+  settings->setValue("showdeleteprompt", ui->actionView_Hidden_Files->isChecked());
 }
 
 void MainUI::treeWidgetWidthChanged(float percent){
@@ -922,10 +927,12 @@ void MainUI::RemoveFiles(QStringList list){
    }
 
   //Verify permanent removal of file/dir
-  QMessageBox dlgQ(QMessageBox::Question, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?"), QMessageBox::Yes | QMessageBox::No, this);
-    dlgQ.setDetailedText(tr("Items to be removed:")+"\n\n"+names.join("\n"));
-  dlgQ.exec();
-  if(dlgQ.result() != QMessageBox::Yes){ return; } //cancelled
+  if(ui->actionVerify_File_Delete->isChecked()){
+    QMessageBox dlgQ(QMessageBox::Question, tr("Verify Removal"), tr("WARNING: This will permanently delete the file(s) from the system!")+"\n"+tr("Are you sure you want to continue?"), QMessageBox::Yes | QMessageBox::No, this);
+      dlgQ.setDetailedText(tr("Items to be removed:")+"\n\n"+names.join("\n"));
+    dlgQ.exec();
+    if(dlgQ.result() != QMessageBox::Yes){ return; } //cancelled
+  }
 
   //Now remove the file/dir
   qDebug() << " - Delete: "<<paths;

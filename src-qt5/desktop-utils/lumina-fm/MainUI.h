@@ -129,7 +129,8 @@ private slots:
 	void on_actionDelete_Selection_triggered();*/
 	void on_actionRefresh_triggered();
 	void on_actionView_Hidden_Files_triggered();
-    //void on_actionView_showDirTreePane_triggered();
+	void on_actionVerify_File_Delete_triggered();
+	//void on_actionView_showDirTreePane_triggered();
 	//void on_actionShow_Action_Buttons_triggered();
 	void treeWidgetWidthChanged(float percent);
 	void on_actionShow_Thumbnails_triggered();
