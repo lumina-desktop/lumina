@@ -162,7 +162,6 @@ void PrintWidget::highlightText(TextData *text) {
 //Private functions
 
 void PrintWidget::generatePreview() {
-  qDebug() << "Generating Preview";
   populateScene(); // i.e. setPreviewPrintedPictures() e.l.
   layoutPages();
   curPage = qBound(1, curPage, pages.count());
@@ -211,7 +210,6 @@ void PrintWidget::populateScene()
   }
   qDeleteAll(pages);
   pages.clear();
-  qDebug() << "populateScene";
   int numPages = BACKEND->numPages();
   if(BACKEND->hashSize() < numPages){ return; } //nothing to show yet
 

@@ -11,12 +11,9 @@
 
 BookmarkMenu::BookmarkMenu(Renderer *Backend, QWidget *parent) : QWidget(parent), ui(new Ui::BookmarkMenu()), BACKEND(Backend){
   ui->setupUi(this);
-  ui->closeButton->setIcon( LXDG::findIcon("dialog-close") );
   connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(close()));
   connect(ui->bookmarks, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item) { 
     Backend->handleLink(item->data(1, Qt::UserRole).toString()); }); 
-
-  ui->bookmarks->setHeaderLabel("Title"); 
 }
 
 void BookmarkMenu::loadBookmarks() {
@@ -41,7 +38,6 @@ void BookmarkMenu::loadBookmarks() {
       }else{
         item = new QTreeWidgetItem(parent);
       }
-
       item->setText(0, bm->title);
       item->setData(1, Qt::UserRole, bm->link);
       if(!bm->link.isEmpty())

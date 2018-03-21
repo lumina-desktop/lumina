@@ -89,7 +89,7 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
 				default:
 					rotation = Poppler::Page::Rotation::Rotate0;
 			}
-      img = PAGE->renderToImage(DPI.width(),DPI.height(), -1, -1, -1, -1, rotation);
+      img = PAGE->renderToImage(DPI.width(), DPI.height(), -1, -1, -1, -1, rotation);
       loadingHash.insert(pagenum, img);
       delete PAGE;
     }
@@ -127,6 +127,7 @@ void Renderer::clearHash() {
   loadingHash.clear();
 }
 
+//Highlighting found text, bookmarks, and page properties disabled for Poppler
 bool Renderer::supportsExtraFeatures() { return false; }
 
 void Renderer::traverseOutline(void *, int) { }

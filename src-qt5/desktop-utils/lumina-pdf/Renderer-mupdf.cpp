@@ -209,7 +209,7 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   fz_pixmap *pixmap;
   fz_display_list *list;
 
-  double pageDPI = 150.0;
+  double pageDPI = 96.0;
   double sf = DPI.width() / pageDPI;
   fz_scale(&matrix, sf, sf);
   fz_pre_rotate(&matrix, degrees);

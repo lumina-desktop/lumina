@@ -32,11 +32,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   PROPDIALOG = new PropDialog(BACKEND);
   BOOKMARKS = new BookmarkMenu(BACKEND, this->centralWidget());
   BOOKMARKS->setContextMenuPolicy(Qt::CustomContextMenu);
-  BOOKMARKS->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  //BOOKMARKS->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   //Create the interface widgets
   WIDGET = new PrintWidget(BACKEND, this->centralWidget());
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
-  WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  //WIDGET->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   loadingQueue.clear();
   clockTimer = new QTimer(this);
     clockTimer->setInterval(1000); //1-second updates to clock
@@ -57,6 +57,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->label_replaceme->setVisible(false);
   this->centralWidget()->layout()->replaceWidget(ui->label_replaceme2, BOOKMARKS);
   ui->label_replaceme2->setVisible(false);
+  QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  policy.setHorizontalStretch(1);
+  BOOKMARKS->setSizePolicy(policy);
+  policy.setHorizontalStretch(4);
+  WIDGET->setSizePolicy(policy);
   connect(WIDGET, SIGNAL(customContextMenuRequested(const QPoint&)),this, SLOT(showContextMenu(const QPoint&)) );
   connect(WIDGET, SIGNAL(currentPageChanged()), this, SLOT(updatePageNumber()) );
   connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
@@ -208,21 +213,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
 
   //TESTING features/functionality
   bool TESTING = BACKEND->supportsExtraFeatures();
-  ui->actionSettings->setEnabled(TESTING);
-  ui->actionSettings->setVisible(TESTING);
   ui->actionBookmarks->setEnabled(TESTING);
   ui->actionBookmarks->setVisible(TESTING);
-  ui->actionScroll_Mode->setEnabled(TESTING);
-  ui->actionScroll_Mode->setVisible(TESTING);
-  ui->actionSelect_Mode->setEnabled(TESTING);
-  ui->actionSelect_Mode->setVisible(TESTING);
   ui->actionProperties->setEnabled(TESTING);
   ui->actionProperties->setVisible(TESTING);
-  ui->menuSettings->setEnabled(TESTING);
-  ui->menuSettings->setVisible(TESTING);
-  if(!TESTING){
-    ui->menubar->removeAction(ui->menuSettings->menuAction() );
-  }
+  ui->actionClearHighlights->setEnabled(TESTING);
+  ui->actionClearHighlights->setVisible(TESTING);
 
   ui->actionSettings->setEnabled(false);
   ui->actionSettings->setVisible(false);
@@ -385,19 +381,21 @@ void MainUI::startLoadingPages(int degrees){
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  QSize DPI(300,300); //print-quality (some printers even go to 600 DPI nowdays)
+  QSize DPI(150,150); //print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
   for(int i=0; i<screens.length(); i++){
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() << screens[i]->logicalDotsPerInchY();
   }*/
+
   for(int i=0; i<BACKEND->numPages(); i++){
     //qDebug() << " - Kickoff page load:" << i;
     if(BACKEND->loadMultiThread()) {
       QtConcurrent::run(BACKEND, &Renderer::renderPage, i, DPI, degrees);
     }else{
       BACKEND->renderPage(i, DPI, degrees);
+      if(i % 50 == 0){ QCoreApplication::processEvents(); }
     }
   }
   //qDebug() << "Finish page loading kickoff";
@@ -634,7 +632,8 @@ void MainUI::find(QString text, bool forward) {
 
       //qDebug() << "Jump to page: " << currentText.page;
 
-      WIDGET->highlightText(currentText);
+      if(BACKEND->supportsExtraFeatures())
+        WIDGET->highlightText(currentText);
     }else{
       ui->resultsLabel->setText("No results found");
     }
