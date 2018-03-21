@@ -17,7 +17,7 @@
 
 RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID), ui(new Ui::RSSFeedPlugin()){
   ui->setupUi(this);
-  //Load the global settings 
+  //Load the global settings
   setprefix = "rssreader/"; //this structure/prefix should be used for *all* plugins of this type
   RSS = new RSSReader(this, setprefix);
   ui->text_feed->setContextMenuPolicy(Qt::NoContextMenu);
@@ -49,7 +49,7 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     //First-time run of the plugin - automatically load the default feeds
     feeds = LOS::RSSFeeds();
     for(int i=0; i<feeds.length(); i++){ feeds[i] = feeds[i].section("::::",1,-1); } //just need url right now
-    feeds << "http://lumina-desktop.org/?feed=rss2"; //Lumina Desktop blog feed
+    feeds << "https://lumina-desktop.org/?feed=rss2"; //Lumina Desktop blog feed
     LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"currentfeeds", feeds);
   }else{
     feeds = LSession::handle()->DesktopPluginSettings()->value(setprefix+"currentfeeds",QStringList()).toStringList();
@@ -77,7 +77,7 @@ void RSSFeedPlugin::updateOptionsMenu(){
   QStringList feeds = LOS::RSSFeeds();
   feeds << tr("Lumina Desktop RSS")+"::::http://lumina-desktop.org/?feed=rss2";
   feeds.sort();
-  for(int i=0; i<feeds.length(); i++){ 
+  for(int i=0; i<feeds.length(); i++){
     QAction *tmp = presetMenu->addAction(feeds[i].section("::::",0,0) );
     tmp->setWhatsThis( feeds[i].section("::::",1,-1) );
   }
@@ -114,7 +114,7 @@ void RSSFeedPlugin::updateFeed(QString ID){
     if(!data.items[i].pubdate.isNull() || !data.items[i].author.isEmpty()){
       html.append("<i>(");
       if(!data.items[i].pubdate.isNull()){ html.append(data.items[i].pubdate.toString(Qt::DefaultLocaleShortDate)); }
-      if(!data.items[i].author.isEmpty()){ 
+      if(!data.items[i].author.isEmpty()){
         if(!html.endsWith("(")){ html.append(", "); } //spacing between date/author
         if(!data.items[i].author_email.isEmpty()){ html.append("<a href=\"mailto:"+data.items[i].author_email+"\" style=\"color: "+color+";\">"+data.items[i].author+"</a>"); }
         else{ html.append(data.items[i].author); }
@@ -179,7 +179,6 @@ void RSSFeedPlugin::openFeedInfo(){
   if(ID.isEmpty()){ return; }
   updateFeedInfo(ID);
   ui->stackedWidget->setCurrentWidget(ui->page_feed_info);
-  
 }
 
 void RSSFeedPlugin::openFeedNew(){
@@ -279,14 +278,13 @@ void RSSFeedPlugin::saveSettings(){
   if(ui->combo_sync_units->currentIndex()==1){ DI = DI*60; } //convert from hours to minutes
   set->setValue(setprefix+"default_interval_minutes", DI);
   set->sync();
-  
+
   //Now go back to the feeds
   backToFeeds();
 }
 
 //Feed Object interactions
 void RSSFeedPlugin::UpdateFeedList(){
-  
   QString activate = ui->combo_feed->whatsThis();
   if(!activate.isEmpty()){ ui->combo_feed->setWhatsThis(""); }
   if(activate.isEmpty()){ activate = ui->combo_feed->currentData().toString(); } // keep current item selected
@@ -329,7 +327,7 @@ void RSSFeedPlugin::RSSItemChanged(QString ID){
   for(int i=0; i<ui->combo_feed->count(); i++){
     if(ui->combo_feed->itemData(i).toString()!=ID){ continue; }
     RSSchannel info = RSS->dataForID(ID);
-    if(info.title.isEmpty()){ 
+    if(info.title.isEmpty()){
       ui->combo_feed->setItemText(i, ID);
       ui->combo_feed->setItemIcon(i, LXDG::findIcon("dialog-cancel","") );
     }else{

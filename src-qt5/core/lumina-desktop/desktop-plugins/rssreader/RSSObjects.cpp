@@ -91,7 +91,7 @@ void RSSReader::syncNow(){
 //=================
 //         PRIVATE
 //=================
-QString RSSReader::keyForUrl(QString url){ 
+QString RSSReader::keyForUrl(QString url){
   //get current hash key for this URL
   QStringList keys = hash.keys();
   if(keys.contains(url)){ return url; } //this is already a valid key
@@ -131,12 +131,12 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
       rssinfo.rss = false;
       while(xml.readNextStartElement()){
         if(DEBUG) qDebug() << " - ATOM Element (channel):" << xml.name();
-        if(xml.name()=="entry") { 
+        if(xml.name()=="entry") {
           rssinfo.items << readRSSItemAtom(&xml);
         }else if(xml.name()=="title"){
           rssinfo.title = xml.readElementText();
           if(DEBUG) qDebug() << "title" << rssinfo.link;
-        }else if(xml.name()=="link"){ 
+        }else if(xml.name()=="link"){
           QXmlStreamAttributes att = xml.attributes();
           for(int i = 0; i < att.size(); i++) {
             if(att[i].name() == "href") {
@@ -149,7 +149,7 @@ RSSchannel RSSReader::readRSS(QByteArray bytes){
           rssinfo.description = xml.readElementText();
         }else if(xml.name()=="updated"){
           rssinfo.lastBuildDate = ATOMDateTime(xml.readElementText());
-        }else if(xml.name()=="icon"){ 
+        }else if(xml.name()=="icon"){
           rssinfo.icon_url = xml.readElementText();
           if(DEBUG) qDebug() << "icon" << rssinfo.icon_url;
           requestRSS(rssinfo.icon_url);
@@ -170,9 +170,9 @@ RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
     //qDebug() << " - RSS Element (channel):" <<rss->name();
     if(rss->name()=="item"){ info.items << readRSSItem(rss); }
     else if(rss->name()=="title"){ info.title = rss->readElementText(); }
-    else if(rss->name()=="link"){ 
-      QString txt = rss->readElementText(); 
-      if(!txt.isEmpty()){ info.link = txt; } 
+    else if(rss->name()=="link"){
+      QString txt = rss->readElementText();
+      if(!txt.isEmpty()){ info.link = txt; }
     }
     else if(rss->name()=="description"){ info.description = rss->readElementText(); }
     else if(rss->name()=="lastBuildDate"){ info.lastBuildDate = RSSDateTime(rss->readElementText()); }
@@ -189,10 +189,10 @@ RSSchannel RSSReader::readRSSChannel(QXmlStreamReader *rss){
 RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
   RSSitem item;
   while(rss->readNextStartElement()){
-    if(rss->name()=="title"){ 
+    if(rss->name()=="title"){
       item.title = rss->readElementText();
       if(DEBUG) qDebug() << rss->name() << item.title;
-    }else if(rss->name()=="link"){ 
+    }else if(rss->name()=="link"){
       QXmlStreamAttributes att = rss->attributes();
       for(int i = 0; i < att.size(); i++) {
         if(att[i].name() == "href") {
@@ -201,13 +201,13 @@ RSSitem RSSReader::readRSSItemAtom(QXmlStreamReader *rss){
       }
       rss->readElementText();
       if(DEBUG) qDebug() << rss->name() << item.link;
-    }else if(rss->name()=="summary"){ 
+    }else if(rss->name()=="summary"){
       item.description = rss->readElementText();
       if(DEBUG) qDebug() << rss->name() << item.description;
-    } else if(rss->name()=="comments"){ 
+    } else if(rss->name()=="comments"){
       item.comments_url = rss->readElementText();
       if(DEBUG) qDebug() << rss->name() << item.comments_url;
-    } else if(rss->name()=="author"){ 
+    } else if(rss->name()=="author"){
       rss->readNextStartElement();
       item.author = rss->readElementText();
       if(DEBUG) qDebug() << "author" << item.author;
@@ -228,11 +228,11 @@ RSSitem RSSReader::readRSSItem(QXmlStreamReader *rss){
     else if(rss->name()=="link"){ item.link = rss->readElementText(); }
     else if(rss->name()=="description"){ item.description = rss->readElementText(); }
     else if(rss->name()=="comments"){ item.comments_url = rss->readElementText(); }
-    else if(rss->name()=="author"){ 
+    else if(rss->name()=="author"){
       //Special handling - this field can contain both email and name
-      QString raw = rss->readElementText(); 
-      if(raw.contains("@")){  
-        item.author_email = raw.split(" ").filter("@").first(); 
+      QString raw = rss->readElementText();
+      if(raw.contains("@")){
+        item.author_email = raw.split(" ").filter("@").first();
         item.author = raw.remove(item.author_email).remove("(").remove(")").simplified(); //the name is often put within parentheses after the email
       }else{ item.author = raw; }
     }
@@ -270,12 +270,11 @@ QDateTime RSSReader::ATOMDateTime(QString datetime){
 //=================
 void RSSReader::replyFinished(QNetworkReply *reply){
   QString url = reply->request().url().toString();
-  qDebug() << "Got Reply:" << url;
+  //qDebug() << "Got RSS Reply:" << url;
   QString key = keyForUrl(url); //current hash key for this URL
   QByteArray data = reply->readAll();
   outstandingURLS.removeAll(url);
-  if(data.isEmpty()){
-    qDebug() << "No data returned:" << url;
+  //if(data.isEmpty()){
     //see if the URL can be adjusted for known issues
     bool handled = false;
     QUrl redirecturl = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
@@ -288,27 +287,29 @@ void RSSReader::replyFinished(QNetworkReply *reply){
         requestRSS(newurl);
         emit newChannelsAvailable();
         handled = true;
-      }      
+      }
     }
-    if(!handled && hash.contains(key) ){ 
+    if(!handled && hash.contains(key) ){
       emit rssChanged(hash[key].originalURL);
     }
+  if(data.isEmpty() || handled){
+    //qDebug() << "No data returned:" << url;
     return;
   }
 
-  if(!hash.contains(key)){ 
+  if(!hash.contains(key)){
     //qDebug() << " - hash does not contain URL:" << url;
     //URL removed from list while a request was outstanding?
     //Could also be an icon fetch response
     QStringList keys = hash.keys();
     for(int i=0; i<keys.length(); i++){
-      qDebug() << " - Check for icon URL:" << hash[keys[i]].icon_url;
+      //qDebug() << " - Check for icon URL:" << hash[keys[i]].icon_url;
       if(hash[keys[i]].icon_url.toLower() == url.toLower()){ //needs to be case-insensitive
         //Icon fetch response
         RSSchannel info = hash[keys[i]];
         QImage img = QImage::fromData(data);
         info.icon = QIcon( QPixmap::fromImage(img) );
-        qDebug() << "Got Icon response:" << url << info.icon;
+        //qDebug() << "Got Icon response:" << url << info.icon;
         hash.insert(keys[i], info); //insert back into the hash
         emit rssChanged( hash[keys[i]].originalURL );
         break;
@@ -320,15 +321,15 @@ void RSSReader::replyFinished(QNetworkReply *reply){
     RSSchannel info = readRSS(data); //QNetworkReply can be used as QIODevice
     reply->deleteLater(); //clean up
     //Validate the info and announce any changes (4/21/17 - make the description optional even if RSS format requires it - Ken Moore)
-    if(info.title.isEmpty() || info.link.isEmpty() ){ 
+    if(info.title.isEmpty() || info.link.isEmpty() ){
       qDebug() << "Missing XML Information:" << url << info.title << info.link;
-      return; 
+      return;
     } //bad info/read
 
     //Update the bookkeeping elements of the info
     if(info.timetolive<=0){ info.timetolive = LSession::handle()->DesktopPluginSettings()->value(setprefix+"default_interval_minutes", 60).toInt(); }
     if(info.timetolive <=0){ info.timetolive = 60; } //error in integer conversion from settings?
-    info.lastsync = QDateTime::currentDateTime(); info.nextsync = info.lastsync.addSecs(info.timetolive * 60); 
+    info.lastsync = QDateTime::currentDateTime(); info.nextsync = info.lastsync.addSecs(info.timetolive * 60);
     //Now see if anything changed and save the info into the hash
     bool changed = (hash[key].lastBuildDate.isNull() || (hash[key].lastBuildDate < info.lastBuildDate) );
     bool newinfo = false;
