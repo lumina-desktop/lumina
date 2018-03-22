@@ -18,6 +18,10 @@ int main(int argc, char ** argv)
         RRSettings::ApplyPrevious();
         CLIdone = true;
         break;
+      }else if(QString(argv[i]) == "--mirror-monitors"){
+        RRSettings::MirrorAll();
+        CLIdone = true;
+        break;
       }
     }
     if(CLIdone){ return 0; }

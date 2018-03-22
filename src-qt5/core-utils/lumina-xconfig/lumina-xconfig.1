@@ -1,6 +1,6 @@
 .Dd November 6, 2017
 .Dt LUMINA-XCONFIG 1
-.Os 1.3.3
+.Os 1.4.2
 
 .Sh NAME
 .Nm lumina-xconfig
@@ -10,6 +10,7 @@ configurations.
 .Sh SYNOPSIS
 .Nm
 .Op Fl -reset-monitors
+.Op Fl -mirror-monitors
 
 .Sh DESCRIPTION
 .Nm
@@ -21,11 +22,14 @@ It is also easy to select the resolution and rotation from a drop down
 box for each screen.
 The Add Screen tab provides an option to enable a connected monitor that
 is not in use.
+
 .Nm
-has one option:
+Options:
 .Bl -tag -width indent
 .It Ic --reset-monitors
-Resets the configuration to default.
+Reset the monitor configuration to defaults in config file
+.It Ic --mirror-monitors
+Setup all connected monitors as a single display output
 .El
 
 .Sh DEPENDENCIES
@@ -37,6 +41,7 @@ A single extra runtime dependency is required:
 .Sh FILES
 .Bl -tag -width indent
 .It Pa /usr/local/bin/lumina-xconfig
+.It Pa {XDG_CONFIG_HOME}/lumina-desktop/lumina-xconfig.conf
 .El
 
 .Sh SEE ALSO

@@ -21,6 +21,16 @@ void RRSettings::ApplyPrevious(){
   RRSettings::Apply(screens);
 }
 
+void RRSettings::MirrorAll(){
+  QList<ScreenInfo> screens;
+  //Now find the highest resolution supported by all connected monitors
+
+  //Setup one monitor with that resolution, and mirror the rest of them
+
+  //Now reset the display with xrandr
+  RRSettings::Apply(screens);
+}
+
 //Read the current screen config from xrandr
 QList<ScreenInfo> RRSettings::CurrentScreens(){
   QList<ScreenInfo> SCREENS;

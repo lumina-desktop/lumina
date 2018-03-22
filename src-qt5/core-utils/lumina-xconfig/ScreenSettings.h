@@ -38,7 +38,9 @@ class ScreenInfo{
 class RRSettings{
 public:
 	//Reset current screen config to match previously-saved settings
-	static void ApplyPrevious(); //generally performed on startup of the desktop
+	static void ApplyPrevious();
+	//Setup all the connected monitors as a single mirror
+	static void MirrorAll();
 
 	//Read the current screen config from xrandr
 	static QList<ScreenInfo> CurrentScreens(); //reads xrandr information
