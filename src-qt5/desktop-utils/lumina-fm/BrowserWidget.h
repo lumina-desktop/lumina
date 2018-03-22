@@ -26,8 +26,9 @@ private:
 	int numItems; //used for checking if all the items have loaded yet
 	QString ID, statustip;
 	QStringList date_format, historyList;
-  QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
+	QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
 	bool freshload;
+	int treeSortColumn;
 
 	//The drag and drop brower widgets
 	DDListWidget *listWidget;
@@ -61,6 +62,8 @@ public:
 
 	void setShowActive(bool show); //used for accenting if the widget is "active"
 
+	void setTreeWidgetSortColumn(int col, bool now = false);
+
 	QString status(){ return statustip; }
 
 	//Date format for show items
@@ -82,6 +85,7 @@ private slots:
 	void selectionChanged();
 	void loadStatistics(BrowserWidget *bw); //designed to be run in a background thread
 
+
 protected:
 	void resizeEvent(QResizeEvent *ev);
 
@@ -96,6 +100,6 @@ signals:
 
 	//Internal signal
 	void dirChange(QString, bool); //current dir path, force
-
+	void treeWidgetSortColumn(int);
 };
 #endif

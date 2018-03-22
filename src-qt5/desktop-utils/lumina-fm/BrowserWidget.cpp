@@ -33,6 +33,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   connect(this, SIGNAL(dirChange(QString, bool)), BROWSER, SLOT(loadDirectory(QString, bool)) );
   listWidget = 0;
   treeWidget = 0;
+  treeSortColumn = 0;
   readDateFormat();
   freshload = true; //nothing loaded yet
   numItems = 0;
@@ -98,8 +99,10 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SIGNAL(contextMenuRequested()) );
     connect(treeWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(DataDropped(QString, QStringList)) );
     connect(treeWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
+    connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(treeWidgetSortColumn(int)) );
+    connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(setTreeWidgetSortColumn(int)) );
     retranslate();
-    treeWidget->sortItems(0, Qt::AscendingOrder);
+    treeWidget->sortItems(treeSortColumn, Qt::AscendingOrder);
     treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
@@ -189,6 +192,13 @@ void BrowserWidget::setShowActive(bool show){
   QString base = "";//"QListWidget::item,QTreeWidget::item{ border: 1px solid transparent; background-color: red; } QListWidget::item:hover,QTreeWidget::item:hover{ border: 1px solid black; background-color: blue; }";
   if(!show){ base.prepend("QAbstractScrollArea{ background-color: rgba(10,10,10,10); } QHeaderView{ background-color: lightgrey; } "); }
   this->setStyleSheet(base);
+}
+
+void BrowserWidget::setTreeWidgetSortColumn(int col, bool now){
+  treeSortColumn = col;
+  if(now && treeWidget!=0){
+    treeWidget->sortItems(treeSortColumn, Qt::AscendingOrder);
+  }
 }
 
 // This function is only called if user changes sessionsettings. By doing so, operations like sorting by date

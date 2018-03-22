@@ -176,6 +176,7 @@ public:
 signals:
 	void DataDropped(QString, QStringList); //Dir path, List of commands
 	void GotFocus();
+	void sortColumnChanged(int);
 
 protected:
 	void focusInEvent(QFocusEvent *ev){
@@ -320,6 +321,7 @@ public:
       // In other cases, we trust base class implementation
       return QTreeWidgetItem::operator<(tmp);
     }
+
 };
 
 //Item override for sorting purposes of list widget items
