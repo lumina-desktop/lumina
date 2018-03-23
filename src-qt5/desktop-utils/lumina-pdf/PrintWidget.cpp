@@ -200,7 +200,7 @@ void PrintWidget::layoutPages() {
       double pageHeight = pages.at(pageNum)->boundingRect().height();
       //qDebug() << "Row:" << i << "Page Num:" << pageNum << "Columns:" << cols << "Floor Value: " << pageNum / cols << "f(x):" << i + (pageNum / cols);
 
-      for(int k = i + (pageNum / cols); k < pageNum; k++) {
+      for(int k = cols * (pageNum / cols); k < pageNum; k++) {
         itemWidth += pages.at(k)->boundingRect().width();
       }
 
