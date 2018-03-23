@@ -1,11 +1,12 @@
 Lumina
 ======
-
-[![Join the chat at https://gitter.im/trueos/lumina](https://badges.gitter.im/trueos/lumina.svg)](https://gitter.im/trueos/lumina?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 This is the official source tree for the Lumina Desktop Environment.
 
 For additional information about the project, please browse the official website for documentation, screenshots, and more: www.lumina-desktop.org
+
+**Community Chat Channels:**
+ - Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
+ - IRC: [#lumina-desktop on freenode](http://webchat.freenode.net?channels=%23lumina-desktop)
 
 **Lumina Project Info: Table of Contents**
 
