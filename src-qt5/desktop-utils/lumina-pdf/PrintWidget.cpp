@@ -156,8 +156,8 @@ void PrintWidget::highlightText(TextData *text) {
     QPen highlightOutline(QColor(255, 255, 100, 125));
     scene->addRect(rect, highlightOutline, highlightFill);
     text->highlighted(true);
-    goToPosition(text->page(), rect.x(), rect.y());
   }
+  goToPosition(text->page(), text->loc().x(), text->loc().y());
 }
 
 //Private functions
@@ -201,7 +201,7 @@ void PrintWidget::layoutPages() {
     }
   }
   scene->setSceneRect(scene->itemsBoundingRect());
-  qDebug() << "Finished Page Layout";
+  //qDebug() << "Finished Page Layout";
 }
 
 void PrintWidget::populateScene()
@@ -316,13 +316,25 @@ void PrintWidget::fit(bool doFitting) {
 }
 
 void PrintWidget::goToPosition(int pagenum, float x, float y) {
-  setCurrentPage(pagenum+1);
-  if(x != 0)  { 
-    QScrollBar *hsc = this->horizontalScrollBar();
-    hsc->setValue((int)x - 10);
-  } 
-  if(y != 0) {
-    QScrollBar *vsc = this->verticalScrollBar();
-    vsc->setValue((int)y - 10);
-  } 
+  setCurrentPage(pagenum);
+  
+  QScrollBar *hsc = this->horizontalScrollBar();
+  QScrollBar *vsc = this->verticalScrollBar();
+  QPointF pt = this->transform().map(pages.at(pagenum-1)->pos());
+  int secondPagenum = pagenum < pages.size() ? pagenum : pagenum-2;
+  QPointF pt2 = this->transform().map(pages.at(secondPagenum)->pos());
+  double realHeight = pages.at(pagenum-1)->boundingRect().height();
+  double virtualHeight = qAbs(pt2.y() - pt.y());
+
+  int yConv = int(pt.y() + y*(virtualHeight/realHeight)) - 10;
+  int xConv = int(pt.x() + x*(virtualHeight/realHeight)) - 10;
+
+  //qDebug() << "Y:" << y << "RATIO:" << virtualHeight/realHeight << "YCONV:" << yConv << "PTY" << pt.y() << "MAX" << vsc->maximum();
+  if(yConv > vsc->maximum())
+    vsc->triggerAction(QAbstractSlider::SliderToMaximum);
+  else if(y != 0)
+    vsc->setValue(yConv);
+
+  if(x != 0)
+    hsc->setValue(xConv);
 }

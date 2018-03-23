@@ -85,7 +85,7 @@ void Renderer::handleLink(QString link) {
 
   if(!link.isEmpty()) {
     pagenum = fz_resolve_link(CTX, DOC, uri, &xp, &yp);
-    emit goToPosition(pagenum, xp, yp);
+    emit goToPosition(pagenum+1, xp, yp);
   }
 }
 
