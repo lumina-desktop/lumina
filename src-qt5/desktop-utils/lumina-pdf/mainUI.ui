@@ -371,10 +371,16 @@
    <property name="text">
     <string/>
    </property>
+   <property name="toolTip">
+    <string>Zoom Out</string>
+   </property>
   </action>
   <action name="actionZoom_In_2">
    <property name="text">
     <string/>
+   </property>
+   <property name="toolTip">
+    <string>Zoom In</string>
    </property>
   </action>
   <action name="actionStart_Here">

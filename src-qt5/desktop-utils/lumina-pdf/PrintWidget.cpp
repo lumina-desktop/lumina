@@ -70,7 +70,7 @@ void PrintWidget::setViewMode(ViewMode mode) {
     this->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
     fitting = false;
     zoomMode = CustomZoom;
-    //zoomFactor = this->transform().m11() * (double(printer->logicalDpiY()) / logicalDpiY());
+    zoomFactor = this->transform().m11() * (150.0 / logicalDpiY());
   } else {
     fitting = true;
     fit();
@@ -128,7 +128,6 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
   if(!text->highlighted()) {
-    double pageHeight = pages.at(text->page()-1)->boundingRect().height();
     int degrees = BACKEND->rotatedDegrees();
     //Shows the text's location on a non-rotated page
     QRectF rect = text->loc();
@@ -150,7 +149,11 @@ void PrintWidget::highlightText(TextData *text) {
         rect.adjust(cy, cx, cy, cx);
     }
     //Moves the rectangle onto the right page
-    rect.moveTop(rect.y() + pageHeight*(text->page()-1));
+    double pageHeight = 0;
+    for(int i = 0; i < text->page() - 1; i++)
+      pageHeight += pages.at(i)->boundingRect().height();
+
+    rect.moveTop(rect.y() + pageHeight);
     //Transparent yellow for the highlight box
     QBrush highlightFill(QColor(255, 255, 177, 100));
     QPen highlightOutline(QColor(255, 255, 100, 125));
@@ -178,7 +181,7 @@ void PrintWidget::layoutPages() {
 
   int numPagePlaces = numPages;
   int cols = 1; // singleMode and default
-  QSize pageSize = BACKEND->imageHash(0).size();
+  QSize pageSize = BACKEND->imageHash(curPage-1).size();
   if (viewMode == AllPagesView) {
     cols = pageSize.width() > pageSize.height() ? qFloor(qSqrt(numPages)) : qCeil(qSqrt(numPages));
     cols += cols % 2;  // Nicer with an even number of cols
@@ -188,17 +191,28 @@ void PrintWidget::layoutPages() {
   }
   int rows = qCeil(double(numPagePlaces) / cols);
 
-  double itemWidth = pages.at(0)->boundingRect().width();
-  double itemHeight = pages.at(0)->boundingRect().height();
-  int pageNum = 1; for (int i = 0; i < rows && pageNum <= numPages; i++) {
-    for (int j = 0; j < cols && pageNum <= numPages; j++) {
-      if (!i && !j && viewMode == FacingPagesView) {
-          continue;
-      } else {
-        pages.at(pageNum-1)->setPos(QPointF(j*itemWidth, i*itemHeight));
-        pageNum++;
+  int pageNum = 0; 
+  QList<double> rowMaxList;
+  for (int i = 0; i < rows && pageNum < numPages; i++) {
+    double rowMax = 0;
+    for (int j = 0; j < cols && pageNum < numPages; j++) {
+      double itemWidth = 0, itemHeight = 0;
+      double pageHeight = pages.at(pageNum)->boundingRect().height();
+      //qDebug() << "Row:" << i << "Page Num:" << pageNum << "Columns:" << cols << "Floor Value: " << pageNum / cols << "f(x):" << i + (pageNum / cols);
+
+      for(int k = i + (pageNum / cols); k < pageNum; k++) {
+        itemWidth += pages.at(k)->boundingRect().width();
       }
+
+      foreach(double size, rowMaxList)
+        itemHeight += size;  
+
+      //qDebug() << pageNum << QPointF(itemWidth, itemHeight);
+      pages.at(pageNum)->setPos(QPointF(itemWidth, itemHeight));
+      pageNum++;
+      rowMax = qMax(rowMax, pageHeight);
     }
+    rowMaxList.push_back(rowMax);
   }
   scene->setSceneRect(scene->itemsBoundingRect());
   //qDebug() << "Finished Page Layout";
@@ -300,6 +314,7 @@ void PrintWidget::fit(bool doFitting) {
     this->setTransform(t);
     if (doFitting && fitting) {
       QRectF viewSceneRect = this->viewportTransform().mapRect(this->viewport()->rect());
+      qDebug() << viewSceneRect;
       viewSceneRect.moveTop(target.top());
       this->ensureVisible(viewSceneRect); // Nah...
     }
@@ -312,7 +327,7 @@ void PrintWidget::fit(bool doFitting) {
     }
   }
 
-  //zoomFactor = this->transform().m11() * (float(printer->logicalDpiY()) / this->logicalDpiY());
+  zoomFactor = this->transform().m11() * (150.0 / this->logicalDpiY());
 }
 
 void PrintWidget::goToPosition(int pagenum, float x, float y) {
@@ -326,8 +341,8 @@ void PrintWidget::goToPosition(int pagenum, float x, float y) {
   double realHeight = pages.at(pagenum-1)->boundingRect().height();
   double virtualHeight = qAbs(pt2.y() - pt.y());
 
-  int yConv = int(pt.y() + y*(virtualHeight/realHeight)) - 10;
-  int xConv = int(pt.x() + x*(virtualHeight/realHeight)) - 10;
+  int yConv = int(pt.y() + y*(virtualHeight/realHeight)) - 30;
+  int xConv = int(pt.x() + x*(virtualHeight/realHeight)) - 30;
 
   //qDebug() << "Y:" << y << "RATIO:" << virtualHeight/realHeight << "YCONV:" << yConv << "PTY" << pt.y() << "MAX" << vsc->maximum();
   if(yConv > vsc->maximum())

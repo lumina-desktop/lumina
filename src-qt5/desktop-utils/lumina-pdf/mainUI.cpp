@@ -57,7 +57,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)) );
 	connect(BACKEND, SIGNAL(reloadPages(int)), this, SLOT(startLoadingPages(int)));
 	connect(BACKEND, SIGNAL(goToPosition(int, float, float)), WIDGET, SLOT(goToPosition(int, float, float)));
-  connect(ui->splitter, SIGNAL(splitterMoved(int, int)), this, SLOT(splitterMoved()) );
+  connect(ui->splitter, &QSplitter::splitterMoved, this, [=]() {
+    double percent = qBound(0.0, (ui->splitter->sizes().first()/(double)this->width())*100.0, 33.3); ui->splitter->setSizes( QList<int>() << this->width()*(percent/100.0) << this->width() * ((100.0-percent)/100.0)); });
 
   PrintDLG = new QPrintDialog(this);
   connect(PrintDLG, SIGNAL(accepted(QPrinter*)), this, SLOT(paintToPrinter(QPrinter*)) );
@@ -625,10 +626,4 @@ void MainUI::find(QString text, bool forward) {
       ui->resultsLabel->setText("No results found");
     }
   }
-}
-
-void MainUI::splitterMoved() {
-  float percent = (ui->splitter->sizes().first() / ( (float) this->width()) )*100.0;
-  percent = percent > 33.3 ? 33.3 : percent;
-  ui->splitter->setSizes( QList<int>() << this->width()*(percent/100.0) << this->width() * ((100.0-percent)/100.0) );
 }
