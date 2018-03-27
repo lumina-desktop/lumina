@@ -10,7 +10,12 @@ configurations.
 .Sh SYNOPSIS
 .Nm
 .Op Fl -reset-monitors
+.Nm
 .Op Fl -mirror-monitors
+.Nm
+.Op Fl -list-profiles
+.Nm
+.Op Fl -apply-profile Ao profile Ac
 
 .Sh DESCRIPTION
 .Nm
@@ -27,9 +32,13 @@ is not in use.
 Options:
 .Bl -tag -width indent
 .It Ic --reset-monitors
-Reset the monitor configuration to defaults in config file
+Reset the monitor configuration to the default profile
 .It Ic --mirror-monitors
 Setup all connected monitors as a single display output
+.It Ic --list-profiles
+Return the list of all the currently-known profiles
+.It Ic --apply-profile <profile>
+Apply the given monitor profile (will do nothing if profile does not exist)
 .El
 
 .Sh DEPENDENCIES
