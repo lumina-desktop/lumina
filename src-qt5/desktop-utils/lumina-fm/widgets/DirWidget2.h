@@ -54,7 +54,7 @@ public:
 	void setThumbnailSize(int px);
 	void setFocusLineDir();
 	void adjustTreeWidget(float percent); //percent between 0-100
-
+	void setTreeSortMode(int num); //0-4
 
 
 public slots:

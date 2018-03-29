@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>137</height>
+             <height>163</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -116,7 +116,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>38</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -143,6 +143,11 @@
      </property>
      <addaction name="actionTabs"/>
     </widget>
+    <widget class="QMenu" name="menuSort_Mode">
+     <property name="title">
+      <string>Sort Mode</string>
+     </property>
+    </widget>
     <addaction name="actionRefresh"/>
     <addaction name="separator"/>
     <addaction name="actionShow_Thumbnails"/>
@@ -150,6 +155,7 @@
     <addaction name="actionVerify_File_Delete"/>
     <addaction name="separator"/>
     <addaction name="menuView_Mode"/>
+    <addaction name="menuSort_Mode"/>
    </widget>
    <widget class="QMenu" name="menuBookmarks">
     <property name="title">
@@ -461,6 +467,11 @@
    </property>
    <property name="text">
     <string>Verify File Delete</string>
+   </property>
+  </action>
+  <action name="actionSortTabs">
+   <property name="text">
+    <string>Sort by Name</string>
    </property>
   </action>
  </widget>

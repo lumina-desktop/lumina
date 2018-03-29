@@ -81,9 +81,9 @@ private:
 	//Internal non-ui widgets
 	QTabBar *tabBar;
 	//QFileSystemModel *fsmod;
-	QMenu *contextMenu;
-	QRadioButton *radio_view_details, *radio_view_list;//, *radio_view_tabs, *radio_view_cols;
-	QWidgetAction *detWA, *listWA;//, *tabsWA, *colsWA;
+	QMenu *contextMenu, * menuSort_Mode;
+    QRadioButton *radio_view_details, *radio_view_list, *radio_sort_name, *radio_sort_size, *radio_sort_type, *radio_sort_datemod, *radio_sort_datecre;//, *radio_view_tabs, *radio_view_cols;
+    QWidgetAction *detWA, *listWA, *sortnameA, *sortsizeA, *sorttypeA, *sortdateMA, *sortdateCA; //, *tabsWA, *colsWA;
 
 	//UI Widgets
 	QList<DirWidget*> DWLIST;
@@ -137,6 +137,12 @@ private slots:
 	void goToBookmark(QAction*);
 	void goToDevice(QAction*);
 	void viewModeChanged(bool);
+    void sortModeName(bool);
+    void sortModeSize(bool);
+    void sortModeType(bool);
+   void sortModeDateM(bool);
+   void sortModeDateC(bool);
+ 
 	//void groupModeChanged(bool);
 	void on_actionLarger_Icons_triggered();
 	void on_actionSmaller_Icons_triggered();

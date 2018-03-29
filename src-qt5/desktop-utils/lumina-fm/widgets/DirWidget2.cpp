@@ -156,6 +156,12 @@ void DirWidget::setThumbnailSize(int px){
   ui->tool_zoom_out->setEnabled(px >16); //lower limit on image sizes
 }
 
+void DirWidget::setTreeSortMode(int num){
+  bool now = true;
+  BW->setTreeWidgetSortColumn(num, now);
+  if(RCBW!=0){ RCBW->setTreeWidgetSortColumn(num, now ); }
+}
+
 //====================
 //         Folder Pane
 //====================

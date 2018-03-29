@@ -84,6 +84,32 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
     ui->menuView_Mode->addAction(listWA);
     //ui->menuGroup_Mode->addAction(tabsWA);
     //ui->menuGroup_Mode->addAction(colsWA);
+  if(DEBUG){ qDebug() << " - sort Menu"; }
+  menuSort_Mode = new QMenu(this);
+  radio_sort_name = new QRadioButton(tr("Sort by Name"), this);
+  radio_sort_size = new QRadioButton(tr("Sort by Size"), this);
+  radio_sort_type = new QRadioButton(tr("Sort by Type"), this);
+  radio_sort_datemod = new QRadioButton(tr("Sort by Date Modified"), this);
+  radio_sort_datecre = new QRadioButton(tr("Sort by Date Created"), this);
+  ui->menuSort_Mode->clear();
+  sortnameA = new QWidgetAction(this);
+    sortnameA->setDefaultWidget(radio_sort_name);
+  sortsizeA = new QWidgetAction(this);
+    sortsizeA->setDefaultWidget(radio_sort_size);
+  sorttypeA = new QWidgetAction(this);
+    sorttypeA->setDefaultWidget(radio_sort_type);
+  sortdateMA = new QWidgetAction(this);
+    sortdateMA->setDefaultWidget(radio_sort_datemod);
+  sortdateCA = new QWidgetAction(this);
+    sortdateCA->setDefaultWidget(radio_sort_datecre);
+
+
+    ui->menuSort_Mode->addAction(sortnameA);
+    ui->menuSort_Mode->addAction(sortsizeA);
+    ui->menuSort_Mode->addAction(sorttypeA);
+    ui->menuSort_Mode->addAction(sortdateMA);
+    ui->menuSort_Mode->addAction(sortdateCA);
+
   //Setup the pages
   //ui->BrowserLayout->clear();
   ui->page_player->setLayout(new QVBoxLayout());
@@ -187,12 +213,13 @@ void MainUI::OpenDirs(QStringList dirs){
 
     //Initialize the widget with the proper settings
     if(DEBUG){ qDebug() << "Setup Dir Widget"; }
-    DW->setShowDetails(radio_view_details->isChecked());
-    DW->setThumbnailSize(settings->value("iconsize", 32).toInt());
+    DW->setShowDetails(radio_view_details->isChecked() );
+    DW->setThumbnailSize(settings->value("iconsize", 32).toInt() );
     DW->showHidden( ui->actionView_Hidden_Files->isChecked() );
     DW->showThumbnails( ui->actionShow_Thumbnails->isChecked() );
     //DW->showDirTreePane( ui->actionView_showDirTreePane->isChecked() );
     DW->adjustTreeWidget( settings->value("dirTree_width", 25.0).toFloat() );
+    DW->setTreeSortMode( settings->value("sortmode","num").toInt() );
     //Now load the directory
     if(DEBUG){ qDebug() << "Load Directory"; }
     DW->ChangeDir(dirs[i]); //kick off loading the directory info
@@ -262,6 +289,14 @@ void MainUI::setupConnections(){
   //connect(radio_view_tabs, SIGNAL(toggled(bool)), this, SLOT(groupModeChanged(bool)) );
   //connect(radio_view_cols, SIGNAL(toggled(bool)), this, SLOT(groupModeChanged(bool)) );
 
+  // Sort Buttons
+  connect(radio_sort_name, SIGNAL(toggled(bool)), this, SLOT(sortModeName(bool)) );
+  connect(radio_sort_size, SIGNAL(toggled(bool)), this, SLOT(sortModeSize(bool)) );
+  connect(radio_sort_type, SIGNAL(toggled(bool)), this, SLOT(sortModeType(bool)) );
+  connect(radio_sort_datemod, SIGNAL(toggled(bool)), this, SLOT(sortModeDateM(bool)) );
+  connect(radio_sort_datecre, SIGNAL(toggled(bool)), this, SLOT(sortModeDateC(bool)) );
+
+
   //Special Keyboard Shortcuts
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
@@ -315,7 +350,21 @@ void MainUI::loadSettings(){
   //bool usetabs = (settings->value("groupmode","tabs").toString()=="tabs");
   //if(usetabs){ radio_view_tabs->setChecked(true); }
  // else{ radio_view_cols->setChecked(true); }
+  //Sort Mode
+  int sortMode = (settings->value("sortmode","num").toInt() );
+  switch(sortMode){
+    case 0: // Name
+    radio_sort_name->setChecked(true); break;
+    case 1: // Size
+    radio_sort_size->setChecked(true); break;
+    case 2: // Type
+    radio_sort_type->setChecked(true); break;
+    case 3: // Date Modified
+    radio_sort_datemod->setChecked(true); break;
+    case 4: // Date Created
+    radio_sort_datecre->setChecked(true); break;
 
+  } // end sortMode Switch
 }
 
 void MainUI::RebuildBookmarksMenu(){
@@ -555,6 +604,58 @@ void MainUI::viewModeChanged(bool active){
   }
 
 }
+
+
+void MainUI::sortModeName(bool active){
+  if(!active){ return; }
+  bool sortbyName = radio_sort_name->isChecked();
+  settings->setValue("sortmode","0");
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->setTreeSortMode(0);
+ qDebug() << "sortModeName";
+ qDebug() << "bool" << active;
+
+}
+}
+
+void MainUI::sortModeSize(bool active){
+  if(!active){ return; }
+  bool sortbySize = radio_sort_size->isChecked();
+  settings->setValue("sortmode","1");
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->setTreeSortMode(1);
+ qDebug() << "sortModeSize";
+ qDebug() << "bool" << active;
+}
+}
+
+void MainUI::sortModeType(bool active){
+  if(!active){ return; }
+  bool sortbyType = radio_sort_type->isChecked();
+  settings->setValue("sortmode","2");
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->setTreeSortMode(2);
+}
+}
+
+void MainUI::sortModeDateM(bool active){
+  if(!active){ return; }
+  bool sortbyDateM = radio_sort_datemod->isChecked();
+  settings->setValue("sortmode","3");
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->setTreeSortMode(3);
+}
+}
+
+void MainUI::sortModeDateC(bool active){
+  if(!active){ return; }
+  bool sortbyDateC = radio_sort_datecre->isChecked();
+  settings->setValue("sortmode","4");
+  for(int i=0; i<DWLIST.length(); i++){
+    DWLIST[i]->setTreeSortMode(4);
+}
+}
+
 
 /*void MainUI::groupModeChanged(bool active){
   if(!active){ return; } //on every change, all radio buttons will call this function - only run this once though
