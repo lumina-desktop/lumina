@@ -35,7 +35,10 @@ void BootSplash::generateTipOfTheDay(){
     tip = LUtils::readFile(sysMOTD).join("\n");
 
   }else{
-    int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
+    QSettings sessionsettings("lumina-desktop","sessionsettings");
+    bool disablequotes = sessionsettings.value("DisableQuotes").toBool();
+    if (disablequotes == false){
+     int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
   switch(index){
     case 0:
 	tip = tr("This desktop is powered by coffee, coffee, and more coffee."); break;
@@ -130,7 +133,7 @@ void BootSplash::generateTipOfTheDay(){
     case 45:
 	tip = "\""+tr("Better to remain silent and be thought a fool than to speak out and remove all doubt.")+"\"\n\n- Abraham Lincoln -"; break;
   } //end of switch for tips
-
+  } // end else statement for disabling quotes
   } //end of fallback tip generation
   ui->label_welcome->setText( tip);
 }

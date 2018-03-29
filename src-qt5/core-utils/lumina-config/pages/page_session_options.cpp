@@ -33,6 +33,7 @@ page_session_options::page_session_options(QWidget *parent) : PageWidget(parent)
   connect(ui->check_session_playlogoutaudio, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_autoapplinks, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->check_watch_app_procs, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
+  connect(ui->check_quotes, SIGNAL(toggled(bool)), this, SLOT(settingChanged()) );
   connect(ui->mywindowmanager, SIGNAL(currentIndexChanged(int)), this, SLOT(settingChanged()));
   updateIcons();
 }
@@ -53,6 +54,7 @@ void page_session_options::SaveSettings(){
   sessionsettings.setValue("TimeFormat", ui->line_session_time->text());
   sessionsettings.setValue("DateFormat", ui->line_session_date->text());
   sessionsettings.setValue("DateTimeOrder", ui->combo_session_datetimeorder->currentData().toString());
+  sessionsettings.setValue("DisableQuotes", ui->check_quotes->isChecked());
 
   QString my_win = ui->mywindowmanager->currentData().toString();
   // Warn user if they select a non-default window manager
@@ -97,6 +99,7 @@ void page_session_options::LoadSettings(int){
   ui->check_session_playloginaudio->setChecked( sessionsettings.value("PlayStartupAudio",true).toBool() );
   ui->check_session_playlogoutaudio->setChecked( sessionsettings.value("PlayLogoutAudio",true).toBool() );
   ui->check_autoapplinks->setChecked( sessionsettings.value("AutomaticDesktopAppLinks",true).toBool() );
+  ui->check_quotes->setChecked( sessionsettings.value("DisableQuotes",true).toBool() );
   ui->push_session_setUserIcon->setIcon( LXDG::findIcon(QDir::homePath()+"/.loginIcon.png", "user-identity") );
   ui->line_session_time->setText( sessionsettings.value("TimeFormat","").toString() );
   ui->line_session_date->setText( sessionsettings.value("DateFormat","").toString() );

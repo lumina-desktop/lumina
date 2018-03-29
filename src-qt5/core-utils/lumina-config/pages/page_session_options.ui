@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>512</width>
-    <height>300</height>
+    <height>315</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,6 +63,13 @@
       <widget class="QCheckBox" name="check_watch_app_procs">
        <property name="text">
         <string>Show application crash data</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="check_quotes">
+       <property name="text">
+        <string>Disable Startup Quotes</string>
        </property>
       </widget>
      </item>
