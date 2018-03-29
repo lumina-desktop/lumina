@@ -602,7 +602,7 @@ void MainUI::viewModeChanged(bool active){
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setShowDetails(showDetails);
   }
-
+ui->menuView_Mode->hide();
 }
 
 
@@ -612,10 +612,8 @@ void MainUI::sortModeName(bool active){
   settings->setValue("sortmode","0");
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setTreeSortMode(0);
- qDebug() << "sortModeName";
- qDebug() << "bool" << active;
-
-}
+  }
+  ui->menuSort_Mode->hide();
 }
 
 void MainUI::sortModeSize(bool active){
@@ -624,9 +622,8 @@ void MainUI::sortModeSize(bool active){
   settings->setValue("sortmode","1");
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setTreeSortMode(1);
- qDebug() << "sortModeSize";
- qDebug() << "bool" << active;
-}
+  }
+  ui->menuSort_Mode->hide();
 }
 
 void MainUI::sortModeType(bool active){
@@ -635,7 +632,8 @@ void MainUI::sortModeType(bool active){
   settings->setValue("sortmode","2");
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setTreeSortMode(2);
-}
+  }
+  ui->menuSort_Mode->hide();
 }
 
 void MainUI::sortModeDateM(bool active){
@@ -644,7 +642,8 @@ void MainUI::sortModeDateM(bool active){
   settings->setValue("sortmode","3");
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setTreeSortMode(3);
-}
+  }
+  ui->menuSort_Mode->hide();
 }
 
 void MainUI::sortModeDateC(bool active){
@@ -653,9 +652,9 @@ void MainUI::sortModeDateC(bool active){
   settings->setValue("sortmode","4");
   for(int i=0; i<DWLIST.length(); i++){
     DWLIST[i]->setTreeSortMode(4);
+  }
+  ui->menuSort_Mode->hide();
 }
-}
-
 
 /*void MainUI::groupModeChanged(bool active){
   if(!active){ return; } //on every change, all radio buttons will call this function - only run this once though
