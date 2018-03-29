@@ -259,6 +259,7 @@ void MainUI::setupIcons(){
   // View menu
   ui->actionRefresh->setIcon( LXDG::findIcon("view-refresh","") );
   ui->menuView_Mode->setIcon( LXDG::findIcon("view-choose","") );
+  ui->menuSort_Mode->setIcon(LXDG::findIcon("list-spacing","") );
 
   // Bookmarks menu
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
