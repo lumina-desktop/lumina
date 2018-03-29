@@ -39,6 +39,7 @@ class RRSettings{
 public:
 	//Reset current screen config to match previously-saved settings
 	static void ApplyPrevious();
+	static void ApplyProfile(QString profile);
 	//Setup all the connected monitors as a single mirror
 	static void MirrorAll();
 

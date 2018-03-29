@@ -29,8 +29,12 @@ PrintWidget::PrintWidget(Renderer *backend, QWidget *parent) :
 }
 
 PrintWidget::~PrintWidget() {
-  //delete scene;
-  //delete items in pages(?)
+  for (int i = 0; i < pages.size(); i++){
+    scene->removeItem(pages.at(i));
+  }
+  qDeleteAll(pages);
+  pages.clear(); 
+  scene->deleteLater();
 }
 
 //Public Slots
@@ -198,16 +202,13 @@ void PrintWidget::layoutPages() {
     for (int j = 0; j < cols && pageNum < numPages; j++) {
       double itemWidth = 0, itemHeight = 0;
       double pageHeight = pages.at(pageNum)->boundingRect().height();
-      //qDebug() << "Row:" << i << "Page Num:" << pageNum << "Columns:" << cols << "Floor Value: " << pageNum / cols << "f(x):" << i + (pageNum / cols);
 
-      for(int k = cols * (pageNum / cols); k < pageNum; k++) {
+      for(int k = cols * (pageNum / cols); k < pageNum; k++)
         itemWidth += pages.at(k)->boundingRect().width();
-      }
 
       foreach(double size, rowMaxList)
         itemHeight += size;  
 
-      //qDebug() << pageNum << QPointF(itemWidth, itemHeight);
       pages.at(pageNum)->setPos(QPointF(itemWidth, itemHeight));
       pageNum++;
       rowMax = qMax(rowMax, pageHeight);
@@ -314,7 +315,6 @@ void PrintWidget::fit(bool doFitting) {
     this->setTransform(t);
     if (doFitting && fitting) {
       QRectF viewSceneRect = this->viewportTransform().mapRect(this->viewport()->rect());
-      qDebug() << viewSceneRect;
       viewSceneRect.moveTop(target.top());
       this->ensureVisible(viewSceneRect); // Nah...
     }
@@ -344,7 +344,6 @@ void PrintWidget::goToPosition(int pagenum, float x, float y) {
   int yConv = int(pt.y() + y*(virtualHeight/realHeight)) - 30;
   int xConv = int(pt.x() + x*(virtualHeight/realHeight)) - 30;
 
-  //qDebug() << "Y:" << y << "RATIO:" << virtualHeight/realHeight << "YCONV:" << yConv << "PTY" << pt.y() << "MAX" << vsc->maximum();
   if(yConv > vsc->maximum())
     vsc->triggerAction(QAbstractSlider::SliderToMaximum);
   else if(y != 0)

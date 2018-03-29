@@ -22,6 +22,14 @@ int main(int argc, char ** argv)
         RRSettings::MirrorAll();
         CLIdone = true;
         break;
+      }else if(QString(argv[i]) == "--list-profiles"){
+        qDebug() << RRSettings::savedProfiles().join("\n");
+        CLIdone = true;
+        break;
+      }else if(QString(argv[i]) == "--apply-profile" && argc > (i+1) ){
+        RRSettings::ApplyProfile( QString(argv[i+1]) );
+        CLIdone = true;
+        break;
       }
     }
     if(CLIdone){ return 0; }

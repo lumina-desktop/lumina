@@ -21,12 +21,52 @@ void RRSettings::ApplyPrevious(){
   RRSettings::Apply(screens);
 }
 
+void RRSettings::ApplyProfile(QString profile){
+  //Make sure the profile exists first
+  if( !RRSettings::savedProfiles().contains(profile) ){ return; }
+  //Now load/apply the profile
+  QList<ScreenInfo> screens = RRSettings::PreviousSettings(profile);
+  RRSettings::Apply(screens);
+}
+
 void RRSettings::MirrorAll(){
-  QList<ScreenInfo> screens;
+  QList<ScreenInfo> screens = RRSettings::CurrentScreens();
   //Now find the highest resolution supported by all connected monitors
-
+  QStringList combined;
+  bool starting = true;
+  for(int i=0; i<screens.length(); i++){
+    //qDebug() << "Got Screen:" << screens[i].ID << screens[i].isavailable << screens[i].isactive << screens[i].resList;
+    if(!screens[i].isavailable){ continue; }
+    if(combined.isEmpty() && starting){ combined = screens[i].resList; starting = false; }
+    else{
+      for(int j=0; j<combined.length(); j++){
+        QString res = combined[j].section(" ",0,0, QString::SectionSkipEmpty);
+        if( screens[i].resList.filter(res).isEmpty() ){
+          combined.removeAt(j); j--;
+        }
+      }
+    }
+  }
+  //Get the highest res in the combined list
+  if(combined.isEmpty()){
+    qDebug() << "Could not find any common resolutions between the available monitors!";
+    return;
+  }
+  //qDebug() << "Got combined res list:" << combined;
+  QSize max;
+  for(int i=0; i<combined.length(); i++){
+    QString res = combined[i].section(" ",0,0, QString::SectionSkipEmpty);
+    QSize tmp(res.section("x",0,0).toInt(), res.section("x",1,1).toInt() );
+    if(tmp.width()>=max.width() && tmp.height()>=max.height()){ max = tmp; }
+  }
+  qDebug() << "Detected max unified resolution:" << max;
   //Setup one monitor with that resolution, and mirror the rest of them
-
+  for(int i=0; i<screens.length(); i++){
+    if(!screens[i].isavailable){ continue; } //skip it, not available at the moment
+    screens[i].geom = QRect(QPoint(0,0),max);
+    screens[i].rotation = 0;
+    if(!screens[i].isactive){ screens[i].applyChange = 2; } //activate it
+  }
   //Now reset the display with xrandr
   RRSettings::Apply(screens);
 }

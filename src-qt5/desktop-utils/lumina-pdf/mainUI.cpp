@@ -34,6 +34,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   PROPDIALOG = new PropDialog(BACKEND);
   BOOKMARKS = new BookmarkMenu(BACKEND, ui->splitter);
   BOOKMARKS->setContextMenuPolicy(Qt::CustomContextMenu);
+  BOOKMARKS->setVisible(false);
   WIDGET = new PrintWidget(BACKEND, ui->splitter);
   WIDGET->setContextMenuPolicy(Qt::CustomContextMenu);
   ui->splitter->setCollapsible(0, true);
@@ -360,7 +361,6 @@ void MainUI::startLoadingPages(int degrees){
 	BACKEND->clearHash();
   WIDGET->setVisible(false);
   BOOKMARKS->setVisible(false);
-  //qDebug() << "Update Progress Bar";
   progress->setRange(0, BACKEND->numPages());
   progress->setValue(0);
   progAct->setVisible(true);
@@ -516,7 +516,6 @@ void MainUI::updatePageNumber(){
 }*/
 
 void MainUI::updateContextMenu(){
-  //qDebug() << "UpdateContextMenu";
   contextMenu->clear();
   contextMenu->addSection( QString(tr("Page %1 of %2")).arg(QString::number(WIDGET->currentPage()),
     QString::number(BACKEND->numPages()) ) );
