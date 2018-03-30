@@ -36,14 +36,15 @@ FORMS += mainUI.ui \
          PropDialog.ui \
          BookmarkMenu.ui
 
-isEmpty(USE_POPPLER){
-	message("Using MuPDF Backend")
-	LIBS += -lmupdf -lmupdfthird
-	SOURCES += Renderer-mupdf.cpp
-}else{
+isEmpty(USE_MUPDF) || !isEmpty(USE_POPPLER){
 	message("Using Poppler-Qt5 Backend")
 	LIBS += -lpoppler-qt5
 	SOURCES += Renderer-poppler.cpp
+}else{
+	message("Using MuPDF Backend")
+	LIBS += -lmupdf -lmupdfthird
+	SOURCES += Renderer-mupdf.cpp
+
 }
 
 TRANSLATIONS =  i18n/l-pdf_af.ts \
