@@ -22,6 +22,33 @@
 #include "Renderer.h"
 #include "TextData.h"
 
+class LinkItem: public QGraphicsItem {
+public:
+  LinkItem(QGraphicsItem *parent, TextData *_data) : QGraphicsItem(parent), bbox(_data->loc()), data(_data) {
+    setCacheMode(DeviceCoordinateCache);
+    setAcceptHoverEvents(true);
+  }
+
+QRectF boundingRect() const Q_DECL_OVERRIDE
+  { return bbox; }
+
+inline TextData* getData() const
+  { return data; }
+
+void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE
+{
+  Q_UNUSED(widget);
+  painter->setClipRect(option->exposedRect);
+  painter->setBrush(QBrush(QColor(255, 255, 177, 100)));
+  painter->setPen(QPen(QColor(255, 255, 100, 125)));
+  painter->drawRect(bbox);
+}
+
+private:
+  QRectF bbox;
+  TextData *data;
+};
+
 class PageItem : public QGraphicsItem {
 public:
   PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize)
@@ -30,6 +57,7 @@ public:
     brect = QRectF(QPointF(-25, -25),
               QSizeF(paperSize)+QSizeF(50, 50));
     setCacheMode(DeviceCoordinateCache);
+    setAcceptHoverEvents(true);
   }
 
   QRectF boundingRect() const Q_DECL_OVERRIDE
@@ -80,7 +108,6 @@ private:
   QRectF brect;
 };
 
-
 class PrintWidget : public QGraphicsView
 {
   Q_OBJECT
@@ -112,6 +139,7 @@ private:
   double zoomFactor;
   bool initialized, fitting;
   QList<QGraphicsItem*> pages;
+  QHash<int, QList<QGraphicsItem*>> links;
   int degrees;
   Renderer *BACKEND;
 
@@ -157,6 +185,42 @@ protected:
     QGraphicsView::resizeEvent(e);
     emit resized();
    }
+
+  void mouseMoveEvent(QMouseEvent *e) Q_DECL_OVERRIDE {
+    QGraphicsView::mouseMoveEvent(e);
+    QGraphicsItem *item = scene->itemAt(mapToScene(e->pos()), transform());
+
+    if(item) {
+      LinkItem *link = dynamic_cast<LinkItem*>(item);
+      if(link)
+        link->setOpacity(1);
+      QList<QGraphicsItem*> linkList;
+      if(PageItem *page = dynamic_cast<PageItem*>(item))
+        linkList = page->childItems();
+      else
+        linkList = link->parentItem()->childItems();
+      foreach(QGraphicsItem *linkItem, linkList) {
+        if(dynamic_cast<LinkItem*>(linkItem) == link)
+          continue;
+        dynamic_cast<LinkItem*>(linkItem)->setOpacity(0.1);
+      }
+    }
+  }
+
+  void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE {
+    QGraphicsView::mouseReleaseEvent(e);
+    QPointF scenePoint = mapToScene(e->pos());
+    QGraphicsItem *item = scene->itemAt(scenePoint, transform());
+    if(LinkItem *link = dynamic_cast<LinkItem*>(item)) {
+      PageItem *page = dynamic_cast<PageItem*>(link->parentItem());
+      if(!BACKEND->isExternalLink(page->pageNumber()-1, link->getData()->text())) {
+        BACKEND->handleLink(link->getData()->text());
+      }else{
+        //Handle external link
+      } 
+      link->setOpacity(0.1);
+    }
+  }
 
   void showEvent(QShowEvent* e) Q_DECL_OVERRIDE {
     QGraphicsView::showEvent(e);

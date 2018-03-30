@@ -2,8 +2,22 @@
 #include <poppler/qt5/poppler-qt5.h>
 #include <QThread>
 
+class Link {
+  public:
+    Link(TextData *_data, Poppler::Link *_link) : data(_data), link(_link) { }
+    ~Link() { delete data; }
+  
+    TextData* getData() { return data; }
+    Poppler::Link* getLink() { return link; }
+
+  private:
+    TextData *data;
+    Poppler::Link *link;
+};
+
 static Poppler::Document *DOC;
 QHash<int, QImage> loadingHash;
+QHash<int, QList<Link*>> linkHash;
 
 Renderer::Renderer(){
   DOC = 0;
@@ -29,6 +43,12 @@ bool Renderer::loadDocument(QString path, QString password){
     //Clear out the old document first
     delete DOC;
     DOC=0;
+    if(linkHash.size() > 0) {
+      foreach(QList<Link*> linkArray, linkHash) {
+        qDeleteAll(linkArray);
+      }
+      linkHash.clear();
+    }
     needpass = false;
     pnum=0;
     docpath = path;
@@ -91,6 +111,17 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
 			}
       img = PAGE->renderToImage(DPI.width(), DPI.height(), -1, -1, -1, -1, rotation);
       loadingHash.insert(pagenum, img);
+      QList<Link*> linkArray;
+      foreach(Poppler::Link *link, PAGE->links()) {
+        QString location;
+        if(link->linkType() == Poppler::Link::LinkType::Goto)
+          location = dynamic_cast<Poppler::LinkGoto*>(link)->fileName();
+        else if(link->linkType() == Poppler::Link::LinkType::Goto)
+          location = dynamic_cast<Poppler::LinkBrowse*>(link)->url();
+        Link *newLink = new Link(new TextData(link->linkArea(), pagenum, location), link);
+        linkArray.append(newLink);
+      }
+      linkHash.insert(pagenum, linkArray);
       delete PAGE;
     }
     //qDebug() << "Done Render Page:" << pagenum << img.size();
@@ -132,4 +163,53 @@ bool Renderer::supportsExtraFeatures() { return false; }
 
 void Renderer::traverseOutline(void *, int) { }
 
-void Renderer::handleLink(QString link) { }
+void Renderer::handleLink(QString linkDest) { 
+  Poppler::Link* trueLink;
+  foreach(QList<Link*> linkArray, linkHash) {
+    for(int i = 0; i < linkArray.size(); i++) {
+      Poppler::Link* link = linkArray[i]->getLink();
+      if(link->linkType() == Poppler::Link::LinkType::Browse) {
+        if(linkDest == dynamic_cast<Poppler::LinkBrowse*>(link)->url())
+          trueLink = link;
+      }else if(link->linkType() == Poppler::Link::LinkType::Goto) {
+        if(linkDest == dynamic_cast<Poppler::LinkGoto*>(link)->fileName())
+          trueLink = link;
+      }
+    }
+  }
+  if(trueLink) {
+    if(trueLink->linkType() == Poppler::Link::LinkType::Goto)
+      emit goToPosition(dynamic_cast<Poppler::LinkGoto*>(trueLink)->destination().pageNumber(), 0, 0);
+  }
+}
+
+TextData* Renderer::linkList(int pageNum, int entry) { 
+  if(linkHash[pageNum].size() > 0)
+    return linkHash[pageNum][entry]->getData();
+  else
+    return 0;
+}
+
+int Renderer::linkSize(int pageNum) { return linkHash[pageNum].size(); }
+
+bool Renderer::isExternalLink(int pageNum, QString text) { 
+  Poppler::Link* trueLink;
+  foreach(QList<Link*> linkArray, linkHash) {
+    for(int i = 0; i < linkArray.size(); i++) {
+      Poppler::Link* link = linkArray[i]->getLink();
+      if(link->linkType() == Poppler::Link::LinkType::Browse) {
+        if(text == dynamic_cast<Poppler::LinkBrowse*>(link)->url())
+          trueLink = link;
+      }else if(link->linkType() == Poppler::Link::LinkType::Goto) {
+        if(text == dynamic_cast<Poppler::LinkGoto*>(link)->fileName())
+          trueLink = link;
+      }
+    }
+  }
+  if(trueLink) {
+    if(trueLink->linkType() == Poppler::Link::LinkType::Goto)
+      return dynamic_cast<Poppler::LinkGoto*>(trueLink)->isExternal();
+    if(trueLink->linkType() == Poppler::Link::LinkType::Browse)
+      return true;
+  }
+}

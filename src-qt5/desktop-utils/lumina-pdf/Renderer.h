@@ -46,6 +46,9 @@ public:
   QList<TextData*> searchDocument(QString text, bool matchCase);
   void traverseOutline(void *, int);
   void handleLink(QString);
+  TextData *linkList(int, int);
+  int linkSize(int);
+  bool isExternalLink(int, QString);
 
 	void clearHash();
   //Makes sure degrees is between 0 and 360 then rotates the matrix and 

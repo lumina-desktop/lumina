@@ -1,4 +1,5 @@
-#include "Renderer.h"
+#include "Renderer.h" 
+#include "TextData.h" 
 #include <QDateTime>
 #include <mupdf/fitz.h>
 #include <mupdf/pdf.h>
@@ -6,28 +7,70 @@
 #include <QFuture>
 #include <QtConcurrent>
 
+class Link {
+  public:
+    Link(fz_context *_ctx, fz_link *_fzLink, char *_uri, int _page, QRectF _loc = QRectF()) : fzLink(_fzLink), ctx(_ctx) {
+      QString uri = QString::fromLocal8Bit(_uri); 
+      data = new TextData(_loc, _page, uri);
+    }
+
+    ~Link() {
+      fz_drop_link(ctx, fzLink);
+      delete data;
+    }
+
+    TextData* getData() { return data; }
+
+  private:
+    TextData *data;
+    fz_link *fzLink;
+    fz_context *ctx;
+};
+
 class Data {
   public:
-    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_pixmap *_pix, fz_matrix _ctm, double _sf) : pagenumber(_pagenum),
-      ctx(_ctx),
-      list(_list),
-      bbox(_bbox),
-      pix(_pix),
-      ctm(_ctm),
-      sf(_sf)
-    { }
+    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_matrix _ctm, double _sf, fz_link *_link) : pagenumber(_pagenum), ctx(_ctx), list(_list), bbox(_bbox), ctm(_ctm), sf(_sf) {
 
-    ~Data() { }
+      while(_link) {
+        QRectF rect(sf*_link->rect.x0, sf*_link->rect.y0, sf*(_link->rect.x1 - _link->rect.x0), sf*(_link->rect.y1 - _link->rect.y0));
+        Link *link = new Link(_ctx, _link, _link->uri, _pagenum, rect);
+        linkList.push_back(link);
+        _link = _link->next;
+      }
+    }
 
+    ~Data() { 
+      fz_drop_pixmap(ctx, pix);
+      fz_drop_display_list(ctx, list);
+      qDeleteAll(linkList);
+      linkList.clear();
+    }
+
+    int getPage() { return pagenumber; }
+    QList<Link*> getLinkList() { return linkList; }
+    fz_context* getContext() { return ctx; }
+    fz_display_list* getDisplayList() { return list; }
+    QRectF getScaledRect() { return QRectF(sf*bbox.x0, sf*bbox.y0, sf*(bbox.x1-bbox.x0), sf*(bbox.y1 - bbox.y0)); }
+    fz_rect getBoundingBox() { return bbox; }
+    fz_matrix getMatrix() { return ctm; }
+    QImage getImage() { return img; }
+
+    void setImage(QImage _img) { img = _img; }
+    void setRenderThread(QFuture<void> thread) { renderThread = thread; }
+    void setPixmap(fz_pixmap *_pix) { pix = _pix; }
+    
+  private:
     int pagenumber;
     fz_context *ctx;
     fz_display_list *list;
     fz_rect bbox;
-    fz_pixmap *pix;
     fz_matrix ctm;
+    QList<Link*> linkList;
+    double sf;
+
+    fz_pixmap *pix;
     QImage img;
     QFuture<void> renderThread;
-    double sf;
 };
 
 fz_document *DOC;
@@ -85,7 +128,8 @@ void Renderer::handleLink(QString link) {
 
   if(!link.isEmpty()) {
     pagenum = fz_resolve_link(CTX, DOC, uri, &xp, &yp);
-    emit goToPosition(pagenum+1, xp, yp);
+    if(pagenum != -1)
+      emit goToPosition(pagenum+1, xp, yp);
   }
 }
 
@@ -174,29 +218,29 @@ bool Renderer::loadDocument(QString path, QString password){
 
 void renderer(Data *data, Renderer *obj)
 {
-  int pagenum = data->pagenumber;
+  int pagenum = data->getPage();
   //qDebug() << "Rendering:" << pagenum;
-  fz_context *ctx = data->ctx;
-  fz_display_list *list = data->list;
-  fz_rect bbox = data->bbox;
-  fz_pixmap *pixmap = data->pix;
-  fz_matrix ctm = data->ctm;
+  fz_context *ctx = data->getContext();
+  fz_rect bbox = data->getBoundingBox();
+  fz_matrix ctm = data->getMatrix();
   fz_device *dev;
+  fz_irect rbox;
 
   ctx = fz_clone_context(ctx);
-  dev = fz_new_draw_device(ctx, &fz_identity, pixmap);
-  fz_run_display_list(ctx, list, dev, &ctm, &bbox, NULL);
+  fz_pixmap *pixmap = fz_new_pixmap_with_bbox(ctx, fz_device_rgb(ctx), fz_round_rect(&rbox, &bbox), NULL, 0);
+  fz_clear_pixmap_with_value(ctx, pixmap, 0xff);
 
-  data->img = QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888);   
+  dev = fz_new_draw_device(ctx, &fz_identity, pixmap);
+  fz_run_display_list(ctx, data->getDisplayList(), dev, &ctm, &bbox, NULL);
+
+  data->setImage(QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888));
+  data->setPixmap(pixmap);
+  dataHash.insert(pagenum, data);
+
   fz_close_device(ctx, dev);
   fz_drop_device(ctx, dev);
-
   fz_drop_context(ctx);
 
-  if(dataHash.find(pagenum) == dataHash.end())
-    dataHash.insert(pagenum, data);
-  else
-    dataHash[pagenum] = data;
   emit obj->PageLoaded(pagenum);
 }
 
@@ -205,8 +249,6 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   Data *data;
   fz_matrix matrix;
   fz_rect bbox;
-  fz_irect rbox;
-  fz_pixmap *pixmap;
   fz_display_list *list;
 
   double pageDPI = 96.0;
@@ -222,42 +264,39 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   list = fz_new_display_list(CTX, &bbox);
   fz_device *dev = fz_new_list_device(CTX, list);
   fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
-  /*fz_annot *annot = fz_first_annot(CTX, PAGE);
+  fz_annot *annot = fz_first_annot(CTX, PAGE);
 
   while(annot) {
-    fz_run_annot(CTX, annot, dev, &fz_identity, NULL);
-    fz_rect bbox;
-    fz_bound_annot(CTX, annot, &bbox);
+    fz_rect anotBox;
+    fz_bound_annot(CTX, annot, &anotBox);
+    fz_run_annot(CTX, annot, dev, &matrix, NULL);
     
-    QRectF rect(bbox.x0, bbox.y0, (bbox.x1-bbox.x0), (bbox.y1 - bbox.y0));
+    QRectF rect(anotBox.x0, anotBox.y0, (anotBox.x1-anotBox.x0), (anotBox.y1 - anotBox.y0));
     qDebug() << "Annotation:" << rect << "at" << pagenum;
     annot = fz_next_annot(CTX, annot);
-  }*/
+  }
 
+  fz_link *link = fz_load_links(CTX, PAGE); 
+  
   fz_close_device(CTX, dev);
   fz_drop_device(CTX, dev);
   fz_drop_page(CTX, PAGE);
 
-  pixmap = fz_new_pixmap_with_bbox(CTX, fz_device_rgb(CTX), fz_round_rect(&rbox, &bbox), NULL, 0);
-  fz_clear_pixmap_with_value(CTX, pixmap, 0xff);
-
-  data = new Data(pagenum, CTX, list, bbox, pixmap, matrix, sf);
-  data->renderThread = QtConcurrent::run(&renderer, data, this);
+  data = new Data(pagenum, CTX, list, bbox, matrix, sf, link);
+  data->setRenderThread(QtConcurrent::run(&renderer, data, this));
 }
 
 QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
   fz_rect rectBuffer[1000];
   QList<TextData*> results;
   for(int i = 0; i < pnum; i++) {
-    int count = fz_search_display_list(CTX, dataHash[i]->list, text.toLocal8Bit().data(), rectBuffer, 1000);
+    int count = fz_search_display_list(CTX, dataHash[i]->getDisplayList(), text.toLocal8Bit().data(), rectBuffer, 1000);
     //qDebug() << "Page " << i+1 << ": Count, " << count;
     for(int j = 0; j < count; j++) {
-      double sf = dataHash[i]->sf;
-      QRectF rect(rectBuffer[j].x0*sf, rectBuffer[j].y0*sf, (rectBuffer[j].x1-rectBuffer[j].x0)*sf, (rectBuffer[j].y1 - rectBuffer[j].y0)*sf);
-      TextData *t = new TextData(rect, i+1, text);
+      TextData *t = new TextData(dataHash[i]->getScaledRect(), i+1, text);
       //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
       if(matchCase){
-        fz_stext_page *sPage = fz_new_stext_page_from_display_list(CTX, dataHash[i]->list, NULL);
+        fz_stext_page *sPage = fz_new_stext_page_from_display_list(CTX, dataHash[i]->getDisplayList(), NULL);
         QString currentStr = QString(fz_copy_selection(CTX, sPage, *fz_rect_min(&rectBuffer[j]), *fz_rect_max(&rectBuffer[j]), false));
         if(currentStr.contains(text, Qt::CaseSensitive)){ results.append(t); }
       }else{
@@ -269,7 +308,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
 }
 
 QImage Renderer::imageHash(int pagenum) {
-  return dataHash[pagenum]->img;
+  return dataHash[pagenum]->getImage();
 }
 
 int Renderer::hashSize() {
@@ -277,12 +316,26 @@ int Renderer::hashSize() {
 }
 
 void Renderer::clearHash() {
-  for(int i = 0; i < dataHash.size(); i++) {
-    fz_drop_pixmap(CTX, dataHash[i]->pix);
-    fz_drop_display_list(CTX, dataHash[i]->list);
-  }
   qDeleteAll(dataHash);
   dataHash.clear();
 }
 
+TextData* Renderer::linkList(int pagenum, int entry) {
+  return dataHash[pagenum]->getLinkList()[entry]->getData();
+}
+
+int Renderer::linkSize(int pagenum) {
+  return dataHash[pagenum]->getLinkList().size();
+}
+
+bool Renderer::isExternalLink(int pagenum, QString text) { 
+  QList<Link*> linkList = dataHash[pagenum]->getLinkList();
+  foreach(Link *link, linkList) {
+    if(link->getData()->text() == text)
+      return fz_is_external_link(CTX, link->getData()->text().toLocal8Bit().data());
+  }
+  return false;
+}
+
 bool Renderer::supportsExtraFeatures() { return true; }
+

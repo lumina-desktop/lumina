@@ -131,7 +131,7 @@ void PrintWidget::setCurrentPage(int pageNumber) {
 
 void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
-  if(!text->highlighted()) {
+  if(!text->highlighted() && !text->loc().isNull()) {
     int degrees = BACKEND->rotatedDegrees();
     //Shows the text's location on a non-rotated page
     QRectF rect = text->loc();
@@ -224,6 +224,13 @@ void PrintWidget::populateScene()
   for (int i = 0; i < pages.size(); i++){
     scene->removeItem(pages.at(i));
   }
+  for(int i = 0; i < links.size(); i++) {
+    if(links[i].size() > 0) {
+      qDeleteAll(links[i]);
+      links[i].clear();
+    }
+  }
+  links.clear();
   qDeleteAll(pages);
   pages.clear();
   int numPages = BACKEND->numPages();
@@ -231,16 +238,26 @@ void PrintWidget::populateScene()
 
   for (int i = 0; i < numPages; i++) {
     QImage pagePicture = BACKEND->imageHash(i);
-
     QSize paperSize = pagePicture.size();
+    QList<QGraphicsItem*> linkLocations;
 
     if(pagePicture.isNull()) {
       qDebug() << "NULL IMAGE ON PAGE " << i;
       continue;
     }
+
     PageItem* item = new PageItem(i+1, pagePicture, paperSize);
     scene->addItem(item);
     pages.append(item);
+
+    if(BACKEND->supportsExtraFeatures()) {
+      for(int k = 0; k < BACKEND->linkSize(i); k++) {
+        LinkItem *lItem = new LinkItem(item, BACKEND->linkList(i, k));
+        lItem->setOpacity(0.1);
+        linkLocations.append(lItem);
+      }
+      links.insert(i, linkLocations);
+    }
   }
 }
 
