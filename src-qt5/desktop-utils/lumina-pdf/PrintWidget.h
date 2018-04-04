@@ -19,8 +19,55 @@
 #include <QStyleOptionGraphicsItem>
 #include <QtMath>
 #include <QPageLayout>
+#include <QTextDocument>
 #include "Renderer.h"
 #include "TextData.h"
+
+class AnnotItem: public QGraphicsItem {
+public:
+  AnnotItem(QGraphicsItem *parent, QList<QString> textData, QRectF loc) : QGraphicsItem(parent), author(textData[0]), text(textData[1]) {
+    setCacheMode(DeviceCoordinateCache);
+    QString allText = "Author: " + author + "\n\n" + text;
+    QTextDocument document;
+    document.setDefaultFont(QFont("Helvitica", 10, QFont::Normal));
+    document.setPageSize(QSize(120, 120));
+    document.setHtml(allText);
+    loc.moveTopLeft(QPointF(loc.center().x(), loc.center().y()+loc.height()/2));
+    loc.setSize(document.size()+QSize(10, 10));
+    bbox = loc;
+  }
+
+  QRectF boundingRect() const Q_DECL_OVERRIDE { return bbox; }
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE
+  {
+    Q_UNUSED(widget);
+    QString allText = "Author: " + author + "\n\n" + text;
+    painter->setClipRect(option->exposedRect);
+    painter->setFont(QFont("Helvitica", 10, QFont::Normal));
+    painter->setBrush(QBrush(QColor(255, 255, 177, 255)));
+    painter->drawRect(bbox);
+    painter->setPen(QPen(QColor("Black")));
+    painter->drawText(bbox, Qt::AlignLeft | Qt::TextWordWrap, allText);
+  }
+
+private:
+  QRectF bbox;
+  QString author;
+  QString text;
+};
+
+class AnnotZone: public QGraphicsItem {
+public:
+  AnnotZone(QGraphicsItem *parent, QRectF _bbox, AnnotItem *_annot) : QGraphicsItem(parent), bbox(_bbox), annot(_annot) { }
+  QRectF boundingRect() const Q_DECL_OVERRIDE { return bbox; }
+  AnnotItem* annotation() const { return annot; }
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE { Q_UNUSED(widget); Q_UNUSED(painter); Q_UNUSED(option); } 
+
+private:
+  QRectF bbox;
+  AnnotItem *annot;
+};
 
 class LinkItem: public QGraphicsItem {
 public:
@@ -186,24 +233,38 @@ protected:
     emit resized();
    }
 
+  void clearItems(QList<QGraphicsItem*> itemList, QGraphicsItem *item) {
+    foreach(QGraphicsItem *graphicsItem, itemList) {
+      if(item == graphicsItem)
+        continue;
+      if(graphicsItem == dynamic_cast<LinkItem*>(graphicsItem))
+        graphicsItem->setOpacity(0.1);
+      if(graphicsItem == dynamic_cast<AnnotItem*>(graphicsItem))
+        graphicsItem->setVisible(false);
+    }
+  }
+
   void mouseMoveEvent(QMouseEvent *e) Q_DECL_OVERRIDE {
     QGraphicsView::mouseMoveEvent(e);
-    QGraphicsItem *item = scene->itemAt(mapToScene(e->pos()), transform());
 
-    if(item) {
-      LinkItem *link = dynamic_cast<LinkItem*>(item);
-      if(link)
-        link->setOpacity(1);
+    if(QGraphicsItem *item = scene->itemAt(mapToScene(e->pos()), transform())) {
       QList<QGraphicsItem*> linkList;
+      if(item == dynamic_cast<AnnotItem*>(item))
+        item = item->parentItem();
+
       if(PageItem *page = dynamic_cast<PageItem*>(item))
         linkList = page->childItems();
       else
-        linkList = link->parentItem()->childItems();
-      foreach(QGraphicsItem *linkItem, linkList) {
-        if(dynamic_cast<LinkItem*>(linkItem) == link)
-          continue;
-        dynamic_cast<LinkItem*>(linkItem)->setOpacity(0.1);
+        linkList = item->parentItem()->childItems();
+
+      if(LinkItem *link = dynamic_cast<LinkItem*>(item)){
+        item->setOpacity(1);
+      }else if(AnnotZone *annotZone = dynamic_cast<AnnotZone*>(item)){
+        annotZone->annotation()->setVisible(true);
+        item = annotZone->annotation();
       }
+
+      clearItems(linkList, item);
     }
   }
 
@@ -216,7 +277,7 @@ protected:
       if(!BACKEND->isExternalLink(page->pageNumber()-1, link->getData()->text())) {
         BACKEND->handleLink(link->getData()->text());
       }else{
-        //Handle external link
+        ExternalLinkDialog
       } 
       link->setOpacity(0.1);
     }

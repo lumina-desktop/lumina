@@ -7,6 +7,29 @@
 #include <QFuture>
 #include <QtConcurrent>
 
+class Annot{
+  public:
+    Annot(fz_context *_ctx, pdf_annot *_fzAnnot, char *_text, char *_author, QRectF _loc = QRectF()) : fzAnnot(_fzAnnot), ctx(_ctx), loc(_loc) {
+      author = (_author) ? QString::fromLocal8Bit(_author) : QString(); 
+      text = (_text) ? QString::fromLocal8Bit(_text) : QString(); 
+    }
+
+    ~Annot() {
+      fz_drop_annot(ctx, (fz_annot*)fzAnnot);
+    }
+
+    QString getAuthor() { return author; }
+    QString getText() { return text; }
+    QRectF getLoc() { return loc; }
+
+  private:
+    pdf_annot *fzAnnot;
+    fz_context *ctx;
+    QString author;
+    QString text;
+    QRectF loc;
+};
+
 class Link {
   public:
     Link(fz_context *_ctx, fz_link *_fzLink, char *_uri, int _page, QRectF _loc = QRectF()) : fzLink(_fzLink), ctx(_ctx) {
@@ -29,14 +52,15 @@ class Link {
 
 class Data {
   public:
-    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_matrix _ctm, double _sf, fz_link *_link) : pagenumber(_pagenum), ctx(_ctx), list(_list), bbox(_bbox), ctm(_ctm), sf(_sf) {
+    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_matrix _ctm, double _sf, fz_link *_link, QList<Annot*> &_annot) : pagenumber(_pagenum), ctx(_ctx), list(_list), bbox(_bbox), ctm(_ctm), sf(_sf), annotList(_annot) {
 
       while(_link) {
         QRectF rect(sf*_link->rect.x0, sf*_link->rect.y0, sf*(_link->rect.x1 - _link->rect.x0), sf*(_link->rect.y1 - _link->rect.y0));
         Link *link = new Link(_ctx, _link, _link->uri, _pagenum, rect);
-        linkList.push_back(link);
+        linkList.append(link);
         _link = _link->next;
       }
+
     }
 
     ~Data() { 
@@ -44,10 +68,13 @@ class Data {
       fz_drop_display_list(ctx, list);
       qDeleteAll(linkList);
       linkList.clear();
+      qDeleteAll(annotList);
+      annotList.clear();
     }
 
     int getPage() { return pagenumber; }
     QList<Link*> getLinkList() { return linkList; }
+    QList<Annot*> getAnnotList() { return annotList; }
     fz_context* getContext() { return ctx; }
     fz_display_list* getDisplayList() { return list; }
     QRectF getScaledRect() { return QRectF(sf*bbox.x0, sf*bbox.y0, sf*(bbox.x1-bbox.x0), sf*(bbox.y1 - bbox.y0)); }
@@ -67,6 +94,7 @@ class Data {
     fz_matrix ctm;
     QList<Link*> linkList;
     double sf;
+    QList<Annot*> annotList;
 
     fz_pixmap *pix;
     QImage img;
@@ -241,6 +269,7 @@ void renderer(Data *data, Renderer *obj)
   fz_drop_device(ctx, dev);
   fz_drop_context(ctx);
 
+  //qDebug() << "Finished rendering:" << pagenum;
   emit obj->PageLoaded(pagenum);
 }
 
@@ -251,10 +280,11 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   fz_rect bbox;
   fz_display_list *list;
 
-  double pageDPI = 96.0;
-  double sf = DPI.width() / pageDPI;
-  fz_scale(&matrix, sf, sf);
-  fz_pre_rotate(&matrix, degrees);
+  //double pageDPI = 96.0;
+  //double sf = DPI.width() / pageDPI;
+  double sf = 1;
+  //fz_scale(&matrix, sf, sf);
+  fz_rotate(&matrix, degrees);
 
   fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
   fz_bound_page(CTX, PAGE, &bbox);
@@ -264,25 +294,35 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   list = fz_new_display_list(CTX, &bbox);
   fz_device *dev = fz_new_list_device(CTX, list);
   fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
-  fz_annot *annot = fz_first_annot(CTX, PAGE);
-
-  while(annot) {
-    fz_rect anotBox;
-    fz_bound_annot(CTX, annot, &anotBox);
-    fz_run_annot(CTX, annot, dev, &matrix, NULL);
-    
-    QRectF rect(anotBox.x0, anotBox.y0, (anotBox.x1-anotBox.x0), (anotBox.y1 - anotBox.y0));
-    qDebug() << "Annotation:" << rect << "at" << pagenum;
-    annot = fz_next_annot(CTX, annot);
-  }
 
   fz_link *link = fz_load_links(CTX, PAGE); 
-  
+  pdf_annot *_annot = pdf_first_annot(CTX, (pdf_page*)PAGE);
+  QList<Annot*> annotList;
+
+  //qDebug() << "Starting annotations for:" << pagenum;
+  while(_annot) {
+    pdf_run_annot(CTX, _annot, dev, &fz_identity, NULL);
+    fz_rect anotBox;
+    pdf_bound_annot(CTX, _annot, &anotBox);
+    QRectF rect(sf*anotBox.x0, sf*anotBox.y0, sf*(anotBox.x1-anotBox.x0), sf*(anotBox.y1 - anotBox.y0));
+    char *contents = NULL, *author = NULL; 
+    fz_try(CTX)
+      contents = pdf_copy_annot_contents(CTX, _annot);
+    fz_catch(CTX) { }
+    fz_try(CTX)
+      author = pdf_copy_annot_author(CTX, _annot);
+    fz_catch(CTX) { }
+   
+    Annot *annot = new Annot(CTX, _annot, contents, author, rect);
+    annotList.append(annot);
+    _annot = _annot->next;
+  }
+
   fz_close_device(CTX, dev);
   fz_drop_device(CTX, dev);
   fz_drop_page(CTX, PAGE);
 
-  data = new Data(pagenum, CTX, list, bbox, matrix, sf, link);
+  data = new Data(pagenum, CTX, list, bbox, matrix, sf, link, annotList);
   data->setRenderThread(QtConcurrent::run(&renderer, data, this));
 }
 
@@ -326,6 +366,18 @@ TextData* Renderer::linkList(int pagenum, int entry) {
 
 int Renderer::linkSize(int pagenum) {
   return dataHash[pagenum]->getLinkList().size();
+}
+
+QList<QString> Renderer::annotList(int pagenum, int entry) {
+  return QList<QString>() << dataHash[pagenum]->getAnnotList()[entry]->getAuthor() << dataHash[pagenum]->getAnnotList()[entry]->getText();
+}
+
+QRectF Renderer::annotLoc(int pagenum, int entry) {
+  return dataHash[pagenum]->getAnnotList()[entry]->getLoc();
+}
+
+int Renderer::annotSize(int pagenum) {
+  return dataHash[pagenum]->getAnnotList().size();
 }
 
 bool Renderer::isExternalLink(int pagenum, QString text) { 

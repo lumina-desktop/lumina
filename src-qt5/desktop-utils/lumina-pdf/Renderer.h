@@ -48,6 +48,9 @@ public:
   void handleLink(QString);
   TextData *linkList(int, int);
   int linkSize(int);
+  QList<QString> annotList(int, int);
+  int annotSize(int);
+  QRectF annotLoc(int, int);
   bool isExternalLink(int, QString);
 
 	void clearHash();

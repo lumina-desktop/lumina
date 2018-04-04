@@ -224,22 +224,18 @@ void PrintWidget::populateScene()
   for (int i = 0; i < pages.size(); i++){
     scene->removeItem(pages.at(i));
   }
-  for(int i = 0; i < links.size(); i++) {
-    if(links[i].size() > 0) {
-      qDeleteAll(links[i]);
-      links[i].clear();
-    }
-  }
-  links.clear();
   qDeleteAll(pages);
   pages.clear();
+  //links.clear();
+  //annots.clear();
   int numPages = BACKEND->numPages();
   if(BACKEND->hashSize() < numPages){ return; } //nothing to show yet
 
   for (int i = 0; i < numPages; i++) {
     QImage pagePicture = BACKEND->imageHash(i);
     QSize paperSize = pagePicture.size();
-    QList<QGraphicsItem*> linkLocations;
+    //QList<QGraphicsItem*> linkLocations;
+    //QList<QGraphicsItem*> annotLocations;
 
     if(pagePicture.isNull()) {
       qDebug() << "NULL IMAGE ON PAGE " << i;
@@ -254,9 +250,17 @@ void PrintWidget::populateScene()
       for(int k = 0; k < BACKEND->linkSize(i); k++) {
         LinkItem *lItem = new LinkItem(item, BACKEND->linkList(i, k));
         lItem->setOpacity(0.1);
-        linkLocations.append(lItem);
+        //linkLocations.append(lItem);
       }
-      links.insert(i, linkLocations);
+      //qDebug() << "Creating annotations for:" <<  i;
+      for(int k = 0; k < BACKEND->annotSize(i); k++) {
+        AnnotItem *aItem = new AnnotItem(item, BACKEND->annotList(i, k), BACKEND->annotLoc(i, k));
+        AnnotZone *aZone = new AnnotZone(item, BACKEND->annotLoc(i, k), aItem);
+        aItem->setVisible(false);
+        //annotLocations.append(aItem);
+      }
+      //links.insert(i, linkLocations);
+      //annots.insert(i, annotLocations);
     }
   }
 }
