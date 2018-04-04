@@ -277,7 +277,7 @@ protected:
       if(!BACKEND->isExternalLink(page->pageNumber()-1, link->getData()->text())) {
         BACKEND->handleLink(link->getData()->text());
       }else{
-        ExternalLinkDialog
+        //External Link
       } 
       link->setOpacity(0.1);
     }

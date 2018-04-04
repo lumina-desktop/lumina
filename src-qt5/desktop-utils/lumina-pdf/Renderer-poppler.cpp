@@ -220,4 +220,5 @@ bool Renderer::isExternalLink(int pageNum, QString text) {
     if(trueLink->linkType() == Poppler::Link::LinkType::Browse)
       return true;
   }
+  return false;
 }
