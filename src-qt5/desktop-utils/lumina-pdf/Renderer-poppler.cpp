@@ -191,16 +191,19 @@ TextData* Renderer::linkList(int pageNum, int entry) {
 }
 
 QList<QString> Renderer::annotList(int pageNum, int entry) { 
+  Q_UNUSED(pageNum)
+  Q_UNUSED(entry)
   return QList<QString>() << QString() << QString();
 }
 
-int Renderer::linkSize(int pageNum) { return linkHash[pageNum].size(); }
+int Renderer::linkSize(int pageNum) { Q_UNUSED(pageNum) return linkHash[pageNum].size(); }
 
-int Renderer::annotSize(int pageNum) { return 0; }
+int Renderer::annotSize(int pageNum) { Q_UNUSED(pageNum) return 0; }
 
-QRectF Renderer::annotLoc(int pageNum, int entry) { return QRectF(); }
+QRectF Renderer::annotLoc(int pageNum, int entry) { Q_UNUSED(pageNum) Q_UNUSED(entry) return QRectF(); }
 
 bool Renderer::isExternalLink(int pageNum, QString text) { 
+  Q_UNUSED(pageNum)
   Poppler::Link* trueLink;
   foreach(QList<Link*> linkArray, linkHash) {
     for(int i = 0; i < linkArray.size(); i++) {
