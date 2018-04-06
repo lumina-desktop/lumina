@@ -182,6 +182,7 @@ void DirWidget::LoadSnaps(QString basedir, QStringList snaps){
   //Save these value internally for use later
   //qDebug() << "ZFS Snapshots available:" << basedir << snaps;
   snapbasedir = basedir;
+  snaps.sort();
   snapshots = snaps;
   //if(!snapbasedir.isEmpty()){ watcher->addPath(snapbasedir); } //add this to the watcher in case snapshots get created/removed
   //Now update the UI as necessary
