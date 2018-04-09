@@ -3,8 +3,11 @@ INCLUDEPATH *= $${PWD}
 
 SOURCES *= $${PWD}/RootDesktop.cpp \
 		$${PWD}/ContextMenu.cpp \
-		$${PWD}/NativeWindow.cpp
+		$${PWD}/NativeWindow.cpp \
+		$${PWD}/Panel.cpp
 
 HEADERS *= $${PWD}/RootDesktop.h \
 		$${PWD}/ContextMenu.h \
-		$${PWD}/NativeWindow.h
+		$${PWD}/NativeWindow.h \
+		$${PWD}/Panel.h \
+		$${PWD}/Plugin.h

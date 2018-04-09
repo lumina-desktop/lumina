@@ -20,7 +20,7 @@ public:
 
 private:
 	QImage bgimage;
-	QStringList lastscreens;
+	QStringList lastscreens, lastpanels;
 	QTimer *bgTimer;
 	DesktopContextMenu *cmenu;
 

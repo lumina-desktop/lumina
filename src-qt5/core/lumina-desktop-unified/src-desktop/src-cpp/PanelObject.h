@@ -41,6 +41,7 @@ public:
 	Q_INVOKABLE int height();
 	Q_INVOKABLE bool isVertical();
 	Q_INVOKABLE QStringList plugins();
+	Q_INVOKABLE QRect geometry(){ return geom; }
 
 public slots:
 	void setBackground(QString fileOrColor);
