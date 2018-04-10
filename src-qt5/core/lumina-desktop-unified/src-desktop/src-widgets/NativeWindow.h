@@ -16,6 +16,11 @@ public:
 	NativeWindow(NativeWindowObject *obj);
 	~NativeWindow();
 
+	QPoint relativeOrigin(); //origin of the embedded window relative to the frame
+
+public slots:
+	void initProperties();
+
 private:
 	//Core object
 	NativeWindowObject *WIN;
@@ -27,6 +32,7 @@ private:
 	QHBoxLayout *toolbarL;
 	QVBoxLayout *vlayout;
 	QLabel *titleLabel;
+	QWidget *container;
 	// Info cache variables
 	QRect oldgeom;
 
@@ -38,7 +44,7 @@ private slots:
 	void syncTitle();
 	void syncIcon();
 	void syncSticky();
-	void syncVisibility();
+	void syncVisibility(bool init = false);
 	void syncWinType();
 	void syncGeom();
 };

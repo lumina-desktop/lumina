@@ -631,6 +631,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
 
     win->addDamageID( (uint) dmgID); //save this for later
   }else{
+    /*
     //xcb_reparent_window(QX11Info::connection(), win->id(), this->winId(), 0, 0);
     //Also use a partial-composite here - make sure the window pixmap is available even when the window is obscured
     xcb_composite_redirect_window(QX11Info::connection(), win->id(), XCB_COMPOSITE_REDIRECT_AUTOMATIC);
@@ -639,6 +640,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
     Damage dmgID = XDamageCreate(QX11Info::display(), win->id(), XDamageReportRawRectangles);
 
     win->addDamageID( (uint) dmgID); //save this for later
+    */
   }
   //win->addFrameWinID(this->winId());
   registerClientEvents(win->id());
@@ -795,7 +797,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   if(attr == 0){ return; } //could not get attributes of window
   if(attr->override_redirect){ free(attr); return; } //window has override redirect set (do not manage)
   free(attr);
-  xcb_reparent_window(QX11Info::connection(), id, QX11Info::appRootWindow(), 0, 0);
+  //xcb_reparent_window(QX11Info::connection(), id, QX11Info::appRootWindow(), 0, 0);
   //Now go ahead and create/populate the container for this window
   NativeWindowObject *win = new NativeWindowObject(id);
 
