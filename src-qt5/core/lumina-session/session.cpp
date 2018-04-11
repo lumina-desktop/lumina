@@ -53,14 +53,29 @@ void LSession::procFinished(){
   }
   //qDebug() << " - Final Count:" << stopped << stopping;
   if(stopping || stopped==PROCS.length()){
+    //Note about compton: It does not like running multiple sessions under the *same user*
+    // (even on different displays). Run a blanket killall on it when closing down so that
+    // any other Lumina sessions will automatically restart compton on that specific display
+    QProcess::execute("killall compton");
     QCoreApplication::exit(0);
+  }else{
+    //Make sure we restart the process as needed
+    for(int i=0; i<PROCS.length(); i++){
+      if(PROCS[i]->state()==QProcess::NotRunning){
+        //runtime/wm processes have special restart rules above
+        if(PROCS[i]->objectName()!="runtime" && PROCS[i]->objectName()!="wm"){
+          PROCS[i]->start(QIODevice::ReadOnly);
+        }
+      }
+    }
   }
 }
 
 void LSession::startProcess(QString ID, QString command, QStringList watchfiles){
   QString dir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs";
+  QString display = QString(getenv("DISPLAY")).section(":",1,1);
   if(!QFile::exists(dir)){ QDir tmp(dir); tmp.mkpath(dir); }
-  QString logfile = dir+"/"+ID+".log";
+  QString logfile = dir+"/"+ID+"_"+display+".log";
   if(QFile::exists(logfile+".old")){ QFile::remove(logfile+".old"); }
   if(QFile::exists(logfile)){ QFile::rename(logfile,logfile+".old"); }
 
@@ -110,8 +125,9 @@ void LSession::setupCompositor(){
 	 LUtils::writeFile(set, info, true);
 	 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
        }
-	if(startcompton && QFile::exists(set)){ startProcess("compositing","compton --config \""+set+"\"", QStringList() << set); }
-        else if(startcompton){ startProcess("compositing","compton"); }
+       QString disp = getenv("DISPLAY");
+	if(startcompton && QFile::exists(set)){ startProcess("compositing","compton -d "+disp+" --config \""+set+"\"", QStringList() << set); }
+        else if(startcompton){ startProcess("compositing","compton -d "+disp); }
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
 }
