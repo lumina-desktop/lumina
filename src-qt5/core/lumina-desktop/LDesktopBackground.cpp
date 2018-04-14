@@ -46,7 +46,7 @@ QPixmap LDesktopBackground::setBackground(const QString& bgFile, const QString& 
             } else {
                 mode = Qt::KeepAspectRatio;
             }
-            if(bgImage.height() != geom.height() && bgImage.width() != geom.width() ){ bgImage = bgImage.scaled(geom.size(), mode);  }
+            if(bgImage.height() != geom.height() && bgImage.width() != geom.width() ){ bgImage = bgImage.scaled(geom.size(), mode, Qt::SmoothTransformation);  }
             //bgImage = bgImage.scaled(size(), mode);
         }
 
