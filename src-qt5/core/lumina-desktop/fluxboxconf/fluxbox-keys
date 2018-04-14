@@ -49,16 +49,14 @@ OnTitlebar Mouse3 :WindowMenu
 # alt-tab
 Mod1 Tab  :NextWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
 Mod1 Shift Tab  :PrevWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
-Control Tab :NextGroup (workspace=[current])  (workspace=[current])
-Control Shift Tab :PrevGroup (workspace=[current])  (workspace=[current])
 
 # cycle through tabs in the current window
 Mod4 Tab  :NextTab
 Mod4 Shift Tab  :PrevTab
 
 # Arrange/Tile Current windows
-Mod1 Left  :ArrangeWindowsStackRight (Layer=Normal)
-Mod1 Right  :ArrangeWindowsStackLeft (Layer=Normal)
+Mod4 Mod1 Left  :ArrangeWindowsStackRight (Layer=Normal)
+Mod4 Mod1 Right  :ArrangeWindowsStackLeft (Layer=Normal)
 
 # go to a specific tab in the current window
 Mod4 1  :Tab 1
@@ -151,4 +149,4 @@ Mod1 Next :Exec lumina-open -volumedown
 Mod1 Home  :Exec lumina-open -brightnessup
 Mod1 End  :Exec lumina-open -brightnessdown
 F12 :Exec lumina-terminal -toggle
-115 :Exec lumina-desktop --show-start
+Mod4 space :Exec lumina-desktop --show-start
