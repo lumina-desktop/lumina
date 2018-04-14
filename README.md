@@ -202,4 +202,4 @@ The TrueOS Project also maintains a number of social media accounts you can watc
 * Facebook: https://www.facebook.com/groups/4210443834/
 * Linkedin: http://www.linkedin.com/groups?gid=1942544
 * TrueOS Blog: https://www.trueos.org/blog/
-* Twitter: https://twitter.com/TrueOS_Project/
+* Twitter: https://twitter.com/trueos/
