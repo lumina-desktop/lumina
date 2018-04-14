@@ -11,6 +11,8 @@
 #include "pages/getPage.h"
 #include "pages/page_main.h"
 
+#include <QSettings>
+
 //=============
 //      PUBLIC
 //=============
@@ -30,10 +32,16 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   setupIcons();
   loadMonitors();
   //changePage(""); //load the default main page
+
+  // restore window geometry
+  QSettings settings("lumina-desktop","lumina-config");
+  restoreGeometry(settings.value("window/geometry").toByteArray());
 }
 
 mainWindow::~mainWindow(){
-
+  // save window geometry
+  QSettings settings("lumina-desktop","lumina-config");
+  settings.setValue("window/geometry", saveGeometry());
 }
 
 //==============
