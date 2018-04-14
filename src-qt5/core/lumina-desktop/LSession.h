@@ -21,6 +21,7 @@
 #include <QMediaPlayer>
 #include <QThread>
 #include <QUrl>
+#include <QClipboard>
 
 #include "Globals.h"
 #include "AppMenu.h"
@@ -141,6 +142,8 @@ private:
 
 	int VersionStringToNumber(QString version);
 
+    bool ignoreClipboard; // flag for (handle/store)Clipboard
+
 public slots:
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);
@@ -169,6 +172,10 @@ private slots:
 
 
 	void SessionEnding();
+
+    // Clipboard
+    void handleClipboard(QClipboard::Mode mode);
+    void storeClipboard(QString text, QClipboard::Mode mode);
 
 signals:
 	//System Tray Signals

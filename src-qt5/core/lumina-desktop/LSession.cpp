@@ -10,6 +10,7 @@
 #include <QTime>
 #include <QScreen>
 #include <QtConcurrent>
+#include <QMimeData>
 #include "LXcbEventFilter.h"
 #include "BootSplash.h"
 
@@ -72,6 +73,11 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   connect(this, SIGNAL(screenAdded(QScreen*)), this, SLOT(screensChanged()) );
   connect(this, SIGNAL(screenRemoved(QScreen*)), this, SLOT(screensChanged()) );
   connect(this, SIGNAL(primaryScreenChanged(QScreen*)), this, SLOT(screensChanged()) );
+
+  // Clipboard
+  ignoreClipboard = false;
+  qRegisterMetaType<QClipboard::Mode>("QClipboard::Mode");
+  connect(QApplication::clipboard(), SIGNAL(changed(QClipboard::Mode)), this, SLOT(handleClipboard(QClipboard::Mode)));
  } //end check for primary process
 }
 
@@ -585,6 +591,20 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
 
 void LSession::SessionEnding(){
   stopSystemTray(); //just in case it was not stopped properly earlier
+}
+
+void LSession::handleClipboard(QClipboard::Mode mode){
+  if (!ignoreClipboard) {
+    const QMimeData *mime = QApplication::clipboard()->mimeData(mode);
+    if (!mime) { return; }
+    if (mime->hasText()) { QMetaObject::invokeMethod(this, "storeClipboard", Qt::QueuedConnection, Q_ARG(QString, mime->text()), Q_ARG(QClipboard::Mode, mode)); }
+  }
+}
+
+void LSession::storeClipboard(QString text, QClipboard::Mode mode){
+  ignoreClipboard = true;
+  QApplication::clipboard()->setText(text, mode);
+  ignoreClipboard = false;
 }
 
 //===============
