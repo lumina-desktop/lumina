@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QIcon>
 #include <QRegExp>
+#include <QWindow>
 
 #ifdef QT_WIDGETS_LIB
 #include <QStyle>
