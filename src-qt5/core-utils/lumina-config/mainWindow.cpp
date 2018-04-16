@@ -11,14 +11,22 @@
 #include "pages/getPage.h"
 #include "pages/page_main.h"
 
+#include <QSettings>
+
 //=============
 //      PUBLIC
 //=============
 mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   ui->setupUi(this);
+  geomTimer = new QTimer(this);
+    geomTimer->setSingleShot(true);
+    geomTimer->setInterval(1000); //1 second
+    connect(geomTimer, SIGNAL(timeout()), this, SLOT(saveWinGeometry()) );
+
   APPSLIST = new XDGDesktopList(this, true); //keep this up to date while the app is open
   QTimer::singleShot(100, APPSLIST, SLOT(updateList())); //don't let this hold up the initial application loading
   cpage = "somerandomjunktostartwith";
+
   //Need to insert a spacer action in the toolbar
   QWidget *tmp = new QWidget(this);
     tmp->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -30,6 +38,9 @@ mainWindow::mainWindow() : QMainWindow(), ui(new Ui::mainWindow()){
   setupIcons();
   loadMonitors();
   //changePage(""); //load the default main page
+  QSettings S("lumina-desktop","lumina-config");
+  QRect geom = S.value("window_geometry", QRect()).toRect();
+  if(!geom.isNull()){ this->setGeometry(geom); }
 }
 
 mainWindow::~mainWindow(){
@@ -58,7 +69,7 @@ void mainWindow::setupIcons(){
 }
 
 void mainWindow::loadMonitors(){
-  if(ui->actionMonitor->menu()==0){ 
+  if(ui->actionMonitor->menu()==0){
     ui->actionMonitor->setMenu( new QMenu(this) );
     ui->actionMonitor->setWhatsThis("0");
     connect( ui->actionMonitor->menu(), SIGNAL(triggered(QAction*)), this, SLOT(changeMonitor(QAction*)) );
@@ -76,7 +87,7 @@ void mainWindow::loadMonitors(){
         ui->actionMonitor->setWhatsThis(tmp->whatsThis() );
       }
   }
-  
+
 }
 
 //=============
@@ -114,6 +125,11 @@ void mainWindow::changePage(QString id){
 //================
 //  PRIVATE SLOTS
 //================
+void mainWindow::saveWinGeometry(){
+  QSettings S("lumina-desktop","lumina-config");
+  S.setValue("window_geometry", this->geometry());
+}
+
 //Page signal handling
 void mainWindow::pageCanSave(bool save){
   ui->actionSave->setVisible(save);

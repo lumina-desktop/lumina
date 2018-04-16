@@ -9,6 +9,9 @@
 #include "globals.h"
 //#include "pages/getPage.h"
 
+#include <QResizeEvent>
+#include <QMoveEvent>
+
 namespace Ui{
 	class mainWindow;
 };
@@ -28,11 +31,13 @@ private:
 	Ui::mainWindow *ui;
 	QShortcut *backShortcut, *quitShortcut;
 	QString cpage; //current page
-
+	QTimer *geomTimer;
 
 	void changePage(QString id);
 
 private slots:
+	void saveWinGeometry();
+
 	//Page signals
 	void pageCanSave(bool);
 	void pageSetTitle(QString);
@@ -42,5 +47,17 @@ private slots:
 	void on_actionBack_triggered();
         void changeMonitor(QAction*);
 	void quitShortcut_Triggered();
+
+protected:
+	void resizeEvent(QResizeEvent *ev){
+	  if(geomTimer->isActive()){ geomTimer->stop(); }
+	  geomTimer->start();
+	  QMainWindow::resizeEvent(ev);
+	}
+	void moveEvent(QMoveEvent *ev){
+	  if(geomTimer->isActive()){ geomTimer->stop(); }
+	  geomTimer->start();
+	  QMainWindow::moveEvent(ev);
+	}
 };
 #endif
