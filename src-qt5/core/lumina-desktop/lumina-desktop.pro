@@ -69,9 +69,7 @@ RESOURCES+= Lumina-DE.qrc
 desktop.path = $${L_SESSDIR}
 desktop.files = Lumina-DE.desktop
 
-icons.files = Lumina-DE.png \
-		Insight-FileManager.png
-icons.path = $${L_SHAREDIR}/pixmaps
+icons.files = Lumina-DE.png
 
 fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys

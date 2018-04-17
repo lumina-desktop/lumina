@@ -127,6 +127,9 @@ isEmpty(OS){
   RCC_DIR=./.build/rcc
   QMAKE_DISTCLEAN += -r ./.build
 
+  #Setup the default place for installing icons (use scalable dir for variable-size icons)
+  icons.path = $${L_SHAREDIR}/icons/hicolor/scalable/apps
+
   #some other compile time flags
   CONFIG *= c++11
 }
