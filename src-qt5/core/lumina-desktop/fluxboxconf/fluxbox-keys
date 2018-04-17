@@ -49,16 +49,10 @@ OnTitlebar Mouse3 :WindowMenu
 # alt-tab
 Mod1 Tab  :NextWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
 Mod1 Shift Tab  :PrevWindow (workspace=[current])  (workspace=[current]) !! FBCV13 !!
-Control Tab :NextGroup (workspace=[current])  (workspace=[current])
-Control Shift Tab :PrevGroup (workspace=[current])  (workspace=[current])
-
-# cycle through tabs in the current window
-Mod4 Tab  :NextTab
-Mod4 Shift Tab  :PrevTab
 
 # Arrange/Tile Current windows
-Mod1 Left  :ArrangeWindowsStackRight (Layer=Normal)
-Mod1 Right  :ArrangeWindowsStackLeft (Layer=Normal)
+Mod1 Control Left  :ArrangeWindowsStackRight (Layer=Normal)
+Mod1 Control Right  :ArrangeWindowsStackLeft (Layer=Normal)
 
 # go to a specific tab in the current window
 Mod4 1  :Tab 1
@@ -84,14 +78,6 @@ Mod1 F9  :If {Matches (Layer=Normal)} {Minimize}
 Mod1 F10  :If {Matches (Layer=Normal)} {Maximize}
 Mod1 F11  :If {Matches (Layer=Normal)} {Fullscreen}
 
-# send the current window to previous/next workspace
-Mod4 Left  :If {Matches (Layer=Normal)} {SendToPrevWorkspace}
-Mod4 Right  :If {Matches (Layer=Normal)} {SendToNextWorkspace}
-
-# send the current window and follow it to previous/next workspace
-Control Mod4 Left :If {Matches (Layer=Normal)} {TakeToPrevWorkspace}
-Control Mod4 Right :If {Matches (Layer=Normal)} {TakeToNextWorkspace}
-
 # change to a specific workspace
 Control F1  :Workspace 1
 Control F2  :Workspace 2
@@ -109,9 +95,9 @@ Control F12  :Workspace 12
 Control Mod1 Left  :PrevWorkspace
 Control Mod1 Right  :NextWorkspace
 
-# Control + MouseWheel to change workspaces
-Control Mouse4 :PrevWorkspace
-Control Mouse5 :NextWorkspace
+# Control+Alt + MouseWheel to change workspaces
+Control Mod1 Mouse4 :PrevWorkspace
+Control Mod1 Mouse5 :NextWorkspace
 
 # send the current window to a specific workspace
 Mod4 F1  :SendToWorkspace 1
@@ -152,3 +138,4 @@ Mod1 Home  :Exec lumina-open -brightnessup
 Mod1 End  :Exec lumina-open -brightnessdown
 F12 :Exec lumina-terminal -toggle
 115 :Exec lumina-desktop --show-start
+Mod4 space :Exec lumina-desktop --show-start
