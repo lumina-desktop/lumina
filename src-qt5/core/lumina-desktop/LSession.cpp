@@ -594,10 +594,21 @@ void LSession::SessionEnding(){
 }
 
 void LSession::handleClipboard(QClipboard::Mode mode){
-  if (!ignoreClipboard) {
+  if ( !ignoreClipboard && mode == QClipboard::Clipboard ){ //only support Clipboard
     const QMimeData *mime = QApplication::clipboard()->mimeData(mode);
-    if (!mime) { return; }
-    if (mime->hasText()) { QMetaObject::invokeMethod(this, "storeClipboard", Qt::QueuedConnection, Q_ARG(QString, mime->text()), Q_ARG(QClipboard::Mode, mode)); }
+    if (mime==NULL) { return; }
+    if (mime->hasText() && !QApplication::clipboard()->ownsClipboard()) {
+      //preserve the entire mimeData set, not just the text
+      //Note that even when we want to "save" the test, we should keep the whole thing
+      //  this preserves formatting codes and more that apps might need
+      QMimeData *copy = new QMimeData();
+      QStringList fmts = mime->formats();
+      for(int i=0; i<fmts.length(); i++){ copy->setData(fmts[i], mime->data(fmts[i])); }
+      ignoreClipboard = true;
+      QApplication::clipboard()->setMimeData(copy, mode);
+      ignoreClipboard = false;
+      //QMetaObject::invokeMethod(this, "storeClipboard", Qt::QueuedConnection, Q_ARG(QString, mime->text()), Q_ARG(QClipboard::Mode, mode));
+    }
   }
 }
 
