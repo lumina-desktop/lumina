@@ -51,7 +51,9 @@ int main(int argc, char ** argv)
    QApplication a(argc, argv);
 
    QString icondir="/usr/local/share/icons";
-   QStringList iconfiles; iconfiles << "user-home" << "falkon" << "firefox" << "utilities-terminal";
+   QStringList iconfiles;
+   if(argc<2){ iconfiles << "folder-downloads" << "start-here-lumina" << "firefox" << "utilities-terminal"; }
+   else{ iconfiles = QString(argv[1]).split(" "); }
 
    QDir dir(icondir);
    QStringList themes = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
@@ -69,6 +71,7 @@ int main(int argc, char ** argv)
        qDebug() << " -------------------------";
        qDebug() << " - Looking for icon:" << iconfiles[j];
        qDebug() << " - Found File:" << findInDir(themepath, iconfiles[j]);
+       qDebug() << " - Has Theme Icon:" << QIcon::hasThemeIcon(iconfiles[j]);
        qDebug() << " - Found Icon:" << QIcon::fromTheme(iconfiles[j]).name();
     }
      qDebug() << " ================";
