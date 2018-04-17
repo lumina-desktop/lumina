@@ -34,7 +34,6 @@ public:
 
 private:
     QTimer timer;
-    QTime lastActivity;
     QMap<quint32, QTime> clients;
 
 private slots:
