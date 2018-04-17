@@ -18,7 +18,7 @@
 
 #define XSCREENSAVER "xscreensaver-command -deactivate"
 #define TIMEOUT 30000
-#define MAX_INHIBIT 5
+#define MAX_INHIBIT 18000
 
 class ScreenSaver : public QObject
 {
@@ -59,7 +59,7 @@ private slots:
         QMapIterator<quint32, QTime> client(clients);
         while (client.hasNext()) {
             client.next();
-            if (client.value().hour()>=MAX_INHIBIT) { clients.remove(client.key()); }
+            if (client.value().secsTo(QTime::currentTime())>=MAX_INHIBIT) { clients.remove(client.key()); }
         }
     }
     bool canInhibit()
