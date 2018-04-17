@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Lumina org.freedesktop.ScreenSaver
+Comment=Lumina org.freedesktop.ScreenSaver
+Icon=preferences-desktop-screensaver
+Exec=lumina-org.freedesktop.ScreenSaver
+Terminal=false
+Type=Application
+OnlyShowIn=Lumina;
+StartupNotify=false

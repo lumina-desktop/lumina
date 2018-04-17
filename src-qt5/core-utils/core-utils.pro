@@ -6,5 +6,6 @@ CONFIG += recursive
 
 SUBDIRS+= lumina-config \
 	 lumina-search \
-	 lumina-xconfig
+         lumina-xconfig \
+         lumina-dbus
 
