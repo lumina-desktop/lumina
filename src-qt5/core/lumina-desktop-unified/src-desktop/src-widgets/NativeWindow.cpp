@@ -6,11 +6,34 @@
 //===========================================
 #include "NativeWindow.h"
 
+#include <QWidget>
+#include <QWindow>
+
 // === PUBLIC ===
 NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Qt::FramelessWindowHint){
   WIN = obj;
   createFrame();
-  WIN->addFrameWinID(this->winId());
+  WIN->addFrameWinID(container->winId());
+}
+
+NativeWindow::~NativeWindow(){
+  vlayout->deleteLater();
+  toolbarL->deleteLater();
+}
+
+QPoint NativeWindow::relativeOrigin(){
+  //Update all the margins for the frame
+  /*QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
+  //QList<int> : [Left, Right, Top, Bottom] in pixels
+  int topM = frame[2] - titleLabel->fontMetrics().height(); //figure out how much extra we have to work with
+  if(topM<0){ topM = 0; }
+  int botM = topM/2.0;
+  QPoint containerCorner(frame[0], topM-botM);
+  return containerCorner;*/
+  return QPoint(0,0);
+}
+
+void NativeWindow::initProperties(){
   //Setup all the property connections
   connect(WIN, SIGNAL(winImageChanged()), this, SLOT(syncWinImage()) );
   connect(WIN, SIGNAL(nameChanged()), this, SLOT(syncName()) );
@@ -21,26 +44,22 @@ NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Q
   connect(WIN, SIGNAL(winTypeChanged()), this, SLOT(syncWinType()) );
   connect(WIN, SIGNAL(geomChanged()), this, SLOT(syncGeom()) );
   connect(WIN, SIGNAL(WindowClosed(WId)), this, SLOT(deleteLater()) );
+
+  //Setup all the button connections
+  connect(minB, SIGNAL(clicked()), WIN, SLOT(toggleVisibility()) );
+  connect(maxB, SIGNAL(clicked()), WIN, SLOT(toggleMaximize()) );
+  connect(closeB, SIGNAL(clicked()), WIN, SLOT(requestClose()) );
+
   //Now Perform the initial property loads
   syncWinImage();
   syncName();
   syncTitle();
   syncIcon();
   syncSticky();
-  syncVisibility();
   syncWinType();
   syncGeom();
-  //Setup all the button connections
-  connect(minB, SIGNAL(clicked()), WIN, SLOT(toggleVisibility()) );
-  connect(maxB, SIGNAL(clicked()), WIN, SLOT(toggleMaximize()) );
-  connect(closeB, SIGNAL(clicked()), WIN, SLOT(requestClose()) );
+  syncVisibility(true); //init visibility - force it visible to start with
 
-
-}
-
-NativeWindow::~NativeWindow(){
-  vlayout->deleteLater();
-  toolbarL->deleteLater();
 }
 
 // === PRIVATE ===
@@ -62,7 +81,8 @@ void NativeWindow::createFrame(){
     vlayout->setSpacing(0);
   toolbarL = new QHBoxLayout();
     toolbarL->setSpacing(0);
-
+  container = QWidget::createWindowContainer(QWindow::fromWinId(WIN->id()), this);
+    container->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     //vlayout.align
   titleLabel = new QLabel(this);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -75,7 +95,7 @@ void NativeWindow::createFrame(){
   toolbarL->addWidget(maxB);
   toolbarL->addWidget(closeB);
   vlayout->addLayout(toolbarL);
-  vlayout->addStretch();
+  vlayout->addWidget(container);
   this->setLayout(vlayout);
   // Load the icons for the buttons
   loadIcons();
@@ -112,9 +132,13 @@ void NativeWindow::syncSticky(){
   qDebug() << "Got Sticky Change:" << WIN->isSticky();
 }
 
-void NativeWindow::syncVisibility(){
-  qDebug() << "Sync Visibility:" << WIN->isVisible();
-  this->setVisible(WIN->isVisible());
+void NativeWindow::syncVisibility(bool init){
+  if(init){
+    WIN->setProperty(NativeWindowObject::Visible, true, true); //force it
+  }else{
+    qDebug() << "Sync Visibility:" << WIN->isVisible();
+    this->setVisible(WIN->isVisible());
+  }
 }
 
 void NativeWindow::syncWinType(){

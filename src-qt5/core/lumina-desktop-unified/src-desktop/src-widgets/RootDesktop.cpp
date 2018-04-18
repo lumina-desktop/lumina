@@ -6,6 +6,7 @@
 //===========================================
 #include <global-objects.h>
 #include "RootDesktop.h"
+#include "Panel.h"
 
 // === PUBLIC ===
 RootDesktop::RootDesktop(QWindow *) : QWidget(0, Qt::Widget | Qt::FramelessWindowHint | Qt::WindowStaysOnBottomHint){
@@ -66,7 +67,14 @@ void RootDesktop::on_screensChanged(){
 }
 
 void RootDesktop::on_panelsChanged(){
-
+  QStringList pans = RootDesktopObject::instance()->panels();
+  //Now find any new panels and create them as needed
+  for(int i=0; i<pans.length(); i++){
+    if(lastpanels.contains(pans[i])){ continue; } //already created
+    //Need to create a new panel widget (self-maintained)
+     new Panel( RootDesktopObject::instance()->panel(pans[i]) );
+  }
+  lastpanels = pans; //save this for the next time around
 }
 
 void RootDesktop::on_windowsChanged(){

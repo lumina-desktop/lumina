@@ -127,12 +127,14 @@ public slots:
 	void NewMouseRelease(int buttoncode, WId win = 0);
 	void CheckDamageID(WId);
 
+	void RequestReparent(WId, WId, QPoint); //client, parent, relative origin point in parent
+
+
 private slots:
 	//These are the slots which are built-in and automatically connected when a new NativeWindow is created
 	void RequestClose(WId);
 	void RequestKill(WId);
 	void RequestPing(WId);
-	void RequestReparent(WId, WId, QPoint); //client, parent, relative origin point in parent
 
 	//Window-mgmt functions (see Window-mgmt.cpp for details)
 	void ArrangeWindows(WId primary, QString type);

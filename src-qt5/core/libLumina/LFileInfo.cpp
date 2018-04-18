@@ -35,28 +35,36 @@ void LFileInfo::loadExtraInfo(){
     mime = "inode/directory";
     //Special directory icons
     QString name = this->fileName().toLower();
-    if(name=="desktop"){ icon = "user-desktop"; }
-    else if(name=="tmp"){ icon = "folder-temp"; }
-    else if(name=="video" || name=="videos"){ icon = "folder-video"; }
-    else if(name=="music" || name=="audio"){ icon = "folder-sound"; }
-    else if(name=="projects" || name=="devel"){ icon = "folder-development"; }
-    else if(name=="notes"){ icon = "folder-txt"; }
-    else if(name=="downloads"){ icon = "folder-downloads"; }
-    else if(name=="documents"){ icon = "folder-documents"; }
-    else if(name=="images" || name=="pictures"){ icon = "folder-image"; }
-    else if(this->absoluteFilePath().startsWith("/net/")){ icon = "folder-remote"; }
-    else if( !this->isReadable() ){ icon = "folder-locked"; }
+    if(name=="desktop"){ iconList << "user-desktop"; }
+    else if(name=="tmp"){ iconList << "folder-temp"; }
+    else if(name=="video" || name=="videos"){ iconList << "folder-video" << "camera-photo-film" ; }
+    else if(name=="music" || name=="audio"){ iconList << "folder-sound" << "media-playlist-audio"; }
+    else if(name=="projects" || name=="devel"){ iconList << "folder-development"; }
+    else if(name=="notes"){ iconList << "folder-txt" << "note-multiple-outline" << "note-multiple"; }
+    else if(name=="downloads"){ iconList << "folder-downloads" << "folder-download"; }
+    else if(name=="documents"){ iconList << "folder-documents"; }
+    else if(name=="images" || name=="pictures"){ iconList << "folder-image"; }
+    else if(this->absoluteFilePath().startsWith("/net/")){ iconList << "folder-remote"; }
+    else if( !this->isReadable() ){ iconList << "folder-locked"<< "folder-lock"; }
+    iconList << "folder";
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
-    icon = "application-x-desktop"; //default value
+    iconList << "application-x-desktop"; //default value
     desk = new XDGDesktop(this->absoluteFilePath(), 0);
     if(desk->type!=XDGDesktop::BAD){
       //use the specific desktop file info (if possible)
-      if(!desk->icon.isEmpty()){ icon = desk->icon; }
+      if(!desk->icon.isEmpty()){ iconList << desk->icon; }
     }
   }else{
     //Generic file, just determine the mimetype
     mime = LXDG::findAppMimeForFile(this->fileName());
+  }
+  //check the mimetype for an icon as needed
+  QString tmp = mime;
+    tmp.replace("/","-");
+    iconList << tmp;
+  if(this->isExecutable()){
+    iconList << "application-x-executable";
   }
 }
 
@@ -94,14 +102,9 @@ QString LFileInfo::mimetype(){
 
 // -- Return the icon to use for this file
 QString LFileInfo::iconfile(){
-  if(!icon.isEmpty()){
-    return icon;
-  }else if(!mime.isEmpty()){
-    QString tmp = mime;
-    tmp.replace("/","-");
-    return tmp;
-  }else if(this->isExecutable()){
-    return "application-x-executable";
+  //Go through the icon list and find the first one that exists in the current theme
+  for(int i=0; i<iconList.length(); i++){
+    if( QIcon::hasThemeIcon(iconList[i])){ return iconList[i]; }
   }
   return ""; //Fall back to nothing
 }

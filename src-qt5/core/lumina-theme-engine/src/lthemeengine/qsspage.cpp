@@ -239,25 +239,35 @@ void QSSPage::readSettings(){
 
 void QSSPage::findStyleSheets(QStringList paths, QStringList enabled){
   paths.removeDuplicates();
+  std::reverse(enabled.begin(), enabled.end()); // reverse for proper order
+  QMap<int, QString> sortedStylesSheets;
   for(int i=0; i<paths.length(); i++){
     if(!QFile::exists(paths[i])){ continue; }
     QDir dir(paths[i]);
     dir.setFilter(QDir::Files);
     dir.setNameFilters(QStringList() << "*.qss");
     foreach (QFileInfo info, dir.entryInfoList()){
+      if(enabled.contains(info.filePath())){ sortedStylesSheets[enabled.indexOf(info.filePath())] = info.filePath(); }
+      else{
+        QListWidgetItem *item = new QListWidgetItem(info.fileName());
+        item->setToolTip(info.filePath());
+        item->setData(QSS_FULL_PATH_ROLE, info.filePath());
+        item->setData(QSS_WRITABLE_ROLE, info.isWritable());
+        m_ui->list_disabled->addItem(item);
+      }
+    }
+  }
+  QMapIterator<int, QString> i(sortedStylesSheets);
+  while (i.hasNext()) {
+    i.next();
+    QFileInfo info(i.value());
+    if (info.isFile()) {
       QListWidgetItem *item = new QListWidgetItem(info.fileName());
       item->setToolTip(info.filePath());
       item->setData(QSS_FULL_PATH_ROLE, info.filePath());
       item->setData(QSS_WRITABLE_ROLE, info.isWritable());
-      if( enabled.contains(info.filePath()) ){ m_ui->qssListWidget->addItem(item); }
-      else{ m_ui->list_disabled->addItem(item); }
+      m_ui->qssListWidget->addItem(item);
     }
-  }
-  //Now ensure the priority of the items in the active list is correct
-  for(int i = 0; i < m_ui->qssListWidget->count(); ++i){
-    QListWidgetItem *item = m_ui->qssListWidget->item(i);
-    int index = enabled.indexOf( item->data(QSS_FULL_PATH_ROLE).toString() );
-    if(index>=0){ m_ui->qssListWidget->insertItem(index, item); }// item->move(m_ui->qssListWidget->count() - 1 - index); }
   }
   m_ui->list_disabled->sortItems(Qt::AscendingOrder);
 

@@ -129,6 +129,8 @@ void DesktopManager::NewWindowAvailable(NativeWindowObject* win){
 #ifdef USE_WIDGETS
   qDebug() << "Got New Widget Window:" << win->name();
   NativeWindow *tmp = new NativeWindow(win);
+  //Lumina::NWS->RequestReparent(win->id(), win->frameId(), tmp->relativeOrigin());
+  QTimer::singleShot(10, tmp, SLOT(initProperties()) );
 #endif
   syncWindowList();
 }

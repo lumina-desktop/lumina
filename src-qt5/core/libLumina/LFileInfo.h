@@ -17,7 +17,8 @@
 
 class LFileInfo : public QFileInfo{
 private:
-	QString mime, icon, zfs_ds;
+	QString mime, zfs_ds;
+	QStringList iconList;
 	XDGDesktop *desk;
 
 	void loadExtraInfo();

@@ -58,7 +58,6 @@ FORMS    += MainUI.ui \
 		OPWidget.ui
 
 icons.files = Insight-FileManager.png
-icons.path = $${L_SHAREDIR}/pixmaps
 
 
 TRANSLATIONS =  i18n/lumina-fm_af.ts \
