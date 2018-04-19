@@ -29,7 +29,7 @@ QStringList themeInherits(QString dir){
       QString line = in.readLine();
       if(line.startsWith("Inherits=")){
         //qDebug() << "Got Inherit Line" << line;
-        list = line.section("=",1,-1).split(";");
+        list = line.section("=",1,-1).split(",");
         break; //done now
       }
     }
@@ -72,6 +72,7 @@ int main(int argc, char ** argv)
        qDebug() << " - Looking for icon:" << iconfiles[j];
        qDebug() << " - Found File:" << findInDir(themepath, iconfiles[j]);
        qDebug() << " - Has Theme Icon:" << QIcon::hasThemeIcon(iconfiles[j]);
+       qDebug() << " - Using Theme Cache:" << QFile::exists(themepath+"/icon-theme.cache");
        qDebug() << " - Found Icon:" << QIcon::fromTheme(iconfiles[j]).name();
     }
      qDebug() << " ================";
