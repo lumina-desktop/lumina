@@ -205,7 +205,8 @@ void LSession::CleanupSession(){
   if(vol>=0){ sessionsettings->setValue("last_session_state/audio_volume", vol); }
   bool playaudio = sessionsettings->value("PlayLogoutAudio",true).toBool();
   if( playaudio ){
-      QString sfile = sessionsettings->value("audiofiles/logout", LOS::LuminaShare()+"Logout.ogg").toString();
+      QString sfile = sessionsettings->value("audiofiles/logout", "").toString();
+       if(sfile.isEmpty() || !QFile::exists(sfile)){ sfile = LOS::LuminaShare()+"Logout.ogg"; }
       playAudioFile(sfile);
   }
   //Stop the background system tray (detaching/closing apps as necessary)
@@ -242,7 +243,7 @@ void LSession::CleanupSession(){
     // this will leave the wallpapers up for a few moments (preventing black screens)
   }
   //Now wait a moment for things to close down before quitting
-  if(playaudio){
+  if(playaudio && mediaObj!=0){
     //wait a max of 5 seconds for audio to finish
     bool waitmore = true;
     for(int i=0; i<100 && waitmore; i++){
@@ -312,7 +313,8 @@ void LSession::launchStartupApps(){
 
   //Now play the login music since we are finished
   if(sessionsettings->value("PlayStartupAudio",true).toBool()){
-     QString sfile = sessionsettings->value("audiofiles/login", LOS::LuminaShare()+"Login.ogg").toString();
+     QString sfile = sessionsettings->value("audiofiles/login", "").toString();
+     if(sfile.isEmpty() || !QFile::exists(sfile)){ sfile = LOS::LuminaShare()+"Login.ogg"; }
      playAudioFile(sfile);
   }
   //qDebug() << "[DESKTOP INIT FINISHED]";
