@@ -13,6 +13,8 @@
 #include <QApplication>
 #include <LUtils.h>
 
+#define DEBUG 0
+
 PianoBarProcess::PianoBarProcess(QWidget *parent) : QObject(parent){
   setupProcess();
   saveTimer = new QTimer(this);
@@ -69,7 +71,7 @@ void PianoBarProcess::answerQuestion(int selection){
 
   if(makingStation && sel.isEmpty()){ makingStation = false; } //cancelled
   sendToProcess(sel, true);
-  if(makingStation){ 
+  if(makingStation){
     //Need to prompt to list all the available stations to switch over right away
     sendToProcess("s");
   }
@@ -171,7 +173,7 @@ void PianoBarProcess::setAudioDriver(QString driver){
   LUtils::writeFile(QDir::homePath()+"/.libao", info, true);
 }
 // ====== PUBLIC SLOTS ======
-void PianoBarProcess::play(){ 
+void PianoBarProcess::play(){
   if(PROC->state() == QProcess::NotRunning){
     PROC->start();
   }else{
@@ -181,14 +183,14 @@ void PianoBarProcess::play(){
   }
 }
 
-void PianoBarProcess::pause(){ 
-  sendToProcess("S"); 
+void PianoBarProcess::pause(){
+  sendToProcess("S");
   cState = PianoBarProcess::Paused;
   emit currentStateChanged(cState);
 }
 
-void PianoBarProcess::skipSong(){ 
-  sendToProcess("n"); 
+void PianoBarProcess::skipSong(){
+  sendToProcess("n");
 }
 
 // ====== PRIVATE ======
@@ -280,7 +282,7 @@ void PianoBarProcess::ProcUpdate(){
   QStringList info = tmp.split("\n",QString::SkipEmptyParts);
 
   //NOTE: Need to have a cache of info lines which can carry over between updates as needed (for questions, etc)
-  //qDebug() << "Got Update:" << info;
+  if(DEBUG){ qDebug() << "Got Update:" << info; }
   for(int i=0; i<info.length(); i++){
     //First handle any pending cache of listing lines
     if((info[i].startsWith("\t")||info[i].startsWith(" ")) && info[i].contains(")")){
@@ -340,7 +342,7 @@ void PianoBarProcess::ProcUpdate(){
         for(int j=0; j<stationList.length(); j++){
           if(stationList[j].endsWith(cstation) ){
             //qDebug() << "Activate Station:" << stationList[i];
-            sendToProcess(QString::number(j), true); 
+            sendToProcess(QString::number(j), true);
             break;
           }else if(j==stationList.length()-1){
             //qDebug() << "Activate Last Station:" << stationList[i];
@@ -348,10 +350,10 @@ void PianoBarProcess::ProcUpdate(){
           }
         }
       }else if( !infoList.isEmpty() ){
-        qDebug() << "Got Question with List:" << info[i] << infoList;
+        //qDebug() << "Got Question with List:" << info[i] << infoList;
         emit NewQuestion(info[i].section("[?]",1,-1).simplified(), infoList);
       }else if(info[i].contains(" Select ") ){
-        qDebug() << "Got Question without List:" << info[i];
+        //qDebug() << "Got Question without List:" << info[i];
         //Got a prompt without a list of answers - just cancel the prompt
         sendToProcess("",true);
         if(makingStation){
@@ -368,6 +370,8 @@ void PianoBarProcess::ProcUpdate(){
 	stamp = QTime::fromString(info[i].section("/",1,-1), "mm:ss");
         int totS = 60*stamp.minute() + stamp.second(); //time total
         emit TimeUpdate(totS-curS, totS);
+    }else if(DEBUG){
+      qDebug() << "Got Unhandled Pianobar message:" << info[i];
     }
   }
 }
@@ -375,5 +379,6 @@ void PianoBarProcess::ProcUpdate(){
 void PianoBarProcess::ProcStateChanged(QProcess::ProcessState stat){
   if(stat == QProcess::NotRunning){ cState = PianoBarProcess::Stopped; }
   else{ cState = PianoBarProcess::Paused; }
+  if(DEBUG){ qDebug() << "Pianobar Process State Changed:" << cState; }
   emit currentStateChanged(cState);
 }
