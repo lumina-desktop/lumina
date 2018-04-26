@@ -129,6 +129,7 @@ void DesktopManager::NewWindowAvailable(NativeWindowObject* win){
 #ifdef USE_WIDGETS
   qDebug() << "Got New Widget Window:" << win->name();
   NativeWindow *tmp = new NativeWindow(win);
+  //qDebug() << " - Embed Into frame:" << tmp->relativeOrigin();
   //Lumina::NWS->RequestReparent(win->id(), win->frameId(), tmp->relativeOrigin());
   QTimer::singleShot(10, tmp, SLOT(initProperties()) );
 #endif
@@ -205,6 +206,24 @@ void DesktopManager::updatePanelSettings(){
   }
   //qDebug() << "Panel Settings Changed:" << total_ids;
   RootDesktopObject::instance()->setPanels(total_ids); //put the new ones in place
+  QTimer::singleShot(500, this, SLOT(updatePanelReservations()) );
+}
+
+void DesktopManager::updatePanelReservations(){
+  /*QRect raw_session, reserved_session;
+  QList<ScreenObject*> screens = RootDesktopObject::instance()->screenObjects();
+  //Calculate the total session rectangle and session panel reservations
+  QList<PanelObject*> tmp = RootDesktopObject::instance()->panelObjectList();
+  for(int i=0; i<screens.length(); i++){
+    raw_session = raw_session.united(screens[i]->geometry());
+  }
+  for(int i=0; i<tmp.length(); i++){
+    reserved_session = 
+  }
+  //Go through all the panels and calculate the current screen reservations
+  */
+
+
 }
 
 void DesktopManager::updatePluginSettings(){

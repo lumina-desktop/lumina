@@ -133,7 +133,7 @@ private:
 	unsigned int dmgID, dmg, icodmg;
 	//Collation/Delay for window resize events
 	QTimer *geomTimer;
-	QRect newgeom;
+	QRect newgeom, lastgeom;
 
 	void emitSinglePropChanged(NativeWindowObject::Property);
 

@@ -169,7 +169,7 @@ void LSession::CleanupSession(){
   //Now perform any other cleanup
   //Lumina::NEF->stop();
   //Now wait a moment for things to close down before quitting
-  if(playaudio){
+  if(playaudio && mediaObj!=0){
     //wait a max of 5 seconds for audio to finish
     bool waitmore = true;
     for(int i=0; i<100 && waitmore; i++){

@@ -9,5 +9,6 @@ SOURCES *= $${PWD}/RootDesktop.cpp \
 HEADERS *= $${PWD}/RootDesktop.h \
 		$${PWD}/ContextMenu.h \
 		$${PWD}/NativeWindow.h \
+		$${PWD}/NativeEmbedWidget.h \
 		$${PWD}/Panel.h \
 		$${PWD}/Plugin.h

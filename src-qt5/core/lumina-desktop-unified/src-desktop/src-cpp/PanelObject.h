@@ -25,7 +25,7 @@ class PanelObject : public QObject {
 
 private:
 	QString panel_id, bg;
-	QRect geom;
+	QRect geom, fullside_geom;
 	QStringList panel_plugins;
 
 public:
@@ -42,6 +42,7 @@ public:
 	Q_INVOKABLE bool isVertical();
 	Q_INVOKABLE QStringList plugins();
 	Q_INVOKABLE QRect geometry(){ return geom; }
+	Q_INVOKABLE QRect fullSideGeometry(){ return fullside_geom; }
 
 public slots:
 	void setBackground(QString fileOrColor);

@@ -9,6 +9,7 @@
 
 #include <global-includes.h>
 #include <NativeWindowObject.h>
+#include "NativeEmbedWidget.h"
 
 class NativeWindow : public QFrame{
 	Q_OBJECT
@@ -32,7 +33,8 @@ private:
 	QHBoxLayout *toolbarL;
 	QVBoxLayout *vlayout;
 	QLabel *titleLabel;
-	QWidget *container;
+	NativeEmbedWidget *container;
+
 	// Info cache variables
 	QRect oldgeom;
 

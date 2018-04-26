@@ -91,8 +91,13 @@ void NativeWindowSystem::CheckWindowPosition(WId id, bool newwindow){
   //used after a "drop" to validate/snap/re-arrange window(s) as needed
   // if "newwindow" is true, then this is the first-placement routine for a window before it initially appears
   NativeWindowObject* win = findWindow(id);
+  CheckWindowPosition(win, newwindow);
+}
+
+void NativeWindowSystem::CheckWindowPosition(NativeWindowObject *win, bool newwindow){
   if(win==0){ return; } //invalid window
   QRect geom = win->geometry();
+  qDebug() << "Got Window Geometry:" << geom;
   bool changed = false;
   //Make sure it is on the screen (quick check)
   if(geom.x() < 0){ changed = true; geom.moveLeft(0); }
@@ -101,5 +106,6 @@ void NativeWindowSystem::CheckWindowPosition(WId id, bool newwindow){
   if(geom.height() < 20){ changed = true; geom.setHeight(100); }
   if(changed){ win->setGeometryNow(geom); }
   //Now run it through the window arrangement routine
+  qDebug() << "ArrangeWindows";
   arrangeWindows(win, newwindow ?"center" : "snap", true);
 }

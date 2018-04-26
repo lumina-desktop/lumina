@@ -568,12 +568,12 @@ void NativeWindowSystem::ChangeWindowProperties(NativeWindowObject* win, QList< 
 
   }
   if(props.contains(NativeWindowObject::Visible)){
-    qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindowObject::Visible) ];
+    //qDebug() << "Check Window Visibility:" << vals[ props.indexOf(NativeWindowObject::Visible) ];
     if( vals[ props.indexOf(NativeWindowObject::Visible) ].toBool() ){
-      qDebug() << " - Map it!";
+      //qDebug() << " - Map it!";
       xcb_map_window(QX11Info::connection(), win->id());
     }else{
-      qDebug() << " - Unmap it!";
+      //qDebug() << " - Unmap it!";
       xcb_unmap_window(QX11Info::connection(), win->id());
     }
   }
@@ -630,6 +630,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
     Damage dmgID = XDamageCreate(QX11Info::display(), win->id(), XDamageReportRawRectangles);
 
     win->addDamageID( (uint) dmgID); //save this for later
+    registerClientEvents(win->id());
   }else{
     /*
     //xcb_reparent_window(QX11Info::connection(), win->id(), this->winId(), 0, 0);
@@ -643,7 +644,7 @@ void NativeWindowSystem::SetupNewWindow(NativeWindowObject *win){
     */
   }
   //win->addFrameWinID(this->winId());
-  registerClientEvents(win->id());
+  //registerClientEvents(win->id());
 }
 
 QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
@@ -802,7 +803,7 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   NativeWindowObject *win = new NativeWindowObject(id);
 
   //Register for events from this window
-  registerClientEvents(win->id());
+  //registerClientEvents(win->id());
   NWindows << win;
   UpdateWindowProperties(win, NativeWindowObject::allProperties());
   if(win->showWindowFrame()){
@@ -815,11 +816,16 @@ void NativeWindowSystem::NewWindowDetected(WId id){
   connect(win, SIGNAL(RequestPing(WId)), this, SLOT(RequestPing(WId)) );
   connect(win, SIGNAL(RequestReparent(WId, WId, QPoint)), this, SLOT(RequestReparent(WId, WId, QPoint)) );
   connect(win, SIGNAL(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)), this, SLOT(RequestPropertiesChange(WId, QList<NativeWindowObject::Property>, QList<QVariant>)) );
-  connect(win, SIGNAL(VerifyNewGeometry(WId)), this, SLOT(CheckWindowPosition(WId)) );
+  connect(win, SIGNAL(WindowClosed(WId)), this, SLOT(WindowCloseDetected(WId)) );
+  //connect(win, SIGNAL(VerifyNewGeometry(WId)), this, SLOT(CheckWindowPosition(WId)) );
+  qDebug() << " - Setup New Window";
   SetupNewWindow(win);
-  CheckWindowPosition(id, true); //first time placement
-  xcb_map_window(QX11Info::connection(), win->id());
+  qDebug() << " - Setup window position";
+  CheckWindowPosition(win, true); //first time placement
+  //xcb_map_window(QX11Info::connection(), win->id());
+  qDebug() << " - Emit new window signal";
   emit NewWindowAvailable(win);
+  connect(win, SIGNAL(VerifyNewGeometry(WId)), this, SLOT(CheckWindowPosition(WId)) );
 }
 
 void NativeWindowSystem::NewTrayWindowDetected(WId id){

@@ -268,10 +268,11 @@ void NativeWindowObject::updateGeometry(int x, int y, int width, int height, boo
   QPoint pos(x+fgeom[0], y+fgeom[2]);
   QSize sz(width-fgeom[0]-fgeom[1], height-fgeom[2]-fgeom[3]);
   newgeom = QRect(pos, sz);
+  lastgeom = QRect(x,y,width,height); //save this for later
   if(!now){
     //qDebug() << "Update Geometry:" << fgeom << QRect(x,y,width,height) << pos << sz;
     //requestProperties(QList<NativeWindowObject::Property>() << NativeWindowObject::GlobalPos << NativeWindowObject::Size, QList<QVariant>() << pos << sz);
-    if(!geomTimer->isActive()){ geomTimer->start(); }
+    if(!geomTimer->isActive()){ QTimer::singleShot(0,geomTimer, SLOT(start())); }
   }else{
    sendNewGeom();
   }
@@ -295,18 +296,23 @@ void NativeWindowObject::toggleMaximize(){
     }
   }
   //Now compare the current geometry to the screen geometry
+  qDebug() << "Maximize Toggle:" << curgeom << max;
   if(curgeom!=max){
+    qDebug() << " - maximize";
     setGeometryNow(max); //will set newgeom to max
-    newgeom = curgeom; //now reset newgeom
+    lastgeom = curgeom; //save this for later
   }else{
+    qDebug() << " - restore" << lastgeom;
     //Already maximized, look at the old geometry and figure out how to restore it
-    if(newgeom.isNull()){
+    if(lastgeom.isNull() || lastgeom == max){
+      qDebug() << " -- Reset lastgeom to half-screen size";
       //no old info available - center the window at half maximum size
-      newgeom = QRect(max.x()-max.width()/2, max.y()-max.height()/2, max.width()/2, max.height()/2);
+      lastgeom = QRect(max.x()-max.width()/2, max.y()-max.height()/2, max.width()/2, max.height()/2);
     }
-    setGeometryNow(newgeom);
+    setGeometryNow(lastgeom);
   }
-  emit geomChanged();
+  qDebug() << "After toggle:" << lastgeom;
+  //emit geomChanged();
 }
 
 void NativeWindowObject::requestClose(){
