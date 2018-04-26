@@ -53,7 +53,6 @@ void LFileInfo::loadExtraInfo(){
     iconList << "folder";
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
-    iconList << "application-x-desktop"; //default value
     desk = new XDGDesktop(this->absoluteFilePath(), 0);
     if(desk->type!=XDGDesktop::BAD){
       //use the specific desktop file info (if possible)
@@ -298,4 +297,3 @@ bool LFileInfo::zfsRollback(QString snapname){
   if(!ok){ qDebug() << "Error Rolling back to ZFS Snapshot:" << snapname << info; }
   return ok;
 }
-
