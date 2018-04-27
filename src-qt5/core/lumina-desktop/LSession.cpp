@@ -95,6 +95,64 @@ LSession::~LSession(){
  }
 }
 
+//Static function so everything can get the same icon name
+QString LSession::batteryIconName(int charge, bool charging){
+  int icon = -1;
+  if (charge > 90) { icon = 4; }
+  else if (charge > 70) { icon = 3; }
+  else if (charge > 20) { icon = 2; }
+  else if (charge > 5) { icon = 1; }
+  else if (charge > 0 ) { icon = 0; }
+  if(charging){ icon = icon+10; }
+  QStringList iconList;
+    switch (icon) {
+      case 0:
+        iconList << "battery-20" << "battery-020" << "battery-empty" << "battery-caution";
+        break;
+      case 1:
+        iconList << "battery-40" << "battery-040" << "battery-low" << "battery-caution";
+        break;
+      case 2:
+        iconList << "battery-60" << "battery-060" << "battery-good";
+        break;
+      case 3:
+        iconList << "battery-80" << "battery-080" << "battery-good";
+        break;
+      case 4:
+        iconList << "battery-100" << "battery-full";
+        break;
+      case 10:
+        iconList << "battery-20-charging" << "battery-020-charging" << "battery-empty-charging" << "battery-caution-charging"
+		<< "battery-charging-20" << "battery-charging-020" << "battery-charging-empty" << "battery-charging-caution";
+        break;
+      case 11:
+        iconList << "battery-40-charging" << "battery-040-charging" << "battery-low-charging" << "battery-caution-charging"
+		<< "battery-charging-40" << "battery-charging-040" << "battery-charging-low" << "battery-charging-caution";
+        break;
+      case 12:
+        iconList << "battery-60-charging" << "battery-060-charging" << "battery-good-charging"
+		<< "battery-charging-60" << "battery-charging-060" << "battery-charging-good";
+        break;
+      case 13:
+        iconList << "battery-80-charging" << "battery-080-charging" << "battery-good-charging"
+		<< "battery-charging-80" << "battery-charging-080" << "battery-charging-good";
+        break;
+      case 14:
+        if(charge==100){ iconList << "battery-full-charged"; }
+        iconList << "battery-100-charging" << "battery-full-charging"
+		<< "battery-charging-100" << "battery-charging-full";
+        break;
+      default:
+        iconList << "battery-unknown" << "battery-missing";
+        break;
+    }
+    iconList << "battery"; //generic battery icon
+    for(int i=0; i<iconList.length(); i++){
+      if( QIcon::hasThemeIcon(iconList[i]) ){ return iconList[i]; }
+    }
+    return ""; //no icon found
+}
+
 void LSession::setupSession(){
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
