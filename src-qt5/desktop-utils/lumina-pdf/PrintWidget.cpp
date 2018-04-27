@@ -1,4 +1,6 @@
 #include "PrintWidget.h"
+#include <QPushButton>
+#include <QGraphicsProxyWidget>
 
 PrintWidget::PrintWidget(Renderer *backend, QWidget *parent) : 
   QGraphicsView(parent), scene(0), curPage(1), viewMode(SinglePageView), 
@@ -226,23 +228,23 @@ void PrintWidget::populateScene()
   }
   qDeleteAll(pages);
   pages.clear();
-  //links.clear();
-  //annots.clear();
+  links.clear();
+  annots.clear();
   int numPages = BACKEND->numPages();
   if(BACKEND->hashSize() < numPages){ return; } //nothing to show yet
 
   for (int i = 0; i < numPages; i++) {
     QImage pagePicture = BACKEND->imageHash(i);
     QSize paperSize = pagePicture.size();
-    //QList<QGraphicsItem*> linkLocations;
-    //QList<QGraphicsItem*> annotLocations;
+    QList<QGraphicsItem*> linkLocations;
+    QList<QGraphicsItem*> annotLocations;
 
     if(pagePicture.isNull()) {
       qDebug() << "NULL IMAGE ON PAGE " << i;
       continue;
     }
 
-    PageItem* item = new PageItem(i+1, pagePicture, paperSize);
+    PageItem* item = new PageItem(i+1, pagePicture, paperSize, BACKEND);
     scene->addItem(item);
     pages.append(item);
 
@@ -250,17 +252,51 @@ void PrintWidget::populateScene()
       for(int k = 0; k < BACKEND->linkSize(i); k++) {
         LinkItem *lItem = new LinkItem(item, BACKEND->linkList(i, k));
         lItem->setOpacity(0.1);
-        //linkLocations.append(lItem);
+        linkLocations.append(lItem);
       }
       //qDebug() << "Creating annotations for:" <<  i;
       for(int k = 0; k < BACKEND->annotSize(i); k++) {
-        AnnotItem *aItem = new AnnotItem(item, BACKEND->annotList(i, k), BACKEND->annotLoc(i, k));
-        AnnotZone *aZone = new AnnotZone(item, BACKEND->annotLoc(i, k), aItem);
+        Annotation *annot = BACKEND->annotList(i, k); 
+        if(annot->getType() == 14) {
+          InkItem *iItem = new InkItem(item, annot);
+          annotLocations.append(iItem);
+        }
+        PopupItem *aItem = new PopupItem(item, annot);
+        AnnotZone *aZone = new AnnotZone(item, annot, aItem);
         aItem->setVisible(false);
-        //annotLocations.append(aItem);
+        annotLocations.append(aItem);
+        annotLocations.append(aZone);
       }
-      //links.insert(i, linkLocations);
-      //annots.insert(i, annotLocations);
+
+      for(int k = 0; k < BACKEND->widgetSize(i); k++) {
+        Widget *widget = BACKEND->widgetList(i, k);
+        int type = widget->getWidgetType();
+        QRectF loc = widget->getLocation();
+        QString text = widget->getCurrentText();
+        if(type == 0) {
+          QPushButton *button = new QPushButton(widget->getCurrentText());
+          button->setGeometry(loc.toRect());
+          button->setText(text);
+          QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget(item);
+          proxy->setWidget(button);
+        }else if(type == 1) {
+
+        }else if(type == 2) {
+
+        }else if(type == 3) {
+
+        }else if(type == 4) {
+
+        }else if(type == 5) {
+
+        }else if(type == 6) {
+
+        }else {
+          qDebug() << "INVALID WIDGET";
+        }
+      }
+      links.insert(i, linkLocations);
+      annots.insert(i, annotLocations);
     }
   }
 }

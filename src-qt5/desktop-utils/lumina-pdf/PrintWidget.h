@@ -20,12 +20,41 @@
 #include <QtMath>
 #include <QPageLayout>
 #include <QTextDocument>
+#include <QApplication>
 #include "Renderer.h"
 #include "TextData.h"
 
-class AnnotItem: public QGraphicsItem {
+class InkItem: public QGraphicsItem {
 public:
-  AnnotItem(QGraphicsItem *parent, QList<QString> textData, QRectF loc) : QGraphicsItem(parent), author(textData[0]), text(textData[1]) {
+  InkItem(QGraphicsItem *parent, Annotation *_annot) : QGraphicsItem(parent), pointData(_annot->getInkList()), inkColor(_annot->getColor()), annot(_annot) {
+    setCacheMode(DeviceCoordinateCache);
+    bbox = annot->getLoc();
+  }
+
+  QRectF boundingRect() const Q_DECL_OVERRIDE { return bbox; }
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE
+  {
+    Q_UNUSED(widget);
+    painter->setClipRect(option->exposedRect);
+    QPen inkPen = QPen(inkColor);
+    painter->setPen(inkPen);
+    foreach(QVector<QPointF> pointList, pointData) {
+      painter->drawLines(pointList);
+    }
+  }
+
+private:
+  QRectF bbox;
+  QVector<QVector<QPointF>> pointData;
+  QColor inkColor;
+  Annotation *annot;
+};
+
+class PopupItem: public QGraphicsItem {
+public:
+  PopupItem(QGraphicsItem *parent, Annotation *_annot) : QGraphicsItem(parent), author(_annot->getAuthor()), text(_annot->getText()) {
+    QRectF loc = _annot->getLoc();
     setCacheMode(DeviceCoordinateCache);
     QString allText = "Author: " + author + "\n\n" + text;
     QTextDocument document;
@@ -59,14 +88,22 @@ private:
 
 class AnnotZone: public QGraphicsItem {
 public:
-  AnnotZone(QGraphicsItem *parent, QRectF _bbox, AnnotItem *_annot) : QGraphicsItem(parent), bbox(_bbox), annot(_annot) { }
+  AnnotZone(QGraphicsItem *parent, Annotation *_annot, PopupItem *_annotItem) : QGraphicsItem(parent), bbox(_annot->getLoc()), annot(_annotItem) { 
+    _hasText = !_annot->getText().isEmpty(); 
+    _hasAuthor = !_annot->getAuthor().isEmpty(); 
+  }
+
   QRectF boundingRect() const Q_DECL_OVERRIDE { return bbox; }
-  AnnotItem* annotation() const { return annot; }
+  PopupItem* annotation() const { return annot; }
+  bool hasText() const { return _hasText; }
+  bool hasAuthor() const { return _hasAuthor; }
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) Q_DECL_OVERRIDE { Q_UNUSED(widget); Q_UNUSED(painter); Q_UNUSED(option); } 
 
 private:
   QRectF bbox;
-  AnnotItem *annot;
+  PopupItem *annot;
+  bool _hasText;
+  bool _hasAuthor;
 };
 
 class LinkItem: public QGraphicsItem {
@@ -98,8 +135,8 @@ private:
 
 class PageItem : public QGraphicsItem {
 public:
-  PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize)
-        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize)
+  PageItem(int _pageNum, QImage _pagePicture, QSize _paperSize, Renderer *_backend)
+        : pageNum(_pageNum), pagePicture(_pagePicture), paperSize(_paperSize), BACKEND(_backend)
   {
     brect = QRectF(QPointF(-25, -25),
               QSizeF(paperSize)+QSizeF(50, 50));
@@ -146,6 +183,10 @@ public:
     painter->setClipRect(paperRect & option->exposedRect);
     painter->fillRect(paperRect, Qt::white);
     painter->drawImage(QPoint(0,0), pagePicture);
+    for(int k = 0; k < BACKEND->annotSize(pageNum-1); k++) {
+      Annotation *annot = BACKEND->annotList(pageNum-1, k);
+      painter->drawImage(annot->getLoc(), annot->renderImage());
+    }
   }
 
 private:
@@ -153,6 +194,7 @@ private:
   QImage pagePicture;
   QSize paperSize;
   QRectF brect;
+  Renderer *BACKEND;
 };
 
 class PrintWidget : public QGraphicsView
@@ -187,6 +229,7 @@ private:
   bool initialized, fitting;
   QList<QGraphicsItem*> pages;
   QHash<int, QList<QGraphicsItem*>> links;
+  QHash<int, QList<QGraphicsItem*>> annots;
   int degrees;
   Renderer *BACKEND;
 
@@ -239,17 +282,18 @@ protected:
         continue;
       if(graphicsItem == dynamic_cast<LinkItem*>(graphicsItem))
         graphicsItem->setOpacity(0.1);
-      if(graphicsItem == dynamic_cast<AnnotItem*>(graphicsItem))
+      if(graphicsItem == dynamic_cast<PopupItem*>(graphicsItem))
         graphicsItem->setVisible(false);
     }
   }
 
   void mouseMoveEvent(QMouseEvent *e) Q_DECL_OVERRIDE {
     QGraphicsView::mouseMoveEvent(e);
+    static bool cursorSet = false;
 
     if(QGraphicsItem *item = scene->itemAt(mapToScene(e->pos()), transform())) {
       QList<QGraphicsItem*> linkList;
-      if(item == dynamic_cast<AnnotItem*>(item))
+      if(item == dynamic_cast<PopupItem*>(item))
         item = item->parentItem();
 
       if(PageItem *page = dynamic_cast<PageItem*>(item))
@@ -259,11 +303,19 @@ protected:
 
       if(LinkItem *link = dynamic_cast<LinkItem*>(item)){
         item->setOpacity(1);
-      }else if(AnnotZone *annotZone = dynamic_cast<AnnotZone*>(item)){
-        annotZone->annotation()->setVisible(true);
+        if(!cursorSet) {
+          QApplication::setOverrideCursor(QCursor(Qt::PointingHandCursor));
+          cursorSet = true;
+        }
+      }else if(cursorSet){
+        QApplication::restoreOverrideCursor();
+        cursorSet = false;
+      }
+      if(AnnotZone *annotZone = dynamic_cast<AnnotZone*>(item)){
+        if(annotZone->hasText() or annotZone->hasAuthor())
+          annotZone->annotation()->setVisible(true);
         item = annotZone->annotation();
       }
-
       clearItems(linkList, item);
     }
   }
@@ -273,12 +325,7 @@ protected:
     QPointF scenePoint = mapToScene(e->pos());
     QGraphicsItem *item = scene->itemAt(scenePoint, transform());
     if(LinkItem *link = dynamic_cast<LinkItem*>(item)) {
-      PageItem *page = dynamic_cast<PageItem*>(link->parentItem());
-      if(!BACKEND->isExternalLink(page->pageNumber()-1, link->getData()->text())) {
-        BACKEND->handleLink(link->getData()->text());
-      }else{
-        //External Link
-      } 
+      BACKEND->handleLink(this, link->getData()->text());
       link->setOpacity(0.1);
     }
   }

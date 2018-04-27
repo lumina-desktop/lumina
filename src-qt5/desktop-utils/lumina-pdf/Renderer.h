@@ -10,8 +10,12 @@
 #include <QImage>
 #include <QDebug>
 #include <QJsonObject>
+#include <QMessageBox>
+#include <QProcess>
 #include "TextData.h"
 #include "Bookmark.h"
+#include "Annotation.h"
+#include "Widget.h"
 
 class Renderer : public QObject {
 Q_OBJECT
@@ -31,29 +35,29 @@ public:
   bool loadMultiThread();
 
   //Information functions (usually needs to be loaded first)
-  int numPages(){ return pnum; }
-  bool needPassword(){ return needpass; }
-  QString title(){ return doctitle; }
-  QJsonObject properties() { return jobj; }
-  int hashSize();
-  QImage imageHash(int pagenum);
-	int rotatedDegrees() { return degrees; }
-  QList<Bookmark*> getBookmarks() { return bookmarks; }
+  virtual int numPages(){ return pnum; }
+  virtual bool needPassword(){ return needpass; }
+  virtual QString title(){ return doctitle; }
+  virtual QJsonObject properties() { return jobj; }
+  virtual int hashSize();
+  virtual QImage imageHash(int pagenum);
+	virtual int rotatedDegrees() { return degrees; }
+  virtual QList<Bookmark*> getBookmarks() { return bookmarks; }
 
   //Main access functions
-  bool loadDocument(QString path, QString password);
-  void renderPage(int pagenum, QSize DPI, int degrees=0);
-  QList<TextData*> searchDocument(QString text, bool matchCase);
-  void traverseOutline(void *, int);
-  void handleLink(QString);
-  TextData *linkList(int, int);
-  int linkSize(int);
-  QList<QString> annotList(int, int);
-  int annotSize(int);
-  QRectF annotLoc(int, int);
-  bool isExternalLink(int, QString);
+  virtual bool loadDocument(QString path, QString password);
+  virtual void renderPage(int pagenum, QSize DPI, int degrees=0);
+  virtual QList<TextData*> searchDocument(QString text, bool matchCase);
+  virtual void traverseOutline(void *, int);
+  virtual void handleLink(QWidget*, QString);
+  virtual TextData *linkList(int, int);
+  virtual int linkSize(int);
+  virtual Annotation *annotList(int, int);
+  virtual int annotSize(int);
+  virtual Widget *widgetList(int, int);
+  virtual int widgetSize(int);
 
-	void clearHash();
+	virtual void clearHash();
   //Makes sure degrees is between 0 and 360 then rotates the matrix and 
   void setDegrees(int degrees) {
     //Mods by 360, but adds and remods because of how C++ treats negative mods
@@ -61,7 +65,7 @@ public:
     emit reloadPages(this->degrees);
   }
 
-  bool supportsExtraFeatures();
+  virtual bool supportsExtraFeatures();
 
 signals:
   void PageLoaded(int);

@@ -16,7 +16,7 @@ BookmarkMenu::BookmarkMenu(Renderer *Backend, QWidget *parent) : QWidget(parent)
   connect(ui->closeButton, &QPushButton::clicked, parent, [=]() { static_cast<QSplitter*>(parent)->setSizes(QList<int>() << 0 << this->width()); });
   connect(ui->closeButton, &QPushButton::clicked, parent, [=]() { });
   connect(ui->bookmarks, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem *item) { 
-    Backend->handleLink(item->data(1, Qt::UserRole).toString()); }); 
+    Backend->handleLink(parent, item->data(1, Qt::UserRole).toString()); }); 
 }
 
 void BookmarkMenu::loadBookmarks() {

@@ -163,7 +163,7 @@ bool Renderer::supportsExtraFeatures() { return false; }
 
 void Renderer::traverseOutline(void *, int) { }
 
-void Renderer::handleLink(QString linkDest) { 
+void Renderer::handleLink(QWidget *obj, QString linkDest) { 
   Poppler::Link* trueLink;
   foreach(QList<Link*> linkArray, linkHash) {
     for(int i = 0; i < linkArray.size(); i++) {
@@ -180,6 +180,9 @@ void Renderer::handleLink(QString linkDest) {
   if(trueLink) {
     if(trueLink->linkType() == Poppler::Link::LinkType::Goto)
       emit goToPosition(dynamic_cast<Poppler::LinkGoto*>(trueLink)->destination().pageNumber(), 0, 0);
+    else if(trueLink->linkType() == Poppler::Link::LinkType::Browse) {
+      if(QMessageBox::Yes == QMessageBox::question(obj, tr("Open External Link?"), QString(tr("Do you want to open %1 in the default browser")).arg(linkDest), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ QProcess::startDetached("firefox \""+linkDest+"\""); }
+    }
   }
 }
 
@@ -190,38 +193,12 @@ TextData* Renderer::linkList(int pageNum, int entry) {
     return 0;
 }
 
-QList<QString> Renderer::annotList(int pageNum, int entry) { 
-  Q_UNUSED(pageNum)
-  Q_UNUSED(entry)
-  return QList<QString>() << QString() << QString();
-}
-
 int Renderer::linkSize(int pageNum) { Q_UNUSED(pageNum) return linkHash[pageNum].size(); }
 
 int Renderer::annotSize(int pageNum) { Q_UNUSED(pageNum) return 0; }
 
-QRectF Renderer::annotLoc(int pageNum, int entry) { Q_UNUSED(pageNum) Q_UNUSED(entry) return QRectF(); }
+Annotation *Renderer::annotList(int pageNum, int entry) { Q_UNUSED(pageNum) Q_UNUSED(entry) return NULL; }
 
-bool Renderer::isExternalLink(int pageNum, QString text) { 
-  Q_UNUSED(pageNum)
-  Poppler::Link* trueLink;
-  foreach(QList<Link*> linkArray, linkHash) {
-    for(int i = 0; i < linkArray.size(); i++) {
-      Poppler::Link* link = linkArray[i]->getLink();
-      if(link->linkType() == Poppler::Link::LinkType::Browse) {
-        if(text == dynamic_cast<Poppler::LinkBrowse*>(link)->url())
-          trueLink = link;
-      }else if(link->linkType() == Poppler::Link::LinkType::Goto) {
-        if(text == dynamic_cast<Poppler::LinkGoto*>(link)->fileName())
-          trueLink = link;
-      }
-    }
-  }
-  if(trueLink) {
-    if(trueLink->linkType() == Poppler::Link::LinkType::Goto)
-      return dynamic_cast<Poppler::LinkGoto*>(trueLink)->isExternal();
-    if(trueLink->linkType() == Poppler::Link::LinkType::Browse)
-      return true;
-  }
-  return false;
-}
+int Renderer::widgetSize(int pageNum) { Q_UNUSED(pageNum) return 0; }
+
+Widget *Renderer::widgetList(int pageNum, int entry) { Q_UNUSED(pageNum) Q_UNUSED(entry) return NULL; }

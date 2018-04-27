@@ -30,7 +30,9 @@ HEADERS  += mainUI.h \
 		Renderer.h \
 		TextData.h \
     Bookmark.h \
-    BookmarkMenu.h
+    BookmarkMenu.h \
+    Annotation.h \
+    Widget.h
 
 FORMS += mainUI.ui \
          PropDialog.ui \

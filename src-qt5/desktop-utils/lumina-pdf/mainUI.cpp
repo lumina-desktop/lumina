@@ -484,6 +484,19 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
     QImage img = BACKEND->imageHash(pageCount[i]).scaled(sz, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     //Now draw the image
     painter.drawImage(0,0,img);
+    //Also paint the annotations at their locations
+    for(int k = 0; k < BACKEND->annotSize(i); k++) {
+      Annotation *annot = BACKEND->annotList(i, k);
+      if(annot->print()) {
+        if(annot->getType() == 14) {
+          painter.setPen(QPen(annot->getColor()));
+          foreach(QVector<QPointF> pointList, annot->getInkList())
+            painter.drawLines(pointList);
+        }else{
+          painter.drawImage(annot->getLoc(), annot->renderImage());
+        }
+      }
+    }
   }
   progAct->setVisible(false);
 }

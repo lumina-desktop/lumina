@@ -1,34 +1,17 @@
 #include "Renderer.h" 
 #include "TextData.h" 
-#include <QDateTime>
 #include <mupdf/fitz.h>
 #include <mupdf/pdf.h>
+#include <QDateTime>
 #include <QMutex>
 #include <QFuture>
 #include <QtConcurrent>
 
-class Annot{
-  public:
-    Annot(fz_context *_ctx, pdf_annot *_fzAnnot, char *_text, char *_author, QRectF _loc = QRectF()) : fzAnnot(_fzAnnot), ctx(_ctx), loc(_loc) {
-      author = (_author) ? QString::fromLocal8Bit(_author) : QString(); 
-      text = (_text) ? QString::fromLocal8Bit(_text) : QString(); 
-    }
+class Annot;
 
-    ~Annot() {
-      fz_drop_annot(ctx, (fz_annot*)fzAnnot);
-    }
-
-    QString getAuthor() { return author; }
-    QString getText() { return text; }
-    QRectF getLoc() { return loc; }
-
-  private:
-    pdf_annot *fzAnnot;
-    fz_context *ctx;
-    QString author;
-    QString text;
-    QRectF loc;
-};
+inline QRectF convertRect(fz_rect bbox, double sf=1.0) {
+  return QRectF(sf*bbox.x0, sf*bbox.y0, sf*(bbox.x1-bbox.x0), sf*(bbox.y1 - bbox.y0));
+}
 
 class Link {
   public:
@@ -52,15 +35,14 @@ class Link {
 
 class Data {
   public:
-    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_matrix _ctm, double _sf, fz_link *_link, QList<Annot*> &_annot) : pagenumber(_pagenum), ctx(_ctx), list(_list), bbox(_bbox), ctm(_ctm), sf(_sf), annotList(_annot) {
+    Data(int _pagenum, fz_context *_ctx, fz_display_list *_list, fz_rect _bbox, fz_matrix _ctm, double _sf, fz_link *_link, QList<Annot*> &_annot, QList<Widget*> &_widgets) : pagenumber(_pagenum), ctx(_ctx), list(_list), bbox(_bbox), ctm(_ctm), sf(_sf), annotList(_annot), widgetList(_widgets) {
 
       while(_link) {
-        QRectF rect(sf*_link->rect.x0, sf*_link->rect.y0, sf*(_link->rect.x1 - _link->rect.x0), sf*(_link->rect.y1 - _link->rect.y0));
+        QRectF rect = convertRect(_link->rect, sf);
         Link *link = new Link(_ctx, _link, _link->uri, _pagenum, rect);
         linkList.append(link);
         _link = _link->next;
       }
-
     }
 
     ~Data() { 
@@ -70,14 +52,19 @@ class Data {
       linkList.clear();
       qDeleteAll(annotList);
       annotList.clear();
+      qDeleteAll(widgetList);
+      widgetList.clear();
     }
 
     int getPage() { return pagenumber; }
     QList<Link*> getLinkList() { return linkList; }
-    QList<Annot*> getAnnotList() { return annotList; }
+    Annot* getAnnotList(int i) { return annotList[i]; }
+    Widget* getWidgetList(int i) { return widgetList[i]; }
+    int getAnnotSize() { return annotList.size(); }
+    int getWidgetSize() { return widgetList.size(); }
     fz_context* getContext() { return ctx; }
     fz_display_list* getDisplayList() { return list; }
-    QRectF getScaledRect() { return QRectF(sf*bbox.x0, sf*bbox.y0, sf*(bbox.x1-bbox.x0), sf*(bbox.y1 - bbox.y0)); }
+    QRectF getScaledRect() { return convertRect(bbox, sf); }
     fz_rect getBoundingBox() { return bbox; }
     fz_matrix getMatrix() { return ctm; }
     QImage getImage() { return img; }
@@ -95,6 +82,7 @@ class Data {
     QList<Link*> linkList;
     double sf;
     QList<Annot*> annotList;
+    QList<Widget*> widgetList;
 
     fz_pixmap *pix;
     QImage img;
@@ -106,6 +94,32 @@ fz_context *CTX;
 QHash<int, Data*> dataHash;
 QMutex mutex[FZ_LOCK_MAX];
 fz_locks_context locks;
+
+class Annot : public Annotation{
+  public:
+    Annot(fz_context *_ctx, pdf_annot *_fzAnnot, int _type, int _i, float _opacity, QRectF _loc = QRectF()) : Annotation(_type, _opacity, _loc), ctx(_ctx), fzAnnot(_fzAnnot), pageNum(_i) { }
+    virtual ~Annot() { fz_drop_annot(ctx, (fz_annot*)fzAnnot); }
+
+    virtual QImage renderImage() {
+      fz_rect bbox;
+      fz_irect rbox;
+      pdf_bound_annot(ctx, fzAnnot, &bbox);
+
+      fz_pixmap *pixmap = fz_new_pixmap_with_bbox(ctx, fz_device_rgb(ctx), fz_round_rect(&rbox, &bbox), NULL, 0);
+      fz_clear_pixmap_with_value(ctx, pixmap, 0xff);
+      fz_device *dev = fz_new_draw_device(ctx, &fz_identity, pixmap);
+      fz_run_display_list(ctx, dataHash[pageNum]->getDisplayList(), dev, &fz_identity, &bbox, NULL);
+
+      QImage image(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride, QImage::Format_RGB888);
+      return image;
+    }
+    
+  private:
+    fz_context *ctx;
+    pdf_annot *fzAnnot;
+
+    int pageNum;
+};
 
 inline QString getTextInfo(QString str) {
   char infoBuff[1000];
@@ -137,6 +151,7 @@ Renderer::Renderer(){
 }
 
 Renderer::~Renderer(){
+  //pdf_clean_page_contents
   qDebug() << "Dropping Context";
   clearHash();
   fz_drop_document(CTX, DOC);
@@ -147,7 +162,7 @@ Renderer::~Renderer(){
 
 bool Renderer::loadMultiThread(){ return false; }
 
-void Renderer::handleLink(QString link) {
+void Renderer::handleLink(QWidget *obj, QString link) {
   float xp = 0.0, yp = 0.0;
   int pagenum = 0;
 
@@ -155,9 +170,13 @@ void Renderer::handleLink(QString link) {
   char *uri = linkData.data();
 
   if(!link.isEmpty()) {
-    pagenum = fz_resolve_link(CTX, DOC, uri, &xp, &yp);
-    if(pagenum != -1)
-      emit goToPosition(pagenum+1, xp, yp);
+    if(fz_is_external_link(CTX, uri)) {
+      if(QMessageBox::Yes == QMessageBox::question(obj, tr("Open External Link?"), QString(tr("Do you want to open %1 in the default browser")).arg(link), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ QProcess::startDetached("firefox \""+link+"\""); }
+    }else{
+      pagenum = fz_resolve_link(CTX, DOC, uri, &xp, &yp);
+      if(pagenum != -1)
+        emit goToPosition(pagenum+1, xp, yp);
+    }
   }
 }
 
@@ -192,6 +211,8 @@ bool Renderer::loadDocument(QString path, QString password){
       fz_register_document_handlers(CTX); 
       qDebug() << "Document handlers registered";
     }
+
+    //fz_page_presentation
 
     docpath = path;
     DOC = fz_open_document(CTX, path.toLocal8Bit().data());
@@ -280,49 +301,250 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   fz_rect bbox;
   fz_display_list *list;
 
-  //double pageDPI = 96.0;
-  //double sf = DPI.width() / pageDPI;
-  double sf = 1;
-  //fz_scale(&matrix, sf, sf);
-  fz_rotate(&matrix, degrees);
+  double pageDPI = 96.0;
+  double sf = DPI.width() / pageDPI;
+  fz_scale(&matrix, sf, sf);
+  fz_pre_rotate(&matrix, degrees);
 
-  fz_page *PAGE = fz_load_page(CTX, DOC, pagenum);
-  fz_bound_page(CTX, PAGE, &bbox);
+  pdf_page *PAGE = pdf_load_page(CTX, (pdf_document*)DOC, pagenum);
+  pdf_bound_page(CTX, PAGE, &bbox);
   emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
 
   fz_transform_rect(&bbox, &matrix);
   list = fz_new_display_list(CTX, &bbox);
   fz_device *dev = fz_new_list_device(CTX, list);
-  fz_run_page(CTX, PAGE, dev, &fz_identity, NULL);  
+  pdf_run_page_contents(CTX, PAGE, dev, &fz_identity, NULL);  
 
-  fz_link *link = fz_load_links(CTX, PAGE); 
-  pdf_annot *_annot = pdf_first_annot(CTX, (pdf_page*)PAGE);
+  fz_link *link = pdf_load_links(CTX, PAGE); 
+  pdf_annot *_annot = pdf_first_annot(CTX, PAGE);
   QList<Annot*> annotList;
+  QList<Widget*> widgetList;
 
   //qDebug() << "Starting annotations for:" << pagenum;
   while(_annot) {
-    pdf_run_annot(CTX, _annot, dev, &fz_identity, NULL);
+    //if(pdf_annot_is_dirty(CTX, _annot))
+      //qDebug() << "DIRTY ANNOT";
+
+    int type = pdf_annot_type(CTX, _annot);
+    /**TYPES
+      0 = TEXT
+      1 = LINK
+      2 = FREE_TEXT
+      3 = LINE
+      4 = SQUARE
+      ...
+      24 = 3D
+      -1 = UNKNOWN
+    **/
+    //qDebug() << "Page Number:" << pagenum+1 << type << pdf_string_from_annot_type(CTX, (enum pdf_annot_type)type);
     fz_rect anotBox;
     pdf_bound_annot(CTX, _annot, &anotBox);
-    QRectF rect(sf*anotBox.x0, sf*anotBox.y0, sf*(anotBox.x1-anotBox.x0), sf*(anotBox.y1 - anotBox.y0));
+    QRectF rect = convertRect(anotBox, sf);
+    float opacity = pdf_annot_opacity(CTX, _annot);
+    /**TYPES
+      0 = LEFT
+      1 = CENTER
+      2 = RIGHT
+    **/
+    int quadding = pdf_annot_quadding(CTX, _annot);
+
+    Annot *annot = new Annot(CTX, _annot, type, pagenum, opacity, rect);
+
+    int flags = pdf_annot_flags(CTX, _annot);
+    /**FLAGS
+      1 << 0 = INVISIBLE
+      1 << 1 = HIDDEN
+      1 << 2 = PRINT
+      1 << 3 = NO_ZOOM
+      1 << 4 = NO_ROTATE
+      1 << 5 = NO_VIEW
+      1 << 6 = READ_ONLY
+      1 << 7 = LOCKED
+      1 << 8 = TOGGLE_NO_VIEW
+      1 << 9 = LOCKED_CONTENTS
+    **/
+    
+    annot->setPrint((flags & PDF_ANNOT_IS_PRINT) == PDF_ANNOT_IS_PRINT);
+
     char *contents = NULL, *author = NULL; 
-    fz_try(CTX)
-      contents = pdf_copy_annot_contents(CTX, _annot);
-    fz_catch(CTX) { }
-    fz_try(CTX)
-      author = pdf_copy_annot_author(CTX, _annot);
-    fz_catch(CTX) { }
+    if(type != 19 and type != 20) {
+      fz_try(CTX){
+        contents = pdf_copy_annot_contents(CTX, _annot);
+        if(contents)
+          annot->setContents(QString::fromLocal8Bit(contents));
+      }fz_catch(CTX) { }
+      fz_try(CTX){
+        author = pdf_copy_annot_author(CTX, _annot);
+        if(author)
+          annot->setAuthor(QString::fromLocal8Bit(author));
+      }fz_catch(CTX) { }
+    }
+    //pdf_annot_modification_date(CTX, _annot);
+
+    if(pdf_annot_has_ink_list(CTX, _annot)) {
+      int inkCount = pdf_annot_ink_list_count(CTX, _annot);
+      QVector<QVector<QPointF>> inkList;
+      for(int i = 0; i < inkCount; i++) {
+        int strokeCount = pdf_annot_ink_list_stroke_count(CTX, _annot, i);
+        QVector<QPointF> inkPoints;
+        for(int k = 0; k < strokeCount; k++) {
+          fz_point strokeVertex = pdf_annot_ink_list_stroke_vertex(CTX, _annot, i, k);
+          QPointF vertexPoint(strokeVertex.x, strokeVertex.y);
+          inkPoints.append(sf*vertexPoint);
+        }
+        inkList.append(inkPoints);
+        annot->setInkList(inkList);
+      }
+      fz_rect annotRect;
+      pdf_annot_rect(CTX, _annot, &annotRect);
+      //qDebug() << "ANNOT RECT:" << convertRect(annotRect, sf);
+      //qDebug() << "INK LIST:" << inkList;
+    }
+
+    float color[4] = {0, 0, 0, 1};
+    int n;
+    fz_try(CTX) {
+      pdf_annot_color(CTX, _annot, &n, color);
+      QColor inkColor = QColor(color[0]*255, color[1]*255, color[2]*255, color[3]*255);
+      annot->setColor(inkColor);
+      //qDebug() << "COLOR:" << inkColor;
+    }fz_catch(CTX) {
+      //qDebug() << "NO COLOR";
+      annot->setColor(QColor());
+    }
+
+    if(pdf_annot_has_interior_color(CTX, _annot)) {
+      fz_try(CTX) {
+        color[0] = 0; color[1] = 0; color[2] = 0; color[3] = 1;
+        pdf_annot_interior_color(CTX, _annot, &n, color);
+        QColor internalColor = QColor(color[0]*255, color[1]*255, color[2]*255, color[3]*255);
+        //qDebug() << "INTERNAL COLOR:" << internalColor;
+        annot->setInternalColor(internalColor);
+      }fz_catch(CTX) {
+        //qDebug() << "NO INTERNAL COLOR";
+        annot->setInternalColor(QColor());
+      }
+    }
+    
+    //qDebug() << "BORDER:" << pdf_annot_border(CTX, _annot);
+
+    if(pdf_annot_has_quad_points(CTX, _annot)) {
+      //qDebug() << "HAS QUAD POINTS" << "Page Number:" << pagenum << type;
+      int pointCount = pdf_annot_quad_point_count(CTX, _annot);
+      QList<QPolygonF> quadList;
+      for(int i = 0; i < pointCount; i++) {
+        float qp[8];
+        pdf_annot_quad_point(CTX, _annot, i, qp);
+        QPolygonF quad = QPolygonF(QVector<QPointF>() << QPointF(qp[0], qp[1]) << QPointF(qp[2], qp[3]) << QPointF(qp[4], qp[5]) << QPointF(qp[6], qp[7]));
+        quadList.append(quad);
+      }
+      annot->setQuadList(quadList);
+    }
    
-    Annot *annot = new Annot(CTX, _annot, contents, author, rect);
+    if(pdf_annot_has_line_ending_styles(CTX, _annot)) {
+      //qDebug() << "HAS LINE ENDING STYLES" << "Page Number:" << pagenum << type;
+      pdf_line_ending start, end;
+      /**LINE ENDING
+        0 = NONE
+        1 = SQUARE
+        2 = CIRCLE
+        ...
+        9 = SLASH
+      **/
+      pdf_annot_line_ending_styles(CTX, _annot, &start, &end);
+      //qDebug() << "START:" << start << "END:" << end;
+    }
+
+    if(pdf_annot_has_vertices(CTX, _annot)) {
+      //qDebug() << "HAS VERTICIES" << "Page Number:" << pagenum << type;
+      int vertexCount = pdf_annot_vertex_count(CTX, _annot);
+      QList<QPointF> vertexList;
+      for(int i = 0; i < vertexCount; i++) {
+        fz_point v = pdf_annot_vertex(CTX, _annot, i);
+        vertexList.append(sf*QPointF(v.x, v.y));
+      }
+      //qDebug() << vertexList;
+    }
+
+    if(pdf_annot_has_line(CTX, _annot)) {
+      fz_point a, b;
+      pdf_annot_line(CTX, _annot, &a, &b);
+      QPointF pa(a.x, a.y);
+      QPointF pb(b.x, b.y);
+      //qDebug() << pa << pb;
+    }
+
+    if(pdf_annot_has_icon_name(CTX, _annot)) {
+      QString iconName = QString::fromLocal8Bit(pdf_annot_icon_name(CTX, _annot));
+      //qDebug() << iconName;
+    }
+
+    if(!pdf_annot_has_ink_list(CTX, _annot)) {
+      pdf_run_annot(CTX, _annot, dev, &fz_identity, NULL);
+    }
+
     annotList.append(annot);
-    _annot = _annot->next;
+    _annot = pdf_next_annot(CTX, _annot);
+  }
+
+  pdf_widget *widget = pdf_first_widget(CTX, (pdf_document*)DOC, PAGE);
+  while(widget) {
+    int type = pdf_widget_type(CTX, widget);
+    /**
+      -1 = NOT_WIDGET
+      0 = PUSHBUTTON
+      1 = CHECKBOX
+      2 = RADIOBUTTON
+      3 = TEXT
+      4 = LISTBOX
+      5 = COMBOBOX
+      6 = SIGNATURE
+    **/
+
+    fz_rect wrect;
+    pdf_bound_widget(CTX, widget, &wrect);
+    QRectF WRECT = convertRect(wrect, sf);
+    char *currText = pdf_text_widget_text(CTX, (pdf_document*)DOC, widget);
+    int maxLen = pdf_text_widget_max_len(CTX, (pdf_document*)DOC, widget);
+    int contentType = pdf_text_widget_content_type(CTX, (pdf_document*)DOC, widget);
+    /**
+      0 = UNRESTRAINED
+      1 = NUMBER
+      2 = SPECIAL
+      3 = DATE
+      4 = TIME
+    **/
+
+    Widget *WIDGET = new Widget(type, WRECT, QString::fromLocal8Bit(currText), maxLen, contentType); 
+    if(type == 4 or type == 5) {
+      QStringList optionList, exportList;
+      bool multi = pdf_choice_widget_is_multiselect(CTX, (pdf_document*)DOC, widget);
+     
+      if(int listS = pdf_choice_widget_options(CTX, (pdf_document*)DOC, widget, 0, NULL)) {
+        char *opts[listS];
+        pdf_choice_widget_options(CTX, (pdf_document*)DOC, widget, 0, opts);
+        for(int i = 0; i < listS; i++) { optionList.append(QString::fromLocal8Bit(opts[i])); }
+        WIDGET->setOptions(optionList);
+      }
+
+      if(int exportS = pdf_choice_widget_options(CTX, (pdf_document*)DOC, widget, 1, NULL)) {
+        char *opts[exportS];
+        pdf_choice_widget_options(CTX, (pdf_document*)DOC, widget, 1, opts);
+        for(int i = 0; i < exportS; i++) { exportList.append(QString::fromLocal8Bit(opts[i])); }
+        WIDGET->setExports(exportList);
+      }
+    }
+
+    widgetList.push_back(WIDGET);
+
+    widget = pdf_next_widget(CTX, widget);
   }
 
   fz_close_device(CTX, dev);
   fz_drop_device(CTX, dev);
-  fz_drop_page(CTX, PAGE);
+  //fz_drop_page(CTX, PAGE);
 
-  data = new Data(pagenum, CTX, list, bbox, matrix, sf, link, annotList);
+  data = new Data(pagenum, CTX, list, bbox, matrix, sf, link, annotList, widgetList);
   data->setRenderThread(QtConcurrent::run(&renderer, data, this));
 }
 
@@ -368,26 +590,20 @@ int Renderer::linkSize(int pagenum) {
   return dataHash[pagenum]->getLinkList().size();
 }
 
-QList<QString> Renderer::annotList(int pagenum, int entry) {
-  return QList<QString>() << dataHash[pagenum]->getAnnotList()[entry]->getAuthor() << dataHash[pagenum]->getAnnotList()[entry]->getText();
-}
-
-QRectF Renderer::annotLoc(int pagenum, int entry) {
-  return dataHash[pagenum]->getAnnotList()[entry]->getLoc();
+Annotation *Renderer::annotList(int pagenum, int entry) {
+  return static_cast<Annotation*>(dataHash[pagenum]->getAnnotList(entry));
 }
 
 int Renderer::annotSize(int pagenum) {
-  return dataHash[pagenum]->getAnnotList().size();
+  return dataHash[pagenum]->getAnnotSize();
 }
 
-bool Renderer::isExternalLink(int pagenum, QString text) { 
-  QList<Link*> linkList = dataHash[pagenum]->getLinkList();
-  foreach(Link *link, linkList) {
-    if(link->getData()->text() == text)
-      return fz_is_external_link(CTX, link->getData()->text().toLocal8Bit().data());
-  }
-  return false;
+Widget *Renderer::widgetList(int pagenum, int entry) {
+  return dataHash[pagenum]->getWidgetList(entry);
+}
+
+int Renderer::widgetSize(int pagenum) {
+  return dataHash[pagenum]->getWidgetSize();
 }
 
 bool Renderer::supportsExtraFeatures() { return true; }
-
