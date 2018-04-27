@@ -140,6 +140,7 @@ private slots:
 	void ArrangeWindows(WId primary, QString type);
 	void TileWindows(WId primary, QString type);
 	void CheckWindowPosition(WId id, bool newwindow = false);
+	void CheckWindowPosition(NativeWindowObject *win, bool newwindow = false);
 	void arrangeWindows(NativeWindowObject *primary, QString type, bool primaryonly = false);
 
 signals:

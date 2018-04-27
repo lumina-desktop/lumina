@@ -57,6 +57,7 @@ public:
 
 	//C++ Access Functions (simplifications for the QML ones)
 	QList<NativeWindowObject*> windowObjects();
+	QList<ScreenObject*> screenObjects();
 
 private:
 	QList<ScreenObject*> s_objects;
@@ -64,9 +65,10 @@ private:
 	QList<NativeWindowObject*> window_objects;
 	QList<NativeWindowObject*> tray_window_objects;
 	QPointer<NativeWindowObject> last_window_up;
-	QTimer *currentTimeTimer;
+	QTimer *currentTimeTimer, *availgeomTimer;
 	QString currentTimeFormat, currentTimeString;
 	QDateTime currentDateTimeStruct;
+	QRegion session_avail_geom;
 
 public slots:
 	void updateScreens(); //rescan/update screen objects
@@ -84,6 +86,8 @@ public slots:
 
 private slots:
 	void updateCurrentTime();
+	void availableScreenGeomChanged();
+	void submitSessionGeom();
 
 signals:
 	void screensChanged();
@@ -91,6 +95,7 @@ signals:
 	void windowsChanged();
 	void trayWindowsChanged();
 	void currentTimeChanged();
+	void sessionGeomAvailableChanged();
 
 	void startLogout();
 	void mouseMoved();

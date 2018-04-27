@@ -6,9 +6,12 @@
 //===========================================
 #include "LFileInfo.h"
 #include <LUtils.h>
+#include <QRegExp>
+#include <unistd.h>
 
 LFileInfo::LFileInfo() : QFileInfo(){
   desk = 0;
+  c_uid = -1;
 }
 
 LFileInfo::LFileInfo(QString filepath) : QFileInfo(){ //overloaded contructor
@@ -30,6 +33,7 @@ LFileInfo::~LFileInfo(){
 void LFileInfo::loadExtraInfo(){
   if(desk!=0){ desk->deleteLater(); }
   desk = 0;
+  c_uid = geteuid();
   //Now load the extra information
   if(this->absoluteFilePath().startsWith("/net/") || this->isDir() ){
     mime = "inode/directory";
@@ -49,7 +53,6 @@ void LFileInfo::loadExtraInfo(){
     iconList << "folder";
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
-    iconList << "application-x-desktop"; //default value
     desk = new XDGDesktop(this->absoluteFilePath(), 0);
     if(desk->type!=XDGDesktop::BAD){
       //use the specific desktop file info (if possible)
@@ -81,8 +84,32 @@ void LFileInfo::getZfsDataset(){
     //Use the "atime" property for this check - been around since the earliest versions of ZFS and should take no time to probe
     QString out = LUtils::runCommand(ok, "zfs", QStringList() << "get" << "-H" << "atime" << this->canonicalFilePath() );
     if(!ok){ zfs_ds = "."; } //just something that is not empty - but is clearly not a valid dataset
-    else{  zfs_ds = out.section("\n",0,0).section("\t",0,0).simplified(); }
+    else{
+      zfs_ds = out.section("\n",0,0).section("\t",0,0).simplified();
+      zfs_dspath = this->canonicalFilePath().section(zfs_ds.section("/",1,-1), 1,-1); //relative path
+      if(!zfs_dspath.isEmpty()){ zfs_dspath.prepend(zfs_ds); }
+      else{ zfs_dspath = zfs_ds; } //on the current dataset "root"
+      //qDebug() << "Got ZFS dataset:" << zfs_ds << zfs_dspath;
+    }
     //qDebug() << "Found Dataset:" << zfs_ds << out << ok;
+    if(ok){
+      //Also get the list of permissions this user has for modifying the ZFS dataset
+      QStringList perms = LUtils::runCommand(ok, "zfs", QStringList() << "allow" << zfs_ds ).split("\n");
+      //qDebug() << "Permissions:" << perms;
+      if(!perms.isEmpty() && ok){
+        //Now need to filter/combine the permissions for all the groups this user is a part of
+        QStringList gplist = LUtils::runCommand(ok, "id", QStringList() << "-np").split("\n").filter("groups");
+        if(!gplist.isEmpty()){ gplist = gplist.first().replace("\t", " ").split(" ",QString::SkipEmptyParts); gplist.removeAll("groups"); }
+        for(int i=0; i<gplist.length(); i++){
+          QStringList tmp = perms.filter(QRegExp("[user|group] "+gplist[i]));
+          if(tmp.isEmpty()){ continue; }
+          zfs_perms << tmp.first().section(" ",2,2,QString::SectionSkipEmpty).split(",",QString::SkipEmptyParts);
+        }
+        zfs_perms.removeDuplicates();
+        //qDebug() << "Got ZFS Permissions:" << zfs_ds << zfs_perms;
+      }
+    }
+
   }
 }
 
@@ -138,7 +165,11 @@ bool LFileInfo::isAVFile(){
   return (mime.startsWith("audio/") || mime.startsWith("video/") );
 }
 
-bool LFileInfo::isZfsDataset(){
+bool LFileInfo::isZfsDataset(QString path){
+  if(!path.isEmpty() && zfsAvailable() ){
+    //manual check of a dir
+    return (0 == LUtils::runCmd("zfs", QStringList() << "get" << "-H" << "atime" << path) );
+  }
   if(!goodZfsDataset()){ return false; }
   return ( ("/"+zfs_ds.section("/",1,-1)) == this->canonicalFilePath());
 }
@@ -183,5 +214,86 @@ bool LFileInfo::zfsSetProperty(QString property, QString value){
   bool ok = false;
   QString info = LUtils::runCommand(ok, "zfs", QStringList() << "set" << property+"="+value << zfs_ds);
   if(!ok){ qDebug() << "Error Setting ZFS Property:" << property+"="+value << info; }
+  return ok;
+}
+
+//ZFS Permissions/Modifications
+bool LFileInfo::canZFScreate(){
+  if(!goodZfsDataset()){ return false; }
+  return (zfs_perms.contains("create")  || (c_uid==0) );
+}
+
+bool LFileInfo::zfsCreateDataset(QString subdir){
+  if(!canZFScreate()){ return false; }
+  if(subdir.startsWith("/")){ qDebug() << "Not a relative path!!"; return false; }
+  if( QFile::exists(this->canonicalFilePath()+"/"+subdir) ){
+    return false;
+  }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "create" << zfs_dspath+"/"+subdir );
+  if(!ok){ qDebug() << "Error Creating ZFS Dataset:" << subdir << info; }
+  return ok;
+}
+
+bool LFileInfo::canZFSdestroy(){
+  if(!goodZfsDataset()){ return false; }
+  return (zfs_perms.contains("destroy") || (c_uid==0) );
+}
+
+bool LFileInfo::zfsDestroyDataset(QString subdir){
+  if(!canZFSdestroy()){ return false; }
+  if(!subdir.isEmpty() && !subdir.startsWith("/")){
+    if( isZfsDataset(this->canonicalFilePath()+"/"+subdir) ){ subdir = zfs_dspath+"/"+subdir; }
+  }
+  else if(subdir.isEmpty() && (zfs_ds == zfs_dspath) ){ subdir = zfs_ds; }
+  else{ qDebug() << "Invalid subdir:" << subdir; return false; }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "destroy" << subdir);
+  if(!ok){ qDebug() << "Error Destroying ZFS Dataset:" << subdir << info; }
+  return ok;
+}
+
+bool LFileInfo::zfsDestroySnapshot(QString snapshot){
+  if(!canZFSdestroy()){ return false; }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "destroy" << zfs_ds+"@"+snapshot);
+  if(!ok){ qDebug() << "Error Destroying ZFS Snapshot:" << snapshot << info; }
+  return ok;
+}
+
+bool LFileInfo::canZFSclone(){
+  if(!goodZfsDataset()){ return false; }
+  return (zfs_perms.contains("clone")  || (c_uid==0) );
+}
+
+bool LFileInfo::zfsCloneDataset(QString subdir, QString newsubdir){
+  if(!canZFSclone()){ return false; }
+
+  return false;
+}
+
+bool LFileInfo::canZFSsnapshot(){
+  if(!goodZfsDataset()){ return false; }
+  return (zfs_perms.contains("snapshot")  || (c_uid==0) );
+}
+
+bool LFileInfo::zfsSnapshot(QString snapname){
+  if(!canZFSsnapshot()){ return false; }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "snapshot" << zfs_ds+"@"+snapname);
+  if(!ok){ qDebug() << "Error Creating ZFS Snapshot:" << snapname << info; }
+  return ok;
+}
+
+bool LFileInfo::canZFSrollback(){
+  if(!goodZfsDataset()){ return false; }
+  return (zfs_perms.contains("rollback")  || (c_uid==0) );
+}
+
+bool LFileInfo::zfsRollback(QString snapname){
+  if(!canZFSrollback()){ return false; }
+  bool ok = false;
+  QString info = LUtils::runCommand(ok, "zfs", QStringList() << "rollback" << zfs_ds+"@"+snapname);
+  if(!ok){ qDebug() << "Error Rolling back to ZFS Snapshot:" << snapname << info; }
   return ok;
 }

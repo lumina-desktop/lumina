@@ -30,72 +30,31 @@ LBattery::~LBattery(){
 
 void LBattery::updateBattery(bool force){
   // Get current state of charge
-  //QStringList result = LUtils::getCmdOutput("/usr/sbin/apm", QStringList() << "-al");
-  int charge = LOS::batteryCharge(); //result.at(1).toInt();
-//qDebug() << "1: " << result.at(0).toInt() << " 2: " << result.at(1).toInt();
-  int icon = -1;
-  if (charge > 90) { icon = 4; }
-  else if (charge > 70) { icon = 3; }
-  else if (charge > 20) { icon = 2; }
-  else if (charge > 5) { icon = 1; }
-  else if (charge > 0 ) { icon = 0; }
-  if(LOS::batteryIsCharging()){ icon = icon+10; }
-  //icon = icon + result.at(0).toInt() * 10;
-  if (icon != iconOld || force) {
-    switch (icon) {
-      case 0:
-        label->setPixmap( LXDG::findIcon("battery-20","battery-caution").pixmap(label->size()) );
-        break;
-      case 1:
-        label->setPixmap( LXDG::findIcon("battery-40", "battery-040").pixmap(label->size()) );
-        break;
-      case 2:
-        label->setPixmap( LXDG::findIcon("battery-60", "battery-060").pixmap(label->size()) );
-        break;
-      case 3:
-        label->setPixmap( LXDG::findIcon("battery-80", "battery-080").pixmap(label->size()) );
-        break;
-      case 4:
-        label->setPixmap( LXDG::findIcon("battery-100", "battery").pixmap(label->size()) );
-        break;
-      case 10:
-        label->setPixmap( LXDG::findIcon("battery-charging-20", "battery-charging-caution").pixmap(label->size()) );
-        break;
-      case 11:
-        label->setPixmap( LXDG::findIcon("battery-charging-40", "battery-charging-040").pixmap(label->size()) );
-        break;
-      case 12:
-        label->setPixmap( LXDG::findIcon("battery-charging-60", "battery-charging-060").pixmap(label->size()) );
-        break;
-      case 13:
-        label->setPixmap( LXDG::findIcon("battery-charging-80", "battery-charging-080").pixmap(label->size()) );
-        break;
-      case 14:
-        label->setPixmap( LXDG::findIcon("battery-charging-100", "battery-charging").pixmap(label->size()) );
-        break;
-      default:
-        label->setPixmap( LXDG::findIcon("battery-unknown", "battery-missing").pixmap(label->size()) );
-        break;
+  int charge = LOS::batteryCharge();
+  bool charging = LOS::batteryIsCharging();
+  QString batt_icon = LSession::batteryIconName(charge, charging);
+  if(iconOld != batt_icon){
+    label->setPixmap( QIcon::fromTheme(batt_icon).pixmap(label->size()) );
+    if(charge <= 5 && !charging){
+      //Play some audio warning chime when
+      bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
+      if( playaudio ){
+        QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", "").toString();
+        if(sfile.isEmpty()){ sfile = LOS::LuminaShare()+"low-battery.ogg"; }
+        LSession::handle()->playAudioFile(sfile);
+      }
     }
-  }
-  if(icon<iconOld && icon==0){
-    //Play some audio warning chime when
-    bool playaudio = sessionsettings->value("PlayBatteryLowAudio",true).toBool();
-    if( playaudio ){
-      QString sfile = LSession::handle()->sessionSettings()->value("audiofiles/batterylow", LOS::LuminaShare()+"low-battery.ogg").toString();
-      LSession::handle()->playAudioFile(sfile);
-    }
+    iconOld = batt_icon; //save for later
   }
 
-  if(icon==0){ label->setStyleSheet("QLabel{ background: red;}"); }
-  else if(icon==14 && charge>98){ label->setStyleSheet("QLabel{ background: green;}"); }
+  if(charge<=5 && !charging){ label->setStyleSheet("QLabel{ background: red;}"); }
+  else if(charge>98 && charging){ label->setStyleSheet("QLabel{ background: green;}"); }
   else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
-  iconOld = icon;
 
   //Now update the display
   QString tt;
   //Make sure the tooltip can be properly translated as necessary (Ken Moore 5/9/14)
-  if(icon > 9 && icon < 15){ tt = QString(tr("%1 % (Charging)")).arg(QString::number(charge)); }
+  if(charging){ tt = QString(tr("%1 % (Charging)")).arg(QString::number(charge)); }
   else{ tt = QString( tr("%1 % (%2 Remaining)") ).arg(QString::number(charge), getRemainingTime() ); }
   label->setToolTip(tt);
 }

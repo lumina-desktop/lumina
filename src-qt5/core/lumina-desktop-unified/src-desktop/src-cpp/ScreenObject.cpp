@@ -11,6 +11,7 @@
 ScreenObject::ScreenObject(QScreen *scrn, QObject *parent) : QObject(parent){
   bg_screen = scrn;
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
+  connect(RootWindowObject::instance(), SIGNAL(sessionGeomAvailableChanged()), this, SLOT(updateAvailableGeometry()) );
 }
 
 void ScreenObject::RegisterType(){
@@ -49,12 +50,15 @@ void ScreenObject::setPanels(QStringList ids){
     return;
   }
 
+  QRegion *sess = RootDesktopObject::instance()->availableGeometry();
+  QRect avail = sess->intersected(bg_screen->geometry()).boundingRect();
+  if(session_available_geometry.isNull()){ avail = bg_screen->geometry(); }
   //First update/remove any current panel objects
   bool change = false;
   for(int i=0; i<panel_objects.length(); i++){
     if(ids.contains(panel_objects[i]->name()) ){
       ids.removeAll(panel_objects[i]->name()); //already handled
-      panel_objects[i]->syncWithSettings(bg_screen->geometry());
+      panel_objects[i]->syncWithSettings(avail);
     }else{
       panel_objects.takeAt(i)->deleteLater();
       i--;
@@ -86,4 +90,24 @@ PanelObject* ScreenObject::panel(QString id){
     if(panel_objects[i]->name()==id){ return panel_objects[i]; }
   }
   return 0;
+}
+
+QRect ScreenObject::availableGeometry(){
+  return avail_geom;
+}
+
+void ScreenObject::updateAvailableGeometry(){
+  QRegion *sess = RootDesktopObject::instance()->availableGeometry();
+  QRegion availRegion = sess->intersected(bg_screen->geometry());
+  QRect avail = availRegion.boundingRect();
+  for(int i=0; i<panel_objects.length(); i++){
+    panel_objects[i]->syncWithSettings(avail);
+    //Note: Use the "full side" geometry to ensure that we are cleanly cutting off the entire side of the region
+    availRegion = availRegion.subtracted( panel_objects[i]->fullSideGeometry() );
+  }
+  avail = availRegion.boundingRect();
+  if(avail != avail_geom){
+    avail_geom = avail;
+    emit availableGeomChanged();
+  }
 }

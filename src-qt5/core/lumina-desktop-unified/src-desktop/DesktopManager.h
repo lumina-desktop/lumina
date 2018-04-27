@@ -39,6 +39,7 @@ private slots:
 	void updateSessionSettings();
 	void updateDesktopSettings();
 	void updatePanelSettings();
+	void updatePanelReservations();
 	void updatePluginSettings();
 	void updateMenuSettings();
 	void updateAnimationSettings();

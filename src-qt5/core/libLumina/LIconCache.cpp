@@ -53,6 +53,7 @@ bool LIconCache::isLoaded(QString icon){
 
 QString LIconCache::findFile(QString icon){
   if(icon.isEmpty()){ return ""; }
+  
   //Get the currently-set theme
   QString cTheme = QIcon::themeName();
   if(cTheme.isEmpty()){
@@ -328,7 +329,7 @@ void LIconCache::ReadFile(LIconCache *obj, QString id, QString path){
 }
 
 bool LIconCache::isThemeIcon(QString id){
-  return (!id.contains("/") && !id.contains(".") && !id.contains("libreoffice") );
+  return (!id.contains("/") && !id.contains(".") ); //&& !id.contains("libreoffice") );
 }
 
 QIcon LIconCache::iconFromTheme(QString id){

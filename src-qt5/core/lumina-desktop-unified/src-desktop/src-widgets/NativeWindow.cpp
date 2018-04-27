@@ -13,7 +13,7 @@
 NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Qt::FramelessWindowHint){
   WIN = obj;
   createFrame();
-  WIN->addFrameWinID(container->winId());
+  //WIN->addFrameWinID(this->winId());
 }
 
 NativeWindow::~NativeWindow(){
@@ -23,14 +23,11 @@ NativeWindow::~NativeWindow(){
 
 QPoint NativeWindow::relativeOrigin(){
   //Update all the margins for the frame
-  /*QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
+  QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
   //QList<int> : [Left, Right, Top, Bottom] in pixels
-  int topM = frame[2] - titleLabel->fontMetrics().height(); //figure out how much extra we have to work with
-  if(topM<0){ topM = 0; }
-  int botM = topM/2.0;
-  QPoint containerCorner(frame[0], topM-botM);
-  return containerCorner;*/
-  return QPoint(0,0);
+  QPoint containerCorner(frame[0], frame[2]);
+  return containerCorner;
+  //return QPoint(0,0);
 }
 
 void NativeWindow::initProperties(){
@@ -59,7 +56,7 @@ void NativeWindow::initProperties(){
   syncWinType();
   syncGeom();
   syncVisibility(true); //init visibility - force it visible to start with
-
+  container->activateWindow();
 }
 
 // === PRIVATE ===
@@ -81,13 +78,12 @@ void NativeWindow::createFrame(){
     vlayout->setSpacing(0);
   toolbarL = new QHBoxLayout();
     toolbarL->setSpacing(0);
-  container = QWidget::createWindowContainer(QWindow::fromWinId(WIN->id()), this);
-    container->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  qDebug() << "Create Native Embed Widget";
+  container = new NativeEmbedWidget(this, WIN);
+    container->widget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     //vlayout.align
   titleLabel = new QLabel(this);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-  //contentW = new QWidget(this);
-    //contentW->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   //Now put the widgets in the right places
   toolbarL->addWidget(otherB);
   toolbarL->addWidget(titleLabel);
@@ -95,7 +91,8 @@ void NativeWindow::createFrame(){
   toolbarL->addWidget(maxB);
   toolbarL->addWidget(closeB);
   vlayout->addLayout(toolbarL);
-  vlayout->addWidget(container);
+  //vlayout->addStretch();
+  vlayout->addWidget(container->widget());
   this->setLayout(vlayout);
   // Load the icons for the buttons
   loadIcons();
@@ -115,7 +112,7 @@ void NativeWindow::syncWinImage(){
 }
 
 void NativeWindow::syncName(){
-  qDebug() << "Got Name Change:" << WIN->name();
+  //qDebug() << "Got Name Change:" << WIN->name();
 }
 
 void NativeWindow::syncTitle(){
@@ -129,20 +126,20 @@ void NativeWindow::syncIcon(){
 }
 
 void NativeWindow::syncSticky(){
-  qDebug() << "Got Sticky Change:" << WIN->isSticky();
+  //qDebug() << "Got Sticky Change:" << WIN->isSticky();
 }
 
 void NativeWindow::syncVisibility(bool init){
   if(init){
     WIN->setProperty(NativeWindowObject::Visible, true, true); //force it
-  }else{
-    qDebug() << "Sync Visibility:" << WIN->isVisible();
+  }else if(this->isVisible() != WIN->isVisible()){
+    //qDebug() << "Sync Visibility:" << WIN->isVisible();
     this->setVisible(WIN->isVisible());
   }
 }
 
 void NativeWindow::syncWinType(){
-  qDebug() << "Sync Win Type";
+  //qDebug() << "Sync Win Type";
   closeB->setVisible(WIN->showCloseButton());
   maxB->setVisible(WIN->showMaxButton());
   minB->setVisible(WIN->showMinButton());
@@ -163,7 +160,10 @@ void NativeWindow::syncWinType(){
 }
 
 void NativeWindow::syncGeom(){
-  qDebug() << "Sync Geometry:" << WIN->name();
-  qDebug() << "  Frame:" << WIN->frameGeometry() << "Win:" << WIN->imageGeometry();
-  this->setGeometry( WIN->frameGeometry() );
+  //qDebug() << "Sync Geometry:" << WIN->name();
+  //qDebug() << "  Frame:" << WIN->frameGeometry() << "Win:" << WIN->imageGeometry();
+  QRect geom = WIN->frameGeometry();
+  if(geom!=this->geometry()){
+    this->setGeometry( geom );
+  }
 }

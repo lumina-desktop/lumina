@@ -48,6 +48,7 @@ void PanelObject::setBackground(QString fileOrColor){
 void PanelObject::setGeometry( QRect newgeom ){
   if(geom!=newgeom){
     geom = newgeom;
+    fullside_geom = geom; //unknown full-side geom - no parent info given
     emit geomChanged();
   }
 }
@@ -88,10 +89,19 @@ void PanelObject::syncWithSettings(QRect parent_geom){
   this->setBackground( DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/background", "rgba(0,0,0,120)").toString() );
  // qDebug() << "Update Panel:" << panel_id << id << anchor+"/"+align << length << width;
   //Now calculate the geometry of the panel
-  QRect newgeom;
+  QRect newgeom, newfullsidegeom;
   //Figure out the size of the panel
-  if(anchor=="top" || anchor=="bottom"){ newgeom.setWidth( parent_geom.width()*length ); newgeom.setHeight(width); }
-  else{ newgeom.setWidth(width); newgeom.setHeight(parent_geom.height()*length); }
+  if(anchor=="top" || anchor=="bottom"){
+    newgeom.setWidth( parent_geom.width()*length ); newgeom.setHeight(width);
+    newfullsidegeom.setWidth(parent_geom.width()); newfullsidegeom.setHeight(width);
+    if(anchor=="top"){ newfullsidegeom.moveTopLeft(QPoint(0,0)); }
+    else{ newfullsidegeom.moveBottomLeft( QPoint(0, parent_geom.height()) ); }
+  }else{
+    newgeom.setWidth(width); newgeom.setHeight(parent_geom.height()*length);
+    newfullsidegeom.setWidth(width); newfullsidegeom.setHeight(parent_geom.height());
+    if(anchor=="left"){ newfullsidegeom.moveTopLeft(QPoint(0,0)); }
+    else{ newfullsidegeom.moveTopRight( QPoint(parent_geom.width(), 0) ); }
+  }
   //qDebug() << " - Size:" << newgeom;
   //Now figure out the location of the panel
   if(align=="left" || align=="top"){
@@ -114,7 +124,9 @@ void PanelObject::syncWithSettings(QRect parent_geom){
   //qDebug() << " - Calculated Geometry (relative to parent):" << newgeom;
   //Note: newgeom is currently in parent-relative coordinates (not global)
   newgeom.translate(parent_geom.x(), parent_geom.y());
+  newfullsidegeom.translate(parent_geom.x(), parent_geom.y());
+  fullside_geom = newfullsidegeom;
   //qDebug() << " - Calculated Geometry (global):" << newgeom;
-  this->setGeometry(newgeom); //shift to global coordinates
+  this->setGeometry(newgeom); //in global coordinates
   this->setPlugins( DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/plugins", QStringList()).toStringList() );
 }

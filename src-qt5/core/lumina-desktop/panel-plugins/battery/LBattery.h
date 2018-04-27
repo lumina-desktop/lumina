@@ -29,7 +29,7 @@ public:
 private:
 	QTimer *timer;
 	QLabel *label;
-	int iconOld;
+	QString iconOld;
 	QSettings *sessionsettings;
 
 private slots:

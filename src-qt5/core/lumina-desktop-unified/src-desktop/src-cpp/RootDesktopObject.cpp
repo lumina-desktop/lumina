@@ -18,6 +18,10 @@ RootDesktopObject::RootDesktopObject(QObject *parent) : QObject(parent){
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
   currentTimeTimer = new QTimer(this);
   connect(currentTimeTimer, SIGNAL(timeout()), this, SLOT(updateCurrentTime()) );
+  availgeomTimer = new QTimer(this);
+    availgeomTimer->setInterval(100);
+    availgeomTimer->setSingleShot(true);
+    connect(availgeomTimer, SIGNAL(timeout()), this, SLOT(submitSessionGeom()) );
 }
 
 RootDesktopObject::~RootDesktopObject(){
@@ -170,6 +174,16 @@ void RootDesktopObject::setPanels(QStringList ids){
       change = true; //list changed
     }
   } //end loop over screens+session
+  //Now calculate the available session geometry
+  QRegion sess(geom);
+  for(int i=0; i<panel_objects.length(); i++){
+    sess = sess.subtracted( QRegion(panel_objects[i].geometry()) );
+  }
+  if(sess != session_avail_geom){
+    session_avail_geom = sess;
+    emit sessionGeomAvailableChanged(); }
+  }
+
   if(change){ emit panelsChanged(); }
 }
 
@@ -242,6 +256,10 @@ QList<NativeWindowObject*> RootDesktopObject::windowObjects(){
   return window_objects;
 }
 
+QList<ScreenObject*> RootDesktopObject::screenObjects(){
+  return s_objects;
+}
+
 // === PUBLIC SLOTS ===
 void RootDesktopObject::updateScreens(){
   QList<QScreen*> scrns = QApplication::screens();
@@ -251,7 +269,11 @@ void RootDesktopObject::updateScreens(){
     for(int j=0; j<s_objects.length() && !found; j++){
       if(s_objects[j]->name()==scrns[i]->name()){ found = true; tmp << s_objects.takeAt(j); }
     }
-    if(!found){ tmp << new ScreenObject(scrns[i], this); }
+    if(!found){
+      //Create new screen object
+      tmp << new ScreenObject(scrns[i], this);
+      connect(tmp.last(), SIGNAL(availableGeomChanged()), this, SLOT(availableScreenGeomChanged()) );
+    }
   }
   //Delete any leftover objects
   for(int i=0; i<s_objects.length(); i++){ s_objects[i]->deleteLater(); }
@@ -290,4 +312,13 @@ void RootDesktopObject::updateCurrentTime(){
     currentTimeString = tmp;
     emit currentTimeChanged();
   }
+}
+
+void RootDesktopObject::availableScreenGeomChanged(){
+  if(availgeomTimer->isActive()){ availgeomTimer->stop(); }
+  availgeomTimer->start();
+}
+
+void RootDesktopObject::submitSessionGeom(){
+ //TODO - read off the available geom from each ScreenObject and register that with NativeWindowSystem
 }

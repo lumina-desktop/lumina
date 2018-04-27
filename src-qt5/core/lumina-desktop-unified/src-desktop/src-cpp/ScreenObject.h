@@ -24,11 +24,13 @@ class ScreenObject : public QObject {
 	Q_PROPERTY( int width READ width NOTIFY geomChanged)
 	Q_PROPERTY( int height READ height NOTIFY geomChanged)
 	Q_PROPERTY( QStringList panels READ panels NOTIFY panelsChanged)
+	Q_PROPERTY( QRect availableGeom READ availableGeometry NOTIFY availableGeomChanged)
 
 private:
 	QScreen *bg_screen;
 	QString bg;
 	QList<PanelObject*> panel_objects;
+	QRect avail_geom;
 
 public:
 	ScreenObject(QScreen *scrn = 0, QObject *parent = 0);
@@ -44,6 +46,7 @@ public:
 	Q_INVOKABLE QStringList panels();
 	Q_INVOKABLE PanelObject* panel(QString id);
 	Q_INVOKABLE QRect geometry(){ return bg_screen->geometry(); }
+	Q_INVOKABLE QRect availableGeometry();
 
 	void setPanels(QList<PanelObject*> list);
 
@@ -52,10 +55,12 @@ public:
 public slots:
 	void setPanels(QStringList ids);
 	void setBackground(QString fileOrColor);
+	void updateAvailableGeometry();
 
 signals:
 	void backgroundChanged();
 	void geomChanged();
+	void availableGeomChanged();
 	void panelsChanged();
 
 	//Internal signals for thread-safety

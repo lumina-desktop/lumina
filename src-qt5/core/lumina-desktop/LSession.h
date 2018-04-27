@@ -53,6 +53,8 @@ public:
 	LSession(int &argc, char **argv);
 	~LSession();
 
+	static QString batteryIconName(int charge, bool charging);
+
 	static bool checkUserFiles();
 	//Functions to be called during startup
 	void setupSession();

@@ -851,7 +851,7 @@ void LXDG::setEnvironmentVars(){
 QIcon LXDG::findIcon(QString iconName, QString fallback){
   //With the addition of the Lumina theme engine (8/3/17), switch back to using the Qt icon from theme method for apps
   QIcon tmp;
-  if(!iconName.contains("libreoffice")){ //libreoffice is stupid - their svg icons are un-renderable with Qt
+  if(!iconName.contains("libreoffice") || !QIcon::themeName().startsWith("material-design") ){ //libreoffice is stupid - their svg icons are un-renderable with Qt
     tmp = QIcon::fromTheme(iconName);
     /*if(iconName.contains("start-here")){
       qDebug() << "[ICON]" << iconName << "found:" << !tmp.isNull() << tmp.name();
