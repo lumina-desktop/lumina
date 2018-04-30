@@ -225,7 +225,7 @@ void DirWidget::UpdateIcons(){
   ui->actionBack->setIcon( LXDG::findIcon("go-previous","") );
   ui->actionUp->setIcon( LXDG::findIcon("go-up","") );
   ui->actionHome->setIcon( LXDG::findIcon("go-home","") );
-  ui->actionMenu->setIcon( LXDG::findIcon("view-more-vertical","format-list-unordered") );
+  ui->actionMenu->setIcon( LXDG::findIcon("open-menu", "view-more-vertical") );
   ui->actionSingleColumn->setIcon(LXDG::findIcon("view-right-close","view-close") );
   ui->actionDualColumn->setIcon(LXDG::findIcon("view-right-new","view-split-left-right") );
 
