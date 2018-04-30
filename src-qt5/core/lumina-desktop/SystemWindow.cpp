@@ -20,7 +20,7 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   ui->tool_restart->setIcon( LXDG::findIcon("system-reboot","") );
   ui->tool_shutdown->setIcon( LXDG::findIcon("system-shutdown","") );
   ui->tool_suspend->setIcon( LXDG::findIcon("system-suspend","") );
-  ui->push_cancel->setIcon( LXDG::findIcon("dialog-cancel","") );
+  ui->push_cancel->setIcon( LXDG::findIcon("system-cancel","dialog-cancel") );
   ui->push_lock->setIcon( LXDG::findIcon("system-lock-screen","") );
   //Connect the signals/slots
   connect(ui->tool_logout, SIGNAL(clicked()), this, SLOT(sysLogout()) );
