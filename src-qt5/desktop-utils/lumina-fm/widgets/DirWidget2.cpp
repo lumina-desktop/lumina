@@ -293,10 +293,10 @@ void DirWidget::createMenus(){
   cOpenMenu->setTitle(tr("Launch..."));
   cOpenMenu->setIcon( LXDG::findIcon("quickopen","") );
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Open Current Dir in a Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
-  cOpenMenu->addAction(LXDG::findIcon("media-slideshow",""), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
+  cOpenMenu->addAction(LXDG::findIcon("media-slideshow","view-presentation"), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
   if(LUtils::isValidBinary("qsudo")){
-    cOpenMenu->addAction(LXDG::findIcon("", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
+    cOpenMenu->addAction(LXDG::findIcon("system-file-manager-root", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
   }
 
   if(cArchiveMenu==0){ cArchiveMenu = new QMenu(this); }
