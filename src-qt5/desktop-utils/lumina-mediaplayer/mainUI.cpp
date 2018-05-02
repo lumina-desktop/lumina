@@ -196,7 +196,7 @@ void MainUI::setupConnections(){
 }
 
 void MainUI::setupIcons(){
-  ui->radio_local->setIcon( LXDG::findIcon("media-playlist-audio","audio-x-generic") );
+  ui->radio_local->setIcon( LXDG::findIcon("multimedia-audio-player","media-audio") );
   ui->radio_pandora->setIcon( LXDG::findIcon("pandora",":pandora") );
 
   ui->actionClose->setIcon( LXDG::findIcon("application-close","dialog-close") );
@@ -218,14 +218,14 @@ void MainUI::setupIcons(){
 
   //Pandora Pages
   ui->push_pandora_apply->setIcon( LXDG::findIcon("dialog-ok-apply","dialog-ok") );
-  ui->tool_pandora_ban->setIcon( LXDG::findIcon("dialog-warning","") );
+  ui->tool_pandora_ban->setIcon( LXDG::findIcon("system-cancel", "dialog-warning") );
   ui->tool_pandora_info->setIcon( LXDG::findIcon("dialog-information","") );
-  ui->tool_pandora_love->setIcon( LXDG::findIcon("emblem-favorite","") );
-  ui->tool_pandora_tired->setIcon( LXDG::findIcon("media-playlist-close","flag") );
+  ui->tool_pandora_love->setIcon( LXDG::findIcon("favorites", "emblem-favorite") );
+  ui->tool_pandora_tired->setIcon( LXDG::findIcon("media-skip-forward","media-playlist-close") );
   ui->tool_pandora_stationrm->setIcon( LXDG::findIcon("list-remove","") );
   ui->tool_pandora_stationadd->setIcon( LXDG::findIcon("list-add","") );
-  ui->action_pandora_newstation_artist->setIcon( LXDG::findIcon("preferences-desktop-user","") );
-  ui->action_pandora_newstation_song->setIcon( LXDG::findIcon("bookmark-audio","media-playlist-audio") );
+  ui->action_pandora_newstation_artist->setIcon( LXDG::findIcon("view-media-artist","preferences-desktop-user") );
+  ui->action_pandora_newstation_song->setIcon( LXDG::findIcon("view-media-playlist", "media-playlist-audio") );
   ui->action_pandora_newstation_search->setIcon( LXDG::findIcon("edit-find", "document-find") );
 }
 
