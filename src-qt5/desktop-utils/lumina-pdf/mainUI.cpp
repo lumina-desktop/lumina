@@ -177,8 +177,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()){
   ui->actionPrevious_Page->setIcon(LXDG::findIcon("go-previous",""));
   ui->actionNext_Page->setIcon(LXDG::findIcon("go-next",""));
   ui->actionLast_Page->setIcon(LXDG::findIcon("go-last",""));
-  ui->actionStart_Here->setIcon(LXDG::findIcon("video-television","media-playback-start-circled"));
-  ui->actionStart_Begin->setIcon(LXDG::findIcon("video-display","presentation-play"));
+  ui->actionStart_Here->setIcon(LXDG::findIcon("video-display","media-playback-start-circled"));
+  ui->actionStart_Begin->setIcon(LXDG::findIcon("view-presentation","presentation-play"));
   ui->actionStop_Presentation->setIcon(LXDG::findIcon("media-playback-stop", "media-playback-stop-circled"));
   ui->actionBookmarks->setIcon(LXDG::findIcon("bookmark-new",""));
   ui->actionFind->setIcon(LXDG::findIcon("edit-find",""));
