@@ -859,6 +859,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     //if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
   }
   if(!tmp.isNull() && tmp.name()==iconName){ return tmp; } //found this in the theme
+  if(!fallback.isEmpty() && QIcon::hasThemeIcon(fallback)){ tmp = QIcon::fromTheme(fallback); return tmp; } //found this in the theme
 
 
   //NOTE: This was re-written on 11/10/15 to avoid using the QIcon::fromTheme() framework

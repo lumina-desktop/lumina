@@ -246,6 +246,7 @@ void MainUI::setupIcons(){
   ui->actionNew_Window->setIcon( LXDG::findIcon("window-new","") );
   ui->actionNew_Tab->setIcon( LXDG::findIcon("tab-new","") );
   ui->actionSearch->setIcon( LXDG::findIcon("edit-find","") );
+  ui->actionOpen_as_Root->setIcon( LXDG::findIcon("system-file-manager-root","") );
   ui->actionClose_Browser->setIcon( LXDG::findIcon("tab-close","") );
   ui->actionClose->setIcon( LXDG::findIcon("application-exit","") );
 
@@ -259,7 +260,7 @@ void MainUI::setupIcons(){
   // View menu
   ui->actionRefresh->setIcon( LXDG::findIcon("view-refresh","") );
   ui->menuView_Mode->setIcon( LXDG::findIcon("view-choose","") );
-  ui->menuSort_Mode->setIcon(LXDG::findIcon("list-spacing","") );
+  ui->menuSort_Mode->setIcon(LXDG::findIcon("list-spacing","view-list") );
 
   // Bookmarks menu
   ui->actionManage_Bookmarks->setIcon( LXDG::findIcon("bookmarks-organize","") );
