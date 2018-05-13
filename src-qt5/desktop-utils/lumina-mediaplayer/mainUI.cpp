@@ -196,8 +196,9 @@ void MainUI::setupConnections(){
 }
 
 void MainUI::setupIcons(){
+
   ui->radio_local->setIcon( LXDG::findIcon("multimedia-audio-player","media-audio") );
-  ui->radio_pandora->setIcon( LXDG::findIcon("pandora",":pandora") );
+  ui->radio_pandora->setIcon( QIcon::fromTheme("pandora",QIcon(":pandora")) );
 
   ui->actionClose->setIcon( LXDG::findIcon("application-close","dialog-close") );
   ui->actionPlay->setIcon( LXDG::findIcon("media-playback-start","") );
@@ -270,7 +271,7 @@ void MainUI::PlayerTypeChanged(bool active){
   if(ui->radio_pandora->isChecked()){
     ui->stackedWidget->setCurrentWidget(ui->page_pandora);
     PandoraStateChanged(PANDORA->currentState());
-    QIcon ico = LXDG::findIcon("pandora",":pandora");
+    QIcon ico = QIcon::fromTheme("pandora",QIcon(":pandora"));
     SYSTRAY->setIcon( ico );
     this->setWindowIcon( ico );
     this->setWindowTitle( tr("Pandora Radio") );
@@ -279,7 +280,7 @@ void MainUI::PlayerTypeChanged(bool active){
   }else{
     ui->stackedWidget->setCurrentWidget(ui->page_local);
     LocalStateChanged(QMediaPlayer::StoppedState);
-    QIcon ico = LXDG::findIcon("media-playlist-audio","audio-x-generic");
+    QIcon ico = LXDG::findIcon("multimedia-audio-player","media-audio");
     SYSTRAY->setIcon( ico );
     this->setWindowIcon( ico );
     this->setWindowTitle( tr("Media Player") );

@@ -1,5 +1,5 @@
 <RCC>
   <qresource>
-    <file alias="pandora">Pandora.svg</file>
+    <file alias="pandora">pandora.png</file>
   </qresource>
 </RCC>
