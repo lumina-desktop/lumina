@@ -46,6 +46,7 @@ public:
 	Q_INVOKABLE QString currentTime();
 	Q_INVOKABLE QDateTime currentDateTime();
 
+
 	//QML Globals Access
 	Q_INVOKABLE OSInterface* os_interface();
 
@@ -58,6 +59,7 @@ public:
 	//C++ Access Functions (simplifications for the QML ones)
 	QList<NativeWindowObject*> windowObjects();
 	QList<ScreenObject*> screenObjects();
+	QRegion* availableGeometry();
 
 private:
 	QList<ScreenObject*> s_objects;

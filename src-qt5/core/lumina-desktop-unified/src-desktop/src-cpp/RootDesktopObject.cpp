@@ -175,13 +175,13 @@ void RootDesktopObject::setPanels(QStringList ids){
     }
   } //end loop over screens+session
   //Now calculate the available session geometry
-  QRegion sess(geom);
+  QRegion sess(total);
   for(int i=0; i<panel_objects.length(); i++){
-    sess = sess.subtracted( QRegion(panel_objects[i].geometry()) );
+    sess = sess.subtracted( QRegion(panel_objects[i]->geometry()) );
   }
   if(sess != session_avail_geom){
     session_avail_geom = sess;
-    emit sessionGeomAvailableChanged(); }
+    emit sessionGeomAvailableChanged();
   }
 
   if(change){ emit panelsChanged(); }
@@ -258,6 +258,10 @@ QList<NativeWindowObject*> RootDesktopObject::windowObjects(){
 
 QList<ScreenObject*> RootDesktopObject::screenObjects(){
   return s_objects;
+}
+
+QRegion* RootDesktopObject::availableGeometry(){
+  return &session_avail_geom;
 }
 
 // === PUBLIC SLOTS ===

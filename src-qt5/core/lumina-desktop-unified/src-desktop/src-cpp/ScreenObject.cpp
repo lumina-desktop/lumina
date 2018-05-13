@@ -7,11 +7,12 @@
 #include "ScreenObject.h"
 #include <QQmlEngine>
 #include <QDebug>
+#include "RootDesktopObject.h"
 
 ScreenObject::ScreenObject(QScreen *scrn, QObject *parent) : QObject(parent){
   bg_screen = scrn;
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
-  connect(RootWindowObject::instance(), SIGNAL(sessionGeomAvailableChanged()), this, SLOT(updateAvailableGeometry()) );
+  connect(RootDesktopObject::instance(), SIGNAL(sessionGeomAvailableChanged()), this, SLOT(updateAvailableGeometry()) );
 }
 
 void ScreenObject::RegisterType(){
@@ -52,7 +53,7 @@ void ScreenObject::setPanels(QStringList ids){
 
   QRegion *sess = RootDesktopObject::instance()->availableGeometry();
   QRect avail = sess->intersected(bg_screen->geometry()).boundingRect();
-  if(session_available_geometry.isNull()){ avail = bg_screen->geometry(); }
+  if(avail.isNull()){ avail = bg_screen->geometry(); }
   //First update/remove any current panel objects
   bool change = false;
   for(int i=0; i<panel_objects.length(); i++){

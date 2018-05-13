@@ -15,18 +15,25 @@
 class Plugin : public QWidget{
 	Q_OBJECT
 private:
-	bool isPanelPlugin;
-	bool isVertical; //only used for panel plugins
 	QString _id;
 
 signals:
 	void orientationChanged();
 
 public:
+	QBoxLayout *boxLayout;
+	bool isPanelPlugin;
+	bool isVertical; //only used for panel plugins
+
 	Plugin(QWidget *parent, QString id, bool panelplug = false) : QWidget(parent){
 	  isPanelPlugin = panelplug;
 	  isVertical = false;
 	  _id = id;
+	  boxLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+	  this->setLayout( boxLayout );
+	  boxLayout->setContentsMargins(0,0,0,0);
+	  updateLayoutOrientation();
+	  connect(this, SIGNAL(orientationChanged()), this, SLOT(updateLayoutOrientation()) );
 	}
 
 	void setVertical(bool set){
@@ -36,7 +43,9 @@ public:
 	QString id(){ return _id; }
 
 private slots:
-
+	void updateLayoutOrientation(){
+	  boxLayout->setDirection( this->isVertical ? QBoxLayout::TopToBottom : QBoxLayout::LeftToRight );
+	}
 };
 
 //Special subclass for a button-based plugin
@@ -48,11 +57,10 @@ private:
 public:
 	PluginButton(QWidget *parent, QString id, bool panelplug=false) : Plugin(parent, id, panelplug) {
 	  button = new QToolButton(this);
-	  this->setLayout( new QBoxLayout(QBoxLayout::LeftToRight) );
-	  this->layout()->setContentsMargins(0,0,0,0);
 	  this->layout()->addWidget(button);
 	}
 
 	~PluginButton(){}
 };
+
 #endif
