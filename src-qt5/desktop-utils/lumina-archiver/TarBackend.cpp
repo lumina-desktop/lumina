@@ -12,10 +12,16 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+#ifdef Q_OS_LINUX
+#define TAR_CMD "bsdtar"
+#else
+#define TAR_CMD "tar"
+#endif
+
 Backend::Backend(QObject *parent) : QObject(parent){
   //Setup the backend process
   PROC.setProcessChannelMode(QProcess::MergedChannels);
-  PROC.setProgram("tar");
+  PROC.setProgram(TAR_CMD);
   connect(&PROC, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished(int, QProcess::ExitStatus)) );
   connect(&PROC, SIGNAL(readyReadStandardOutput()), this, SLOT(processData()) );
   connect(&PROC, SIGNAL(started()), this, SIGNAL(ProcessStarting()) );
@@ -124,7 +130,7 @@ void Backend::startAdd(QStringList paths,  bool absolutePaths){
     args<< "@"+filepath;
   }
   STARTING=true;
-  PROC.start("tar", args);
+  PROC.start(TAR_CMD, args);
 }
 
 void Backend::startRemove(QStringList paths){
@@ -140,7 +146,7 @@ void Backend::startRemove(QStringList paths){
   }
   args<< "@"+filepath;
   STARTING=true;
-  PROC.start("tar", args);
+  PROC.start(TAR_CMD, args);
 }
 
 void Backend::startExtract(QString path, bool overwrite, QString file){
@@ -162,7 +168,7 @@ void Backend::startExtract(QString path, bool overwrite, QStringList files){
   args << "-C" << path;
   STARTING=true;
   //qDebug() << "Starting command:" << "tar" << args;
-  PROC.start("tar", args);
+  PROC.start(TAR_CMD, args);
 }
 
 void Backend::startViewFile(QString path){
@@ -180,7 +186,7 @@ void Backend::startViewFile(QString path){
   while(!tmpProc.waitForFinished(500)){ QCoreApplication::processEvents(); }
   emit ProcessFinished(tmpProc.exitCode()==0, "");
   QProcess::startDetached("xdg-open", QStringList() << newfilename);
-  //PROC.start("tar", args);
+  //PROC.start(TAR_CMD, args);
 }
 
 //===============
@@ -226,7 +232,7 @@ void Backend::startList(){
   args << "-tv";
   LIST = STARTING=true;
   //qDebug() << "Starting List:" << "tar "+args.join(" ")+" "+flags.join(" ");
-  PROC.start("tar", QStringList() << args << flags);
+  PROC.start(TAR_CMD, QStringList() << args << flags);
 }
 
 //===============
