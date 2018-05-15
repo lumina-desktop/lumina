@@ -94,6 +94,7 @@ void PanelObject::syncWithSettings(QRect parent_geom){
   double length = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/length_percent", 100).toDouble()/100.0;
   double width = DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/width_font_percent", 2.1).toDouble();
     width =  qRound(width * QApplication::fontMetrics().height() );
+    //qDebug() << " Got Panel Width From Settings:" << width;
   this->setBackground( DesktopSettings::instance()->value(DesktopSettings::Panels, id+"/background", "rgba(0,0,0,120)").toString() );
  // qDebug() << "Update Panel:" << panel_id << id << anchor+"/"+align << length << width;
   //Now calculate the geometry of the panel
