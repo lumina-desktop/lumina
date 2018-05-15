@@ -10,6 +10,10 @@
 #include <QQmlEngine>
 #include <QDebug>
 
+#ifdef USE_WIDGETS
+#include <Plugin.h>
+#endif
+
 PanelObject::PanelObject(QString id, QObject *parent) : QObject(parent){
   panel_id = id;
 }
@@ -56,8 +60,12 @@ void PanelObject::setGeometry( QRect newgeom ){
 void PanelObject::setPlugins( QStringList plist){
   //Iterate through the list and find the URL's for the files
   QStringList dirs; dirs << ":/qml/plugins/"; //add local directories here
+  static QStringList built_in;
+#ifdef USE_WIDGETS
+  if(built_in.isEmpty()){ built_in = Plugin::built_in_plugins(); }
+#endif
   for(int i=0; i<plist.length(); i++){
-    bool found = false;
+    bool found = built_in.contains(plist[i].toLower());
     for(int j=0; j<dirs.length() && !found; j++){
       if(QFile::exists(dirs[j]+plist[i]+".qml")){
         plist[i] = QUrl::fromLocalFile(dirs[j]+plist[i]+".qml").url();

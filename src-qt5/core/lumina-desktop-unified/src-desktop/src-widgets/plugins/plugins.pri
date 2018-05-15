@@ -3,4 +3,5 @@ INCLUDEPATH *= $${PWD}
 
 #SOURCES *=
 
-HEADERS *= $${PWD}/ClockPlugin.h
+HEADERS *= $${PWD}/ClockPlugin.h \
+		$${PWD}/SpacerPlugin.h

@@ -14,7 +14,7 @@
 // === PUBLIC ===
 RootDesktopObject::RootDesktopObject(QObject *parent) : QObject(parent){
   last_window_up = 0;
-  updateScreens(); //make sure the internal list is updated right away
+  //updateScreens(); //make sure the internal list is updated right away
   connect(this, SIGNAL(changePanels(QStringList)), this, SLOT(setPanels(QStringList)) );
   currentTimeTimer = new QTimer(this);
   connect(currentTimeTimer, SIGNAL(timeout()), this, SLOT(updateCurrentTime()) );
@@ -46,6 +46,7 @@ RootDesktopObject* RootDesktopObject::instance(){
 
 //QML Read Functions
 QStringList RootDesktopObject::screens(){
+  if(s_objects.length()<1){ updateScreens(); }
   //qDebug() << "Request Screens:" << s_objects.length();
   QStringList names;
   for(int i=0; i<s_objects.length(); i++){ names << s_objects[i]->name(); }
@@ -53,6 +54,7 @@ QStringList RootDesktopObject::screens(){
 }
 
 ScreenObject* RootDesktopObject::screen(QString id){
+  if(s_objects.length()<1){ updateScreens(); }
   //qDebug() << "Got Screen Request:" << id;
   for(int i=0; i<s_objects.length(); i++){
     if(s_objects[i]->name()==id){ return s_objects[i]; }
@@ -315,6 +317,7 @@ void RootDesktopObject::updateCurrentTime(){
     currentDateTimeStruct = DT;
     currentTimeString = tmp;
     emit currentTimeChanged();
+    //qDebug() << "Current Time Changed:" << currentTimeString;
   }
 }
 

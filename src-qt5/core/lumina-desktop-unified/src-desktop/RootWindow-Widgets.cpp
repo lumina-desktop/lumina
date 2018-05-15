@@ -13,8 +13,10 @@ RootDesktop *root_view;
 
 RootWindow::RootWindow() : QObject(){
   root_win = QWindow::fromWinId( QX11Info::appRootWindow() );
-  root_view = new RootDesktop(root_win); //make it a child of the root window
+  //qDebug() << "Creating RootDesktop Object";
   root_obj = RootDesktopObject::instance();
+  //qDebug() << "Creating RootDesktop View";
+  root_view = new RootDesktop(root_win); //make it a child of the root window
   syncRootSize();
   connect(root_win, SIGNAL(widthChanged(int)), this, SLOT(syncRootSize()) );
   connect(root_win, SIGNAL(heightChanged(int)),this, SLOT(syncRootSize()) );

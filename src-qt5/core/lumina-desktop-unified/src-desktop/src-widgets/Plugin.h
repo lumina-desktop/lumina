@@ -36,15 +36,26 @@ public:
 	  boxLayout = new QBoxLayout(QBoxLayout::LeftToRight);
 	  this->setLayout( boxLayout );
 	  boxLayout->setContentsMargins(0,0,0,0);
+	  this->setContentsMargins(0,0,0,0);
 	  updateLayoutOrientation();
 	  connect(this, SIGNAL(orientationChanged()), this, SLOT(updateLayoutOrientation()) );
 	}
 
 	void setVertical(bool set){
 	  if(set!=isVertical){ isVertical = set; emit orientationChanged(); }
+	  setupSizing();
 	}
 
 	QString id(){ return _id; }
+
+	virtual void setupSizing(){
+	  if(isPanelPlugin){
+	    if(!isVertical){ this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding); }
+	    else{ this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred); }
+	  }else{
+	    this->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	  }
+	}
 
 private slots:
 	void updateLayoutOrientation(){
@@ -60,6 +71,8 @@ public:
 	QToolButton *button;
 	PluginButton(QWidget *parent, QString id, bool panelplug=false) : Plugin(parent, id, panelplug) {
 	  button = new QToolButton(this);
+	  button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	  button->setAutoRaise(true);
 	  this->layout()->addWidget(button);
 	}
 

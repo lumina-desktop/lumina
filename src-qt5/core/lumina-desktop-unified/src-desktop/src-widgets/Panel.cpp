@@ -11,6 +11,7 @@ Panel::Panel(PanelObject *pobj) : QWidget(0, Qt::Window | Qt::FramelessWindowHin
   this->setObjectName("LuminaPanelBackgroundWidget");
   obj = pobj;
   layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
+    layout->setContentsMargins(0,0,0,0);
   this->setBackgroundRole(QPalette::AlternateBase);
   connect(obj, SIGNAL(backgroundChanged()), this, SLOT(updateBackground()) );
   connect(obj, SIGNAL(geomChanged()), this, SLOT(updateGeom()) );
@@ -75,6 +76,7 @@ void Panel::updatePlugins(){
       layout->removeWidget(plug); //remove from the layout for a moment
     }
     layout->insertWidget(i, plug);
+    plug->setupSizing();
   }
   //Now remove any plugins which were deleted from config
   for(int i=0; i<lastplugins.length(); i++){

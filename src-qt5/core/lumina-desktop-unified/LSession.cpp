@@ -10,7 +10,7 @@
 #include "BootSplash.h"
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
 //Initialize all the global objects to null pointers
@@ -33,12 +33,14 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   mediaObj = 0; //private object used for playing login/logout chimes
  if(this->isPrimaryProcess()){
   //Setup the global registrations
+  if(DEBUG){ qDebug() << "Starting session init..."; }
   qsrand(QDateTime::currentMSecsSinceEpoch());
   this->setApplicationName("Lumina Desktop Environment");
   this->setApplicationVersion( LDesktopUtils::LuminaDesktopVersion() );
   this->setOrganizationName("LuminaDesktopEnvironment");
   this->setQuitOnLastWindowClosed(false); //since the LDesktop's are not necessarily "window"s
   //Enable a few of the simple effects by default
+  if(DEBUG){ qDebug() << " - Setting attributes and effects"; }
   this->setEffectEnabled( Qt::UI_AnimateMenu, true);
   this->setEffectEnabled( Qt::UI_AnimateCombo, true);
   this->setEffectEnabled( Qt::UI_AnimateTooltip, true);
@@ -46,19 +48,24 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   this->setAttribute(Qt::AA_UseHighDpiPixmaps); //allow pixmaps to be scaled up as well as down
 
   //Now initialize the global objects (but do not start them yet)
+  if(DEBUG){ qDebug() << " - Create native event objects"; }
   Lumina::NEF = new NativeEventFilter();
   Lumina::NWS = new NativeWindowSystem();
   Lumina::SS = new LScreenSaver();
   Lumina::DESKMAN = new DesktopManager();
   //Now put the Native Window System into it's own thread to keep things snappy
+  if(DEBUG){ qDebug() << " - Create extra threads"; }
   Lumina::EVThread = new QThread();
     Lumina::DESKMAN->moveToThread(Lumina::EVThread);
   Lumina::EVThread->start();
   Lumina::APPLIST = XDGDesktopList::instance();
+  if(DEBUG){ qDebug() << " - Create root window"; }
   Lumina::ROOTWIN = new RootWindow();
   Lumina::SHORTCUTS = new LShortcutEvents(); //this can be moved to it's own thread eventually as well
+  if(DEBUG){ qDebug() << " - Setup Connections"; }
   setupGlobalConnections();
  } //end check for primary process
+ if(DEBUG){ qDebug() << " [finished] Session init"; }
 }
 
 LSession::~LSession(){
