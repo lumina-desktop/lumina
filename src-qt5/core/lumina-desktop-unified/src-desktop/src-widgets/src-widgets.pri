@@ -4,7 +4,8 @@ INCLUDEPATH *= $${PWD}
 SOURCES *= $${PWD}/RootDesktop.cpp \
 		$${PWD}/ContextMenu.cpp \
 		$${PWD}/NativeWindow.cpp \
-		$${PWD}/Panel.cpp
+		$${PWD}/Panel.cpp \
+		$${PWD}/Plugin.cpp
 
 HEADERS *= $${PWD}/RootDesktop.h \
 		$${PWD}/ContextMenu.h \
@@ -12,3 +13,5 @@ HEADERS *= $${PWD}/RootDesktop.h \
 		$${PWD}/NativeEmbedWidget.h \
 		$${PWD}/Panel.h \
 		$${PWD}/Plugin.h
+
+include("plugins/plugins.pri")

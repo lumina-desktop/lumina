@@ -25,6 +25,10 @@ public:
 	bool isPanelPlugin;
 	bool isVertical; //only used for panel plugins
 
+	//These static functions are defined in "Plugin.cpp"
+	static QStringList built_in_plugins();
+	static Plugin* createPlugin(QWidget *parent, QString id, bool panelplug = false);
+
 	Plugin(QWidget *parent, QString id, bool panelplug = false) : QWidget(parent){
 	  isPanelPlugin = panelplug;
 	  isVertical = false;
@@ -51,10 +55,9 @@ private slots:
 //Special subclass for a button-based plugin
 class PluginButton : public Plugin{
 	Q_OBJECT
-private:
-	QToolButton *button;
 
 public:
+	QToolButton *button;
 	PluginButton(QWidget *parent, QString id, bool panelplug=false) : Plugin(parent, id, panelplug) {
 	  button = new QToolButton(this);
 	  this->layout()->addWidget(button);

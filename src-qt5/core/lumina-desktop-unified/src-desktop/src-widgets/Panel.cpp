@@ -35,8 +35,7 @@ Plugin* Panel::findPlugin(QString id){
 }
 
 Plugin* Panel::createPlugin(QString id){
-
-  return 0;
+  return Plugin::createPlugin(this, id, true);
 }
 
 // PRIVATE SLOTS
