@@ -289,8 +289,13 @@ void LOS::systemSuspend(){
 
 //Battery Availability
 bool LOS::hasBattery(){
-  int val = LUtils::getCmdOutput("apm -l").join("").toInt();
-  return (val >= 0 && val <= 100);
+  static int hasbat = -1;
+  if(hasbat < 0 ){
+    int val = batteryCharge();
+    if(val >= 0 && val <= 100){ hasbat = 1; }
+    else{ hasbat = 0; }
+  }
+  return (hasbat==1);
 }
 
 //Battery Charge Level
