@@ -14,7 +14,7 @@ NetworkButton::NetworkButton(QWidget *parent) : QToolButton(parent){
   //Setup the menu
 
   //Now start the initial update routine in a moment
-  connect(OSInterface::instance(), SIGNAL(batteryChanged()), this, SLOT(updateButton()) );
+  connect(OSInterface::instance(), SIGNAL(networkStatusChanged()), this, SLOT(updateButton()) );
   QTimer::singleShot(10, this, SLOT(updateButton()) );
 }
 
@@ -26,6 +26,7 @@ void NetworkButton::updateButton(){
   this->setIcon( QIcon::fromTheme( OSInterface::instance()->networkIcon() ) );
   //Now get all the info about the battery for the tooltip
   this->setToolTip( OSInterface::instance()->networkStatus() );
+  //qDebug() << "Network Button Sync:" << OSInterface::instance()->networkIcon();
 }
 
 void NetworkButton::buttonClicked(){

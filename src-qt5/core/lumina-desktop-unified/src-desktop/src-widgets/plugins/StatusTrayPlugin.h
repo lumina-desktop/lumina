@@ -12,6 +12,7 @@
 #include <VolumeButton.h>
 #include <BatteryButton.h>
 #include <NetworkButton.h>
+#include <UpdatesButton.h>
 
 #include <global-includes.h>
 
@@ -42,7 +43,7 @@ public:
 	  if(OSInterface::instance()->OS_volumeSupported()){ boxLayout->addWidget( new VolumeButton(this) ); }
 	  boxLayout->addWidget( new NetworkButton(this) );
 	  if(OSInterface::instance()->batteryAvailable()){ boxLayout->addWidget( new BatteryButton(this) ); }
-	  //boxLayout->addWidget( new UpdateButton(this) );
+	  if(OSInterface::instance()->updatesSupported()){ boxLayout->addWidget( new UpdatesButton(this) ); }
 	}
 	~StatusTrayPlugin(){ }
 

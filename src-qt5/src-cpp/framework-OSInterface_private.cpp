@@ -530,6 +530,7 @@ void OSInterface::syncUpdateInfo(OSInterface *os, QHash<QString, QVariant> *hash
     status="available"; icons << "state-warning" << "update-medium" << "security-medium";
   }
   icons << "state-offline" << "update-none";
+  //qDebug() << "Update Sync:" << status << icons;
   //Save the current info into the hash (if different)
   if(status != updateStatus()){
     hash->insert("updates/status", status);

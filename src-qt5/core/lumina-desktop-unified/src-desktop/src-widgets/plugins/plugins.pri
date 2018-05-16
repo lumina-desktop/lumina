@@ -4,7 +4,8 @@ INCLUDEPATH *= $${PWD}
 SOURCES *= $${PWD}/SystemTrayMenu.cpp \
 		$${PWD}/VolumeButton.cpp \
 		$${PWD}/BatteryButton.cpp \
-		$${PWD}/NetworkButton.cpp
+		$${PWD}/NetworkButton.cpp \
+		$${PWD}/UpdatesButton.cpp
 
 HEADERS *= $${PWD}/ClockPlugin.h \
 		$${PWD}/CalendarMenu.h \
@@ -13,4 +14,5 @@ HEADERS *= $${PWD}/ClockPlugin.h \
 		$${PWD}/SystemTrayMenu.h \
 		$${PWD}/VolumeButton.h \
 		$${PWD}/BatteryButton.h \
-		$${PWD}/NetworkButton.h
+		$${PWD}/NetworkButton.h \
+		$${PWD}/UpdatesButton.h
