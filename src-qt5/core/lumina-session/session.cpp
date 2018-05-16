@@ -127,7 +127,7 @@ void LSession::setupCompositor(){
        }
        QString disp = getenv("DISPLAY");
 	if(startcompton && QFile::exists(set)){ startProcess("compositing","compton -d "+disp+" --config \""+set+"\"", QStringList() << set); }
-        else if(startcompton){ startProcess("compositing","compton -d "+disp); }
+        else if(startcompton){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp); }
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
 }
@@ -187,7 +187,7 @@ void LSession::start(bool unified){
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
  }else{
   //unified process
-  setupCompositor();
+  setupCompositor(); //required for Lumina 2
   startProcess("runtime","lumina-desktop-unified");
  }
 }
