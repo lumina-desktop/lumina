@@ -256,6 +256,10 @@ void RootDesktopObject::launchApp(QString appOrPath){
 //C++ Access Functions (simplifications for the QML ones)
 QList<NativeWindowObject*> RootDesktopObject::windowObjects(){
   return window_objects;
+
+}
+QList<NativeWindowObject*> RootDesktopObject::trayWindowObjects(){
+  return tray_window_objects;
 }
 
 QList<ScreenObject*> RootDesktopObject::screenObjects(){

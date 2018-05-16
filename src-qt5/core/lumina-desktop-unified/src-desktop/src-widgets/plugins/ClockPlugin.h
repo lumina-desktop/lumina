@@ -41,7 +41,8 @@ private slots:
 	        else{ break; }
 	      }else{
 	        //Need to get a lot more complicated - need to break up sections mid-word based on widget width
-	        for(int i=0; i<textL.length(); i++){
+	        // NOT WORKING - can cause infinite loop somehow (perhaps max is 0 on init?)
+	        /*for(int i=0; i<textL.length(); i++){
 	          int tmp = button->fontMetrics().width(textL[i]);
 	          if(tmp>max){
 	            //qDebug() << "CLOCK:" << i << tmp << max << textL[i];
@@ -49,7 +50,7 @@ private slots:
 	            QString rem = textL[i].remove(tmps);
                    textL[i] = tmps; textL.insert(i+1, rem);
 	          }
-	        }
+	        }*/
 	        //Now go ahead and break the main loop - text all fits width-wise now
 	        break;
 	      }
@@ -61,7 +62,7 @@ private slots:
 	}
 
 public:
-	ClockPlugin(QWidget *parent, QString id, bool panelplug) : PluginButton(parent, id, panelplug){
+	ClockPlugin(QWidget *parent, QString id, bool panelplug, bool vertical) : PluginButton(parent, id, panelplug, vertical){
 	  connect(RootDesktopObject::instance(), SIGNAL(currentTimeChanged()), this, SLOT(updateTime()) );
 	  QFont tmp = button->font();
 	    tmp.setBold(true);

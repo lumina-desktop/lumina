@@ -36,7 +36,8 @@ Plugin* Panel::findPlugin(QString id){
 }
 
 Plugin* Panel::createPlugin(QString id){
-  return Plugin::createPlugin(this, id, true);
+  Plugin* tmp = Plugin::createPlugin(this, id, true, obj->isVertical());
+  return tmp;
 }
 
 // PRIVATE SLOTS

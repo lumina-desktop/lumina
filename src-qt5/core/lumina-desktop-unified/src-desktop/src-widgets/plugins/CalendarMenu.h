@@ -20,7 +20,7 @@ private:
 	QCalendarWidget *cal;
 	QWidgetAction *WA;
 public:
-	CalendarMenu(){
+	CalendarMenu() : QMenu(){
 	  cal = new QCalendarWidget();
 	  WA = new QWidgetAction(this);
 	    WA->setDefaultWidget(cal);

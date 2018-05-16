@@ -27,11 +27,11 @@ public:
 
 	//These static functions are defined in "Plugin.cpp"
 	static QStringList built_in_plugins();
-	static Plugin* createPlugin(QWidget *parent, QString id, bool panelplug = false);
+	static Plugin* createPlugin(QWidget *parent, QString id, bool panelplug = false, bool vertical = false);
 
-	Plugin(QWidget *parent, QString id, bool panelplug = false) : QWidget(parent){
+	Plugin(QWidget *parent, QString id, bool panelplug = false, bool vertical = false) : QWidget(parent){
 	  isPanelPlugin = panelplug;
-	  isVertical = false;
+	  isVertical = vertical;
 	  _id = id;
 	  boxLayout = new QBoxLayout(QBoxLayout::LeftToRight);
 	  this->setLayout( boxLayout );
@@ -69,7 +69,7 @@ class PluginButton : public Plugin{
 
 public:
 	QToolButton *button;
-	PluginButton(QWidget *parent, QString id, bool panelplug=false) : Plugin(parent, id, panelplug) {
+	PluginButton(QWidget *parent, QString id, bool panelplug=false, bool vertical = false) : Plugin(parent, id, panelplug, vertical) {
 	  button = new QToolButton(this);
 	  button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	  button->setAutoRaise(true);

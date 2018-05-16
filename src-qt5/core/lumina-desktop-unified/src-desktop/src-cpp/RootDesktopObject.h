@@ -58,6 +58,7 @@ public:
 
 	//C++ Access Functions (simplifications for the QML ones)
 	QList<NativeWindowObject*> windowObjects();
+	QList<NativeWindowObject*> trayWindowObjects();
 	QList<ScreenObject*> screenObjects();
 	QRegion* availableGeometry();
 

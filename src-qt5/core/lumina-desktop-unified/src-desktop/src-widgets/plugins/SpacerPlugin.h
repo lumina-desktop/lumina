@@ -12,7 +12,7 @@ class SpacerPlugin : public Plugin{
 	Q_OBJECT
 
 public:
-	SpacerPlugin(QWidget *parent, QString id, bool panelplug) : Plugin(parent, id, panelplug){}
+	SpacerPlugin(QWidget *parent, QString id, bool panelplug, bool vertical) : Plugin(parent, id, panelplug, vertical){}
 	~SpacerPlugin(){ }
 
 	//Replace the virtual sizing function
