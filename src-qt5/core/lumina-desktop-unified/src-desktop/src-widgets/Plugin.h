@@ -73,6 +73,7 @@ public:
 	  button = new QToolButton(this);
 	  button->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	  button->setAutoRaise(true);
+	  button->setPopupMode(QToolButton::InstantPopup);
 	  this->layout()->addWidget(button);
 	}
 

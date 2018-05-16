@@ -88,7 +88,7 @@ LSession::~LSession(){
 void LSession::setupSession(){
   BootSplash splash;
     splash.showScreen("init");
-  qDebug() << "Initializing Session:" << QDateTime::currentDateTime().toString( Qt::SystemLocaleShortDate);;
+  qDebug() << "Setting up session:" << QDateTime::currentDateTime().toString( Qt::SystemLocaleShortDate);;
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
   QTime* timer = 0;
   if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
