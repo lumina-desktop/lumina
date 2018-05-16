@@ -341,31 +341,34 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
   hash->insert("netaccess/address", address.join(", "));
 
   //Figure out the icon used for this type/strnegth
-  QString icon;
+  QStringList icons;
   if(type.startsWith("cell")){
-    if(address.isEmpty()){ icon = "network-cell-off"; }
-    else if(strength>80){ icon = "network-cell-connected-100"; }
-    else if(strength>60){ icon = "network-cell-connected-75"; }
-    else if(strength>40){ icon = "network-cell-connected-50"; }
-    else if(strength>10){ icon = "network-cell-connected-25"; }
-    else if(strength >=0){ icon = "network-cell-connected-00"; }
-    else{ icon = "network-cell"; } //unknown strength - just use generic icon so we at least get off/on visibility
+    if(address.isEmpty()){ icons <<"network-cell-off"; }
+    else if(strength>80){ icons <<"network-cell-connected-100"; }
+    else if(strength>60){ icons <<"network-cell-connected-75"; }
+    else if(strength>40){ icons << "network-cell-connected-50"; }
+    else if(strength>10){ icons << "network-cell-connected-25"; }
+    else if(strength >=0){ icons << "network-cell-connected-00"; }
+    icons << "network-cell"; //fallback - just use generic icon so we at least get off/on visibility
+
   }else if(type=="wifi"){
-    if(address.isEmpty()){ icon = "network-wireless-off"; }
-    else if(strength>80){ icon = "network-wireless-100"; }
-    else if(strength>60){ icon = "network-wireless-75"; }
-    else if(strength>40){ icon = "network-wireless-50"; }
-    else if(strength>10){ icon = "network-wireless-25"; }
-    else if(strength >=0){ icon = "network-wireless-00"; }
-    else{ icon = "network-wireless"; } //unknown strength - just use generic icon so we at least get off/on visibility
+    if(address.isEmpty()){ icons << "network-wireless-disconnected" << "network-wireless-00" << "network-wireless-off"; }
+    else if(strength>80){ icons << "network-wireless-100"; }
+    else if(strength>60){ icons << "network-wireless-75"; }
+    else if(strength>40){ icons << "network-wireless-50"; }
+    else if(strength>10){ icons << "network-wireless-25"; }
+    else if(strength >=0){ icons << "network-wireless-00"; }
+    icons << "network-wireless";  //fallback - just use generic icon so we at least get off/on visibility
+
   }else if(type=="wired"){
-    if(strength==100 && !address.isEmpty()){ icon = "network-wired-connected"; }
-    else if(strength==100){ icon = "network-wired-pending"; }
-    else{ icon = "network-wired-disconnected"; }
-  }else{
-    icon = "network-workgroup"; //failover to a generic "network" icon
+    if(strength==100 && !address.isEmpty()){ icons << "network-wired-connected" << "network-wired"; }
+    else if(strength==100){ icons << "network-wired-pending" << "network-wired-aquiring"; }
+    else{ icons << "network-wired-unavailable" << "network-wired-disconnected" ; }
   }
-  hash->insert("netaccess/icon",icon);
+  icons << "network-workgroup" << "network-unknown";
+  for(int i=0; i<icons.length(); i++){
+    if(QIcon::hasThemeIcon(icons[i])){ hash->insert("netaccess/icon",icons[i]); break; }
+  }
   //qDebug() << "[DEBUG] Emit NetworkStatusChanged";
   os->emit networkStatusChanged();
   QTimer::singleShot(0, timer, SLOT(start()));
@@ -517,18 +520,22 @@ void OSInterface::syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *has
 
 void OSInterface::syncUpdateInfo(OSInterface *os, QHash<QString, QVariant> *hash, QTimer *timer){
   //Get the current status
-  QString status, icon;
+  QString status;
+  QStringList icons;
   if(OS_updatesRunning()){
-    status="running"; icon="sync";
+    status="running"; icons << "state-download" << "update-medium" << "sync";
   }else if(OS_updatesFinished()){
-    status="finished"; icon="security-high";
+    status="finished"; icons << "state-ok" << "update-high" << "security-high";
   }else if(OS_updatesAvailable()){
-    status="available"; icon="security-medium";
+    status="available"; icons << "state-warning" << "update-medium" << "security-medium";
   }
+  icons << "state-offline" << "update-none";
   //Save the current info into the hash (if different)
   if(status != updateStatus()){
     hash->insert("updates/status", status);
-    hash->insert("updates/icon", icon);
+    for(int i=0; i<icons.length(); i++){
+      if(QIcon::hasThemeIcon(icons[i])){ hash->insert("updates/icon", icons[i]); break;}
+    }
     os->emit updateStatusChanged();
   }
   QTimer::singleShot(0, timer, SLOT(start()));
