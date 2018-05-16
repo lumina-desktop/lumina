@@ -8,7 +8,7 @@
 //===========================================
 #include <framework-OSInterface.h>
 #include <QtConcurrent>
-
+#include <QIcon>
 #include <QQmlEngine>
 
 OSInterface::OSInterface(QObject *parent) : QObject(parent){
@@ -490,24 +490,26 @@ void OSInterface::syncBatteryInfo(OSInterface *os, QHash<QString, QVariant> *has
     }
   hash->insert("battery/time", time);
   //Determine the icon which should be used for this status
-  QString icon;
+  QStringList icons;
   if(charging){
-    if(charge>=99){ icon="battery-charging"; }
-    else if(charge>80){ icon="battery-charging-80"; }
-    else if(charge >60){ icon="battery-charging-60"; }
-    else if(charge >30){ icon="battery-charging-40"; }
-    else if(charge >0){ icon="battery-charging-20"; }
-    else{ icon="battery-unknown"; }
+    if(charge>=99){ icons << "battery-100-charging" << "battery-charging-100" << "battery-full-charging" << "battery-charging-full" << "battery-charging"; }
+    else if(charge >80){ icons << "battery-charging-80"<< "battery-80-charging"<< "battery-charging-080" << "battery-080-charging" << "battery-good-charging" << "battery-charging-good"; }
+    else if(charge >60){ icons << "battery-charging-60"<< "battery-60-charging"<< "battery-charging-060" << "battery-060-charging" << "battery-good-charging" << "battery-charging-good"; }
+    else if(charge >40){ icons << "battery-charging-40"<< "battery-40-charging"<< "battery-charging-040" << "battery-040-charging" << "battery-good-charging" << "battery-charging-good"; }
+    else if(charge >20){ icons << "battery-charging-20"<< "battery-20-charging"<< "battery-charging-020" << "battery-020-charging" << "battery-low-charging" << "battery-charging-low"; }
+    else if(charge > 0){ icons << "battery-charging-00"<< "battery-00-charging"<< "battery-charging-000" << "battery-000-charging" << "battery-caution-charging" << "battery-charging-caution"; }
   }else{
-    if(charge>90){ icon="battery"; }
-    else if(charge>80){ icon="battery-80"; }
-    else if(charge >60){ icon="battery-60"; }
-    else if(charge >30){ icon="battery-40"; }
-    else if(charge >10){ icon="battery-20"; }
-    else if(charge >0){ icon="battery-alert"; }
-    else{ icon="battery-unknown"; }
+    if(charge>=99){ icons << "battery-100" << "battery-full-charged" << "battery-full" << "battery"; }
+    else if(charge >80){ icons << "battery-80"<< "battery-080" << "battery-good"; }
+    else if(charge >60){ icons << "battery-60"<< "battery-060" << "battery-good"; }
+    else if(charge >40){ icons << "battery-40"<< "battery-040" << "battery-good"; }
+    else if(charge >20){ icons << "battery-20"<< "battery-020" << "battery-low"; }
+    else if(charge > 0){ icons << "battery-00" << "battery-000" << "battery-caution"; }
   }
-  hash->insert("battery/icon",icon);
+  icons << "battery-unknown" << "battery";
+  for(int i=0; i<icons.length(); i++){
+    if(QIcon::hasThemeIcon(icons[i])){ hash->insert("battery/icon",icons[i]); break; }
+  }
   //Now emit the change signal and restart the timer
   os->emit batteryChanged();
   QTimer::singleShot(0, timer, SLOT(start()));
