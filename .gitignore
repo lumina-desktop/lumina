@@ -9,6 +9,7 @@ moc_*.cpp
 ui_*.h
 qrc_*.cpp
 .build
+
 # Compiled binaries
 src-qt5/core/lumina-desktop/lumina-desktop
 src-qt5/core/lumina-session/start-lumina-desktop
@@ -24,7 +25,7 @@ src-qt5/core-utils/lumina-xconfig/lumina-xconfig
 src-qt5/desktop-utils/lumina-fm/lumina-fm
 src-qt5/desktop-utils/lumina-fileinfo/lumina-fileinfo
 src-qt5/desktop-utils/lumina-screenshot/lumina-screenshot
-src-qt5/desktop-utils/lumina-terminal/lumina-terminal
+src-qt5/*/lumina-terminal/lumina-terminal
 src-qt5/desktop-utils/lumina-textedit/lumina-textedit
 src-qt5/desktop-utils/lumina-archiver/lumina-archiver
 src-qt5/desktop-utils/lumina-calculator/lumina-calculator
@@ -40,6 +41,10 @@ src-qt5/core/lumina-theme-engine/src/lthemeengine-style/liblthemeengine-style.so
 src-qt5/core/lumina-theme-engine/src/lthemeengine/Makefile
 src-qt5/core/lumina-theme-engine/src/lthemeengine/lthemeengine
 src-qt5/desktop-utils/lumina-mediaplayer/lumina-mediaplayer
+src-qt5/src-cpp/tests/test
+
+
+# QMake-generated Makefiles
 src-qt5/Makefile
 src-qt5/*/Makefile
 src-qt5/*/*/Makefile
