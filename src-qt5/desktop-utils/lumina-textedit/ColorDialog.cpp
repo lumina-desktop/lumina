@@ -23,7 +23,7 @@ ColorDialog::ColorDialog(QSettings *set, QWidget *parent) : QDialog(parent), ui(
 void ColorDialog::LoadColors(){
   ui->treeWidget->clear();
   QStringList colors = settings->allKeys().filter("colors/");
-	
+
   for(int i=0; i<colors.length(); i++){
     QTreeWidgetItem *it = new QTreeWidgetItem();
     it->setText(0, colors[i].section("/",-1));

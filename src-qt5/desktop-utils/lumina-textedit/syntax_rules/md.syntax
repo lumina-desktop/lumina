@@ -91,7 +91,7 @@
 		},
 		{
 			"name" : "lists",
-			"regex" : "^\\s*([0-9].|[\\*\\+\\-]{1})\\s+",
+			"regex" : "^\\s*([0-9]+.|[\\*\\+\\-]{1})\\s+",
 			"foreground" : "colors/function"
 		},
 		{

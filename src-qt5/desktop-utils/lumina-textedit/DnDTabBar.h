@@ -59,8 +59,12 @@ protected:
 
 	virtual void mouseMoveEvent(QMouseEvent *ev){
           //qDebug() << "Got Move Event:" << this->geometry() << ev->pos();
-	  if(selTab>=0 && !this->parentWidget()->geometry().contains( this->mapToParent(ev->pos())) ){
-	    //qDebug() << "Starting Drag:" << this->geometry() << ev->pos();
+	  QWidget *parent = this->parentWidget(); //top-level parent widget
+          while(parent->parentWidget()!=0 && !parent->isWindow()){ parent = parent->parentWidget(); }
+	  if(selTab>=0 && !QRect(QPoint(0,0), parent->size()).contains( this->mapTo(parent, ev->pos())) ){
+            //qDebug() << "Got Mouse outside of parent:" << parent->geometry() << this->geometry() << this->mapTo(parent, ev->pos());
+            //if(ev->button()!=Qt::LeftButton){ QTabBar::mouseMoveEvent(ev); return; }
+	    qDebug() << "Starting Drag:" << this->geometry() << ev->pos();
 	    QString tab = selTab;
             this->mouseReleaseEvent(new QMouseEvent(QEvent::MouseButtonRelease, ev->pos(), ev->button(), ev->buttons(), ev->modifiers()) ); //will reset selTab
 	    //this->update();

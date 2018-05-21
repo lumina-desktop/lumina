@@ -40,7 +40,7 @@ private:
 	QFontComboBox *fontbox;
 	ColorDialog *colorDLG;
 	QSettings *settings;
-	QShortcut *closeFindS;
+	QShortcut *closeFindS, *nextTabS, *prevTabS;
 	QSpinBox *fontSizes;
 	QAction *label_readonly;
 
@@ -77,6 +77,8 @@ private slots:
 	void tabClosed(int);
 	void tabDetached(int);
 	void tabDraggedOut(int, Qt::DropAction);
+	void nextTab();
+	void prevTab();
 
 	//Find/Replace functions
 	void closeFindReplace();

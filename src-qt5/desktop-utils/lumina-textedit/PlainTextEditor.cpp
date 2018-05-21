@@ -53,6 +53,7 @@ void PlainTextEditor::showLineNumbers(bool show){
 }
 
 void PlainTextEditor::LoadSyntaxRule(QString type){
+  qDebug() << "Load SyntaxRule";
   QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){
     if(files[i].name() == type){
@@ -66,6 +67,7 @@ void PlainTextEditor::LoadSyntaxRule(QString type){
 }
 
 void PlainTextEditor::updateSyntaxColors(){
+  qDebug() << "Update Syntax Colors";
   SYNTAX->reloadRules();
   SYNTAX->rehighlight();
 }

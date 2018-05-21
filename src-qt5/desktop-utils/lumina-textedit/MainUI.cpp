@@ -78,6 +78,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   closeFindS = new QShortcut(QKeySequence(Qt::Key_Escape), this);
     connect(closeFindS, SIGNAL(activated()), this, SLOT(closeFindReplace()) );
   ui->groupReplace->setVisible(false);
+  nextTabS = new QShortcut(QKeySequence(QKeySequence::Forward), this);
+  prevTabS = new QShortcut(QKeySequence(QKeySequence::Back), this);
+  connect(nextTabS, SIGNAL(activated()), this, SLOT(nextTab()) );
+  connect(prevTabS, SIGNAL(activated()), this, SLOT(prevTab()) );
+
   //Update the menu of available syntax highlighting modes
   QStringList smodes = Custom_Syntax::availableRules(settings);
   for(int i=0; i<smodes.length(); i++){
@@ -450,6 +455,24 @@ void MainUI::tabDraggedOut(int tab, Qt::DropAction act){
     tabClosed(tab);
     if(tabWidget->count()==0){ this->close(); } //merging two windows together?
   }
+}
+
+void MainUI::nextTab(){
+  //qDebug() << "Next Tab";
+  if(tabWidget->count()<1){ return; } //no tabs
+  int cur = tabWidget->currentIndex();
+  cur++;
+  if(cur>=tabWidget->count()){ cur = 0; }
+  tabWidget->setCurrentIndex(cur);
+}
+
+void MainUI::prevTab(){
+  //qDebug() << "Previous Tab";
+  if(tabWidget->count()<1){ return; } //no tabs
+  int cur = tabWidget->currentIndex();
+  cur--;
+  if(cur<0){ cur = tabWidget->count()-1; }
+  tabWidget->setCurrentIndex(cur);
 }
 
 //Find/Replace functions
