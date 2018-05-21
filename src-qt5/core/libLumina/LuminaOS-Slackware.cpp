@@ -163,12 +163,12 @@ void LOS::systemRestart(bool){ //start reboot sequence
 
 //Check for suspend support
 bool LOS::systemCanSuspend(){
-  return false;
+  return true;
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
-
+  QProcess::startDetached("dbus-send --system --print-reply=literal --dest=org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower.Suspend");
 }
 
 //Battery Availability
