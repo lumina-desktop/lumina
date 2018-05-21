@@ -83,6 +83,7 @@ int main(int argc, char ** argv)
     LXDG::setEnvironmentVars();
     setenv("DESKTOP_SESSION","Lumina",1);
     setenv("XDG_CURRENT_DESKTOP","Lumina",1);
+    setenv("DE", "lumina",1); // xdg-open support
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
     QApplication a(argc, argv);

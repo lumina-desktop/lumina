@@ -43,7 +43,7 @@ void printUsageInfo(){
   qDebug() << " \"-brightness[up/down]\" Flag to increase/decrease screen brightness by 5%";
   qDebug() << " \"-autostart-apps\" Flag to launch all the various apps which are registered with XDG autostart specification";
   qDebug() << "\"-terminal\" Flag to open the terminal currently set as the user's default";
-  exit(1);
+  exit(0);
 }
 
 void ShowErrorDialog(int argc, char **argv, QString message){
