@@ -194,6 +194,13 @@ PlainTextEditor* MainUI::currentEditor(){
   return static_cast<PlainTextEditor*>( tabWidget->currentWidget() );
 }
 
+QString MainUI::currentFile(){
+  PlainTextEditor* cur = currentEditor();
+  if(cur!=0){
+    return cur->currentFile();
+  }
+  return "";
+}
 QString MainUI::currentFileDir(){
   PlainTextEditor* cur = currentEditor();
   QString dir;
@@ -228,7 +235,7 @@ void MainUI::OpenFile(QString file){
   QStringList files;
   if(file.isEmpty()){
     //Prompt for a file to open
-    files = QFileDialog::getOpenFileNames(this, tr("Open File(s)"), currentFileDir(), tr("Text Files (*)") );
+    files = QFileDialog::getOpenFileNames(this, tr("Open File(s)"), currentFile(), tr("Text Files (*)") );
     if(files.isEmpty()){ return; } //cancelled
   }else{
     files << file;

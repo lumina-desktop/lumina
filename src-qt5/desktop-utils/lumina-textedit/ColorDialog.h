@@ -25,9 +25,9 @@ private:
 public:
 	ColorDialog(QSettings *set, QWidget *parent);
 	~ColorDialog(){}
-		
+
 	void LoadColors();
-		
+
 public slots:
 	void updateIcons();
 
@@ -44,5 +44,5 @@ protected:
 	  this->hide();
 	}
 };
-	
+
 #endif

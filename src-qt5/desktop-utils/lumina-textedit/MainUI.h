@@ -46,6 +46,7 @@ private:
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
+	QString currentFile();
 	QString currentFileDir();
 	QStringList unsavedFiles();
 
