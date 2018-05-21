@@ -91,7 +91,7 @@ void AppLauncherPlugin::loadButton(){
     button->setWhatsThis(info.absoluteFilePath());
     QString iconame;
     if(info.isDir()){
-	if(path.startsWith("/media/")){
+    if(path.startsWith("/media/") || path.startsWith("/run/media/")){
            iconame = "drive-removable-media";
           //Could add device ID parsing here to determine what "type" of device it is - will be OS-specific though
 	  //button->setIcon( LXDG::findIcon("drive-removable-media","") );
