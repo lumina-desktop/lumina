@@ -61,7 +61,7 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget
   this->show();
   LSession::handle()->XCB->SetAsPanel(this->winId());
   LSession::handle()->XCB->SetAsSticky(this->winId());
-  if(hascompositer){ 
+  if(hascompositer){
     //qDebug() << "Enable Panel compositing";
     //this->setStyleSheet("QWidget#LuminaPanelBackgroundWidget{ background: transparent; }");
     //this->setWindowOpacity(0.5); //fully transparent background for the main widget
@@ -72,7 +72,7 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget
 }
 
 LPanel::~LPanel(){
-	
+
 }
 
 int LPanel::Screen(){
@@ -92,7 +92,7 @@ void LPanel::prepareToClose(){
     PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
-  }	 
+  }	
   this->hide();
 }
 
@@ -120,9 +120,9 @@ void LPanel::UpdatePanel(bool geomonly){
   hidden = settings->value(PPREFIX+"hidepanel",false).toBool();
   QString loc = settings->value(PPREFIX+"location","").toString().toLower();
   if(loc.isEmpty() && defaultpanel){ loc="top"; }
-  if(loc=="top" || loc=="bottom"){ 
-    horizontal=true; 
-    layout->setAlignment(Qt::AlignLeft); 
+  if(loc=="top" || loc=="bottom"){
+    horizontal=true;
+    layout->setAlignment(Qt::AlignLeft);
     layout->setDirection(QBoxLayout::LeftToRight);
   }else{
     horizontal=false;
@@ -175,7 +175,7 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc+xhi-ht,sz.width(), ht );
     if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "bottom"); }
-    else{ 
+    else{
       LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc,yloc+ xhi-hidesize, this->width(), hidesize), "bottom"); 
       hidepoint = QPoint(xloc, yloc+xhi-hidesize);
       showpoint = QPoint(xloc, yloc+xhi-ht);
@@ -191,7 +191,7 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc, ht, sz.height());
     if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "left"); }
-    else{ 
+    else{
       LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, hidesize, sz.height()), "left"); 
       hidepoint = QPoint(xloc, yloc);
       showpoint = QPoint(xloc, yloc);
@@ -207,7 +207,7 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMaximumSize(sz);
     this->setGeometry(xloc+xwid-ht,yloc,ht, sz.height());
     if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "right"); }  
-    else{ 
+    else{
       LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc+xwid-hidesize, yloc, hidesize, sz.height()), "right"); 
       hidepoint = QPoint(xloc+xwid-hidesize, yloc);
       showpoint = QPoint(xloc+xwid-ht, yloc);
@@ -226,10 +226,10 @@ void LPanel::UpdatePanel(bool geomonly){
     QString style = "QWidget#LuminaPanelColor{ background: %1; border-radius: 3px; border: 1px solid %1; }";
     style = style.arg(color);
     panelArea->setStyleSheet(style);
-  }else{ 
+  }else{
     panelArea->setStyleSheet(""); //clear it and use the one from the theme
   }
-  
+
   //Then go through the plugins and create them as necessary
   QStringList plugins = settings->value(PPREFIX+"pluginlist", QStringList()).toStringList();
   /*if(defaultpanel && plugins.isEmpty()){
@@ -243,7 +243,7 @@ void LPanel::UpdatePanel(bool geomonly){
       while( plugins.contains(plugins[i]+"---"+QString::number(Screen())+"."+QString::number(this->number())+"."+QString::number(num)) ){
         num++;
       }
-      
+
       plugins[i] = plugins[i]+"---"+QString::number(Screen())+"."+QString::number(this->number())+"."+QString::number(num);
       //qDebug() << "Adjust Plugin ID:" << plugins[i];
     }
@@ -269,7 +269,7 @@ void LPanel::UpdatePanel(bool geomonly){
       //New Plugin
       if(DEBUG){ qDebug() << " -- New Plugin:" << plugins[i] << i; }
       LPPlugin *plug = NewPP::createPlugin(plugins[i], panelArea, horizontal);
-      if(plug != 0){ 
+      if(plug != 0){
         PLUGINS.insert(i, plug);
         layout->insertWidget(i, PLUGINS[i]);
 	connect(plug, SIGNAL(MenuClosed()), this, SLOT(checkPanelFocus()));
@@ -316,19 +316,20 @@ void LPanel::UpdateLocale(){
 
 void LPanel::UpdateTheme(){
   //The panel itself has no theme-based icons, just forward the signal to all the plugins
+  //qDebug() << "Update Theme for plugins";
   for(int i=0; i<PLUGINS.length(); i++){
     QTimer::singleShot(1,PLUGINS[i], SLOT(ThemeChange()));
-  }	
+  }
 }
 
 // ===================
 //     PRIVATE SLOTS
 // ===================
 void LPanel::checkPanelFocus(){
-  qDebug() << "Check Panel Focus:" << panelnum << viswidth << fullwidth << this->size();
+  //qDebug() << "Check Panel Focus:" << panelnum << viswidth << fullwidth << this->size();
   if( !this->geometry().contains(QCursor::pos()) ){
     //Move the panel back to it's "hiding" spot
-    if(hidden){ 
+    if(hidden){
       QSize sz(horizontal ? this->width() : viswidth, horizontal ? viswidth : this->height() );
       this->setMinimumSize(sz);
       this->setMaximumSize(sz);
@@ -343,13 +344,14 @@ void LPanel::checkPanelFocus(){
       this->setMinimumSize(sz);
       this->setMaximumSize(sz);
       this->setGeometry( QRect(showpoint, sz) );
-  }  
+  }
+  //qDebug() << " - done checking focus";
 }
 
 //===========
 // PROTECTED
 //===========
-void LPanel::resizeEvent(QResizeEvent *event){ 
+void LPanel::resizeEvent(QResizeEvent *event){
   QWidget::resizeEvent(event);
   for(int i=0; i<PLUGINS.length(); i++){ PLUGINS[i]->OrientationChange(); }
 }

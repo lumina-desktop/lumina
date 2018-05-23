@@ -347,7 +347,6 @@ void LSession::NewCommunication(QStringList list){
 void LSession::launchStartupApps(){
   //First start any system-defined startups, then do user defined
   qDebug() << "Launching startup applications";
-
   //Enable Numlock
   if(LUtils::isValidBinary("numlockx")){ //make sure numlockx is installed
     if(sessionsettings->value("EnableNumlock",false).toBool()){
@@ -493,8 +492,11 @@ void LSession::updateDesktops(){
   qDebug() << "  Screen Count:" << sC;
   qDebug() << "  DESKTOPS Length:" << DESKTOPS.length();
   if(sC<1){ return; } //stop here - no screens available temporarily (displayport/4K issue)
-
-  for(int i=0; i<sC; i++){ qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i); }
+  screenRect = QRect(); //clear it
+  for(int i=0; i<sC; i++){
+    screenRect = screenRect.united(DW->screenGeometry(i));
+    qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i);
+  }
 
   bool firstrun = (DESKTOPS.length()==0);
   bool numchange = DESKTOPS.length()!=sC;
@@ -774,8 +776,13 @@ void LSession::playAudioFile(QString filepath){
 //  XCB EVENT FILTER FUNCTIONS
 // =======================
 void LSession::RootSizeChange(){
+  if(DESKTOPS.isEmpty() || screenRect.isNull()){ return; } //Initial setup not run yet
+  QDesktopWidget *DW = this->desktop();
+  int sC = DW->screenCount();
+  QRect tmp;
+  for(int i=0; i<sC; i++){ tmp = tmp.united(DW->screenGeometry(i)); }
+  if(tmp == screenRect){ return; } //false event - session size did not change
   qDebug() << "Got Root Size Change";
-  if(DESKTOPS.isEmpty()){ return; } //Initial setup not run yet
   xchange = true;
   screenTimer->start();
 }

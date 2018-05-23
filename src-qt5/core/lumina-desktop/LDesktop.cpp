@@ -16,7 +16,7 @@
 
 #include <QScreen>
 
-#define DEBUG 0
+#define DEBUG 1
 
 LDesktop::LDesktop(int deskNum, bool setdefault) : QObject(){
   screenID = QApplication::screens().at(deskNum)->name();
