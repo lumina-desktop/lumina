@@ -49,7 +49,7 @@ RSSFeedPlugin::RSSFeedPlugin(QWidget* parent, QString ID) : LDPlugin(parent, ID)
     //First-time run of the plugin - automatically load the default feeds
     feeds = LOS::RSSFeeds();
     for(int i=0; i<feeds.length(); i++){ feeds[i] = feeds[i].section("::::",1,-1); } //just need url right now
-    feeds << "https://lumina-desktop.org/?feed=rss2"; //Lumina Desktop blog feed
+    feeds << "https://lumina-desktop.org/feed/"; //Lumina Desktop blog feed
     LSession::handle()->DesktopPluginSettings()->setValue(setprefix+"currentfeeds", feeds);
   }else{
     feeds = LSession::handle()->DesktopPluginSettings()->value(setprefix+"currentfeeds",QStringList()).toStringList();
@@ -75,7 +75,7 @@ void RSSFeedPlugin::updateOptionsMenu(){
 
   presetMenu->clear();
   QStringList feeds = LOS::RSSFeeds();
-  feeds << tr("Lumina Desktop RSS")+"::::http://lumina-desktop.org/?feed=rss2";
+  feeds << tr("Lumina Desktop RSS")+"::::https://lumina-desktop.org/feed/";
   feeds.sort();
   for(int i=0; i<feeds.length(); i++){
     QAction *tmp = presetMenu->addAction(feeds[i].section("::::",0,0) );
