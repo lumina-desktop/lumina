@@ -172,7 +172,9 @@ void MainUI::SyncFileInfo(){
       mediaLabel->setFixedSize(64,64);
       ui->formLayout->replaceWidget(ui->label_file_icon, mediaLabel);
     }else{
-      ui->label_file_icon->setPixmap( LXDG::findIcon( INFO->iconfile(), "unknown").pixmap(QSize(64,64)) );
+      QString iconFile = INFO->iconfile();
+      if (iconFile.isEmpty()) { iconFile = INFO->XDG()->icon; }
+      ui->label_file_icon->setPixmap( LXDG::findIcon( iconFile, "unknown").pixmap(QSize(64,64)) );
     }
 
   //qDebug() << "Check XDG Info:"
