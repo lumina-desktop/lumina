@@ -887,15 +887,16 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   if( QDir::searchPaths("icontheme").filter("/"+cTheme+"/").isEmpty() ){
     //Need to reset search paths: setup the "icontheme" "material-design-light" and "fallback" sets
     // - Get all the base icon directories
-    QStringList paths;
+    QStringList paths, fall;
       paths << QDir::homePath()+"/.icons/"; //ordered by priority - local user dirs first
       QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
         xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
         for(int i=0; i<xdd.length(); i++){
           if(QFile::exists(xdd[i]+"/icons")){ paths << xdd[i]+"/icons/"; }
+          if(QFile::exists(xdd[i]+"/pixmaps")) { fall << xdd[i]+"/pixmaps"; }
         }
     //Now load all the dirs into the search paths
-    QStringList theme, oxy, fall;
+    QStringList theme, oxy;
     QStringList themedeps = getIconThemeDepChain(cTheme, paths);
     for(int i=0; i<paths.length(); i++){
       theme << getChildIconDirs( paths[i]+cTheme);
