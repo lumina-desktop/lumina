@@ -14,6 +14,7 @@
 #include <QFileSystemWatcher>
 
 #include "syntaxSupport.h"
+#include "Word.h"
 
 //QPlainTextEdit subclass for providing the actual text editor functionality
 class PlainTextEditor : public QPlainTextEdit{
@@ -39,8 +40,9 @@ public:
 	int LNWWidth(); //replacing the LNW size hint detection
 	void paintLNW(QPaintEvent *ev); //forwarded from the LNW paint event
 	void updateLNW();
+  void setWordList(QList<Word*> _wordList) { wordList = _wordList; }
 
-    QFontMetrics *metrics;
+  QFontMetrics *metrics;
 
 private:
 	QWidget *LNW; //Line Number Widget
@@ -48,6 +50,7 @@ private:
 	QSettings *settings;
 	QString lastSaveContents;
 	QFileSystemWatcher *watcher;
+  QList<Word*> wordList;
 	//Syntax Highlighting class
 	Custom_Syntax *SYNTAX;
 
@@ -74,10 +77,13 @@ private slots:
 
 protected:
 	void resizeEvent(QResizeEvent *ev);
+  void contextMenuEvent(QContextMenuEvent *ev);
+  void keyPressEvent(QKeyEvent *ev);
 
 signals:
 	void UnsavedChanges(QString); //filename
 	void FileLoaded(QString);
+	void CheckSpelling(int, int);
 	void statusTipChanged();
 };
 

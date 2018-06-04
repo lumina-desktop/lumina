@@ -20,7 +20,11 @@
 #include <QActionGroup>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QClipboard>
+#include <QInputDialog>
 #include "PlainTextEditor.h"
+
+#define DEBUG 0
 
 MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->setupUi(this);
@@ -95,6 +99,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->actionLine_Numbers->setChecked( settings->value("showLineNumbers",true).toBool() );
   ui->actionWrap_Lines->setChecked( settings->value("wrapLines",true).toBool() );
   ui->actionShow_Popups->setChecked( settings->value("showPopupWarnings",true).toBool() );
+  ui->actionEnable_Spellcheck->setChecked( settings->value("enableSpellcheck",true).toBool() );
   QString tabLoc = settings->value("tabsLocation","top").toString().toLower();
   if(tabLoc=="bottom"){ ui->action_tabsBottom->setChecked(true); tabWidget->setTabPosition(QTabWidget::South);}
   else if(tabLoc=="left"){ ui->action_tabsLeft->setChecked(true); tabWidget->setTabPosition(QTabWidget::West);}
@@ -120,7 +125,9 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   connect(ui->actionLine_Numbers, SIGNAL(toggled(bool)), this, SLOT(showLineNumbers(bool)) );
   connect(ui->actionWrap_Lines, SIGNAL(toggled(bool)), this, SLOT(wrapLines(bool)) );
   connect(ui->actionShow_Popups, SIGNAL(toggled(bool)), this, SLOT(showPopupWarnings(bool)) );
+  connect(ui->actionEnable_Spellcheck, SIGNAL(toggled(bool)), this, SLOT(enableSpellcheck(bool)) );
   connect(ui->actionCustomize_Colors, SIGNAL(triggered()), this, SLOT(ModifyColors()) );
+  connect(ui->actionSet_Language, SIGNAL(triggered()), this, SLOT(SetLanguage()) );
   connect(ui->actionFind, SIGNAL(triggered()), this, SLOT(openFind()) );
   connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(openReplace()) );
   connect(ui->tool_find_next, SIGNAL(clicked()), this, SLOT(findNext()) );
@@ -140,6 +147,11 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   if(lastSize.width() > this->sizeHint().width() && lastSize.height() > this->sizeHint().height() ){
     this->resize(lastSize);
   }
+
+  ui->actionEnable_Spellcheck->setEnabled(DEBUG);
+  ui->actionSet_Language->setEnabled(DEBUG);
+  ui->actionEnable_Spellcheck->setVisible(DEBUG);
+  ui->actionSet_Language->setVisible(DEBUG);
 }
 
 MainUI::~MainUI(){
@@ -201,6 +213,7 @@ QString MainUI::currentFile(){
   }
   return "";
 }
+
 QString MainUI::currentFileDir(){
   PlainTextEditor* cur = currentEditor();
   QString dir;
@@ -252,6 +265,8 @@ void MainUI::OpenFile(QString file){
       edit = new PlainTextEditor(settings, this);
       connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
+      if(DEBUG)
+        connect(edit, SIGNAL(CheckSpelling(int, int)), this, SLOT(checkSpelling(int, int)));
       connect(edit, SIGNAL(statusTipChanged()), this, SLOT(updateStatusTip()) );
       tabWidget->addTab(edit, files[i].section("/",-1));
       edit->showLineNumbers(ui->actionLine_Numbers->isChecked());
@@ -260,9 +275,22 @@ void MainUI::OpenFile(QString file){
       QFont font = fontbox->currentFont();
       font.setPointSize( fontSizes->value() );
       edit->document()->setDefaultFont(font);
+      /*QStringList applicationDirs = LXDG::systemApplicationDirs();*/
+      if(ui->actionEnable_Spellcheck->isChecked()) {
+        QStringList dirs = QString(getenv("XDG_DATA_DIRS")).split(":");
+        foreach(QString dir, dirs) {
+          if(QDir(dir).exists("hunspell")) {
+            //Default to US English Dictionary
+            hunspellPath = dir+"/hunspell/";
+            hunspell = new Hunspell(QString(hunspellPath + "en_US.aff").toLocal8Bit(), QString(hunspellPath + "en_US.dic").toLocal8Bit());
+          }
+        }
+      }
     }
     tabWidget->setCurrentWidget(edit);
     edit->LoadFile(files[i]);
+    if(DEBUG)
+      checkSpelling(-1);
     edit->setFocus();
     QApplication::processEvents(); //to catch the fileLoaded() signal
   }
@@ -370,7 +398,7 @@ void MainUI::showLineNumbers(bool show){
 
 void MainUI::wrapLines(bool wrap){
   settings->setValue("wrapLines",wrap);
-  if(currentEditor() == 0){ return; }
+  if(currentEditor() == NULL){ return; }
   currentEditor()->setLineWrapMode( wrap ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
   /*for(int i=0; i<tabWidget->count(); i++){
     PlainTextEditor *edit = static_cast<PlainTextEditor*>(tabWidget->widget(i));
@@ -383,8 +411,40 @@ void MainUI::ModifyColors(){
   colorDLG->showNormal();
 }
 
+void MainUI::SetLanguage() {
+  QDir dir(hunspellPath);
+  QStringList files = dir.entryList(QStringList() << "*.dic", QDir::Files);
+  QStringList items; 
+  int defaultDic = 0;
+  for(int i = 0; i < files.size(); i++) {
+    QString item = files[i].split('.')[0];
+    if(item == settings->value("language/").toString()) {
+      defaultDic = i;
+    }
+    items.append(item);
+  }
+  QString dic = QInputDialog::getItem(this, "Set Language for Document", "Language:", items, defaultDic);
+  settings->setValue("language/", dic);
+  if(hunspell)
+    delete hunspell; 
+
+  hunspell = new Hunspell(QString(hunspellPath+dic+".aff").toLocal8Bit(), QString(hunspellPath+dic+".dic").toLocal8Bit());
+
+  checkSpelling(-1);
+}
+
 void MainUI::showPopupWarnings(bool show){
   settings->setValue("showPopupWarnings",show);
+}
+
+void MainUI::enableSpellcheck(bool show){
+  qDebug() << "Enabling Spellcheck";
+  settings->setValue("enableSpellcheck",show);
+  if(currentEditor() != NULL and hunspell == NULL) {
+    /*QStringList applicationDirs = LXDG::systemApplicationDirs();*/
+    hunspell = new Hunspell(QString(hunspellPath + "en_US.aff").toLocal8Bit(), QString(hunspellPath + "en_US.dic").toLocal8Bit());
+    qDebug() << "Hunspell Created";
+  }
 }
 
 void MainUI::showToolbar(bool show){
@@ -557,6 +617,55 @@ PlainTextEditor *cur = currentEditor();
     //Re-highlight the newly-inserted text
     cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);
   }
+}
+
+void MainUI::checkWord(QTextBlock block) {
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+
+  foreach(Word *word, wordList) {
+    if(word->blockNum == block.blockNumber())
+      wordList.removeOne(word);
+  }
+
+  QStringList words = block.text().split(QRegExp("\\W+"));
+  QTextCursor cursor(block);
+
+  foreach(QString word, words) {
+    if(!hunspell->spell(word.toStdString())) {
+      QList<QString> suggestions;
+      foreach(std::string newWord, hunspell->suggest(word.toStdString()))
+        suggestions.append(QString::fromStdString(newWord));
+      QTextEdit::ExtraSelection sel;
+      sel.format.setBackground(QColor("Red"));
+      sel.cursor = cur->document()->find(word, cursor.position());
+      Word *wordC = new Word(word, suggestions, sel, block.blockNumber(), cursor.positionInBlock());
+      wordList.append(wordC);
+    }
+    cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor);
+  }
+}
+
+void MainUI::checkSpelling(int bpos, int epos) {
+  //qDebug() << "Checking spelling on";
+  PlainTextEditor *cur = currentEditor();
+  if(cur==0){ return; }
+  static int numBlocks = cur->blockCount();
+
+  if(bpos == -1 or numBlocks != cur->blockCount()) { //When opening a file or loading a new dictionary
+    for(QTextBlock block = cur->document()->begin(); block != cur->document()->end(); block = block.next())
+      checkWord(block);
+    numBlocks = cur->blockCount();
+  }else if(epos == -1){ //Normal checking of one block from typing
+    QTextBlock block = cur->document()->findBlock(bpos);
+    checkWord(block);
+  }else { //Check blocks after copy/paste
+    for(QTextBlock block = cur->document()->findBlock(0); block != cur->document()->findBlock(epos); block = block.next()) {
+      checkWord(block);
+    }
+  }
+  
+  cur->setWordList(wordList);
 }
 
 //=============

@@ -13,6 +13,9 @@
 #include <QDebug>
 #include <QApplication>
 #include <QMessageBox>
+#include <QMenu>
+#include <QClipboard>
+#include <QTimer>
 
 #include <LUtils.h>
 
@@ -53,22 +56,21 @@ void PlainTextEditor::showLineNumbers(bool show){
 }
 
 void PlainTextEditor::LoadSyntaxRule(QString type){
-  //qDebug() << "Load SyntaxRule";
   QList<SyntaxFile> files = SyntaxFile::availableFiles(settings);
   for(int i=0; i<files.length(); i++){
     if(files[i].name() == type){
       files[i].SetupDocument(this);
       SYNTAX->loadRules(files[i]);
       break;
-    }else if(i==files.length()-1){
-      SyntaxFile dummy; SYNTAX->loadRules(dummy);
+    }else if(i==files.length()-1){ 
+      SyntaxFile dummy;
+      SYNTAX->loadRules(dummy);
     }
   }
   SYNTAX->rehighlight();
 }
 
 void PlainTextEditor::updateSyntaxColors(){
-  //qDebug() << "Update Syntax Colors";
   SYNTAX->reloadRules();
   SYNTAX->rehighlight();
 }
@@ -288,6 +290,8 @@ void PlainTextEditor::LNW_updateWidth(){
 }
 
 void PlainTextEditor::LNW_highlightLine(){
+  QList<QTextEdit::ExtraSelection> sels;
+  foreach(Word *word, wordList) { sels.append(word->sel); };
   if(this->isReadOnly()){ return; }
   QColor highC = QColor(0,0,0,50); //just darken the line a bit
   QTextEdit::ExtraSelection sel;
@@ -295,7 +299,7 @@ void PlainTextEditor::LNW_highlightLine(){
   sel.format.setProperty(QTextFormat::FullWidthSelection, true);
   sel.cursor = this->textCursor();
   sel.cursor.clearSelection(); //just in case it already has one
-  setExtraSelections( QList<QTextEdit::ExtraSelection>() << sel );
+  setExtraSelections( sels << sel);
 }
 
 void PlainTextEditor::LNW_update(const QRect &rect, int dy){
@@ -337,6 +341,7 @@ void PlainTextEditor::checkMatchChar(){
 void PlainTextEditor::textChanged(){
   //qDebug() << " - Got Text Changed signal";
   bool changed = (lastSaveContents != this->toPlainText());
+  emit CheckSpelling(this->textCursor().position(), -1);
   if(changed == hasChanges){ return; } //no change
   hasChanges = changed; //save for reading later
   if(hasChanges){  emit UnsavedChanges( this->whatsThis() ); }
@@ -381,4 +386,33 @@ void PlainTextEditor::resizeEvent(QResizeEvent *ev){
 
 void PlainTextEditor::updateLNW(){
     LNW_updateWidth();
+}
+
+void PlainTextEditor::contextMenuEvent(QContextMenuEvent *ev){
+    QMenu *menu = createStandardContextMenu();
+    qDebug() << this->textCursor().blockNumber() << this->textCursor().columnNumber() << this->textCursor().position();
+    /*QMenu *menu = new QMenu();
+    QString word = "";
+    foreach(Word *word, wordList) {
+      foreach(QString word, word->suggestions) {
+        QAction *suggestionAction = menu->addAction(word);
+      }
+    }
+    menu->addSeparator();
+    QAction *ignoreAll = menu->addAction(tr("Ignore All"));
+    QAction *addToDictionary = menu->addAction(tr("Add to Dictionary"));*/
+    menu->exec(ev->globalPos());
+    delete menu;
+}
+
+void PlainTextEditor::keyPressEvent(QKeyEvent *ev) {
+  //Check spelling when copy/paste
+  if(ev->matches(QKeySequence::Paste) or ev->matches(QKeySequence::Cut)) {
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    int epos = this->textCursor().position() + clipboard->text().size();
+    qDebug() << this->textCursor().position() << epos;
+    QTimer::singleShot(100, this, [=]() { emit CheckSpelling(this->textCursor().position(), epos); });
+  }
+
+  QPlainTextEdit::keyPressEvent(ev);
 }

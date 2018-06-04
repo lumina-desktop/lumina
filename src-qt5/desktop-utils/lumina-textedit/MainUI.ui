@@ -182,7 +182,7 @@
      <x>0</x>
      <y>0</y>
      <width>505</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -228,8 +228,10 @@
     <addaction name="actionLine_Numbers"/>
     <addaction name="actionWrap_Lines"/>
     <addaction name="actionShow_Popups"/>
+    <addaction name="actionEnable_Spellcheck"/>
     <addaction name="separator"/>
     <addaction name="actionCustomize_Colors"/>
+    <addaction name="actionSet_Language"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -446,6 +448,28 @@
    </property>
    <property name="text">
     <string>Show Toolbar</string>
+   </property>
+  </action>
+  <action name="actionEnable_Spellcheck">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable Spellcheck</string>
+   </property>
+   <property name="statusTip">
+    <string>Enable Spellchecking</string>
+   </property>
+  </action>
+  <action name="actionSet_Language">
+   <property name="text">
+    <string>Set Language</string>
    </property>
   </action>
  </widget>
