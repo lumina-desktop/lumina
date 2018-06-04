@@ -283,6 +283,7 @@ void MainUI::OpenFile(QString file){
             //Default to US English Dictionary
             hunspellPath = dir+"/hunspell/";
             hunspell = new Hunspell(QString(hunspellPath + "en_US.aff").toLocal8Bit(), QString(hunspellPath + "en_US.dic").toLocal8Bit());
+            edit->setDictionary(hunspell);
           }
         }
       }

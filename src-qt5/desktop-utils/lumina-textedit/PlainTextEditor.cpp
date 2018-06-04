@@ -291,6 +291,7 @@ void PlainTextEditor::LNW_updateWidth(){
 
 void PlainTextEditor::LNW_highlightLine(){
   QList<QTextEdit::ExtraSelection> sels;
+  
   foreach(Word *word, wordList) { sels.append(word->sel); };
   if(this->isReadOnly()){ return; }
   QColor highC = QColor(0,0,0,50); //just darken the line a bit
@@ -388,19 +389,34 @@ void PlainTextEditor::updateLNW(){
     LNW_updateWidth();
 }
 
+Word *PlainTextEditor::wordAtPosition(int blockNum, int pos) {
+  foreach(Word *word, wordList) {
+    //qDebug() << word->word << "WordBlock:" << word->blockNum << "Block:" << blockNum << "WordPos:" << word->position << "Pos:" << pos;
+    if(word->blockNum == blockNum and pos >= word->position and pos <= word->position+word->word.length())
+      return word;
+  }
+  return NULL;
+}
+
 void PlainTextEditor::contextMenuEvent(QContextMenuEvent *ev){
     QMenu *menu = createStandardContextMenu();
-    qDebug() << this->textCursor().blockNumber() << this->textCursor().columnNumber() << this->textCursor().position();
-    /*QMenu *menu = new QMenu();
-    QString word = "";
-    foreach(Word *word, wordList) {
+    /*qDebug() << this->textCursor().blockNumber() << this->textCursor().positionInBlock();
+    Word *word = wordAtPosition(this->textCursor().blockNumber(), this->textCursor().positionInBlock());
+    QList<QAction*> suggestionList;
+    if(word != NULL) {
       foreach(QString word, word->suggestions) {
         QAction *suggestionAction = menu->addAction(word);
+        connect(suggestionAction, &QAction::triggered, this, [=]() { Something });
+        suggestionList.append(suggestionAction);
       }
-    }
-    menu->addSeparator();
-    QAction *ignoreAll = menu->addAction(tr("Ignore All"));
-    QAction *addToDictionary = menu->addAction(tr("Add to Dictionary"));*/
+      menu->addSeparator();
+      QAction *ignore = menu->addAction(tr("Ignore"));
+      connect(ignore, &QAction::triggered, this, [word]() { word->ignore(); });
+      QAction *ignoreAll = menu->addAction(tr("Ignore All"));
+      connect(ignoreAll, &QAction::triggered, this, [=]() { foreach(Word *wordP, wordList) { if(wordP->word == word->word) { wordP->ignore(); }} });
+      QAction *addToDictionary = menu->addAction(tr("Add to Dictionary"));
+      connect(addToDictionary, &QAction::triggered, this, [word, this]() { hunspell->add(word->word.toStdString()); });
+    }*/
     menu->exec(ev->globalPos());
     delete menu;
 }
@@ -410,7 +426,7 @@ void PlainTextEditor::keyPressEvent(QKeyEvent *ev) {
   if(ev->matches(QKeySequence::Paste) or ev->matches(QKeySequence::Cut)) {
     QClipboard *clipboard = QGuiApplication::clipboard();
     int epos = this->textCursor().position() + clipboard->text().size();
-    qDebug() << this->textCursor().position() << epos;
+    //qDebug() << this->textCursor().position() << epos;
     QTimer::singleShot(100, this, [=]() { emit CheckSpelling(this->textCursor().position(), epos); });
   }
 

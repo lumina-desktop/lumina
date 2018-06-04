@@ -46,6 +46,11 @@ bool SyntaxFile::highlight_excess_whitespace(){
   return formatObj.value("highlight_whitespace_eol").toBool();
 }
 
+bool SyntaxFile::check_spelling(){
+  if(!formatObj.contains("check_spelling")){ return false; }
+  return formatObj.value("check_spelling").toBool();
+}
+
 int SyntaxFile::tab_length(){
   int num = -1;
   if(formatObj.contains("tab_width")){ num = formatObj.value("tab_width").toInt(); }

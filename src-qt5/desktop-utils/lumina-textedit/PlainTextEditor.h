@@ -13,6 +13,8 @@
 #include <QPaintEvent>
 #include <QFileSystemWatcher>
 
+#include <hunspell/hunspell.hxx>
+
 #include "syntaxSupport.h"
 #include "Word.h"
 
@@ -32,6 +34,7 @@ public:
 	void LoadFile(QString filepath);
 	bool SaveFile(bool newname = false);
 	QString currentFile();
+  Word *wordAtPosition(int, int);
 
 	bool hasChange();
 	bool readOnlyFile();
@@ -41,6 +44,7 @@ public:
 	void paintLNW(QPaintEvent *ev); //forwarded from the LNW paint event
 	void updateLNW();
   void setWordList(QList<Word*> _wordList) { wordList = _wordList; }
+  void setDictionary(Hunspell *_hunspell) { hunspell = _hunspell; }
 
   QFontMetrics *metrics;
 
@@ -53,6 +57,7 @@ private:
   QList<Word*> wordList;
 	//Syntax Highlighting class
 	Custom_Syntax *SYNTAX;
+  Hunspell *hunspell;
 
 	//Bracket/Perentheses matching functions
 	int matchleft, matchright; //positions within the document
