@@ -17,7 +17,7 @@ HEADERS	+= MainUI.h \
 			ColorDialog.h \
 			DnDTabBar.h \
       Word.h
-		
+
 SOURCES	+= main.cpp \
 			MainUI.cpp \
 			PlainTextEditor.cpp \

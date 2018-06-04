@@ -414,7 +414,7 @@ void MainUI::ModifyColors(){
 void MainUI::SetLanguage() {
   QDir dir(hunspellPath);
   QStringList files = dir.entryList(QStringList() << "*.dic", QDir::Files);
-  QStringList items; 
+  QStringList items;
   int defaultDic = 0;
   for(int i = 0; i < files.size(); i++) {
     QString item = files[i].split('.')[0];
@@ -426,7 +426,7 @@ void MainUI::SetLanguage() {
   QString dic = QInputDialog::getItem(this, "Set Language for Document", "Language:", items, defaultDic);
   settings->setValue("language/", dic);
   if(hunspell)
-    delete hunspell; 
+    delete hunspell;
 
   hunspell = new Hunspell(QString(hunspellPath+dic+".aff").toLocal8Bit(), QString(hunspellPath+dic+".dic").toLocal8Bit());
 
@@ -664,7 +664,7 @@ void MainUI::checkSpelling(int bpos, int epos) {
       checkWord(block);
     }
   }
-  
+
   cur->setWordList(wordList);
 }
 

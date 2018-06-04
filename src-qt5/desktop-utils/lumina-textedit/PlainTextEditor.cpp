@@ -62,7 +62,7 @@ void PlainTextEditor::LoadSyntaxRule(QString type){
       files[i].SetupDocument(this);
       SYNTAX->loadRules(files[i]);
       break;
-    }else if(i==files.length()-1){ 
+    }else if(i==files.length()-1){
       SyntaxFile dummy;
       SYNTAX->loadRules(dummy);
     }
@@ -364,7 +364,7 @@ void PlainTextEditor::fileChanged(){
   text.append("\n");
   text.append( tr("(Note: You will lose all currently-unsaved changes)") );
   text.append("\n\n%1");
- 
+
   if(!update){
     update = (QMessageBox::Yes == QMessageBox::question(this, tr("File Modified"),text.arg(currentFile()) , QMessageBox::Yes | QMessageBox::No, QMessageBox::No) );
   }
