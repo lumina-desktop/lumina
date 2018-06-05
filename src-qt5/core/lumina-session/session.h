@@ -63,7 +63,7 @@ private:
 	int wmfails;
 	QTimer *wmTimer;
 
-	void setupCompositor();
+	void setupCompositor(bool force = false);
 
 private slots:
 	void stopall();
