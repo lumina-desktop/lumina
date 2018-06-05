@@ -37,6 +37,7 @@ Plugin* Panel::findPlugin(QString id){
 
 Plugin* Panel::createPlugin(QString id){
   Plugin* tmp = Plugin::createPlugin(this, id, true, obj->isVertical());
+  if(tmp!=0){ PLUGINS << tmp; }
   return tmp;
 }
 
@@ -66,12 +67,20 @@ void Panel::updateBackground(){
 
 void Panel::updatePlugins(){
   QStringList plugs = obj->plugins();
-  qDebug() << "Got panel plugins:" << obj->name() << plugs;
+  //qDebug() << "Got panel plugins:" << obj->name() << plugs;
+  while(PLUGINS.length()>0){
+    Plugin *plug = PLUGINS.takeFirst();
+    //qDebug() << "Removing Plugin:" << plug->id() << PLUGINS.length();
+    layout->removeWidget(plug);
+    plug->deleteLater();
+  }
   for(int i=0; i<plugs.length(); i++){
-    lastplugins.removeAll(plugs[i]); //remove this from the last list (handled)
-    Plugin *plug = findPlugin(plugs[i]);
-    if(plug==0){ plug = createPlugin(plugs[i]); }
-    if(plug==0){ continue; } //not a valid plugin - just skip it
+    //lastplugins.removeAll(plugs[i]); //remove this from the last list (handled)
+    Plugin *plug = 0; //findPlugin(plugs[i]);
+    if(plug==0){
+      plug = createPlugin(plugs[i]);
+      if(plug==0){ continue; } //not a valid plugin - just skip it
+    }
     //Now setup the order of the plugins properly
     if( layout->indexOf(plug) >=0 ){
       layout->removeWidget(plug); //remove from the layout for a moment
@@ -80,10 +89,10 @@ void Panel::updatePlugins(){
     plug->setupSizing();
   }
   //Now remove any plugins which were deleted from config
-  for(int i=0; i<lastplugins.length(); i++){
+  /*for(int i=0; i<lastplugins.length(); i++){
     Plugin *plug = findPlugin(lastplugins[i]);
     if(plug==0){ continue; }
     plug->deleteLater();
-  }
-  lastplugins = plugs;
+  }*/
+  //lastplugins = plugs;
 }

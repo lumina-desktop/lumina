@@ -88,7 +88,7 @@ protected:
          if(tmp!=textRows){
 	    textRows = tmp;
 	    if(textRows<1){ textRows = 1; }
-	    if(button->isVisible() && !button->text().isEmpty()){ QTimer::singleShot(0, this, SLOT(updateTime()) ); }
+	    if(!button->text().isEmpty()){ QTimer::singleShot(30, this, SLOT(updateTime()) ); }
 	  }
 	}
 };
