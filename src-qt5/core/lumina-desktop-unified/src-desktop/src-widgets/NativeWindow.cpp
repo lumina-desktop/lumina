@@ -26,6 +26,7 @@ QPoint NativeWindow::relativeOrigin(){
   QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
   //QList<int> : [Left, Right, Top, Bottom] in pixels
   QPoint containerCorner(frame[0], frame[2]);
+  qDebug() << "Got Container Corner:" << containerCorner << "L,R,T,B:" << frame;
   return containerCorner;
   //return QPoint(0,0);
 }
@@ -108,7 +109,7 @@ void NativeWindow::loadIcons(){
 
 //Property Change slots
 void NativeWindow::syncWinImage(){
- //Do nothing at the moment (compositing disabled)
+ //Do nothing at the moment (internal compositing disabled)
 }
 
 void NativeWindow::syncName(){
@@ -150,18 +151,19 @@ void NativeWindow::syncWinType(){
   //Update all the margins for the frame
   QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
   /*QList<int> : [Left, Right, Top, Bottom] in pixels */
-  vlayout->setContentsMargins( frame[0], frame[1], 0, frame[3]);
+  //qDebug() << "Setup Frame Margins:" << frame;
+  vlayout->setContentsMargins( frame[0], 0,frame[1], frame[3]);
   int topM = frame[2] - titleLabel->fontMetrics().height(); //figure out how much extra we have to work with
   if(topM<0){ topM = 0; }
   int botM = topM/2.0;
-  toolbarL->setContentsMargins( 0, 0, topM-botM, botM);
+  toolbarL->setContentsMargins( 0, topM-botM, 0, botM);
   //QPoint containerCorner(frame[0], topM-botM);
   //WIN->emit RequestReparent(WIN->id(), this->winId(), containerCorner);
 }
 
 void NativeWindow::syncGeom(){
-  //qDebug() << "Sync Geometry:" << WIN->name();
-  //qDebug() << "  Frame:" << WIN->frameGeometry() << "Win:" << WIN->imageGeometry();
+  qDebug() << "Sync Geometry:" << WIN->name();
+  qDebug() << "  Frame:" << WIN->frameGeometry() << "Win:" << WIN->imageGeometry();
   QRect geom = WIN->frameGeometry();
   if(geom!=this->geometry()){
     this->setGeometry( geom );
