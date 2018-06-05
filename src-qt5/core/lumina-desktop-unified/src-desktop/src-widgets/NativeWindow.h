@@ -21,8 +21,21 @@ public:
 
 public slots:
 	void initProperties();
+	//Mouse Interactivity
+	void startMoving();
+	void startResizing();
 
 private:
+	//Window status
+	enum ModState{Normal, Move, ResizeTop, ResizeTopRight, ResizeRight, ResizeBottomRight, ResizeBottom, ResizeBottomLeft, ResizeLeft, ResizeTopLeft};
+	ModState activeState;
+	ModState currentCursor;
+	QPoint offset; //needed for movement calculations (offset from mouse click to movement point)
+	//Functions for getting/setting state
+	ModState getStateAtPoint(QPoint pt, bool setoffset = false); //generally used for mouse location detection
+	void setMouseCursor(ModState, bool override = false);  //Update the mouse cursor based on state
+	QTimer *moveTimer;
+
 	//Core object
 	NativeWindowObject *WIN;
 	// Interface items
@@ -49,6 +62,18 @@ private slots:
 	void syncVisibility(bool init = false);
 	void syncWinType();
 	void syncGeom();
+
+protected:
+	void mousePressEvent(QMouseEvent*);
+	void mouseMoveEvent(QMouseEvent*);
+	void mouseReleaseEvent(QMouseEvent*);
+	void leaveEvent(QEvent *ev);
+	//void enterEvent(QEvent *ev);
+	void moveEvent(QMoveEvent *ev);
+
+signals:
+	void windowMoved(NativeWindowObject*);
+
 };
 
 #endif

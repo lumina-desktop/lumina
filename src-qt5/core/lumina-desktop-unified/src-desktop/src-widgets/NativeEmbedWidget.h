@@ -40,9 +40,10 @@ public:
 	~NativeEmbedWidget(){}
 
 	QWidget* widget(){ return embedW; }
+	QRect geometry(){ return embedW->geometry(); }
 
 public slots:
-	void activateWindow(){ _window->requestActivate(); }
+	void activateWindow(){ QTimer::singleShot(0, _window, SLOT(requestActivate())); }
 
 };
 
