@@ -104,7 +104,7 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
 void LSession::setupCompositor(bool force){
   //Compositing manager
   QSettings settings("lumina-desktop","sessionsettings");
-  if(settings.value("enableCompositing",false).toBool()){
+  if(settings.value("enableCompositing",false).toBool() || force){
     if(LUtils::isValidBinary("compton")){
       //Compton available - check the config file
       QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
@@ -126,8 +126,7 @@ void LSession::setupCompositor(bool force){
 	 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
        }
        QString disp = getenv("DISPLAY");
-	//if(startcompton && QFile::exists(set)){ startProcess("compositing","compton -d "+disp+" --config \""+set+"\"", QStringList() << set); }
-        /*else */if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp); }
+	if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp); }
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
 }
