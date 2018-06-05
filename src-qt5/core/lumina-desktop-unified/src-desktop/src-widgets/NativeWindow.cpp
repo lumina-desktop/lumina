@@ -18,7 +18,7 @@ NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Q
   moveTimer = new QTimer(this);
   moveTimer->setSingleShot(true);
   moveTimer->setInterval(100); //1/10 second
-  connect(moveTimer, SIGNAL(timeout()), this, SLOT(syncGeom()) );
+  connect(moveTimer, SIGNAL(timeout()), this, SLOT(submitLocationChange()) ); //Let the window system know the window has moved
   //WIN->addFrameWinID(this->winId());
 }
 
@@ -125,29 +125,11 @@ NativeWindow::ModState NativeWindow::getStateAtPoint(QPoint pt, bool setoffset){
 	return ResizeBottom;
       }
     }else if(onLeft){
-      //Left side options
-      /*if(pt.y() < this->height()/5){
-	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()); } //difference from top-left corner
-	return ResizeTopLeft;
-      }else if(pt.y() > (this->height()*4.0/5.0)){
-	if(setoffset){ offset.setX(pt.x()); offset.setY(pt.y()-this->height()); } //difference from bottom-left corner
-	return ResizeBottomLeft;
-      }else{*/
 	if(setoffset){ offset.setX(pt.x()); offset.setY(0); } //difference from left edge (Y does not matter)
 	return ResizeLeft;
-      //}
     }else if(onRight){
-      //Right side options
-      /*if(pt.y() < this->height()/5){
-	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()); } //difference from top-right corner
-	return ResizeTopRight;
-      }else if(pt.y() > (this->height()*4.0/5.0)){
-	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(pt.y()-this->height()); } //difference from bottom-right corner
-	return ResizeBottomRight;
-      }else{*/
 	if(setoffset){ offset.setX(pt.x()-this->width()); offset.setY(0); } //difference from right edge (Y does not matter)
 	return ResizeRight;
-      //}
     }else{
 	return Normal;
     }
@@ -313,6 +295,10 @@ void NativeWindow::syncGeom(){
   }
 }
 
+void NativeWindow::submitLocationChange(){
+  emit windowMoved(WIN);
+}
+
 // === PROTECTED ===
 void NativeWindow::mousePressEvent(QMouseEvent *ev){
   container->activateWindow();
@@ -413,9 +399,9 @@ void NativeWindow::mouseMoveEvent(QMouseEvent *ev){
     //if( (geom.width()%2==0 && geom.height()%2==0) || activeState==Move){
       //qDebug() << " Change Window:" << this->geometry() << geom;
       if(activeState==Move){ this->setGeometry(geom); }
-      else{
-        //qDebug() << " Change Window Dimensions:" << this->geometry() << geom;
-	//qDebug() << " - Mouse Pos:" << ev->globalPos() << ev->pos() << "Offset" << offset;
+      else if(this->geometry()!=geom){
+        qDebug() << " Change Window Dimensions:" << this->geometry() << geom;
+	qDebug() << " - Mouse Pos:" << ev->globalPos() << ev->pos() << "Offset" << offset;
 	this->setGeometry(geom);
       }
     //}
@@ -458,6 +444,6 @@ void NativeWindow::moveEvent(QMoveEvent *ev){
   //qDebug() << "Got Move Event:" << ev->pos() << container->geometry();
   QFrame::moveEvent(ev);
   //if(!closing && !container->isPaused()){
-    moveTimer->start();
+    QTimer::singleShot(0,moveTimer, SLOT(start())); //this needs to be thread-safe
   //}
 }

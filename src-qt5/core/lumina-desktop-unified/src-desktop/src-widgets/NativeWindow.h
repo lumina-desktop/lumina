@@ -62,6 +62,7 @@ private slots:
 	void syncVisibility(bool init = false);
 	void syncWinType();
 	void syncGeom();
+	void submitLocationChange();
 
 protected:
 	void mousePressEvent(QMouseEvent*);
