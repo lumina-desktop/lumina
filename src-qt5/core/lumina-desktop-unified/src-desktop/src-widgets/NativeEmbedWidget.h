@@ -28,6 +28,7 @@ public:
 	NativeEmbedWidget(QWidget *parent, NativeWindowObject *obj) : QObject(parent){
 	  WIN = obj;
 	  _window = QWindow::fromWinId(WIN->id());
+	  //embedW = new QWidget(parent);
 	  embedW = QWidget::createWindowContainer(_window, parent);
 	  //Setup all the internal connections
 	  connect(_window, SIGNAL(visibleChanged(bool)), this, SLOT(visibleChanged(bool)) );

@@ -19,6 +19,11 @@ NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Q
   moveTimer->setSingleShot(true);
   moveTimer->setInterval(100); //1/10 second
   connect(moveTimer, SIGNAL(timeout()), this, SLOT(submitLocationChange()) ); //Let the window system know the window has moved
+  resizeTimer = new QTimer(this);
+  resizeTimer->setSingleShot(true);
+  resizeTimer->setInterval(10); //1/10 second
+  connect(resizeTimer, SIGNAL(timeout()), this, SLOT(submitSizeChange()) ); //Let the window system know the window has moved
+  
   //WIN->addFrameWinID(this->winId());
 }
 
@@ -32,7 +37,7 @@ QPoint NativeWindow::relativeOrigin(){
   QList<int> frame = WIN->property(NativeWindowObject::FrameExtents).value<QList<int> >();
   //QList<int> : [Left, Right, Top, Bottom] in pixels
   QPoint containerCorner(frame[0], frame[2]);
-  qDebug() << "Got Container Corner:" << containerCorner << "L,R,T,B:" << frame;
+  //qDebug() << "Got Container Corner:" << containerCorner << "L,R,T,B:" << frame;
   return containerCorner;
   //return QPoint(0,0);
 }
@@ -299,6 +304,13 @@ void NativeWindow::submitLocationChange(){
   emit windowMoved(WIN);
 }
 
+void NativeWindow::submitSizeChange(){
+  if(!pending_geom.isNull()){
+    this->setGeometry(pending_geom);
+    pending_geom = QRect();
+  }
+}
+
 // === PROTECTED ===
 void NativeWindow::mousePressEvent(QMouseEvent *ev){
   container->activateWindow();
@@ -320,6 +332,7 @@ void NativeWindow::mousePressEvent(QMouseEvent *ev){
 }
 
 void NativeWindow::mouseMoveEvent(QMouseEvent *ev){
+  //qDebug() << "Got Mouse Move Event:" << ev->pos();
   QFrame::mouseMoveEvent(ev);
   if(activeState == Normal){
     setMouseCursor( getStateAtPoint(ev->pos()) ); //just update the mouse cursor
@@ -400,9 +413,12 @@ void NativeWindow::mouseMoveEvent(QMouseEvent *ev){
       //qDebug() << " Change Window:" << this->geometry() << geom;
       if(activeState==Move){ this->setGeometry(geom); }
       else if(this->geometry()!=geom){
-        qDebug() << " Change Window Dimensions:" << this->geometry() << geom;
-	qDebug() << " - Mouse Pos:" << ev->globalPos() << ev->pos() << "Offset" << offset;
-	this->setGeometry(geom);
+        pending_geom = geom;
+        if(!resizeTimer->isActive()){ QTimer::singleShot(0,resizeTimer, SLOT(start()) ); }
+        /*qDebug() << " Change Window Dimensions:" << this->geometry() << geom;
+	 qDebug() << " - Mouse Pos:" << ev->globalPos() << ev->pos() << "Offset" << offset;
+	 this->setGeometry(geom);
+        qDebug() << " - Done setting geom";*/
       }
     //}
   }

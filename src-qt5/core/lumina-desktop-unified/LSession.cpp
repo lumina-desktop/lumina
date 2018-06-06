@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2012-2017, Ken Moore
+//  Copyright (c) 2012-2018, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================

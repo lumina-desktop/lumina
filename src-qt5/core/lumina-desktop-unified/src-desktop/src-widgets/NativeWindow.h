@@ -34,7 +34,7 @@ private:
 	//Functions for getting/setting state
 	ModState getStateAtPoint(QPoint pt, bool setoffset = false); //generally used for mouse location detection
 	void setMouseCursor(ModState, bool override = false);  //Update the mouse cursor based on state
-	QTimer *moveTimer;
+	QTimer *moveTimer, *resizeTimer;
 
 	//Core object
 	NativeWindowObject *WIN;
@@ -49,7 +49,7 @@ private:
 	NativeEmbedWidget *container;
 
 	// Info cache variables
-	QRect oldgeom;
+	QRect oldgeom, pending_geom;
 
 private slots:
 
@@ -63,6 +63,7 @@ private slots:
 	void syncWinType();
 	void syncGeom();
 	void submitLocationChange();
+	void submitSizeChange();
 
 protected:
 	void mousePressEvent(QMouseEvent*);
