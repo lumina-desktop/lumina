@@ -64,6 +64,7 @@ public:
 
 	void SetupNewWindow(NativeWindowObject *win);
 	QImage GetWindowImage(NativeWindowObject *win);
+	QPixmap GetTrayWindowImage(NativeWindowObject *win);
 
 	NativeWindowSystem();
 	~NativeWindowSystem();

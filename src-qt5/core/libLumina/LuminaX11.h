@@ -100,25 +100,25 @@ public:
 	enum WINDOWSTATE {S_MODAL, S_STICKY, S_MAX_VERT, S_MAX_HORZ, S_SHADED, S_SKIP_TASKBAR, S_SKIP_PAGER, S_HIDDEN, S_FULLSCREEN, S_ABOVE, S_BELOW, S_ATTENTION};
 	enum WINDOWACTION {A_MOVE, A_RESIZE, A_MINIMIZE, A_SHADE, A_STICK, A_MAX_VERT, A_MAX_HORZ, A_FULLSCREEN, A_CHANGE_DESKTOP, A_CLOSE, A_ABOVE, A_BELOW};
 	//Now enums which can have multiple values at once (Use the plural form for the QFlags)
-	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination 
+	enum ICCCM_PROTOCOL {TAKE_FOCUS = 0x0, DELETE_WINDOW = 0x1}; //any combination
 	Q_DECLARE_FLAGS(ICCCM_PROTOCOLS, ICCCM_PROTOCOL);
 	enum SIZE_HINT { US_POSITION=1<<0, US_SIZE=1<<1, P_POSITION=1<<2, P_SIZE=1<<3, P_MIN_SIZE=1<<4, P_MAX_SIZE=1<<5, P_RESIZE_INC=1<<6, P_ASPECT=1<<7, BASE_SIZE=1<<8, P_WIN_GRAVITY=1<<9 };
 	Q_DECLARE_FLAGS(SIZE_HINTS, SIZE_HINT);
 	enum MOVERESIZE_WINDOW_FLAG { X=0x0, Y=0x1, WIDTH=0x2, HEIGHT=0x3};
 	Q_DECLARE_FLAGS(MOVERESIZE_WINDOW_FLAGS, MOVERESIZE_WINDOW_FLAG);
-	
+
 	xcb_ewmh_connection_t EWMH; //This is where all the screen info and atoms are located
 
 	LXCB();
 	~LXCB();
-		
+
 	//== Main Interface functions ==
 	// General Information
 	QList<WId> WindowList(bool rawlist = false); //list all non-Lumina windows (rawlist -> all workspaces)
 	unsigned int CurrentWorkspace();
 	unsigned int NumberOfWorkspaces();
 	WId ActiveWindow(); //fetch the ID for the currently active window
-	
+
 	//Session Modification
 	bool CheckDisableXinerama(); //returns true if Xinerama was initially set but now disabled
 	void RegisterVirtualRoots(QList<WId> roots);
@@ -139,13 +139,13 @@ public:
 	bool WindowIsMaximized(WId win);
 	int WindowIsFullscreen(WId win); //Returns the screen number if the window is fullscreen (or -1)
 	QIcon WindowIcon(WId win); //_NET_WM_ICON
-	
+
 	//Window Modification
 	// - SubStructure simplifications (not commonly used)
 	void SelectInput(WId win, bool isEmbed = false); //XSelectInput replacement (to see window events)
 	uint GenerateDamageID(WId);
 	void paintRoot(QRect area, const QPixmap *pix);
-	
+
 	// - General Window Modifications
 	void SetAsSticky(WId); //Stick to all workspaces
 	void SetDisableWMActions(WId); //Disable WM control (shortcuts/automatic functions)
@@ -161,13 +161,13 @@ public:
 	void ResizeWindow(WId win, int width, int height);
 	void ResizeWindow(WId win, QSize sz){ ResizeWindow(win, sz.width(), sz.height()); } //overload for simplicity
 	void ReserveLocation(WId win, QRect geom, QString loc);
-	
+
 	//Window Embedding/Detaching (for system tray)
 	//void SetWindowBackground(QWidget *parent, QRect area, WId client);
 	uint EmbedWindow(WId win, WId container); //returns the damage ID (or 0 for an error)
 	bool UnembedWindow(WId win);
 	QPixmap TrayImage(WId win);
-	
+
 	//System Tray Management
 	WId startSystemTray(int screen = 0); //Startup the system tray (returns window ID for tray)
 	void closeSystemTray(WId); //Close the system tray
@@ -179,16 +179,16 @@ public:
 	void WM_CloseWindow(WId win, bool force = false);
 	void WM_ShowWindow(WId win);
 	void WM_HideWindow(WId win);
-	
+
 	WId WM_CreateWindow(WId parent = 0);
-	
+
 	// WM Utility Functions
 	QList<WId> WM_RootWindows(); //return all windows which have root as the parent
 	bool WM_ManageWindow(WId win, bool needsmap = true); //return whether the window is/should be managed
 	QRect WM_Window_Geom(WId win); //Return the current window geometry
 	void setupEventsForFrame(WId frame);
 	bool setupEventsForRoot(WId root = 0);
-	
+
 	// ICCCM Standards (older standards)
 	// -- WM_NAME
 	QString WM_ICCCM_GetName(WId win);
@@ -212,13 +212,13 @@ public:
 	icccm_size_hints WM_ICCCM_GetNormalHints(WId win); //most values in structure are -1 if not set
 	//void WM_ICCCM_SetNormalHints(WId win, icccm_size_hints hints);
 	// -- WM_HINTS (contains WM_STATE)
-	
+
 	// -- WM_PROTOCOLS
 	ICCCM_PROTOCOLS WM_ICCCM_GetProtocols(WId win);
 	void WM_ICCCM_SetProtocols(WId win, ICCCM_PROTOCOLS flags);
-	
+
 	//NET_WM Standards (newer standards)
-	
+
 	// -- ROOT WINDOW PROPERTIES
 	// _NET_SUPPORTED
 	void WM_Set_Root_Supported(); //set the atom list of supported features on the root window
@@ -226,192 +226,192 @@ public:
 	// Note: client list ordered oldest->newest, stacking list ordered bottom->top
 	QList<WId> WM_Get_Client_List(bool stacking = false);
 	void WM_Set_Client_List(QList<WId> list, bool stacking=false);
-	
+
 	// _NET_NUMBER_OF_DESKTOPS
 	// Note: This is the number of virtual workspaces, not monitors
 	unsigned int WM_Get_Number_Desktops(); //return value equals 0 for errors
 	void WM_SetNumber_Desktops(unsigned int number); //should be at least 1
-	
+
 	// _NET_DESKTOP_GEOMETRY
 	// Note: This property is the combined size and/or bounding rectangle of all monitors
 	//  The definition works well for single-monitors, but gets really fuzzy for multiple monitors
 	QSize WM_Get_Desktop_Geometry();
 	void WM_Set_Desktop_Geometry(QSize);
-	
+
 	// _NET_DESKTOP_VIEWPORT
-	// Note: This is the X/Y origin  of the viewport for each monitor 
+	// Note: This is the X/Y origin  of the viewport for each monitor
 	//  Thi is normally (0,0) , unless desktop larger than monitor supports
 	QList<QPoint> WM_Get_Desktop_Viewport();
 	void WM_Set_Desktop_Viewport(QList<QPoint> list);
-	
+
 	// _NET_CURRENT_DESKTOP
 	// Note: Current workspace number. Range = 0 to (_NET_NUMBER_OF_DESKTOPS - 1)
 	int WM_Get_Current_Desktop(); //Returns -1 for errors
 	void WM_Set_Current_Desktop(unsigned int num);
-	
+
 	// _NET_DESKTOP_NAMES
 	QStringList WM_Get_Desktop_Names();
 	void WM_Set_Desktop_Names(QStringList list);
-	
+
 	// _NET_ACTIVE_WINDOW
 	WId WM_Get_Active_Window();
 	void WM_Set_Active_Window(WId win);
-	
+
 	// _NET_WORKAREA
 	// Note: The workarea is the recangle for each monitor where no space is reserved
 	//  This accounts for any STRUT's that are set, within the current VIEWPORT
 	QList<QRect> WM_Get_Workarea();
 	void WM_Set_Workarea(QList<QRect> list);
-	
+
 	// _NET_SUPPORTING_WM_CHECK
 	// Note: This needs to be set on two windows: root -> child, and child->child
 	// So the "set" function will do both at the same time
 	// The child window also needs the _NET_WM_NAME set to the window manager name
 	WId WM_Get_Supporting_WM(WId win);
 	void WM_Set_Supporting_WM(WId child);
-	
+
 	// _NET_VIRTUAL_ROOTS
 	QList<WId> WM_Get_Virtual_Roots();
 	void WM_Set_Virtual_Roots(QList<WId> list);
-	
+
 	// _NET_DESKTOP_LAYOUT
 	// NOTE: Skip this implementation for now - is supposed to be set by a pager (not the WM)
 	//   and the WM can choose to use/ignore it as necessary.
 	// (Just use the current XRandR layout instead of this setting/property)
-	
+
 	// _NET_SHOWING_DESKTOP
 	// Note: This is true/false depending on whether the WM is hiding all windows to show the desktop only
 	bool WM_Get_Showing_Desktop();
 	void WM_Set_Showing_Desktop(bool show);
-	
+
 	// -- ROOT WINDOW MESSAGES/REQUESTS (for non-WM usage)
 	// _NET_CLOSE_WINDOW
 	void WM_Request_Close_Window(WId win);
-	
+
 	// _NET_MOVERESIZE_WINDOW
 	// Note: Used for finalized movement/resize operations
 	void WM_Request_MoveResize_Window(WId win, QRect geom, bool fromuser = false,  LXCB::GRAVITY grav = LXCB::STATIC, LXCB::MOVERESIZE_WINDOW_FLAGS flags = LXCB::MOVERESIZE_WINDOW_FLAGS(LXCB::X | LXCB::Y | LXCB::WIDTH | LXCB::HEIGHT) );
-	
-	// _NET_WM_MOVERESIZE 
+
+	// _NET_WM_MOVERESIZE
 	// Note: Used for interactive clicks/changes to a window size/position
 	// There are known race conditions/issues with this X format - so skip it for now (11/12/15)
-	
+
 	// _NET_RESTACK_WINDOW
 	// Note: Send a request to re-stack a window (win) with respect to another window (sibling)
 	//   based on the flag to determine how the stack order should be changed
 	void WM_Request_Restack_Window(WId win, WId sibling, LXCB::STACK_FLAG flag);
-	
+
 	// _NET_REQUEST_FRAME_EXTENTS
 	// Note: This is used by client windows to get the _NET_FRAME_EXTENTS property pre-set
 	//  by the WM before the window is actually mapped (just an estimate of the frame at least)
 	void WM_Request_Frame_Extents(WId win);
-	
+
 	// -- WINDOW PROPERTIES
 	// _NET_SUPPORTED
 	void WM_Set_Window_Supported(WId win); //set the atom list of supported features on the given window
-	
+
 	// _NET_WM_NAME
 	QString WM_Get_Name(WId win);
 	void WM_Set_Name(WId win, QString txt);
-	
+
 	// _NET_WM_VISIBLE_NAME
 	QString WM_Get_Visible_Name(WId win);
 	void WM_Set_Visible_Name(WId win, QString txt);
-	
+
 	// _NET_WM_ICON_NAME
 	QString WM_Get_Icon_Name(WId win);
 	void WM_Set_Icon_Name(WId win, QString txt);
-	
+
 	// _NET_WM_VISIBLE_ICON_NAME
 	QString WM_Get_Visible_Icon_Name(WId win);
 	void WM_Set_Visible_Icon_Name(WId win, QString txt);
-	
+
 	// _NET_WM_DESKTOP
 	// Note: This refers to the virtual workspace, not the monitor/screen number
 	int WM_Get_Desktop(WId win); //returns -1 if window on all desktops
 	void WM_Set_Desktop(WId win, int num); //use -1 to set it for all desktops
-	
+
 	// _NET_WM_WINDOW_TYPE
 	// Note: While this returns a list, they are ordered by priority for WM usage (use the first one known about)
 	QList<LXCB::WINDOWTYPE> WM_Get_Window_Type(WId win);
 	void WM_Set_Window_Type(WId win, QList<LXCB::WINDOWTYPE> list);
-	
+
 	// _NET_WM_STATE
 	QList<LXCB::WINDOWSTATE> WM_Get_Window_States(WId win);
 	void WM_Set_Window_States(WId win, QList<LXCB::WINDOWSTATE> list);
-	
+
 	// _NET_WM_ALLOWED_ACTIONS
 	QList<LXCB::WINDOWACTION> WM_Get_Window_Actions(WId win);
 	void WM_Set_Window_Actions(WId win, QList<LXCB::WINDOWACTION> list);
-	
+
 	// _NET_WM_STRUT
 	QList<unsigned int> WM_Get_Window_Strut(WId win); //Returns: [left,right,top,bottom] margins in pixels (always length 4)
 	void WM_Set_Window_Strut(WId win, QList<unsigned int> margins); //Input: [left, right, top, bottom] - must be length 4
-	
+
 	// _NET_WM_STRUT_PARTIAL
 	QList<strut_geom> WM_Get_Window_Strut_Partial(WId win); //Returns: [left,right,top,bottom] struts
 	void WM_Set_Window_Strut_Partial(WId win, QList<strut_geom> struts); //Input: [left,right,top,bottom] - must be length 4
-	
+
 	// _NET_WM_ICON_GEOMETRY
 	QRect WM_Get_Icon_Geometry(WId win);
 	void WM_Set_Icon_Geometry(WId win, QRect geom);
-	
+
 	// _NET_WM_ICON
 	// Note: Don't write a "Set" routine for this - is handled on the client side and not the WM/DE side
 	QIcon WM_Get_Icon(WId win);
-	
+
 	// _NET_WM_PID
 	// Note: Don't write a "Set" routine for this - is handled on the client side and not the WM/DE side
 	unsigned int WM_Get_Pid(WId win);
-	
+
 	// _NET_WM_HANDLED_ICONS
-	// Note: Probably not going to need this - is used by pagers exclusively to tell the WM 
+	// Note: Probably not going to need this - is used by pagers exclusively to tell the WM
 	//  not to provide task manager icons (not needed for an integrated WM/DE combination)
 	bool WM_Get_Handled_Icons(WId win);
 	void WM_Set_Handled_Icons(WId win, bool set);
-	
+
 	// _NET_WM_USER_TIME
 	// Note: The user time property on a client window is supposed to be updated on user activity,
 	//   allowing the WM to be able to distinguish user activity from automated window actions
 	unsigned int WM_Get_User_Time(WId win);
 	void WM_Set_User_Time(WId win, unsigned int xtime);
-	
+
 	// _NET_WM_USER_TIME_WINDOW
-	// This returns the window to watch for time update events, 
+	// This returns the window to watch for time update events,
 	//  instead of constantly polling all the (toplevel?) windows for the app
 	// IGNORED - xcb_ewmh library does not appear to have valid support for this property yet (11/13/15)
 	//WId WM_Get_User_Time_WIndow(WId win);
 	//void WM_Set_User_Time_Window(WId win, WId utwin);
-	
+
 	// _NET_FRAME_EXTENTS
 	QList<unsigned int> WM_Get_Frame_Extents(WId win); //Returns: [left,right,top,bottom] margins in pixels (always length 4)
 	void WM_Set_Frame_Extents(WId win, QList<unsigned int> margins); //Input: [left, right, top, bottom] - must be length 4
-	
+
 	// _NET_WM_OPAQUE_REGION
 	// NOT SUPPORTED - missing in xcb_ewmh library (11/13/15)
-	
+
 	// _NET_WM_BYPASS_COMPOSITOR
 	// NOT SUPPORTED - missing in xcb_ewmh library (11/13/15)
-	
+
 	// === SPECIAL WM PROTOCOLS (EWMH) ===
 	// _NET_WM_PING
 	// Note: Used to determine if a window/app is hung before killing the process (with PID)
 	// The client window should respond instantly if it is still active (waiting on user input for instance)
 	void WM_Send_Ping(WId win);
-	
+
 	// _NET_WM_SYNC_REQUEST
 	uint64_t WM_Get_Sync_Request_Counter(WId win);
 	//void WM_Set_Sync_Request_Counter(WId win, uint64_t count);
-	
+
 	// _NET_WM_FULLSCREEN_MONITORS
 	QList<unsigned int> WM_Get_Fullscreen_Monitors(WId win); //Returns: [top,bottom,left,right] monitor numbers for window to use when fullscreen
 	void WM_Set_Fullscreen_Montors(WId win, QList<unsigned int> list); //Input: [top,bottom,left,right] monitor numbers
-	
+
 	// _NET_WM_CM_S(n)
 	// Note: This is used to check/register the compositing manager for the current X screen (#n)
 	WId WM_Get_CM_Owner();
 	void WM_Set_CM_Owner(WId win);
-	
+
 	//============
 	// RANDR Functions (directly reading changing monitor outputs)
 	//============

@@ -6,37 +6,72 @@
 //===========================================
 #ifndef _DESKTOP_WINDOW_EMBED_WIDGET_H
 #define _DESKTOP_WINDOW_EMBED_WIDGET_H
+
 #include <global-includes.h>
 
-class NativeEmbedWidget : public QObject{
+#define USE_QWINDOW_EMBED  1
+
+class EmbedWidget : public QWidget {
+	Q_OBJECT
+private:
+	NativeWindowObject *WIN;
+
+public:
+	EmbedWidget(NativeWindowObject *win, QWidget* parent) : QWidget(parent){
+	  WIN = win;
+	}
+	~EmbedWidget(){}
+
+public slots:
+	void submitNewGeom(){
+	  QRect global_geom = QRect( this->mapToGlobal(QPoint(0,0)), this->size() );
+	  WIN->setGeometryNow(global_geom);
+	}
+
+protected:
+	void resizeEvent(QResizeEvent *ev){
+	  QWidget::resizeEvent(ev);
+	  submitNewGeom();
+	}
+	/*void moveEvent(QMoveEvent *ev){
+	  QWidget::moveEvent(ev);
+	  submitNewGeom();
+	}*/
+	void hideEvent(QHideEvent *ev){
+	  QWidget::hideEvent(ev);
+	  qDebug() << "Hide Event";
+	  WIN->requestProperty(NativeWindowObject::Visible, false);
+	}
+	void showEvent(QShowEvent *ev){
+	  QWidget::showEvent(ev);
+	  qDebug() << "ShowEvent";
+	  WIN->requestProperty(NativeWindowObject::Visible, true);
+	}
+	void enterEvent(QEvent *ev){
+	  QWidget::enterEvent(ev);
+	  qDebug() << "enter event";
+	}
+	void paintEvent(QPaintEvent *){
+	  //Never paint anything with this widget
+	}
+
+};
+
+class NativeEmbedWidget : public QObject {
 	Q_OBJECT
 private:
 	QWidget *embedW;
-	QWindow *_window;
 	NativeWindowObject *WIN;
-
-private slots:
-	void visibleChanged(bool show){ WIN->setProperty(NativeWindowObject::Visible, show); }
-	void windowTitleChanged(QString title){ WIN->setProperty(NativeWindowObject::Title, title); }
-	void heightChanged(int val){ qDebug() << "Got Wndow Height change:" << val; } //WIN->setProperty(NativeWindowObject::Size, QSize(WIN->property(NativeWindowObject::Size).toSize().width(),val) ); }
-	void widthChanged(int val){ qDebug() << "Got Wndow Width change:" << val; } // WIN->setProperty(NativeWindowObject::Size, QSize(val, WIN->property(NativeWindowObject::Size).toSize().height()) ); }
-	void xChanged(int val){ qDebug() << "Got Window X changed:" << val; }
-	void yChanged(int val){ qDebug() << "Got Window Y changed:" << val; }
-
 
 public:
 	NativeEmbedWidget(QWidget *parent, NativeWindowObject *obj) : QObject(parent){
 	  WIN = obj;
-	  _window = QWindow::fromWinId(WIN->id());
-	  //embedW = new QWidget(parent);
-	  embedW = QWidget::createWindowContainer(_window, parent);
-	  //Setup all the internal connections
-	  connect(_window, SIGNAL(visibleChanged(bool)), this, SLOT(visibleChanged(bool)) );
-	  connect(_window, SIGNAL(windowTitleChanged(const QString&)), this, SLOT(windowTitleChanged(const QString&)) );
-	  connect(_window, SIGNAL(widthChanged(int)), this, SLOT(widthChanged(int)) );
-	  connect(_window, SIGNAL(heightChanged(int)), this, SLOT(heightChanged(int)) );
-	  connect(_window, SIGNAL(xChanged(int)), this, SLOT(xChanged(int)) );
-	  connect(_window, SIGNAL(yChanged(int)), this, SLOT(yChanged(int)) );
+	  if(USE_QWINDOW_EMBED){
+	    QWindow* _window = QWindow::fromWinId(WIN->id());
+	    embedW = QWidget::createWindowContainer(_window, parent);
+	  }else{
+	    embedW = new EmbedWidget(WIN, parent);
+	  }
 	}
 	~NativeEmbedWidget(){}
 
@@ -44,7 +79,8 @@ public:
 	QRect geometry(){ return embedW->geometry(); }
 
 public slots:
-	void activateWindow(){ QTimer::singleShot(0, _window, SLOT(requestActivate())); }
+	void activateWindow(){ WIN->requestActivate(); } //QTimer::singleShot(0, WIN, SLOT(requestActivate())); }
+	void windowFrameMoved(){}
 
 };
 

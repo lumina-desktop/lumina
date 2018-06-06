@@ -224,7 +224,7 @@ bool EventFilter::nativeEventFilter(const QByteArray &eventType, void *message, 
 		break;
 //==============================
 	    case XCB_DESTROY_NOTIFY:
-		//qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
+		   qDebug() << "Window Closed Event:" << ((xcb_destroy_notify_event_t *)ev)->window;
                   obj->emit WindowDestroyed( ((xcb_destroy_notify_event_t *) ev)->window );
 	        break;
 //==============================

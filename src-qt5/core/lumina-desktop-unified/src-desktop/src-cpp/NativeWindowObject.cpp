@@ -327,6 +327,10 @@ void NativeWindowObject::requestPing(){
   emit RequestPing(winid);
 }
 
+void NativeWindowObject::requestActivate(){
+  requestProperty(NativeWindowObject::Active, true);
+}
+
 // ==== PRIVATE ====
 void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop){
   //Simple switch to emit the QML-usable signals as properties are changed

@@ -37,13 +37,13 @@
 #define URGENCYHINT (1L << 8) //For window urgency detection
 
 #define ROOT_WIN_EVENT_MASK (XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT |  \
-                         XCB_EVENT_MASK_BUTTON_PRESS | 	\
-                         XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
-                         XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
-                         XCB_EVENT_MASK_POINTER_MOTION | 	\
-                         XCB_EVENT_MASK_PROPERTY_CHANGE | 	\
+                       XCB_EVENT_MASK_BUTTON_PRESS | 	\
+                       XCB_EVENT_MASK_STRUCTURE_NOTIFY |	\
+                       XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY |	\
+                       XCB_EVENT_MASK_POINTER_MOTION | 	\
+                       XCB_EVENT_MASK_PROPERTY_CHANGE | 	\
 			 XCB_EVENT_MASK_FOCUS_CHANGE |	\
-                         XCB_EVENT_MASK_ENTER_WINDOW)
+                       XCB_EVENT_MASK_ENTER_WINDOW)
 
 #define NORMAL_WIN_EVENT_MASK (XCB_EVENT_MASK_BUTTON_PRESS | 	\
 			XCB_EVENT_MASK_BUTTON_RELEASE | 	\
@@ -384,14 +384,9 @@ void NativeWindowSystem::UpdateWindowProperties(NativeWindowObject* win, QList< 
     QIcon icon;
     if(win == findTrayWindow(win->id())){
       //Tray Icon Window
-      QPixmap pix;
-      //Get the current QScreen (for XCB->Qt conversion)
-      QList<QScreen*> scrnlist = QApplication::screens();
-      //Try to grab the given window directly with Qt
-      for(int i=0; i<scrnlist.length() && pix.isNull(); i++){
-        pix = scrnlist[i]->grabWindow(win->id());
-      }
-      icon.addPixmap(pix);
+      icon.addPixmap( GetTrayWindowImage(win) );
+      qDebug() << "Loaded Tray Icon" << !icon.isNull();
+
     }else{
       //Standard window
       //Fetch the _NET_WM_ICON for the window and return it as a QIcon
@@ -678,6 +673,47 @@ QImage NativeWindowSystem::GetWindowImage(NativeWindowObject* win){
   //win->setProperty(NativeWindowObject::WinImage, QVariant::fromValue<QImage>(img) );
 }
 
+QPixmap NativeWindowSystem::GetTrayWindowImage(NativeWindowObject *win){
+  QPixmap pix;
+
+  //Get the current QScreen (for XCB->Qt conversion)
+  QList<QScreen*> scrnlist = QApplication::screens();
+  if(scrnlist.isEmpty()){ return pix; }
+
+  //Try to grab the given window directly with Qt
+  pix = scrnlist[0]->grabWindow(win->id());
+  if(!pix.isNull()){
+    //done - go ahead and return the image
+    return pix;
+  }
+
+  //Now try the more complicated XCB read mechanisms
+  // -------------------------------
+  //First get the pixmap from the XCB compositing layer (since the tray images are redirected there)
+  xcb_pixmap_t pixmap = xcb_generate_id(QX11Info::connection());
+  xcb_composite_name_window_pixmap(QX11Info::connection(), win->id(), pixmap);
+  //Get the sizing information about the pixmap
+  xcb_get_geometry_cookie_t Gcookie = xcb_get_geometry_unchecked(QX11Info::connection(), pixmap);
+  xcb_get_geometry_reply_t *Greply = xcb_get_geometry_reply(QX11Info::connection(), Gcookie, NULL);
+  if(Greply==0){ qDebug() << "[Tray Image] - Geom Fetch Error:"; return QPixmap(); } //Error in geometry detection
+
+  //Now convert the XCB pixmap into an XCB image
+  xcb_get_image_cookie_t GIcookie = xcb_get_image_unchecked(QX11Info::connection(), XCB_IMAGE_FORMAT_Z_PIXMAP, pixmap, 0, 0, Greply->width, Greply->height, 0xffffffff);
+  xcb_get_image_reply_t *GIreply = xcb_get_image_reply(QX11Info::connection(), GIcookie, NULL);
+  if(GIreply==0){ qDebug() << "[Tray Image] - Image Convert Error:"; return QPixmap(); } //Error in conversion
+  uint8_t *GIdata = xcb_get_image_data(GIreply);
+  uint32_t BPL = xcb_get_image_data_length(GIreply) / Greply->height; //bytes per line
+  //Now convert the XCB image into a Qt Image
+  QImage image(const_cast<uint8_t *>(GIdata), Greply->width, Greply->height, BPL, QImage::Format_ARGB32_Premultiplied);
+  //Free the various data structures
+  free(GIreply); //done with get image reply
+  xcb_free_pixmap(QX11Info::connection(), pixmap); //done with the raw pixmap
+  free(Greply); //done with geom reply
+
+  return pix;
+
+}
+
 // === PUBLIC SLOTS ===
 //These are the slots which are typically only used by the desktop system itself or the NativeEventFilter
 void NativeWindowSystem::RegisterVirtualRoot(WId id){
@@ -861,12 +897,12 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 void NativeWindowSystem::WindowCloseDetected(WId id){
   NativeWindowObject *win = findWindow(id, false);
   if(win==0){ win = findWindow(id, true); }
-  //qDebug() << "Got Window Closed" << id << win;
-  //qDebug() << "Old Window List:" << NWindows.length();
+  qDebug() << "Got Window Closed" << id << win;
+  qDebug() << "Old Window List:" << NWindows.length();
   if(win!=0){
     NWindows.removeAll(win);
     win->emit WindowClosed(id);
-    //qDebug() << "Visible Window Closed!!!";
+    qDebug() << "Visible Window Closed!!!";
     emit WindowClosed();
     win->deleteLater();
   }else{
@@ -878,7 +914,7 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
       win->deleteLater();
     }
   }
-  //qDebug() << " - Now:" << NWindows.length();
+  qDebug() << " - Now:" << NWindows.length();
 }
 
 void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindowObject::Property prop){

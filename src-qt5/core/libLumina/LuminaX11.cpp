@@ -959,7 +959,7 @@ QPixmap LXCB::TrayImage(WId win){
   if(pix.isNull()){
       pix = scrnlist[0]->grabWindow(win);
   }
-  return pix;	
+  return pix;
   
   //NOTE: Code below here saved for reference later (as necessary)
   // -------------------------------
