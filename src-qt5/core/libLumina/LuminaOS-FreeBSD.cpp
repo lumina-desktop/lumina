@@ -124,22 +124,28 @@ void LOS::setScreenBrightness(int percent){
     qDebug() << "Set hardware brightness:" << percent << success;
   }*/
   if( !success && LUtils::isValidBinary("intel_backlight") && !remoteSession){
+    //qDebug() << "Run intel_backlight";
     //Use the intel_backlight utility (only for Intel mobo/hardware?)
-   if(0== LUtils::runCmd("intel_backlight", QStringList() <<QString::number(percent)) ){
-     //This utility does not report success/failure - run it again to get the current value and ensure it was set properly
-     success = (percent == LUtils::getCmdOutput("intel_backlight").join("").section("%",0,0).section(":",1,1).simplified().toInt() );
-   }
+    // Note: this returns an integer value corresponding to the percent brightess the screen was just set to
+    int ret = LUtils::runCmd("sudo -n intel_backlight", QStringList() << QString::number(percent));
+    //qDebug() << " - Return value:" << ret;
+    success = (percent ==  ret);
   }
   // - if hardware brightness does not work, use software brightness
   if(!success && LUtils::isValidBinary("xbrightness") ){
+    //qDebug() << "Run xbrightness";
     QString cmd = "xbrightness  %1";
     float pf = percent/100.0; //convert to a decimel
     cmd = cmd.arg( QString::number( int(65535*pf) ) );
-    success = (0 == LUtils::runCmd(cmd) );
+    LUtils::runCmd(cmd);
+    //qDebug() << " - Return value:" << ret;
+    success = true;
   }
   //Save the result for later
+  //qDebug() << "Got Brightness:" << percent << success;
   if(!success){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
+  //qDebug() << " - Write to file:" << screenbrightness;
   LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }
 
