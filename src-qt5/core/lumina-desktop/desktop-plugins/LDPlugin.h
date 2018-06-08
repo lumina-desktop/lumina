@@ -29,7 +29,7 @@
 
 class LDPlugin : public QFrame{
 	Q_OBJECT
-	
+
 private:
 	QString PLUGID, prefix;
 	QSettings *settings;
@@ -41,9 +41,9 @@ private:
 
 public:
 	LDPlugin(QWidget *parent = 0, QString id="unknown");
-	
+
 	~LDPlugin(){}
-	
+
 	QString ID(){
 	  return PLUGID;
 	}
@@ -51,46 +51,46 @@ public:
 	void setContextMenu(QMenu *cmen){ contextM = cmen; }
 
 	QMenu* contextMenu(){ return contextM; }
-	
+
 	virtual QSize defaultPluginSize(){
 	  //This needs to be re-implemented in the subclassed plugin
 	  // The returned QSize is in grid points (typically 100 or 200 pixels square)
 	  return QSize(1,1); //1x1 grid size
 	}
-	
+
 	void savePluginGeometry(QRect geom){
 	  settings->setValue(prefix+"geometry/desktopGridPoints", geom);
 	  settings->sync();
 	}
-	
+
 	QRect loadPluginGeometry(){
-	  return settings->value(prefix+"geometry/desktopGridPoints", QRect()).toRect();	
+	  return settings->value(prefix+"geometry/desktopGridPoints", QRect()).toRect();
 	}
-	
+
 	void saveSetting(QString var, QVariant val){
 	  //qDebug() << "Saving Setting:" << prefix+var+QString(" = ")+val.toString();
 	  settings->setValue(prefix+var, val);
 	  settings->sync();
 	}
-	
+
 	QVariant readSetting(QString var, QVariant defaultval){
 	  return settings->value(prefix+var, defaultval);
 	}
-	
+
 	virtual void Cleanup(){
 	  //This needs to be re-implemented in the subclassed plugin
 	   //This is where any last-minute changes are performed before a plugin is removed permanently
 	   //Note1: This is *not* called if the plugin is being temporarily closed
 	   //Note2: All the settings for this plugin will be automatically removed after this is finished
 	}
-	
+
 	void removeSettings(bool permanent = false){ //such as when a plugin is deleted
 	  if(permanent){ Cleanup(); }
 	  QStringList list = settings->allKeys().filter(prefix);
 	   for(int i=0; i<list.length(); i++){ settings->remove(list[i]); }
-	
+
 	}
-	
+
 	void setGridGeometry(QRect grid){ settings->setValue(prefix+"geometry/gridLocation", grid); }
 	QRect gridGeometry(){ return settings->value(prefix+"geometry/gridLocation",QRect()).toRect(); }
 
@@ -106,36 +106,36 @@ public slots:
 	  setupMenu();
 	}
 	void showPluginMenu();
-	
+
 signals:
 	void OpenDesktopMenu();
 	void CloseDesktopMenu();
 	void PluginResized();
 	void PluginActivated();
-	
+
 	//Signals for communication with the desktop layout system (not generally used by hand)
 	void StartMoving(QString); //ID of plugin
 	void StartResizing(QString); //ID of plugin
 	void RemovePlugin(QString); //ID of plugin
 	void IncreaseIconSize(); // only used for desktop icons
 	void DecreaseIconSize(); // only used for desktop icons
-	
+
 private slots:
-	void slotStartMove(){ 
-	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) ); 
-	  emit StartMoving(PLUGID); 
+	void slotStartMove(){
+	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) );
+	  emit StartMoving(PLUGID);
 	}
-	
-	void slotStartResize(){ 
-	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) ); 
-	  emit StartResizing(PLUGID); 
+
+	void slotStartResize(){
+	  QCursor::setPos( this->mapToGlobal(QPoint(this->width()/2, this->height()/2)) );
+	  emit StartResizing(PLUGID);
 	}
-	
-	void slotRemovePlugin(){ 
+
+	void slotRemovePlugin(){
 	  removeSettings(true);
-	  emit RemovePlugin(PLUGID); 
+	  emit RemovePlugin(PLUGID);
 	}
-		
+
 protected:
 	void mousePressEvent(QMouseEvent *ev){
 	  if(!dragTimer->isActive() && ev->buttons().testFlag(Qt::LeftButton) ){ dragTimer->start(); }
@@ -146,9 +146,9 @@ protected:
 	  QWidget::mouseReleaseEvent(ev);
 	}
 	void mouseMoveEvent(QMouseEvent *ev){
-	  if(ev->buttons().testFlag(Qt::LeftButton)){ 
+	  if(ev->buttons().testFlag(Qt::LeftButton)){
 	    if(dragTimer->isActive()){ dragTimer->stop(); }
-	    slotStartMove(); 
+	    slotStartMove();
 	  }
 	  QWidget::mouseMoveEvent(ev);
 	}

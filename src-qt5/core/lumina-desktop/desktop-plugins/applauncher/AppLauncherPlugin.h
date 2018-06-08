@@ -53,6 +53,7 @@ private slots:
 	//void increaseIconSize();
 	//void decreaseIconSize();
 	//void deleteFile();
+	void startDragNDrop();
 
 	void actionTriggered(QAction *act);
 	void openWith();
@@ -90,18 +91,9 @@ protected:
 	void mouseMoveEvent(QMouseEvent *ev){
 	  if( (ev->buttons() & Qt::LeftButton) ){
 	    if((ev->pos() - dragstartpos).manhattanLength() > (this->width()/4) ){
-	      //Start the drag event for this file
-	      QDrag *drag = new QDrag(this);
-	      QMimeData *md = new QMimeData;
-	        md->setUrls( QList<QUrl>() << QUrl::fromLocalFile(button->whatsThis()) );
-	        drag->setMimeData(md);
-	      //Now perform the drag and react appropriately
-	      Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
-	      if(dropAction == Qt::MoveAction){
-	        // File Moved, remove it from here
-	        //qDebug() << "File Moved:" << button->whatsThis();
-	        //DO NOT DELETE FILES - return code often is wrong (browser drops for instance)
-	      }
+	      emit StartMoving(this->ID());
+	    }else if(false){ //
+	      startDragNDrop();
 	    }
 	  }else{
 	    LDPlugin::mouseMoveEvent(ev);

@@ -153,6 +153,8 @@ void AppLauncherPlugin::loadButton(){
     tmp = this->contextMenu()->addAction( tr("Delete"), this, SLOT(fileDelete()) );
     ICONS->loadIcon(tmp, "document-close");
   }
+  tmp = this->contextMenu()->addAction( tr("Drag to Application"), this, SLOT(startDragNDrop()) );
+  ICONS->loadIcon(tmp, "edit-redo");
   iconLoaded(iconID); //make sure the emblem is layered on top
   //If the file is a symlink, put the overlay on the icon
   /*if(info.isSymLink()){
@@ -237,6 +239,21 @@ void AppLauncherPlugin::iconLoaded(QString ico){
       pix = QPixmap::fromImage(img);
     }
     button->setIcon( QIcon(pix) );
+  }
+}
+
+void AppLauncherPlugin::startDragNDrop(){
+  //Start the drag event for this file
+  QDrag *drag = new QDrag(this);
+  QMimeData *md = new QMimeData;
+    md->setUrls( QList<QUrl>() << QUrl::fromLocalFile(button->whatsThis()) );
+    drag->setMimeData(md);
+  //Now perform the drag and react appropriately
+  Qt::DropAction dropAction = drag->exec(Qt::CopyAction | Qt::MoveAction);
+  if(dropAction == Qt::MoveAction){
+    // File Moved, remove it from here
+    //qDebug() << "File Moved:" << button->whatsThis();
+    //DO NOT DELETE FILES - return code often is wrong (browser drops for instance)
   }
 }
 
