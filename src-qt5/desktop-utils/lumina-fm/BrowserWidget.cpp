@@ -58,7 +58,6 @@ void BrowserWidget::changeDirectory(QString dir){
     for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
     //videoMap.clear();
   }
-  if(BROWSER->currentDirectory()==dir){ return; } //already on this directory
   //qDebug() << "Change Directory:" << dir << historyList;
 
   if( !dir.contains("/.zfs/snapshot/") ){
