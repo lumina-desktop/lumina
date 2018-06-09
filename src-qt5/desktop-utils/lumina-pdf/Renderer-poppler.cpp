@@ -6,7 +6,7 @@ class Link {
   public:
     Link(TextData *_data, Poppler::Link *_link) : data(_data), link(_link) { }
     ~Link() { delete data; }
-  
+
     TextData* getData() { return data; }
     Poppler::Link* getLink() { return link; }
 
@@ -91,6 +91,7 @@ bool Renderer::loadDocument(QString path, QString password){
 
 void Renderer::renderPage(int pagenum, QSize DPI, int degrees){
   //qDebug() << "Render Page:" << pagenum << DPI << degrees;
+
   if(DOC!=0){
     Poppler::Page *PAGE = DOC->page(pagenum);
     QImage img;
@@ -163,7 +164,7 @@ bool Renderer::supportsExtraFeatures() { return false; }
 
 void Renderer::traverseOutline(void *, int) { }
 
-void Renderer::handleLink(QWidget *obj, QString linkDest) { 
+void Renderer::handleLink(QWidget *obj, QString linkDest) {
   Poppler::Link* trueLink;
   foreach(QList<Link*> linkArray, linkHash) {
     for(int i = 0; i < linkArray.size(); i++) {
@@ -186,7 +187,7 @@ void Renderer::handleLink(QWidget *obj, QString linkDest) {
   }
 }
 
-TextData* Renderer::linkList(int pageNum, int entry) { 
+TextData* Renderer::linkList(int pageNum, int entry) {
   if(linkHash[pageNum].size() > 0)
     return linkHash[pageNum][entry]->getData();
   else

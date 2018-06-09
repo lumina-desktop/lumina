@@ -227,7 +227,7 @@ void MainUI::loadFile(QString path){
   if(!QFile::exists(path) || path.isEmpty() ){ return; }
   QString password;
   bool ok = true;
-    
+
   while( ok && !BACKEND->loadDocument(path, password) && BACKEND->needPassword() ){
     password = QInputDialog::getText(this, tr("Unlock PDF"), tr("Password:"), QLineEdit::Password, "", &ok);
     if(!ok){ break; } //cancelled
@@ -370,7 +370,7 @@ void MainUI::startLoadingPages(int degrees){
   // Using Qt to scale the image (adjust page value) smooths out the image quite a bit without a lot of performance loss (but cannot scale up without pixelization)
   // The best approach seams to be to increase the DPI a bit, but match that with the same scaling on the page size (smoothing)
 
-  QSize DPI(150,150); //print-quality (some printers even go to 600 DPI nowdays)
+  QSize DPI(250,250); //print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
