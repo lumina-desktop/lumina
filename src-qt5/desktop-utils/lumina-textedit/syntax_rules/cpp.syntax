@@ -12,7 +12,7 @@
 	},
 	"format": {
 		"line_wrap": false,
-		"highlight_whitespace_eol": true
+		"highlight_whitespace_eol": true,
 		"check_spelling": false
 	},
 	"rules": [{
