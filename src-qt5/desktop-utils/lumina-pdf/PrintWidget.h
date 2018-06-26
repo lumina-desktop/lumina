@@ -298,7 +298,7 @@ protected:
 
       if(PageItem *page = dynamic_cast<PageItem*>(item))
         linkList = page->childItems();
-      else
+      else if(item != dynamic_cast<QGraphicsRectItem*>(item))
         linkList = item->parentItem()->childItems();
 
       if(LinkItem *link = dynamic_cast<LinkItem*>(item)){
