@@ -22,7 +22,6 @@ MainUI::MainUI()
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
   areaOverlay = 0;
-  ppath = QDir::homePath();
   ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().width("200%") );
   setupIcons();
   ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
@@ -60,6 +59,7 @@ MainUI::MainUI()
   connect(tabbar, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
   connect(ui->check_show_popups, SIGNAL(toggled(bool)), this, SLOT(showPopupsChanged(bool)) );
   settings = LUtils::openSettings("lumina-desktop", "lumina-screenshot",this);
+  ppath = settings->value("previous-path", QDir::homePath()).toString();
   QString opt = settings->value("screenshot-target", "window").toString();
   if( opt == "window") {ui->radio_window->setChecked(true); }
   else if(opt=="area"){ ui->radio_area->setChecked(true); }
@@ -129,6 +129,7 @@ void MainUI::saveScreenshot(){
   }else{
     picSaved = true;
     ppath = filepath.section("/",0,-2); //just the directory
+    settings->setValue("previous-path", ppath);
     if (closeOnSave) {
       // We came here from close, now we need to close *after* handling
       // the current screen event.
