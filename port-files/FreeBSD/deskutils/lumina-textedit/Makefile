@@ -21,8 +21,8 @@ I18N_DESC= Install localization files
 
 MAKE_JOBS_UNSAFE=yes
 
-USES=           qmake
-USE_QT5=	core gui widgets network svg \
+USES=		qmake qt:5
+USE_QT=		core gui widgets network svg \
 		buildtools_build x11extras concurrent multimedia
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos

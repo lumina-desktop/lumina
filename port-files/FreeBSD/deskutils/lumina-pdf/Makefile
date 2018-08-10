@@ -36,8 +36,8 @@ I18N_USE=			qt5=linguist_build
 
 MAKE_JOBS_UNSAFE=yes
 
-USES=           qmake
-USE_QT5=	core gui widgets network svg multimedia \
+USES=		qmake qt:5
+USE_QT=		core gui widgets network svg multimedia \
 		buildtools_build x11extras concurrent printsupport
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
