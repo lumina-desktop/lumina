@@ -31,7 +31,7 @@ GH_TAGNAME=	%%GHTAG%%
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
-USE_QT5+= linguist_build
+USE_QT+= linguist_build
 QMAKE_ARGS+=CONFIG+=WITH_I18N
 .endif
 

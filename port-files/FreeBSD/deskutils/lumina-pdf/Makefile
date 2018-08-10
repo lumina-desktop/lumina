@@ -30,7 +30,7 @@ MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
 MUPDF_QMAKE_ON=			USE_MUPDF=true
 
 I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			qt5=linguist_build
+I18N_USE=			qt+=linguist_build
 
 .include <bsd.port.options.mk>
 
