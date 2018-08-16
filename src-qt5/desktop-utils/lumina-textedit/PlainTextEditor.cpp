@@ -291,7 +291,6 @@ void PlainTextEditor::LNW_updateWidth(){
 
 void PlainTextEditor::LNW_highlightLine(){
   QList<QTextEdit::ExtraSelection> sels;
-  
   foreach(Word *word, wordList) { sels.append(word->sel); };
   if(this->isReadOnly()){ return; }
   QColor highC = QColor(0,0,0,50); //just darken the line a bit

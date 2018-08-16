@@ -27,7 +27,7 @@ SOURCES	+= main.cpp \
 FORMS		+= MainUI.ui \
 			ColorDialog.ui
 
-LIBS  +=  -lhunspell-1.6
+#LIBS  +=  -lhunspell-1.6
 
 TRANSLATIONS =  i18n/l-te_af.ts \
                 i18n/l-te_ar.ts \
