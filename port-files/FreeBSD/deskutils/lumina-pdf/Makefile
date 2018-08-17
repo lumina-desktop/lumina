@@ -37,11 +37,17 @@ GH_PROJECT=	lumina
 GH_TAGNAME=	%%GHTAG%%
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
-POPPLER_LIB_DEPENDS=		libpoppler-qt5.so:graphics/poppler-qt5
-POPPLER_QMAKE_ON=		USE_POPPLER=true
-MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
-MUPDF_QMAKE_ON=			USE_MUPDF=true
-I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			USE_QT+=linguist_build
+.if${PORT_OPTIONS:MPOPPLER}
+QMAKE_ARGS+=	USE_POPPLER=true
+LIB_DEPENDS+=	libpoppler-qt5.so:graphics/poppler-qt5
+.elif${PORT_OPTIONS:MMUPDF}
+QMAKE_ARGS+=	USE_MUPDF=true
+LIB_DEPENDS+=	libmupdf.so:graphics/mupdf
+.endif
+
+.if${PORT_OPTIONS:MI18N}
+USE_QT+= linguist_build
+QMAKE_ARGS+=CONFIG+=WITH_I18N
+.endif
 
 .include <bsd.port.mk>
