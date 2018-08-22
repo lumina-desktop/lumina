@@ -35,19 +35,20 @@ void LFileInfo::loadExtraInfo(){
   desk = 0;
   c_uid = geteuid();
   //Now load the extra information
-  if(this->absoluteFilePath().startsWith("/net/") || this->isDir() ){
+  QString abspath = this->absoluteFilePath();
+  if( this->isDir() ){
     mime = "inode/directory";
     //Special directory icons
     QString name = this->fileName().toLower();
-    if(name=="desktop"){ iconList << "user-desktop"; }
+    if(name=="desktop" || abspath == LUtils::standardDirectory(LUtils::Desktop, false) ){ iconList << "user-desktop"; }
     else if(name=="tmp"){ iconList << "folder-temp"; }
-    else if(name=="video" || name=="videos"){ iconList << "folder-video" << "camera-photo-film" ; }
-    else if(name=="music" || name=="audio"){ iconList << "folder-sound" << "media-playlist-audio"; }
+    else if(name=="video" || name=="videos" || abspath == LUtils::standardDirectory(LUtils::Videos, false)){ iconList << "folder-video" << "camera-photo-film" ; }
+    else if(name=="music" || name=="audio" || abspath == LUtils::standardDirectory(LUtils::Music, false)){ iconList << "folder-sound" << "media-playlist-audio"; }
     else if(name=="projects" || name=="devel"){ iconList << "folder-development"; }
     else if(name=="notes"){ iconList << "folder-txt" << "note-multiple-outline" << "note-multiple"; }
-    else if(name=="downloads"){ iconList << "folder-downloads" << "folder-download"; }
-    else if(name=="documents"){ iconList << "folder-documents"; }
-    else if(name=="images" || name=="pictures"){ iconList << "folder-image"; }
+    else if(name=="downloads" || abspath == LUtils::standardDirectory(LUtils::Downloads, false)){ iconList << "folder-downloads" << "folder-download"; }
+    else if(name=="documents" || abspath == LUtils::standardDirectory(LUtils::Documents, false)){ iconList << "folder-documents"; }
+    else if(name=="images" || name=="pictures" || abspath == LUtils::standardDirectory(LUtils::Pictures, false)){ iconList << "folder-image"; }
     else if(this->absoluteFilePath().startsWith("/net/")){ iconList << "folder-remote"; }
     else if( !this->isReadable() ){ iconList << "folder-locked"<< "folder-lock"; }
     iconList << "folder";

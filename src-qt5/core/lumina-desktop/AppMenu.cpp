@@ -45,14 +45,8 @@ void AppMenu::updateAppList(){
   APPS.clear(); //NOTE: Don't delete these pointers - the pointers are managed by the sysApps class and these are just references to them
   //qDebug() << "New Apps List:";
   if(LSession::handle()->sessionSettings()->value("AutomaticDesktopAppLinks",true).toBool() && !lastHashUpdate.isNull() ){
-    QString desktop = QDir::homePath()+"/"+tr("Desktop")+"/"; //translated desktop folder
-    if(!QFile::exists(desktop)){
-      desktop = QDir::homePath()+"/Desktop/"; //desktop folder
-      if(!QFile::exists(desktop)){
-        desktop = QDir::homePath()+"/desktop/"; //lowercase desktop folder
-        if(!QFile::exists(desktop)){ desktop.clear(); }
-      }
-    }
+    QString desktop = LUtils::standardDirectory(LUtils::Desktop);
+    desktop.append("/");
     //qDebug() << "Update Desktop Folder:" << desktop << sysApps->removedApps << sysApps->newApps;
     QStringList tmp = sysApps->removedApps;
     for(int i=0; i<tmp.length() && !desktop.isEmpty(); i++){

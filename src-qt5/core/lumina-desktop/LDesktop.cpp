@@ -685,8 +685,7 @@ void LDesktop::PasteInDesktop(){
     }
   }
   //Now go through and paste all the designated files
-  QString desktop = QDir::homePath()+"/"+tr("Desktop"); //translated form
-  if(!QFile::exists(desktop)){ desktop = QDir::homePath()+"/Desktop"; } //default/untranslated form
+  QString desktop = LUtils::standardDirectory(LUtils::Desktop);
   for(int i=0; i<files.length(); i++){
     QString path = files[i].section("::::",1,-1);
     if(!QFile::exists(path)){ continue; } //does not exist any more - move on to next

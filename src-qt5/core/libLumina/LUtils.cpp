@@ -43,6 +43,73 @@
 //=============
 //  LUtils Functions
 //=============
+
+//Return the path to one of the XDG standard directories
+QString LUtils::standardDirectory(StandardDir dir, bool createAsNeeded){
+// enum StandardDir {Desktop, Documents, Downloads, Music, Pictures, PublicShare, Templates, Videos}
+  QString var="XDG_%1_DIR";
+  QString defval="$HOME";
+  QString val;
+  switch (dir){
+    case Desktop:
+      var = var.arg("DESKTOP");
+      defval.append("/Desktop");
+      break;
+    case Documents:
+      var = var.arg("DOCUMENTS");
+      defval.append("/Documents");
+      break;
+    case Downloads:
+      var = var.arg("DOWNLOAD");
+      defval.append("/Downloads");
+      break;
+    case Music:
+      var = var.arg("MUSIC");
+      defval.append("/Music");
+      break;
+    case Pictures:
+      var = var.arg("PICTURES");
+      defval.append("/Pictures");
+      break;
+    case PublicShare:
+      var = var.arg("PUBLICSHARE");
+      break;
+    case Templates:
+      var = var.arg("TEMPLATES");
+      break;
+    case Videos:
+      var = var.arg("VIDEOS");
+      defval.append("/Videos");
+      break;
+  }
+  //Read the XDG user dirs file (if it exists)
+  QString configdir = getenv("XDG_DATA_HOME");
+  if(configdir.isEmpty()){ configdir = QDir::homePath()+"/.config"; }
+  QString conffile=configdir+"/user-dirs.dirs";
+  if(QFile::exists(conffile)){
+    static QStringList _contents;
+    static QDateTime _lastread;
+    if(_contents.isEmpty() || _lastread < QFileInfo(conffile).lastModified()){
+      _contents = LUtils::readFile(conffile);
+      _lastread = QDateTime::currentDateTime();
+    }
+    QStringList match = _contents.filter(var+"=");
+    if(!match.isEmpty()){
+      val = match.first().section("=",-1).simplified();
+      if(val.startsWith("\"")){ val = val.remove(0,1); }
+      if(val.endsWith("\"")){ val.chop(1); }
+    }
+  }
+  //Now check the value and return it
+  if(val.isEmpty()){ val = defval; }; //use the default value
+  val = val.replace("$HOME", QDir::homePath());
+  if(createAsNeeded && !QFile::exists(val) ){
+    QDir dir;
+    dir.mkpath(val);
+  }
+  return val;
+}
+
 QString LUtils::runCommand(bool &success, QString command, QStringList arguments, QString workdir, QStringList env){
   QProcess proc;
     proc.setProcessChannelMode(QProcess::MergedChannels); //need output

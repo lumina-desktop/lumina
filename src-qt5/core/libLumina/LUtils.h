@@ -29,9 +29,13 @@
 
 class LUtils{
 public:
+	enum StandardDir {Desktop, Documents, Downloads, Music, Pictures, PublicShare, Templates, Videos};
+
+	//Return the path to one of the XDG standard directories
+	static QString standardDirectory(StandardDir dir, bool createAsNeeded = true);
 
 	//Run an external command and return output & exit code
-     static QString runCommand(bool &success, QString command, QStringList arguments = QStringList(), QString workdir = "", QStringList env = QStringList());
+	static QString runCommand(bool &success, QString command, QStringList arguments = QStringList(), QString workdir = "", QStringList env = QStringList());
 
 	//Run an external command and return the exit code
 	static int runCmd(QString cmd, QStringList args = QStringList());
