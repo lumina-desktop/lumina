@@ -18,7 +18,7 @@
 
 imgDialog::imgDialog(QWidget *parent) : QDialog(parent), ui(new Ui::imgDialog()){
   ui->setupUi(this); //load the designer form
-  QString title = tr("Burn IMG to Device");
+  QString title = tr("Burn Disk Image to Device");
   if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
   this->setWindowTitle(title);
   ui->frame_running->setVisible(false);
@@ -107,7 +107,7 @@ void imgDialog::cancel(){
     this->close();
   }else{
     //Prompt if the transfer should be cancelled
-    if(QMessageBox::Yes == QMessageBox::question(this, tr("Cancel Image Burn?"), tr("Do you wish to stop the current IMG burn process?")+"\n\n"+tr("Warning: This will leave the USB device in an inconsistent state")) ){
+    if(QMessageBox::Yes == QMessageBox::question(this, tr("Cancel Image Burn?"), tr("Do you wish to stop the current disk image burn process?")+"\n\n"+tr("Warning: This will leave the USB device in an inconsistent state")) ){
       ddProc->kill();
     }
   }
@@ -175,7 +175,7 @@ void imgDialog::procFinished(){
         QMessageBox::warning(this, tr("ERROR"), tr("The process could not be completed:")+"\n\n"+lastmsg);
       }
     }else{
-      QMessageBox::information(this, tr("SUCCESS"), tr("The image was successfully burned to the USB device") );
+      QMessageBox::information(this, tr("SUCCESS"), tr("The image was successfully burned to the device") );
       this->close();
     }
   }
