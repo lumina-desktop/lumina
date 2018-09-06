@@ -35,6 +35,9 @@ public:
 	LSingleApplication(int &argc, char **argv, QString appname);
 	~LSingleApplication();
 
+	static QString getLockfileName(QString appname);
+	static void removeLocks(QString appname);
+
 	bool isPrimaryProcess();
 
 	QStringList inputlist; //in case the app wants access to modified inputs (relative path fixes and such)

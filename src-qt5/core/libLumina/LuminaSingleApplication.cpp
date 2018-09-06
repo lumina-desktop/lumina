@@ -18,14 +18,7 @@ LSingleApplication::LSingleApplication(int &argc, char **argv, QString appname) 
   this->setAttribute(Qt::AA_UseHighDpiPixmaps);
   if(appname!="lumina-desktop"){ cTrans = LUtils::LoadTranslation(this, appname); }//save the translator for later
   //Initialize a couple convenience internal variables
-  cfile = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
-  QString username = QString::number(getuid());
-  //For locking the process use the official process name - not the user input (no masking)
-  appname = this->applicationName();
-  QString display = QString(getenv("DISPLAY"));
-  if(display.startsWith(":")){ display.remove(0,1); }
-  display = display.section(".",0,0);
-  cfile = cfile.arg( username, appname, display );
+  cfile = getLockfileName(this->applicationName()); //do not allow masking the utility name
   lockfile = new QLockFile(cfile+"-lock");
     lockfile->setStaleLockTime(0); //long-lived processes
   for(int i=1; i<argc; i++){
@@ -56,6 +49,26 @@ LSingleApplication::~LSingleApplication(){
     lserver->close();
     QLocalServer::removeServer(cfile);
     lockfile->unlock();
+  }
+}
+
+QString LSingleApplication::getLockfileName(QString appname){
+  QString path = QDir::tempPath()+"/.LSingleApp-%1-%2-%3";
+  QString username = QString::number(getuid());
+  QString display = QString(getenv("DISPLAY"));
+  if(display.startsWith(":")){ display.remove(0,1); }
+  display = display.section(".",0,0);
+  path = path.arg( username, appname, display );
+  return path;
+}
+
+void LSingleApplication::removeLocks(QString appname){
+  QString path = getLockfileName(appname);
+  if(QFile::exists(path+"-lock")){
+    QFile::remove(path+"-lock");
+  }
+  if(QFile::exists(path)){
+    QFile::remove(path);
   }
 }
 

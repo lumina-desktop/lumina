@@ -305,6 +305,7 @@ void OSInterface::syncNetworkInfo(OSInterface *os, QHash<QString, QVariant> *has
     bool ok = false;
     for(int j=0; j<addressList.length() && !ok; j++){
       if( addressList[j].ip().isLoopback() ){ continue; }
+      else if(addressList[i].ip().isEqual(QHostAddress(QHostAddress::LocalHost)) || addressList[i].ip().isEqual(QHostAddress::LocalHostIPv6) ){ continue; }
       addressList[j].ip().toIPv4Address(&ok);
     }
     if(ok){ active = netconfigL[i]; break; } //found a good one with a valid IPv4

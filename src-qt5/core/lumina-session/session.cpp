@@ -16,6 +16,7 @@
 #include <LUtils.h>
 #include <LuminaOS.h>
 #include <LDesktopUtils.h>
+#include <LuminaSingleApplication.h>
 
 void LSession::stopall(){
   stopping = true;
@@ -193,13 +194,15 @@ void LSession::start(bool unified){
 	startProcess("wm", WM);
   }
   //Desktop Next
-  startProcess("runtime","lumina-desktop -new-instance");
+  LSingleApplication::removeLocks("lumina-desktop");
+  startProcess("runtime","lumina-desktop");
   //ScreenSaver
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
  }else{
   //unified process
   setupCompositor(true); //required for Lumina 2
-  startProcess("runtime","lumina-desktop-unified -new-instance");
+  LSingleApplication::removeLocks("lumina-desktop-unified");
+  startProcess("runtime","lumina-desktop-unified");
  }
 }
 

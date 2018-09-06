@@ -9,6 +9,7 @@ target.path = $${L_BINDIR}
 include(../libLumina/LDesktopUtils.pri)
 include(../libLumina/LuminaXDG.pri)
 include(../libLumina/LuminaThemes.pri)
+include(../libLumina/LuminaSingleApplication.pri)
 
 SOURCES += main.cpp \
 			session.cpp

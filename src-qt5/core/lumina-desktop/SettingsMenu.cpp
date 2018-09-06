@@ -13,12 +13,12 @@ SettingsMenu::SettingsMenu() : QMenu(){
   this->setObjectName("SettingsMenu");
   connect(this, SIGNAL(triggered(QAction*)), this, SLOT(runApp(QAction*)) );
   connect(QApplication::instance(), SIGNAL(LocaleChanged()), this, SLOT(UpdateMenu()) );
-  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(UpdateMenu()) );	
+  connect(QApplication::instance(), SIGNAL(IconThemeChanged()), this, SLOT(UpdateMenu()) );
   QTimer::singleShot(100, this, SLOT(UpdateMenu()) );
 }
 
 SettingsMenu::~SettingsMenu(){
-  
+
 }
 
 void SettingsMenu::UpdateMenu(){
@@ -35,6 +35,9 @@ void SettingsMenu::UpdateMenu(){
 	this->addAction(act);
    act = new QAction( LXDG::findIcon("preferences-other",""), tr("Display"), this);
 	act->setWhatsThis("lumina-xconfig");
+	this->addAction(act);
+  act = new QAction( LXDG::findIcon("preferences-desktop-theme",""), tr("Theme"), this);
+	act->setWhatsThis("lthemeengine");
 	this->addAction(act);
   act = new QAction( LXDG::findIcon("preferences-desktop",""), tr("All Desktop Settings"), this);
 	act->setWhatsThis("lumina-config");
@@ -58,7 +61,7 @@ void SettingsMenu::UpdateMenu(){
   }
   act = new QAction( LXDG::findIcon("lumina",""), tr("About Lumina"), this);
 	act->setWhatsThis("lumina-info");
-	this->addAction(act);  
+	this->addAction(act);
 }
 
 
