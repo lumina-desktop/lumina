@@ -859,6 +859,19 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     //if(tmp.isNull()){ tmp = QIcon::fromTheme(fallback); }
   }
   if(!tmp.isNull() && tmp.name()==iconName){ return tmp; } //found this in the theme
+  else if(iconName=="start-here-lumina"){
+    //Additional fallback options for the OS-branded icon
+    QString osname = LOS::OSName().simplified().toLower();
+    QStringList possible; possible << "distributor-logo-"+osname << osname;
+    QStringList words;
+    if(osname.contains(" ")){ words = osname.split(" "); }
+    else if(osname.contains("-")){ words = osname.split("-"); }
+    for(int i=0; i<words.length(); i++){ possible << "distributor-logo-"+words[i] << words[i]; }
+    //qDebug() << "Looking for possible OS icons:" << possible;
+    for(int i=0; i<possible.length(); i++){
+      if(QIcon::hasThemeIcon(possible[i])){ return QIcon::fromTheme(possible[i]); }
+    }
+  }
   if(!fallback.isEmpty() && QIcon::hasThemeIcon(fallback)){ tmp = QIcon::fromTheme(fallback); return tmp; } //found this in the theme
 
 

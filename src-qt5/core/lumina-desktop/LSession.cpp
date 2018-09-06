@@ -210,7 +210,7 @@ void LSession::setupSession(){
   //Initialize the desktops
     splash.showScreen("desktop");
   if(DEBUG){ qDebug() << " - Init Desktops:" << timer->elapsed();}
-  desktopFiles = QDir(QDir::homePath()+"/Desktop").entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
+  desktopFiles = QDir(LUtils::standardDirectory(LUtils::Desktop)).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs, QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
   updateDesktops();
   //if(DEBUG){ qDebug() << " - Process Events (6x):" << timer->elapsed();}
   //for(int i=0; i<6; i++){ LSession::processEvents(); } //Run through this a few times so the interface systems get up and running
@@ -227,8 +227,7 @@ void LSession::setupSession(){
     watcherChange( confdir+"/fluxbox-keys" );
     watcherChange( confdir+"/favorites.list" );
     //Try to watch the localized desktop folder too
-    if(QFile::exists(QDir::homePath()+"/"+tr("Desktop"))){ watcherChange( QDir::homePath()+"/"+tr("Desktop") ); }
-    watcherChange( QDir::homePath()+"/Desktop" );
+    watcherChange( LUtils::standardDirectory(LUtils::Desktop) );
     //And watch the /media directory, and /run/media/USERNAME directory
    if(QFile::exists("/media")){  watcherChange("/media"); }
    QString userMedia = QString("/run/media/%1").arg(QDir::homePath().split("/").takeLast());
@@ -419,7 +418,7 @@ void LSession::watcherChange(QString changed){
     }
     emit SessionConfigChanged();
   }else if(changed.endsWith("desktopsettings.conf") ){ emit DesktopConfigChanged(); }
-  else if(changed == QDir::homePath()+"/Desktop" || changed == QDir::homePath()+"/"+tr("Desktop") ){
+  else if(changed == LUtils::standardDirectory(LUtils::Desktop) ){
     desktopFiles = QDir(changed).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs ,QDir::Name | QDir::IgnoreCase | QDir::DirsFirst);
     if(DEBUG){ qDebug() << "New Desktop Files:" << desktopFiles.length(); }
     emit DesktopFilesChanged();

@@ -277,7 +277,7 @@ void MainUI::OpenFile(QString file){
       edit->document()->setDefaultFont(font);
       /*QStringList applicationDirs = LXDG::systemApplicationDirs();*/
       if(ui->actionEnable_Spellcheck->isChecked()) {
-        QStringList dirs = QString(getenv("XDG_DATA_DIRS")).split(":");
+        /*QStringList dirs = QString(getenv("XDG_DATA_DIRS")).split(":");
         foreach(QString dir, dirs) {
           if(QDir(dir).exists("hunspell")) {
             //Default to US English Dictionary
@@ -285,7 +285,7 @@ void MainUI::OpenFile(QString file){
             hunspell = new Hunspell(QString(hunspellPath + "en_US.aff").toLocal8Bit(), QString(hunspellPath + "en_US.dic").toLocal8Bit());
             edit->setDictionary(hunspell);
           }
-        }
+        }*/
       }
     }
     tabWidget->setCurrentWidget(edit);
@@ -413,7 +413,7 @@ void MainUI::ModifyColors(){
 }
 
 void MainUI::SetLanguage() {
-  QDir dir(hunspellPath);
+  /*QDir dir(hunspellPath);
   QStringList files = dir.entryList(QStringList() << "*.dic", QDir::Files);
   QStringList items;
   int defaultDic = 0;
@@ -431,7 +431,7 @@ void MainUI::SetLanguage() {
 
   hunspell = new Hunspell(QString(hunspellPath+dic+".aff").toLocal8Bit(), QString(hunspellPath+dic+".dic").toLocal8Bit());
 
-  checkSpelling(-1);
+  checkSpelling(-1);*/
 }
 
 void MainUI::showPopupWarnings(bool show){
@@ -439,13 +439,13 @@ void MainUI::showPopupWarnings(bool show){
 }
 
 void MainUI::enableSpellcheck(bool show){
-  qDebug() << "Enabling Spellcheck";
+  /*qDebug() << "Enabling Spellcheck";
   settings->setValue("enableSpellcheck",show);
   if(currentEditor() != NULL and hunspell == NULL) {
-    /*QStringList applicationDirs = LXDG::systemApplicationDirs();*/
+    //QStringList applicationDirs = LXDG::systemApplicationDirs();
     hunspell = new Hunspell(QString(hunspellPath + "en_US.aff").toLocal8Bit(), QString(hunspellPath + "en_US.dic").toLocal8Bit());
     qDebug() << "Hunspell Created";
-  }
+  }*/
 }
 
 void MainUI::showToolbar(bool show){
@@ -621,22 +621,30 @@ PlainTextEditor *cur = currentEditor();
 }
 
 void MainUI::checkWord(QTextBlock block) {
-  PlainTextEditor *cur = currentEditor();
+  /*PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
+  if(block.text().simplified().isEmpty()){ return; }
 
   foreach(Word *word, wordList) {
-    if(word->blockNum == block.blockNumber())
+    if(word->blockNum == block.blockNumber()){
+      qDebug() << "Remove Word";
       wordList.removeOne(word);
+    }
   }
 
   QStringList words = block.text().split(QRegExp("\\W+"));
+  qDebug() << "Got Words:" << words;
   QTextCursor cursor(block);
 
   foreach(QString word, words) {
+    qDebug() << "Check Word:" << word;
     if(!hunspell->spell(word.toStdString())) {
-      QList<QString> suggestions;
-      foreach(std::string newWord, hunspell->suggest(word.toStdString()))
+      qDebug() << "Not a word";
+      QStringList suggestions;
+      foreach(std::string newWord, hunspell->suggest(word.toStdString())){
         suggestions.append(QString::fromStdString(newWord));
+      }
+      qDebug() << "Got Suggestions:" << suggestions;
       QTextEdit::ExtraSelection sel;
       sel.format.setBackground(QColor("Red"));
       sel.cursor = cur->document()->find(word, cursor.position());
@@ -644,27 +652,31 @@ void MainUI::checkWord(QTextBlock block) {
       wordList.append(wordC);
     }
     cursor.movePosition(QTextCursor::NextWord, QTextCursor::MoveAnchor);
-  }
+  }*/
 }
 
 void MainUI::checkSpelling(int bpos, int epos) {
-  //qDebug() << "Checking spelling on";
+  qDebug() << "Checking spelling on" << bpos << epos;
   PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   static int numBlocks = cur->blockCount();
-
-  if(bpos == -1 or numBlocks != cur->blockCount()) { //When opening a file or loading a new dictionary
-    for(QTextBlock block = cur->document()->begin(); block != cur->document()->end(); block = block.next())
+  //qDebug() << " - numblocks:" << numBlocks;
+  if(bpos == -1 || numBlocks != cur->blockCount()) { //When opening a file or loading a new dictionary
+    for(QTextBlock block = cur->document()->begin(); block != cur->document()->end(); block = block.next()){
+      //qDebug() << " - Check Block:" << block.text();
       checkWord(block);
+    }
     numBlocks = cur->blockCount();
   }else if(epos == -1){ //Normal checking of one block from typing
     QTextBlock block = cur->document()->findBlock(bpos);
+    //qDebug() << " - Check Block:" << block.text();
     checkWord(block);
   }else { //Check blocks after copy/paste
     for(QTextBlock block = cur->document()->findBlock(0); block != cur->document()->findBlock(epos); block = block.next()) {
       checkWord(block);
     }
   }
+  //qDebug() << " - set Word List:" << wordList;
 
   cur->setWordList(wordList);
 }

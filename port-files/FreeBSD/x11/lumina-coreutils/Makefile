@@ -23,10 +23,10 @@ I18N_DESC= Install localization files
 
 MAKE_JOBS_UNSAFE=yes
 
-USES=		qmake
+USES=		qmake qt:5
 
 USE_LDCONFIG=	yes
-USE_QT5=	core gui widgets network svg imageformats \
+USE_QT=			core gui widgets network svg imageformats \
 		buildtools_build x11extras concurrent multimedia
 
 USE_GITHUB=	yes
@@ -36,7 +36,7 @@ GH_TAGNAME=	%%GHTAG%%
 WRKSRC_SUBDIR=	src-qt5/core-utils
 
 .if${PORT_OPTIONS:MI18N}
-USE_QT5+= linguist_build
+USE_QT+= linguist_build
 QMAKE_ARGS+=CONFIG+=WITH_I18N
 .endif
 

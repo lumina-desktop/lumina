@@ -14,6 +14,7 @@ man/man8/start-lumina-desktop.8.gz
 share/applications/lthemeengine.desktop
 share/applications/lumina-info.desktop
 share/applications/lumina-support.desktop
+share/icons/hicolor/scalable/apps/Lumina-DE.png
 share/icons/material-design-dark/LICENSE
 share/icons/material-design-dark/index.theme
 share/icons/material-design-dark/scalable/actions/address-book-new.svg
@@ -1659,9 +1660,12 @@ share/lthemeengine/colors/darker.conf
 share/lthemeengine/colors/dusk.conf
 share/lthemeengine/colors/sand.conf
 share/lthemeengine/colors/simple.conf
+share/lthemeengine/colors/trident-dark.conf
 share/lthemeengine/colors/waves.conf
 share/lthemeengine/desktop_qss/DarkGlass.qss
+share/lthemeengine/desktop_qss/DarkGlass-desktop-icons.qss
 share/lthemeengine/desktop_qss/Glass.qss
+share/lthemeengine/desktop_qss/Glass-desktop-icons.qss
 share/lthemeengine/qss/scrollbar-simple.qss
 share/lthemeengine/qss/sliders-simple.qss
 share/lthemeengine/qss/tooltip-simple.qss
@@ -1881,5 +1885,4 @@ share/lumina-desktop/themes/DarkGlass.qss.template
 share/lumina-desktop/themes/Glass.qss.template
 share/lumina-desktop/themes/Lumina-default.qss.template
 share/lumina-desktop/themes/None.qss.template
-share/pixmaps/Lumina-DE.png
 share/xsessions/Lumina-DE.desktop

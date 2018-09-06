@@ -355,7 +355,7 @@ void MainUI::endPresentation(){
 }
 
 void MainUI::startLoadingPages(int degrees){
-  qDebug() <<"Start Loading Pages";
+  //qDebug() <<"Start Loading Pages";
   //if(BACKEND->hashSize() != 0) { return; } //currently loaded[ing]
   loadingQueue.clear();
 	BACKEND->clearHash();
@@ -420,7 +420,7 @@ void MainUI::paintToPrinter(QPrinter *PRINTER){
   int copies = PRINTER->copyCount();
   bool collate = PRINTER->collateCopies();
   bool reverse = (PRINTER->pageOrder()==QPrinter::LastPageFirst);
-  qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
+  //qDebug() << "PRINTER DPI:" << PRINTER->resolution() << PRINTER->supportedResolutions();
   if(PRINTER->resolution() < 300){
     //Try to get 300 DPI resolution at least
     PRINTER->setResolution(300);
@@ -632,10 +632,11 @@ void MainUI::find(QString text, bool forward) {
 
       TextData *currentText = results[currentHighlight];
 
-      if(BACKEND->supportsExtraFeatures())
+      if(BACKEND->supportsExtraFeatures()) {
         WIDGET->highlightText(currentText);
-    }else{
-      ui->resultsLabel->setText("No results found");
+      }else{
+        ui->resultsLabel->setText("No results found");
+      }
     }
   }
 }

@@ -141,6 +141,10 @@ void LSession::start(bool unified){
   setenv("QT_QPA_PLATFORMTHEME","lthemeengine", true);
   setenv("QT_NO_GLIB", "1", 1); //Disable the glib event loop within Qt at runtime (performance hit + bugs)
   unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //need exact-pixel measurements (no fake scaling)
+  if(LUtils::isValidBinary("xdg-user-dirs-update")){
+    //Make sure the XDG user directories are created as needed first
+    QProcess::execute("xdg-user-dirs-update");
+  }
 
  if(!unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
@@ -181,13 +185,13 @@ void LSession::start(bool unified){
 	startProcess("wm", WM);
   }
   //Desktop Next
-  startProcess("runtime","lumina-desktop");
+  startProcess("runtime","lumina-desktop -new-instance");
   //ScreenSaver
   if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
  }else{
   //unified process
   setupCompositor(true); //required for Lumina 2
-  startProcess("runtime","lumina-desktop-unified");
+  startProcess("runtime","lumina-desktop-unified -new-instance");
  }
 }
 

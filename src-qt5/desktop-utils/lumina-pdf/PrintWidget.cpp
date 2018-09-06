@@ -129,12 +129,16 @@ void PrintWidget::setCurrentPage(int pageNumber) {
       this->centerOn(pages.at(curPage-1));
     }
   }
+
+  //qDebug() << "Page Set";
 }
 
 void PrintWidget::highlightText(TextData *text) {
   //Creates a rectangle around the text if the text has not already been highlighted
+  //qDebug() << "Page:" << text->page() << "Loc:" << text->loc();
   if(!text->highlighted() && !text->loc().isNull()) {
     int degrees = BACKEND->rotatedDegrees();
+    //qDebug() << "Degrees:" << degrees;
     //Shows the text's location on a non-rotated page
     QRectF rect = text->loc();
     //Rotates the rectangle by the page's center and gets the right calculation for text's new location
@@ -154,12 +158,18 @@ void PrintWidget::highlightText(TextData *text) {
       else
         rect.adjust(cy, cx, cy, cx);
     }
+
+    //qDebug() << "Post Degrees:" << rect;
     //Moves the rectangle onto the right page
     double pageHeight = 0;
     for(int i = 0; i < text->page() - 1; i++)
       pageHeight += pages.at(i)->boundingRect().height();
 
+    //qDebug() << "PageHeight:" << pageHeight;
+
     rect.moveTop(rect.y() + pageHeight);
+
+    //qDebug() << "Final Rect:" << rect;
     //Transparent yellow for the highlight box
     QBrush highlightFill(QColor(255, 255, 177, 100));
     QPen highlightOutline(QColor(255, 255, 100, 125));
@@ -388,6 +398,7 @@ void PrintWidget::fit(bool doFitting) {
 }
 
 void PrintWidget::goToPosition(int pagenum, float x, float y) {
+  //qDebug() << "Page:" << pagenum << "X:" << x << "Y:" << y;
   setCurrentPage(pagenum);
   
   QScrollBar *hsc = this->horizontalScrollBar();
@@ -398,8 +409,12 @@ void PrintWidget::goToPosition(int pagenum, float x, float y) {
   double realHeight = pages.at(pagenum-1)->boundingRect().height();
   double virtualHeight = qAbs(pt2.y() - pt.y());
 
+  //qDebug() << "Real:" << realHeight << "Virtual:" << virtualHeight;
+
   int yConv = int(pt.y() + y*(virtualHeight/realHeight)) - 30;
   int xConv = int(pt.x() + x*(virtualHeight/realHeight)) - 30;
+
+  //qDebug() << "newX:" << xConv << "newY:" << yConv;
 
   if(yConv > vsc->maximum())
     vsc->triggerAction(QAbstractSlider::SliderToMaximum);

@@ -354,7 +354,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   }
 
   tmp = sysDefaults.filter("desktoplinks_");
-  QString desktopFolder = QDir::homePath()+"/Desktop/"; //need to make this translatable and dynamic later
+  QString desktopFolder = LUtils::standardDirectory(LUtils::Desktop);
+  desktopFolder.append("/");
   for(int i=0; i<tmp.length(); i++){
     if(tmp[i].startsWith("#") || !tmp[i].contains("=") ){ continue; }
     QString var = tmp[i].section("=",0,0).toLower().simplified();

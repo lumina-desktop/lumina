@@ -65,6 +65,7 @@ class Data {
     fz_context* getContext() { return ctx; }
     fz_display_list* getDisplayList() { return list; }
     QRectF getScaledRect() { return convertRect(bbox, sf); }
+    QRectF getScaledRect(fz_rect &rect) { return convertRect(rect, sf); }
     fz_rect getBoundingBox() { return bbox; }
     fz_matrix getMatrix() { return ctm; }
     QImage getImage() { return img; }
@@ -144,7 +145,7 @@ Renderer::Renderer(){
   locks.unlock = unlock_mutex;
 
   DOC = 0;
-  qDebug() << "Creating Context";
+  //qDebug() << "Creating Context";
   CTX = fz_new_context(NULL, &locks, FZ_STORE_UNLIMITED);
   needpass = false;
   degrees = 0;
@@ -152,7 +153,7 @@ Renderer::Renderer(){
 
 Renderer::~Renderer(){
   //pdf_clean_page_contents
-  qDebug() << "Dropping Context";
+  //qDebug() << "Dropping Context";
   clearHash();
   fz_drop_document(CTX, DOC);
   DOC = NULL;
@@ -216,7 +217,7 @@ bool Renderer::loadDocument(QString path, QString password){
 
     docpath = path;
     DOC = fz_open_document(CTX, path.toLocal8Bit().data());
-    qDebug() << "File opened" << DOC;
+    //qDebug() << "File opened" << DOC;
     if(DOC==0){
       qDebug() << "Could not open file:" << path;
       return false;
@@ -230,13 +231,13 @@ bool Renderer::loadDocument(QString path, QString password){
       if(needpass){ return false; } //incorrect password
     }
 
-    qDebug() << "Password Check cleared";
+    //qDebug() << "Password Check cleared";
     pnum = fz_count_pages(CTX, DOC);
     qDebug() << "Page count: " << pnum;
 
     doctitle.clear();
 
-    qDebug() << "Opening File:" << path;
+    //qDebug() << "Opening File:" << path;
     jobj.insert("subject", getTextInfo("Subject") );
     jobj.insert("author", getTextInfo("Author") );
     jobj.insert("creator", getTextInfo("Creator") );
@@ -255,8 +256,8 @@ bool Renderer::loadDocument(QString path, QString password){
     fz_outline *outline = fz_load_outline(CTX, DOC);
     if(outline) 
       traverseOutline(outline, 0);
-    else
-      qDebug() << "No Bookmarks";
+    //else
+      //qDebug() << "No Bookmarks";
 
     fz_drop_outline(CTX, outline);
 
@@ -555,7 +556,7 @@ QList<TextData*> Renderer::searchDocument(QString text, bool matchCase){
     int count = fz_search_display_list(CTX, dataHash[i]->getDisplayList(), text.toLocal8Bit().data(), rectBuffer, 1000);
     //qDebug() << "Page " << i+1 << ": Count, " << count;
     for(int j = 0; j < count; j++) {
-      TextData *t = new TextData(dataHash[i]->getScaledRect(), i+1, text);
+      TextData *t = new TextData(dataHash[i]->getScaledRect(rectBuffer[j]), i+1, text);
       //MuPDF search does not match case, so retrieve the exact text at the location found and determine whether or not it matches the case of the search text if the user selected to match case
       if(matchCase){
         fz_stext_page *sPage = fz_new_stext_page_from_display_list(CTX, dataHash[i]->getDisplayList(), NULL);

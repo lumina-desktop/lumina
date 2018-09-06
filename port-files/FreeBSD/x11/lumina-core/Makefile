@@ -38,12 +38,12 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:multimedia/gstreamer1-plugins-core
 .endif
 
 MAKE_JOBS_UNSAFE=yes
-USES=		qmake
+USES=		qmake qt:5
 
 USE_GL=		gl
 USE_XORG=	x11 xdamage xcb
 USE_LDCONFIG=	yes
-USE_QT5=	core gui widgets network svg multimedia imageformats \
+USE_QT=		core gui widgets network svg multimedia imageformats \
 		buildtools_build x11extras concurrent
 
 USE_GITHUB=	yes
@@ -58,7 +58,7 @@ QMAKE_ARGS=	DEFAULT_SETTINGS=TrueOS
 .endif
 
 .if${PORT_OPTIONS:MI18N}
-USE_QT5+= linguist_build
+USE_QT+= linguist_build
 QMAKE_ARGS+=CONFIG+=WITH_I18N
 .endif
 

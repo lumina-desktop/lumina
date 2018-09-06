@@ -110,7 +110,7 @@ void MainUI::LoadArguments(QStringList args){
     connect(BACKEND, SIGNAL(ExtractSuccessful()), delayClose, SLOT(start()) );
   }
   BACKEND->loadFile(files[0]);
-  ui->actionUSB_Image->setEnabled(files[0].simplified().endsWith(".img"));
+  ui->actionUSB_Image->setEnabled(files[0].simplified().endsWith(".img") || files[0].simplified().endsWith(".iso"));
   if(action==0){ BurnImgToUSB(); } //Go ahead and launch the burn dialog right away
 
 }

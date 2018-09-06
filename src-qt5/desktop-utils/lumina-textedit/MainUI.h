@@ -21,7 +21,7 @@
 #include "DnDTabBar.h"
 #include "Word.h"
 
-#include <hunspell/hunspell.hxx>
+//#include <hunspell/hunspell.hxx>
 
 namespace Ui{
 	class MainUI;
@@ -46,16 +46,16 @@ private:
 	QShortcut *closeFindS, *nextTabS, *prevTabS;
 	QSpinBox *fontSizes;
 	QAction *label_readonly;
-  Hunspell *hunspell;
-  QList<Word*> wordList;
-  QString hunspellPath;
+	//Hunspell *hunspell;
+	QList<Word*> wordList;
+	QString hunspellPath;
 
 	//Simplification functions
 	PlainTextEditor* currentEditor();
-  QString currentFile();
+	QString currentFile();
 	QString currentFileDir();
 	QStringList unsavedFiles();
-  void checkWord(QTextBlock);
+	void checkWord(QTextBlock);
 
 private slots:
 	//Main Actions
@@ -70,8 +70,8 @@ private slots:
 	void updateStatusTip();
 	void changeFontSize(int newFontSize);
 	void changeTabsLocation(QAction*);
-  void checkSpelling(int bpos, int epos = -1);
-  void SetLanguage();
+	void checkSpelling(int bpos, int epos = -1);
+	void SetLanguage();
 
 	//Other Menu Actions
 	void UpdateHighlighting(QAction *act = 0);
@@ -88,8 +88,8 @@ private slots:
 	void tabClosed(int);
 	void tabDetached(int);
 	void tabDraggedOut(int, Qt::DropAction);
-  void nextTab();
-  void prevTab();
+	void nextTab();
+	void prevTab();
 
 	//Find/Replace functions
 	void closeFindReplace();

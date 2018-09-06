@@ -24,25 +24,30 @@ I18N_DESC= Install localization files
 POPPLER_DESC=	Use Poppler-qt5 backend renderer
 MUPDF_DESC=		Use MuPDF backend renderer
 
-POPPLER_LIB_DEPENDS=		libpoppler-qt5.so:graphics/poppler-qt5
-POPPLER_QMAKE_ON=		USE_POPPLER=true
-MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
-MUPDF_QMAKE_ON=			USE_MUPDF=true
-
-I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			qt5=linguist_build
-
 .include <bsd.port.options.mk>
 
 MAKE_JOBS_UNSAFE=yes
 
-USES=           qmake
-USE_QT5=	core gui widgets network svg multimedia \
+USES=		qmake qt:5
+USE_QT=		core gui widgets network svg multimedia \
 		buildtools_build x11extras concurrent printsupport
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
 GH_TAGNAME=	%%GHTAG%%
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
+
+.if${PORT_OPTIONS:MPOPPLER}
+QMAKE_ARGS+=	USE_POPPLER=true
+LIB_DEPENDS+=	libpoppler-qt5.so:graphics/poppler-qt5
+.elif${PORT_OPTIONS:MMUPDF}
+QMAKE_ARGS+=	USE_MUPDF=true
+LIB_DEPENDS+=	libmupdf.so:graphics/mupdf
+.endif
+
+.if${PORT_OPTIONS:MI18N}
+USE_QT+= linguist_build
+QMAKE_ARGS+=CONFIG+=WITH_I18N
+.endif
 
 .include <bsd.port.mk>
