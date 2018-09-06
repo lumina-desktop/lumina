@@ -125,6 +125,7 @@ public slots:
 	Q_INVOKABLE void requestKill();	//ask the WM to kill the app associated with this window (harsh - only use if not responding)
 	Q_INVOKABLE void requestPing();	//ask the app if it is still active (a WindowNotResponding signal will get sent out if there is no reply);
 	Q_INVOKABLE void requestActivate();
+	Q_INVOKABLE void announceClosed();
 
 private:
 	QHash <NativeWindowObject::Property, QVariant> hash;

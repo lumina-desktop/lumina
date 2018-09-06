@@ -132,6 +132,9 @@ public slots:
 
 
 private slots:
+	//Internal Admin functions
+	void verifyWindowExistance();
+
 	//These are the slots which are built-in and automatically connected when a new NativeWindow is created
 	void RequestClose(WId);
 	void RequestKill(WId);

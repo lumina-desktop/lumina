@@ -23,8 +23,8 @@ NativeWindow::NativeWindow( NativeWindowObject *obj ) : QFrame(0, Qt::Window | Q
   resizeTimer->setSingleShot(true);
   resizeTimer->setInterval(10); //1/10 second
   connect(resizeTimer, SIGNAL(timeout()), this, SLOT(submitSizeChange()) ); //Let the window system know the window has moved
-  
-  //WIN->addFrameWinID(this->winId());
+
+  WIN->addFrameWinID(this->winId());
 }
 
 NativeWindow::~NativeWindow(){

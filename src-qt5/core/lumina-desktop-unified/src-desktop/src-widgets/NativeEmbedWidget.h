@@ -49,10 +49,15 @@ protected:
 	}
 	void enterEvent(QEvent *ev){
 	  QWidget::enterEvent(ev);
-	  qDebug() << "enter event";
+	  qDebug() << "Enter event";
 	}
 	void paintEvent(QPaintEvent *){
 	  //Never paint anything with this widget
+	}
+	void closeEvent(QCloseEvent *ev){
+	  qDebug() << "Embed Window Closed";
+	  WIN->emit WindowClosed(WIN->id());
+	  QWidget::closeEvent(ev);
 	}
 
 };
@@ -69,6 +74,10 @@ public:
 	  if(USE_QWINDOW_EMBED){
 	    QWindow* _window = QWindow::fromWinId(WIN->id());
 	    embedW = QWidget::createWindowContainer(_window, parent);
+	    QList<WId> related; related <<  _window->winId();
+	    if(embedW->nativeParentWidget()!=0){ related << embedW->nativeParentWidget()->winId(); }
+	    WIN->setProperty(NativeWindowObject::RelatedWindows, QVariant::fromValue< QList<WId> >(related) );
+	    //connect(_window, SIGNAL(destroyed(QObject*)), WIN, SLOT(announceClosed()) );
 	  }else{
 	    embedW = new EmbedWidget(WIN, parent);
 	  }

@@ -331,6 +331,9 @@ void NativeWindowObject::requestActivate(){
   requestProperty(NativeWindowObject::Active, true);
 }
 
+void NativeWindowObject::announceClosed(){
+  this->emit WindowClosed(winid);
+}
 // ==== PRIVATE ====
 void NativeWindowObject::emitSinglePropChanged(NativeWindowObject::Property prop){
   //Simple switch to emit the QML-usable signals as properties are changed

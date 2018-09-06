@@ -291,13 +291,13 @@ NativeWindowObject* NativeWindowSystem::findWindow(WId id, bool checkRelated){
   for(int i=0; i<NWindows.length(); i++){
     if(id==NWindows[i]->id() ){ return NWindows[i]; }
     else if(id==NWindows[i]->frameId() ){ return NWindows[i]; }
-    //if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
+    if(checkRelated && NWindows[i]->isRelatedTo(id)){ return NWindows[i]; }
     //else if(!checkRelated && id==NWindows[i]->id()){ return NWindows[i]; }
   }
   //Check to see if this is a transient for some other window
   if(checkRelated){
-    //WId tid = obj->getTransientFor(id);
-    //if(tid!=id){ return findWindow(tid, checkRelated); } //call it recursively as needed
+    WId tid = obj->getTransientFor(id);
+    if(tid!=id){ return findWindow(tid, checkRelated); } //call it recursively as needed
     //qDebug() << "  -- Could not find Window!";
   }
   return 0;
@@ -895,16 +895,18 @@ void NativeWindowSystem::NewTrayWindowDetected(WId id){
 }
 
 void NativeWindowSystem::WindowCloseDetected(WId id){
-  NativeWindowObject *win = findWindow(id, false);
-  if(win==0){ win = findWindow(id, true); }
-  qDebug() << "Got Window Closed" << id << win;
-  qDebug() << "Old Window List:" << NWindows.length();
+  NativeWindowObject *win = findWindow(id, true);
+  //if(win==0){ win = findWindow(id, true); }
+  //qDebug() << "Got Window Closed" << id << win;
+  //qDebug() << "Old Window List:" << NWindows.length();
+  bool ok = false;
   if(win!=0){
     NWindows.removeAll(win);
     win->emit WindowClosed(id);
-    qDebug() << "Visible Window Closed!!!";
+    //qDebug() << "Visible Window Closed!!!";
     emit WindowClosed();
     win->deleteLater();
+    ok = true;
   }else{
     win = findTrayWindow(id);
     if(win!=0){
@@ -912,9 +914,11 @@ void NativeWindowSystem::WindowCloseDetected(WId id){
       win->emit WindowClosed(id);
       emit TrayWindowClosed();
       win->deleteLater();
+      ok = true;
     }
   }
-  qDebug() << " - Now:" << NWindows.length();
+  if(!ok && !NWindows.isEmpty() && !TWindows.isEmpty() ){ QTimer::singleShot(0, this, SLOT(verifyWindowExistance()) ); }
+  //qDebug() << " - Now:" << NWindows.length();
 }
 
 void NativeWindowSystem::WindowPropertyChanged(WId id, NativeWindowObject::Property prop){
@@ -1044,6 +1048,23 @@ void NativeWindowSystem::lowerWindow(NativeWindowObject *win){
 
 // === PRIVATE SLOTS ===
 //These are the slots which are built-in and automatically connected when a new NativeWindow is created
+void NativeWindowSystem::verifyWindowExistance(){
+  //qDebug() << "Verify Window Existance";
+  QList<xcb_void_cookie_t> cookies;
+  //Generate all the cookies for the probes
+  for(int i=0; i<NWindows.length(); i++){
+    cookies << xcb_configure_window_checked(QX11Info::connection(), NWindows[i]->id(), 0, 0);
+  }
+  //Now look at all the replies and send close messages for any bad-window errors
+  for(int i=0; i<cookies.length(); i++){
+    xcb_generic_error_t *error = xcb_request_check( QX11Info::connection(), cookies[i]);
+    if(error!=0){
+      //qDebug() << " - Got missing window" << NWindows[i]->name();
+      NWindows[i]->announceClosed();
+    }
+  }
+  //qDebug() << " - End Verify";
+}
 
 void NativeWindowSystem::RequestClose(WId win){
   //Send the window a WM_DELETE_WINDOW message
