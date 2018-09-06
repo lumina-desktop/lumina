@@ -104,6 +104,7 @@ void LDesktop::UpdateGeometry(){
     //qDebug() << " - Update Desktop Plugin Area";
     //UpdateDesktopPluginArea();
     //qDebug() << " - Done With Desktop Geom Updates";
+    QTimer::singleShot(0, this, SLOT(UpdateBackground()));
     QTimer::singleShot(0, this, SLOT(UpdatePanels()));
 }
 
