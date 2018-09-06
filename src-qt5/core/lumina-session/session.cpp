@@ -169,6 +169,14 @@ void LSession::start(bool unified){
 	       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
 	      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
 	    }
+            if(!QFile::exists(confDir+"/fluxbox-overlay")){
+              QStringList contents; contents << "background: unset";
+              LUtils::writeFile(confDir+"/fluxbox-overlay", contents, true);
+              //Now make sure this overlay file is set within the init file
+              contents = LUtils::readFile(confDir+"/fluxbox-init");
+              contents << "session.styleOverlay:	"+confDir+"/fluxbox-overlay";
+              LUtils::writeFile(confDir+"/fluxbox-init", contents, true);
+            }
 	    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
 	      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
