@@ -23,6 +23,8 @@
 #include <LuminaOS.h>
 #include <LUtils.h>
 #include <LDesktopUtils.h>
+#include <AppMenu.h>
+#include <LSession.h>
 
 #define DEBUG 0
 
@@ -31,10 +33,7 @@ int main(int argc, char ** argv)
     QString monitorID;
     int panelnum = 0;
     if (argc > 1) {
-      if (QString(argv[1]) == QString("--version")){
-        qDebug() << LDesktopUtils::LuminaDesktopVersion();
-        return 0;
-      }
+      monitorID = QString(argv[1]);
     }
 
     //Setup any pre-QApplication initialization values
@@ -43,13 +42,17 @@ int main(int argc, char ** argv)
     setenv("QT_QPA_PLATFORMTHEME", "lthemeengine", 1);
     unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //causes pixel-specific scaling issues with the desktop - turn this on after-the-fact for other apps
     //Startup the session
-    QApplication a(argc, argv);
+    LSession a(argc, argv);
+    a.setupSession(true);
     if(monitorID.isEmpty()){
       monitorID = a.screens().first()->name();
     }
+    //qDebug() << "Create AppMenu";
+    //AppMenu App;
+    //qDebug() << "Create Panel" << a.sessionSettings()->fileName();
     QSettings settings("lumina-desktop","desktopsettings");
-    LPanel P(&settings, monitorID, panelnum);
-    P.UpdatePanel();
+    LPanel P(&settings, monitorID, panelnum, 0 , false);
+    P.show();
     int retCode = a.exec();
     return retCode;
 }

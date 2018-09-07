@@ -260,7 +260,8 @@ void lthemeenginePlatformTheme::readSettings(){
     //load style sheets
 #ifdef QT_WIDGETS_LIB
     QStringList qssPaths;
-    if(qApp->applicationFilePath().section("/",-1).startsWith("lumina-desktop") ){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
+    QString appname = qApp->applicationFilePath().section("/",-1);
+    if( appname.startsWith("lumina-desktop") || appname.startsWith("lumina-panel") ){ qssPaths << settings.value("desktop_stylesheets").toStringList(); }
     qssPaths << settings.value("stylesheets").toStringList();
     //qDebug() << "Loaded Stylesheets:" << qApp->applicationName() << qssPaths;
     m_userStyleSheet = loadStyleSheets(qssPaths);

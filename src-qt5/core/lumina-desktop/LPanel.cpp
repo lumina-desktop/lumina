@@ -12,8 +12,9 @@
 
 #define DEBUG 0
 
-LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget(){
+LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent, bool reservespace) : QWidget(){
   //Take care of inputs
+  reserveloc = reservespace;
   this->setMouseTracking(true);
   hascompositer = false; //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
@@ -31,6 +32,7 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget
   screen = LSession::desktop();
   QString screenID = QApplication::screens().at(Screen())->name();
   PPREFIX = "panel_"+screenID+"."+QString::number(num)+"/";
+  if(DEBUG){ qDebug() << "Panel Prefix:" << PPREFIX; }
   defaultpanel = (LSession::handle()->screenGeom(Screen()).x()==0 && num==0);
   horizontal=true; //use this by default initially
   hidden = false; //use this by default
@@ -58,8 +60,11 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent) : QWidget
     //layout->setSizeConstraint(QLayout::SetFixedSize);
   panelArea->setLayout(layout);
   //Set special window flags on the panel for proper usage
+  if(DEBUG){ qDebug() << "About to Show Panel"; }
   this->show();
+  //if(reservespace){
   LSession::handle()->XCB->SetAsPanel(this->winId());
+  //}
   LSession::handle()->XCB->SetAsSticky(this->winId());
   if(hascompositer){
     //qDebug() << "Enable Panel compositing";
@@ -92,7 +97,7 @@ void LPanel::prepareToClose(){
     PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
-  }	
+  }
   this->hide();
 }
 
@@ -158,9 +163,10 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc,sz.width(), sz.height());
     //qDebug() << " - Reserve Panel Localation";
-    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "top"); }
-    else{ 
-     LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, this->width(), hidesize), "top");
+    if(!hidden){
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "top"); }
+    }else{
+     if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, this->width(), hidesize), "top"); }
       hidepoint = QPoint(xloc, yloc);
       showpoint = QPoint(xloc, yloc);
       this->move(hidepoint);
@@ -174,9 +180,10 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc+xhi-ht,sz.width(), ht );
-    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "bottom"); }
-    else{
-      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc,yloc+ xhi-hidesize, this->width(), hidesize), "bottom"); 
+    if(!hidden){
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "bottom"); }
+    }else{
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc,yloc+ xhi-hidesize, this->width(), hidesize), "bottom");  }
       hidepoint = QPoint(xloc, yloc+xhi-hidesize);
       showpoint = QPoint(xloc, yloc+xhi-ht);
       this->move(hidepoint); //Could bleed over onto the screen below
@@ -190,9 +197,10 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc,yloc, ht, sz.height());
-    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "left"); }
-    else{
-      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, hidesize, sz.height()), "left"); 
+    if(!hidden){
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "left"); }
+    }else{
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc, yloc, hidesize, sz.height()), "left");  }
       hidepoint = QPoint(xloc, yloc);
       showpoint = QPoint(xloc, yloc);
       this->move(hidepoint); //Could bleed over onto the screen left
@@ -206,18 +214,19 @@ void LPanel::UpdatePanel(bool geomonly){
     this->setMinimumSize(sz);
     this->setMaximumSize(sz);
     this->setGeometry(xloc+xwid-ht,yloc,ht, sz.height());
-    if(!hidden){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "right"); }  
-    else{
-      LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc+xwid-hidesize, yloc, hidesize, sz.height()), "right"); 
+    if(!hidden){
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), this->geometry(), "right"); }
+    }else{
+      if(reserveloc){ LSession::handle()->XCB->ReserveLocation(this->winId(), QRect(xloc+xwid-hidesize, yloc, hidesize, sz.height()), "right"); }
       hidepoint = QPoint(xloc+xwid-hidesize, yloc);
       showpoint = QPoint(xloc+xwid-ht, yloc);
       this->move(hidepoint); //Could bleed over onto the screen right
       this->resize( viswidth, this->height());
     }
   }
-  if(DEBUG){ qDebug() << " - Done with panel geometry"; }
+  if(DEBUG){ qDebug() << " - Done with panel geometry" << this->geometry(); }
   //Double check that the "sticky" bit is set on the window state
-  bool  needsticky = !LSession::handle()->XCB->WM_Get_Window_States(this->winId()).contains(LXCB::S_STICKY);
+  bool  needsticky = (reserveloc ? !LSession::handle()->XCB->WM_Get_Window_States(this->winId()).contains(LXCB::S_STICKY) : true);
   if(needsticky){ LSession::handle()->XCB->SetAsSticky(this->winId()); }
   if(geomonly){ return; }
   //Now update the appearance of the toolbar
@@ -357,7 +366,7 @@ void LPanel::resizeEvent(QResizeEvent *event){
 }
 
 void LPanel::paintEvent(QPaintEvent *event){
-  if(!hascompositer){
+  if(!hascompositer && reserveloc){
     QPainter *painter = new QPainter(this);
     //qDebug() << "Paint Panel:" << PPREFIX;
     //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow

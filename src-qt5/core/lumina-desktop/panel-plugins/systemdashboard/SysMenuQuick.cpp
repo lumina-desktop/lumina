@@ -36,13 +36,13 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
 }
 
 LSysMenuQuick::~LSysMenuQuick(){
-	
+
 }
 
 void LSysMenuQuick::UpdateMenu(){
   ui->retranslateUi(this);
   //Audio Volume
-  int val = LOS::audioVolume();	
+  int val = LOS::audioVolume();
   QIcon ico;
   if(val > 66){ ico= LXDG::findIcon("audio-volume-high",""); }
   else if(val > 33){ ico= LXDG::findIcon("audio-volume-medium",""); }
@@ -69,7 +69,7 @@ void LSysMenuQuick::UpdateMenu(){
     ui->label_bright_text->setText(txt);
     if(ui->slider_brightness->value()!=val){ ui->slider_brightness->setValue(val); }
   }
-  
+
   //Do any one-time checks
   if(firstrun){
     hasBat = LOS::hasBattery(); //No need to check this more than once - will not change in the middle of a session
@@ -87,7 +87,7 @@ void LSysMenuQuick::UpdateMenu(){
     }
     ui->group_locale->setVisible(locales.length() > 1);
   }
-  
+
   //Battery Status
   if(hasBat){
     ui->group_battery->setVisible(true);

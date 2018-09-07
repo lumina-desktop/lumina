@@ -61,7 +61,7 @@ void LXCB::createWMAtoms(){
   QList<xcb_intern_atom_reply_t*> reply;
   for(int i=0; i<atoms.length(); i++){
       reply << xcb_intern_atom_reply(QX11Info::connection(), \
-			xcb_intern_atom(QX11Info::connection(), 0, atoms[i].length(), atoms[i].toLocal8Bit()), NULL); 
+			xcb_intern_atom(QX11Info::connection(), 0, atoms[i].length(), atoms[i].toLocal8Bit()), NULL);
   }
   //Now evaluate all the requests and save the atoms
   for(int i=0; i<reply.length(); i++){

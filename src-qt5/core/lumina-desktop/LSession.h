@@ -57,7 +57,7 @@ public:
 
 	static bool checkUserFiles();
 	//Functions to be called during startup
-	void setupSession();
+	void setupSession(bool partial = false);
 
 	//Public System Tray Functions
 	QList<WId> currentTrayApps(WId visualTray);

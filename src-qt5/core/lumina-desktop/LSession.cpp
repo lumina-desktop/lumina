@@ -153,10 +153,15 @@ QString LSession::batteryIconName(int charge, bool charging){
     return ""; //no icon found
 }
 
-void LSession::setupSession(){
+void LSession::setupSession(bool partial){
   //Seed random number generator (if needed)
   qsrand( QTime::currentTime().msec() );
-
+  if(partial){
+      sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
+      DPlugSettings = new QSettings("lumina-desktop","pluginsettings/desktopsettings");
+      appmenu = new AppMenu();
+    return;
+  }
   currTranslator = LUtils::LoadTranslation(this, "lumina-desktop");
   BootSplash splash;
     splash.showScreen("init");

@@ -29,7 +29,7 @@ class LClock : public LPPlugin{
 public:
 	LClock(QWidget *parent = 0, QString id = "clock", bool horizontal=true);
 	~LClock();
-	
+
 private:
 	QTimer *timer;
 	QToolButton *button; //RotateToolButton
@@ -38,7 +38,7 @@ private:
 	QMenu *TZMenu;
 	QCalendarWidget *calendar;
 	QWidgetAction *calAct;
-	
+
 private slots:
 	void updateTime(bool adjustformat = false);
 	void updateFormats();
