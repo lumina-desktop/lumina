@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9), qt5-qmake, qtbase5-dev, qtmultimedia5-dev,
                libx11-dev, libxrender-dev, libxcomposite-dev, libxdamage-dev,
                libxcb-icccm4-dev, libxcb-damage0-dev, libxcb-util0-dev,
                libqt5x11extras5-dev, qttools5-dev-tools, libxcb-image0-dev,
-               libxcb-composite0-dev, qtdeclarative5-dev, libqt5svg5-dev,
+               libpoppler-qt5-dev, qtdeclarative5-dev, libqt5svg5-dev,
                libxcb-xinput0-dev
 Standards-Version: 3.9.6
 Homepage: https://github.com/trueos/lumina
