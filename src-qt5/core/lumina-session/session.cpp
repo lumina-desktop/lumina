@@ -127,7 +127,7 @@ void LSession::setupCompositor(bool force){
 	 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
        }
        QString disp = getenv("DISPLAY");
-	if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp+" --config "+set); }
+	if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp+" --config "+set, QStringList() << set); }
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
 }
