@@ -116,18 +116,22 @@ void LSession::setupCompositor(bool force){
       }
 	//Auto-detect if GLX is available on the system and turn it on/off as needed
        bool startcompton = true;
+       bool hasAccel = false;
        if(LUtils::isValidBinary("glxinfo")){
-	 bool hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
+	 hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
 	 qDebug() << "Detected GPU Acceleration:" << hasAccel;
-	 QStringList info = LUtils::readFile(set);
+	 /*QStringList info = LUtils::readFile(set);
 	 for(int i=0; i<info.length(); i++){
 	   if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
 	 }
-	 LUtils::writeFile(set, info, true);
+	 LUtils::writeFile(set, info, true);*/
 	 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
        }
        QString disp = getenv("DISPLAY");
-	if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp+" --config "+set, QStringList() << set); }
+         // Prefer GLX-accel only if that is detected as possible
+	if( (startcompton || force) && hasAccel ){ startProcess("compositing","compton --backend glx -d "+disp+" --config "+set, QStringList() << set); }
+         //if cannot determine if GLX accel is available, use the hybrid glx/xrender backend for some better auto-setting stuff
+	else if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp+" --config "+set, QStringList() << set); }
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
   }
 }
