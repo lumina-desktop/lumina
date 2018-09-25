@@ -48,7 +48,7 @@ FORMS    += mainWindow.ui \
 		ScriptDialog.ui \
 		PanelWidget.ui
 
-include("pages/pages.pri")
+include("utils/pages.pri")
 
 TRANSLATIONS =  i18n/lumina-config_af.ts \
                 i18n/lumina-config_ar.ts \

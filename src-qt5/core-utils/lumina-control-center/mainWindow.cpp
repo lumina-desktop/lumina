@@ -8,8 +8,8 @@
 #include "ui_mainWindow.h"
 #include "globals.h"
 
-#include "pages/getPage.h"
-#include "pages/page_main.h"
+#include "utils/getPage.h"
+#include "utils/page_main.h"
 
 #include <QSettings>
 

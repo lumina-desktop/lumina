@@ -35,7 +35,7 @@
 #include <LuminaOS.h>
 #include <LuminaThemes.h>
 
-#include "pages/PageWidget.h"
+#include "utils/PageWidget.h"
 
 #endif
 
