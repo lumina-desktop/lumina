@@ -25,7 +25,7 @@ LSysTray::LSysTray(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
   isRunning = false; stopping = false; checking = false; pending = false;
   QTimer::singleShot(100, this, SLOT(start()) );
   //Also do one extra check a minute or so after startup (just in case something got missed in the initial flood of registrations)
-  QTimer::singleShot(90000,this, SLOT(checkAll()) ); 
+  QTimer::singleShot(90000,this, SLOT(checkAll()) );
   connect(LSession::handle(), SIGNAL(TrayListChanged()), this, SLOT(checkAll()) );
   connect(LSession::handle(), SIGNAL(TrayIconChanged(WId)), this, SLOT(UpdateTrayWindow(WId)) );
   connect(LSession::handle(), SIGNAL(VisualTrayAvailable()), this, SLOT(start()) );
@@ -41,9 +41,9 @@ void LSysTray::start(){
   if(isRunning || stopping){ return; } //already running
   isRunning = LSession::handle()->registerVisualTray(this->winId());
   qDebug() << "Visual Tray Started:" << this->type() << isRunning;
-  if(isRunning){ 
+  if(isRunning){
     //upTimer->start();
-    QTimer::singleShot(0,this, SLOT(checkAll()) ); 
+    QTimer::singleShot(0,this, SLOT(checkAll()) );
   }
 }
 
@@ -60,7 +60,7 @@ void LSysTray::stop(){
   //Release all the tray applications and delete the containers
   if( !LSession::handle()->currentTrayApps(this->winId()).isEmpty() ){
     qDebug() << " - Remove tray applications";
-    //This overall system tray is not closed down - go ahead and release them here	  
+    //This overall system tray is not closed down - go ahead and release them here
     for(int i=(trayIcons.length()-1); i>=0; i--){
       trayIcons[i]->detachApp();
       TrayIcon *cont = trayIcons.takeAt(i);
@@ -132,9 +132,9 @@ void LSysTray::checkAll(){
       //LSession::processEvents();
       //qDebug() << " - Attach tray app";
       cont->attachApp(wins[i]);
-      if(cont->appID()==0){ 
+      if(cont->appID()==0){
 	//could not attach window - remove the widget
-	qDebug() << " - Invalid Tray App: Could Not Embed:"; 
+	qDebug() << " - Invalid Tray App: Could Not Embed:";
 	trayIcons.takeAt(trayIcons.length()-1); //Always at the end
 	LI->removeWidget(cont);
 	cont->deleteLater();

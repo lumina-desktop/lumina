@@ -43,7 +43,7 @@ public slots:
 private:
 	WId IID, AID; //icon ID and app ID
 	int badpaints;
-	uint dmgID; 
+	uint dmgID;
 	int scalefactor;
 
 protected:
