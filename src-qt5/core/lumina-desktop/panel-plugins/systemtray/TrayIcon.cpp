@@ -106,7 +106,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
-	  if((this->size()*scalefactor) != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); }
+	  if((this->size()*scalefactor) != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); return; }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 	  badpaints = 0; //good paint
 	}else{
@@ -123,7 +123,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 }
 
 void TrayIcon::resizeEvent(QResizeEvent *event){
-  //qDebug() << "Resize Event:" << event->size().width() << event->size().height();	
+  //qDebug() << "Resize Event:" << event->size().width() << event->size().height();
   if(AID!=0){
     LSession::handle()->XCB->ResizeWindow(AID,  event->size());
     QTimer::singleShot(500, this, SLOT(update()) ); //make sure to re-draw the window in a moment

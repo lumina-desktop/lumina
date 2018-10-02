@@ -5,7 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 //  Note: The basic idea behind this class that that it puts the app window
-//    in the same spot as the tray icon (to directly pass mouse events and such), 
+//    in the same spot as the tray icon (to directly pass mouse events and such),
 //    while keeping the tray icon visual in sync with the app window
 //===========================================
 #ifndef _LUMINA_PANEL_PLUGIN_SYSTEM_TRAY_ICON_H
