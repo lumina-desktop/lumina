@@ -86,7 +86,7 @@ int main(int argc, char ** argv)
     unsetenv("QT_QPA_PLATFORMTHEME"); //causes issues with Lumina themes - not many people have this by default...
     //Startup the session
     QApplication a(argc, argv);
-      setenv("QP_QPA_PLATFORMTHEME","lthemeengine",1); //make sure this is after the QApplication - not actually using the theme plugin for **this** process
+      setenv("QT_QPA_PLATFORMTHEME","lthemeengine",1); //make sure this is after the QApplication - not actually using the theme plugin for **this** process
     LSession sess;
       sess.checkFiles(); //Make sure user files are created/installed first
       sess.start(unified);
