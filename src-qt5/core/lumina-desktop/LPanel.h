@@ -37,7 +37,7 @@ private:
 	QWidget *bgWindow, *panelArea;
         //QRect hidegeom, showgeom; //for hidden panels
 	QPoint hidepoint, showpoint; //for hidden panels: locations when hidden/visible
-	bool defaultpanel, horizontal, hidden, hascompositer, reserveloc;
+	bool defaultpanel, horizontal, hidden, reserveloc;
 	QString screenID;
 	int panelnum;
 	int viswidth, fullwidth;

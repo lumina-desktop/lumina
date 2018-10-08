@@ -12,11 +12,12 @@
 
 #define DEBUG 0
 
+static bool hascompositer = !LUtils::getCmdOutput("ps -x").filter("compton").filter("--backend").isEmpty(); //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
+
 LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent, bool reservespace) : QWidget(){
   //Take care of inputs
   reserveloc = reservespace;
   this->setMouseTracking(true);
-  hascompositer = true; //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
   if(DEBUG){ qDebug() << " - Creating Panel:" << scr << num; }
   bgWindow = parent; //save for later
   //Setup the widget overlay for the entire panel to provide transparency effects
