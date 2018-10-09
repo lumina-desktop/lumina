@@ -26,11 +26,13 @@ QString LOS::SysPrefix(){ return "/usr/"; } //Prefix for system
 //OS-specific application shortcuts (*.desktop files)
 QString LOS::ControlPanelShortcut(){ return "/usr/local/share/applications/pccontrol.desktop"; } //system control panel
 QString LOS::AppStoreShortcut(){ return "/usr/local/share/applications/appcafe.desktop"; } //graphical app/pkg manager
+
 //OS-specific RSS feeds (Format: QStringList[ <name>::::<url> ]; )
 QStringList LOS::RSSFeeds(){
   QStringList feeds;
     feeds << "FreeBSD News Feed::::https://www.freebsd.org/news/rss.xml";
     feeds << "TrueOS News Feed::::https://www.trueos.org/feed/";
+    feeds << "Project Trident News Feed::::http://project-trident.org/index.xml";
   return feeds;
  }
 
@@ -266,12 +268,10 @@ void LOS::systemShutdown(bool skipupdates){ //start poweroff sequence
 
 //System Restart
 void LOS::systemRestart(bool skipupdates){ //start reboot sequence
-  bool activeupdates = (LUtils::getCmdOutput("sysrc -n trueos_active_update").join("").simplified()=="YES");
-  if(skipupdates){
+  if(skipupdates || !LUtils::isValidBinary("trueos-update") ){
     QProcess::startDetached("shutdown -ro now");
-  }else{
-    if(activeupdates && LUtils::isValidBinary("pc-updatemanager") && LOS::systemPendingUpdates().isEmpty()){ QProcess::startDetached("pc-updatemanager startupdate"); }
-    else{ QProcess::startDetached("shutdown -r now"); }
+  }else if(LUtils::isValidBinary("sudo")){{
+    QProcess::startDetached("sudo -n trueos-update upgrade"); }
   }
 }
 
@@ -279,17 +279,12 @@ void LOS::systemRestart(bool skipupdates){ //start reboot sequence
 bool LOS::systemCanSuspend(){
   QString state = LUtils::getCmdOutput("sysctl -n hw.acpi.suspend_state").join("").simplified();
   bool ok = LUtils::getCmdOutput("sysctl -n hw.acpi.supported_sleep_state").join("").split(" ",QString::SkipEmptyParts).contains(state);
-  /*bool ok = QFile::exists("/usr/local/bin/pc-sysconfig");
-  if(ok){
-    ok = LUtils::getCmdOutput("pc-sysconfig systemcansuspend").join("").toLower().contains("true");
-  }*/
   return ok;
 }
 
 //Put the system into the suspend state
 void LOS::systemSuspend(){
   QString state = LUtils::getCmdOutput("sysctl -n hw.acpi.suspend_state").join("").simplified();
-  //QProcess::startDetached("pc-sysconfig suspendsystem");
   QProcess::startDetached("acpiconf", QStringList() << "-s" << state );
 }
 
