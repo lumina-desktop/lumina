@@ -18,6 +18,9 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
 }
 
 void BootSplash::generateTipOfTheDay(){
+  bool disablequotes = sessionsettings.value("DisableQuotes").toBool(false);
+  if (disablequotes){ ui->label_welcome->setText(""); return; }
+
   //Try to find a system-defined message of the day for lumina
   QStringList dirs; dirs << LOS::AppPrefix()+"/etc/" << LOS::SysPrefix()+"/etc/" << L_ETCDIR+"/";
   QString sysMOTD = "lumina-motd";
@@ -36,8 +39,7 @@ void BootSplash::generateTipOfTheDay(){
 
   }else{
     QSettings sessionsettings("lumina-desktop","sessionsettings");
-    bool disablequotes = sessionsettings.value("DisableQuotes").toBool();
-    if (disablequotes == false){
+
      int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
   switch(index){
     case 0:
@@ -132,8 +134,7 @@ void BootSplash::generateTipOfTheDay(){
 	tip = "\""+tr("The truth is more important than the facts.")+"\"\n\n- Frank Lloyd Wright -"; break;
     case 45:
 	tip = "\""+tr("Better to remain silent and be thought a fool than to speak out and remove all doubt.")+"\"\n\n- Abraham Lincoln -"; break;
-  } //end of switch for tips
-  } // end else statement for disabling quotes
+    } //end of switch for tips
   } //end of fallback tip generation
   ui->label_welcome->setText( tip);
 }
@@ -145,17 +146,17 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
     txt = tr("Initializing Session …"); per = 10;
     icon = "preferences-system-login";
   }else if(loading=="settings"){
-    txt = tr("Loading System Settings …"); per = 20;	  
+    txt = tr("Loading System Settings …"); per = 20;
     icon = "user-home";
   }else if(loading=="user"){
-    txt = tr("Loading User Preferences …"); per = 30; 
+    txt = tr("Loading User Preferences …"); per = 30;
     icon = "preferences-desktop-user";
   }else if(loading=="systray"){
     txt = tr("Preparing System Tray …"); per = 40;
     icon = "preferences-plugin";
   }else if(loading=="wm"){
     txt = tr("Starting Window Manager …"); per = 50;
-    icon = "preferences-system-windows-actions";	  
+    icon = "preferences-system-windows-actions";
   }else if(loading=="apps"){
     txt = tr("Detecting Applications …"); per = 60;
     icon = "preferences-desktop-icons";
@@ -164,10 +165,10 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
     icon = "preferences-system-windows";
   }else if(loading=="desktop"){
     txt = tr("Preparing Workspace …"); per = 80;
-    icon = "preferences-desktop-wallpaper";	
+    icon = "preferences-desktop-wallpaper";
   }else if(loading=="final"){
     txt = tr("Finalizing …"); per = 90;
-    icon = "start-here-lumina";	  
+    icon = "start-here-lumina";
   }else if(loading.startsWith("app::")){
     txt = QString(tr("Starting App: %1")).arg(loading.section("::",1,50)); per = -1;
   }
@@ -180,7 +181,7 @@ void BootSplash::showScreen(QString loading){ //update icon, text, and progress
   this->update();
   QApplication::processEvents();
 }
-	
+
 void BootSplash::showText(QString txt){ //will only update the text, not the icon/progress
   ui->label_text->setText(txt);
   this->show();
