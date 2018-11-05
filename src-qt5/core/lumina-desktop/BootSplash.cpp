@@ -18,7 +18,11 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
 }
 
 void BootSplash::generateTipOfTheDay(){
-  bool disablequotes = sessionsettings.value("DisableQuotes").toBool(false);
+  QSettings sessionsettings("lumina-desktop","sessionsettings");
+  bool disablequotes = false;
+  if(sessionsettings.contains("DisableQuotes")){
+    disablequotes = sessionsettings.value("DisableQuotes").toBool();
+  }
   if (disablequotes){ ui->label_welcome->setText(""); return; }
 
   //Try to find a system-defined message of the day for lumina
@@ -38,8 +42,6 @@ void BootSplash::generateTipOfTheDay(){
     tip = LUtils::readFile(sysMOTD).join("\n");
 
   }else{
-    QSettings sessionsettings("lumina-desktop","sessionsettings");
-
      int index = qrand()%46; //Make sure this number matches the length of the case below (max value +1)
   switch(index){
     case 0:
