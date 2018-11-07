@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QGraphicsView>
+#include <QEvent>
 
 class PhotoView : public QGraphicsView
 {
@@ -15,4 +16,11 @@ class PhotoView : public QGraphicsView
     private:
         const double scaleFactor = 1.25;
         const double invScaleFactor = 1 / 1.25;
+        bool eventFilter(QObject *, QEvent *event);
+        void mouseDoubleClickEvent(QMouseEvent *event);
+        bool isFit = true;
+
+    signals:
+        void nextImage();
+        void prevImage();
 };

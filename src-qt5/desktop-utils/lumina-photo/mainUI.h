@@ -52,7 +52,7 @@ private:
     QString pfilter; //previous filter
     QSettings *settings;
 
-    private slots:
+private slots:
     void open ();
     bool save();
     void print();

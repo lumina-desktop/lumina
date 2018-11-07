@@ -72,6 +72,8 @@ void MainUI::setupConnections ()
     connect (ui->actionBack, SIGNAL (triggered ()), this, SLOT (backToggled ()));
     connect (ui->actionFirst, SIGNAL (triggered ()), this, SLOT (firstToggled ()));
     connect (ui->actionLast, SIGNAL (triggered ()), this, SLOT (lastToggled ()));
+    connect (ui->photoView, SIGNAL (nextImage ()), this, SLOT (nextToggled ()));
+    connect (ui->photoView, SIGNAL (prevImage ()), this, SLOT (backToggled ()));
 }
 
 void MainUI::setupIcons ()
@@ -99,6 +101,8 @@ void MainUI::setupFilters ()
 
     mimeTypeFiltersWriter.sort ();
 }
+
+
 // ==== PRIVATE SLOTS ====
 void MainUI::fitZoomToggled ()
 {
