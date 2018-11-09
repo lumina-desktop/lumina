@@ -69,7 +69,7 @@
              <x>0</x>
              <y>0</y>
              <width>567</width>
-             <height>163</height>
+             <height>175</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="BrowserLayout">
@@ -116,7 +116,7 @@
      <x>0</x>
      <y>0</y>
      <width>567</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -126,6 +126,8 @@
     <addaction name="actionNew_Window"/>
     <addaction name="actionNew_Tab"/>
     <addaction name="actionSearch"/>
+    <addaction name="separator"/>
+    <addaction name="actionNew_Dir"/>
     <addaction name="separator"/>
     <addaction name="actionClose_Browser"/>
     <addaction name="separator"/>
@@ -472,6 +474,20 @@
   <action name="actionSortTabs">
    <property name="text">
     <string>Sort by Name</string>
+   </property>
+  </action>
+  <action name="actionNew_Dir">
+   <property name="text">
+    <string>Create Directory</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Directory</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetWithChildrenShortcut</enum>
    </property>
   </action>
  </widget>

@@ -246,7 +246,7 @@ void DirWidget::createShortcuts(){
   kZoomIn= new QShortcut(QKeySequence(QKeySequence::ZoomIn),this);
   kZoomOut= new QShortcut(QKeySequence(QKeySequence::ZoomOut),this);
   kNewFile= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_F),this);
-  kNewDir= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N),this);
+  kNewDir= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_N), this);
   kNewXDG= new QShortcut(QKeySequence(Qt::CTRL+Qt::Key_G),this);
   kCut= new QShortcut(QKeySequence(QKeySequence::Cut),this);
   kCopy= new QShortcut(QKeySequence(QKeySequence::Copy),this);
@@ -592,11 +592,11 @@ void DirWidget::UpdateContextMenu(){
     }
     if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1 && canmodify){
       cArchiveMenu->clear();
-      if(sel.length()==1 && ( XDGMime::fromFileName(sel[0]).endsWith("-tar") || 
-                                                XDGMime::fromFileName(sel[0]).endsWith("-image") || 
-                                                 ( XDGMime::fromFileName(sel[0]).contains("zip") && 
-                                                   !XDGMime::fromFileName(sel[0]).endsWith("epub+zip") && 
-                                                   !XDGMime::fromFileName(sel[0]).endsWith("vnd.comicbook+zip" ) 
+      if(sel.length()==1 && ( XDGMime::fromFileName(sel[0]).endsWith("-tar") ||
+                                                XDGMime::fromFileName(sel[0]).endsWith("-image") ||
+                                                 ( XDGMime::fromFileName(sel[0]).contains("zip") &&
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("epub+zip") &&
+                                                   !XDGMime::fromFileName(sel[0]).endsWith("vnd.comicbook+zip" )
                                                   )
                                                  )
                                                ){
@@ -738,27 +738,33 @@ void DirWidget::createNewFile(){
   }
 }
 
+
+void DirWidget::createNewFolder(QWidget *parent, BrowserWidget *browser){
+
+    //Prompt for the new dir name
+    bool ok = false;
+    QString newdir = QInputDialog::getText(parent, tr("New Directory"), tr("Name:"), QLineEdit::Normal, "", \
+          &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+    if(!ok || newdir.isEmpty()){ return; }
+    //Now create the new dir
+    QString full = browser->currentDirectory();
+    if(!full.endsWith("/")){ full.append("/"); }
+    QDir dir(full); //open the current dir
+    full.append(newdir); //append the new name to the current dir
+    //Verify that the new dir does not already exist
+    if(dir.exists(full)){
+      QMessageBox::warning(parent, tr("Invalid Name"), tr("A file or directory with that name already exists! Please pick a different name."));
+      QTimer::singleShot(0,parent, SLOT(createNewDir(parent, browser)) ); //repeat this function
+    }else{
+      if(!dir.mkdir(newdir) ){
+        QMessageBox::warning(parent, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
+      }
+    }
+}
+
 void DirWidget::createNewDir(){
   if(!canmodify){ return; } //cannot create anything here
-  //Prompt for the new dir name
-  bool ok = false;
-  QString newdir = QInputDialog::getText(this, tr("New Directory"), tr("Name:"), QLineEdit::Normal, "", \
-        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
-  if(!ok || newdir.isEmpty()){ return; }
-  //Now create the new dir
-  QString full = currentBrowser()->currentDirectory();
-  if(!full.endsWith("/")){ full.append("/"); }
-  QDir dir(full); //open the current dir
-  full.append(newdir); //append the new name to the current dir
-  //Verify that the new dir does not already exist
-  if(dir.exists(full)){
-    QMessageBox::warning(this, tr("Invalid Name"), tr("A file or directory with that name already exists! Please pick a different name."));
-    QTimer::singleShot(0,this, SLOT(createNewDir()) ); //repeat this function
-  }else{
-    if(!dir.mkdir(newdir) ){
-      QMessageBox::warning(this, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
-    }
-  }
+  createNewFolder(this, currentBrowser());
 }
 
 void DirWidget::createNewXDGEntry(){
