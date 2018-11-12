@@ -424,15 +424,15 @@ void MainUI::RebuildDeviceMenu(){
     }
     QAction *act = new QAction(label,this);
         act->setWhatsThis(path); //full path to mountpoint
-	act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
-	//Now set the appropriate icon
-	QString type = devs[i].section("::::",0,0);
-	if(type=="USB"){ type = "drive-removable-media-usb"; }
-	else if(type=="HDRIVE" || type=="LVM"){ type = "drive-harddisk"; }
-	else if(type=="SDCARD"){ type = "media-flash-sd-mmc"; }
-	else if(type=="DVD"){ type = "media-optical"; }
-	else{ type = "drive-removable-media"; }
-	act->setIcon( LXDG::findIcon(type, "") );
+    act->setToolTip( QString(tr("Filesystem: %1")).arg( devs[i].section("::::",1,1) ) );
+    //Now set the appropriate icon
+    QString type = devs[i].section("::::",0,0);
+    if(type=="USB"){ type = "drive-removable-media-usb"; }
+    else if(type=="HDRIVE" || type=="LVM"){ type = "drive-harddisk"; }
+    else if(type=="SDCARD"){ type = "media-flash-sd-mmc"; }
+    else if(type=="DVD"){ type = "media-optical"; }
+    else{ type = "drive-removable-media"; }
+    act->setIcon( LXDG::findIcon(type, "") );
       ui->menuExternal_Devices->addAction(act);
   }
 }
@@ -473,8 +473,8 @@ DirWidget* MainUI::FindActiveBrowser(){
 //    PRIVATE SLOTS
 //==============
 void MainUI::DisplayStatusBar(QString msg){
-	//qDebug() << "message to show in the status bar:" << msg;
-	ui->statusbar->showMessage(msg);
+    //qDebug() << "message to show in the status bar:" << msg;
+    ui->statusbar->showMessage(msg);
 }
 
 //---------------------
@@ -506,6 +506,11 @@ void MainUI::on_actionClose_triggered(){
   }
   qDebug() << "Closing Down...";
   this->close();
+}
+
+void MainUI::on_actionNew_Dir_triggered()
+{
+    DirWidget::createNewFolder(this, DWLIST.at( tabBar->currentIndex())->currentBrowser() );
 }
 
 void MainUI::on_actionRefresh_triggered(){
@@ -667,8 +672,8 @@ void MainUI::sortModeDateC(bool active){
     for(int i=0; i<tabBar->count(); i++){
       //Remove all the browser tabs
       if( !tabBar->tabWhatsThis(i).startsWith("#") ){
-	tabBar->removeTab(i);
-	i--; //go back one to ensure nothing is missed
+    tabBar->removeTab(i);
+    i--; //go back one to ensure nothing is missed
       }
     }
     //Create all the specific browser tabs for open browsers
@@ -684,8 +689,8 @@ void MainUI::sortModeDateC(bool active){
     for(int i=0; i<tabBar->count(); i++){
       //Remove all the browser tabs
       if( !tabBar->tabWhatsThis(i).startsWith("#") ){
-	tabBar->removeTab(i);
-	i--; //go back one to ensure nothing is missed
+    tabBar->removeTab(i);
+    i--; //go back one to ensure nothing is missed
       }
     }
     //Now create the generic "browser" tab
@@ -717,7 +722,7 @@ void MainUI::CreateBookMark(){
   QString dir = FindActiveBrowser()->currentDir();
   bool ok = false;
   QString name = QInputDialog::getText(this, tr("New Bookmark"), tr("Name:"), QLineEdit::Normal, dir, \
-		&ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
+        &ok, 0, Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
   if(!ok || name.isEmpty()){ return; } //cancelled
   QStringList BM = settings->value("bookmarks",QStringList()).toStringList();
   if(BM.filter(name+"::::").length() >0){
@@ -766,12 +771,12 @@ void MainUI::tabChanged(int tab){
     ui->stackedWidget->setCurrentWidget(ui->page_browser);
     //if(radio_view_tabs->isChecked()){
       for(int i=0; i<DWLIST.length(); i++){
-	 DWLIST[i]->setVisible(DWLIST[i]->id()==info);
+     DWLIST[i]->setVisible(DWLIST[i]->id()==info);
       }
     /*}else{
       //For columns, all widgets need to be visible
       for(int i=0; i<DWLIST.length(); i++){
-	 DWLIST[i]->setVisible(true);
+     DWLIST[i]->setVisible(true);
       }
     }*/
   }
@@ -787,9 +792,9 @@ void MainUI::tabClosed(int tab){
    if(!info.startsWith("#")){
     for(int i=0; i<DWLIST.length(); i++){
       if(info == DWLIST[i]->id()){
-	 DWLIST[i]->cleanup();
+     DWLIST[i]->cleanup();
         delete DWLIST.takeAt(i);
-	break;
+    break;
       }
     }
    }else if(info=="#MW"){
@@ -886,9 +891,9 @@ void MainUI::CutFiles(QStringList list){
   }
   //Now save that data to the global clipboard
   QMimeData *dat = new QMimeData;
-	dat->clear();
-	dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
-	dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
+    dat->clear();
+    dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
+    dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);
   //Update all the buttons to account for clipboard change
@@ -906,9 +911,9 @@ void MainUI::CopyFiles(QStringList list){
   }
   //Now save that data to the global clipboard
   QMimeData *dat = new QMimeData;
-	dat->clear();
-	dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
-	dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
+    dat->clear();
+    dat->setData("x-special/lumina-copied-files", list.join("\n").toLocal8Bit());
+    dat->setUrls(urilist); //the text/uri-list mimetype - built in Qt conversion/use
   QApplication::clipboard()->clear();
   QApplication::clipboard()->setMimeData(dat);
   //Update all the buttons to account for clipboard change
@@ -926,12 +931,12 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
   if(!dir.endsWith("/")){ dir.append("/"); }
   for(int i=0; i<raw.length(); i++){
     if(raw[i].startsWith("cut::::")){
-	cut << raw[i].section("::::",1,50);
-	newcut << dir+raw[i].section("::::",1,50).section("/",-1);
+    cut << raw[i].section("::::",1,50);
+    newcut << dir+raw[i].section("::::",1,50).section("/",-1);
     }
     else if(raw[i].startsWith("copy::::")){
-	copy << raw[i].section("::::",1,50);
-	newcopy<< dir+raw[i].section("::::",1,50).section("/",-1);
+    copy << raw[i].section("::::",1,50);
+    newcopy<< dir+raw[i].section("::::",1,50).section("/",-1);
     }
   }
   //bool errs = false;
@@ -963,9 +968,9 @@ void MainUI::PasteFiles(QString dir, QStringList raw){
     if(!copy.isEmpty()){
       //There were also files copied: save those files back into the clipboard
        QMimeData *dat = new QMimeData;
-	dat->clear();
-	dat->setData("x-special/lumina-copied-files", raw.filter("copy::::").join("\n").toLocal8Bit());
-	QApplication::clipboard()->setMimeData(dat);
+    dat->clear();
+    dat->setData("x-special/lumina-copied-files", raw.filter("copy::::").join("\n").toLocal8Bit());
+    QApplication::clipboard()->setMimeData(dat);
     }
   }
   //Update all the buttons to account for clipboard change

@@ -60,144 +60,145 @@
 #include "widgets/DirWidget2.h"
 
 namespace Ui{
-	class MainUI;
+    class MainUI;
 };
 
 class MainUI : public QMainWindow{
-	Q_OBJECT
+    Q_OBJECT
 public:
-	MainUI();
-	~MainUI();
+    MainUI();
+    ~MainUI();
     //bool rootmode;
 
 public slots:
-	void OpenDirs(QStringList);	 //also called from the main.cpp after initialization
-	void setupIcons(); 			//used during initialization
+    void OpenDirs(QStringList);	 //also called from the main.cpp after initialization
+    void setupIcons(); 			//used during initialization
 
 private:
-	Ui::MainUI *ui;
-	QThread *workThread;
-	DirData *worker;
-	//Internal non-ui widgets
-	QTabBar *tabBar;
-	//QFileSystemModel *fsmod;
-	QMenu *contextMenu, * menuSort_Mode;
+    Ui::MainUI *ui;
+    QThread *workThread;
+    DirData *worker;
+    //Internal non-ui widgets
+    QTabBar *tabBar;
+    //QFileSystemModel *fsmod;
+    QMenu *contextMenu, * menuSort_Mode;
     QRadioButton *radio_view_details, *radio_view_list, *radio_sort_name, *radio_sort_size, *radio_sort_type, *radio_sort_datemod, *radio_sort_datecre;//, *radio_view_tabs, *radio_view_cols;
     QWidgetAction *detWA, *listWA, *sortnameA, *sortsizeA, *sorttypeA, *sortdateMA, *sortdateCA; //, *tabsWA, *colsWA;
 
-	//UI Widgets
-	QList<DirWidget*> DWLIST;
-	MultimediaWidget *MW;
-	SlideshowWidget *SW;
-	TrayUI *TRAY;
-	bool waitingToClose;
+    //UI Widgets
+    QList<DirWidget*> DWLIST;
+    MultimediaWidget *MW;
+    SlideshowWidget *SW;
+    TrayUI *TRAY;
+    bool waitingToClose;
 
-	QSettings *settings;
-	QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
-	//QShortcut *toggledirtreepaneShort;
-	//QCompleter *dirCompleter;
+    QSettings *settings;
+    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
+    //QShortcut *toggledirtreepaneShort;
+    //QCompleter *dirCompleter;
 
-	//Simplification Functions
-	void setupConnections(); 	//used during initialization
-	void loadSettings(); 		//used during initialization
+    //Simplification Functions
+    void setupConnections(); 	//used during initialization
+    void loadSettings(); 		//used during initialization
 
-	void RebuildBookmarksMenu();
-	void RebuildDeviceMenu();
+    void RebuildBookmarksMenu();
+    void RebuildDeviceMenu();
 
-	DirWidget* FindActiveBrowser();
+    DirWidget* FindActiveBrowser();
 
 private slots:
-	void slotSingleInstance(QStringList in){
-	  this->show();
-	  this->raise();
-	  this->activateWindow();
-	  this->OpenDirs(in);
-	}
+    void slotSingleInstance(QStringList in){
+      this->show();
+      this->raise();
+      this->activateWindow();
+      this->OpenDirs(in);
+    }
 
-	//void slotStartSyncTimer();
+    //void slotStartSyncTimer();
 
-	//Menu Actions
-	void on_actionNew_Window_triggered();
-	void on_actionNew_Tab_triggered();
-	void on_actionSearch_triggered();
-	void on_actionClose_Browser_triggered();
-	void on_actionClose_triggered();
-	/*void on_actionRename_triggered();
-	void on_actionCut_Selection_triggered();
-	void on_actionCopy_Selection_triggered();
-	void on_actionPaste_triggered();
-	void on_actionDelete_Selection_triggered();*/
-	void on_actionRefresh_triggered();
-	void on_actionView_Hidden_Files_triggered();
-	void on_actionVerify_File_Delete_triggered();
-	//void on_actionView_showDirTreePane_triggered();
-	//void on_actionShow_Action_Buttons_triggered();
-	void treeWidgetWidthChanged(float percent);
-	void on_actionShow_Thumbnails_triggered();
-	void goToBookmark(QAction*);
-	void goToDevice(QAction*);
-	void viewModeChanged(bool);
+    //Menu Actions
+    void on_actionNew_Window_triggered();
+    void on_actionNew_Tab_triggered();
+    void on_actionSearch_triggered();
+    void on_actionClose_Browser_triggered();
+    void on_actionClose_triggered();
+    void on_actionNew_Dir_triggered();
+    /*void on_actionRename_triggered();
+    void on_actionCut_Selection_triggered();
+    void on_actionCopy_Selection_triggered();
+    void on_actionPaste_triggered();
+    void on_actionDelete_Selection_triggered();*/
+    void on_actionRefresh_triggered();
+    void on_actionView_Hidden_Files_triggered();
+    void on_actionVerify_File_Delete_triggered();
+    //void on_actionView_showDirTreePane_triggered();
+    //void on_actionShow_Action_Buttons_triggered();
+    void treeWidgetWidthChanged(float percent);
+    void on_actionShow_Thumbnails_triggered();
+    void goToBookmark(QAction*);
+    void goToDevice(QAction*);
+    void viewModeChanged(bool);
     void sortModeName(bool);
     void sortModeSize(bool);
     void sortModeType(bool);
    void sortModeDateM(bool);
    void sortModeDateC(bool);
- 
-	//void groupModeChanged(bool);
-	void on_actionLarger_Icons_triggered();
-	void on_actionSmaller_Icons_triggered();
-	void CreateBookMark();
-	//Git Menu options
-	void on_menuGit_aboutToShow();
-	void on_actionRepo_Status_triggered();
-	void on_actionClone_Repository_triggered();
 
-	//Tab interactions
-	void tabChanged(int tab = -1);
-	void tabClosed(int tab = -1);
-	void nextTab(); //For keyboard shortcuts
-	void prevTab(); //For keyboard shortcuts
+    //void groupModeChanged(bool);
+    void on_actionLarger_Icons_triggered();
+    void on_actionSmaller_Icons_triggered();
+    void CreateBookMark();
+    //Git Menu options
+    void on_menuGit_aboutToShow();
+    void on_actionRepo_Status_triggered();
+    void on_actionClone_Repository_triggered();
 
-	//Other Shortcuts
-	void togglehiddenfiles();
-	//void toggleDirTreePane();
-	void focusDirWidget();
+    //Tab interactions
+    void tabChanged(int tab = -1);
+    void tabClosed(int tab = -1);
+    void nextTab(); //For keyboard shortcuts
+    void prevTab(); //For keyboard shortcuts
 
-	//Backend Info passing
-	//void DirDataAvailable(QString, QString, LFileInfoList);
-	void SnapshotDataAvailable(QString, QString, QStringList);
+    //Other Shortcuts
+    void togglehiddenfiles();
+    //void toggleDirTreePane();
+    void focusDirWidget();
 
-	//Dir Browser Interactions
-	void OpenPlayer(LFileInfoList);
-	void OpenImages(LFileInfoList);
-	void OpenTerminal(QString dirpath);
-	void CutFiles(QStringList); //file selection
-	void CopyFiles(QStringList); //file selection
-	void PasteFiles(QString, QStringList raw = QStringList() ); //current dir, optional list of commands
-	void FavoriteFiles(QStringList); //file selection
-	void RenameFiles(QStringList); //file selection
-	void RemoveFiles(QStringList); //file selection
-	void CloseBrowser(QString); //ID
-	void TabNameChanged(QString, QString); // ID/name
+    //Backend Info passing
+    //void DirDataAvailable(QString, QString, LFileInfoList);
+    void SnapshotDataAvailable(QString, QString, QStringList);
 
-	//file info in status bar
-	void DisplayStatusBar(QString);
+    //Dir Browser Interactions
+    void OpenPlayer(LFileInfoList);
+    void OpenImages(LFileInfoList);
+    void OpenTerminal(QString dirpath);
+    void CutFiles(QStringList); //file selection
+    void CopyFiles(QStringList); //file selection
+    void PasteFiles(QString, QStringList raw = QStringList() ); //current dir, optional list of commands
+    void FavoriteFiles(QStringList); //file selection
+    void RenameFiles(QStringList); //file selection
+    void RemoveFiles(QStringList); //file selection
+    void CloseBrowser(QString); //ID
+    void TabNameChanged(QString, QString); // ID/name
 
-	void TrayJobsFinished();
+    //file info in status bar
+    void DisplayStatusBar(QString);
+
+    void TrayJobsFinished();
 
     void on_actionOpen_as_Root_triggered();
 
 signals:
-	void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
+    void Si_AdaptStatusBar(QFileInfoList fileList, QString path, QString messageFolders, QString messageFiles);
 
 protected:
-	void resizeEvent(QResizeEvent *ev){
-	  //Save the new size to the settings file for later
-	  settings->setValue("preferences/MainWindowSize", ev->size());
-	  QMainWindow::resizeEvent(ev); //just in case the window needs to see the event too
-	}
+    void resizeEvent(QResizeEvent *ev){
+      //Save the new size to the settings file for later
+      settings->setValue("preferences/MainWindowSize", ev->size());
+      QMainWindow::resizeEvent(ev); //just in case the window needs to see the event too
+    }
 
-	void closeEvent(QCloseEvent *ev);
+    void closeEvent(QCloseEvent *ev);
 
 };
 
