@@ -26,7 +26,7 @@ void BootSplash::generateTipOfTheDay(){
   if (disablequotes){ ui->label_welcome->setText(""); return; }
 
   //Try to find a system-defined message of the day for lumina
-  QStringList dirs; dirs << LOS::AppPrefix()+"/etc/" << LOS::SysPrefix()+"/etc/" << L_ETCDIR+"/";
+  QStringList dirs; dirs << LOS::AppPrefix()+"/bin/" << LOS::SysPrefix()+"/bin" << LOS::AppPrefix()+"/etc/" << LOS::SysPrefix()+"/etc/" << L_ETCDIR+"/";
   QString sysMOTD = "lumina-motd";
   for(int i=0; i<dirs.length(); i++){
     if(QFile::exists(dirs[i]+sysMOTD)){ sysMOTD.prepend(dirs[i]); break; }
