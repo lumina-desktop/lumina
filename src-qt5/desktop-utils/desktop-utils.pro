@@ -13,5 +13,4 @@ SUBDIRS+= lumina-fm \
 #	lumina-notify \
 	lumina-mediaplayer \
 	lumina-pdf \
-	lumina-photo \
-#	lumina-terminal
+	lumina-photo
