@@ -137,14 +137,18 @@ void page_wallpaper::updateMenus(){
 
 void page_wallpaper::deskbgchanged(){
   //Load the new image preview
+  bool allow_time_set = true;
   if(ui->combo_desk_bg->count()==0){
     ui->label_desk_bgview->setPixmap(QPixmap());
     ui->label_desk_bgview->setText(tr("No Background")+"\n"+tr("(use system default)"));
     ui->label_desk_bgview->setStyleSheet("");
+    allow_time_set = false;
   }else{
+    allow_time_set = (ui->combo_desk_bg->count()>1);
     QString path = ui->combo_desk_bg->itemData( ui->combo_desk_bg->currentIndex() ).toString();
     if(path=="default"){ path = DEFAULTBG; }
     if(QFileInfo(path).isDir()){
+      allow_time_set = true; //always allow setting the time if a directory is set
       QDir dir(path);
       //Got a directory - go ahead and get all the valid image files
       QStringList imgs = LUtils::imageExtensions();
@@ -185,11 +189,10 @@ void page_wallpaper::deskbgchanged(){
   if(ui->combo_desk_bg->count()<2){
     ui->radio_desk_single->setChecked(true);
     ui->radio_desk_multi->setEnabled(false);
-    ui->spin_desk_min->setEnabled(false);
   }else{
     ui->radio_desk_multi->setEnabled(true);
-    ui->spin_desk_min->setEnabled(ui->radio_desk_multi->isChecked());
   }
+  ui->spin_desk_min->setEnabled(allow_time_set);
 
   //Disable the bg remove button if no backgrounds loaded
   ui->tool_desk_rmbg->setEnabled(ui->combo_desk_bg->count()>0);
@@ -197,7 +200,7 @@ void page_wallpaper::deskbgchanged(){
 }
 
 void page_wallpaper::desktimechanged(){
-  ui->spin_desk_min->setEnabled(ui->radio_desk_multi->isChecked());
+  //ui->spin_desk_min->setEnabled(ui->radio_desk_multi->isChecked());
   if(!loading){ emit HasPendingChanges(true); }
 }
 
