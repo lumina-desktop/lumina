@@ -24,6 +24,7 @@ src-qt5/core-utils/lumina-search/lumina-search
 src-qt5/core-utils/lumina-xconfig/lumina-xconfig
 src-qt5/desktop-utils/lumina-fm/lumina-fm
 src-qt5/desktop-utils/lumina-fileinfo/lumina-fileinfo
+src-qt5/desktop-utils/lumina-photo/lumina-photo
 src-qt5/desktop-utils/lumina-screenshot/lumina-screenshot
 src-qt5/*/lumina-terminal/lumina-terminal
 src-qt5/desktop-utils/lumina-textedit/lumina-textedit
@@ -54,6 +55,6 @@ dev-tools/systray-tester/test-tray
 dev-tools/test-dbus/test
 icon-theme/Makefile
 icon-theme/*/Makefile
-Makefile
+./Makefile
 src-qt5/src-qml/test/*
 src-qt5/desktop-utils/lumina-pdf/fontconfig/*
