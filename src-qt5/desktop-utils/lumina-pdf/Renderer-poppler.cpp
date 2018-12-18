@@ -12,7 +12,7 @@ QHash<int, QImage> loadingHash;
 static std::vector<LuminaPDF::drawablePage> pages;
 static std::vector<QList<LuminaPDF::Link *>> links;
 static std::atomic<int> pagesStillLoading;
-static QHash<int, QList<LuminaPDF::Link *>> linkHash;
+// static QHash<int, QList<LuminaPDF::Link *>> linkHash;
 static LuminaPDF::LRUCache<QImage> imageCache;
 
 Renderer::Renderer() : pnum(0), needpass(false), degrees(0) {
@@ -42,12 +42,7 @@ bool Renderer::loadDocument(QString path, QString password) {
     // Clear out the old document first
     DOC.reset(nullptr);
     pages.clear();
-    if (linkHash.size() > 0) {
-      foreach (QList<LuminaPDF::Link *> linkArray, linkHash) {
-        qDeleteAll(linkArray);
-      }
-      linkHash.clear();
-    }
+    links.clear();
     needpass = false;
     pnum = 0;
     docpath = path;
@@ -213,7 +208,10 @@ void Renderer::traverseOutline(void *, int) {}
 
 void Renderer::handleLink(QWidget *obj, QString linkDest) {
   Poppler::Link *trueLink;
-  foreach (QList<LuminaPDF::Link *> linkArray, linkHash) {
+  for (std::vector<QList<LuminaPDF::Link *>>::iterator link_itr = links.begin();
+       link_itr != links.end(); ++link_itr) {
+    auto linkArray = *link_itr;
+
     for (int i = 0; i < linkArray.size(); i++) {
       Poppler::Link *link = linkArray[i]->getLink();
       if (link->linkType() == Poppler::Link::LinkType::Browse) {
@@ -245,14 +243,14 @@ void Renderer::handleLink(QWidget *obj, QString linkDest) {
 }
 
 TextData *Renderer::linkList(int pageNum, int entry) {
-  if (linkHash[pageNum].size() > 0)
-    return linkHash[pageNum][entry]->getData();
+  if (links[pageNum].size() > 0)
+    return links[pageNum][entry]->getData();
   else
     return 0;
 }
 
 int Renderer::linkSize(int pageNum) {
-  Q_UNUSED(pageNum) return linkHash[pageNum].size();
+  Q_UNUSED(pageNum) return links[pageNum].size();
 }
 
 int Renderer::annotSize(int pageNum) { Q_UNUSED(pageNum) return 0; }

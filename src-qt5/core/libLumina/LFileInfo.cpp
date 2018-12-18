@@ -267,7 +267,7 @@ bool LFileInfo::canZFSclone(){
   return (zfs_perms.contains("clone")  || (c_uid==0) );
 }
 
-bool LFileInfo::zfsCloneDataset(QString subdir, QString newsubdir){
+bool LFileInfo::zfsCloneDataset([[maybe_unused]] QString subdir, [[maybe_unused]] QString newsubdir){
   if(!canZFSclone()){ return false; }
 
   return false;
