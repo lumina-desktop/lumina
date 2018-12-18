@@ -6,22 +6,22 @@
 //===========================================
 #pragma once
 
+#include "Renderer.h"
 #include <QDialog>
 #include <QTextEdit>
-#include "Renderer.h"
 
-namespace Ui{
-  class BookmarkMenu;
+namespace Ui {
+class BookmarkMenu;
 };
 
-class BookmarkMenu : public QWidget{
+class BookmarkMenu : public QWidget {
   Q_OBJECT
-  public:
-    BookmarkMenu(Renderer *Backend, QWidget *parent=NULL);
-  public slots:
-    void loadBookmarks();
+public:
+  BookmarkMenu(Renderer *Backend, QWidget *parent = NULL);
+public slots:
+  void loadBookmarks();
 
-  private:
-    Ui::BookmarkMenu *ui;
-    Renderer *BACKEND;
+private:
+  Ui::BookmarkMenu *ui;
+  Renderer *BACKEND;
 };
