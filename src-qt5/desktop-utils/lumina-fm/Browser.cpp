@@ -27,7 +27,7 @@ Browser::Browser(QObject *parent) : QObject(parent){
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
   //connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(captureFrame(QImage)));
   //connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
-  connect(this, SIGNAL(threadDone(QString, QImage)), this, SLOT(futureFinished(QString, QImage))); //will always be between different threads
+  connect(this, SIGNAL(threadDone(QString, const QImage*)), this, SLOT(futureFinished(QString, const QImage*))); //will always be between different threads
 }
 
 Browser::~Browser(){
@@ -61,15 +61,15 @@ bool Browser::showingThumbnails(){
 
 //   PRIVATE
 void Browser::loadItem(QString info, Browser *obj){
-  QImage pix;
+  QImage* pix = new QImage();
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
     QFile file(info);
     if(file.open(QIODevice::ReadOnly)){
       QByteArray bytes = file.readAll();
       file.close();
-      pix.loadFromData(bytes);
-      if(pix.width() > 256 || pix.height() > 256 ){
-        pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
+      pix->loadFromData(bytes);
+      if(pix->width() > 256 || pix->height() > 256 ){
+        *pix = pix->scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
       }
     }
   }
@@ -109,15 +109,15 @@ void Browser::dirChanged(QString dir){
   //else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
-void Browser::futureFinished(QString name, QImage icon){
+void Browser::futureFinished(QString name, const QImage* icon){
   //Note: this will be called once for every item that loads
     //Haven't added the extra files in a directory fix, but that should be easy to do
     //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
     //qDebug() << "Finished:" << name;
     QIcon *ico = new QIcon();
     LFileInfo *info = new LFileInfo(name);
-    if(!icon.isNull() && showThumbs){
-      QPixmap pix = QPixmap::fromImage(icon);
+    if(icon != nullptr && showThumbs){
+      QPixmap pix = QPixmap::fromImage(*icon);
       ico->addPixmap(pix);
     /*}else if(info->isVideo() && showThumbs) {
       if(videoImages.find(name) == videoImages.end()) {
@@ -132,7 +132,10 @@ void Browser::futureFinished(QString name, QImage icon){
     }else{
       ico = loadIcon(info->iconfile());
     }
-    this->emit itemDataAvailable( *ico, info);
+    this->emit itemDataAvailable( ico, info);
+    // We are done with processing received image (copied to pixmap above) so now clean it up
+    delete icon;
+    icon = nullptr;
     //qDebug() << " -- done:" << name;
 }
 

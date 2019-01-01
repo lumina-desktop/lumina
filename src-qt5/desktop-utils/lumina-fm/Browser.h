@@ -50,7 +50,7 @@ private:
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-	void futureFinished(QString, QImage);
+	void futureFinished(QString, const QImage* );
 	void updateRequested();
 
 public slots:
@@ -60,13 +60,13 @@ signals:
 	//Main Signals
 	void itemRemoved(QString item); //emitted if a file was removed from the underlying
 	void clearItems(); //emitted when dirs change for example
-	void itemDataAvailable(QIcon, LFileInfo*);
+	void itemDataAvailable(const QIcon*, LFileInfo*);
 
 	//Start/Stop signals for loading of data
 	void itemsLoading(int); //number of items which are getting loaded
 
 	//Internal signal for the alternate threads
-	void threadDone(QString, QImage);
+	void threadDone(QString, const QImage*);
 };
 
 #endif
