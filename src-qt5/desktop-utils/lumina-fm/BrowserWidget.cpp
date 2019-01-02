@@ -28,7 +28,7 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   bThread->start();
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
-  connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
+  connect(BROWSER, SIGNAL(itemDataAvailable(const QIcon *, LFileInfo*)), this, SLOT(itemDataAvailable(const QIcon *, LFileInfo*)) );
   connect(BROWSER, SIGNAL(itemsLoading(int)), this, SLOT(itemsLoading(int)) );
   connect(this, SIGNAL(dirChange(QString, bool)), BROWSER, SLOT(loadDirectory(QString, bool)) );
   listWidget = 0;
@@ -99,7 +99,7 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(DataDropped(QString, QStringList)), this, SIGNAL(DataDropped(QString, QStringList)) );
     connect(treeWidget, SIGNAL(GotFocus()), this, SLOT(selectionChanged()) );
     connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(treeWidgetSortColumn(int)) );
-    connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(setTreeWidgetSortColumn(int)) );
+    connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(setTreeWidgetSortColumn(int, bool)) );
     retranslate();
     treeWidget->sortItems(treeSortColumn, Qt::AscendingOrder);
     treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
@@ -320,7 +320,7 @@ void BrowserWidget::itemRemoved(QString item){
   }
 }
 
-void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
+void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
   if(info==0){ return; }
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
@@ -347,7 +347,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     }
     //No existing item - make a new one
     if(it==0){
-      it = new CQListWidgetItem(ico, info->fileName(), listWidget);
+      it = new CQListWidgetItem(*ico, info->fileName(), listWidget);
           it->setWhatsThis(info->absoluteFilePath());
           it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
         listWidget->addItem(it);
@@ -356,9 +356,9 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     //Now update the information for the item
     if(info->isDesktopFile() && info->XDG()->isValid()){
       it->setText(info->XDG()->name);
-      it->setIcon(ico);
+      it->setIcon(*ico);
     }else{
-      it->setIcon(ico);
+      it->setIcon(*ico);
       it->setText(info->fileName());
     }
 
@@ -397,7 +397,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
       }
     }
     //Now set/update all the data
-    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){ it->setIcon(0, ico); }
+    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){ it->setIcon(0, *ico); }
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)

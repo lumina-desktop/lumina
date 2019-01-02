@@ -61,7 +61,7 @@ public:
 	QStringList history();
 
 	void setShowActive(bool show); //used for accenting if the widget is "active"
-
+	
 	void setTreeWidgetSortColumn(int col, bool now = false);
 
 	QString status(){ return statustip; }
@@ -80,7 +80,7 @@ private slots:
 	//Browser connections
 	void clearItems();
 	void itemRemoved(QString);
-	void itemDataAvailable(QIcon, LFileInfo*);
+	void itemDataAvailable(const QIcon*, LFileInfo*);
 	void itemsLoading(int total);
 	void selectionChanged();
 	void loadStatistics(BrowserWidget *bw); //designed to be run in a background thread
