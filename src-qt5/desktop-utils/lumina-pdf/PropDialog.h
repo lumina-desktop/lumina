@@ -6,24 +6,24 @@
 //===========================================
 #pragma once
 
+#include "Renderer.h"
 #include <QDialog>
 #include <QTextEdit>
-#include "Renderer.h"
 
-namespace Ui{
-  class PropDialog;
+namespace Ui {
+class PropDialog;
 };
 
 class PropDialog : public QDialog {
   Q_OBJECT
-  public:
-    PropDialog(Renderer *Backend);
+public:
+  PropDialog(Renderer *Backend);
 
-  public slots:
-    void setSize(QSizeF);
-    void setInformation();
+public slots:
+  void setSize(QSizeF);
+  void setInformation();
 
-  private:
-    Ui::PropDialog *ui;
-    Renderer *BACKEND;
+private:
+  Ui::PropDialog *ui;
+  Renderer *BACKEND;
 };

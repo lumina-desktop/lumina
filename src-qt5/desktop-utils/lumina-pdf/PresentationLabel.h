@@ -10,25 +10,29 @@
 #ifndef _PRESENTATION_LABEL_WIDGET_H
 #define _PRESENTATION_LABEL_WIDGET_H
 
+#include <QDebug>
 #include <QLabel>
 #include <QMouseEvent>
-#include <QDebug>
 
-class PresentationLabel : public QLabel{
+class PresentationLabel : public QLabel {
   Q_OBJECT
 
 signals:
   void nextSlide();
 
 public:
-  PresentationLabel() : QLabel(0, Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint){
+  PresentationLabel()
+      : QLabel(0, Qt::Window | Qt::FramelessWindowHint |
+                      Qt::WindowStaysOnTopHint) {
     this->setContextMenuPolicy(Qt::CustomContextMenu);
   }
 
 protected:
-  void mousePressEvent(QMouseEvent *ev){
+  void mousePressEvent(QMouseEvent *ev) {
     QLabel::mousePressEvent(ev);
-    if(ev->button()==Qt::LeftButton){ emit nextSlide(); }
+    if (ev->button() == Qt::LeftButton) {
+      emit nextSlide();
+    }
   }
 };
 

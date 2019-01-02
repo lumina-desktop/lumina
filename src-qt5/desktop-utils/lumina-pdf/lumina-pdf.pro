@@ -4,10 +4,12 @@ QT       *= core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT *= widgets concurrent
 
 
+CONFIG += c++1z
 TARGET = lumina-pdf
 TEMPLATE = app
 
 QT += printsupport
+QMAKE_CXXFLAGS += -std=c++17
 
 target.path = $${L_BINDIR}
 
@@ -32,7 +34,11 @@ HEADERS  += mainUI.h \
     Bookmark.h \
     BookmarkMenu.h \
     Annotation.h \
-    Widget.h
+    Widget.h \
+    link.h \
+    drawablepage.h \
+    graphicsitems.h \
+    lrucache.h
 
 FORMS += mainUI.ui \
          PropDialog.ui \
