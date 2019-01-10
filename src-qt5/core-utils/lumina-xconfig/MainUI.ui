@@ -38,7 +38,8 @@
            <string>Refresh Screens</string>
           </property>
           <property name="icon">
-           <iconset theme="view-refresh"/>
+           <iconset theme="view-refresh">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -51,7 +52,8 @@
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="list-remove"/>
+           <iconset theme="list-remove">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>
@@ -83,23 +85,27 @@
         </item>
         <item>
          <widget class="QToolButton" name="tool_tileX">
+          <property name="toolTip">
+           <string>Align horizontally</string>
+          </property>
           <property name="text">
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-column">
-            <normaloff>.</normaloff>.</iconset>
+           <iconset theme="view-split-left-right"/>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QToolButton" name="tool_tileY">
+          <property name="toolTip">
+           <string>Align vertically</string>
+          </property>
           <property name="text">
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-agenda">
-            <normaloff>.</normaloff>.</iconset>
+           <iconset theme="view-split-top-bottom"/>
           </property>
          </widget>
         </item>
@@ -112,8 +118,7 @@
            <string notr="true">...</string>
           </property>
           <property name="icon">
-           <iconset theme="format-view-grid-small">
-            <normaloff>.</normaloff>.</iconset>
+           <iconset theme="view-grid"/>
           </property>
          </widget>
         </item>
@@ -260,7 +265,8 @@
              <string>Preview</string>
             </property>
             <property name="icon">
-             <iconset theme="view-restore"/>
+             <iconset theme="view-restore">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -273,7 +279,8 @@
              <string>Delete</string>
             </property>
             <property name="icon">
-             <iconset theme="view-close"/>
+             <iconset theme="view-close">
+              <normaloff>.</normaloff>.</iconset>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>
