@@ -48,17 +48,20 @@ PrintWidget::~PrintWidget() {
 void PrintWidget::fitView() {
   setZoomMode(FitInView);
   setCurrentPage(curPage); // Make sure we stay on the same page
+  //generatePreview();
 }
 
 void PrintWidget::fitToWidth() {
   setZoomMode(FitToWidth);
   setCurrentPage(curPage); // Make sure we stay on the same page
+ // generatePreview();
 }
 
 void PrintWidget::setZoomMode(ZoomMode mode) {
   zoomMode = mode;
   fitting = true;
   fit(true);
+  generatePreview();
 }
 
 void PrintWidget::setAllPagesViewMode() { setViewMode(AllPagesView); }
@@ -79,6 +82,7 @@ void PrintWidget::setViewMode(ViewMode mode) {
     fitting = true;
     fit();
   }
+  generatePreview();
 }
 
 void PrintWidget::zoomIn(double factor) {
@@ -110,9 +114,11 @@ void PrintWidget::setVisible(bool visible) {
 void PrintWidget::setCurrentPage(int pageNumber) {
 
   int lastPage = curPage;
-  curPage = std::max(1, std::min(pageNumber, BACKEND->numPages()));
+  //We need to allow one additional page after the last page here for presentation mode.
+  // This allows a "blank" page at the end of a presentation before actually closing down the presentation;
+  curPage = std::max(1, std::min(pageNumber, BACKEND->numPages()+1));
 
-  /* if (lastPage != curPage && lastPage > 0 && lastPage <= pages.count()) {
+   /*if (lastPage != curPage && lastPage > 0 && lastPage <= pages.count()) {
     if (zoomMode != FitInView) {
       QScrollBar *hsc = this->horizontalScrollBar();
       QScrollBar *vsc = this->verticalScrollBar();
@@ -122,12 +128,12 @@ void PrintWidget::setCurrentPage(int pageNumber) {
     } else {
       this->centerOn(pages.at(curPage - 1));
     }
-  } */
+  }*/
 
-  if (lastPage != curPage)
+  if (lastPage != curPage){
     updatePreview();
-
-  qDebug() << "Current page set to " << pageNumber << "\n";
+  }
+  //qDebug() << "Current page set to " << pageNumber << "\n";
 }
 
 void PrintWidget::highlightText(TextData *text) {
@@ -240,19 +246,24 @@ void PrintWidget::populateScene() {
   links.clear();
   annots.clear();
   // int numPages = BACKEND->numPages();
-  if (!BACKEND->isDoneLoading()) {
-    qDebug() << "populateScene() called while backend still loading.\n";
+  if (!BACKEND->isDoneLoading(curPage)) {
+    //qDebug() << "populateScene() called while backend still loading.\n";
     return;
   } // nothing to show yet
-
-  for (int i = curPage; i < curPage + 1; i++) {
+  int start = curPage;
+  int end = start;
+  if( viewMode == FacingPagesView){ end += 1; }
+  else if( viewMode == AllPagesView ) {  start = 1; end = BACKEND->numPages(); }
+  //single-page view otherwise
+  //qDebug() << "Populate Scene" << start << end;
+  for (int i = start; i < end + 1; i++) {
     QImage pagePicture = BACKEND->imageHash(i);
     QSize paperSize = pagePicture.size();
     QList<QGraphicsItem *> linkLocations;
     QList<QGraphicsItem *> annotLocations;
 
     if (pagePicture.isNull()) {
-      qDebug() << "NULL IMAGE ON PAGE " << i;
+      //qDebug() << "NULL IMAGE ON PAGE " << i;
       continue;
     }
 

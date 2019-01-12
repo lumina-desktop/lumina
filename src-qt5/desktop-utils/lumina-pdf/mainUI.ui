@@ -116,7 +116,7 @@
      <x>0</x>
      <y>0</y>
      <width>697</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -322,10 +322,16 @@
    <property name="text">
     <string>Previous Page</string>
    </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
   </action>
   <action name="actionNext_Page">
    <property name="text">
     <string>Next Page</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
   <action name="actionLast_Page">

@@ -7,6 +7,7 @@
 #include <mupdf/fitz.h>
 #include <mupdf/pdf.h>
 
+QMutex hashMutex;
 class Annot;
 
 inline QRectF convertRect(fz_rect bbox, double sf = 1.0) {
@@ -180,6 +181,7 @@ Renderer::~Renderer() {
 bool Renderer::loadMultiThread() { return false; }
 
 void Renderer::handleLink(QWidget *obj, QString link) {
+  //qDebug() << "handle link";
   float xp = 0.0, yp = 0.0;
   int pagenum = 0;
 
@@ -206,6 +208,7 @@ void Renderer::handleLink(QWidget *obj, QString link) {
 
 // Traverse the outline tree through Preorder traversal
 void Renderer::traverseOutline(void *link, int level) {
+  //qDebug() << "traverse outline";
   fz_outline *olink = (fz_outline *)link;
 
   Bookmark *bm = new Bookmark(olink->title, olink->uri, olink->page, level);
@@ -220,9 +223,10 @@ void Renderer::traverseOutline(void *link, int level) {
 
 bool Renderer::loadDocument(QString path, QString password) {
   // first time through
+  //qDebug() << "Load Document:" << path;
   if (path != docpath) {
     if (DOC != 0) {
-      qDebug() << "New document";
+      //qDebug() << "New document";
       fz_drop_document(CTX, DOC);
       DOC = NULL;
       needpass = false;
@@ -233,7 +237,7 @@ bool Renderer::loadDocument(QString path, QString password) {
       }
     } else if (DOC == 0) {
       fz_register_document_handlers(CTX);
-      qDebug() << "Document handlers registered";
+      //qDebug() << "Document handlers registered";
     }
 
     // fz_page_presentation
@@ -258,7 +262,7 @@ bool Renderer::loadDocument(QString path, QString password) {
 
     // qDebug() << "Password Check cleared";
     pnum = fz_count_pages(CTX, DOC);
-    qDebug() << "Page count: " << pnum;
+    //qDebug() << "Page count: " << pnum;
 
     doctitle.clear();
 
@@ -299,7 +303,7 @@ bool Renderer::loadDocument(QString path, QString password) {
 
 void renderer(Data *data, Renderer *obj) {
   int pagenum = data->getPage();
-  // qDebug() << "Rendering:" << pagenum;
+  //qDebug() << "Rendering:" << pagenum;
   fz_context *ctx = data->getContext();
   fz_rect bbox = data->getBoundingBox();
   fz_matrix ctm = data->getMatrix();
@@ -317,18 +321,20 @@ void renderer(Data *data, Renderer *obj) {
   data->setImage(QImage(pixmap->samples, pixmap->w, pixmap->h, pixmap->stride,
                         QImage::Format_RGB888));
   data->setPixmap(pixmap);
+  hashMutex.lock();
   dataHash.insert(pagenum, data);
+  hashMutex.unlock();
 
   fz_close_device(ctx, dev);
   fz_drop_device(ctx, dev);
   fz_drop_context(ctx);
 
-  // qDebug() << "Finished rendering:" << pagenum;
+  //qDebug() << "Finished rendering:" << pagenum;
   emit obj->PageLoaded(pagenum);
 }
 
 void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
-  // qDebug() << "- Rendering Page:" << pagenum << degrees;
+  //qDebug() << "- Rendering Page:" << pagenum << degrees;
   Data *data;
   fz_matrix matrix;
   fz_rect bbox;
@@ -339,7 +345,8 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
   fz_scale(&matrix, sf, sf);
   fz_pre_rotate(&matrix, degrees);
 
-  pdf_page *PAGE = pdf_load_page(CTX, (pdf_document *)DOC, pagenum);
+  //mupdf indexes pages starting at 0, not 1
+  pdf_page *PAGE = pdf_load_page(CTX, (pdf_document *)DOC, pagenum-1);
   pdf_bound_page(CTX, PAGE, &bbox);
   emit OrigSize(QSizeF(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
 
@@ -569,8 +576,7 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
                                 maxLen, contentType);
     if (type == 4 or type == 5) {
       QStringList optionList, exportList;
-      bool multi =
-          pdf_choice_widget_is_multiselect(CTX, (pdf_document *)DOC, widget);
+      bool multi = pdf_choice_widget_is_multiselect(CTX, (pdf_document *)DOC, widget);
 
       if (int listS = pdf_choice_widget_options(CTX, (pdf_document *)DOC,
                                                 widget, 0, NULL)) {
@@ -608,6 +614,7 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
 }
 
 QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
+  //qDebug() << "Search Document";
   fz_rect rectBuffer[1000];
   QList<TextData *> results;
   for (int i = 0; i < pnum; i++) {
@@ -639,38 +646,51 @@ QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
 }
 
 QImage Renderer::imageHash(int pagenum) {
+  if(!dataHash.contains(pagenum)){ return QImage(); }
   return dataHash[pagenum]->getImage();
+}
+
+QSize Renderer::imageSize(int pagenum){
+  if(!dataHash.contains(pagenum)){ return QSize(); }
+  return dataHash[pagenum]->getImage().size();
 }
 
 int Renderer::hashSize() { return dataHash.size(); }
 
 void Renderer::clearHash() {
-  qDeleteAll(dataHash);
+  //qDeleteAll(dataHash);
   dataHash.clear();
 }
 
 TextData *Renderer::linkList(int pagenum, int entry) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return dataHash[pagenum]->getLinkList()[entry]->getData();
 }
 
 int Renderer::linkSize(int pagenum) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return dataHash[pagenum]->getLinkList().size();
 }
 
 Annotation *Renderer::annotList(int pagenum, int entry) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return static_cast<Annotation *>(dataHash[pagenum]->getAnnotList(entry));
 }
 
 int Renderer::annotSize(int pagenum) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return dataHash[pagenum]->getAnnotSize();
 }
 
 Widget *Renderer::widgetList(int pagenum, int entry) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return dataHash[pagenum]->getWidgetList(entry);
 }
 
 int Renderer::widgetSize(int pagenum) {
+  if(!dataHash.contains(pagenum)){ return 0; }
   return dataHash[pagenum]->getWidgetSize();
 }
 
+bool Renderer::isDoneLoading(int page){ return dataHash.contains(page); }
 bool Renderer::supportsExtraFeatures() { return true; }

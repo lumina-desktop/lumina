@@ -25,6 +25,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()) {
   ui->setupUi(this);
   // this->setWindowTitle(tr("Lumina PDF Viewer"));
   this->setWindowIcon(LXDG::findIcon("application-pdf", "unknown"));
+  this->setFocusPolicy(Qt::StrongFocus);
   presentationLabel = 0;
   CurrentPage = 1;
   lastdir = QDir::homePath();
@@ -61,7 +62,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()) {
                    this, SLOT(showContextMenu(const QPoint &)));
   QObject::connect(WIDGET, SIGNAL(currentPageChanged()), this,
                    SLOT(updatePageNumber()));
-  QObject::connect(BACKEND, SIGNAL(PageLoaded()), this, SLOT(slotPageLoaded()));
+  QObject::connect(BACKEND, SIGNAL(PageLoaded(int)), this, SLOT(slotPageLoaded(int)));
   QObject::connect(BACKEND, SIGNAL(SetProgress(int)), this,
                    SLOT(slotSetProgress(int)));
   QObject::connect(BACKEND, SIGNAL(reloadPages(int)), this,
@@ -217,38 +218,28 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()) {
   ui->actionFit_Width->setIcon(LXDG::findIcon("transform-scale", ""));
   ui->actionFit_Page->setIcon(LXDG::findIcon("zoom-fit-best", ""));
   ui->actionOpen_PDF->setIcon(LXDG::findIcon("document-open", ""));
-  ui->actionSingle_Page->setIcon(
-      LXDG::findIcon("view-split-top-bottom", "format-view-agenda"));
-  ui->actionDual_Pages->setIcon(
-      LXDG::findIcon("view-split-left-right", "format-view-grid-small"));
-  ui->actionAll_Pages->setIcon(
-      LXDG::findIcon("view-grid", "format-view-grid-large"));
+  ui->actionSingle_Page->setIcon( LXDG::findIcon("view-split-top-bottom", "format-view-agenda"));
+  ui->actionDual_Pages->setIcon( LXDG::findIcon("view-split-left-right", "format-view-grid-small"));
+  ui->actionAll_Pages->setIcon( LXDG::findIcon("view-grid", "format-view-grid-large"));
   ui->actionScroll_Mode->setIcon(LXDG::findIcon("cursor-pointer", ""));
   ui->actionSelect_Mode->setIcon(LXDG::findIcon("cursor-text", ""));
   ui->actionZoom_In->setIcon(LXDG::findIcon("zoom-in", ""));
   ui->actionZoom_Out->setIcon(LXDG::findIcon("zoom-out", ""));
   ui->actionZoom_In_2->setIcon(LXDG::findIcon("zoom-in", ""));
   ui->actionZoom_Out_2->setIcon(LXDG::findIcon("zoom-out", ""));
-  ui->actionRotate_Counterclockwise->setIcon(
-      LXDG::findIcon("object-rotate-left", ""));
-  ui->actionRotate_Clockwise->setIcon(
-      LXDG::findIcon("object-rotate-right", ""));
+  ui->actionRotate_Counterclockwise->setIcon( LXDG::findIcon("object-rotate-left", ""));
+  ui->actionRotate_Clockwise->setIcon( LXDG::findIcon("object-rotate-right", ""));
   ui->actionFirst_Page->setIcon(LXDG::findIcon("go-first", ""));
   ui->actionPrevious_Page->setIcon(LXDG::findIcon("go-previous", ""));
   ui->actionNext_Page->setIcon(LXDG::findIcon("go-next", ""));
   ui->actionLast_Page->setIcon(LXDG::findIcon("go-last", ""));
-  ui->actionStart_Here->setIcon(
-      LXDG::findIcon("video-display", "media-playback-start-circled"));
-  ui->actionStart_Begin->setIcon(
-      LXDG::findIcon("view-presentation", "presentation-play"));
-  ui->actionStop_Presentation->setIcon(
-      LXDG::findIcon("media-playback-stop", "media-playback-stop-circled"));
+  ui->actionStart_Here->setIcon( LXDG::findIcon("video-display", "media-playback-start-circled"));
+  ui->actionStart_Begin->setIcon( LXDG::findIcon("view-presentation", "presentation-play"));
+  ui->actionStop_Presentation->setIcon( LXDG::findIcon("media-playback-stop", "media-playback-stop-circled"));
   ui->actionBookmarks->setIcon(LXDG::findIcon("bookmark-new", ""));
   ui->actionFind->setIcon(LXDG::findIcon("edit-find", ""));
-  ui->actionFind_Next->setIcon(
-      LXDG::findIcon("go-down-search", "edit-find-next"));
-  ui->actionFind_Previous->setIcon(
-      LXDG::findIcon("go-up-search", "edit-find-prev"));
+  ui->actionFind_Next->setIcon( LXDG::findIcon("go-down-search", "edit-find-next"));
+  ui->actionFind_Previous->setIcon( LXDG::findIcon("go-up-search", "edit-find-prev"));
   ui->actionProperties->setIcon(LXDG::findIcon("dialog-information", ""));
   ui->actionSettings->setIcon(LXDG::findIcon("document-properties", ""));
   ui->findNextB->setIcon(LXDG::findIcon("go-down-search"));
@@ -280,6 +271,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()) {
   ui->actionScroll_Mode->setVisible(false);
   ui->actionSelect_Mode->setEnabled(false);
   ui->actionSelect_Mode->setVisible(false);
+  //qDebug() << "Done with MainUI Init";
 }
 
 MainUI::~MainUI() {
@@ -415,10 +407,9 @@ void MainUI::startPresentation(bool atStart) {
 
 void MainUI::ShowPage(int page) {
   // Check for valid document/page
-  // qDebug() << "Load Page:" << page << "/" << BACKEND->numPages() << "Index:"
-  // << page;
-  page = std::max(1, std::min(page, BACKEND->numPages()));
-  if (page == BACKEND->numPages() and CurrentPage == page) {
+  //qDebug() << "Load Page:" << page << "/" << BACKEND->numPages() << "Index:" << page;
+  //page = std::max(1, std::min(page, BACKEND->numPages()));
+  if (page == BACKEND->numPages()+2 ) { //allow one blank/black page after the end of the last slide
     endPresentation();
     return; // invalid - no document loaded or invalid page specified
   }
@@ -429,11 +420,11 @@ void MainUI::ShowPage(int page) {
     WIDGET->updatePreview();
     return;
   }
-  // qDebug() << "Show Page:" << page << "/" << numPages;
+  //qDebug() << "Show Page:" << page << "/" << BACKEND->numPages();
   CurrentPage = page;
   QImage PAGEIMAGE;
   if (page < BACKEND->numPages() + 1) {
-    PAGEIMAGE = BACKEND->imageHash(page - 1);
+    PAGEIMAGE = BACKEND->imageHash(page);
   }
 
   // Now scale the image according to the user-designations and show it
@@ -448,6 +439,8 @@ void MainUI::ShowPage(int page) {
     // Blank page (useful so there is one blank page after the last slide before
     // stopping the presentation)
     presentationLabel->setPixmap(QPixmap());
+    presentationLabel->setText(tr("Presentation Finished: Hit \"ESC\" key to close presentation view"));
+    presentationLabel->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
   }
 }
 
@@ -463,14 +456,17 @@ void MainUI::endPresentation() {
   clockTimer->stop();
   clockAct->setVisible(false);
   this->releaseKeyboard();
+  if(WIDGET->currentPage() >= BACKEND->numPages()){
+    lastPage();
+  }
   updatePageNumber();
 }
 
 void MainUI::startLoadingPages(int degrees) {
-  // qDebug() <<"Start Loading Pages";
+  //qDebug() <<"Start Loading Pages";
   // if(BACKEND->hashSize() != 0) { return; } //currently loaded[ing]
   loadingQueue.clear();
-  // BACKEND->clearHash();
+  BACKEND->clearHash();
   WIDGET->setVisible(false);
   BOOKMARKS->setVisible(false);
   progress->setRange(0, BACKEND->numPages());
@@ -485,8 +481,7 @@ void MainUI::startLoadingPages(int degrees) {
   // pixelization) The best approach seams to be to increase the DPI a bit, but
   // match that with the same scaling on the page size (smoothing)
 
-  QSize DPI(250,
-            250); // print-quality (some printers even go to 600 DPI nowdays)
+  QSize DPI(250, 250); // print-quality (some printers even go to 600 DPI nowdays)
 
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
@@ -506,33 +501,36 @@ void MainUI::startLoadingPages(int degrees) {
       }
     }
   }
-  // qDebug() << "Finish page loading kickoff";
+  //qDebug() << "Finish page loading kickoff";
 }
 
 void MainUI::slotSetProgress(int finished) { progress->setValue(finished); }
 
-void MainUI::slotPageLoaded() {
-  // loadingQueue.push_back(page);
-  // int finished = loadingQueue.size();
-  // qDebug() << "Page Loaded:" << page << finished;
-  // if (finished == BACKEND->numPages()) {
-  progAct->setVisible(false);
-  WIDGET->setVisible(true);
-  BOOKMARKS->setVisible(true);
-  ui->splitter->setSizes(QList<int>() << 0 << this->width());
-  WIDGET->setCurrentPage(1);
-  ui->actionStop_Presentation->setEnabled(false);
-  ui->actionStart_Here->setEnabled(true);
-  ui->actionStart_Begin->setEnabled(true);
-  pageAct->setVisible(true);
-  PROPDIALOG->setSize(pageSize);
-  qDebug() << " - Document Setup: All pages loaded";
+void MainUI::slotPageLoaded(int page) {
+  //qDebug() << "slotPageLoaded";
+  loadingQueue.push_back(page);
+  int finished = loadingQueue.size();
+  //qDebug() << "Page Loaded:" << page << finished;
+  if (finished == BACKEND->numPages()) {
+    progAct->setVisible(false);
+    WIDGET->setVisible(true);
+    BOOKMARKS->setVisible(true);
+    ui->splitter->setSizes(QList<int>() << 0 << this->width());
+    WIDGET->setCurrentPage(1);
+    ui->actionStop_Presentation->setEnabled(false);
+    ui->actionStart_Here->setEnabled(true);
+    ui->actionStart_Begin->setEnabled(true);
+    pageAct->setVisible(true);
+    PROPDIALOG->setSize(pageSize);
+    //qDebug() << " - Document Setup: All pages loaded";
+  }
   // QTimer::singleShot(10, WIDGET,
   //                   SLOT(updatePreview())); // start loading the file preview
   WIDGET->updatePreview();
 }
 
 void MainUI::paintToPrinter(QPrinter *PRINTER) {
+  //qDebug() << "paintToPrinter()";
   if (BACKEND->hashSize() != BACKEND->numPages()) {
     return;
   }
@@ -649,8 +647,8 @@ void MainUI::OpenNewFile() {
 }
 
 void MainUI::updateClock() {
-  label_clock->setText(
-      QDateTime::currentDateTime().toString("<b>hh:mm:ss</b>"));
+  label_clock->setText("<b>"+
+      QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate)+"</b>");
 }
 
 void MainUI::updatePageNumber() {
@@ -693,6 +691,7 @@ void MainUI::updateContextMenu() {
 }
 
 void MainUI::keyPressEvent(QKeyEvent *event) {
+  //qDebug() << "Got Key Press Event!";
   // See if this is one of the special hotkeys and act appropriately
   bool inPresentation = (presentationLabel != 0);
   switch (event->key()) {
@@ -746,6 +745,7 @@ void MainUI::keyPressEvent(QKeyEvent *event) {
 
 void MainUI::wheelEvent(QWheelEvent *event) {
   // Scroll the window according to the mouse wheel
+  //qDebug() << "Got Wheel Event!";
   QMainWindow::wheelEvent(event);
 }
 

@@ -154,13 +154,13 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
   }
 
   if (pagesStillLoading == 1) {
-    emit PageLoaded();
+    emit PageLoaded(pagenum);
   }
 
   --pagesStillLoading;
 }
 
-bool Renderer::isDoneLoading() { return pagesStillLoading == 0; }
+bool Renderer::isDoneLoading(int page) { return imageCache.contains(page); }
 
 QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
   QList<TextData *> results;
@@ -177,9 +177,13 @@ QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
   return results;
 }
 
-QSize Renderer::imageSize(int pagenum) { return pages[pagenum].size(); }
+QSize Renderer::imageSize(int pagenum) {
+  if(!imageCache.contains(pagenum)){ return QSize(); }
+  return pages[pagenum].size();
+}
 
 QImage Renderer::imageHash(int pagenum) {
+  if(!imageCache.contains(pagenum)){ return QImage(); }
   // while(pagesStillLoading > 0) { qDebug() << "pagesStillLoading!\n";}
 
   std::optional<QImage> cachedImage = imageCache.get(pagenum);

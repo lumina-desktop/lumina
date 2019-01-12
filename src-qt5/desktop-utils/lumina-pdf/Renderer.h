@@ -67,11 +67,11 @@ public:
     emit reloadPages(this->degrees);
   }
 
-  virtual bool isDoneLoading();
+  virtual bool isDoneLoading(int page);
   virtual bool supportsExtraFeatures();
 
 signals:
-  void PageLoaded();
+  void PageLoaded(int);
   void SetProgress(int);
   void OrigSize(QSizeF);
   void reloadPages(int);

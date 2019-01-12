@@ -74,7 +74,7 @@ private:
 
 private slots:
   void startLoadingPages(int degrees = 0);
-  void slotPageLoaded();
+  void slotPageLoaded(int);
   void slotSetProgress(int);
 
   // Simplification routines
