@@ -310,13 +310,13 @@ QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
   QStringList inactiveColors = settings.value("inactive_colors").toStringList();
   QStringList disabledColors = settings.value("disabled_colors").toStringList();
   settings.endGroup();
-    if(activeColors.count() == QPalette::NColorRoles && inactiveColors.count() == QPalette::NColorRoles && disabledColors.count() == QPalette::NColorRoles){
-      for (int i = 0; i < QPalette::NColorRoles; i++){
-        QPalette::ColorRole role = QPalette::ColorRole(i);
-        customPalette.setColor(QPalette::Active, role, QColor(activeColors.at(i)));
-        customPalette.setColor(QPalette::Inactive, role, QColor(inactiveColors.at(i)));
-        customPalette.setColor(QPalette::Disabled, role, QColor(disabledColors.at(i)));
-        }
+  if(activeColors.count() <= QPalette::NColorRoles && inactiveColors.count() <= QPalette::NColorRoles && disabledColors.count() <= QPalette::NColorRoles){
+    for (int i = 0; i < QPalette::NColorRoles && i<activeColors.count(); i++){
+      QPalette::ColorRole role = QPalette::ColorRole(i);
+      customPalette.setColor(QPalette::Active, role, QColor(activeColors.at(i)));
+      customPalette.setColor(QPalette::Inactive, role, QColor(inactiveColors.at(i)));
+      customPalette.setColor(QPalette::Disabled, role, QColor(disabledColors.at(i)));
+      }
     }
   else{ customPalette = *QPlatformTheme::palette(SystemPalette); } //load fallback palette
   return customPalette;

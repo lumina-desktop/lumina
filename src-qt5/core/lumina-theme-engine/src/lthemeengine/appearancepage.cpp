@@ -253,8 +253,8 @@ QPalette AppearancePage::loadColorScheme(const QString &filePath){
   QStringList inactiveColors = settings.value("inactive_colors").toStringList();
   QStringList disabledColors = settings.value("disabled_colors").toStringList();
   settings.endGroup();
-  if(activeColors.count() == QPalette::NColorRoles && inactiveColors.count() == QPalette::NColorRoles && disabledColors.count() == QPalette::NColorRoles){
-    for (int i = 0; i < QPalette::NColorRoles; i++){
+  if(activeColors.count() <= QPalette::NColorRoles && inactiveColors.count() <= QPalette::NColorRoles && disabledColors.count() <= QPalette::NColorRoles){
+    for (int i = 0; i < QPalette::NColorRoles && i<activeColors.count(); i++){
       QPalette::ColorRole role = QPalette::ColorRole(i);
       customPalette.setColor(QPalette::Active, role, QColor(activeColors.at(i)));
       customPalette.setColor(QPalette::Inactive, role, QColor(inactiveColors.at(i)));
@@ -263,7 +263,7 @@ QPalette AppearancePage::loadColorScheme(const QString &filePath){
     }
   else{
     customPalette = palette(); //load fallback palette
-    }
+  }
   return customPalette;
 }
 
