@@ -13,8 +13,8 @@ share/applications/lumina-photo.desktop
 %%I18N%%share/lumina-desktop/i18n/l-photo_da.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_de.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_el.qm
-%%I18N%%share/lumina-desktop/i18n/l-photo_en_GB.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_en_AU.qm
+%%I18N%%share/lumina-desktop/i18n/l-photo_en_GB.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_en_ZA.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_es.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_et.qm
@@ -42,7 +42,6 @@ share/applications/lumina-photo.desktop
 %%I18N%%share/lumina-desktop/i18n/l-photo_ms.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_mt.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_nb.qm
-%%I18N%%share/lumina-desktop/i18n/l-photo_ne.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_nl.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_pa.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_pl.qm
@@ -50,7 +49,6 @@ share/applications/lumina-photo.desktop
 %%I18N%%share/lumina-desktop/i18n/l-photo_pt_BR.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_ro.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_ru.qm
-%%I18N%%share/lumina-desktop/i18n/l-photo_sa.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_sk.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_sl.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_sr.qm
@@ -61,7 +59,6 @@ share/applications/lumina-photo.desktop
 %%I18N%%share/lumina-desktop/i18n/l-photo_th.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_tr.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_uk.qm
-%%I18N%%share/lumina-desktop/i18n/l-photo_ur.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_uz.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_vi.qm
 %%I18N%%share/lumina-desktop/i18n/l-photo_zh_CN.qm
