@@ -32,7 +32,7 @@ USES=		qmake qt:5
 USE_QT=		core gui widgets network svg multimedia \
 		buildtools_build x11extras concurrent printsupport
 USE_GITHUB=	yes
-GH_ACCOUNT=	trueos
+GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina
 GH_TAGNAME=	%%GHTAG%%
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
