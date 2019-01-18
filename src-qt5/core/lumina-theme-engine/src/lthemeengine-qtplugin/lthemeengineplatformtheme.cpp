@@ -180,11 +180,16 @@ void lthemeenginePlatformTheme::applySettings(){
   if(!m_update){ m_update = true; }
 
   //Mouse Cursor syncronization
-  QString mthemefile = QDir::homePath()+"/.icons/default/index.theme";
+  /*QString mthemefile = QDir::homePath()+"/.icons/default/index.theme";
   if(!watcher->files().contains(mthemefile) && QFile::exists(mthemefile)){
     watcher->addPath(mthemefile); //X11 mouse cursor theme file
     //qDebug() << "Add Mouse Cursor File to Watcher";
     syncMouseCursorTheme(mthemefile);
+  }*/
+  //Now cleanup any old palette as needed
+  if(outgoingpalette != 0){
+    QCoreApplication::processEvents(); //make sure everything switches to the new palette first
+    delete outgoingpalette;
   }
 }
 #ifdef QT_WIDGETS_LIB
@@ -216,17 +221,17 @@ void lthemeenginePlatformTheme::fileChanged(QString path){
 }
 
 void lthemeenginePlatformTheme::readSettings(){
- if(m_customPalette){
-    delete m_customPalette;
+  outgoingpalette = m_customPalette;
+  if(m_customPalette){
     m_customPalette = 0;
-    }
+  }
   QSettings settings(lthemeengine::configFile(), QSettings::IniFormat);
   settings.beginGroup("Appearance");
   m_style = settings.value("style", "Fusion").toString();
   if(settings.value("custom_palette", false).toBool()){
     QString schemePath = settings.value("color_scheme_path","airy").toString();
     m_customPalette = new QPalette(loadColorScheme(schemePath));
-    }
+  }
   m_cursorTheme = settings.value("cursor_theme","").toString();
   m_iconTheme = settings.value("icon_theme", "material-design-light").toString();
   settings.endGroup();
