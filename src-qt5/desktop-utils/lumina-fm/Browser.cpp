@@ -61,16 +61,18 @@ bool Browser::showingThumbnails(){
 
 //   PRIVATE
 void Browser::loadItem(QString info, Browser *obj){
-  QImage* pix = new QImage();
+  QImage* pix = 0; //this needs to return 0 if a standard icon is to be used
   if(imageFormats.contains(info.section(".",-1).toLower()) ){
     QFile file(info);
     if(file.open(QIODevice::ReadOnly)){
       QByteArray bytes = file.readAll();
       file.close();
-      pix->loadFromData(bytes);
-      if(pix->width() > 256 || pix->height() > 256 ){
-        *pix = pix->scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
+      QImage *tmppix = new QImage();
+      tmppix->loadFromData(bytes);
+      if(tmppix->width() > 256 || tmppix->height() > 256 ){
+        *pix = tmppix->scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
       }
+      delete tmppix;
     }
   }
   //qDebug() << " - done with item:" << info;
