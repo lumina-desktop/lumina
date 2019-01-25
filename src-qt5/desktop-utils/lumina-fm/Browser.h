@@ -20,6 +20,7 @@
 #include <LVideoLabel.h>
 #include <LuminaXDG.h>
 #include <LFileInfo.h>
+#include <QMutex>
 
 class Browser : public QObject{
 	Q_OBJECT
@@ -43,14 +44,15 @@ private:
 	QStringList imageFormats, videoFormats, oldFiles, updateList;
 	QHash<QString, QIcon> mimeIcons; //cache for quickly re-using QIcons
 	QTimer *updateTimer;
+	QMutex hashMutex;
 
-	void loadItem(QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
+	void loadItem(const QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
 	QIcon* loadIcon(QString icon); //simplification for using/populating the mimIcons cache
 
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
 	void dirChanged(QString); // tied into the watcher - for new/removed files in the current dir
-	void futureFinished(QString, const QImage* );
+	void futureFinished(const QString, const QImage );
 	void updateRequested();
 
 public slots:
@@ -66,7 +68,7 @@ signals:
 	void itemsLoading(int); //number of items which are getting loaded
 
 	//Internal signal for the alternate threads
-	void threadDone(QString, const QImage*);
+	void threadDone(const QString, const QImage);
 };
 
 #endif

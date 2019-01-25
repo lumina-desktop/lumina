@@ -27,7 +27,7 @@ Browser::Browser(QObject *parent) : QObject(parent){
   imageFormats = LUtils::imageExtensions(false); //lowercase suffixes
   //connect(surface, SIGNAL(frameReceived(QImage)), this, SLOT(captureFrame(QImage)));
   //connect(player, &QMediaPlayer::mediaStatusChanged, this, [&]{ stopVideo(player, player->mediaStatus()); });
-  connect(this, SIGNAL(threadDone(QString, const QImage*)), this, SLOT(futureFinished(QString, const QImage*))); //will always be between different threads
+  connect(this, SIGNAL(threadDone(const QString, const QImage)), this, SLOT(futureFinished(const QString, const QImage))); //will always be between different threads
 }
 
 Browser::~Browser(){
@@ -60,30 +60,34 @@ bool Browser::showingThumbnails(){
 }
 
 //   PRIVATE
-void Browser::loadItem(QString info, Browser *obj){
-  QImage* pix = 0; //this needs to return 0 if a standard icon is to be used
-  if(imageFormats.contains(info.section(".",-1).toLower()) ){
-    QFile file(info);
-    if(file.open(QIODevice::ReadOnly)){
-      QByteArray bytes = file.readAll();
-      file.close();
-      QImage *tmppix = new QImage();
-      tmppix->loadFromData(bytes);
-      if(tmppix->width() > 256 || tmppix->height() > 256 ){
-        *pix = tmppix->scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
-      }
-      delete tmppix;
-    }
-  }
-  //qDebug() << " - done with item:" << info;
+void Browser::loadItem(const QString info, Browser *obj){
+  //qDebug() << "Load Thumbnail in separate thread:" << info;
+  const QImage pix(info);
   obj->emit threadDone(info, pix);
+  //qDebug() << " - Done:" << info;
+ /* QImage* pix = new QImage();
+  qDebug() << "Load Thumbnail";
+  QFile file(info);
+  if(file.open(QIODevice::ReadOnly)){
+    QByteArray bytes = file.readAll();
+    pix->loadFromData(bytes);
+    if(pix->width() > 256 || pix->height() > 256 ){
+      *pix = pix->scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
+    }
+    file.close();
+  }
+  qDebug() << "Loading Thumbnail Done:" << info;
+  obj->emit threadDone(info, pix);*/
 }
 
 QIcon* Browser::loadIcon(QString icon){
+  hashMutex.lock();
   if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
-  return &mimeIcons[icon];
+  QIcon *tmp = &mimeIcons[icon];
+  hashMutex.unlock();
+  return tmp;
 }
 
 
@@ -111,15 +115,15 @@ void Browser::dirChanged(QString dir){
   //else if(dir.startsWith(currentDir)){ QtConcurrent::run(this, &Browser::loadItem, dir, this ); }
 }
 
-void Browser::futureFinished(QString name, const QImage* icon){
+void Browser::futureFinished(QString name, const QImage icon){
   //Note: this will be called once for every item that loads
     //Haven't added the extra files in a directory fix, but that should be easy to do
     //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
     //qDebug() << "Finished:" << name;
     QIcon *ico = new QIcon();
     LFileInfo *info = new LFileInfo(name);
-    if(icon != nullptr && showThumbs){
-      QPixmap pix = QPixmap::fromImage(*icon);
+    if(!icon.isNull() && showThumbs){
+      QPixmap pix = QPixmap::fromImage(icon);
       ico->addPixmap(pix);
     /*}else if(info->isVideo() && showThumbs) {
       if(videoImages.find(name) == videoImages.end()) {
@@ -132,12 +136,10 @@ void Browser::futureFinished(QString name, const QImage* icon){
         ico->addPixmap(videoImages[name]);
       }*/
     }else{
+      //Standard Icon based on file type
       ico = loadIcon(info->iconfile());
     }
     this->emit itemDataAvailable( ico, info);
-    // We are done with processing received image (copied to pixmap above) so now clean it up
-    delete icon;
-    icon = nullptr;
     //qDebug() << " -- done:" << name;
 }
 
@@ -163,13 +165,16 @@ void Browser::loadDirectory(QString dir, bool force){
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   updateList.clear();
   //qDebug() << "Load Directory" << dir;
+  if(dir.endsWith("/")){ dir.chop(1); }
   bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
+    //qDebug() << " - different Directory";
     //videoImages.clear();
     oldFiles.clear();
     lastcheck = QDateTime(); //null time
     emit clearItems();
     dirupdate = false;
+    QCoreApplication::processEvents();
   }
   currentDir = dir; //save this for later
   QDateTime now = QDateTime::currentDateTime();
@@ -185,7 +190,7 @@ void Browser::loadDirectory(QString dir, bool force){
     if(showHidden){ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot, QDir::NoSort); }
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
     if(dirupdate || old.isEmpty()){ emit itemsLoading(files.length()); }
-    //qDebug() << "Files Found:" << files.length();
+    //qDebug() << "Files Found:" << files.length() << currentDir;
     for(int i=0; i<files.length(); i++){
       watcher->addPath(directory.absoluteFilePath(files[i]));
       QString path = directory.absoluteFilePath(files[i]);
@@ -195,12 +200,15 @@ void Browser::loadDirectory(QString dir, bool force){
       //reloaditem = true;
       if(old.contains(path)){ old.removeAll(path); } //still in existance
       //if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
-      //qDebug() << "Future Starting:" << files[i];
-      if(reloaditem){ QtConcurrent::run(this, &Browser::loadItem, path, this); }
-      /*}else{
-        //No special icon loading - just skip the file read step
-        futureFinished(path, QImage()); //loadItem(path, this);
-      }*/
+      //qDebug() << "Future Starting:" << path;
+      if(reloaditem){
+	if(imageFormats.contains(path.section(".",-1).toLower()) ){
+          QtConcurrent::run(this, &Browser::loadItem, path, this);
+        }else{
+          //No special icon loading - just skip the loadItem function
+          futureFinished(path, QImage());
+        }
+      }
     }
     watcher->addPath(directory.absolutePath());
     if(!old.isEmpty()){

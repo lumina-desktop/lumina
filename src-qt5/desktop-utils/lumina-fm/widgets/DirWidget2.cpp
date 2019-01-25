@@ -832,6 +832,7 @@ void DirWidget::removeFiles(){
 }
 
 void DirWidget::runFiles(){
+  //qDebug() << "Run Files";
   QStringList sel = currentBrowser()->currentSelection();
   if(sel.isEmpty()){ return; }
   QStringList dirs;
@@ -842,6 +843,7 @@ void DirWidget::runFiles(){
       QProcess::startDetached("lumina-open \""+sel[i]+"\"");
     }
   }
+  //qDebug() << " - got Dirs:" << dirs;
   if(!dirs.isEmpty()){
     currentBrowser()->changeDirectory( dirs.takeFirst()); //load the first directory in this widget
   }

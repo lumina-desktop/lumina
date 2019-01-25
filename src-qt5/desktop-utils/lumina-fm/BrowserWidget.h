@@ -29,6 +29,7 @@ private:
 	QMap<QString,QPair<QTreeWidgetItem*, LVideoWidget*>> videoMap;
 	bool freshload;
 	int treeSortColumn;
+	QMutex widgetMutex;
 
 	//The drag and drop brower widgets
 	DDListWidget *listWidget;
@@ -61,7 +62,7 @@ public:
 	QStringList history();
 
 	void setShowActive(bool show); //used for accenting if the widget is "active"
-	
+
 	void setTreeWidgetSortColumn(int col, bool now = false);
 
 	QString status(){ return statustip; }

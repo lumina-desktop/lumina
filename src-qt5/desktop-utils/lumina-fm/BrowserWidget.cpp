@@ -53,6 +53,7 @@ void BrowserWidget::stop(){
 }
 
 void BrowserWidget::changeDirectory(QString dir){
+  //qDebug() << "Change Dir:" << dir;
   if(USE_VIDEO_LABEL){
     QStringList vids = videoMap.keys();
     for(int i=0; i<vids.length(); i++){ videoMap.take(vids[i]).second->deleteLater(); }
@@ -219,7 +220,7 @@ QStringList BrowserWidget::currentSelection(){
     //qDebug() << "Selection number:" << sel.length();
     //if(sel.isEmpty() && listWidget->currentItem()!=0){ sel << listWidget->currentItem(); }
     //qDebug() << "Selection number:" << sel.length();
-    for(int i=0; i<sel.length(); i++){ out << sel[i]->whatsThis(); qDebug() << "Selection:" << sel[i]->text() << sel[i]->whatsThis(); }
+    for(int i=0; i<sel.length(); i++){ out << sel[i]->whatsThis(); }
   }else if(treeWidget!=0){
     QList<QTreeWidgetItem*> sel = treeWidget->selectedItems();
     //if(sel.isEmpty() && treeWidget->currentItem()!=0){ sel << treeWidget->currentItem(); }
@@ -321,11 +322,13 @@ void BrowserWidget::itemRemoved(QString item){
 }
 
 void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
+  //qDebug() << "itemDataAvailable";
   if(info==0){ return; }
+  if(info->absolutePath() != BROWSER->currentDirectory()){ return; } //leftover item from a previous load
+  widgetMutex.lock();
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
   if(treeWidget!=0){ treeWidget->setWhatsThis(BROWSER->currentDirectory() ); }
-  if(info->absolutePath() != BROWSER->currentDirectory()){ return; } //leftover item from a previous load
-  //qDebug() << "Item Data Available:" << info->fileName();
+  //if(info->absolutePath().contains("/.zfs/")){ qDebug() << "Item Data Available:" << info->fileName(); }
   int num = 0;
   if(listWidget!=0){
     //LIST WIDGET - name and icon only
@@ -356,11 +359,10 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     //Now update the information for the item
     if(info->isDesktopFile() && info->XDG()->isValid()){
       it->setText(info->XDG()->name);
-      it->setIcon(*ico);
     }else{
-      it->setIcon(*ico);
       it->setText(info->fileName());
     }
+    if(ico!=0){ it->setIcon(*ico); }
 
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
@@ -397,7 +399,9 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
       }
     }
     //Now set/update all the data
-    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){ it->setIcon(0, *ico); }
+    if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){
+        if(ico!=0){ it->setIcon(0, *ico); }
+    }
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
@@ -410,7 +414,7 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
   }
   if(num < numItems){
     //Still loading items
-    this->setEnabled(false);
+    //this->setEnabled(false);
   }else{
     //qDebug() << "Got Items Loaded:" << num << numItems;
     if(freshload && treeWidget!=0){
@@ -423,9 +427,11 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     QtConcurrent::run(this, &BrowserWidget::loadStatistics, this);
     //QTimer::singleShot(0, this, SLOT(loadStatistics()));
     //Done loading items
-    this->setEnabled(true);
+    //this->setEnabled(true);
 
   }//end check for finished loading items
+  widgetMutex.unlock();
+  //qDebug() << " - Done with itemDataAvailable";
 }
 
 void BrowserWidget::itemsLoading(int total){
