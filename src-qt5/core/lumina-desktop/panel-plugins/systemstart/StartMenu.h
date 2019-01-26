@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QScrollArea>
 #include <QMouseEvent>
+#include <QMutex>
 
 #include <LuminaXDG.h>
 
@@ -35,12 +36,13 @@ private:
 	QStringList favs;
 	QString CCat, CSearch, topsearch; //current category/search
 	QTimer *searchTimer;
+	QMutex searchmutex;
 
 	//Simple utility functions
 	//void deleteChildren(QWidget *obj); //recursive function
 	void ClearScrollArea(QScrollArea *area);
 	void SortScrollArea(QScrollArea *area);
-	void do_search(QString search, bool force);
+	void do_search(QString search, bool force, Ui::StartMenu *tui);
 
 	bool promptAboutUpdates(bool &skip);
 

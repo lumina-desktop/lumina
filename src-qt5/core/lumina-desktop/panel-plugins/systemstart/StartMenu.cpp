@@ -221,21 +221,22 @@ void StartMenu::SortScrollArea(QScrollArea *area){
   }
 }
 
-void StartMenu::do_search(QString search, bool force){
+void StartMenu::do_search(QString search, bool force, Ui::StartMenu *tui){
   search = search.simplified(); //remove unneccesary whitespace
   if(search == CSearch && !force){
     //nothing new - just ensure the page is visible
-    if(ui->stackedWidget->currentWidget()!=ui->page_search  ){ ui->stackedWidget->setCurrentWidget(ui->page_search); }
+    if(tui->stackedWidget->currentWidget()!=tui->page_search  ){ tui->stackedWidget->setCurrentWidget(tui->page_search); }
     return;
   }else if(search.isEmpty()){
     CSearch.clear();
-    if(ui->stackedWidget->currentWidget()==ui->page_search  ){ on_tool_back_clicked(); }
+    if(tui->stackedWidget->currentWidget()==tui->page_search  ){ on_tool_back_clicked(); }
     return;
   }
+  searchmutex.lock();
   //Got a search term - check it
   CSearch = search; //save this for comparison later
   //qDebug() << "Search for term:" << search;
-  ClearScrollArea(ui->scroll_search);
+  ClearScrollArea(tui->scroll_search);
   topsearch.clear();
   //Now find any items which match the search
   QStringList found; //syntax: [<sorter>::::<mimetype>::::<filepath>]
@@ -264,23 +265,24 @@ void StartMenu::do_search(QString search, bool force){
     ItemWidget *it = 0;
     if( found[i].section("::::",2,-1).endsWith(".desktop")){
       XDGDesktop item(found[i].section("::::",2,-1));
-      if(item.isValid()){ it = new ItemWidget(ui->scroll_favs->widget(), &item); }
+      if(item.isValid()){ it = new ItemWidget(tui->scroll_favs->widget(), &item); }
     }else{
-      it = new ItemWidget(ui->scroll_favs->widget(), found[i].section("::::",2,-1), found[i].section("::::",1,1) );
+      it = new ItemWidget(tui->scroll_favs->widget(), found[i].section("::::",2,-1), found[i].section("::::",1,1) );
     }
     if(it==0){ continue; }
     if(!it->gooditem){ it->deleteLater(); continue; } //invalid for some reason
-    ui->scroll_search->widget()->layout()->addWidget(it);
+    tui->scroll_search->widget()->layout()->addWidget(it);
     connect(it, SIGNAL(NewShortcut()), this, SLOT(UpdateFavs()) );
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
     if(i%3==0){
       QApplication::processEvents();
-      if(searchTimer->isActive()){ return; } //search changed - go ahead and stop here
+      if(searchTimer->isActive()){ searchmutex.unlock(); return; } //search changed - go ahead and stop here
     }
   }
-  ui->stackedWidget->setCurrentWidget(ui->page_search);
+  tui->stackedWidget->setCurrentWidget(tui->page_search);
+  searchmutex.unlock();
 }
 
 bool StartMenu::promptAboutUpdates(bool &skip){
@@ -692,7 +694,8 @@ void StartMenu::on_line_search_textEdited(QString){
 
 void StartMenu::startSearch(){
   if(!this->isVisible()){ return; } //menu closed while timer was active
- do_search(ui->line_search->text(),false); //auto-launched
+ //QtConcurrent::run(this, &StartMenu::do_search, ui->line_search->text(),false, ui); //auto-launched
+  do_search(ui->line_search->text(), false, ui);
 }
 
 void StartMenu::on_line_search_returnPressed(){

@@ -517,6 +517,7 @@ void XDGDesktopList::watcherChanged(){
 void XDGDesktopList::updateList(){
   //run the check routine
   if(synctimer->isActive()){ synctimer->stop(); }
+  hashmutex.lock();
   QStringList appDirs = LXDG::systemApplicationDirs(); //get all system directories
   QStringList found, newfiles; //for avoiding duplicate apps (might be files with same name in different priority directories)
   QStringList oldkeys = files.keys();
@@ -569,10 +570,12 @@ void XDGDesktopList::updateList(){
     synctimer->setInterval(60000); //Update in 1 minute if nothing changes before then
     synctimer->start();
   }
+  hashmutex.unlock();
 }
 
 QList<XDGDesktop*> XDGDesktopList::apps(bool showAll, bool showHidden){
   //showAll: include invalid files, showHidden: include NoShow/Hidden files
+  //hashmutex.lock();
   QStringList keys = files.keys();
   QList<XDGDesktop*> out;
   for(int i=0; i<keys.length(); i++){
@@ -582,17 +585,21 @@ QList<XDGDesktop*> XDGDesktopList::apps(bool showAll, bool showHidden){
       }
     }
   }
+  //hashmutex.unlock();
   return out;
 }
 
 XDGDesktop* XDGDesktopList::findAppFile(QString filename){
+  //hashmutex.lock();
   QStringList keys = files.keys().filter(filename);
   QString chk = filename.section("/",-1);
+  XDGDesktop *found = 0;
   for(int i=0; i<keys.length(); i++){
-    if(keys[i] == filename || keys[i].endsWith("/"+chk)){ return files[keys[i]]; }
+    if(keys[i] == filename || keys[i].endsWith("/"+chk)){ found = files[keys[i]]; }
   }
+  //hashmutex.unlock();
   //No matches
-  return 0;
+  return found;
 }
 
 void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){

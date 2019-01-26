@@ -1,6 +1,6 @@
 //===========================================
 //  Lumina-DE source code
-//  Copyright (c) 2013, Ken Moore
+//  Copyright (c) 2013-2019, Ken Moore
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
@@ -30,6 +30,7 @@
 #include <QDebug>
 #include <QMenu>
 #include <QAction>
+#include <QMutex>
 
 // ======================
 // FreeDesktop Desktop Actions Framework (data structure)
@@ -117,6 +118,7 @@ private:
 	QFileSystemWatcher *watcher;
 	QTimer *synctimer;
 	bool keepsynced;
+	QMutex hashmutex;
 
 private slots:
 	void watcherChanged();
