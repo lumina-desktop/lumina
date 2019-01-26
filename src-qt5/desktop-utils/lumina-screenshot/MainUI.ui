@@ -83,6 +83,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="statusTip">
             <string>Open screenshot with an application</string>
            </property>
@@ -99,6 +105,18 @@
          </item>
          <item>
           <widget class="QToolButton" name="tool_copy_to_clipboard">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="statusTip">
             <string>Copy screenshot to clipboard</string>
            </property>
@@ -131,6 +149,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="statusTip">
             <string>Resize screenshot to selection</string>
            </property>
@@ -152,6 +176,12 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>75</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="statusTip">
             <string>Crop screenshot to selection</string>
@@ -254,8 +284,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>439</width>
-               <height>230</height>
+               <width>64</width>
+               <height>24</height>
               </rect>
              </property>
             </widget>
@@ -496,7 +526,7 @@
     <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
-    <string></string>
+    <string/>
    </property>
    <property name="movable">
     <bool>false</bool>

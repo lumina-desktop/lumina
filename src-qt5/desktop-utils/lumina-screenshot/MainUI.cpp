@@ -112,6 +112,11 @@ QRect MainUI::pointsToRect(QPoint pt1, QPoint pt2){
   return rec;
 }
 
+void MainUI::showSBMessage(QString msg, int secs){
+  //Show statusbar message (for designated time)
+  ui->statusBar->showMessage("----> "+msg, secs*1000);
+}
+
 //==============
 //  PRIVATE SLOTS
 //==============
@@ -154,10 +159,11 @@ void MainUI::quicksave(){
 
 }
 void MainUI::copyToClipboard(){
-  qDebug() << "Copy Image to clipboard";
+  //qDebug() << "Copy Image to clipboard";
   QClipboard *clipboard = QApplication::clipboard();
   clipboard->setImage(IMG->image());
-  qDebug() << " - Success:" << !clipboard->image().isNull();
+  showSBMessage(tr("Image copied to clipboard"), 10);
+  //qDebug() << " - Success:" << !clipboard->image().isNull();
 }
 
 void MainUI::startScreenshot(){

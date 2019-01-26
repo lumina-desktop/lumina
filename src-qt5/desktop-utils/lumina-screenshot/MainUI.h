@@ -61,7 +61,8 @@ private:
 
 	QRect pointsToRect(QPoint pt1, QPoint pt2);
 
-    QShortcut *quitShortcut, *openShortcut;
+	QShortcut *quitShortcut, *openShortcut;
+	void showSBMessage(QString msg, int secs);
 
 private slots:
 	//Button Slots
@@ -85,7 +86,7 @@ private slots:
 	bool getWindow(); //set the "cwin" variable as appropriate
 	void getPixmap(); //set the "cpic" variable to the new screenshot
 
-    void quitShortcut_activated();
+	void quitShortcut_activated();
 
 protected:
 	void mousePressEvent(QMouseEvent *ev);
