@@ -84,8 +84,10 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   ui->groupReplace->setVisible(false);
   nextTabS = new QShortcut(QKeySequence(QKeySequence::Forward), this);
   prevTabS = new QShortcut(QKeySequence(QKeySequence::Back), this);
+  closeTabS = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F4), this);
   connect(nextTabS, SIGNAL(activated()), this, SLOT(nextTab()) );
   connect(prevTabS, SIGNAL(activated()), this, SLOT(prevTab()) );
+  connect(closeTabS, SIGNAL(activated()), this, SLOT(CloseFile()) );
 
   //Update the menu of available syntax highlighting modes
   QStringList smodes = Custom_Syntax::availableRules(settings);

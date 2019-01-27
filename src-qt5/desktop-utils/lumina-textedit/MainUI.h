@@ -43,7 +43,7 @@ private:
 	QFontComboBox *fontbox;
 	ColorDialog *colorDLG;
 	QSettings *settings;
-	QShortcut *closeFindS, *nextTabS, *prevTabS;
+	QShortcut *closeFindS, *nextTabS, *prevTabS, *closeTabS;
 	QSpinBox *fontSizes;
 	QAction *label_readonly;
 	//Hunspell *hunspell;
