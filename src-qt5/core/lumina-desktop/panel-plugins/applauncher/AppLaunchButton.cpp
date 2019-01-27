@@ -35,20 +35,15 @@ AppLaunchButtonPlugin::~AppLaunchButtonPlugin(){
 void AppLaunchButtonPlugin::updateButtonVisuals(){
   QIcon icon;
   QString tooltip = tr("Click to assign an application");
-  if(appfile.endsWith(".desktop")){
-    XDGDesktop desk(appfile);
-    if(desk.isValid()){
-      icon = LXDG::findIcon(desk.icon, "unknown");
-      tooltip = QString(tr("Launch %1")).arg(desk.name);
-    }else{
-      icon = LXDG::findIcon("task-attention","");
-      appfile.clear();
-    }
-  }else if(QFile::exists(appfile)){
-    icon = LXDG::findMimeIcon(appfile.section("/",-1));
+  LFileInfo info(appfile);
+  if(info.isDesktopFile()){
+      icon = LXDG::findIcon(info.iconfile(), "unknown");
+      tooltip = QString(tr("Launch %1")).arg(info.XDG()->name);
+  }else if(info.exists()){
+    icon = LXDG::findIcon(info.iconfile(), "unknown");
     tooltip = QString(tr("Open %1")).arg(appfile.section("/",-1));
   }else{
-   icon =  LXDG::findIcon("task-attention", "");
+    icon =  LXDG::findIcon("task-attention", "");
   }
   button->setIcon( icon );
   button->setToolTip(tooltip);
