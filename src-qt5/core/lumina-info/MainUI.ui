@@ -83,7 +83,7 @@
              </sizepolicy>
             </property>
             <property name="whatsThis">
-             <string notr="true">https://github.com/trueos/lumina</string>
+             <string notr="true">https://github.com/lumina-desktop/lumina</string>
             </property>
             <property name="text">
              <string>Source Repository</string>
@@ -118,7 +118,7 @@
              </sizepolicy>
             </property>
             <property name="whatsThis">
-             <string notr="true">http://lumina-desktop.org</string>
+             <string notr="true">https://lumina-desktop.github.io</string>
             </property>
             <property name="text">
              <string>Lumina Website</string>
@@ -146,7 +146,7 @@
              </sizepolicy>
             </property>
             <property name="whatsThis">
-             <string notr="true">https://github.com/trueos/lumina/issues</string>
+             <string notr="true">https://github.com/lumina-desktop/lumina/issues</string>
             </property>
             <property name="text">
              <string>Bug Reports</string>
@@ -270,7 +270,7 @@
              </sizepolicy>
             </property>
             <property name="whatsThis">
-             <string notr="true">https://gitter.im/trueos/lumina?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge</string>
+             <string notr="true">https://t.me/luminadesktop</string>
             </property>
             <property name="text">
              <string>Ask the Community</string>
