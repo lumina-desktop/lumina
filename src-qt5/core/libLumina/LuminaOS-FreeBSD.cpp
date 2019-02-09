@@ -129,7 +129,7 @@ void LOS::setScreenBrightness(int percent){
     //qDebug() << "Run intel_backlight";
     //Use the intel_backlight utility (only for Intel mobo/hardware?)
     // Note: this returns an integer value corresponding to the percent brightess the screen was just set to
-    int ret = LUtils::runCmd("sudo -n intel_backlight", QStringList() << QString::number(percent));
+    int ret = LUtils::runCmd("intel_backlight", QStringList() << QString::number(percent));
     //qDebug() << " - Return value:" << ret;
     success = (percent ==  ret);
   }
