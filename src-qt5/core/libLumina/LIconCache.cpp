@@ -122,6 +122,7 @@ QString LIconCache::findFile(QString icon){
 
 void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   if(icon.isEmpty()){ return; }
+  if(icon=="appcafe"){ qDebug() << "appcafe icon:" << isThemeIcon(icon) << HASH.contains(icon); }
   if(isThemeIcon(icon)){
     button->setIcon( iconFromTheme(icon));
     return ;

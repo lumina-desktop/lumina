@@ -40,6 +40,7 @@ public:
 
 	// -- Return the icon file to use for this file
 	QString iconfile(); //Note: This string is auto-formatted for use in the LXDG::findIcon() routine.
+	QIcon icon();
 
 	// -- Check if this is an XDG desktop file
 	bool isDesktopFile();

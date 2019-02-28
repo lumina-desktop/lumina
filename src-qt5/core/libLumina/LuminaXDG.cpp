@@ -94,6 +94,8 @@ void XDGDesktop::sync(){
       else if(comment.isEmpty() && loc==slang){ comment = val; } //short locale code
       else if(loc == lang){ comment = val; }
     }else if(var=="Icon"){
+      //Quick fix for bad-registrations which add the icon suffix for theme icons
+      if(!val.startsWith("/") && val.endsWith(".png") ){ val = val.section(".",0,-2); }
       if(insection){
         if(icon.isEmpty() && loc.isEmpty()){ icon = val; }
 	else if(icon.isEmpty() && loc==slang){ icon = val; } //short locale code
@@ -156,6 +158,7 @@ void XDGDesktop::sync(){
       }
     }
   }
+
 }
 
 
@@ -963,6 +966,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   }
   //If still no icon found, look for any image format in the "pixmaps" directory
   if(ico.isNull()){
+    //qDebug() << "Null Icon:" << iconName << LOS::AppPrefix();
     if(QFile::exists(LOS::AppPrefix()+"share/pixmaps/"+iconName)){
       ico.addFile(LOS::AppPrefix()+"share/pixmaps/"+iconName);
     }else{
@@ -975,6 +979,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       //Use the first one found that is a valid format
       for(int i=0; i<found.length(); i++){
         if( formats.contains(found[i].section(".",-1).toLower()) ){
+         //qDebug() << " - Found non-theme icon:" << found[i];
 	  ico.addFile( pix.absoluteFilePath(found[i]) );
 	  break;
 	}

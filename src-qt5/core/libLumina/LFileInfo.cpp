@@ -133,8 +133,23 @@ QString LFileInfo::iconfile(){
   //Go through the icon list and find the first one that exists in the current theme
   for(int i=0; i<iconList.length(); i++){
     if( QIcon::hasThemeIcon(iconList[i])){ return iconList[i]; }
+    else if(desk!=0 && iconList[i] == desk->icon){
+      //See if this icon is in the old "pixmaps" icon directory
+      QDir dir("/usr/local/share/pixmaps");
+      QStringList matches = dir.entryList(QStringList() << desk->icon+".png" << desk->icon+".jpg");
+      if(!matches.isEmpty()){
+        return dir.absoluteFilePath(matches.first());
+      }
+    }
   }
   return ""; //Fall back to nothing
+}
+
+QIcon LFileInfo::icon(){
+  QString ifile = iconfile();
+  if(ifile.startsWith("/")){ return QIcon(ifile); }
+  else if(ifile.isEmpty()){ return QIcon::fromTheme("unknown"); }
+  else{ return QIcon::fromTheme(ifile); }
 }
 
 // -- Check if this is an XDG desktop file

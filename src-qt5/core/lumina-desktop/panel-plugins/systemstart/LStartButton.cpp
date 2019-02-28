@@ -9,6 +9,9 @@
 
 #include <LuminaXDG.h>
 #include <LUtils.h> //This contains the "ResizeMenu" class
+//#include <LIconCache.h>
+
+//extern LIconCache *ICONS;
 
 LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizontal) : LPPlugin(parent, id, horizontal){
   button = new QToolButton(this);
@@ -64,7 +67,7 @@ void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
       //App still listed - update the button
       old << QUICKL[i]->whatsThis(); //add the list of current buttons
       LFileInfo info(QUICKL[i]->whatsThis());
-      QUICKL[i]->setIcon( LXDG::findIcon(info.iconfile(),"unknown") );
+      QUICKL[i]->setIcon( info.icon() );
       if(info.isDesktopFile()){ QUICKL[i]->setToolTip( info.XDG()->name ); }
       else{ QUICKL[i]->setToolTip( info.fileName() ); }
     }
@@ -76,7 +79,7 @@ void LStartButtonPlugin::updateQuickLaunch(QStringList apps){
       LQuickLaunchButton *tmp = new LQuickLaunchButton(apps[i], this);
       QUICKL << tmp;
       LFileInfo info(apps[i]);
-      tmp->setIcon( LXDG::findIcon( info.iconfile() ) );
+      tmp->setIcon( info.icon() );
       if(info.isDesktopFile()){ tmp->setToolTip( info.XDG()->name ); }
       else{ tmp->setToolTip( info.fileName() ); }
       //Now add the button to the layout and connect the signal/slots
