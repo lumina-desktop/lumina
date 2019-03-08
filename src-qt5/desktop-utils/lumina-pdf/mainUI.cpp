@@ -481,7 +481,13 @@ void MainUI::startLoadingPages(int degrees) {
   // pixelization) The best approach seams to be to increase the DPI a bit, but
   // match that with the same scaling on the page size (smoothing)
 
-  QSize DPI(250, 250); // print-quality (some printers even go to 600 DPI nowdays)
+  //QSize DPI(250, 250); // print-quality (some printers even go to 600 DPI nowdays)
+
+
+  int curpage = WIDGET->currentPage();
+  if(curpage<0){ curpage = 1; }
+  else if(curpage>=BACKEND->numPages()){ curpage=BACKEND->numPages(); }
+  WIDGET->setCurrentPage(curpage);
 
   /*qDebug() << "Screen Resolutions:";
   QList<QScreen*> screens = QApplication::screens();
@@ -489,7 +495,7 @@ void MainUI::startLoadingPages(int degrees) {
     qDebug() << screens[i]->name() << screens[i]->logicalDotsPerInchX() <<
   screens[i]->logicalDotsPerInchY();
   }*/
-  int n = BACKEND->numPages() + 1;
+  /*int n = BACKEND->numPages() + 1;
   for (int i = 1; i < n; i++) {
     // qDebug() << " - Kickoff page load:" << i;
     if (BACKEND->loadMultiThread()) {
@@ -500,23 +506,27 @@ void MainUI::startLoadingPages(int degrees) {
         QCoreApplication::processEvents();
       }
     }
-  }
+  }*/
   //qDebug() << "Finish page loading kickoff";
 }
 
 void MainUI::slotSetProgress(int finished) { progress->setValue(finished); }
 
 void MainUI::slotPageLoaded(int page) {
+  int curpage = WIDGET->currentPage();
+  if(curpage == page || (curpage <0 && page==1) ){
+    //current page loaded
+
   //qDebug() << "slotPageLoaded";
-  loadingQueue.push_back(page);
-  int finished = loadingQueue.size();
+  /*loadingQueue.push_back(page);
+  int finished = loadingQueue.size();*/
   //qDebug() << "Page Loaded:" << page << finished;
-  if (finished == BACKEND->numPages()) {
+  //if (finished == BACKEND->numPages()) {
     progAct->setVisible(false);
     WIDGET->setVisible(true);
     BOOKMARKS->setVisible(true);
-    ui->splitter->setSizes(QList<int>() << 0 << this->width());
-    WIDGET->setCurrentPage(1);
+    //ui->splitter->setSizes(QList<int>() << 0 << this->width());
+    //WIDGET->setCurrentPage(1);
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);

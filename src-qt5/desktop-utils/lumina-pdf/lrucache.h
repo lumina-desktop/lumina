@@ -44,6 +44,11 @@ public:
     hashmap[k] = values.begin();
   }
 
+  bool contains(const Key k){
+    auto itr = hashmap.find(k);
+    return ( itr!=hashmap.end() );
+  }
+
 private:
   size_t max;
   std::list<std::tuple<Key, Value>> values;

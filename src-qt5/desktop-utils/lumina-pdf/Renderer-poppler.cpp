@@ -1,7 +1,7 @@
 #include "Renderer.h"
 #include "drawablepage.h"
 #include "link.h"
-#include "lrucache.h"
+//#include "lrucache.h"
 #include <QThread>
 #include <atomic>
 #include <poppler/qt5/poppler-qt5.h>
@@ -9,21 +9,24 @@
 static std::unique_ptr<Poppler::Document> DOC;
 QHash<int, QImage> loadingHash;
 
-static std::vector<LuminaPDF::drawablePage> pages;
+//static std::vector<LuminaPDF::drawablePage> pages;
 static std::vector<QList<LuminaPDF::Link *>> links;
 static std::atomic<int> pagesStillLoading;
 // static QHash<int, QList<LuminaPDF::Link *>> linkHash;
-static LuminaPDF::LRUCache<QImage> imageCache;
+//static LuminaPDF::LRUCache<QImage> imageCache;
+
+QSize DPI;
+int ROTATE = 0;
 
 Renderer::Renderer() : pnum(0), needpass(false), degrees(0) {
   DOC.reset(nullptr);
   pagesStillLoading = 1;
-  imageCache.setCacheSize(5);
+  //imageCache.setCacheSize(5);
 }
 
 Renderer::~Renderer() {
   // qDeleteAll(loadingHash);
-  pages.clear();
+  //pages.clear();
   for (auto &linkList : links) {
     qDeleteAll(linkList);
   }
@@ -41,7 +44,7 @@ bool Renderer::loadDocument(QString path, QString password) {
   if (DOC != nullptr && path != docpath) {
     // Clear out the old document first
     DOC.reset(nullptr);
-    pages.clear();
+    //pages.clear();
     links.clear();
     needpass = false;
     pnum = 0;
@@ -83,9 +86,9 @@ bool Renderer::loadDocument(QString path, QString password) {
         WIDGET->setOrientation(QPageLayout::Portrait);
     }*/
     delete PAGE;
-    pages.reserve(pnum + 1);
+    //pages.reserve(pnum + 1);
 
-    for (int i = 0; i < pnum + 1; ++i) {
+    /*for (int i = 0; i < pnum + 1; ++i) {
       LuminaPDF::drawablePage temp;
       pages.emplace_back(std::move(temp));
     }
@@ -94,8 +97,8 @@ bool Renderer::loadDocument(QString path, QString password) {
       QList<LuminaPDF::Link *> temp;
       links.push_back(temp);
     }
-
-    pagesStillLoading = pnum;
+    */
+    //pagesStillLoading = pnum;
 
     return true; // could load the first page
   }
@@ -103,9 +106,9 @@ bool Renderer::loadDocument(QString path, QString password) {
 }
 
 void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
-  // qDebug() << "Render Page:" << pagenum << DPI << degrees;
-
-  emit SetProgress(pages.size() - pagesStillLoading);
+  if(loadingHash.contains(pagenum)){ return; } //nothing to do
+ qDebug() << "Render Page:" << pagenum << DPI << degrees;
+  //emit SetProgress(pnum - pagesStillLoading);
 
   if (DOC != nullptr) {
     Poppler::Page *PAGE = DOC->page(pagenum - 1);
@@ -127,11 +130,11 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
       }
 
       LuminaPDF::drawablePage temp(PAGE, DPI, rotation);
-      pages[pagenum] = std::move(temp);
-      // img = PAGE->renderToImage(DPI.width(), DPI.height(), -1, -1, -1, -1,
-      //                          rotation);
-      // loadingHash.insert(pagenum, img);
-      QList<LuminaPDF::Link *> linkArray;
+      //pages[pagenum] = std::move(temp);
+       img = PAGE->renderToImage(DPI.width(), DPI.height(), -1, -1, -1, -1,
+                                rotation);
+      loadingHash.insert(pagenum, img);
+      /*QList<LuminaPDF::Link *> linkArray;
 
       foreach (Poppler::Link *link, PAGE->links()) {
         QString location;
@@ -146,21 +149,22 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
 
       links[pagenum] = linkArray;
       // linkHash.insert(pagenum, linkArray);
+      */
     }
-    // qDebug() << "Done Render Page:" << pagenum << img.size();
+    //qDebug() << "Done Render Page:" << pagenum << img.size();
   } else {
-    pages[pagenum] = LuminaPDF::drawablePage();
-    // loadingHash.insert(pagenum, QImage());
+    //pages[pagenum] = LuminaPDF::drawablePage();
+    loadingHash.insert(pagenum, QImage());
   }
 
-  if (pagesStillLoading == 1) {
+  //if (pagesStillLoading > 0) {
     emit PageLoaded(pagenum);
-  }
+  //}
 
-  --pagesStillLoading;
+  //--pagesStillLoading;
 }
 
-bool Renderer::isDoneLoading(int page) { return imageCache.contains(page); }
+bool Renderer::isDoneLoading(int page) { return loadingHash.contains(page); }
 
 QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
   QList<TextData *> results;
@@ -178,31 +182,37 @@ QList<TextData *> Renderer::searchDocument(QString text, bool matchCase) {
 }
 
 QSize Renderer::imageSize(int pagenum) {
-  if(!imageCache.contains(pagenum)){ return QSize(); }
-  return pages[pagenum].size();
+  if(!loadingHash.contains(pagenum)){ return QSize(); }
+  return loadingHash[pagenum].size();
 }
 
 QImage Renderer::imageHash(int pagenum) {
-  if(!imageCache.contains(pagenum)){ return QImage(); }
+  if(loadingHash.contains(pagenum)){
+    return loadingHash[pagenum];
+  }else{
+    return QImage();
+  }
+  //if(!imageCache.contains(pagenum)){ return QImage(); }
   // while(pagesStillLoading > 0) { qDebug() << "pagesStillLoading!\n";}
 
-  std::optional<QImage> cachedImage = imageCache.get(pagenum);
+  //std::optional<QImage> cachedImage = imageCache.get(pagenum);
 
-  if (cachedImage.has_value())
-    return *cachedImage;
+  /*if (cachedImage.has_value())
+    return *cachedImage;*/
 
-  imageCache.push(pagenum, pages[pagenum].render());
-  return *imageCache.get(pagenum);
+  //imageCache.push(pagenum, pages[pagenum].render());
+  //return *imageCache.get(pagenum);
 }
 
 int Renderer::hashSize() {
-  qDebug() << "pages contains " << pages.size() << " elements.\n";
-  return pages.size();
+  //qDebug() << "pages contains " << pages.size() << " elements.\n";
+  return loadingHash.size();
 }
 
-void Renderer::clearHash() {
-  loadingHash.clear();
-  pages.clear();
+void Renderer::clearHash( int pagenum) {
+  if(pagenum<0){ loadingHash.clear(); }
+  else if(loadingHash.contains(pagenum)){ loadingHash.remove(pagenum); }
+  //pages.clear();
 }
 
 // Highlighting found text, bookmarks, and page properties disabled for Poppler

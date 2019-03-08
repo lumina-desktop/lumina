@@ -59,7 +59,7 @@ public:
   virtual Widget *widgetList(int, int);
   virtual int widgetSize(int);
 
-  virtual void clearHash();
+  virtual void clearHash(int pagenum = -1);
   // Makes sure degrees is between 0 and 360 then rotates the matrix and
   void setDegrees(int degrees) {
     // Mods by 360, but adds and remods because of how C++ treats negative mods

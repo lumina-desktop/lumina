@@ -657,9 +657,10 @@ QSize Renderer::imageSize(int pagenum){
 
 int Renderer::hashSize() { return dataHash.size(); }
 
-void Renderer::clearHash() {
+void Renderer::clearHash(int pagenum) {
   //qDeleteAll(dataHash);
-  dataHash.clear();
+  if(pagenum<0){ dataHash.clear(); }
+  else if(dataHash.contains(pagenum)){ dataHash.remove(pagenum); }
 }
 
 TextData *Renderer::linkList(int pagenum, int entry) {

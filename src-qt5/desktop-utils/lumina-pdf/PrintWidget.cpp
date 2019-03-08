@@ -1,6 +1,7 @@
 #include "PrintWidget.h"
 #include <QGraphicsProxyWidget>
 #include <QPushButton>
+#include <QtConcurrent>
 
 PrintWidget::PrintWidget(Renderer *backend, QWidget *parent)
     : QGraphicsView(parent), scene(0), curPage(1), viewMode(SinglePageView),
@@ -129,11 +130,23 @@ void PrintWidget::setCurrentPage(int pageNumber) {
       this->centerOn(pages.at(curPage - 1));
     }
   }*/
-
-  if (lastPage != curPage){
+  QSize DPI(300, 300);
+  if (lastPage != curPage || !BACKEND->imageSize(curPage).isNull()){
     updatePreview();
+    for(int i=(curPage-3); i<BACKEND->numPages(); i++){
+      if(i<0){ continue; }
+      else if( i < (curPage-2) ){ BACKEND->clearHash(i); }
+      else if( i > (curPage+2) ){ BACKEND->clearHash(i); }
+      else{
+         if (BACKEND->loadMultiThread()) {
+          QtConcurrent::run(BACKEND, &Renderer::renderPage, i, DPI, degrees);
+        } else {
+          BACKEND->renderPage(i, DPI, degrees);
+        }
+      }
+    }
   }
-  //qDebug() << "Current page set to " << pageNumber << "\n";
+  qDebug() << "Current page set to " << pageNumber << "\n";
 }
 
 void PrintWidget::highlightText(TextData *text) {

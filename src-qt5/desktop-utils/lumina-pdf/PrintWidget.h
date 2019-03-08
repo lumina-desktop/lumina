@@ -60,7 +60,7 @@ public:
   ZoomMode getZoomMode() const { return this->zoomMode; }
   int currentPage() const {
     return curPage;
-    return publicPageNum;
+    //return publicPageNum;
   }
 
 signals:
