@@ -128,6 +128,7 @@ void LStartButtonPlugin::openMenu(){
   if(old!=0){ old->deleteLater(); }*/
 //--------
   //qDebug() << "Menu Size:" << startmenu->size();
+  startmenu->activateWindow();
   startmenu->UpdateMenu();
   button->showMenu();
 }
