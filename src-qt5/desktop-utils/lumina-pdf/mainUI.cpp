@@ -106,8 +106,12 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI()) {
   tmp->setExclusive(true);
   tmp->addAction(ui->actionSingle_Page);
   tmp->addAction(ui->actionDual_Pages);
-  tmp->addAction(ui->actionAll_Pages);
+  //tmp->addAction(ui->actionAll_Pages);
   ui->actionSingle_Page->setChecked(true);
+
+  //Disable the all pages view - does not work with partial cache of pages
+  ui->actionAll_Pages->setVisible(false);
+  ui->actionAll_Pages->setEnabled(false);
 
   // Connect up the buttons
   QObject::connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(close()));
@@ -439,7 +443,11 @@ void MainUI::ShowPage(int page) {
     // Blank page (useful so there is one blank page after the last slide before
     // stopping the presentation)
     presentationLabel->setPixmap(QPixmap());
-    presentationLabel->setText(tr("Presentation Finished: Hit \"ESC\" key to close presentation view"));
+    if(CurrentPage>BACKEND->numPages() || CurrentPage <1){
+      presentationLabel->setText(tr("Presentation Finished: Hit \"ESC\" key to close presentation view"));
+    }else{
+      presentationLabel->setText(tr("Loading Page...."));
+    }
     presentationLabel->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
   }
 }
@@ -520,19 +528,21 @@ void MainUI::slotPageLoaded(int page) {
   //qDebug() << "slotPageLoaded";
   /*loadingQueue.push_back(page);
   int finished = loadingQueue.size();*/
-  //qDebug() << "Page Loaded:" << page << finished;
+  //qDebug() << "Page Loaded:" << page;
   //if (finished == BACKEND->numPages()) {
     progAct->setVisible(false);
     WIDGET->setVisible(true);
     BOOKMARKS->setVisible(true);
-    //ui->splitter->setSizes(QList<int>() << 0 << this->width());
-    //WIDGET->setCurrentPage(1);
+    if(BACKEND->getBookmarks().isEmpty()){
+      ui->splitter->setSizes(QList<int>() << 0 << this->width());
+    }
     ui->actionStop_Presentation->setEnabled(false);
     ui->actionStart_Here->setEnabled(true);
     ui->actionStart_Begin->setEnabled(true);
     pageAct->setVisible(true);
     PROPDIALOG->setSize(pageSize);
     //qDebug() << " - Document Setup: All pages loaded";
+    ShowPage(page);
   }
   // QTimer::singleShot(10, WIDGET,
   //                   SLOT(updatePreview())); // start loading the file preview

@@ -3,24 +3,23 @@
 #include "link.h"
 //#include "lrucache.h"
 #include <QThread>
+#include <QMutex>
 #include <atomic>
 #include <poppler/qt5/poppler-qt5.h>
 
 static std::unique_ptr<Poppler::Document> DOC;
 QHash<int, QImage> loadingHash;
+QMutex hashMutex;
 
 //static std::vector<LuminaPDF::drawablePage> pages;
 static std::vector<QList<LuminaPDF::Link *>> links;
-static std::atomic<int> pagesStillLoading;
+//static std::atomic<int> pagesStillLoading;
 // static QHash<int, QList<LuminaPDF::Link *>> linkHash;
 //static LuminaPDF::LRUCache<QImage> imageCache;
 
-QSize DPI;
-int ROTATE = 0;
-
 Renderer::Renderer() : pnum(0), needpass(false), degrees(0) {
   DOC.reset(nullptr);
-  pagesStillLoading = 1;
+  //pagesStillLoading = 1;
   //imageCache.setCacheSize(5);
 }
 
@@ -107,11 +106,15 @@ bool Renderer::loadDocument(QString path, QString password) {
 
 void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
   if(loadingHash.contains(pagenum)){ return; } //nothing to do
- qDebug() << "Render Page:" << pagenum << DPI << degrees;
+  //qDebug() << "Render Page:" << pagenum;// << DPI << degrees;
+  hashMutex.lock();
+  loadingHash.insert(pagenum, QImage()); //temporary placeholder while we load the image
+  hashMutex.unlock();
+
   //emit SetProgress(pnum - pagesStillLoading);
 
   if (DOC != nullptr) {
-    Poppler::Page *PAGE = DOC->page(pagenum - 1);
+    Poppler::Page *PAGE = DOC->page(pagenum-1); //needs to be 0+
     QImage img;
     if (PAGE != nullptr) {
       Poppler::Page::Rotation rotation;
@@ -133,7 +136,9 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
       //pages[pagenum] = std::move(temp);
        img = PAGE->renderToImage(DPI.width(), DPI.height(), -1, -1, -1, -1,
                                 rotation);
+      hashMutex.lock();
       loadingHash.insert(pagenum, img);
+      hashMutex.unlock();
       /*QList<LuminaPDF::Link *> linkArray;
 
       foreach (Poppler::Link *link, PAGE->links()) {
@@ -147,14 +152,15 @@ void Renderer::renderPage(int pagenum, QSize DPI, int degrees) {
         linkArray.append(newLink);
       }
 
-      links[pagenum] = linkArray;
+      links[pagenum] = linkArray;*/
       // linkHash.insert(pagenum, linkArray);
-      */
     }
     //qDebug() << "Done Render Page:" << pagenum << img.size();
-  } else {
-    //pages[pagenum] = LuminaPDF::drawablePage();
-    loadingHash.insert(pagenum, QImage());
+  }else{
+    //Could not load the image - go ahead and remove it from the loading hash
+    hashMutex.lock();
+    loadingHash.remove(pagenum);
+    hashMutex.unlock();
   }
 
   //if (pagesStillLoading > 0) {
@@ -210,8 +216,10 @@ int Renderer::hashSize() {
 }
 
 void Renderer::clearHash( int pagenum) {
+  hashMutex.lock();
   if(pagenum<0){ loadingHash.clear(); }
   else if(loadingHash.contains(pagenum)){ loadingHash.remove(pagenum); }
+  hashMutex.unlock();
   //pages.clear();
 }
 

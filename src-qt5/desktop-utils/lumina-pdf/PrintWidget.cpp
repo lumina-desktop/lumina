@@ -130,10 +130,11 @@ void PrintWidget::setCurrentPage(int pageNumber) {
       this->centerOn(pages.at(curPage - 1));
     }
   }*/
+
   QSize DPI(300, 300);
   if (lastPage != curPage || !BACKEND->imageSize(curPage).isNull()){
     updatePreview();
-    for(int i=(curPage-3); i<BACKEND->numPages(); i++){
+    for(int i=(curPage-3); i<=BACKEND->numPages(); i++){
       if(i<0){ continue; }
       else if( i < (curPage-2) ){ BACKEND->clearHash(i); }
       else if( i > (curPage+2) ){ BACKEND->clearHash(i); }
@@ -146,7 +147,7 @@ void PrintWidget::setCurrentPage(int pageNumber) {
       }
     }
   }
-  qDebug() << "Current page set to " << pageNumber << "\n";
+  //qDebug() << "Current page set to " << pageNumber << "\n";
 }
 
 void PrintWidget::highlightText(TextData *text) {
