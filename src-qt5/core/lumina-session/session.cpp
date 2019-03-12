@@ -103,36 +103,24 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
 }
 
 void LSession::setupCompositor(bool force){
+  //Compton available - check the config file
+  QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
+  if(!QFile::exists(set) || LUtils::readFile(set).join("").simplified().isEmpty() ){
+    if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
+      QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
+    }
+  }
+
   //Compositing manager
   QSettings settings("lumina-desktop","sessionsettings");
   if(settings.value("enableCompositing",false).toBool() || force){
     if(LUtils::isValidBinary("compton")){
-      //Compton available - check the config file
-      QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
-      if(!QFile::exists(set)){
-	  if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
-	    QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
-	  }
-      }
-	//Auto-detect if GLX is available on the system and turn it on/off as needed
-       bool startcompton = true;
-       bool hasAccel = false;
-       if(LUtils::isValidBinary("glxinfo")){
-	 hasAccel =! LUtils::getCmdOutput("glxinfo -B").filter("direct rendering:").filter("Yes").isEmpty();
-	 qDebug() << "Detected GPU Acceleration:" << hasAccel;
-	 /*QStringList info = LUtils::readFile(set);
-	 for(int i=0; i<info.length(); i++){
-	   if(info[i].section("=",0,0).simplified()=="backend"){ info[i] = QString("backend = \"")+ (hasAccel ? "glx" : "xrender")+"\""; break; } //replace this line
-	 }
-	 LUtils::writeFile(set, info, true);*/
-	 if( !hasAccel && settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startcompton = false; }
-       }
-       QString disp = getenv("DISPLAY");
-         // Prefer GLX-accel only if that is detected as possible
-	if( (startcompton || force) && hasAccel ){ startProcess("compositing","compton --backend glx -d "+disp+" --config "+set, QStringList() << set); }
-         //if cannot determine if GLX accel is available, use the hybrid glx/xrender backend for some better auto-setting stuff
-	else if(startcompton || force){ startProcess("compositing","compton --backend xr_glx_hybrid -d "+disp+" --config "+set, QStringList() << set); }
-    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){ startProcess("compositing","xcompmgr"); }
+      QString disp = getenv("DISPLAY");
+      //Always use the GLX backend for compton - the xrender and hybrid backends cause lots of flickering
+      startProcess("compositing","compton --backend glx -d "+disp+" --config "+set, QStringList() << set);
+    }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){
+      startProcess("compositing","xcompmgr");
+    }
   }
 }
 
