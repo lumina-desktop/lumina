@@ -105,7 +105,10 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
 void LSession::setupCompositor(bool force){
   //Compton available - check the config file
   QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
-  if(!QFile::exists(set) || LUtils::readFile(set).join("").simplified().isEmpty() ){
+  bool replaceconf = !QFile::exists(set);
+  if(!replaceconf){ replaceconf = (QFileInfo(set).size()<1); }
+  if( replaceconf ){
+    if(QFile::exists(set)){ QFile::remove(set); }
     if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
       QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
     }
