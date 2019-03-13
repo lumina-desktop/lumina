@@ -408,6 +408,15 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
       if(val.endsWith("%")){ val = QString::number( (screenGeom.height()*val.section("%",0,0).toDouble())/100 )+"px"; }
       themesettings[4] = val;
     }
+    else if(var=="theme_fluxbox"){
+      QString fbinit = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init";
+      QStringList contents = LUtils::readFile(fbinit);
+      int index = contents.indexOf( contents.filter("session.styleFile:").join("") );
+      QString line = "session.styleFile:\t"+val;
+      if(index>=0){ contents[index] = line; }
+      else{ contents << line; }
+      LUtils::writeFile(fbinit, contents, true);
+    }
   }
   //qDebug() << " - Now Color:" << themesettings[1] << setTheme;
 
