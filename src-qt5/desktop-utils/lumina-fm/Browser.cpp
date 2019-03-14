@@ -62,7 +62,11 @@ bool Browser::showingThumbnails(){
 //   PRIVATE
 void Browser::loadItem(const QString info, Browser *obj){
   //qDebug() << "Load Thumbnail in separate thread:" << info;
-  const QImage pix(info);
+  QImage pix(info);
+  //Make sure we only keep a small version in memory - not the full thing
+  if(pix.width() > 256 || pix.height() > 256 ){
+    pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
+  }
   obj->emit threadDone(info, pix);
   //qDebug() << " - Done:" << info;
  /* QImage* pix = new QImage();
@@ -96,15 +100,23 @@ void Browser::fileChanged(QString file){
   //qDebug() << "Got File Changed:" << file;
   if(file.section("/",0,-2) == currentDir){
     if(QFile::exists(file) ){
+      //qDebug() << "File exists:" << file;
       updateList << file;
       if(!updateTimer->isActive()){ updateTimer->start(); }
       //QtConcurrent::run(this, &Browser::loadItem, file, this); //file modified but not removed
 
     }else if(oldFiles.contains(file) ){
+      //qDebug() << "OldFile removed: " << file;
       oldFiles.removeAll(file);
       emit itemRemoved(file);
+      updateList << currentDir;
+      if(!updateTimer->isActive()){ updateTimer->start(); }
+    }else{
+      //qDebug() << "File does not exist:" << file;
+      updateList << currentDir;
+      if(!updateTimer->isActive()){ updateTimer->start(); }
     }
-  }//else if(file==currentDir){ QTimer::singleShot(0, this, SLOT(loadDirectory()) ); }
+  }
 }
 
 void Browser::dirChanged(QString dir){
@@ -147,9 +159,10 @@ void Browser::updateRequested(){
   //Clear the cache list ASAP
   QStringList list = updateList;
   updateList.clear();
+  //qDebug() << "Got Update List:" << list;
   list.removeDuplicates();
   //Now look to see if an all-dir update is needed
-  if(list.contains(currentDir)){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
+  if(list.contains(currentDir) || list.isEmpty()){ QTimer::singleShot(10, this, SLOT(loadDirectory()) ); }
   else{
     //individual file updates
     for(int i=0; i<list.length(); i++){
@@ -199,6 +212,8 @@ void Browser::loadDirectory(QString dir, bool force){
       //if(dirupdate){ qDebug() << "Reload Item:" << reloaditem << path.section("/",-1); }
       //reloaditem = true;
       if(old.contains(path)){ old.removeAll(path); } //still in existance
+      else{ reloaditem = true; } //new file - make sure this gets loaded
+      //qDebug() << "Item:" << files[i] << reloaditem;
       //if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
       //qDebug() << "Future Starting:" << path;
       if(reloaditem){
