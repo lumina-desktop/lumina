@@ -18,6 +18,7 @@ class LProcess : public QProcess{
 private:
 	QFileSystemWatcher *watcher;
 	QString id;
+
 private slots:
 	void filechanged(QString path){
           //qDebug() << "File Changed:" << path;
@@ -63,6 +64,8 @@ private:
 	int wmfails;
 	QTimer *wmTimer;
 
+	bool setupFluxboxFiles();
+	bool setupComptonFiles();
 	void setupCompositor(bool force = false);
 
 private slots:

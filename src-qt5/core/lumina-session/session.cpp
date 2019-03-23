@@ -18,6 +18,49 @@
 #include <LDesktopUtils.h>
 #include <LuminaSingleApplication.h>
 
+bool LSession::setupFluxboxFiles(){
+    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
+    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
+    if(!QFile::exists(confDir+"/fluxbox-init")){
+      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-init-rc");
+       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
+       LUtils::writeFile(confDir+"/fluxbox-init", keys, true);
+      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    }
+    if(!QFile::exists(confDir+"/fluxbox-keys")){
+      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
+       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
+       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
+      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    }
+    if(!QFile::exists(confDir+"/fluxbox-overlay")){
+      QStringList contents; contents << "background: unset";
+      LUtils::writeFile(confDir+"/fluxbox-overlay", contents, true);
+       //Now make sure this overlay file is set within the init file
+       contents = LUtils::readFile(confDir+"/fluxbox-init");
+       contents << "session.styleOverlay:	"+confDir+"/fluxbox-overlay";
+       LUtils::writeFile(confDir+"/fluxbox-init", contents, true);
+    }
+    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
+    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
+      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
+    }
+  return true;
+}
+
+bool LSession::setupComptonFiles(){
+  QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
+  bool replaceconf = !QFile::exists(set);
+  if(!replaceconf){ replaceconf = (QFileInfo(set).size()<1); }
+  if( replaceconf ){
+    if(QFile::exists(set)){ QFile::remove(set); }
+    if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
+      QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
+    }
+  }
+  return true;
+}
+
 void LSession::stopall(){
   stopping = true;
   for(int i=0; i<PROCS.length(); i++){
@@ -105,15 +148,6 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
 void LSession::setupCompositor(bool force){
   //Compton available - check the config file
   QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
-  bool replaceconf = !QFile::exists(set);
-  if(!replaceconf){ replaceconf = (QFileInfo(set).size()<1); }
-  if( replaceconf ){
-    if(QFile::exists(set)){ QFile::remove(set); }
-    if(QFile::exists(LOS::LuminaShare()+"/compton.conf")){
-      QFile::copy(LOS::LuminaShare()+"/compton.conf", set);
-    }
-  }
-
   //Compositing manager
   QSettings settings("lumina-desktop","sessionsettings");
   if(settings.value("enableCompositing",false).toBool() || force){
@@ -145,38 +179,13 @@ void LSession::start(bool unified){
  if(!unified){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
+  QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
   //Window Manager First
   if(WM=="fluxbox" || WM.endsWith("/fluxbox") || WM.simplified().isEmpty() ){
 	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	  if( !LUtils::isValidBinary("fluxbox") ){
 	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";
 	  }else{
-	    QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
-	    if(!QFile::exists(confDir)){ QDir dir(confDir); dir.mkpath(confDir); }
-	    if(!QFile::exists(confDir+"/fluxbox-init")){
-	      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-init-rc");
-	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
-	       LUtils::writeFile(confDir+"/fluxbox-init", keys, true);
-	      QFile::setPermissions(confDir+"/fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-	    }
-	    if(!QFile::exists(confDir+"/fluxbox-keys")){
-	      QStringList keys = LUtils::readFile(LOS::LuminaShare()+"/fluxbox-keys");
-	       keys = keys.replaceInStrings("${XDG_CONFIG_HOME}", QString( getenv("XDG_CONFIG_HOME")));
-	       LUtils::writeFile(confDir+"/fluxbox-keys", keys, true);
-	      QFile::setPermissions(confDir+"/fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-	    }
-            if(!QFile::exists(confDir+"/fluxbox-overlay")){
-              QStringList contents; contents << "background: unset";
-              LUtils::writeFile(confDir+"/fluxbox-overlay", contents, true);
-              //Now make sure this overlay file is set within the init file
-              contents = LUtils::readFile(confDir+"/fluxbox-init");
-              contents << "session.styleOverlay:	"+confDir+"/fluxbox-overlay";
-              LUtils::writeFile(confDir+"/fluxbox-init", contents, true);
-            }
-	    // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
-	    if(!QFile::exists(QDir::homePath()+"/.fluxbox")){
-	      QDir dir; dir.mkpath(QDir::homePath()+"/.fluxbox");
-	    }
 	    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
 	    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
 	  }
@@ -205,6 +214,8 @@ void LSession::checkFiles(){
 //internal version conversion examples:
   //  [1.0.0 -> 1000000], [1.2.3 -> 1002003], [0.6.1 -> 6001]
   qDebug() << "[Lumina] Checking User Files";
+  setupComptonFiles();
+  setupFluxboxFiles();
   QSettings sset("lumina-desktop", "sessionsettings");
   QString OVS = sset.value("DesktopVersion","0").toString(); //Old Version String
   qDebug() << " - Old Version:" << OVS;
