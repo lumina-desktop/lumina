@@ -485,11 +485,32 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
   int nversion = LDesktopUtils::VersionStringToNumber(currentversion);
   bool newversion =  ( oldversion < nversion ); //increasing version number
   bool newrelease = ( lastversion.contains("-devel", Qt::CaseInsensitive) && QApplication::applicationVersion().contains("-release", Qt::CaseInsensitive) ); //Moving from devel to release
-
-  QString confdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
-  //Check for the desktop settings file
-  QString dset = confdir+"desktopsettings.conf";
   bool firstrun = false;
+  QString confdir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
+
+  //Check the fluxbox configuration files
+  QString dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
+  if(!QFile::exists(dset+"fluxbox-init")){
+    firstrun = true;
+  }
+  bool fluxcopy = false;
+  if(!QFile::exists(dset+"fluxbox-init")){ fluxcopy=true; }
+  else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
+  else if(oldversion < 60){ fluxcopy=true; qDebug() << "Current fluxbox settings obsolete: Re-implementing defaults"; }
+  if(fluxcopy){
+    qDebug() << "Copying default fluxbox configuration files";
+    if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
+    if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
+    QString finit = LUtils::readFile(LOS::LuminaShare()+"fluxbox-init-rc").join("\n");
+     finit.replace("${XDG_CONFIG_HOME}", QString(getenv("XDG_CONFIG_HOME")));
+     LUtils::writeFile(dset+"fluxbox-init", finit.split("\n"));
+    QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
+    QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+    QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
+  }
+
+  //Check for the desktop settings file
+  dset = confdir+"desktopsettings.conf";
   if(!QFile::exists(dset) || oldversion < 5000){
     if( oldversion < 100000 && nversion>=100000 ){ system("rm -rf ~/.lumina"); qDebug() << "Current desktop settings obsolete: Re-implementing defaults"; }
     else{ firstrun = true; }
@@ -560,27 +581,6 @@ bool LDesktopUtils::checkUserFiles(QString lastversion, QString currentversion){
       newtheme.setValue("Interface/stylesheets", QStringList() << enginedir+"qss/tooltip-simple.qss" << enginedir+"qss/scrollbar-simple.qss" << enginedir+"qss/sliders-simple.qss" << enginedir+"qss/traynotification-simple.qss");
       newtheme.sync(); //flush this to file right now
     } //end check for theme file existance
-  }
-
-  //Check the fluxbox configuration files
-  dset = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/";
-  if(!QFile::exists(dset+"fluxbox-init")){
-    firstrun = true;
-  }
-  bool fluxcopy = false;
-  if(!QFile::exists(dset+"fluxbox-init")){ fluxcopy=true; }
-  else if(!QFile::exists(dset+"fluxbox-keys")){fluxcopy=true; }
-  else if(oldversion < 60){ fluxcopy=true; qDebug() << "Current fluxbox settings obsolete: Re-implementing defaults"; }
-  if(fluxcopy){
-    qDebug() << "Copying default fluxbox configuration files";
-    if(QFile::exists(dset+"fluxbox-init")){ QFile::remove(dset+"fluxbox-init"); }
-    if(QFile::exists(dset+"fluxbox-keys")){ QFile::remove(dset+"fluxbox-keys"); }
-    QString finit = LUtils::readFile(LOS::LuminaShare()+"fluxbox-init-rc").join("\n");
-     finit.replace("${XDG_CONFIG_HOME}", QString(getenv("XDG_CONFIG_HOME")));
-     LUtils::writeFile(dset+"fluxbox-init", finit.split("\n"));
-    QFile::copy(LOS::LuminaShare()+"fluxbox-keys", dset+"fluxbox-keys");
-    QFile::setPermissions(dset+"fluxbox-init", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
-    QFile::setPermissions(dset+"fluxbox-keys", QFile::ReadOwner | QFile::WriteOwner | QFile::ReadUser | QFile::ReadOther | QFile::ReadGroup);
   }
 
   if(firstrun){ qDebug() << "First time using Lumina!!"; }
