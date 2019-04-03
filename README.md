@@ -47,7 +47,7 @@ All the translation files for Lumina are available through the trueos/lumina-i18
 
 All the translations for Lumina are contained within this repository directly (the i18n/ subdirectories within each project source tree). To include these translation files, the `WITH_I18N` build flag must be set at compilation time, in which case the translation files will automatically get synced/built alongside the corresponding binaries.
 
-To submit translations, please use the online [TrueOS Translation System](http://weblate.trueos.org/projects/lumina/). Anonymous users may submit translation suggestions, but a website account will be needed to created before you can submit/approve translations directly to the project. See the documentation/information on the site for full details.
+To submit translations, please edit those i18n/*.ts translation files and submit a pull request to this repository.
 
 How to file bug reports or feature requests <a name="filebugs"></a>
 ----
