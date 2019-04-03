@@ -244,6 +244,7 @@ void StartMenu::do_search(QString search, bool force, Ui::StartMenu *tui){
   if(LUtils::isValidBinary(tmp)){ found << "0::::application/x-executable::::"+tmp; }
   QList<XDGDesktop*> apps = LSession::handle()->applicationMenu()->currentAppHash()->value("All");
   for(int i=0; i<apps.length(); i++){
+    if(apps[i]==0){ continue; }
     int priority = -1;
     if(apps[i]->name.toLower()==search.toLower()){ priority = 10; }
     else if(apps[i]->name.startsWith(search, Qt::CaseInsensitive)){ priority = 15; }
@@ -276,10 +277,10 @@ void StartMenu::do_search(QString search, bool force, Ui::StartMenu *tui){
     connect(it, SIGNAL(RemovedShortcut()), this, SLOT(UpdateFavs()) );
     connect(it, SIGNAL(RunItem(QString)), this, SLOT(LaunchItem(QString)) );
     connect(it, SIGNAL(toggleQuickLaunch(QString, bool)), this, SLOT(UpdateQuickLaunch(QString, bool)) );
-    if(i%3==0){
+    /*if(i%3==0){
       QApplication::processEvents();
       if(searchTimer->isActive()){ searchmutex.unlock(); return; } //search changed - go ahead and stop here
-    }
+    }*/
   }
   tui->stackedWidget->setCurrentWidget(tui->page_search);
   searchmutex.unlock();

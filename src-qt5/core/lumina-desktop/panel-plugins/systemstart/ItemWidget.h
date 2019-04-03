@@ -32,7 +32,7 @@ public:
 	// - Favorites (path/type)
 	ItemWidget(QWidget *parent=0, QString itemPath="", QString type="unknown", bool goback=false);
 	// - Generic Apps
-	ItemWidget(QWidget *parent=0, XDGDesktop *item= 0);
+	ItemWidget(QWidget *parent=0, XDGDesktop *item=0);
 
 	~ItemWidget();
 
@@ -47,7 +47,7 @@ private:
 	bool isDirectory, isShortcut, menuopen;
 	QString linkPath, iconPath, text;
 	QTimer *menureset;
-	
+
 	void createWidget();
 
 	void setupContextMenu();
@@ -64,29 +64,29 @@ private slots:
 	void ItemClicked();
 	void actionClicked(QAction*);
 	//Functions to fix the submenu open/close issues
-	void actionMenuOpen(){ 
-	  if(menureset->isActive()){ menureset->stop(); } 
-	  menuopen = true; 
+	void actionMenuOpen(){
+	  if(menureset->isActive()){ menureset->stop(); }
+	  menuopen = true;
 	}
 	void resetmenuflag(){ menuopen = false; } //tied to the "menureset" timer
 	void actionMenuClosed(){ menureset->start(); }
-	
+
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event){
 	  if(menuopen){ resetmenuflag(); } //skip this event if a submenu was open
-	  else if(event->button() == Qt::RightButton && !icon->whatsThis().startsWith("chcat::::") ){ 
-	    menuopen = true; 
+	  else if(event->button() == Qt::RightButton && !icon->whatsThis().startsWith("chcat::::") ){
+	    menuopen = true;
 	    setupContextMenu();
 	    contextMenu->popup(event->globalPos());
           }else if(event->button() != Qt::NoButton){ ItemClicked(); }
 	}
-	
+
 	void resizeEvent(QResizeEvent *ev){
 	  updateItems(); //update the sizing of everything
 	  QFrame::resizeEvent(ev); // do the normal procedures
 	}
-	
+
 signals:
 	void NewShortcut();
 	void RemovedShortcut();
