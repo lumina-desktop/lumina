@@ -6,7 +6,6 @@ For additional information about the project, please browse the official website
 
 **Community Chat Channels:**
  - Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
- - IRC: [#lumina-desktop on freenode](http://webchat.freenode.net?channels=%23lumina-desktop)
 
 **Lumina Project Info: Table of Contents**
 
