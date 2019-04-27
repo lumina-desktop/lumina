@@ -178,7 +178,9 @@ void Browser::loadDirectory(QString dir, bool force){
   if(dir.isEmpty()){ return; } //nothing to do - nothing previously loaded
   updateList.clear();
   //qDebug() << "Load Directory" << dir;
-  if(dir.endsWith("/")){ dir.chop(1); }
+  //Ensure we have the canonical path for this dir
+  dir = QDir(dir).canonicalPath();
+  //if(dir.endsWith("/")){ dir.chop(1); }
   bool dirupdate = true;
   if(currentDir != dir){ //let the main widget know to clear all current items (completely different dir)
     //qDebug() << " - different Directory";

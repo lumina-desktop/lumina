@@ -14,6 +14,7 @@
 
 int main(int argc, char ** argv)
 {
+    qputenv("QT_NO_GLIB","1");
     LTHEME::LoadCustomEnvSettings();
     qsrand(QDateTime::currentMSecsSinceEpoch());
     LSingleApplication a(argc, argv, "lumina-fm"); //loads translations inside constructor
