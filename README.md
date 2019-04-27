@@ -15,7 +15,7 @@ For additional information about the project, please browse the official website
 - [How to file bug reports or feature requests](#filebugs)
 - [How to build from source](#buildfromsource)
 
-**General Project Information: Table of Contents**
+---
 
 Description <a name="description"></a>
 =====
