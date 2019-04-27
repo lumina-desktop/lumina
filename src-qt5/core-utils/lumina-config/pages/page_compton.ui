@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>428</width>
     <height>300</height>
    </rect>
   </property>
@@ -30,13 +30,6 @@
     <widget class="QCheckBox" name="check_disablecompton">
      <property name="text">
       <string>Disable Compositing Manager (session restart required)</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="check_GPUverify">
-     <property name="text">
-      <string>Only use compositing with GPU acceleration </string>
      </property>
     </widget>
    </item>

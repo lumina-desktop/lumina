@@ -189,14 +189,14 @@ void LSession::start(bool unified){
 	    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
 	    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
 	  }
-	  //Compositing manager
-	  setupCompositor();
   } else {
 	if(!LUtils::isValidBinary(WM)){
 	  exit(1);
 	}
 	startProcess("wm", WM);
   }
+  //Compositing manager
+  setupCompositor();
   //Desktop Next
   LSingleApplication::removeLocks("lumina-desktop");
   startProcess("runtime","lumina-desktop");
