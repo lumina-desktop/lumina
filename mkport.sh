@@ -4,7 +4,7 @@
 
 # Set the port
 dfile="lumina"
-VERSION="1.4.2"
+VERSION="1.5.0"
 
 massage_subdir() {
   cd "$1"
@@ -102,5 +102,5 @@ done
 echo "All ports updated: ${allports}"
 #Set a couple variables for the TrueOS build cluster to know which is the "overall" port
 bPort="${allports}" #reset this variable in case something else needs it
-port="x11/lumina-core x11/lumina-coreutils deskutils/lumina-archiver deskutils/lumina-mediaplayer deskutils/lumina-pdf deskutils/lumina-fm deskutils/lumina-textedit deskutils/lumina-screenshot deskutils/lumina-calculator deskutils/lumina-fileinfo x11/lumina"
+port="x11/lumina-core x11/lumina-coreutils deskutils/lumina-archiver deskutils/lumina-mediaplayer deskutils/lumina-fm deskutils/lumina-textedit deskutils/lumina-screenshot deskutils/lumina-fileinfo x11/lumina"
 export bPort

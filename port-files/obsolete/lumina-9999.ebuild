@@ -8,7 +8,7 @@ EAPI=6
 inherit git-r3 qmake-utils
 DESCRIPTION="Lumina desktop environment"
 HOMEPAGE="https://lumina-desktop.org/"
-EGIT_REPO_URI="https://github.com/pcbsd/lumina"
+EGIT_REPO_URI="https://github.com/lumina-desktop/lumina"
 
 LICENSE="BSD"
 SLOT="0"

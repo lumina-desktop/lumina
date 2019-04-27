@@ -97,27 +97,4 @@ The sub-projects are broken down as follows:
  * [lumina-coreutils](https://github.com/lumina-desktop/lumina/tree/master/src-qt5/core-utils): The core utilities for configuring/managing the desktop
  * [desktop-utilities](https://github.com/lumina-desktop/lumina/tree/master/src-qt5/desktop-utils): Various support utilities for desktop systems. Every one of these utilities should be independently packaged.
 
----
-
-### Lumina Handbook <a name="luminadoc"></a>
-
-The Lumina Desktop Environment has its own [handbook](https://lumina-desktop.org/handbook/), hosted on the [Lumina Website](https://lumina-desktop.org). This handbook contains brief installation instructions. However, due to the highly customizable nature of Lumina, the focus of the handbook lies mainly in documenting all user configurable settings. Each option is typically described in detail, with both text and screenshots. Finally, the suite of unique Qt5 utilities included with Lumina are also documented.
-
-TrueOS users are encouraged to review the Lumina documentation, as the Lumina Desktop Environment is installed by default with TrueOS.
-
-## Filing Issues or Feature Requests <a name="fileissues"></a>
-
-* [lumina](https://github.com/lumina-desktop/lumina) : Issues related to using the Lumina Desktop Environment.
-* [lumina-website](https://github.com/lumina/lumina-website) : Issues involving the Lumina Desktop Project website: 
-  - https://www.lumina-desktop.org
-
-The TrueOS handbook has detailed instructions to help you report a bug (https://www.trueos.org/handbook/helpsupport.html#report-a-bug). It is recommended to refer to these instructions when creating new GitHub issues. Better bug reports usually result in faster fixes!
-
-To request a feature, open a new issue in one of the related GitHub issue repositories and begin the title with *Feature Request:*.
-
-## Social Media <a name="socialmedia"></a>
-
-The TrueOS Project also maintains a number of social media accounts you can watch:
-
-* Lumina Blog: https://lumina-desktop.org/blog/
-* Twitter: https://twitter.com/luminadesktop
+The desktop utilities are gradually getting migrated out into their own repositories under the lumina-desktop github organization as well. These repositories are open for individual versioning and updates if an individual would like to "adopt" these utilities and develop them independantly of the release schedule for the desktop components themselves.
