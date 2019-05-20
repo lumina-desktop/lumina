@@ -38,7 +38,7 @@ public:
 	  overwrite = -1; //auto
 	}
 	~FOWorker(){}
-		
+
 public slots:
 	void slotStartOperations();
 

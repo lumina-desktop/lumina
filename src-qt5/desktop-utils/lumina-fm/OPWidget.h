@@ -31,7 +31,7 @@ public:
 	bool isDone();
 
 	//Status reporting after worker finishes
-	bool hasErrors(); 
+	bool hasErrors();
 	float duration(); //in seconds
 	QString finalStat(); //Final status message
 

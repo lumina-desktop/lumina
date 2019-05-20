@@ -25,7 +25,7 @@ FODialog::FODialog(QWidget *parent) : QDialog(parent), ui(new Ui::FODialog){
     connect(Worker, SIGNAL(finished(QStringList)), this, SLOT(WorkDone(QStringList)) );
   Worker->moveToThread(WorkThread);
     WorkThread->start();
-	
+
   //Make sure this dialog is centered on the parent
   if(parent!=0){
     QPoint ctr = parent->mapToGlobal(parent->geometry().center());
@@ -60,10 +60,10 @@ bool FODialog::RemoveFiles(QStringList paths){
   }
 }
 
-bool FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){ 	 
+bool FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){
   //same permissions as old files
   if(oldPaths.length() == newPaths.length()){
-    Worker->ofiles = oldPaths; 
+    Worker->ofiles = oldPaths;
     Worker->nfiles = newPaths;
   }
   Worker->isCP=true;
@@ -79,7 +79,7 @@ bool FODialog::CopyFiles(QStringList oldPaths, QStringList newPaths){
 bool FODialog::RestoreFiles(QStringList oldPaths, QStringList newPaths){
   //user/group rw permissions
   if(oldPaths.length() == newPaths.length()){
-    Worker->ofiles = oldPaths; 
+    Worker->ofiles = oldPaths;
     Worker->nfiles = newPaths;
   }
   Worker->isRESTORE = true;
@@ -201,7 +201,7 @@ QStringList FOWorker::subfiles(QString dirpath, bool dirsfirst){
     //List the files
     QStringList files = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System, QDir::NoSort);
     for(int i=0; i<files.length(); i++){ out << dir.absoluteFilePath(files[i]); }
-    
+
     if(!dirsfirst){
       //Now recursively add any subdirectories and their contents
       QStringList subdirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden, QDir::NoSort);
@@ -216,8 +216,8 @@ QString FOWorker::newFileName(QString path){
   int num=1;
   QString extension = path.section("/",-1).section(".",-1);
   if( path.section("/",-1) == "."+extension || extension ==path.section("/",-1) ){ extension.clear(); } //just a hidden file without extension or directory
-  if(!extension.isEmpty() ){ 
-    extension.prepend("."); 
+  if(!extension.isEmpty() ){
+    extension.prepend(".");
     path.chop(extension.length());
   }
   while( QFile::exists(path+"-"+QString::number(num)+extension) ){ num++; }
@@ -230,20 +230,20 @@ QStringList FOWorker::removeItem(QString path, bool recursive){
   if(recursive){ items = subfiles(path,false); }
   else{ items << path; } //only the given path
   //qDebug() << " - Subfiles:" << items;
-  QStringList err;	
+  QStringList err;
   for(int i=0; i<items.length(); i++){
     if(QFileInfo(items[i]).isDir()){
       if(items[i]==path){
         //Current Directory Removal
         QDir dir;
-        if( !dir.rmdir(items[i]) ){ err << items[i]; }		      
+        if( !dir.rmdir(items[i]) ){ err << items[i]; }
       }else{
         //Recursive Directory Removal
-        err << removeItem(items[i], recursive);	      
+        err << removeItem(items[i], recursive);
       }
     }else{
       //Simple File Removal
-      if( !QFile::remove(items[i]) ){ err << items[i]; }	    
+      if( !QFile::remove(items[i]) ){ err << items[i]; }
     }
   }
   return err;
@@ -251,7 +251,7 @@ QStringList FOWorker::removeItem(QString path, bool recursive){
 
 QStringList FOWorker::copyItem(QString oldpath, QString newpath){
   QStringList err;
-  if(oldpath == newpath){ return err; } //copy something onto itself - just skip it 
+  if(oldpath == newpath){ return err; } //copy something onto itself - just skip it
   if(QFileInfo(oldpath).isDir()){
     //Create a new directory with the same name (no way to copy dir+contents)
     QDir dir;
@@ -294,7 +294,7 @@ void FOWorker::slotStartOperations(){
       else{ emit finished(QStringList()); return; } //cancel operations
     }
   }*/
-	
+
   //Get the complete number of items to be operated on (better tracking)
   QStringList olist, nlist; //old/new list to actually be used (not inputs - modified/added as necessary)
   for(int i=0; i<ofiles.length() && !stopped; i++){
@@ -315,7 +315,7 @@ void FOWorker::slotStartOperations(){
       QStringList subs = subfiles(ofiles[i], true); //dirs need to be first for additions
       for(int s=0; s<subs.length(); s++){
         olist << subs[s];
-	QString newsub = subs[s].section(ofiles[i],0,100, QString::SectionSkipEmpty); 
+	QString newsub = subs[s].section(ofiles[i],0,100, QString::SectionSkipEmpty);
 	    newsub.prepend(nfiles[i]);
 	nlist << newsub;
       }
@@ -357,7 +357,7 @@ void FOWorker::slotStartOperations(){
       }
       //If a parent directory fails to copy, skip all the children as well (they will also fail)
       //QApplication::processEvents();
-      if( !errlist.contains(olist[i].section("/",0,-1)) ){ 
+      if( !errlist.contains(olist[i].section("/",0,-1)) ){
         errlist << copyItem(olist[i], nlist[i]);
       }
     }else if(isMV){
@@ -371,11 +371,11 @@ void FOWorker::slotStartOperations(){
 	}
       }
       //Perform the move if no error yet (including skipping all children)
-      if( !errlist.contains(olist[i].section("/",0,-1)) ){ 
+      if( !errlist.contains(olist[i].section("/",0,-1)) ){
         if( !QFile::rename(ofiles[i], nfiles[i]) ){
           errlist << ofiles[i];
         }
-      }	
+      }
     }
     //ui->progressBar->setValue(i+1);
     //QApplication::processEvents();
