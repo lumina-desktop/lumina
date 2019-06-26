@@ -1,0 +1,63 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Java language support rules
+#  Written by Mike Remski (mremski@comcast.net)
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Java",
+		"file_suffix": ["java"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol": true,
+		"check_spelling": false
+	},
+	"rules": [{
+			"name": "multi-line comment",
+			"regex_start": "/\\*",
+			"regex_end": "\\*/",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "single-line comment",
+			"regex": "//[^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "keywords",
+			"words": ["abstract","assert","boolean","byte","catch","char","class","default","do","double","enum","exports","extends","final","finally","float","implements","import","instanceof","int","interface","long","module","native","new","package","private","protected","public","requires","short","static","strictfp","super","synchronized","this","throw","throws","transient","try","void","volatile","true","false","null"],
+			"foreground": "colors/keyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "alternate keywords",
+			"words": ["for", "while", "switch", "case", "continue", "break", "if", "else", "return", "exit"],
+			"foreground": "colors/altkeyword",
+			"font_weight": "bold"
+		},
+		{
+			"name": "class names",
+			"regex": "\\b[A-Za-z0-9_-\\.]+(?=::)\\b",
+			"foreground": "colors/class",
+			"font_weight": "bold"
+		},
+		{
+			"name": "numbers",
+			"regex" : "\\b[0-9]+\\.?[0-9]*\\b",
+			"foreground": "colors/text"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/function"
+		},
+		{
+			"name": "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground": "colors/text"
+		}
+	]
+}
