@@ -4,7 +4,7 @@ This is an image viewer.
 
 ### Library Dependencies
 
-1. Qt 5.7+ (specific modules listed below)
+1. Qt 5.9+ (specific modules listed below)
    * concurrent
    * core
    * gui
@@ -23,4 +23,3 @@ This is an image viewer.
  * Example : `lumina-photo ./test1.png ./test2.svg ./test3.jpg`
 * Wildcards are allowed to open multiple files in any path
  * Example : `lumina-photo ./testdir/*
-
