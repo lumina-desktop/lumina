@@ -2,8 +2,8 @@ Lumina
 ======
 This is the official source tree for the Lumina Desktop Environment.
 
-- For additional information about the project, please browse the official website for documentation, screenshots, and more: 
- https://lumina-desktop.org/
+For additional information about the project, please browse the official website for documentation, screenshots, and more: 
+https://lumina-desktop.org/
 
 **Community Chat Channels:**
  - Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
