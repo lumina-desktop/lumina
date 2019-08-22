@@ -27,7 +27,7 @@ Other Files that get installed if "core" is built directly:
    * svg
    * widgets
    * x11extras
-   * NOTE: Qt5 platform theme and developer libraries are also required to build the Lumina theme engine plugin (the "qtbase5-private-dev" package on Debian/Ubuntu, or "qt5-qtbase-private-devel" on Fedora/CentOS)
+   * NOTE: Qt5 platform theme and developer libraries are also required to build the Lumina theme engine plugin (the "qtbase5-private-dev" package on Debian/Ubuntu, or "qt5-qtbase-private-devel" and "qt5-qtbase-static" packages on Fedora/CentOS)
 2. X11 Libraries
    * libXdamage
 3. XCB Libraries
