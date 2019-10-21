@@ -26,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>524</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -99,10 +99,16 @@
    <property name="text">
     <string>Next</string>
    </property>
+   <property name="shortcut">
+    <string>Right</string>
+   </property>
   </action>
   <action name="actionBack">
    <property name="text">
     <string>Back</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
    </property>
   </action>
   <action name="action_Exit">
@@ -120,30 +126,48 @@
    <property name="text">
     <string>&amp;Open</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="action_Save_as">
    <property name="text">
     <string>&amp;Save as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="action_Print">
    <property name="text">
     <string>&amp;Print</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="actionZoom_In">
    <property name="text">
     <string>Zoom &amp;In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
    </property>
   </action>
   <action name="actionZoom_Out">
    <property name="text">
     <string>Zoom &amp;Out</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
   </action>
   <action name="action_Normal_Zoom">
    <property name="text">
     <string>&amp;Normal Zoom</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
    </property>
   </action>
   <action name="action_Fit_to_windows">
@@ -155,6 +179,9 @@
    </property>
    <property name="toolTip">
     <string>Fit to Windows</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
    </property>
   </action>
   <action name="action_About">
@@ -169,6 +196,9 @@
    <property name="toolTip">
     <string>First image</string>
    </property>
+   <property name="shortcut">
+    <string>Home</string>
+   </property>
   </action>
   <action name="actionLast">
    <property name="text">
@@ -176,6 +206,9 @@
    </property>
    <property name="toolTip">
     <string>Last image</string>
+   </property>
+   <property name="shortcut">
+    <string>End</string>
    </property>
   </action>
  </widget>
