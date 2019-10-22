@@ -103,7 +103,7 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(setTreeWidgetSortColumn(int, bool)) );
     retranslate();
     treeWidget->sortItems(treeSortColumn, Qt::AscendingOrder);
-    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
+    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().horizontalAdvance("W")*20);
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
     listWidget = new DDListWidget(this);

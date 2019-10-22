@@ -79,7 +79,7 @@ void LClock::updateTime(bool adjustformat){
   if( this->layout()->direction() == QBoxLayout::TopToBottom ){
     //different routine for vertical text (need newlines instead of spaces)
     for(int i=0; i<label.count("\n")+1; i++){
-      if(this->size().width() < (this->fontMetrics().width(label.section("\n",i,i))+10 )&& label.section("\n",i,i).contains(" ")){
+      if(this->size().width() < (this->fontMetrics().horizontalAdvance(label.section("\n",i,i))+10 )&& label.section("\n",i,i).contains(" ")){
 	label.replace(label.section("\n",i,i), label.section("\n",i,i).replace(" ", "\n"));
         i--;
       }
@@ -100,12 +100,12 @@ void LClock::updateTime(bool adjustformat){
       int wid = 0;
       int lwid = 0;
       for(int i=0; i<lines.length(); i++){
-        lwid = metrics.width(lines[i]);
+        lwid = metrics.horizontalAdvance(lines[i]);
         if(lwid>wid){ wid = lwid; }
       }
      qDebug() << "Verify Clock width:" << lines.length() << wid << lines;
      this->setMinimumWidth(wid);
-     this->setMaximumWidth(wid + (4*metrics.width("O")));
+     this->setMaximumWidth(wid + (4*metrics.horizontalAdvance("O")));
     }else{
       //vertical layout
       this->setMinimumHeight(metrics.lineSpacing() * lines.length());

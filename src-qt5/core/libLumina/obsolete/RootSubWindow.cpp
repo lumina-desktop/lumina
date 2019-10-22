@@ -417,7 +417,7 @@ void RootSubWindow::propertiesChanged(QList<NativeWindow::Property> props, QList
 		if(vals[i].toSize().isValid()){
 		  //Just larger than titlebar, with enough space for 8 characters in the titlebar (+4 buttons)
 		  //qDebug() << "Got invalid Min Size: Set a reasonable default minimum";
-		  WinWidget->setMinimumSize( QSize( this->fontMetrics().height()*4 + this->fontMetrics().width("O")*10, this->fontMetrics().height()*10) );
+		  WinWidget->setMinimumSize( QSize( this->fontMetrics().height()*4 + this->fontMetrics().horizontalAdvance("O")*10, this->fontMetrics().height()*10) );
 		  WIN->setProperty(NativeWindow::MinSize, WinWidget->minimumSize());
 		}else{
 		  WinWidget->setMinimumSize(vals[i].toSize());

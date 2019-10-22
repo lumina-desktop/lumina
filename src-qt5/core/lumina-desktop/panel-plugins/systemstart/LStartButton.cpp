@@ -30,7 +30,7 @@ LStartButtonPlugin::LStartButtonPlugin(QWidget *parent, QString id, bool horizon
     connect(startmenu, SIGNAL(UpdateQuickLaunch(QStringList)), this, SLOT(updateQuickLaunch(QStringList)));
 
   QRect screenSize = QApplication::desktop()->availableGeometry(this);
-  QSize saved = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/"+this->type()+"/MenuSize",QSize(this->fontMetrics().width("x")*30 ,screenSize.height()/1.8)).toSize();
+  QSize saved = LSession::handle()->DesktopPluginSettings()->value("panelPlugs/"+this->type()+"/MenuSize",QSize(this->fontMetrics().horizontalAdvance("x")*30 ,screenSize.height()/1.8)).toSize();
   //qDebug() << "Got Start Menu Saved Size:" << saved;
   if(!saved.isNull() && saved.isValid()){ startmenu->setFixedSize(saved); } //re-load the previously saved value
   menu->setContents(startmenu);
