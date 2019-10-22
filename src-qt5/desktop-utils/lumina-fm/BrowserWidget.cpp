@@ -405,11 +405,11 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
-    it->setText(4, DTtoString(info->created()) ); //creation date (4)
+    it->setText(4, DTtoString(info->birthTime()) ); //creation date (4)
     //Now all the hidden data
     it->setWhatsThis(0, info->absoluteFilePath());
     it->setWhatsThis(3, info->lastModified().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
-    it->setWhatsThis(4, info->created().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
+    it->setWhatsThis(4, info->birthTime().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     num = treeWidget->topLevelItemCount();
   }
   if(num < numItems){

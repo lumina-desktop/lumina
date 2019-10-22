@@ -75,7 +75,7 @@ QVariant BrowserModel::data(const QModelIndex &index, int role) const{
 		else if(index.column()==1){ return QVariant(info->fileSize()); }
 		else if(index.column()==2){ return QVariant(info->mimetype()); }
 		else if(index.column()==3){ return QVariant(info->lastModified()->toString(Qt::DefaultLocaleShortDate)); }
-		else if(index.column()==4){ return QVariant(info->created()->toString(Qt::DefaultLocaleShortDate)); }
+		else if(index.column()==4){ return QVariant(info->birthTime()->toString(Qt::DefaultLocaleShortDate)); }
 	case Qt::ToolTipRole:
 		return QVariant(info->absoluteFilePath());
 	case Qt::StatusTipRole:
