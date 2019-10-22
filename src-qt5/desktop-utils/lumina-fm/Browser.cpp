@@ -210,7 +210,7 @@ void Browser::loadDirectory(QString dir, bool force){
       watcher->addPath(directory.absoluteFilePath(files[i]));
       QString path = directory.absoluteFilePath(files[i]);
       oldFiles << path; //add to list for next time
-      bool reloaditem = !dirupdate || lastcheck.isNull() || (QFileInfo(path).lastModified() > lastcheck || QFileInfo(path).created() > lastcheck);
+      bool reloaditem = !dirupdate || lastcheck.isNull() || (QFileInfo(path).lastModified() > lastcheck || QFileInfo(path).birthTime() > lastcheck);
       //if(dirupdate){ qDebug() << "Reload Item:" << reloaditem << path.section("/",-1); }
       //reloaditem = true;
       if(old.contains(path)){ old.removeAll(path); } //still in existance
