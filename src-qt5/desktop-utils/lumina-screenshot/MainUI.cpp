@@ -22,9 +22,9 @@ MainUI::MainUI()
   IMG = new ImageEditor(this);
   ui->scrollArea->setWidget(IMG);
   areaOverlay = 0;
-  ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().width("200%") );
+  ui->label_zoom_percent->setMinimumWidth( ui->label_zoom_percent->fontMetrics().horizontalAdvance("200%") );
   setupIcons();
-  ui->spin_monitor->setMaximum(QApplication::desktop()->screenCount());
+  ui->spin_monitor->setMaximum(QGuiApplication::screens().count());
   if(ui->spin_monitor->maximum()<2){
     ui->spin_monitor->setEnabled(false);
     ui->radio_monitor->setEnabled(false);
