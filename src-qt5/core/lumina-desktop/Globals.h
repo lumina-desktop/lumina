@@ -41,7 +41,7 @@ public:
 	  char name[BUFSIZ];
 	  int count = gethostname(name,sizeof(name));
 	  if (count < 0) {
-	    return QString::null;
+	    return QString();
 	  }
 	  return QString::fromLocal8Bit(name,count);
 	}
