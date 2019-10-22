@@ -18,7 +18,7 @@ class PhotoView : public QGraphicsView
         const double invScaleFactor = 1 / 1.25;
         bool eventFilter(QObject *, QEvent *event);
         void mouseDoubleClickEvent(QMouseEvent *event);
-        bool isFit = true;
+        bool isFit = false;
 
     signals:
         void nextImage();
