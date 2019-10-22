@@ -486,19 +486,20 @@ void LSession::refreshWindowManager(){
 
 void LSession::updateDesktops(){
   qDebug() << " - Update Desktops";
-  QDesktopWidget *DW = this->desktop();
-  int sC = DW->screenCount();
+  QList<QScreen*> screens = QGuiApplication::screens();
+  int sC = screens.count();
   qDebug() << "  Screen Count:" << sC;
   qDebug() << "  DESKTOPS Length:" << DESKTOPS.length();
   if(sC<1){ return; } //stop here - no screens available temporarily (displayport/4K issue)
   screenRect = QRect(); //clear it
-  for(int i=0; i<sC; i++){
-    screenRect = screenRect.united(DW->screenGeometry(i));
-    qDebug() << " -- Screen["+QString::number(i)+"]:" << DW->screenGeometry(i);
+  QList<QScreen*>::const_iterator it;
+  int i = 0;
+  for(it = screens.constBegin(); it != screens.constEnd(); ++it, ++i) {
+    screenRect = screenRect.united((*it)->availableGeometry());
+    qDebug() << " -- Screen["+QString::number(i)+"]:" << (*it)->availableGeometry();
   }
 
   bool firstrun = (DESKTOPS.length()==0);
-  bool numchange = DESKTOPS.length()!=sC;
   QSettings dset("lumina-desktop", "desktopsettings");
   if(firstrun && sC==1){
     //Sanity check - ensure the monitor ID did not change between sessions for single-monitor setups
@@ -519,7 +520,7 @@ void LSession::updateDesktops(){
   }
 
   // If the screen count is changing on us
-  if ( sC != DW->screenCount() ) {
+  if ( sC != QGuiApplication::screens().count() ) {
     qDebug() << "Screen Count changed while running";
     return;
   }
@@ -528,7 +529,7 @@ void LSession::updateDesktops(){
   QList<int> dnums; //keep track of which screens are already managed
   QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(DW->screenGeometry(DESKTOPS[i]->Screen())) ) {
+    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(screens.at(i)->availableGeometry())) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
@@ -540,7 +541,7 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
-	geoms << DW->screenGeometry(DESKTOPS[i]->Screen());
+	geoms << screens.at(i)->availableGeometry();
       }
   }
 
@@ -549,11 +550,11 @@ void LSession::updateDesktops(){
   QList<QScreen*> scrns = QApplication::screens();
   for(int i=0; i<sC; i++){
     allNames << scrns.at(i)->name();
-    if(!dnums.contains(i) && !geoms.contains(DW->screenGeometry(i)) ){
+    if(!dnums.contains(i) && !geoms.contains(screens.at(i)->availableGeometry()) ){
       //Start the desktop on this screen
       qDebug() << " - Start desktop on screen:" << i;
       DESKTOPS << new LDesktop(i);
-      geoms << DW->screenGeometry(i);
+      geoms << screens.at(i)->availableGeometry();
     }
   }
   dset.setValue("last_used_screens", allNames);
@@ -605,8 +606,9 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   if(geom.isNull()){ return; } //Could not get geometry for some reason
   //Get the available geometry for the screen the window is on
   QRect desk;
+  QList<QScreen *> screens = QGuiApplication::screens();
   for(int i=0; i<DESKTOPS.length(); i++){
-    if( this->desktop()->screenGeometry(DESKTOPS[i]->Screen()).contains(geom.center()) ){
+    if( screens.at(i)->availableGeometry().contains(geom.center()) ){
       //Window is on this screen
       if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
       desk = DESKTOPS[i]->availableScreenGeom();
@@ -695,8 +697,9 @@ QFileInfoList LSession::DesktopFiles(){
 }
 
 QRect LSession::screenGeom(int num){
-  if(num < 0 || num >= this->desktop()->screenCount() ){ return QRect(); }
-  QRect geom = this->desktop()->screenGeometry(num);
+  QList<QScreen *> screens = QGuiApplication::screens();
+  if(num < 0 || num >= screens.count() ){ return QRect(); }
+  QRect geom = screens.at(num)->availableGeometry();
   return geom;
 }
 
@@ -776,10 +779,13 @@ void LSession::playAudioFile(QString filepath){
 // =======================
 void LSession::RootSizeChange(){
   if(DESKTOPS.isEmpty() || screenRect.isNull()){ return; } //Initial setup not run yet
-  QDesktopWidget *DW = this->desktop();
-  int sC = DW->screenCount();
+
   QRect tmp;
-  for(int i=0; i<sC; i++){ tmp = tmp.united(DW->screenGeometry(i)); }
+  QList<QScreen*> screens = QGuiApplication::screens();
+  QList<QScreen*>::const_iterator it;
+  for(it = screens.constBegin(); it != screens.constEnd(); ++it) {
+    tmp = tmp.united( (*it)->availableGeometry() );
+  }
   if(tmp == screenRect){ return; } //false event - session size did not change
   qDebug() << "Got Root Size Change";
   xchange = true;
