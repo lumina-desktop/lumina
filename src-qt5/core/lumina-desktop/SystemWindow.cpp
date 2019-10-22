@@ -49,7 +49,7 @@ void SystemWindow::updateWindow(){
     ui->tool_shutdown->setEnabled(ok);
   ui->frame_update->setVisible( !LOS::systemPendingUpdates().isEmpty() );
   //Center this window on the current screen
-  QPoint center = QApplication::desktop()->screenGeometry(QCursor::pos()).center(); //get the center of the current screen
+  QPoint center = QGuiApplication::screenAt(QCursor::pos())->availableGeometry().center(); //get the center of the current screen
   this->move(center.x() - this->width()/2, center.y() - this->height()/2);
 }
 

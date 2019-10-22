@@ -241,7 +241,7 @@ void MainUI::getPixmap(){
     //Grab the whole screen
     cpic = scrn->grabWindow(QApplication::desktop()->winId());
   }else if(cwin==0 && ui->radio_monitor->isChecked()){
-    QRect geom = QApplication::desktop()->screenGeometry(ui->spin_monitor->value()-1);
+    QRect geom = QGuiApplication::screens().at(ui->spin_monitor->value()-1)->availableGeometry();
     cpic = scrn->grabWindow(QApplication::desktop()->winId(), geom.x(), geom.y(), geom.width(), geom.height() );
   }else if(cwin==0 && ui->radio_area->isChecked()){
     //Grab the section of the screen which was selected
@@ -329,7 +329,7 @@ void MainUI::closeEvent(QCloseEvent *ev){
   //qDebug() << "Close Event:" << ui->check_show_popups->isChecked() << picSaved;
   if(ui->check_show_popups->isChecked() && !picSaved){
     //Ask what to do about the unsaved changed
-    QMessageBox dialog( QMessageBox::Warning, tr("Unsaved Screenshot"), 
+    QMessageBox dialog( QMessageBox::Warning, tr("Unsaved Screenshot"),
             tr("The current screenshot has not been saved yet. Do you want to save or discard your changes?"),
             QMessageBox::Discard | QMessageBox::Save | QMessageBox::Cancel, this);
     dialog.setDefaultButton(QMessageBox::Cancel);

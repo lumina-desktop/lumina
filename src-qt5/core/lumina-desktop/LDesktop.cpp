@@ -208,7 +208,7 @@ void LDesktop::InitDesktop(){
   checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << Screen(); }
     //connect(desktop, SIGNAL(resized(int)), this, SLOT(UpdateGeometry(int)));
-  if(DEBUG){ qDebug() << "Desktop #"<<Screen()<<" -> "<< LSession::desktop()->screenGeometry(Screen()) << LSession::handle()->screenGeom(Screen()); }
+  if(DEBUG){ qDebug() << "Desktop #"<<Screen()<<" -> "<< QGuiApplication::screens().at(Screen())->availableGeometry() << LSession::handle()->screenGeom(Screen()); }
   deskMenu = new QMenu(0);
     connect(deskMenu, SIGNAL(triggered(QAction*)), this, SLOT(SystemApplication(QAction*)) );
   winMenu = new QMenu(0);
@@ -241,7 +241,7 @@ void LDesktop::InitDesktop(){
   if(DEBUG){ qDebug() << "Create bgDesktop"; }
   bgDesktop = new LDesktopPluginSpace();
       int grid = settings->value(DPREFIX+"GridSize",-1).toInt();
-      if(grid<0 && LSession::desktop()->screenGeometry(Screen()).height() > 2000){ grid = 200; }
+      if(grid<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ grid = 200; }
       else if(grid<0){ grid = 100; }
       bgDesktop->SetIconSize( grid );
       bgDesktop->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -423,7 +423,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 
 void LDesktop::IncreaseDesktopPluginIcons(){
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
-  if(cur<0 &&LSession::desktop()->screenGeometry(Screen()).height() > 2000){ cur = 200; }
+  if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){  cur = 100; }
   cur+=16;
   issyncing=true; //don't let the change cause a refresh
@@ -435,7 +435,7 @@ void LDesktop::IncreaseDesktopPluginIcons(){
 
 void LDesktop::DecreaseDesktopPluginIcons(){
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
-  if(cur<0 &&LSession::desktop()->screenGeometry(Screen()).height() > 2000){ cur = 200; }
+  if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){ cur = 100; }
   if(cur<32){ return; } //cannot get smaller than 16x16
   cur-=16;
@@ -483,7 +483,7 @@ void LDesktop::UpdatePanels(){
 }
 
 void LDesktop::UpdateDesktopPluginArea(){
-  QRegion visReg(LSession::desktop()->screenGeometry(Screen()) ); //visible region (not hidden behind a panel)
+  QRegion visReg(QGuiApplication::screens().at(Screen())->availableGeometry() ); //visible region (not hidden behind a panel)
   QRect rawRect = visReg.boundingRect(); //initial value (screen size)
   //qDebug() << "Update Desktop Plugin Area:" << bgWindow->geometry();
   for(int i=0; i<PANELS.length(); i++){
@@ -514,11 +514,12 @@ void LDesktop::UpdateDesktopPluginArea(){
   //LSession::handle()->XCB->SetScreenWorkArea((unsigned int) Screen(), rec);
   //Now remove the X offset to place it on the current screen (needs widget-coords, not global)
   globalWorkRect = rec; //save this for later
-  rec.moveTopLeft( QPoint( rec.x()-LSession::desktop()->screenGeometry(Screen()).x() , rec.y()-LSession::desktop()->screenGeometry(Screen()).y() ) );
+  rec.moveTopLeft( QPoint( rec.x()-QGuiApplication::screens().at(Screen())->availableGeometry().x() , rec.y()-QGuiApplication::screens().at(Screen())->availableGeometry().y() ) );
   //qDebug() << "DPlug Area:" << rec << bgDesktop->geometry() << LSession::handle()->desktop()->availableGeometry(bgDesktop);
   if(rec.size().isNull() ){ return; } //|| rec == bgDesktop->geometry()){return; } //nothing changed
   //bgDesktop->show(); //make sure Fluxbox is aware of it *before* we start moving it
-  bgDesktop->setGeometry( LSession::desktop()->screenGeometry(Screen()));
+
+  bgDesktop->setGeometry( QGuiApplication::screens().at(Screen())->availableGeometry());
   //bgDesktop->resize(LSession::desktop()->screenGeometry(Screen()).size());
   //bgDesktop->move(LSession::desktop()->screenGeometry(Screen()).topLeft());
   bgDesktop->setDesktopArea( rec );
