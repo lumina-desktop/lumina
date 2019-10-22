@@ -72,7 +72,7 @@ void showOSD(int argc, char **argv, QString message){
   if(DEBUG) qDebug() << "Display OSD";
   splash.setText(message);
   //Make sure it is centered on the current screen
-  QPoint center = App.desktop()->screenGeometry(QCursor::pos()).center();
+  QPoint center = App.screenAt(QCursor::pos())->availableGeometry().center();
   splash.move(center.x()-(splash.sizeHint().width()/2), center.y()-(splash.sizeHint().height()/2));
   splash.show();
   //qDebug() << " - show message";
