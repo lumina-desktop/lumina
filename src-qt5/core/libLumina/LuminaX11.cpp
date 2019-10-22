@@ -498,7 +498,7 @@ QIcon LXCB::WindowIcon(WId win){
       QImage image(iter.width, iter.height, QImage::Format_ARGB32); //initial setup
 	uint* dat = iter.data;
 	//dat+=2; //remember the first 2 element offset
-	for(int i=0; i<image.byteCount()/4; ++i, ++dat){
+	for(qsizetype i=0; i<image.sizeInBytes()/4; ++i, ++dat){
 	  ((uint*)image.bits())[i] = *dat;
 	}
       icon.addPixmap(QPixmap::fromImage(image)); //layer this pixmap onto the icon
@@ -547,7 +547,7 @@ void LXCB::paintRoot(QRect area, const QPixmap *pix){
   QImage qimage = pix->toImage().convertToFormat(QImage::Format_ARGB32);
   xcb_image_t *image = xcb_image_create(pix->width(), pix->height(), XCB_IMAGE_FORMAT_XY_PIXMAP,
 	32, qimage.depth(), 32, 32, XCB_IMAGE_ORDER_LSB_FIRST, XCB_IMAGE_ORDER_LSB_FIRST,
-	0, qimage.byteCount(), qimage.bits());
+	0, qimage.sizeInBytes(), qimage.bits());
 
 
   //Now paint on the root window
