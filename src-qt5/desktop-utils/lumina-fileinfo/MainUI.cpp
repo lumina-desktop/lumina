@@ -143,7 +143,7 @@ void MainUI::SyncFileInfo(){
     }
     ui->label_file_owner->setText(INFO->owner());
     ui->label_file_group->setText(INFO->group());
-    ui->label_file_created->setText( INFO->created().toString(Qt::SystemLocaleLongDate) );
+    ui->label_file_created->setText( INFO->birthTime().toString(Qt::SystemLocaleLongDate) );
     ui->label_file_modified->setText( INFO->lastModified().toString(Qt::SystemLocaleLongDate) );
     //Get the file permissions
     QString perms;
@@ -220,7 +220,7 @@ void MainUI::SyncZfsInfo(){
     ui->tree_zfs_snaps->clear();
     for(int i=0; i<snaps.length(); i++){
       QFileInfo finfo(snaps[i].section("::::",1,-1));
-      ui->tree_zfs_snaps->addTopLevelItem( new QTreeWidgetItem(QStringList() << snaps[i].section("::::",0,0) << finfo.created().toString(Qt::SystemLocaleShortDate) << finfo.lastModified().toString(Qt::SystemLocaleShortDate) ) );
+      ui->tree_zfs_snaps->addTopLevelItem( new QTreeWidgetItem(QStringList() << snaps[i].section("::::",0,0) << finfo.birthTime().toString(Qt::SystemLocaleShortDate) << finfo.lastModified().toString(Qt::SystemLocaleShortDate) ) );
       ui->tree_zfs_snaps->resizeColumnToContents(0);
     }
     ui->tree_zfs_snaps->setVisible(!snaps.isEmpty());
