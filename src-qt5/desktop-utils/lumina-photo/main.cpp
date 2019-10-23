@@ -36,7 +36,7 @@ int main (int argc, char *argv[])
     }
     // Now start the window
     MainUI W;
-    W.loadArguments (args);
     W.show ();
+    W.loadArguments (args);
     return a.exec ();
 }
