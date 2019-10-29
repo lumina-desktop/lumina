@@ -48,7 +48,7 @@ public:
 
 	void setText(QString txt){
 	  label->setPlainText(txt);
-	  //this->resize( label->fontMetrics().width(txt.section("\n",0,0))+30, this->height());
+	  //this->resize( label->fontMetrics().horizontalAdvance(txt.section("\n",0,0))+30, this->height());
 	}
 
 };

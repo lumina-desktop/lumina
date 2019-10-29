@@ -30,7 +30,7 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   hasChanges = readonly = false;
   lastSaveContents.clear();
   matchleft = matchright = -1;
-  this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
+  this->setTabStopDistance( 8 * QFontMetricsF(this->font()).width(' ') ); //8 character spaces per tab (UNIX standard)
   //this->setObjectName("PlainTextEditor");
   //this->setStyleSheet("QPlainTextEdit#PlainTextEditor{ }");
   SYNTAX = new Custom_Syntax(settings, this->document());
@@ -171,7 +171,7 @@ int PlainTextEditor::LNWWidth(){
   //qDebug() << "point 1" << this->document()->defaultFont();
   while(lines>=10){ chars++; lines/=10; }
   QFontMetrics metrics(this->document()->defaultFont());
-  return (metrics.width("9")*chars); //make sure to add a tiny bit of padding
+  return (metrics.horizontalAdvance("9")*chars); //make sure to add a tiny bit of padding
 }
 
 void PlainTextEditor::paintLNW(QPaintEvent *ev){

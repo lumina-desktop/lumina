@@ -11,7 +11,7 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
   this->setMinimumWidth( this->minimumHeight() * 1.5);
   this->setObjectName("LuminaBootSplash"); //for theme styling
   //Center the window on the primary screen
-  QPoint ctr = QApplication::desktop()->screenGeometry().center();
+  QPoint ctr = QGuiApplication::primaryScreen()->geometry().center();
   this->move( ctr.x()-(this->width()/2), ctr.y()-(this->height()/2) );
   generateTipOfTheDay();
   ui->label_version->setText( QString(tr("Version %1")).arg(LDesktopUtils::LuminaDesktopVersion()) );

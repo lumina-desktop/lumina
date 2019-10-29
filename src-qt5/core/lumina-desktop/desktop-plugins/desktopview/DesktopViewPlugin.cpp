@@ -180,8 +180,8 @@ void DesktopViewPlugin::updateContents(){
     }
     //Now adjust the visible text as necessary based on font/grid sizing
     it->setToolTip(txt);
-    if(this->fontMetrics().width(txt) > (gridSZ.width()-4) ){
-      //int dash = this->fontMetrics().width("-");
+    if(this->fontMetrics().horizontalAdvance(txt) > (gridSZ.width()-4) ){
+      //int dash = this->fontMetrics().horizontalAdvance("-");
       //Text too long, try to show it on two lines
       txt = txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
       if(txt.contains("\n")){

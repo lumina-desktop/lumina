@@ -164,12 +164,14 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Find the number of the left-most desktop screen
   QString screen = "0";
   QRect screenGeom;
-  QDesktopWidget *desk =QApplication::desktop();
-  for(int i=0; i<desk->screenCount(); i++){
-     if(desk->screenGeometry(i).x()==0){
-	screen = QString::number(i);
-	screenGeom = desk->screenGeometry(i);
-	break;
+  QList<QScreen*> screens = QGuiApplication::screens();
+  QList<QScreen*>::const_iterator it;
+  int i = 0;
+  for(it = screens.constBegin(); it != screens.constEnd(); ++it, ++i) {
+     if((*it)->availableGeometry().x()==0) {
+       screen = i;
+       screenGeom = (*it)->availableGeometry();
+       break;
     }
   }
   //Now setup the default "desktopsettings.conf" and "sessionsettings.conf" files

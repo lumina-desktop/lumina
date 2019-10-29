@@ -168,7 +168,7 @@ void AppLauncherPlugin::loadButton(){
   //Now adjust the visible text as necessary based on font/grid sizing
   if(button->toolTip().isEmpty()){ button->setToolTip(txt); }
   //Double check that the visual icon size matches the requested size - otherwise upscale the icon
-    if(button->fontMetrics().width(txt) > (button->width()-OUTMARGIN) ){
+    if(button->fontMetrics().horizontalAdvance(txt) > (button->width()-OUTMARGIN) ){
       //Text too long, try to show it on two lines
       //txt = button->fontMetrics().elidedText(txt, Qt::ElideRight, 2*(button->width()-OUTMARGIN), Qt::TextWordWrap);
       txt =txt.section(" ",0,2).replace(" ","\n"); //First take care of any natural breaks
@@ -177,7 +177,7 @@ void AppLauncherPlugin::loadButton(){
         //need to check each line
 	QStringList txtL = txt.split("\n");
 	for(int i=0; i<txtL.length(); i++){
-	  if(( i+1<txtL.length()) && (button->fontMetrics().width(txtL[i]) < button->width()/2) ){
+	  if(( i+1<txtL.length()) && (button->fontMetrics().horizontalAdvance(txtL[i]) < button->width()/2) ){
 	    txtL[i] = txtL[i]+" "+txtL[i+1];
 	    txtL.removeAt(i+1);
 	  }

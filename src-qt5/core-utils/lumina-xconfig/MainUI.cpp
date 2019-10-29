@@ -259,20 +259,19 @@ void MainUI::tileScreensY(bool activeonly){
         while(overlap){
           QRegion tmp(cur->pos().x(), newy, cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rectCount()>1);
           //qDebug() << "Check Y Overlap:" << newy << overlap << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
-	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
             //qDebug() << " - got Y overlap:" << bound << rects;
-            if( bound.isNull() || rects.isEmpty() ){ newy+=cur->height(); }
+            if( bound.isNull() || diff.rectCount() == 0 ){ newy+=cur->height(); }
             else{
              int orig = newy;
               newy = bound.top();
-              for(int i=0; i<rects.length(); i++){
+              for( const QRect &rect : diff ){
                 //qDebug() << " - Check Rect:" << newy << rects[i] << cur->height();
-                if(rects[i].height()==cur->height()){ continue; } //skip this one - just the same height
-                if(rects[i].top()>newy || newy==bound.bottom()){ newy=rects[i].top(); }
+                if(rect.height()==cur->height()){ continue; } //skip this one - just the same height
+                if(rect.top()>newy || newy==bound.bottom()){ newy=rect.top(); }
               }
               if(orig==newy){ newy = bound.bottom()+1; } //make sure it always changes - no infinite loops!!
             }
@@ -316,20 +315,19 @@ void MainUI::tileScreensX(bool activeonly){
         while(overlap){
           QRegion tmp(newx, cur->pos().y(), cur->width(), cur->height());
           QRegion diff = tmp.subtracted(total);
-          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rects().length()>1);
+          overlap = (diff.boundingRect()!=tmp.boundingRect() || diff.rectCount()>1);
           //qDebug() << "Check X Overlap:" << newx << overlap << total.rects() << tmp.boundingRect() << diff.boundingRect();
           if(overlap){
-	   QVector<QRect> rects = diff.rects();
             QRect bound = diff.boundingRect();
             //qDebug() << " - got X overlap:" << bound << rects;
-            if( bound.isNull() || rects.isEmpty() ){ newx+=cur->width(); }
+            if( bound.isNull() || diff.rectCount() == 0 ){ newx+=cur->width(); }
             else{
              int orig = newx;
               newx = bound.left();
-              for(int i=0; i<rects.length(); i++){
+              for( const QRect &rect : diff ) {
                 //qDebug() << " - Check Rect:" << newx << rects[i] << cur->width();
-                if(rects[i].width()==cur->width()){ continue; } //skip this one - just the same width
-                if(rects[i].left()>newx || newx==bound.right()){ newx=rects[i].left(); }
+                if(rect.width()==cur->width()){ continue; } //skip this one - just the same width
+                if(rect.left()>newx || newx==bound.right()){ newx=rect.left(); }
               }
               if(orig==newx){ newx = bound.right()+1; } //make sure it always changes - no infinite loops!!
             }

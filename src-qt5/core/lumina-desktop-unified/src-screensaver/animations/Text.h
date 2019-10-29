@@ -50,7 +50,7 @@ public:
 	  text->setFont(QFont("Courier", 24, QFont::Bold));
 	  text->setText(display);
           QFontMetrics metrics(text->font());
-	  text->setMinimumSize(QSize( metrics.width(text->text())+10, metrics.height()*text->text().count("\n") +10));
+	  text->setMinimumSize(QSize( metrics.horizontalAdvance(text->text())+10, metrics.height()*text->text().count("\n") +10));
 
 	  movement = new QPropertyAnimation(text);
 	  movement->setPropertyName("pos");

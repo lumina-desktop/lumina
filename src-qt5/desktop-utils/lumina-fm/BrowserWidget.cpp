@@ -103,7 +103,7 @@ void BrowserWidget::showDetails(bool show){
     connect(treeWidget, SIGNAL(sortColumnChanged(int)), this, SIGNAL(setTreeWidgetSortColumn(int, bool)) );
     retranslate();
     treeWidget->sortItems(treeSortColumn, Qt::AscendingOrder);
-    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().width("W")*20);
+    treeWidget->setColumnWidth(0, treeWidget->fontMetrics().horizontalAdvance("W")*20);
     if(!BROWSER->currentDirectory().isEmpty()){ emit dirChange("", true); }
   }else if(!show && listWidget==0){
     listWidget = new DDListWidget(this);
@@ -405,11 +405,11 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
     it->setText(3, DTtoString(info->lastModified() )); //modification date (3)
-    it->setText(4, DTtoString(info->created()) ); //creation date (4)
+    it->setText(4, DTtoString(info->birthTime()) ); //creation date (4)
     //Now all the hidden data
     it->setWhatsThis(0, info->absoluteFilePath());
     it->setWhatsThis(3, info->lastModified().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
-    it->setWhatsThis(4, info->created().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
+    it->setWhatsThis(4, info->birthTime().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     num = treeWidget->topLevelItemCount();
   }
   if(num < numItems){

@@ -76,13 +76,13 @@ protected:
 	      else{outC.setHsl(textC.hue(), textC.hslSaturation(), 255, 50); }
 	      //qDebug() << "Outline Color Values:" << outC;
 	    //Now get the size of the outline border (need to scale for high-res monitors)
-	    qreal OWidth = opt.fontMetrics.width("o")/2.0;
+	    qreal OWidth = opt.fontMetrics.horizontalAdvance("o")/2.0;
 	      //qDebug() << "Outline Width:" << OWidth;
 	    //Now generate a QPainterPath for the text
 	    QPainterPath path;
 	    QStringList txt = this->text().split("\n"); //need each line independently, the newline actually gets painted otherwise
 	    for(int i=0; i<txt.length(); i++){
-	      path.addText(box.center().x() - (opt.fontMetrics.width(txt[i])/2), box.y()+((i+1)*(box.height()/txt.length()))-opt.fontMetrics.descent(), opt.font, txt[i] );
+	      path.addText(box.center().x() - (opt.fontMetrics.horizontalAdvance(txt[i])/2), box.y()+((i+1)*(box.height()/txt.length()))-opt.fontMetrics.descent(), opt.font, txt[i] );
 	    }
 	    path.setFillRule(Qt::WindingFill);
 	    //Now paint the text 

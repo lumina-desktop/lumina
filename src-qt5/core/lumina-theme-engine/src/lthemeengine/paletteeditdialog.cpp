@@ -28,9 +28,9 @@ PaletteEditDialog::~PaletteEditDialog(){
 QPalette PaletteEditDialog::selectedPalette() const{
   QPalette palette;
   for(int i = 0; i < QPalette::NColorRoles; i++){
-    palette.setBrush(QPalette::Active, QPalette::ColorRole(i), m_ui->tableWidget->item(i,0)->backgroundColor());
-    palette.setBrush(QPalette::Inactive, QPalette::ColorRole(i), m_ui->tableWidget->item(i,1)->backgroundColor());
-    palette.setBrush(QPalette::Disabled, QPalette::ColorRole(i), m_ui->tableWidget->item(i,2)->backgroundColor());
+    palette.setBrush(QPalette::Active, QPalette::ColorRole(i), m_ui->tableWidget->item(i,0)->background().color());
+    palette.setBrush(QPalette::Inactive, QPalette::ColorRole(i), m_ui->tableWidget->item(i,1)->background().color());
+    palette.setBrush(QPalette::Disabled, QPalette::ColorRole(i), m_ui->tableWidget->item(i,2)->background().color());
     }
   return palette;
 }
@@ -40,9 +40,9 @@ void PaletteEditDialog::setPalette(const QPalette &palette){
     if(!m_ui->tableWidget->item(i,0)){ m_ui->tableWidget->setItem(i, 0, new QTableWidgetItem()); }
     if(!m_ui->tableWidget->item(i,1)){ m_ui->tableWidget->setItem(i, 1, new QTableWidgetItem()); }
     if(!m_ui->tableWidget->item(i,2)){ m_ui->tableWidget->setItem(i, 2, new QTableWidgetItem()); }
-    m_ui->tableWidget->item(i,0)->setBackgroundColor(palette.color(QPalette::Active, QPalette::ColorRole(i)));
-    m_ui->tableWidget->item(i,1)->setBackgroundColor(palette.color(QPalette::Inactive, QPalette::ColorRole(i)));
-    m_ui->tableWidget->item(i,2)->setBackgroundColor(palette.color(QPalette::Disabled, QPalette::ColorRole(i)));
+    m_ui->tableWidget->item(i,0)->setBackground(QBrush(palette.color(QPalette::Active, QPalette::ColorRole(i))));
+    m_ui->tableWidget->item(i,1)->setBackground(QBrush(palette.color(QPalette::Inactive, QPalette::ColorRole(i))));
+    m_ui->tableWidget->item(i,2)->setBackground(QBrush(palette.color(QPalette::Disabled, QPalette::ColorRole(i))));
     }
   QStringList labels;
   labels << tr("Window text") << tr("Button background") << tr("Bright") << tr("Less bright") << tr("Dark") << tr("Less dark") << tr("Normal text") << tr("Bright text") << tr("Button text") << tr("Normal background") << tr("Window") << tr("Shadow") << tr("Highlight") << tr("Highlighted text")  << tr("Link")  << tr("Visited link") << tr("Alternate background") << tr("Default") << tr("Tooltip background")  << tr("Tooltip text") << tr("Placeholder text");
@@ -55,9 +55,9 @@ void PaletteEditDialog::hideEvent(QHideEvent *){
 }
 
 void PaletteEditDialog::on_tableWidget_itemClicked(QTableWidgetItem *item){
-  QColor color = QColorDialog::getColor(item->backgroundColor(), this, tr("Select Color"));
+  QColor color = QColorDialog::getColor(item->background().color(), this, tr("Select Color"));
   if(color.isValid()){
-    item->setBackgroundColor(color);
+    item->setBackground(QBrush(color));
     emit paletteChanged(selectedPalette());
     }
 }

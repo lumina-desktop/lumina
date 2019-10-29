@@ -367,7 +367,7 @@ void MainUI::UpdateTree(){
   }
 
   if(changed){
-    int wid = ui->tree_contents->fontMetrics().width("W")*5;
+    int wid = ui->tree_contents->fontMetrics().horizontalAdvance("W")*5;
     ui->tree_contents->setColumnWidth(2, wid);
     for(int i=1; i<2; i++){ui->tree_contents->resizeColumnToContents(i); QApplication::processEvents(); wid+= ui->tree_contents->columnWidth(i); }
     //qDebug() << "Set column 0 width:" << wid << ui->tree_contents->viewport()->width();

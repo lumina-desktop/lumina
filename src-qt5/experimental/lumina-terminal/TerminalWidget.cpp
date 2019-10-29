@@ -29,7 +29,7 @@ TerminalWidget::TerminalWidget(QWidget *parent, QString dir) : QTextEdit(parent)
   this->setAcceptRichText(false);
   this->setOverwriteMode(true);
   this->setFocusPolicy(Qt::StrongFocus);
-  this->setTabStopWidth( 8 * this->fontMetrics().width(" ") ); //8 character spaces per tab (UNIX standard)
+  this->setTabStopWidth( 8 * this->fontMetrics().horizontalAdvance(" ") ); //8 character spaces per tab (UNIX standard)
   this->setTabChangesFocus(false);
   //this->setWordWrapMode(QTextOption::NoWrap);
   this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -537,7 +537,7 @@ void TerminalWidget::updateTermSize(){
  if(!PROC->isOpen()){ return; }
   QSize pix = this->size(); //pixels
   QSize chars;
-    chars.setWidth( pix.width()/this->fontMetrics().width("W") );
+    chars.setWidth( pix.width()/this->fontMetrics().horizontalAdvance("W") );
     chars.setHeight( pix.height()/this->fontMetrics().lineSpacing() );
   //qDebug() << "Set Terminal Size:" << chars << pix;
   if(chars.width() <2 || chars.height() <2){ return; } //skip this - cannot go less than 2 characters wide/high

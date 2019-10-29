@@ -75,7 +75,7 @@ void SyntaxFile::SetupDocument(QPlainTextEdit* editor){
   if(formatObj.contains("tab_width")){
     int num = formatObj.value("tab_width").toInt();
     if(num<=0){ num = 8; } //UNIX Standard of 8 characters per tab
-    editor->setTabStopWidth( num * QFontMetrics(editor->document()->defaultFont()).width(" ") );
+    editor->setTabStopDistance( num * QFontMetricsF(editor->document()->defaultFont() ).width(" ") );
   }
 }
 

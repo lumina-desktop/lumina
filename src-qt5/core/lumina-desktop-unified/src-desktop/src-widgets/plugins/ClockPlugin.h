@@ -33,8 +33,8 @@ private slots:
 	        //Note: This is horribly inefficient, but due to the inherently short length of textL it is acceptable
 	        int min = -1; int index = -1;
 	        for(int i=1; i<textL.length(); i++){
-	          int combined = button->fontMetrics().width(textL[i-1]+" "+textL[i]);
-                 int tmp = button->fontMetrics().width(textL[i]);
+	          int combined = button->fontMetrics().horizontalAdvance(textL[i-1]+" "+textL[i]);
+                 int tmp = button->fontMetrics().horizontalAdvance(textL[i]);
 	          if( max>combined && (min<0 || tmp<min)){ min = tmp; index = i; }
 	        }
 	        if(index>0){ textL[index-1] = textL[index-1]+" "+textL[index]; textL.removeAt(index); }
@@ -43,7 +43,7 @@ private slots:
 	        //Need to get a lot more complicated - need to break up sections mid-word based on widget width
 	        // NOT WORKING - can cause infinite loop somehow (perhaps max is 0 on init?)
 	        /*for(int i=0; i<textL.length(); i++){
-	          int tmp = button->fontMetrics().width(textL[i]);
+	          int tmp = button->fontMetrics().horizontalAdvance(textL[i]);
 	          if(tmp>max){
 	            //qDebug() << "CLOCK:" << i << tmp << max << textL[i];
 	            QString tmps = button->fontMetrics().elidedText(textL[i], Qt::ElideRight, max).section("...",0,-2); //remove the three dots at end

@@ -73,7 +73,7 @@ void page_wallpaper::LoadSettings(int screennum){
   else{ ui->radio_desk_single->setChecked(true); }
   ui->spin_desk_min->setValue( settings.value(DPrefix+"background/minutesToChange", 5).toInt() );
   desktimechanged(); //ensure the display gets updated (in case the radio selection did not change);
-  QRect geom = QApplication::desktop()->screenGeometry(cScreen);
+  QRect geom = QGuiApplication::screens().at(cScreen)->availableGeometry();
   ui->label_desk_res->setText( tr("Screen Resolution:")+"\n"+QString::number(geom.width())+"x"+QString::number(geom.height()) );
   int tmp = ui->combo_desk_layout->findData(settings.value(DPrefix+"background/format","stretch"));
   if(tmp>=0){ ui->combo_desk_layout->setCurrentIndex(tmp); }
