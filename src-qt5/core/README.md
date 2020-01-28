@@ -89,3 +89,8 @@ Other Files that get installed if "core" is built directly:
        * `pavucontrol`: Graphical audio mixer utility
        * `acpi`: Battery detection/status
        * `dbus-send`: System shutdown/restart
+   10. Void Linux
+      * `xbacklight`: screen brightness control
+      * `amixer`: Audio mixer control
+      * `pavucontrol`: Graphical audio mixer utility
+      * `acpi`: Battery detection/status

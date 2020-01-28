@@ -81,6 +81,11 @@ isEmpty(OS){
       isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/../etc }
       isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
     }
+    equals(LINUX_DISTRO,"VoidLinux"){
+      isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }
+      isEmpty(L_ETCDIR){ L_ETCDIR = $${PREFIX}/../etc }
+      isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
+    }
   }else{
     OS="Unknown";
   }
