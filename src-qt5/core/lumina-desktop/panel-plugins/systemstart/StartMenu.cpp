@@ -55,7 +55,7 @@ void StartMenu::UpdateAll(){
   ui->tool_launch_deskinfo->setIcon(LXDG::findIcon("system-help",""));
 
   ui->tool_launch_mixer->setIcon( LXDG::findIcon("preferences-desktop-sound","") );
-  ui->label_bright_icon->setPixmap( LXDG::findIcon("brightnesssettings","preferences-desktop-brightness").pixmap(ui->tool_goto_apps->iconSize()) );
+  ui->label_bright_icon->setPixmap( LXDG::findIcon("redshift","preferences-desktop-brightness").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->label_locale_icon->setPixmap( LXDG::findIcon("preferences-desktop-locale","").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->tool_set_nextwkspace->setIcon(LXDG::findIcon("go-next-view",""));
   ui->tool_set_prevwkspace->setIcon(LXDG::findIcon("go-previous-view",""));
