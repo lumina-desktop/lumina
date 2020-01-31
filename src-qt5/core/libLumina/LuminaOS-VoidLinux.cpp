@@ -68,7 +68,8 @@ int LOS::ScreenBrightness(){
     if(QFile::exists(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness")){
       int val = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness").join("").simplified().toInt();
       screenbrightness = val;
-    }else if(QFile::exists("/usr/bin/xbacklight")){
+    }
+    if(screenbrightness == -1 && QFile::exists("/usr/bin/xbacklight")){
       screenbrightness = 100;
     }
   }
@@ -85,28 +86,41 @@ void LOS::setScreenBrightness(int percent){
   QString cmd = "xbacklight -set %1";
   // cmd = cmd.arg( QString::number( int(65535*pf) ) );
   cmd = cmd.arg( QString::number( percent ) );
-  int ret = LUtils::runCmd(cmd);
+  LUtils::runCmd(cmd);
   //Save the result for later
-  if(ret!=0){ screenbrightness = -1; }
-  else{
-    screenbrightness = percent;
-    LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
-  }
+  //qDebug() << "Got brightness change retcode:" << ret;
+  screenbrightness = percent;
+  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }
 
 //Read the current volume
 int LOS::audioVolume(){ //Returns: audio volume as a percentage (0-100, with -1 for errors)
+  static int out = -1;
+  if(out < 0){
+    //First time session check: Load the last setting for this user
+    QString info = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume").join("");
+    if(!info.isEmpty()){
+      out = info.simplified().toInt();
+      return out;
+    }
+  }
   QStringList info = LUtils::getCmdOutput("pactl list sinks");
   if(info.isEmpty()){ return -1; }
   bool isRunning = false;
-  int out = -1;
+  int prevval = out;
+  out = -1; //reset back to unknown and read it dynamically from the system
   for(int i=0; i<info.length(); i++){
     if(info[i].simplified().startsWith("State:")){
       isRunning = (info[i].section(":",-1).simplified()=="RUNNING");
-    }else if(info[i].simplified().startsWith("Base Volume:")){
+    }else if(info[i].simplified().startsWith("Volume:")){
       out = info[i].section(" / ",1,1).section("%",0,0).simplified().toInt();
       if(isRunning){ break; } //currently-running volume output
     }
+  }
+  //qDebug() << "Current Audio Volume:" << out;
+  if(prevval != out){
+    //Some external tool changed the audio volume - update the cache file
+    LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(out), true);
   }
   return out;
 }
@@ -117,7 +131,9 @@ void LOS::setAudioVolume(int percent){
   else if(percent>100){percent=100;}
   QString info = QString("pactl set-sink-volume @DEFAULT_SINK@ ")+QString::number(percent)+"%";
   //Run Command
+  //qDebug() << "Set Audio Volume:" << percent;
   LUtils::runCmd(info);
+  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentvolume", QStringList() << QString::number(percent), true);
 }
 
 //Change the current volume a set amount (+ or -)
@@ -219,13 +235,15 @@ bool LOS::batteryIsCharging(){
 //Battery Time Remaining
 int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
   QString my_status = LUtils::getCmdOutput("acpi -b").join("\n");
-  QRegExp timefind(" [0-9]{2}:[0-9]{2}:[0-9]{2} ");
+  static QRegExp timefind(" [0-9]{2}:[0-9]{2}:[0-9]{2} ");
   int tmp = timefind.indexIn(my_status);
+  //qDebug() << "Battery Secs:" << tmp << my_status << timefind.cap(0);
   if(tmp>=0){
-    QTime time = QTime::fromString(timefind.cap(0),"HH:mm:ss");
-    if(time.isValid()){ tmp = time.hour()*3600 + time.minute()*60 + time.second(); }
+    QTime time = QTime::fromString(timefind.cap(0).simplified(),"HH:mm:ss");
+    //qDebug() << "Got Time:" << time;
+    tmp = time.hour()*3600 + time.minute()*60 + time.second();
   }
-  return tmp; //not implemented yet for Linux
+  return tmp;
 }
 
 //File Checksums
