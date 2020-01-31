@@ -52,7 +52,7 @@ LPI LPlugins::menuPluginInfo(QString plug){
 }
 LPI LPlugins::colorInfo(QString item){
   if(COLORS.contains(item)){ return COLORS[item]; }
-  else{ return LPI(); }  
+  else{ return LPI(); }
 }
 
 //===================
@@ -74,14 +74,14 @@ void LPlugins::LoadPanelPlugins(){
     info.description = QObject::tr("Start menu alternative which focuses on launching applications.");
     info.ID = "appmenu";
     info.icon = "format-list-unordered";
-  PANEL.insert(info.ID, info);   
+  PANEL.insert(info.ID, info);
   //Desktop Bar
   info = LPI(); //clear it
     info.name = QObject::tr("Desktop Bar");
     info.description = QObject::tr("This provides shortcuts to everything in the desktop folder - allowing easy access to all your favorite files/applications.");
     info.ID = "desktopbar";
     info.icon = "user-desktop";
-  PANEL.insert(info.ID, info);  
+  PANEL.insert(info.ID, info);
   //Spacer
   info = LPI(); //clear it
     info.name = QObject::tr("Spacer");
@@ -95,56 +95,56 @@ void LPlugins::LoadPanelPlugins(){
     info.description = QObject::tr("Simple line to provide visual separation between items.");
     info.ID = "line";
     info.icon = "insert-horizontal-rule";
-  PANEL.insert(info.ID, info);  	
+  PANEL.insert(info.ID, info);
   //Desktop Switcher
   info = LPI(); //clear it
     info.name = QObject::tr("Workspace Switcher");
     info.description = QObject::tr("Controls for switching between the various virtual desktops.");
     info.ID = "desktopswitcher";
     info.icon = "format-view-carousel";
-  PANEL.insert(info.ID, info);  	
+  PANEL.insert(info.ID, info);
   //Battery
   info = LPI(); //clear it
     info.name = QObject::tr("Battery Monitor");
     info.description = QObject::tr("Keep track of your battery status.");
     info.ID = "battery";
     info.icon = "battery-charging";
-  PANEL.insert(info.ID, info);  	
+  PANEL.insert(info.ID, info);
   //Clock
   info = LPI(); //clear it
     info.name = QObject::tr("Time/Date");
     info.description = QObject::tr("View the current time and date.");
     info.ID = "clock";
     info.icon = "preferences-system-time";
-  PANEL.insert(info.ID, info);  
+  PANEL.insert(info.ID, info);
   //System Dachboard plugin
   info = LPI(); //clear it
     info.name = QObject::tr("System Dashboard");
     info.description = QObject::tr("View or change system settings (audio volume, screen brightness, battery life, virtual desktops).");
     info.ID = "systemdashboard";
     info.icon = "arrow-down-drop-circle";
-  PANEL.insert(info.ID, info);  
+  PANEL.insert(info.ID, info);
   //Task Manager
   info = LPI(); //clear it
     info.name = QObject::tr("Task Manager");
     info.description = QObject::tr("View and control any running application windows (group similar windows under a single button).");
     info.ID = "taskmanager";
     info.icon = "preferences-system-windows";
-  PANEL.insert(info.ID, info); 
+  PANEL.insert(info.ID, info);
   //Task Manager
   info = LPI(); //clear it
     info.name = QObject::tr("Task Manager (No Groups)");
     info.description = QObject::tr("View and control any running application windows (every individual window has a button)");
     info.ID = "taskmanager-nogroups";
     info.icon = "preferences-system-windows";
-  PANEL.insert(info.ID, info); 
+  PANEL.insert(info.ID, info);
   //System Tray
   info = LPI(); //clear it
     info.name = QObject::tr("System Tray");
     info.description = QObject::tr("Display area for dockable system applications");
     info.ID = "systemtray";
     info.icon = "preferences-system-windows-actions";
-  PANEL.insert(info.ID, info);  
+  PANEL.insert(info.ID, info);
   //Home Button
   info = LPI(); //clear it
     info.name = QObject::tr("Show Desktop");
@@ -158,14 +158,14 @@ void LPlugins::LoadPanelPlugins(){
     info.description = QObject::tr("Unified system access and application launch menu.");
     info.ID = "systemstart";
     info.icon = "Lumina-DE";
-  PANEL.insert(info.ID, info);  
+  PANEL.insert(info.ID, info);
   //Application Launcher
   info = LPI(); //clear it
     info.name = QObject::tr("Application Launcher");
     info.description = QObject::tr("Pin an application shortcut directly to the panel");
     info.ID = "applauncher";
     info.icon = "quickopen";
-  PANEL.insert(info.ID, info); 
+  PANEL.insert(info.ID, info);
   //Audio Player Plugin
   info = LPI(); //clear it
     info.name = QObject::tr("Audio Player");

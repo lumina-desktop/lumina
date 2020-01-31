@@ -24,7 +24,6 @@ LSysDashboard::LSysDashboard(QWidget *parent, QString id, bool horizontal) : LPP
   mact = new QWidgetAction(this);
     mact->setDefaultWidget(sysmenu);
     menu->addAction(mact);
-	
   button->setMenu(menu);
   QTimer::singleShot(0,this, SLOT(OrientationChange())); //Update icons/sizes
 }
@@ -77,7 +76,7 @@ void LSysDashboard::updateIcon(bool force){
 }
 
 void LSysDashboard::resetIcon(){
-  button->setIcon( LXDG::findIcon("arrow-down-drop-circle",""));
+  button->setIcon( LXDG::findIcon("onboard-panel","arrow-down-drop-circle"));
 }
 
 void LSysDashboard::openMenu(){
@@ -88,4 +87,3 @@ void LSysDashboard::openMenu(){
 void LSysDashboard::closeMenu(){
   menu->hide();
 }
-

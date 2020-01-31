@@ -699,7 +699,7 @@ QFileInfoList LSession::DesktopFiles(){
 QRect LSession::screenGeom(int num){
   QList<QScreen *> screens = QGuiApplication::screens();
   if(num < 0 || num >= screens.count() ){ return QRect(); }
-  QRect geom = screens.at(num)->availableGeometry();
+  QRect geom = screens.at(num)->geometry();
   return geom;
 }
 

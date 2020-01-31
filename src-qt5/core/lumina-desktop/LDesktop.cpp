@@ -519,7 +519,7 @@ void LDesktop::UpdateDesktopPluginArea(){
   if(rec.size().isNull() ){ return; } //|| rec == bgDesktop->geometry()){return; } //nothing changed
   //bgDesktop->show(); //make sure Fluxbox is aware of it *before* we start moving it
 
-  bgDesktop->setGeometry( QGuiApplication::screens().at(Screen())->availableGeometry());
+  bgDesktop->setGeometry( QGuiApplication::screens().at(Screen())->geometry());
   //bgDesktop->resize(LSession::desktop()->screenGeometry(Screen()).size());
   //bgDesktop->move(LSession::desktop()->screenGeometry(Screen()).topLeft());
   bgDesktop->setDesktopArea( rec );

@@ -29,20 +29,20 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
   connect(brighttimer, SIGNAL(timeout()), this, SLOT(setCurrentBrightness()) );
   connect(ui->combo_locale, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLocale()) );
   //And setup the default icons
-  ui->label_bright_icon->setPixmap( LXDG::findIcon("preferences-desktop-brightness","").pixmap(ui->label_bright_icon->maximumSize()) );
+  ui->label_bright_icon->setPixmap( LXDG::findIcon("brightnesssettings","preferences-desktop-brightness").pixmap(ui->label_bright_icon->maximumSize()) );
   ui->tool_wk_prev->setIcon( LXDG::findIcon("go-previous-view",""));
   ui->tool_wk_next->setIcon( LXDG::findIcon("go-next-view","") );
   ui->tool_logout->setIcon( LXDG::findIcon("system-log-out","") );
 }
 
 LSysMenuQuick::~LSysMenuQuick(){
-	
+
 }
 
 void LSysMenuQuick::UpdateMenu(){
   ui->retranslateUi(this);
   //Audio Volume
-  int val = LOS::audioVolume();	
+  int val = LOS::audioVolume();
   QIcon ico;
   if(val > 66){ ico= LXDG::findIcon("audio-volume-high",""); }
   else if(val > 33){ ico= LXDG::findIcon("audio-volume-medium",""); }
@@ -69,7 +69,7 @@ void LSysMenuQuick::UpdateMenu(){
     ui->label_bright_text->setText(txt);
     if(ui->slider_brightness->value()!=val){ ui->slider_brightness->setValue(val); }
   }
-  
+
   //Do any one-time checks
   if(firstrun){
     hasBat = LOS::hasBattery(); //No need to check this more than once - will not change in the middle of a session
@@ -87,7 +87,7 @@ void LSysMenuQuick::UpdateMenu(){
     }
     ui->group_locale->setVisible(locales.length() > 1);
   }
-  
+
   //Battery Status
   if(hasBat){
     ui->group_battery->setVisible(true);
@@ -141,7 +141,7 @@ void LSysMenuQuick::brightSliderChanged(){
   //Brightness controls cannot operate extremely quickly - combine calls as necessary
   if(brighttimer->isActive()){ brighttimer->stop(); }
   brighttimer->start();
-  //*DO* update the label right away
+  // *DO* update the label right away
   int val = ui->slider_brightness->value();
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
@@ -153,7 +153,7 @@ void LSysMenuQuick::setCurrentBrightness(){
   LOS::setScreenBrightness(val);
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
-  ui->label_bright_text->setText( txt );	
+  ui->label_bright_text->setText( txt );
 }
 
 void LSysMenuQuick::nextWorkspace(){
