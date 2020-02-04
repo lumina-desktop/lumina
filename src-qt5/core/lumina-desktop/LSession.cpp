@@ -495,8 +495,8 @@ void LSession::updateDesktops(){
   QList<QScreen*>::const_iterator it;
   int i = 0;
   for(it = screens.constBegin(); it != screens.constEnd(); ++it, ++i) {
-    screenRect = screenRect.united((*it)->availableGeometry());
-    qDebug() << " -- Screen["+QString::number(i)+"]:" << (*it)->availableGeometry();
+    screenRect = screenRect.united((*it)->geometry());
+    qDebug() << " -- Screen["+QString::number(i)+"]:" << (*it)->geometry();
   }
 
   bool firstrun = (DESKTOPS.length()==0);
@@ -529,7 +529,7 @@ void LSession::updateDesktops(){
   QList<int> dnums; //keep track of which screens are already managed
   QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(screens.at(i)->availableGeometry())) {
+    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(screens.at(i)->geometry())) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
@@ -541,7 +541,7 @@ void LSession::updateDesktops(){
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
 	dnums << DESKTOPS[i]->Screen();
-	geoms << screens.at(i)->availableGeometry();
+	geoms << screens.at(i)->geometry();
       }
   }
 
@@ -550,11 +550,11 @@ void LSession::updateDesktops(){
   QList<QScreen*> scrns = QApplication::screens();
   for(int i=0; i<sC; i++){
     allNames << scrns.at(i)->name();
-    if(!dnums.contains(i) && !geoms.contains(screens.at(i)->availableGeometry()) ){
+    if(!dnums.contains(i) && !geoms.contains(screens.at(i)->geometry()) ){
       //Start the desktop on this screen
       qDebug() << " - Start desktop on screen:" << i;
       DESKTOPS << new LDesktop(i);
-      geoms << screens.at(i)->availableGeometry();
+      geoms << screens.at(i)->geometry();
     }
   }
   dset.setValue("last_used_screens", allNames);
@@ -608,7 +608,7 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   QRect desk;
   QList<QScreen *> screens = QGuiApplication::screens();
   for(int i=0; i<DESKTOPS.length(); i++){
-    if( screens.at(i)->availableGeometry().contains(geom.center()) ){
+    if( screens.at(i)->geometry().contains(geom.center()) ){
       //Window is on this screen
       if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
       desk = DESKTOPS[i]->availableScreenGeom();
@@ -784,7 +784,7 @@ void LSession::RootSizeChange(){
   QList<QScreen*> screens = QGuiApplication::screens();
   QList<QScreen*>::const_iterator it;
   for(it = screens.constBegin(); it != screens.constEnd(); ++it) {
-    tmp = tmp.united( (*it)->availableGeometry() );
+    tmp = tmp.united( (*it)->geometry() );
   }
   if(tmp == screenRect){ return; } //false event - session size did not change
   qDebug() << "Got Root Size Change";
