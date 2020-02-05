@@ -7,6 +7,10 @@ StartupNotify=true
 Categories=System;
 OnlyShowIn=Lumina;
 Name=Desktop Information
+Name[pt]=Informações do ambiente de trabalho
 GenericName=Version and Legal Information
+GenericName[pt]=Versão e informações legais
 Comment=View information about the Lumina Desktop Environment
+Comment[pt]=Ver informações sobre Lumina Desktop Environment
+
 

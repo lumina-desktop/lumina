@@ -6,7 +6,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation>Clique para atribuir um aplicativo</translation>
+        <translation>Clique para atribuir uma aplicação</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="42"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
         <source>Select Application</source>
-        <translation>Selecionar Aplicativo</translation>
+        <translation>Selecionar aplicação</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="67"/>
@@ -35,57 +35,57 @@
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="63"/>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="117"/>
         <source>Click to Set</source>
-        <translation>Clique para Definir</translation>
+        <translation>Clique para definir</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="74"/>
         <source>Launch %1</source>
-        <translation type="unfinished">Iniciar %1</translation>
+        <translation>Iniciar %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="135"/>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="137"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir com</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="140"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver propriedades</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="142"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operações de ficheiro</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="144"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar nome</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="147"/>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="150"/>
         <source>Cut</source>
-        <translation type="unfinished">Cortar</translation>
+        <translation>Cortar</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="152"/>
         <source>Delete</source>
-        <translation type="unfinished">Excluir</translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
         <source>Select Application</source>
-        <translation>Selecionar Aplicativo </translation>
+        <translation>Selecionar aplicação</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="214"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="300"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo nome</translation>
     </message>
 </context>
 <context>
@@ -103,22 +103,22 @@
     <message>
         <location filename="../AppMenu.cpp" line="48"/>
         <source>Desktop</source>
-        <translation type="unfinished">Área de Trabalho</translation>
+        <translation>Área de trabalho</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="85"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerir aplicações</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="90"/>
         <source>Control Panel</source>
-        <translation>Painel de Controle</translation>
+        <translation>Painel de controlo</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="100"/>
         <source>Multimedia</source>
-        <translation>Multimídia</translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="101"/>
@@ -168,22 +168,22 @@
     <message>
         <location filename="../AppMenu.cpp" line="110"/>
         <source>Utility</source>
-        <translation>Utilitário</translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="111"/>
         <source>Wine</source>
-        <translation>Vinho</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="112"/>
         <source>Unsorted</source>
-        <translation>Sem ordem</translation>
+        <translation>Sem grupo</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="41"/>
         <source>Applications</source>
-        <translation>Aplicativos</translation>
+        <translation>Aplicações</translation>
     </message>
 </context>
 <context>
@@ -196,12 +196,12 @@
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>A iniciar Lumina Desktop...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="41"/>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="49"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina Desktop consegue, facilmente, reproduzir o aspeto de qualquer um dos ambientes de trabalho mais conhecidos.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="51"/>
@@ -246,7 +246,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="57"/>
         <source>Everything has its beauty but not everyone sees it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos temos a nossa beleza mas algumas pessoas não a percebem.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="59"/>
@@ -276,12 +276,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="69"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>O dever não é coletivo mas sim pessoal.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="71"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualquer sociedade que dispensa de um pouco da sua liberdade para ganhar segurança não merece nenhuma e perde ambas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="73"/>
@@ -311,7 +311,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="83"/>
         <source>A person who never made a mistake never tried anything new.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alguém que nunca cometeu um erro é alguém que não tenta coisas novas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="85"/>
@@ -361,12 +361,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="103"/>
         <source>Do, or do not. There is no &apos;try&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Faça ou não faça. Não existe &apos;tentar&apos;.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="105"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um matemático é um dispositivo para transformar café em teoremas.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="107"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="111"/>
         <source>It&apos;s kind of fun to do the impossible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não deixa de ser engraçado fazer o impossível.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="113"/>
@@ -436,52 +436,52 @@
     <message>
         <location filename="../BootSplash.cpp" line="142"/>
         <source>Initializing Session …</source>
-        <translation type="unfinished"></translation>
+        <translation>A iniciar sessão...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="145"/>
         <source>Loading System Settings …</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar definições do sistema...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="148"/>
         <source>Loading User Preferences …</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar preferências do utilizador...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="151"/>
         <source>Preparing System Tray …</source>
-        <translation type="unfinished"></translation>
+        <translation>A preparar bandeja...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="154"/>
         <source>Starting Window Manager …</source>
-        <translation type="unfinished"></translation>
+        <translation>A iniciar gestor de janelas...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="157"/>
         <source>Detecting Applications …</source>
-        <translation type="unfinished"></translation>
+        <translation>A detetar aplicações...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="160"/>
         <source>Preparing Menus …</source>
-        <translation type="unfinished"></translation>
+        <translation>A preparar menus...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="163"/>
         <source>Preparing Workspace …</source>
-        <translation type="unfinished"></translation>
+        <translation>A preparar área de trabalho...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="166"/>
         <source>Finalizing …</source>
-        <translation type="unfinished"></translation>
+        <translation>A finalizar...</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="169"/>
         <source>Starting App: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A iniciar: %1</translation>
     </message>
 </context>
 <context>
@@ -504,17 +504,17 @@
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="33"/>
         <source>Increase Icons</source>
-        <translation>Aumentar Ícones</translation>
+        <translation>Aumentar ícones</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="34"/>
         <source>Decrease Icons</source>
-        <translation>Diminuir Ícones</translation>
+        <translation>Diminuir ícones</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="36"/>
         <source>Delete</source>
-        <translation>Excluir</translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="39"/>
@@ -527,32 +527,32 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="44"/>
         <source>Go Back</source>
-        <translation type="unfinished">Voltar</translation>
+        <translation>Recuar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
         <source>Pin to Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixar na área de trabalho</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="195"/>
         <source>Remove from Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover dos favoritos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="199"/>
         <source>Add to Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar aos favoritos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="204"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover de Início rápido</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="208"/>
         <source>Add to Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar a Início rápido</translation>
     </message>
 </context>
 <context>
@@ -560,7 +560,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro ao processar o script: %1</translation>
     </message>
 </context>
 <context>
@@ -573,92 +573,92 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="38"/>
         <source>Applications</source>
-        <translation type="unfinished">Aplicativos</translation>
+        <translation>Aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar ficheiros</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
-        <translation type="unfinished">Instalar Aplicativos</translation>
+        <translation>Instalar aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Painel de controlo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimídia</translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
-        <translation type="unfinished">Desenvolvimento</translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
-        <translation type="unfinished">Educação</translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
-        <translation type="unfinished">Jogos</translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
-        <translation type="unfinished">Gráficos</translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
-        <translation type="unfinished">Rede</translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
-        <translation type="unfinished">Escritório</translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
-        <translation type="unfinished">Ciência</translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
-        <translation type="unfinished">Definições</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
-        <translation type="unfinished">Sistema</translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
-        <translation type="unfinished">Utilitário</translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
-        <translation type="unfinished">Vinho</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
-        <translation type="unfinished">Sem ordem</translation>
+        <translation>Sem grupo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
 </context>
 <context>
@@ -666,12 +666,12 @@
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="98"/>
         <source>%1 % (Charging)</source>
-        <translation>%1 % (Carregando)</translation>
+        <translation>%1 % (a carregar)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="99"/>
         <source>%1 % (%2 Remaining)</source>
-        <translation>%1 % (%2 Restantes)</translation>
+        <translation>%1 % (restam %2)</translation>
     </message>
 </context>
 <context>
@@ -679,12 +679,12 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuso horário (%1)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizar horário do sistema</translation>
     </message>
 </context>
 <context>
@@ -692,32 +692,32 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar item</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Start Moving Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar movimentação de itens</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Start Resizing Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar redimensionamento de itens</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Increase Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Aumentar tamanho dos itens</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="49"/>
         <source>Decrease Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuir tamanho dos itens</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="51"/>
         <source>Remove Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover item</translation>
     </message>
 </context>
 <context>
@@ -725,12 +725,12 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
-        <translation>Aplicativos Favoritos</translation>
+        <translation>Aplicações favoritas</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
-        <translation>Pastas Favoritas</translation>
+        <translation>Pastas favoritas</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
@@ -745,12 +745,12 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
-        <translation>Fotos</translation>
+        <translation>Imagens</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
-        <translation>Outros Arquivos</translation>
+        <translation>Outros ficheiros</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
@@ -760,7 +760,7 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
-        <translation>Arquivos Favoritos</translation>
+        <translation>Ficheiros favoritos</translation>
     </message>
 </context>
 <context>
@@ -768,39 +768,39 @@
     <message>
         <location filename="../LDesktop.cpp" line="214"/>
         <source>Window List</source>
-        <translation>Lista de Janelas</translation>
+        <translation>Lista de janelas</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="255"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ações de área de trabalho</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <location filename="../LDesktop.cpp" line="636"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova pasta</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="258"/>
         <location filename="../LDesktop.cpp" line="656"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo ficheiro</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="291"/>
         <source>Lumina Desktop</source>
-        <translation>Área de Trabalho Lumina</translation>
+        <translation>Ambiente de trabalho Lumina</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="292"/>
         <source>Workspace %1</source>
-        <translation>Espaço de trabalho %1</translation>
+        <translation>Área de trabalho %1</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="302"/>
@@ -810,24 +810,24 @@
     <message>
         <location filename="../LDesktop.cpp" line="303"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloquear sessão</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="304"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar ficheiros</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="338"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="642"/>
         <location filename="../LDesktop.cpp" line="662"/>
         <location filename="../LDesktop.cpp" line="683"/>
         <source>Desktop</source>
-        <translation type="unfinished">Área de Trabalho</translation>
+        <translation>Ambiente de trabalho</translation>
     </message>
 </context>
 <context>
@@ -835,13 +835,13 @@
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
         <source>Workspace 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Área de trabalho 1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
-        <translation>Espaço de trabalho %1</translation>
+        <translation>Área de trabalho %1</translation>
     </message>
 </context>
 <context>
@@ -849,7 +849,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover de Início rápido</translation>
     </message>
 </context>
 <context>
@@ -858,7 +858,7 @@
         <location filename="../LSession.cpp" line="166"/>
         <location filename="../LSession.cpp" line="355"/>
         <source>Desktop</source>
-        <translation type="unfinished">Área de Trabalho</translation>
+        <translation>Ambiente de trabalho</translation>
     </message>
 </context>
 <context>
@@ -866,7 +866,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/LSysDashboard.cpp" line="43"/>
         <source>System Dashboard</source>
-        <translation>Painel de Instrumentos do Sistema</translation>
+        <translation>Painel do sistema</translation>
     </message>
 </context>
 <context>
@@ -879,32 +879,32 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation>Executar Áudio Mixer</translation>
+        <translation>Iniciar gestor de som</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
         <source>Screen Brightness</source>
-        <translation>Brilho da Tela</translation>
+        <translation>Brilho do ecrã</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="231"/>
         <source>Battery Status</source>
-        <translation>Status da Bateria</translation>
+        <translation>Estado da bateria</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="296"/>
         <source>Workspace</source>
-        <translation>Área de Trabalho</translation>
+        <translation>Área de trabalho</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="344"/>
         <source>Locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="378"/>
@@ -929,42 +929,42 @@
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="148"/>
         <source>Activate Window</source>
-        <translation>Ativar a Janela</translation>
+        <translation>Ativar janela</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="151"/>
         <source>Minimize Window</source>
-        <translation>Minimizar Janela</translation>
+        <translation>Minimizar janela</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="153"/>
         <source>Restore Window</source>
-        <translation>Restaurar a Janela</translation>
+        <translation>Restaurar janela</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="155"/>
         <source>Maximize Window</source>
-        <translation>Maximizar Janela</translation>
+        <translation>Maximizar janela</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="158"/>
         <source>Close Window</source>
-        <translation>Fechar Janela</translation>
+        <translation>Fechar janela</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="161"/>
         <source>Show All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar todas as janelas</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Minimize All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizar todas as janelas</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
         <source>Close All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar todas as janelas</translation>
     </message>
 </context>
 <context>
@@ -972,7 +972,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/LUserButton.cpp" line="41"/>
         <source>Quickly launch applications or open files</source>
-        <translation>Iniciar rapidamente os aplicativos ou abrir os arquivos </translation>
+        <translation>Iniciar aplicações ou abrir ficheiros</translation>
     </message>
 </context>
 <context>
@@ -985,30 +985,30 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="36"/>
         <source>Summary</source>
-        <translation>Sumário</translation>
+        <translation>Resumo</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="20"/>
         <source>CPU Temp:</source>
-        <translation>CPU Temp:</translation>
+        <translation>Temperatura do CPU:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="21"/>
         <source>CPU Usage:</source>
-        <translation>Utilização da CPU:</translation>
+        <translation>Utilização do CPU:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="22"/>
         <source>Mem Usage:</source>
-        <translation>Utilização da Memória:</translation>
+        <translation>Utilização de memória:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="85"/>
         <source>Disk I/O</source>
-        <translation type="unfinished"></translation>
+        <translation>E/S de disco</translation>
     </message>
 </context>
 <context>
@@ -1016,52 +1016,52 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Note Files (*.note)</source>
-        <translation>Arquivos de Anotações (*.anotações)</translation>
+        <translation>Ficheiros de notas (*.note)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Text Files (*)</source>
-        <translation>Arquivos de Texto (*)</translation>
+        <translation>Ficheiros de texto (*)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="101"/>
         <source>Open a note file</source>
-        <translation>Abrir um arquivo de notas </translation>
+        <translation>Abrir um ficheiro de notas</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Name:</source>
-        <translation type="unfinished">Nome:</translation>
+        <translation>Nome:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="140"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome inválido: tente novamente</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="141"/>
         <source>Select a Note Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecione o nome da nota</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="168"/>
         <source>Open Text File</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir ficheiro de texto</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="169"/>
         <source>Create a Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar uma nota</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="172"/>
         <source>Rename Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Mudar nome da nota</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="173"/>
         <source>Delete Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar nota</translation>
     </message>
 </context>
 <context>
@@ -1069,57 +1069,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulário</translation>
+        <translation>Formulário</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished">Limpar lista de reprodução</translation>
+        <translation>Limpar lista de reprodução</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished">Embaralhar a Lista de Reprodução</translation>
+        <translation>Misturar lista de reprodução</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished">Adicionar Arquivos</translation>
+        <translation>Adicionar ficheiros</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished">Adicionar Diretório</translation>
+        <translation>Adicionar diretório</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished">Adicionar URL</translation>
+        <translation>Adicionar URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished">Arquivos Multimídia</translation>
+        <translation>Ficheiros multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished">Selecionar Arquivos Multimídia</translation>
+        <translation>Selecione os ficheiros multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished">Selecionar Diretório Multimídia </translation>
+        <translation>Selecione o diretório multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished">Digite uma URL válida para um arquivo multimídia ou stream:</translation>
+        <translation>Digite o URL válido para um ficheiro multimédia ou fluxo web:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished">URL Multimídia </translation>
+        <translation>URL multimédia</translation>
     </message>
 </context>
 <context>
@@ -1137,17 +1137,17 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation>Embaralhar a Lista de Reprodução</translation>
+        <translation>Misturar lista de reprodução</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation>Adicionar Arquivos</translation>
+        <translation>Adicionar ficheiros</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation>Adicionar Diretório</translation>
+        <translation>Adicionar diretório</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="74"/>
@@ -1157,27 +1157,27 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation>Arquivos Multimídia</translation>
+        <translation>Ficheiros multimédia</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation>Selecionar Arquivos Multimídia</translation>
+        <translation>Selecione os ficheiros multimédia</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation>Selecionar Diretório Multimídia </translation>
+        <translation>Selecione o diretório multimédia</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Digite uma URL válida para um arquivo multimídia ou stream:</translation>
+        <translation>Digite o URL válido para um ficheiro multimédia ou fluxo web:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation>URL Multimídia </translation>
+        <translation>URL multimédia</translation>
     </message>
 </context>
 <context>
@@ -1185,155 +1185,155 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulário</translation>
+        <translation>Formulário</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções de visualização</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir site</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Mais</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="154"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="245"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="391"/>
         <source>Back to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuar para Fontes</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="172"/>
         <source>Feed Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informação da fonte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="212"/>
         <source>Remove Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover fonte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="263"/>
         <source>New Feed Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova subscrição</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation type="unfinished"></translation>
+        <translation>RSS URL</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
         <source>Load a preset RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>A«Carregar uma fonte RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
         <source>Add to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar às fontes</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="409"/>
         <source>Feed Reader Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições do leitor de fontes</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="430"/>
         <source>Manual Sync Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Apenas sincronização manual</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Algumas fontes podem precisar intervalos personalizados e não utilizam esta definição</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Intervalo entre sincronizações</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="483"/>
         <source>Hour(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hora(s)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="478"/>
         <source>Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Minuto(s)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="522"/>
         <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar definições</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="70"/>
         <source>Add RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar fonte RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
         <source>View Feed Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver detalhes da fonte</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="72"/>
         <source>Settings</source>
-        <translation type="unfinished">Definições</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="74"/>
         <source>Update Feeds Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizar agora</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina Desktop RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="145"/>
         <source>Feed URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>URL da fonte: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="146"/>
         <source>Title: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Título: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Description: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Descrição: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
         <source>Website: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Site: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
         <source>Last Build Date: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Útima compilação: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="150"/>
         <source>Last Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Última sincronização: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="151"/>
         <source>Next Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Próxima sincronização: %1</translation>
     </message>
 </context>
 <context>
@@ -1341,37 +1341,37 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation>Protetor De Tela</translation>
+        <translation>Proteção de ecrã</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferências</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papel de parede</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibição</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas as definições</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="54"/>
         <source>Control Panel</source>
-        <translation>Painel de Controle</translation>
+        <translation>Painel de controlo</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="59"/>
         <source>About Lumina</source>
-        <translation>Sobre Lumina</translation>
+        <translation>Acerca de Lumina Desktop</translation>
     </message>
 </context>
 <context>
@@ -1379,134 +1379,134 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulário</translation>
+        <translation>Formulário</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="38"/>
         <source>Type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>Digite para pesquisar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="171"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar ficheiros</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Painel de controlo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerir aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
         <source>Show Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar categorias</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurar ambiente de trabalho</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">Suspender</translation>
+        <translation>Suspender</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">Reiniciar</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Update and Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizar e reiniciar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
         <source>(System Preparing Updates)</source>
-        <translation type="unfinished"></translation>
+        <translation>(A preparar atualizações)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
-        <translation type="unfinished">Sair</translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferências</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1150"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Recuar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar atualizações?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="290"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Existem atualizações para o seu sistema! Instalar agora?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="291"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="292"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Não</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="477"/>
         <source>%1% (Plugged In)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1% (conectado)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="481"/>
         <source>%1% (%2 Estimated)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % (%2 estimado)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="482"/>
         <source>%1% Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Restam %1%</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="498"/>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="667"/>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="678"/>
         <source>Workspace %1/%2</source>
-        <translation type="unfinished">Espaço de trabalho %1/%2</translation>
+        <translation>Área de trabalho %1/%2</translation>
     </message>
 </context>
 <context>
@@ -1514,7 +1514,7 @@
     <message>
         <location filename="../SystemWindow.ui" line="14"/>
         <source>System Options</source>
-        <translation>Opções do Sistema</translation>
+        <translation>Opções do sistema</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="68"/>
@@ -1529,17 +1529,17 @@
     <message>
         <location filename="../SystemWindow.ui" line="100"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Desligar</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="145"/>
         <source>Update Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizar agora</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="167"/>
         <source>Updates ready to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Existem atualizações</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="205"/>
@@ -1560,22 +1560,22 @@
     <message>
         <location filename="../SystemWindow.cpp" line="60"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar atualizações?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="60"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Existem atualizações para o seu sistema! Instalar agora?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Não</translation>
     </message>
 </context>
 <context>
@@ -1583,22 +1583,22 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"/>
         <source>Go Back</source>
-        <translation>Voltar</translation>
+        <translation>Recuar</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="134"/>
         <source>Remove Shortcut</source>
-        <translation>Remover Atalho</translation>
+        <translation>Remover atalho</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="139"/>
         <source>Delete File</source>
-        <translation>Excluir Arquivo </translation>
+        <translation>Apagar ficheiro</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="145"/>
         <source>Create Shortcut</source>
-        <translation>Criar Atalho</translation>
+        <translation>Criar atalho</translation>
     </message>
 </context>
 <context>
@@ -1606,7 +1606,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>Widget do Usuário</translation>
+        <translation>Widget</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1617,18 +1617,18 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="65"/>
         <source>Favorite Applications</source>
-        <translation>Aplicativos Favoritos</translation>
+        <translation>Aplicações favoritas</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="68"/>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="187"/>
         <source>Applications</source>
-        <translation>Aplicativos</translation>
+        <translation>Aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="102"/>
         <source>Favorite Directories</source>
-        <translation>Diretórios Favoritos</translation>
+        <translation>Diretórios favoritos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="105"/>
@@ -1638,43 +1638,43 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="139"/>
         <source>Favorite FIles</source>
-        <translation>Arquivos Favoritos</translation>
+        <translation>Ficheiros favoritos</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="142"/>
         <source>Files</source>
-        <translation>Arquivos</translation>
+        <translation>Ficheiros</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="184"/>
         <source>Apps</source>
-        <translation>Aplicativos</translation>
+        <translation>Aplicações</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation>Página Inicial</translation>
+        <translation>Pasta pessoal</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation>Diretório Inicial</translation>
+        <translation>Diretório da pasta epessoal</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>
         <source>Search this Directory</source>
-        <translation>Pesquisar esse Diretório</translation>
+        <translation>Pesquisar neste diretório</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translation>Voltar para o diretório inicial</translation>
+        <translation>Voltar para a pasta pessoal</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
         <source>Open Directory</source>
-        <translation>Abrir Diretório</translation>
+        <translation>Abrir diretório</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="458"/>
@@ -1684,32 +1684,32 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation>Preferências da área de trabalho</translation>
+        <translation>Preferências do ambiente de trabalho</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
         <source>Control Panel</source>
-        <translation>Painel do Controle</translation>
+        <translation>Painel de controlo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation>Aparência/Plugins da Área de Trabalho</translation>
+        <translation>Aparência/Plugins</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
         <source>Screen Configuration</source>
-        <translation>Configuração da Tela</translation>
+        <translation>Configuração do ecrã</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
         <source>Screensaver Settings</source>
-        <translation>Configurações do Protetor de Tela</translation>
+        <translation>Definições da proteção de ecrã</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation>Sobre a Área de Trabalho Lumina</translation>
+        <translation>Acerca de Lumina Desktop</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
@@ -1719,7 +1719,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="290"/>
         <source>Multimedia</source>
-        <translation>Multimídia</translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="291"/>
@@ -1774,12 +1774,12 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
         <source>Wine</source>
-        <translation>Vinho</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
-        <translation>Sem ordem</translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 <context>
@@ -1787,67 +1787,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimídia</translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished">Desenvolvimento</translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished">Educação</translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished">Jogos</translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished">Gráficos</translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished">Rede</translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished">Escritório</translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished">Ciência</translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished">Definições</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished">Sistema</translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished">Utilitário</translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished">Vinho</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished">Sem ordem</translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 </TS>
