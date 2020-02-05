@@ -6,7 +6,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
-        <translation>Abrir Com..</translation>
+        <translation>Abrir com...</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="68"/>
@@ -26,22 +26,22 @@
     <message>
         <location filename="../LFileDialog.ui" line="131"/>
         <source>Binary Location</source>
-        <translation>Localização do Binário:</translation>
+        <translation>Localização do binário</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
         <source>Find</source>
-        <translation>Procurar</translation>
+        <translation>Localizar</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
         <source>Set this application as the default </source>
-        <translation>Definir essa aplicação como padrão</translation>
+        <translation>Definir esta aplicação como padrão </translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="221"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceitar</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="235"/>
@@ -51,12 +51,12 @@
     <message>
         <location filename="../LFileDialog.cpp" line="40"/>
         <source>(Email Link)</source>
-        <translation>(Link de E-mail)</translation>
+        <translation>(Ligação de e-mail)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Internet URL - %1)</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="114"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="119"/>
         <source>Game</source>
-        <translation>Jogo</translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="120"/>
@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[padrão] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -144,44 +144,44 @@
     <message>
         <location filename="../main.cpp" line="54"/>
         <source>File Error</source>
-        <translation>Erro no Arquivo</translation>
+        <translation>Erro no ficheiro</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="199"/>
         <location filename="../main.cpp" line="213"/>
         <source>Audio Volume %1%</source>
-        <translation>Volume do Som %1%</translation>
+        <translation>Volume de áudio %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="221"/>
         <location filename="../main.cpp" line="230"/>
         <source>Screen Brightness %1%</source>
-        <translation>Brilho da Tela %1%</translation>
+        <translation>Brilho do ecrã %1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="262"/>
         <source>Invalid file or URL: %1</source>
-        <translation>Arquivo ou URL Inválidos: %1</translation>
+        <translation>Ficheiro ou URL inválido: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="283"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrada de aplicação inválida: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="294"/>
         <source>Application shortcut is missing the launching information (malformed shortcut): %1</source>
-        <translation>Está faltando a informação do lançamento do atalho do aplicativo  (atalho mal informado): 1%</translation>
+        <translation>O atalho da aplicação não existe nas informações de arranque (atalho mal formado): %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="307"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>Está faltando a URL do atalhos da URL: %1 </translation>
+        <translation>Falta o atalho do URL: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="318"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>Está faltando o caminho para o diretório do atalho do diretório&quot; %1</translation>
+        <translation>O atalho de diretório não existe no caminho do diretório: %1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="323"/>
@@ -191,17 +191,17 @@
     <message>
         <location filename="../main.cpp" line="386"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível encontrar &quot;%1&quot;. Verifique se está instalado.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="435"/>
         <source>Application Error</source>
-        <translation>Erro no Aplicativo</translation>
+        <translation>Erro na aplicação</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="435"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>O seguinte aplicativo encontrou um erro e teve que ser fechado:</translation>
+        <translation>Ocorreu um erro e a aplicação seguinte teve de ser fechada:</translation>
     </message>
 </context>
 <context>
@@ -209,67 +209,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimédia</translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished">Desenvolvimento</translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished">Educação</translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished">Gráficos</translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished">Rede</translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished">Escritório</translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished">Ciência</translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished">Definições</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished">Sistema</translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 </TS>
