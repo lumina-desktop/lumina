@@ -200,8 +200,7 @@ void LOS::systemSuspend(){
 bool LOS::hasBattery(){
   QString my_status = LUtils::getCmdOutput("acpi -b").join("");
   bool no_battery = my_status.contains("No support");
-  if (no_battery) return false;
-  return true;
+  return !no_battery;
 }
 
 //Battery Charge Level
