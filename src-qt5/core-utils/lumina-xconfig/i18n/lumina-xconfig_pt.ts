@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="pt">
 <context>
     <name>XDGDesktopList</name>
     <message>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 </TS>
