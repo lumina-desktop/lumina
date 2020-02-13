@@ -6,4 +6,6 @@ Type=Application
 StartupNotify=true
 Categories=Utility;
 Name=Lumina Search
+Name[pt]=Pesquisa Lumina
 Comment=Search for files or applications
+Comment[pt]=Pesquisar ficheiros e aplicações

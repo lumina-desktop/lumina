@@ -6,5 +6,7 @@ Type=Application
 StartupNotify=true
 Categories=Settings;
 Name=Desktop Configuration
+Name[pt]=Configurar ambiente de trabalho
 Comment=Modify the desktop
+Comment[pt]=Modificar ambiente de trabalho
 OnlyShowIn=Lumina;

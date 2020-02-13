@@ -6,12 +6,12 @@
     <message>
         <location filename="../ConfigUI.ui" line="14"/>
         <source>Search Configuration</source>
-        <translation>Configuração da Pesquisa</translation>
+        <translation>Configuração da pesquisa</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="20"/>
         <source>Start Search:</source>
-        <translation>Iniciar Pesquisa: </translation>
+        <translation>Iniciar pesquisa:</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="39"/>
@@ -21,22 +21,22 @@
     <message>
         <location filename="../ConfigUI.ui" line="48"/>
         <source>Excluded Directories</source>
-        <translation>Diretórios Excluídos</translation>
+        <translation>Diretórios excluídos</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="119"/>
         <source>Save as Defaults</source>
-        <translation>Salvar como Padrões </translation>
+        <translation>Guardar como predefinição</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="41"/>
         <source>Select Search Directory</source>
-        <translation>Salvar Pesquisa de Diretório</translation>
+        <translation>Selecionar diretório de pesquisa</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="54"/>
         <source>Exclude Directories</source>
-        <translation>Excluir Diretórios</translation>
+        <translation>Excluir diretórios</translation>
     </message>
 </context>
 <context>
@@ -44,22 +44,22 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation>Pesquisar Por...</translation>
+        <translation>Pesquisar por...</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="23"/>
         <source>Type to search</source>
-        <translation>Escreva o que quer pesquisar</translation>
+        <translation>Digite para pesquisar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="30"/>
         <source>Configure search parameters</source>
-        <translation>Configurar parâmetros de pesquisa </translation>
+        <translation>Configurar parâmetros de pesquisa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
-        <translation>Parar a pesquisa atual</translation>
+        <translation>Parar pesquisa ativa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="54"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../MainUI.ui" line="64"/>
         <source>Files or Directories</source>
-        <translation>Ficheiros e Pastas</translation>
+        <translation>Ficheiros e diretórios</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="88"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../MainUI.ui" line="108"/>
         <source>Launch Item</source>
-        <translation>Lançar Item</translation>
+        <translation>Iniciar item</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="119"/>
@@ -90,7 +90,7 @@
         <location filename="../MainUI.ui" line="122"/>
         <location filename="../MainUI.ui" line="125"/>
         <source>Save Screenshot</source>
-        <translation>Guardar a Captura de Ecrã</translation>
+        <translation>Guardar captura de ecrã</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="128"/>
@@ -111,12 +111,12 @@
     <message>
         <location filename="../MainUI.ui" line="144"/>
         <source>Take new snapshot</source>
-        <translation>Criar nova imagem</translation>
+        <translation>Obter captura de ecrã</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="31"/>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="98"/>
@@ -144,12 +144,12 @@
     <message>
         <location filename="../Worker.cpp" line="64"/>
         <source>Starting Search: %1</source>
-        <translation>A iniciar Pesquisa: %1</translation>
+        <translation>A iniciar pesquisa: %1</translation>
     </message>
     <message>
         <location filename="../Worker.cpp" line="112"/>
         <source>Search Finished</source>
-        <translation>Pesquisa Terminada</translation>
+        <translation>Pesquisa terminada</translation>
     </message>
 </context>
 <context>
@@ -157,67 +157,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 </TS>

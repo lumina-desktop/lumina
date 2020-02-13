@@ -1114,7 +1114,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Digite o URL válido para um ficheiro multimédia ou fluxo web:</translation>
+        <translation>Digite um URL válido para um ficheiro multimédia ou fluxo web:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
@@ -1172,7 +1172,7 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation>Digite o URL válido para um ficheiro multimédia ou fluxo web:</translation>
+        <translation>Digite um URL válido para um ficheiro multimédia ou fluxo web:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
@@ -1232,7 +1232,7 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
         <source>Load a preset RSS Feed</source>
-        <translation>A«Carregar uma fonte RSS</translation>
+        <translation>Carregar uma fonte RSS</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
@@ -1659,7 +1659,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation>Diretório da pasta epessoal</translation>
+        <translation>Diretório da pasta pessoal</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>

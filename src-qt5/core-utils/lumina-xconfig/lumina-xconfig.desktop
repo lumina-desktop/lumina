@@ -6,4 +6,6 @@ Type=Application
 StartupNotify=true
 Categories=Settings;
 Name=Lumina Screen Configuration
+Name[pt]=Configuração de ecrã do Lumina
 Comment=Setup monitors and screens
+Comment[pt]=Configurar monitores e ecrãs
