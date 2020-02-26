@@ -7,3 +7,5 @@ StartupNotify=true
 Categories=Graphics;
 Name=Lumina Screenshot
 Comment=Take Screenshot
+Name[pt]=Captura de ecrã Lumina
+Comment[pt]=Obter capturas de ecrã

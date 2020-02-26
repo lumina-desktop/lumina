@@ -8,3 +8,5 @@ StartupNotify=true
 Categories=Utility;
 Name=Lumina File Information
 Comment=View or edit file information including application links
+Name[pt]=Informações de ficheiros do Lumina
+Comment[pt]=Ver e editar informações dos ficheiros
