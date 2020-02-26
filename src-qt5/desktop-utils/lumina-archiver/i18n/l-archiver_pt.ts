@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<TS version="2.1" language="pt">
 <context>
     <name>Backend</name>
     <message>
         <location filename="../TarBackend.cpp" line="243"/>
         <source>Could not read archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível ler o arquivo</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="245"/>
         <source>Archive Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo carregado</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="278"/>
         <source>Extraction Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Extração terminada</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="280"/>
         <source>Modification Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Alteração terminada</translation>
     </message>
 </context>
 <context>
@@ -29,312 +29,312 @@
     <message>
         <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
         <location filename="../MainUI.cpp" line="331"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="125"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="134"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="145"/>
         <source>&amp;Burn to Disk</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gravar para o disco</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquiv&amp;o</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Novo arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="194"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sair</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>
         <source>Add File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar ficheiro(s)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar ficheiros ao arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>Remove File(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover ficheiro(s)</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover seleção do arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="215"/>
         <source>Extract All</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrair tudo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Extract archive into a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrair arquivo para o diretório</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="223"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar diretório</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar diretório ao arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
         <source>Extract Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrair seleção</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="234"/>
         <source>Extract Selected Items</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrair itens selecionados</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="239"/>
         <source>USB Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagem USB</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar IMG para um dispositivo USB (pode ser necessária permissão de adminsitrador)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="28"/>
         <source>Archive Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestor de arquivos</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="29"/>
         <source>Admin Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de administrador</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="55"/>
         <source>CTRL+N</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+N</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="56"/>
         <source>CTRL+O</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+O</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="57"/>
         <source>CTRL+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="58"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+E</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
         <location filename="../MainUI.cpp" line="331"/>
         <source>MimeType</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo MIME</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
         <location filename="../MainUI.cpp" line="331"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="94"/>
         <location filename="../MainUI.cpp" line="236"/>
         <source>Opening Archive...</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="180"/>
         <source>All Types %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos os tipos %1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="181"/>
         <location filename="../MainUI.cpp" line="199"/>
         <source>Uncompressed Archive (*.tar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo sem compressão (*.tar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="182"/>
         <location filename="../MainUI.cpp" line="200"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo comprimido com GZip (*.tar.gz *.tgz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="183"/>
         <location filename="../MainUI.cpp" line="201"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo comprimido com BZip (*.tar.bz *.tbz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="184"/>
         <location filename="../MainUI.cpp" line="202"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo comprimido com BZip2 (*.tar.bz2 *.tbz2)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="185"/>
         <location filename="../MainUI.cpp" line="204"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo comprimido com LZMA (*.tar.lzma *.tlz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="186"/>
         <location filename="../MainUI.cpp" line="203"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo comprimido com XZ (*.tar.xz *.txz)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="187"/>
         <location filename="../MainUI.cpp" line="205"/>
         <source>CPIO Archive (*.cpio)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo CPIO (*.cpio)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="188"/>
         <location filename="../MainUI.cpp" line="206"/>
         <source>PAX Archive (*.pax)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo PAX (*.pax)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="189"/>
         <location filename="../MainUI.cpp" line="207"/>
         <source>AR Archive (*.ar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo AR (*.ar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="190"/>
         <location filename="../MainUI.cpp" line="208"/>
         <source>SHAR Archive (*.shar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo SHAR (*.shar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="191"/>
         <location filename="../MainUI.cpp" line="209"/>
         <source>Zip Archive (*.zip)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo Zip (*.zip)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="192"/>
         <location filename="../MainUI.cpp" line="210"/>
         <source>7-Zip Archive (*.7z)</source>
-        <translation type="unfinished"></translation>
+        <translation>Arquivo 7-Zip (*.7z)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="198"/>
         <source>All Known Types %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos os tipos conhecidos %1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="211"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
-        <translation type="unfinished"></translation>
+        <translation>APENAS LEITURA: imagem ISO (*.iso *.img)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="212"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
-        <translation type="unfinished"></translation>
+        <translation>APENAS LEITURA: arquivo XAR (*.xar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="213"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
-        <translation type="unfinished"></translation>
+        <translation>APENAS LEITURA: arquivo Java (*.jar)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="214"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>APENAS LEITURA: pacote RedHat (*.rpm)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="215"/>
         <source>Show All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar todos os ficheiros (*)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="223"/>
         <source>Create Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="226"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="226"/>
         <source>Could not overwrite file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível substituir o ficheiro:</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="234"/>
         <source>Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="242"/>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Add to Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar ao arquivo</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="244"/>
         <location filename="../MainUI.cpp" line="251"/>
         <location filename="../MainUI.cpp" line="300"/>
         <source>Adding Items...</source>
-        <translation type="unfinished"></translation>
+        <translation>A adicionar itens...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="262"/>
         <source>Removing Items...</source>
-        <translation type="unfinished"></translation>
+        <translation>A remover itens...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="267"/>
         <location filename="../MainUI.cpp" line="311"/>
         <source>Extract Into Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Extrair para diretório</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="269"/>
@@ -343,12 +343,12 @@
         <location filename="../MainUI.cpp" line="313"/>
         <location filename="../MainUI.cpp" line="325"/>
         <source>Extracting...</source>
-        <translation type="unfinished"></translation>
+        <translation>A extrair...</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="345"/>
         <source>Link To: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vínculo a: %1</translation>
     </message>
 </context>
 <context>
@@ -356,67 +356,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 <context>
@@ -424,127 +424,127 @@
     <message>
         <location filename="../imgDialog.ui" line="14"/>
         <source>Burn IMG to device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar IMG para o disco</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="29"/>
         <source>IMG File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiro IMG</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="54"/>
         <source>Block Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do bloco</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="84"/>
         <source>USB Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo USB</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="96"/>
         <source>Refresh Device List</source>
-        <translation type="unfinished"></translation>
+        <translation>Recarregar lista de dispositivos</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar todo o espaço livre no disco (conv = sync)</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
         <source>Burning to USB:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravação para USB:</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="166"/>
         <source>Time Elapsed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempo decorrido:</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="222"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="229"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="21"/>
         <source>Burn IMG to Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar IMG para o disco</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
         <source>Kilobyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilobyte(s)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="37"/>
         <source>Megabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Megabyte(s)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="38"/>
         <source>Gigabyte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gigabyte(s)</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Cancel Image Burn?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar gravação?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Do you wish to stop the current IMG burn process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem a certeza de que deseja para a gravação?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso: esta ação irá deixar o disco UBS num estado deficiente</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Administrator Permissions Needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Requer permissão de administrador</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>This operation requires administrator priviledges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta operação requer privilégios de administrador.</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
         <source>Would you like to enable these priviledges?</source>
-        <translation type="unfinished"></translation>
+        <translation>Gostaria de ativar estes privilégios?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>ERROR</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="175"/>
         <source>The process could not be completed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível concluir o processo:</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>SUCCESS</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucesso</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the USB device</source>
-        <translation type="unfinished"></translation>
+        <translation>A imagem foi escrita com sucesso</translation>
     </message>
 </context>
 </TS>

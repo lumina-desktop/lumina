@@ -8,3 +8,5 @@ Categories=Utility;
 MimeType=application/x-xz-compressed-tar;application/x-lzma-compressed-tar;application/x-bzip-compressed-tar;application/x-tar;application/x-compressed-tar;application/zip;application/gzip;application/bzip;application/x-cd-image;application/x-raw-disk-image;
 Name=Lumina Archiver
 Comment=Archive creator and viewer
+Name[pt]=Arquivador Lumina
+Comment[pt]=Aplicação para criar, editar e ver arquivos
