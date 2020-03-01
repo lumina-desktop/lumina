@@ -141,8 +141,8 @@ private slots:
     void sortModeName(bool);
     void sortModeSize(bool);
     void sortModeType(bool);
-   void sortModeDateM(bool);
-   void sortModeDateC(bool);
+    void sortModeDateM(bool);
+    void sortModeDateC(bool);
 
     //void groupModeChanged(bool);
     void on_actionLarger_Icons_triggered();
@@ -160,9 +160,9 @@ private slots:
     void prevTab(); //For keyboard shortcuts
 
     //Other Shortcuts
-   void on_widgetBack_triggered();
-   void on_widgetUp_triggered();
-   void togglehiddenfiles();
+    void on_widgetBack_triggered();
+    void on_widgetUp_triggered();
+    void togglehiddenfiles();
     //void toggleDirTreePane();
     void focusDirWidget();
 
