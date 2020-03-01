@@ -122,7 +122,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   //Setup any specialty keyboard shortcuts
   if(DEBUG){ qDebug() << " - Keyboard Shortcuts"; }
   widgetBack = new QShortcut(QKeySequence(Qt::ALT+Qt::Key_Left),this);
-#  widgetUp = new QShortcut(QKeySequence(Qt::ALT+Qt::Key_Up),this);
+  widgetUp = new QShortcut(QKeySequence(Qt::ALT+Qt::Key_Up),this);
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
@@ -302,7 +302,7 @@ void MainUI::setupConnections(){
 
   //Special Keyboard Shortcuts
   connect(widgetBack, SIGNAL(activated()), this, SLOT(on_widgetBack_triggered()) );
-#  connect(widgetUp, SIGNAL(activated()), this, SLOT(on_widgetUp_triggered()) );
+  connect(widgetUp, SIGNAL(activated()), this, SLOT(on_widgetUp_triggered()) );
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
