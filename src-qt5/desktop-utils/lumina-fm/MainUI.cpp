@@ -121,6 +121,8 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
 
   //Setup any specialty keyboard shortcuts
   if(DEBUG){ qDebug() << " - Keyboard Shortcuts"; }
+  widgetBack = new QShortcut(QKeySequence(Qt::ALT+Qt::Key_Left),this);
+#  widgetUp = new QShortcut(QKeySequence(Qt::ALT+Qt::Key_Up),this);
   nextTabLShort = new QShortcut( QKeySequence(tr("Shift+Left")), this);
   nextTabRShort = new QShortcut( QKeySequence(tr("Shift+Right")), this);
   togglehiddenfilesShort = new QShortcut( QKeySequence(tr("Ctrl+H")), this);
@@ -298,8 +300,9 @@ void MainUI::setupConnections(){
   connect(radio_sort_datemod, SIGNAL(toggled(bool)), this, SLOT(sortModeDateM(bool)) );
   connect(radio_sort_datecre, SIGNAL(toggled(bool)), this, SLOT(sortModeDateC(bool)) );
 
-
   //Special Keyboard Shortcuts
+  connect(widgetBack, SIGNAL(activated()), this, SLOT(on_widgetBack_triggered()) );
+#  connect(widgetUp, SIGNAL(activated()), this, SLOT(on_widgetUp_triggered()) );
   connect(nextTabLShort, SIGNAL(activated()), this, SLOT( prevTab() ) );
   connect(nextTabRShort, SIGNAL(activated()), this, SLOT( nextTab() ) );
   connect(togglehiddenfilesShort, SIGNAL(activated()), this, SLOT( togglehiddenfiles() ) );
@@ -526,6 +529,16 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
   //Re-load the current browsers
   for(int i=0; i<DWLIST.length(); i++){ DWLIST[i]->showHidden( ui->actionView_Hidden_Files->isChecked() ); }//DWLIST[i]->refresh(); }
 
+}
+
+void MainUI::on_widgetBack_triggered(){
+  DirWidget *cur = FindActiveBrowser();
+  if(cur!=0){ cur->on_actionBack_triggered();
+}
+
+void MainUI::on_widgetUp_triggered(){
+  DirWidget *cur = FindActiveBrowser();
+  if(cur!=0){ cur->on_actionUp_triggered();
 }
 
 void MainUI::on_actionVerify_File_Delete_triggered(){

@@ -93,7 +93,7 @@ private:
     bool waitingToClose;
 
     QSettings *settings;
-    QShortcut *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
+    QShortcut *widgetBack, *widgetUp, *nextTabLShort, *nextTabRShort, *togglehiddenfilesShort, *focusDirWidgetShort;
     //QShortcut *toggledirtreepaneShort;
     //QCompleter *dirCompleter;
 
@@ -160,7 +160,9 @@ private slots:
     void prevTab(); //For keyboard shortcuts
 
     //Other Shortcuts
-    void togglehiddenfiles();
+   void on_widgetBack_triggered();
+   void on_widgetUp_triggered();
+   void togglehiddenfiles();
     //void toggleDirTreePane();
     void focusDirWidget();
 
