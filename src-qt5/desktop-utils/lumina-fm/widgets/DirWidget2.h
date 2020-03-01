@@ -90,7 +90,7 @@ private:
     QMenu *contextMenu, *cNewMenu, *cOpenMenu, *cFModMenu, *cFViewMenu, *cOpenWithMenu, *cArchiveMenu;
 
     //The keyboard shortcuts for context menu items
-    QShortcut *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
+    QShortcut *kBack, *kZoomIn, *kZoomOut, *kNewFile, *kNewDir, *kNewXDG, *kCut, *kCopy, *kPaste, *kRename, \
         *kFav, *kDel, *kOpSS, *kOpMM, *kOpTerm, *kExtract, *kArchive;
 
     //Functions for internal use

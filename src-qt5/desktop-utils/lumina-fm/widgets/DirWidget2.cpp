@@ -243,6 +243,7 @@ void DirWidget::UpdateText(){
 //       PRIVATE
 // =================
 void DirWidget::createShortcuts(){
+  kBack= new QShortcut(QKeySequence(Qt::Key_Alt+Qt::Key_Left),this);
   kZoomIn= new QShortcut(QKeySequence(QKeySequence::ZoomIn),this);
   kZoomOut= new QShortcut(QKeySequence(QKeySequence::ZoomOut),this);
   kNewFile= new QShortcut(QKeySequence(Qt::CTRL+Qt::SHIFT+Qt::Key_F),this);
@@ -260,6 +261,7 @@ void DirWidget::createShortcuts(){
   kOpMM= new QShortcut(QKeySequence(Qt::Key_F7),this);
   kOpTerm = new QShortcut(QKeySequence(Qt::Key_F1),this);
 
+  connect(kBack, SIGNAL(Activated()), this, SLOT(on_actionBack_triggered()) );
   connect(kZoomIn, SIGNAL(activated()), this, SLOT(on_tool_zoom_in_clicked()) );
   connect(kZoomOut, SIGNAL(activated()), this, SLOT(on_tool_zoom_out_clicked()) );
   connect(kNewFile, SIGNAL(activated()), this, SLOT(createNewFile()) );
