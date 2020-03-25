@@ -100,7 +100,7 @@ void LSession::procFinished(){
     //Note about compton: It does not like running multiple sessions under the *same user*
     // (even on different displays). Run a blanket killall on it when closing down so that
     // any other Lumina sessions will automatically restart compton on that specific display
-    QProcess::execute("killall compton");
+    QProcess::execute("pkill compton"); //More OS's have pkill instead of killall
     QCoreApplication::exit(0);
   }else{
     //Make sure we restart the process as needed

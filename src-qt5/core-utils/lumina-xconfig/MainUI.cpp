@@ -414,7 +414,7 @@ void MainUI::SaveSettings(bool quiet){
 }
 
 void MainUI::RestartFluxbox(){
-  QProcess::startDetached("killall fluxbox");
+  QProcess::startDetached("pkill fluxbox");
 }
 
 void MainUI::removeProfile(){

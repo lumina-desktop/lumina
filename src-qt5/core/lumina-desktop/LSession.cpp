@@ -561,7 +561,7 @@ void LSession::updateDesktops(){
   //Make sure fluxbox also gets prompted to re-load screen config if the number of screens changes in the middle of a session
     if(!firstrun && xchange){
       qDebug() << "Update WM";
-      //QProcess::startDetached("killall fluxbox");
+      //QProcess::startDetached("pkill fluxbox");
       xchange = false;
     }
 
