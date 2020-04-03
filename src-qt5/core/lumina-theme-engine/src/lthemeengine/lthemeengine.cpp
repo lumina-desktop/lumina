@@ -194,6 +194,10 @@ bool lthemeengine::setCursorTheme(QString cursorname){
       else{ info << "[Icon Theme]" << newval; } //entire section missing from file
     }
     //Now save the file
+    if( !QFile::exists(QDir::homePath()+"/.icons/default") ){
+      //Need to create the directory first
+      QDir().mkpath(QDir::homePath()+"/.icons/default")
+    }
     QFile file(QDir::homePath()+"/.icons/default/index.theme");
     bool ok = false;
     if( file.open(QIODevice::WriteOnly | QIODevice::Truncate) ){
