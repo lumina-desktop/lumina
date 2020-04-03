@@ -25,7 +25,13 @@ The Lumina Desktop Environment is a lightweight system interface that is designe
 
 Supported operating systems include (but are not limited to):
  * BSD: TrueOS, FreeBSD, OpenBSD, NetBSD, DragonflyBSD, GNU/kFreeBSD
- * Linux: Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
+ * Linux: Void, Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
+
+Partial list of OS Distributions that provide the Lumina desktop out-of-box.
+
+*Please let us know if you know of other distributions to add to this list.*
+
+ * [Project Trident (Void Linux)](https://project-trident.org)
 
 
 Latest Versions <a name="latestversions"></a>
