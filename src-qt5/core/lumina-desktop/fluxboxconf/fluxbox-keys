@@ -144,3 +144,4 @@ Print   :Exec lumina-screenshot
 Mod1 Home   :Exec lumina-open -brightnessup
 Mod1 End   :Exec lumina-open -brightnessdown
 Pause  :Exec xscreensaver-command -lock
+Control Mod1 space :Exec lumina-pingcursor

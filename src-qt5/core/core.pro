@@ -8,6 +8,7 @@ SUBDIRS+= lumina-desktop \
 	lumina-session \
 	lumina-open \
 	lumina-info \
+	lumina-pingcursor \
 	$${PWD}/../../icon-theme \
 	lumina-theme-engine
 #	lumina-checkpass

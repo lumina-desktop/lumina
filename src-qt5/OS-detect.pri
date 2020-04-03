@@ -30,8 +30,7 @@ isEmpty(OS){
   QMAKE_LIBDIR =  $${PWD}/core/libLumina $$[QT_INSTALL_LIBS] $$LIBPREFIX/qt5 $$LIBPREFIX
 
   #Setup the default values for build settings (if not explicitly set previously)
-  isEmpty(PREFIX){ PREFIX=/usr/local }
-  isEmpty(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
+
   #message("General Settings: PREFIX=$${PREFIX}, LIBPREFIX=$${LIBPREFIX}")
   #Now go through and setup any known OS build settings
   #  which are different from the defaults
@@ -41,21 +40,25 @@ isEmpty(OS){
     LIBS += -L/usr/local/lib -L/usr/lib
 
   }else : freebsd-*{
+    isEmpty(PREFIX){ PREFIX=/usr/local }
     OS = FreeBSD
     LIBS += -L/usr/local/lib -L/usr/lib
      #Use the defaults for everything else
 
   }else : openbsd-*{
+    isEmpty(PREFIX){ PREFIX=/usr/local }
     OS = OpenBSD
     LIBS += -L/usr/local/lib -L/usr/lib
     #Use the defaults for everything else
 
   }else : netbsd-*{
+    isEmpty(PREFIX){ PREFIX=/usr/local }
     OS = NetBSD
     LIBS += -L/usr/local/lib -L/usr/lib
     #Use the defaults for everything else
 
   }else : linux-*{
+    isEmpty(PREFIX){ PREFIX=/usr }
     L_SESSDIR=/usr/share/xsessions
     OS=Linux
     LIBS += -L/usr/local/lib -L/usr/lib -L/lib
@@ -87,6 +90,7 @@ isEmpty(OS){
       isEmpty(L_MANDIR){ L_MANDIR = $${PREFIX}/share/man }
     }
   }else{
+    isEmpty(PREFIX){ PREFIX=/usr/local }
     OS="Unknown";
   }
 
@@ -96,6 +100,7 @@ isEmpty(OS){
 
   # Setup the dirs needed to find/load libraries
   INCLUDEPATH +=$${PREFIX}/include 
+  isEmpty(LIBPREFIX){ LIBPREFIX=$${PREFIX}/lib }
 
   # If the detailed install variables are not set - create them from the general vars
   isEmpty(L_BINDIR){ L_BINDIR = $${PREFIX}/bin }

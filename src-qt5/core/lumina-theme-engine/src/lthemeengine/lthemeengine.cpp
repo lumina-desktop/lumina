@@ -196,7 +196,7 @@ bool lthemeengine::setCursorTheme(QString cursorname){
     //Now save the file
     if( !QFile::exists(QDir::homePath()+"/.icons/default") ){
       //Need to create the directory first
-      QDir().mkpath(QDir::homePath()+"/.icons/default")
+      QDir().mkpath(QDir::homePath()+"/.icons/default");
     }
     QFile file(QDir::homePath()+"/.icons/default/index.theme");
     bool ok = false;
