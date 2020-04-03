@@ -11,6 +11,7 @@ https://lumina-desktop.org/
 **Lumina Project Info: Table of Contents**
 
 - [Description](#description)
+- [Operating Systems and Distributions](#osdistros)
 - [Latest Versions](#latestversions)
 - [Translations](#translations)
 - [How to file bug reports or feature requests](#filebugs)
@@ -23,13 +24,14 @@ Description <a name="description"></a>
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
+
+Operating Systems and Distributions <a name="osdistros"></a>
+----
 Supported operating systems include (but are not limited to):
  * BSD: TrueOS, FreeBSD, OpenBSD, NetBSD, DragonflyBSD, GNU/kFreeBSD
  * Linux: Void, Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
 
-Partial list of OS Distributions that provide the Lumina desktop out-of-box.
-
-*Please let us know if you know of other distributions to add to this list.*
+Known OS distributions that provide the Lumina desktop out-of-box:
 
  * [Project Trident (Void Linux)](https://project-trident.org)
 
