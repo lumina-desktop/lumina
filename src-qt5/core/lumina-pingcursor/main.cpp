@@ -13,6 +13,7 @@
 #include <QScreen>
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
+#include <QThread>
 
 int main(int argc, char **argv){
   //Setup the application
@@ -31,13 +32,13 @@ int main(int argc, char **argv){
   splash.setPixmap(QApplication::screens().at(0)->grabWindow(QApplication::desktop()->winId(), splash.x(), splash.y(), 100,100) );
   splash.show();
   QPropertyAnimation anim(&splash,"windowOpacity");
-  anim.setDuration(1500);
+  anim.setDuration(1200);
   anim.setStartValue(1);
   anim.setKeyValueAt(0.30, 0); anim.setKeyValueAt(0.31, 1);
   anim.setKeyValueAt(0.60, 0); anim.setKeyValueAt(0.61, 1);
   anim.setEndValue(0);
   anim.start();
-  while(anim.state() != QAbstractAnimation::Stopped){ App.processEvents(); }
+  while(anim.state() != QAbstractAnimation::Stopped){ QThread::msleep(20); App.processEvents(); } //60 fps
   splash.hide();
   return 0;
 }
