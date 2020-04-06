@@ -21,6 +21,7 @@ LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent)
   this->setFocusPolicy(Qt::NoFocus);
   this->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
   winMenu->setContextMenuPolicy(Qt::CustomContextMenu);
+  LWINLIST = 0;
   connect(this, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openActionMenu()) );
   connect(this, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   connect(winMenu, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openActionMenu()) );
@@ -84,8 +85,8 @@ LWinInfo LTaskButton::currentWindow(){
 
 void LTaskButton::UpdateButton(){
   if(winMenu->isVisible()){ return; } //skip this if the window menu is currently visible for now
-  bool statusOnly = (WINLIST.length() == LWINLIST.length());
-  LWINLIST = WINLIST;
+  bool statusOnly = (WINLIST.length() == LWINLIST);
+  LWINLIST = WINLIST.length();
 
   winMenu->clear();
   LXCB::WINDOWVISIBILITY showstate = LXCB::IGNORE;
@@ -95,7 +96,7 @@ void LTaskButton::UpdateButton(){
       i--;
       continue;
     }
-    if(i==0 && !statusOnly){
+    if(i==0 && (!statusOnly || noicon) ){
       //Update the button visuals from the first window
       this->setIcon(WINLIST[i].icon(noicon));
       cname = WINLIST[i].Class();
@@ -171,7 +172,7 @@ void LTaskButton::buttonClicked(){
   if(WINLIST.length() > 1){
     winMenu->popup(QCursor::pos());
   }else{
-    triggerWindow(); 
+    triggerWindow();
   }
 }
 
@@ -189,7 +190,7 @@ void LTaskButton::maximizeWindow(){
   LWinInfo win = currentWindow();
   LSession::handle()->XCB->MaximizeWindow(win.windowID());
   //LSession::handle()->adjustWindowGeom(win.windowID(), true); //run this for now until the WM works properly
-  cWin = LWinInfo(); //clear the current 
+  cWin = LWinInfo(); //clear the current
 }
 
 void LTaskButton::minimizeWindow(){
@@ -197,7 +198,7 @@ void LTaskButton::minimizeWindow(){
   if(winMenu->isVisible()){ winMenu->hide(); }
   LWinInfo win = currentWindow();
   LSession::handle()->XCB->MinimizeWindow(win.windowID());
-  cWin = LWinInfo(); //clear the current 
+  cWin = LWinInfo(); //clear the current
   QTimer::singleShot(100, this, SLOT(UpdateButton()) ); //make sure to update this button if losing active status
 }
 
@@ -244,7 +245,7 @@ void LTaskButton::winClicked(QAction* act){
   //Get the window from the action
   if(act->data().toInt() < WINLIST.length()){
     cWin = WINLIST[act->data().toInt()];
-    cstate = cWin.status(); 
+    cstate = cWin.status();
   }else{ cWin = LWinInfo(); } //clear it
   //Now trigger the window
   triggerWindow();

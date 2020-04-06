@@ -42,7 +42,7 @@ public:
 
 private:
 	QList<LWinInfo> WINLIST;
-	QList<LWinInfo> LWINLIST;
+	int LWINLIST;
 	QMenu *actMenu; // action menu (custom context menu)
 	QMenu *winMenu; // window menu (if more than 1)
 	LWinInfo cWin;

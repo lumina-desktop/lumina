@@ -30,15 +30,18 @@ QIcon LWinInfo::icon(bool &noicon){
   noicon = false;
   QIcon ico = LSession::handle()->XCB->WindowIcon(window);
   //Check for a null icon, and supply one if necessary
-  if(ico.isNull()){ ico = LXDG::findIcon( this->Class().toLower(),""); }
-  if(ico.isNull()){ico = LXDG::findIcon("preferences-system-windows",""); noicon=true;}
+  if(ico.isNull()){
+    QString cls = this->Class();
+    ico = LXDG::findIcon( cls, cls.toLower());
+  }
+  if(ico.isNull()){ico = LXDG::findIcon("window","preferences-system-windows"); noicon=true;}
   return ico;
 }
-	
+
 QString LWinInfo::Class(){
   return LSession::handle()->XCB->WindowClass(window);
 }
-	
+
 LXCB::WINDOWVISIBILITY LWinInfo::status(bool update){
   if(window==0){ return LXCB::IGNORE; }
   if(update || cstate == LXCB::IGNORE){
