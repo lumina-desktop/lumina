@@ -90,7 +90,7 @@ public:
 
 //XCB Library replacement for LX11 (Qt5 uses XCB instead of XLib)
 class LXCB{
-	
+
 public:
 	enum WINDOWVISIBILITY {IGNORE, INVISIBLE, VISIBLE, ACTIVE, ATTENTION}; //note that this in order of priority
 	enum ICCCM_STATE {WITHDRAWN, NORMAL, ICONIC};

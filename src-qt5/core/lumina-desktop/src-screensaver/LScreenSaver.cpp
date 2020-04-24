@@ -102,8 +102,8 @@ void LScreenSaver::checkInputEvents(){
     change = true;
   }
   //Check the last keyboard input timestamp
-  unsigned int timecode = LSession::instance()->XCB->WM_Get_User_Time( LSession::instance()->XCB->WM_Get_Active_Window() );
-  //unsigned int timecode = 0; //Not done yet - read the _NET_WM_USER_TIME number on the active window
+  //unsigned int timecode = WM_Get_User_Time( WM_Get_Active_Window() );
+  unsigned int timecode = 0; //Not done yet - read the _NET_WM_USER_TIME number on the active window
   if(timecode > lastTimeCode){
     lastTimeCode = timecode;
     change = true;
@@ -158,7 +158,7 @@ void LScreenSaver::ShowLockScreen(){
   if(DEBUG){ qDebug() << "Showing Lock Screen:" << QDateTime::currentDateTime().toString(); }
   LOCKER->aboutToShow();
   //Move the screen locker to the appropriate spot
-  QPoint ctr = QApplication::desktop()->screenGeometry(QCursor::pos()).center();
+  QPoint ctr = QApplication::screenAt(QCursor::pos())->geometry().center();
   LOCKER->resize(LOCKER->sizeHint());
   LOCKER->move(ctr - QPoint(LOCKER->width()/2, LOCKER->height()/2) );
   LOCKER->show();

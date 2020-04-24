@@ -21,7 +21,7 @@ public:
 	bool isLocked();
 
 private:
-	QTimer *starttimer, *locktimer, *hidetimer, *CheckTimer;
+	QTimer *starttimer, *locktimer, *hidetimer, *checkTimer;
 	QList<SSBaseWidget*> BASES;
 	LLockScreen *LOCKER;
 	QPoint lastMousePos;

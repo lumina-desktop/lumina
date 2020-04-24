@@ -67,6 +67,7 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
   currTranslator=0;
   mediaObj=0;
   sessionsettings=0;
+  ScreenSaver=0;
   //Setup the event filter for Qt5
   evFilter =  new XCBEventFilter(this);
   this->installNativeEventFilter( evFilter );
@@ -90,6 +91,7 @@ LSession::~LSession(){
   //delete WM;
   settingsmenu->deleteLater();
   appmenu->deleteLater();
+  if(ScreenSaver!=0){ ScreenSaver->deleteLater(); }
   delete currTranslator;
   if(mediaObj!=0){delete mediaObj;}
  }
@@ -238,6 +240,9 @@ void LSession::setupSession(){
   connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(watcherChange(QString)) );
   connect(this, SIGNAL(aboutToQuit()), this, SLOT(SessionEnding()) );
+  if(DEBUG){ qDebug() << " - Start screensaver:" << timer->elapsed(); }
+  ScreenSaver = new LScreenSaver();
+  ScreenSaver->start();
   //if(DEBUG){ qDebug() << " - Process Events (4x):" << timer->elapsed();}
   //for(int i=0; i<4; i++){ LSession::processEvents(); } //Again, just a few event loops here so thing can settle before we close the splash screen
   if(DEBUG){ qDebug() << " - Launch Startup Apps:" << timer->elapsed();}
@@ -717,6 +722,10 @@ QSettings* LSession::sessionSettings(){
 
 QSettings* LSession::DesktopPluginSettings(){
   return DPlugSettings;
+}
+
+LScreenSaver* LSession::screenSaver(){
+  return ScreenSaver;
 }
 
 WId LSession::activeWindow(){

@@ -45,6 +45,7 @@ public:
 	  }
 	  return QString::fromLocal8Bit(name,count);
 	}
+
 };
 
 #endif

@@ -1,8 +1,14 @@
 include($${PWD}/../../OS-detect.pri)
 
-QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets x11extras multimedia concurrent svg
-
+lessThan(QT_MAJOR_VERSION, 5) {
+  message("[ERROR] Qt 5.11+ is required to use the Lumina Desktop!")
+  exit
+}
+lessThan(QT_MINOR_VERSION, 11){
+  message("[ERROR] Qt 5.11+ is required to use the Lumina Desktop!")
+  exit
+}
+QT       += core gui network widgets x11extras multimedia multimediawidgets concurrent svg quick qml
 
 
 TARGET = lumina-desktop
@@ -17,6 +23,7 @@ include(../libLumina/LuminaSingleApplication.pri)
 include(../libLumina/LuminaThemes.pri)
 include(../libLumina/ExternalProcess.pri)
 include(../libLumina/LIconCache.pri)
+include(../libLumina/DesktopSettings.pri)
 
 TEMPLATE = app
 
@@ -37,6 +44,7 @@ SOURCES += main.cpp \
 
 
 HEADERS  += Globals.h \
+	global-includes.h \
 	WMProcess.h \
 	LXcbEventFilter.h \
 	LSession.h \
@@ -59,6 +67,10 @@ HEADERS  += Globals.h \
 FORMS    += SystemWindow.ui \
 	BootSplash.ui 
 
+
+#include the individual desktop components
+include(../../src-cpp/plugins-base.pri)
+include(src-screensaver/screensaver.pri)
 
 #Now include all the files for the various plugins
 include(panel-plugins/panel-plugins.pri)

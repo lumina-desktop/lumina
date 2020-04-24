@@ -7,7 +7,7 @@
 #ifndef _LUMINA_DESKTOP_LOCK_SCREEN_WIDGET_H
 #define _LUMINA_DESKTOP_LOCK_SCREEN_WIDGET_H
 
-#include "globals.h"
+#include "global-includes.h"
 
 namespace Ui{
 	class LLockScreen;
@@ -34,7 +34,7 @@ private:
 private slots:
 	void UpdateLockInfo();
 	void TryUnlock();
-	
+
 signals:
 	void ScreenUnlocked();
 	void InputDetected();
