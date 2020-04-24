@@ -55,6 +55,7 @@ private:
 	QString lastSaveContents;
 	QFileSystemWatcher *watcher;
 	QList<Word*> wordList;
+	QTimer *FTIMER;
 	//Syntax Highlighting class
 	Custom_Syntax *SYNTAX;
 	//Hunspell *hunspell;

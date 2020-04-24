@@ -34,13 +34,17 @@ PlainTextEditor::PlainTextEditor(QSettings *set, QWidget *parent) : QPlainTextEd
   //this->setObjectName("PlainTextEditor");
   //this->setStyleSheet("QPlainTextEdit#PlainTextEditor{ }");
   SYNTAX = new Custom_Syntax(settings, this->document());
+  FTIMER = new QTimer(this);
+    FTIMER->setInterval(1000);
+    FTIMER->setSingleShot(true);
   connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(LNW_updateWidth()) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(LNW_highlightLine()) );
   connect(this, SIGNAL(updateRequest(const QRect&, int)), this, SLOT(LNW_update(const QRect&, int)) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(checkMatchChar()) );
   connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(cursorMoved()) );
   connect(this, SIGNAL(textChanged()), this, SLOT(textChanged()) );
-  connect(watcher, SIGNAL(fileChanged(const QString&)), this, SLOT(fileChanged()) );
+  connect(watcher, SIGNAL(fileChanged(const QString&)), FTIMER, SLOT(start()) );
+  connect(FTIMER, SIGNAL(timeout()), this, SLOT(fileChanged()));
   LNW_updateWidth();
   LNW_highlightLine();
 }

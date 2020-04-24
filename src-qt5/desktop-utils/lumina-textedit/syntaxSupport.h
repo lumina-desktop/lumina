@@ -85,62 +85,42 @@ public:
   void setupDocument(QPlainTextEdit *edit){ syntax.SetupDocument(edit); } //simple redirect for the function in the currently-loaded rules
 
 protected:
+
   void highlightBlock(const QString &text){
+    QTextCharFormat defaultFormat;
           //qDebug() << "Highlight Block:" << text;
-    //Now look for any multi-line patterns (starting/continuing/ending)
+    //Now  finish any multi-line patterns
     int start = 0;
     int splitactive = previousBlockState();
     if(splitactive>syntax.rules.length()-1){ splitactive = -1; } //just in case
 
-    while(start>=0 && start<=text.length()-1){
-      //qDebug() << "split check:" << start << splitactive;
-      if(splitactive>=0){
-        //Find the end of the current rule
-        int end = syntax.rules[splitactive].endPattern.indexIn(text, start);
-        if(end==-1){
-                //qDebug() << "Highlight to end of line:" << text << start;
-          //rule did not finish - apply to all
-                if(start>0){ setFormat(start-1, text.length()-start+1, syntax.rules[splitactive].format); }
-                else{ setFormat(start, text.length()-start, syntax.rules[splitactive].format); }
-    break; //stop looking for more multi-line patterns
-        }else{
-    //Found end point within the same line
-                //qDebug() << "Highlight to particular point:" << text << start << end;
-    int len = end-start+syntax.rules[splitactive].endPattern.matchedLength();
-                if(start>0){ start--; len++; } //need to include the first character as well
-    setFormat(start, len , syntax.rules[splitactive].format);
-    start+=len; //move pointer to the end of handled range
-    splitactive = -1; //done with this rule
-        }
-      } //end check for end match
-      //Look for the start of any new split rules
-      //qDebug() << "Loop over multi-line rules";
-      for(int i=0; i<syntax.rules.length() && splitactive<0; i++){
-        //qDebug() << "Check Rule:" << i << syntax.rules[i].startPattern << syntax.rules[i].endPattern;
-              if(syntax.rules[i].startPattern.isEmpty()){ continue; }
-              //qDebug() << "Look for start of split rule:" << syntax.rules[i].startPattern << splitactive;
-        int newstart = syntax.rules[i].startPattern.indexIn(text,start);
-        if(newstart>=start){
-                //qDebug() << "Got Start of split rule:" << start << newstart << text;
-    splitactive = i;
-    start = newstart+1;
-                if(start>=text.length()-1){
-                  //qDebug() << "Special case: start now greater than line length";
-                  //Need to apply highlighting to this section too - start matches the end of the line
-                  setFormat(start-1, text.length()-start+1, syntax.rules[splitactive].format);
-                }
-        }
+    //qDebug() << "split check:" << start << splitactive;
+    if(splitactive>=0){
+      //Find the end of the current rule
+      int end = syntax.rules[splitactive].endPattern.indexIn(text, start);
+      if(end==-1){
+        //qDebug() << "Highlight to end of line:" << text << start;
+        //rule did not finish - apply to all
+        if(start>0){ setFormat(start-1, text.length()-start+1, syntax.rules[splitactive].format); }
+        else{ setFormat(start, text.length()-start, syntax.rules[splitactive].format); }
+      }else{
+        //Found end point within the same line
+        //qDebug() << "Highlight to particular point:" << text << start << end;
+        int len = end-start+syntax.rules[splitactive].endPattern.matchedLength();
+        if(start>0){ start--; len++; } //need to include the first character as well
+        setFormat(start, len , syntax.rules[splitactive].format);
+        start+=len; //move pointer to the end of handled range
+        splitactive = -1; //done with this rule
       }
-      if(splitactive<0){  break; } //no other rules found - go ahead and exit the loop
-          } //end scan over line length and multi-line formats
+    } //end check for end of pre-existing multi-line block match
+    setCurrentBlockState(splitactive); //tag this block as continuing as well
 
-    setCurrentBlockState(splitactive);
-          //Do all the single-line patterns
-    for(int i=0; i<syntax.rules.length(); i++){
-            if(syntax.rules[i].pattern.isEmpty()){ continue; } //not a single-line rule
+    //Do all the single-line patterns
+    for(int i=0; i<syntax.rules.length() && splitactive<0; i++){
+      if(syntax.rules[i].pattern.isEmpty()){ continue; } //not a single-line rule
       QRegExp patt(syntax.rules[i].pattern); //need a copy of the rule's pattern (will be changing it below)
       int index = patt.indexIn(text);
-            if(splitactive>=0 || index<start){ continue; } //skip this one - falls within a multi-line pattern above
+      if( index<start ){ continue; } //skip this one - falls within a multi-line pattern above
       while(index>=0){
         int len = patt.matchedLength();
         if(format(index)==currentBlock().charFormat()){ setFormat(index, len, syntax.rules[i].format); } //only apply highlighting if not within a section already
@@ -148,10 +128,37 @@ protected:
       }
     }//end loop over normal (single-line) patterns
 
+    //Look for the start of any new split rules
+    //qDebug() << "Loop over multi-line rules";
+    for(int i=0; i<syntax.rules.length() && splitactive<0; i++){
+      //qDebug() << "Check Rule:" << i << syntax.rules[i].startPattern << syntax.rules[i].endPattern;
+      if(syntax.rules[i].startPattern.isEmpty()){ continue; }
+      //qDebug() << "Look for start of split rule:" << syntax.rules[i].startPattern << splitactive;
+      int newstart = syntax.rules[i].startPattern.indexIn(text,start);
+      if(newstart>=start && (format(newstart) == defaultFormat) ){ //only start multi-line formatting if it is not already contained in a single-line formatting
+        //qDebug() << "Got Start of split rule:" << start << newstart << text << (format(newstart) != defaultFormat);
+        splitactive = i;
+        start = newstart+1;
+        int end = syntax.rules[splitactive].endPattern.indexIn(text, start);
+        if(end>0){ //end of multi-line comment in the same block
+          setFormat(start-1, end-start+1, syntax.rules[splitactive].format);
+          start = end+1;
+        }else{
+          setCurrentBlockState(splitactive);
+        }
+        if(start>=text.length()-1 || splitactive>=0){
+          //qDebug() << "Special case: start now greater than line length";
+          //Need to apply highlighting to this section too - start matches the end of the line
+          setFormat(start-1, text.length()-start+1, syntax.rules[splitactive].format);
+          break; //this goes to the end of the text block
+        }
+      }
+    }
+
     //Now go through and apply any document-wide formatting rules
-          QTextCharFormat fmt;
-          fmt.setBackground( QColor( settings->value("colors/bracket-missing").toString() ) );
-          int max = syntax.char_limit();
+    QTextCharFormat fmt;
+    fmt.setBackground( QColor( settings->value("colors/bracket-missing").toString() ) );
+    int max = syntax.char_limit();
     if(max >= 0 && ( (text.length()+(text.count("\t")*(syntax.tab_length()-1)) )> max) ) {
       //Line longer than it should be - highlight the offending characters
       //Need to be careful about where tabs show up in the line
@@ -159,7 +166,7 @@ protected:
       for(int i=0; i<text.length() and len<=max; i++){
         len += (text[i]=='\t') ? syntax.tab_length() : 1;
         if(len>max)
-          setFormat(i, text.length()-i, fmt); 
+          setFormat(i, text.length()-i, fmt);
       }
     }
     if(syntax.highlight_excess_whitespace()){

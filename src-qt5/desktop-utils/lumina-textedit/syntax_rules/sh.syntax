@@ -9,7 +9,7 @@
 	"meta": {
 		"name": "Shell",
 		"file_suffix": ["sh"],
-		"first_line_match":["#!/bin/sh", "#!/sbin/openrc-run"]
+		"first_line_match":["#!/bin/sh", "#!/bin/bash","#!/bin/env bash","#!/sbin/openrc-run"]
 	},
 	"format": {
 		"line_wrap": false,
