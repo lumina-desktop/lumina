@@ -10,8 +10,8 @@ SUBDIRS+= lumina-desktop \
 	lumina-info \
 	lumina-pingcursor \
 	$${PWD}/../../icon-theme \
-	lumina-theme-engine
-#	lumina-checkpass
+	lumina-theme-engine \
+	lumina-checkpass
 #	lumina-desktop-unified
 
 #Also install any special menu scripts

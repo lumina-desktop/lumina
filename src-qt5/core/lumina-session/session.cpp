@@ -196,12 +196,12 @@ void LSession::start(bool unified){
 	startProcess("wm", WM);
   }
   //Compositing manager
-  setupCompositor();
+  setupCompositor(true);
   //Desktop Next
   LSingleApplication::removeLocks("lumina-desktop");
   startProcess("runtime","lumina-desktop");
   //ScreenSaver
-  if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
+  //if(LUtils::isValidBinary("xscreensaver")){ startProcess("screensaver","xscreensaver -no-splash"); }
  }else{
   //unified process
   setupCompositor(true); //required for Lumina 2
