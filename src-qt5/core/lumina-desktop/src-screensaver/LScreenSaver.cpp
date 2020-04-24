@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QApplication>
 
+#include <LSession.h>
 #define DEBUG 0
 
 LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint){
@@ -102,14 +103,18 @@ void LScreenSaver::checkInputEvents(){
     change = true;
   }
   //Check the last keyboard input timestamp
-  //unsigned int timecode = WM_Get_User_Time( WM_Get_Active_Window() );
-  unsigned int timecode = 0; //Not done yet - read the _NET_WM_USER_TIME number on the active window
+  WId active = LSession::handle()->XCB->WM_Get_Active_Window();
+  if(active != lastActiveWindow){
+    lastActiveWindow = active;
+    change = true;
+  }
+  unsigned int timecode = LSession::handle()->XCB->WM_Get_User_Time(active);
   if(timecode > lastTimeCode){
     lastTimeCode = timecode;
     change = true;
   }
-  //If there was an input event detected, update timers and such
-  if(change){ newInputEvent(); }
+  //If there was an input event detected (or a window is currently full-screen), update timers and such
+  if(change || LSession::handle()->XCB->WindowIsFullscreen(active) ){ newInputEvent(); }
 }
 
 void LScreenSaver::ShowScreenSaver(){

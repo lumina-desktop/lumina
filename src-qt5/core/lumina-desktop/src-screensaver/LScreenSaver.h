@@ -26,6 +26,7 @@ private:
 	LLockScreen *LOCKER;
 	QPoint lastMousePos;
 	unsigned int lastTimeCode;
+	WId lastActiveWindow;
 	int cBright;
 	bool SSRunning, SSLocked, updating;
 

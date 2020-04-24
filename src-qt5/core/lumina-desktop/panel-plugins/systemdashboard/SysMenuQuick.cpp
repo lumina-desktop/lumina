@@ -92,22 +92,11 @@ void LSysMenuQuick::UpdateMenu(){
   if(hasBat){
     ui->group_battery->setVisible(true);
     val = LOS::batteryCharge();
-    if(LOS::batteryIsCharging()){
-      if(val < 15){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-low","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 30){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-caution","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 50){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-040","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 70){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-060","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 90){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging-080","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else{ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-charging","").pixmap(ui->label_bat_icon->maximumSize()) ); }
+    bool charging = LOS::batteryIsCharging();
+    ui->label_bat_icon->setPixmap( LXDG::findIcon(LSession::batteryIconName(val,charging), "").pixmap(ui->label_bat_icon->maximumSize()) );
+    if(charging){
       ui->label_bat_text->setText( QString("%1%\n(%2)").arg(QString::number(val), tr("connected")) );
     }else{
-      if(val < 1){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-missing","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 15){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-low","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 30){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-caution","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 50){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-040","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 70){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-060","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else if(val < 90){ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-080","").pixmap(ui->label_bat_icon->maximumSize()) ); }
-      else{ ui->label_bat_icon->setPixmap( LXDG::findIcon("battery-100","").pixmap(ui->label_bat_icon->maximumSize()) ); }
       ui->label_bat_text->setText( QString("%1%\n(%2)").arg(QString::number(val), getRemainingTime()) );
     }
   }else{

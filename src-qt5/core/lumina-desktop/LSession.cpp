@@ -164,8 +164,8 @@ void LSession::setupSession(){
     splash.showScreen("init");
   qDebug() << "Initializing Session";
   if(QFile::exists("/tmp/.luminastopping")){ QFile::remove("/tmp/.luminastopping"); }
-  QTime* timer = 0;
-  if(DEBUG){ timer = new QTime(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
+  QElapsedTimer* timer = 0;
+  if(DEBUG){ timer = new QElapsedTimer(); timer->start(); qDebug() << " - Init srand:" << timer->elapsed();}
 
   //Setup the QSettings default paths
     splash.showScreen("settings");
@@ -344,6 +344,8 @@ void LSession::NewCommunication(QStringList list){
       screensChanged();
     }else if(list[i]=="--show-start"){
       emit StartButtonActivated();
+    }else if(list[i]=="--lock"){
+      QTimer::singleShot(10, ScreenSaver, SLOT(LockScreenNow()) );
     }else if(list[i]=="--logout"){ QTimer::singleShot(1000, this, SLOT(StartLogout()));}
   }
 }
@@ -398,6 +400,10 @@ void LSession::StartReboot(bool skipupdates){
   CleanupSession();
   LOS::systemRestart(skipupdates);
   QCoreApplication::exit(0);
+}
+
+void LSession::LockScreen(){
+  QTimer::singleShot(10, ScreenSaver, SLOT(LockScreenNow()) );
 }
 
 void LSession::reloadIconTheme(){

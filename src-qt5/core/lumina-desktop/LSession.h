@@ -154,6 +154,7 @@ public slots:
 	void StartLogout();
 	void StartShutdown(bool skipupdates = false);
 	void StartReboot(bool skipupdates = false);
+	void LockScreen();
 
 	void reloadIconTheme();
 
