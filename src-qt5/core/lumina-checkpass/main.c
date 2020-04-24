@@ -22,7 +22,18 @@
 //PAM/security libraries
 #include <sys/types.h>
 #include <security/pam_appl.h>
-#include <security/openpam.h>
+
+//Found this little snippet from SDDM - nice alternative to using the entire openpam library from FreeBSD
+static int PAM_conv(
+	int num_msg,
+	const struct pam_message **msg,
+	struct pam_response **resp,
+	void *ctx)
+{
+	return 0;
+}
+//-----
+
 
 void showUsage(){
     puts("lumina-checkpass: Simple user-level check for password validity (for screen unlockers and such).");
@@ -74,12 +85,17 @@ int main(int argc, char** argv){
   if( getuid() != pwd->pw_uid ){ return 1; } //Current UID does not match currently logged-in user UID
   //Create the non-interactive PAM structures
   pam_handle_t *pamh;
-  struct pam_conv pamc = { openpam_nullconv, NULL };
+  struct pam_conv pamc = { &PAM_conv, 0 };
     //Place the user-supplied password into the structure
+#ifdef __linux__
     int ret = pam_start( "system", cUser, &pamc, &pamh);
-    if(ret != PAM_SUCCESS){ return 1; } //could not init PAM
+#else
+    int ret = pam_start( "system-auth", cUser, &pamc, &pamh);
+#endif
+    if(ret != PAM_SUCCESS){ puts("Could not initialize PAM"); return 1; } //could not init PAM
     //char* cPassword = argv[1];
     ret = pam_set_item(pamh, PAM_AUTHTOK, pass);
+    if(ret != PAM_SUCCESS){ puts("Could not set conversation structure"); }
     //Authenticate with PAM
     ret = pam_authenticate(pamh,0); //this can be true without verifying password if pam_self.so is used in the auth procedures (common)
     if( ret == PAM_SUCCESS ){ ret = pam_acct_mgmt(pamh,0); } //Check for valid, unexpired account and verify access restrictions
