@@ -34,7 +34,16 @@ Supported operating systems include (but are not limited to):
 Known OS distributions that provide the Lumina desktop out-of-box:
 
  * [Project Trident (Void Linux)](https://project-trident.org)
+ 
+Some operating systems package the Lumina desktop under the name `lumina` and some use `lumina-desktop`. 
 
+Operating system repos with a `lumina` package
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/lumina.svg)](https://repology.org/project/lumina/versions)
+
+Operating system repos with a `lumina-desktop` package
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/lumina-desktop.svg)](https://repology.org/project/lumina-desktop/versions)
 
 Latest Versions <a name="latestversions"></a>
 ----
