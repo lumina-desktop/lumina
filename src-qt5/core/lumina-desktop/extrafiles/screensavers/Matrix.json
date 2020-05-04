@@ -1,0 +1,26 @@
+{
+  "disabled" : true,
+  "name" : {
+    "default" : "Matrix"
+  },
+  "description" : {
+    "default" : "Erratic falling columns of various characters with a set color"
+  },
+  "author" : {
+    "name" : "Zackary Welch",
+    "email" : "zwelch@ixsystems.com",
+    "website" : "https://github.com/ZackaryWelch",
+    "company" : "iXsystems",
+    "company_website" : "http://ixsystems.com"
+  },
+  "meta" : {
+    "license" : "3-clause BSD",
+    "license_url" : "https://github.com/trueos/lumina/blob/master/LICENSE",
+    "copyright" : "Copyright (c) 2017, Ken Moore (ken@ixsystems.com)",
+    "date_created" : "20180103",
+    "version" : "1.0"
+  },
+  "qml" : {
+    "exec" : "qml_scripts/Matrix.qml"
+  }
+}

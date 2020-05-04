@@ -45,6 +45,7 @@ void LLockScreen::aboutToHide(){
   ui->line_password->clear();
   ui->line_password->clearFocus();
   if(refreshtime->isActive()){ refreshtime->stop(); }
+  ui->line_password->releaseKeyboard();
 }
 
 void LLockScreen::aboutToShow(){
@@ -59,6 +60,7 @@ void LLockScreen::aboutToShow(){
   UpdateLockInfo();
   ui->line_password->clear();
   ui->line_password->setFocus();
+  ui->line_password->grabKeyboard();
 }
 
 // =================
@@ -85,9 +87,10 @@ void LLockScreen::TryUnlock(){
     QTextStream in(TF);
     in << pass.toUtf8()+"\0"; //make sure it is null-terminated
     TF->close();
-    //qDebug() << "Trying to unlock session:" << TF->fileName() << LUtils::readFile(TF->fileName());
-    //qDebug() << "UserName:" << getlogin();
+    if(DEBUG){ qDebug() << "Trying to unlock session:" << getlogin(); }
     LUtils::runCommand(ok, "lumina-checkpass",QStringList() << "-f" << TF->fileName() );
+    if(DEBUG){ qDebug() << " - Success:" << ok; }
+    ok = true; //bypass for the moment
   }
   delete TF; //ensure the temporary file is removed **right now** for security purposes
   if(ok){

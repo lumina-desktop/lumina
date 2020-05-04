@@ -109,7 +109,8 @@ void LDesktop::UpdateGeometry(){
 }
 
 void LDesktop::SystemLock(){
-  QProcess::startDetached("xscreensaver-command -lock");
+  QTimer::singleShot(30,LSession::handle(), SLOT(LockScreen()) );
+  //QProcess::startDetached("xscreensaver-command -lock");
 }
 
 void LDesktop::SystemLogout(){

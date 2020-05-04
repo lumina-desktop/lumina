@@ -19,6 +19,7 @@ SSPlugin::~SSPlugin(){
 
 bool SSPlugin::isValid(){
   if(data.isEmpty()){ return false; }
+  if( data.value("disabled").toBool(false) ){ return false; } //Skip any plugin with "disabled" = true
   bool ok = data.contains("name") && data.contains("qml") && data.contains("description");
   ok &= containsDefault("name");
   ok &= containsDefault("description");

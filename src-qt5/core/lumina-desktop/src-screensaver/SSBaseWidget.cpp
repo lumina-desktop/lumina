@@ -10,7 +10,7 @@
 //Relative directory to search along the XDG paths for screensavers
 #define REL_DIR QString("/lumina-desktop/screensavers")
 
-#define DEBUG 0
+#define DEBUG 1
 
 // ========
 //   PUBLIC

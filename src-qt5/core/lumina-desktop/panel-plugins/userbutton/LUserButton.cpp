@@ -23,7 +23,7 @@ LUserButtonPlugin::LUserButtonPlugin(QWidget *parent, QString id, bool horizonta
   mact = new QWidgetAction(this);
     mact->setDefaultWidget(usermenu);
     menu->addAction(mact);
-	
+
   button->setMenu(menu);
   connect(menu, SIGNAL(aboutToHide()), this, SLOT(updateButtonVisuals()) );
   //Setup the global shortcut handling for opening the start menu

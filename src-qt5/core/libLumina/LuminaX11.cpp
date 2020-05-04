@@ -462,12 +462,12 @@ int LXCB::WindowIsFullscreen(WId win){
   int i = 0;
   for(it = screens.constBegin(); it != screens.constEnd(); ++it, ++i) {
       QRect sgeom = (*it)->availableGeometry();
-      qDebug() << " -- Check Window Geom:" << sgeom << geom << this->WindowClass(win);
+      //qDebug() << " -- Check Window Geom:" << sgeom << geom << this->WindowClass(win);
       if( sgeom.contains(geom.center()) ){
         //Allow a 1 pixel variation in "full-screen" detection
-        qDebug() << " -- Found Screen:" << i;
+        //qDebug() << " -- Found Screen:" << i;
         if( geom.width() >= (sgeom.width()-1) && geom.height()>=(sgeom.height()-1) ){
-          qDebug() << " -- Is Fullscreen!";
+          //qDebug() << " -- Is Fullscreen!";
           //fullS = true;
           fscreen = i;
         }

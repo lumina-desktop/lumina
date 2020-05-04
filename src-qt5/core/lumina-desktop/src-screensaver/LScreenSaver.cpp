@@ -27,7 +27,7 @@ LScreenSaver::LScreenSaver() : QWidget(0,Qt::BypassWindowManagerHint | Qt::Windo
 	LOCKER->hide();
   SSRunning = SSLocked = updating = false;
   this->setObjectName("LSCREENSAVERBASE");
-  this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: grey; }");
+  this->setStyleSheet("LScreenSaver#LSCREENSAVERBASE{ background: darkgrey; }");
   this->setMouseTracking(true);
   connect(starttimer, SIGNAL(timeout()), this, SLOT(ShowScreenSaver()) );
   connect(locktimer, SIGNAL(timeout()), this, SLOT(LockScreen()) );
@@ -51,7 +51,10 @@ void LScreenSaver::UpdateTimers(){
   if(locktimer->isActive()){ locktimer->stop(); }
   if(hidetimer->isActive()){ hidetimer->stop(); }
 
-  if(!SSRunning && !SSLocked && (starttimer->interval() > 1000) ){ starttimer->start(); }  //time to SS start
+  if(!SSRunning && !SSLocked && (starttimer->interval() > 1000) ){
+    //time to SS start
+    if(LSession::handle()->XCB->WindowIsFullscreen(LSession::handle()->XCB->WM_Get_Active_Window()) ){ starttimer->start();  } //do not start if current window is fullscreen (videos, movies, etc)
+  }
   else if( SSRunning && !SSLocked && (locktimer->interval() > 1000 ) ){ locktimer->start(); } //time to lock
   else if( !SSRunning && SSLocked ){ hidetimer->start(); } //time to hide lock screen
 }
@@ -114,11 +117,12 @@ void LScreenSaver::checkInputEvents(){
     change = true;
   }
   //If there was an input event detected (or a window is currently full-screen), update timers and such
-  if(change || LSession::handle()->XCB->WindowIsFullscreen(active) ){ newInputEvent(); }
+  if(change){ newInputEvent(); }
 }
 
 void LScreenSaver::ShowScreenSaver(){
   if(DEBUG){ qDebug() << "Showing Screen Saver:" << QDateTime::currentDateTime().toString(); }
+  checkInputEvents(); //update all the internal times to now
   //QApplication::setOverrideCursor(QCursor::BlankCursor);
   SSRunning = true;
   updating = true;
@@ -155,6 +159,7 @@ void LScreenSaver::ShowScreenSaver(){
     BASES[i]->show();
     BASES[i]->startPainting();
   }
+  this->grabKeyboard();
   updating = false;
   UpdateTimers();
 }
@@ -167,6 +172,7 @@ void LScreenSaver::ShowLockScreen(){
   LOCKER->resize(LOCKER->sizeHint());
   LOCKER->move(ctr - QPoint(LOCKER->width()/2, LOCKER->height()/2) );
   LOCKER->show();
+  LOCKER->activateWindow();
   //Start the timer for hiding the lock screen due to inactivity
   UpdateTimers();
 }
@@ -176,6 +182,7 @@ void LScreenSaver::HideScreenSaver(){
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
   //if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
+  this->releaseKeyboard();
   if(!SSLocked){
     this->hide();
     emit ClosingScreenSaver();

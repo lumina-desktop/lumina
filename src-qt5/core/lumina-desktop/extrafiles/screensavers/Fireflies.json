@@ -1,0 +1,26 @@
+{
+  "name" : {
+    "default" : "Fireflies"
+  },
+  "description" : {
+    "default" : "Dancing balls of light on the screen"
+  },
+  "author" : {
+    "name" : "Ken Moore",
+    "email" : "ken@ixsystems.com",
+    "website" : "https://github.com/beanpole135",
+    "company" : "iXsystems",
+    "company_website" : "http://ixsystems.com"
+  },
+  "meta" : {
+    "license" : "3-clause BSD",
+    "license_url" : "https://github.com/trueos/lumina/blob/master/LICENSE",
+    "copyright" : "Copyright (c) 2017, Ken Moore (ken@ixsystems.com)",
+    "date_created" : "20171010",
+    "version" : "1.0"
+  },
+  "qml" : {
+    "exec" : "qml_scripts/Fireflies.qml",
+    "additional_files" : ["qml_scripts/Firefly.qml"]
+  }
+}

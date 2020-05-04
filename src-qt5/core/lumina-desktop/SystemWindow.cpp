@@ -105,7 +105,8 @@ void SystemWindow::sysSuspend(){
   this->hide();
   LSession::processEvents();
   //Make sure to lock the system first (otherwise anybody can access it again)
-  LUtils::runCmd("xscreensaver-command -lock");
+  LSession::handle()->LockScreen();
+  //LUtils::runCmd("xscreensaver-command -lock");
   //Now suspend the system
   LOS::systemSuspend();
 }
@@ -114,5 +115,6 @@ void SystemWindow::sysLock(){
   this->hide();
   LSession::processEvents();
   qDebug() << "Locking the desktop...";
-  QProcess::startDetached("xscreensaver-command -lock");
+  QTimer::singleShot(30,LSession::handle(), SLOT(LockScreen()) );
+  //QProcess::startDetached("xscreensaver-command -lock");
 }

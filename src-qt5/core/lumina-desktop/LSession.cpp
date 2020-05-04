@@ -21,10 +21,7 @@
 #include <LIconCache.h>
 
 #include <unistd.h> //for usleep() usage
-
-#ifndef DEBUG
 #define DEBUG 0
-#endif
 
 XCBEventFilter *evFilter = 0;
 LIconCache *ICONS = 0;

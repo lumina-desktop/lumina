@@ -15,7 +15,7 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   if(parent!=0){ parent->setMouseTracking(true); }
   this->setMouseTracking(true);
   sysapps = LSession::handle()->applicationMenu()->currentAppHash(); //get the raw info
-  
+
   //Connect the signals/slots
   connect(ui->tool_desktopsettings, SIGNAL(clicked()), this, SLOT(openDeskSettings()) );
   connect(ui->tool_config_screensaver, SIGNAL(clicked()), this, SLOT(openScreenSaverConfig()) );
@@ -28,13 +28,13 @@ UserWidget::UserWidget(QWidget* parent) : QTabWidget(parent), ui(new Ui::UserWid
   connect(ui->tool_home_browse, SIGNAL(clicked()), this, SLOT(slotOpenDir()) );
   connect(ui->tool_home_search, SIGNAL(clicked()), this, SLOT(slotOpenSearch()) );
   connect(ui->tool_config_about, SIGNAL(clicked()), this, SLOT(openLuminaInfo()) );
-  
+
   //Setup the special buttons
   connect(ui->tool_app_store, SIGNAL(clicked()), this, SLOT(openStore()) );
   connect(ui->tool_controlpanel, SIGNAL(clicked()), this, SLOT(openControlPanel()) );
   //connect(ui->tool_qtconfig, SIGNAL(clicked()), this, SLOT(openQtConfig()) );
-  
-  lastUpdate = QDateTime(); //make sure it refreshes 
+
+  lastUpdate = QDateTime(); //make sure it refreshes
 
   connect(LSession::handle()->applicationMenu(), SIGNAL(AppMenuUpdated()), this, SLOT(UpdateMenu()) );
   connect(QApplication::instance(), SIGNAL(DesktopFilesChanged()), this, SLOT(updateFavItems()) );
@@ -68,7 +68,7 @@ void UserWidget::SortScrollArea(QScrollArea *area){
   for(int i=0; i<lay->count(); i++){
     items << lay->itemAt(i)->widget()->whatsThis().toLower();
   }
-  
+
   items.sort();
   //qDebug() << " - Sorted Items:" << items;
   for(int i=0; i<items.length(); i++){
@@ -84,7 +84,7 @@ void UserWidget::SortScrollArea(QScrollArea *area){
       }
     }
   }
-  
+
 }
 
 QIcon UserWidget::rotateIcon(QIcon ico){
@@ -119,13 +119,13 @@ void UserWidget::UpdateAll(){
   ui->tool_fav_dirs->setIcon( LXDG::findIcon("folder","") );
   ui->tool_fav_files->setIcon( LXDG::findIcon("document-multiple","") );
   ui->tool_desktopsettings->setIcon( LXDG::findIcon("preferences-desktop","") );
-  ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );	
+  ui->tool_config_screensaver->setIcon( LXDG::findIcon("preferences-desktop-screensaver","") );
   ui->tool_config_screensettings->setIcon( LXDG::findIcon("preferences-other","") );
   ui->tool_home_gohome->setIcon( LXDG::findIcon("go-home","") );
   ui->tool_home_browse->setIcon( LXDG::findIcon("document-open","") );
   ui->tool_home_search->setIcon( LXDG::findIcon("system-search","") );
   ui->tool_config_about->setIcon( LXDG::findIcon("lumina","") );
-  
+
   //Setup the special buttons
   QString APPSTORE = LOS::AppStoreShortcut();
   if(QFile::exists(APPSTORE) && !APPSTORE.isEmpty()){

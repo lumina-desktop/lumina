@@ -151,10 +151,16 @@ void LSession::setupCompositor(bool force){
   //Compositing manager
   QSettings settings("lumina-desktop","sessionsettings");
   if(settings.value("enableCompositing",false).toBool() || force){
-    if(LUtils::isValidBinary("compton")){
+    if(LUtils::isValidBinary("picom")){
+      //New name for compton - removed the "-d" startup option (finally reads DISPLAY instead) (May 2020)
+      //Always use the GLX backend for picom - the xrender and hybrid backends cause lots of flickering
+      startProcess("compositing","picom --backend glx --config "+set, QStringList() << set);
+
+    }else if(LUtils::isValidBinary("compton")){
       QString disp = getenv("DISPLAY");
       //Always use the GLX backend for compton - the xrender and hybrid backends cause lots of flickering
       startProcess("compositing","compton --backend glx -d "+disp+" --config "+set, QStringList() << set);
+
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){
       startProcess("compositing","xcompmgr");
     }

@@ -96,6 +96,9 @@ defaults.path = $${L_SHAREDIR}/lumina-desktop/
 
 conf.path = $${L_ETCDIR}
 
+extrafiles.path = $${L_SHAREDIR}/lumina-desktop
+extrafiles.files = extrafiles/*
+
 #Now do any OS-specific defaults (if available)
 #First see if there is a known OS override first
 !isEmpty(DEFAULT_SETTINGS){ 
@@ -185,7 +188,7 @@ dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INST
 manpage.path=$${L_MANDIR}/man1/
 manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
-INSTALLS += target desktop icons defaults conf fluxconf manpage
+INSTALLS += target desktop icons defaults conf fluxconf manpage extrafiles
 
 WITH_I18N{
   INSTALLS += dotrans

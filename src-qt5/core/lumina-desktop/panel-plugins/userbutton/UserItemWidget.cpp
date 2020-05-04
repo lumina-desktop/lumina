@@ -33,7 +33,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
       name->setText( tr("Go Back") );
     }else{
       icon->setPixmap( LXDG::findIcon("folder","").pixmap(32,32) );
-      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
+      name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
     }
   }else{
     actButton->setVisible(false);
@@ -46,7 +46,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
     }else{
       icon->setPixmap( LXDG::findMimeIcon(itemPath.section("/",-1)).pixmap(32,32) );
     }
-    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) ); 
+    name->setText( this->fontMetrics().elidedText(itemPath.section("/",-1), Qt::ElideRight, TEXTCUTOFF) );
   }
   icon->setWhatsThis(itemPath);
   if(!goback){ this->setWhatsThis(name->text()); }
@@ -77,7 +77,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(paren
   }
   //Now fill it appropriately
   icon->setPixmap( LXDG::findIcon(item->icon,"preferences-system-windows-actions").pixmap(32,32) );
-  name->setText( this->fontMetrics().elidedText(item->name, Qt::ElideRight, TEXTCUTOFF) ); 
+  name->setText( this->fontMetrics().elidedText(item->name, Qt::ElideRight, TEXTCUTOFF) );
   this->setWhatsThis(name->text());
   icon->setWhatsThis(item->filePath);
   //Now setup the buttons appropriately
@@ -85,7 +85,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(paren
   setupActions(item);
 }
 
-UserItemWidget::~UserItemWidget(){ 
+UserItemWidget::~UserItemWidget(){
   delete button;
   delete icon;
   delete name;
@@ -98,7 +98,7 @@ void UserItemWidget::createWidget(){
   menuopen = false;
   menureset = new QTimer(this);
     menureset->setSingleShot(true);
-    menureset->setInterval(1000); //1 second	
+    menureset->setInterval(1000); //1 second
   this->setContentsMargins(0,0,0,0);
   button = new QToolButton(this);
     button->setIconSize( QSize(14,14) );
@@ -125,7 +125,7 @@ void UserItemWidget::createWidget(){
 
 void UserItemWidget::setupButton(bool disable){
   //if(isDirectory){ qDebug() << "Directory Entry:" << isShortcut << linkPath << icon->whatsThis(); }
-	
+
   if(disable){
     button->setVisible(false);
   }else if(isShortcut && !linkPath.isEmpty()){ //Favorite Item - can always remove this
@@ -141,7 +141,7 @@ void UserItemWidget::setupButton(bool disable){
   }else if(!isShortcut){// if( !QFile::exists( QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1) ) && !LUtils::isFavorite(icon->whatsThis() ) ){
     //This file does not have a shortcut yet -- allow the user to add it
     button->setWhatsThis("add");
-    button->setIcon( LXDG::findIcon("bookmark-toolbar","") );    
+    button->setIcon( LXDG::findIcon("bookmark-toolbar","") );
     button->setToolTip(tr("Create Shortcut"));
     connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked()) );
   }else{
@@ -161,7 +161,7 @@ void UserItemWidget::setupActions(XDGDesktop *app){
     QAction *act = new QAction(LXDG::findIcon(app->actions[i].icon, app->icon), app->actions[i].name, this);
 	act->setToolTip(app->actions[i].ID);
         act->setWhatsThis(app->actions[i].ID);
-        actButton->menu()->addAction(act);	
+        actButton->menu()->addAction(act);
   }
   connect(actButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(actionClicked(QAction*)) );
   connect(actButton->menu(), SIGNAL(aboutToShow()), this, SLOT(actionMenuOpen()) );
@@ -171,22 +171,22 @@ void UserItemWidget::setupActions(XDGDesktop *app){
 
 void UserItemWidget::buttonClicked(){
   button->setVisible(false);
-  if(button->whatsThis()=="add"){ 
+  if(button->whatsThis()=="add"){
     LDesktopUtils::addFavorite(icon->whatsThis());
     //QFile::link(icon->whatsThis(), QDir::homePath()+"/.lumina/favorites/"+icon->whatsThis().section("/",-1) );
-    emit NewShortcut(); 
-  }else if(button->whatsThis()=="remove"){ 
-    if(linkPath.isEmpty()){ 
+    emit NewShortcut();
+  }else if(button->whatsThis()=="remove"){
+    if(linkPath.isEmpty()){
       //This is a desktop file
       if(isDirectory){
 	QProcess::startDetached("rm -r \""+icon->whatsThis()+"\"");
       }else{
-	QFile::remove(icon->whatsThis()); 
-      } 
+	QFile::remove(icon->whatsThis());
+      }
       //Don't emit the RemovedShortcut signal here - the automatic ~/Desktop watcher will see the change when finished
-    }else{ 
+    }else{
       LDesktopUtils::removeFavorite(icon->whatsThis()); //This is a favorite
-      emit RemovedShortcut(); 
+      emit RemovedShortcut();
     }
   }
 }

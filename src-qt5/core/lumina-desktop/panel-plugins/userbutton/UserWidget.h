@@ -24,8 +24,6 @@
 #include <LuminaOS.h>
 #include "UserItemWidget.h"
 
-#define SSAVER QString("xscreensaver-demo")
-
 namespace Ui{
 	class UserWidget;
 };
@@ -81,7 +79,8 @@ private slots:
 	  LaunchItem("lumina-config", false);
 	}
 	void openScreenSaverConfig(){
-	  LaunchItem(SSAVER, false);
+          LaunchItem("lumina-config",false);
+	  //LaunchItem(SSAVER, false);
 	}
 	void openScreenConfig(){
 	  LaunchItem("lumina-xconfig",false);
@@ -89,7 +88,7 @@ private slots:
 	void openLuminaInfo(){
 	  LaunchItem("lumina-info",false);
 	}
-	
+
 protected:
 	void mouseMoveEvent( QMouseEvent *event);
 
