@@ -84,8 +84,8 @@ int main(int argc, char ** argv)
       return 787; //return special restart code
     }*/
     //Setup the log file
-    QTime *timer=0;
-    if(DEBUG){ timer = new QTime(); timer->start(); }
+    QElapsedTimer *timer=0;
+    if(DEBUG){ timer = new QElapsedTimer(); timer->start(); }
     if(DEBUG){ qDebug() << "Session Setup:" << timer->elapsed(); }
     a.setupSession();
     if(DEBUG){ qDebug() << "Exec Time:" << timer->elapsed(); delete timer;}
