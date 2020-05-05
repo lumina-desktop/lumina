@@ -53,7 +53,9 @@ void LScreenSaver::UpdateTimers(){
 
   if(!SSRunning && !SSLocked && (starttimer->interval() > 1000) ){
     //time to SS start
-    if(LSession::handle()->XCB->WindowIsFullscreen(LSession::handle()->XCB->WM_Get_Active_Window()) ){ starttimer->start();  } //do not start if current window is fullscreen (videos, movies, etc)
+    WId active = LSession::handle()->XCB->WM_Get_Active_Window();
+    bool skip = (LSession::handle()->XCB->WindowName(active) != "Lumina Desktop Environment") && LSession::handle()->XCB->WindowIsFullscreen(active);
+    if(!skip){ starttimer->start();  } //do not start if current window is fullscreen (videos, movies, etc)
   }
   else if( SSRunning && !SSLocked && (locktimer->interval() > 1000 ) ){ locktimer->start(); } //time to lock
   else if( !SSRunning && SSLocked ){ hidetimer->start(); } //time to hide lock screen
