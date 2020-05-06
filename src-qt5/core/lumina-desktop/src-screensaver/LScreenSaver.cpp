@@ -66,6 +66,7 @@ void LScreenSaver::UpdateTimers(){
 // ===========
 void LScreenSaver::start(){
   reloadSettings(); //setup all the initial time frames
+  LSession::handle()->XCB->disableDPMS(); //disable this initially - this only gets turned on when the screensaver activates
   starttimer->start();
   checkTimer->start();
 }
@@ -128,6 +129,7 @@ void LScreenSaver::ShowScreenSaver(){
   //QApplication::setOverrideCursor(QCursor::BlankCursor);
   SSRunning = true;
   updating = true;
+  LSession::handle()->XCB->enableDPMS();
   //Now remove any current Base widgets (prevent any lingering painting between sessions)
   for(int i=0; i<BASES.length(); i++){
     if(DEBUG){ qDebug() << " - Removing SS Base"; }
@@ -183,6 +185,7 @@ void LScreenSaver::HideScreenSaver(){
   //QApplication::restoreOverrideCursor();
   if(DEBUG){ qDebug() << "Hiding Screen Saver:" << QDateTime::currentDateTime().toString(); }
   SSRunning = false;
+  LSession::handle()->XCB->disableDPMS();
   //if(cBright>0){ LOS::setScreenBrightness(cBright); } //return to current brightness
   this->releaseKeyboard();
   if(!SSLocked){

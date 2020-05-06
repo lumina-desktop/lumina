@@ -123,6 +123,9 @@ public:
 	bool CheckDisableXinerama(); //returns true if Xinerama was initially set but now disabled
 	void RegisterVirtualRoots(QList<WId> roots);
 	void SetCurrentWorkspace(int);
+	//Display Power Management System (DPMS)
+	void enableDPMS();
+	void disableDPMS();
 
 	//Window Information
 	QString WindowClass(WId);

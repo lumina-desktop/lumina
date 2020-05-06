@@ -27,6 +27,7 @@
 #include <xcb/xcb_aux.h>
 #include <xcb/composite.h>
 #include <xcb/damage.h>
+#include <xcb/dpms.h>
 
 //XLib includes
 #include <X11/extensions/Xdamage.h>
@@ -182,6 +183,17 @@ void LXCB::SetCurrentWorkspace(int number){
 
   //EWMH function (does not seem to be recognized by Fluxbox)
   xcb_ewmh_request_change_showing_desktop(&EWMH, QX11Info::appScreen(), number);
+}
+
+//Display Power Management System (DPMS)
+// ===== enableDPMS() =====
+void LXCB::enableDPMS(){
+  xcb_dpms_enable(QX11Info::connection());
+}
+
+// ===== disableDPMS() =====
+void LXCB::disableDPMS(){
+  xcb_dpms_disable(QX11Info::connection());
 }
 
 // === WindowClass() ===

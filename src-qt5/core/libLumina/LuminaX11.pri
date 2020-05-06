@@ -1,7 +1,7 @@
 
 QT *= x11extras
 
-LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lXdamage 
+LIBS *= -lc -lxcb -lxcb-ewmh -lxcb-icccm -lxcb-image -lxcb-composite -lxcb-damage -lxcb-util -lxcb-dpms -lXdamage 
 
 #LUtils Files
 SOURCES *= $${PWD}/LuminaX11.cpp
