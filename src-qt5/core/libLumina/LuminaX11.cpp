@@ -31,6 +31,7 @@
 
 //XLib includes
 #include <X11/extensions/Xdamage.h>
+#include <X11/Xproto.h>
 
 #define DEBUG 0
 
@@ -188,11 +189,13 @@ void LXCB::SetCurrentWorkspace(int number){
 //Display Power Management System (DPMS)
 // ===== enableDPMS() =====
 void LXCB::enableDPMS(){
+  XSetScreenSaver( QX11Info::display(), 600, 600, PreferBlanking, DontAllowExposures); //10 minutes - older pre-dpms protocol
   xcb_dpms_enable(QX11Info::connection());
 }
 
 // ===== disableDPMS() =====
 void LXCB::disableDPMS(){
+  XSetScreenSaver( QX11Info::display(), 0, 0, PreferBlanking, DontAllowExposures); //older pre-dpms protocol
   xcb_dpms_disable(QX11Info::connection());
 }
 
