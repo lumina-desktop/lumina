@@ -1,357 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<TS version="2.1" language="pt">
 <context>
     <name>MainUI</name>
     <message>
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Reprodutor multimédia</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation type="unfinished"></translation>
+        <translation>Em reprodução</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nenhum vídeo em reprodução)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de reprodução</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
         <source>up</source>
-        <translation type="unfinished"></translation>
+        <translation>Subir</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation type="unfinished"></translation>
+        <translation>Descer</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
         <source>Current Song</source>
-        <translation type="unfinished"></translation>
+        <translation>Faixa atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="303"/>
         <source>TITLE</source>
-        <translation type="unfinished"></translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="327"/>
         <source>ARTIST</source>
-        <translation type="unfinished"></translation>
+        <translation>Artista</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="337"/>
         <source>ALBUM</source>
-        <translation type="unfinished"></translation>
+        <translation>Álbum</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="368"/>
         <source>Love this song</source>
-        <translation type="unfinished"></translation>
+        <translation>Gosto desta faixa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="384"/>
         <source>Tired of this song (will not play for a month)</source>
-        <translation type="unfinished"></translation>
+        <translation>Estou farto desta faixa (não reproduzir durante 1 mês)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="397"/>
         <source>Ban this song (will never play again)</source>
-        <translation type="unfinished"></translation>
+        <translation>Banir faixa (não voltar a reproduzir)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="417"/>
         <source>View details about song (launches web browser)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver detalhes sobre a faixa (abre o navegador web)</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="448"/>
         <source>Current Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Estação atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="479"/>
         <source>Delete current station</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar estação atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation type="unfinished"></translation>
+        <translation>remover</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
         <source>Create new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar nova estação</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="495"/>
         <source>add</source>
-        <translation type="unfinished"></translation>
+        <translation>adicionar</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="512"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Credenciais Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
         <source>Email</source>
-        <translation type="unfinished"></translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="537"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Palavra-passe</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;Necessita de uma conta?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
         <source>Audio Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualidade de áudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="583"/>
         <source>Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL do proxy</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlar URL do proxy</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
         <source>Apply Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar definições</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="656"/>
         <source>Audio Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlador áudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="681"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="688"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="723"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="728"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="733"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Seguinte</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="743"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Anterior</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="748"/>
         <source>VolUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Aumentar</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="751"/>
         <source>Raise audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Aumenta o volume áudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="756"/>
         <source>VolDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuir</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="759"/>
         <source>Lower audio volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminui o volume áudio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="764"/>
         <source>Close Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar aplicação</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="767"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar para a bandeja se ativa</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="786"/>
         <source>From current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Do artista atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="789"/>
         <source>Create station from current artist</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar estação do artista atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="794"/>
         <source>From current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Da faixa atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="797"/>
         <source>Create station from current song</source>
-        <translation type="unfinished"></translation>
+        <translation>Criara estação da faixa atual</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="808"/>
         <source>Show song notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar notificações</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="813"/>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar...</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="816"/>
         <source>Search for a new station</source>
-        <translation type="unfinished"></translation>
+        <translation>Pesquisar por uma estação</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="276"/>
         <source>Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora Radio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir de Pandora Radio</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="839"/>
         <source>Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ficheiros locais</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="842"/>
         <source>Play Local Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir ficheiros locais</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Tem que instalar &apos;pianobar&apos; para ativar esta funcionalidade</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir músicas do serviço web Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixa</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="123"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Média</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="124"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Alta</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="358"/>
         <source>Open Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir ficheiros multimédia</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="406"/>
         <source>Now Playing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Em reprodução:</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="471"/>
         <source>[PLAYBACK ERROR]
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[Erro de reprodução]
+%1</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="488"/>
         <source>Media Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="490"/>
         <source>Media Stalled...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloqueada...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="492"/>
         <source>Media Buffering...</source>
-        <translation type="unfinished"></translation>
+        <translation>A processar...</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Pandora: Create Station</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora: Criar estação</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="576"/>
         <source>Search Term</source>
-        <translation type="unfinished"></translation>
+        <translation>Termo de pesquisa</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="654"/>
         <source>Pandora Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Pergunta Pandora</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="659"/>
         <source>Pandora Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro Pandora</translation>
     </message>
 </context>
 <context>
@@ -359,7 +360,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="358"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi encontrada qualquer ocorrência. Tente um termo de pesquisa diferente.</translation>
     </message>
 </context>
 <context>
@@ -367,67 +368,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimédia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenvolvimento</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Educação</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Gráficos</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Escritório</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciência</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilitários</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem grupo</translation>
     </message>
 </context>
 </TS>
