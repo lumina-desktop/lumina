@@ -88,7 +88,13 @@ void LSession::procFinished(){
           //if(PROCS[i]->exitCode()==787){ PROCS[i]->start(QIODevice::ReadOnly); } //special internal restart code
           //else{
           stopall(); //}
-        }else if(PROCS[i]->objectName()=="wm" && wmfails<2){ wmfails++; PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); } //restart the WM
+        }else if(PROCS[i]->objectName()=="wm" && wmfails<2){
+          wmfails++;
+          PROCS[i]->start(QIODevice::ReadOnly); wmTimer->start(); //restart the WM
+        }else if(PROCS[i]->objectName()=="compositing" && compfails<2){
+          compfails++;
+          PROCS[i]->start(QIODevice::ReadOnly); compTimer->start(); //restart the compositor
+        }
         //if(PROCS[i]->program().section("/",-1) == "lumina-desktop"){ stopall();  } //start closing down everything
         //else{ PROCS[i]->start(QIODevice::ReadOnly); } //restart the process
         //break;

@@ -25,10 +25,11 @@ private slots:
 	  //qDebug() << " - Program:" << this->program();
 	  if(watcher==0){ return; } //just in case
 	  if(this->state()==QProcess::Running){
-	    if(this->program().section(" ",0,0).section("/",-1) == "fluxbox" ){
+            QString prog = this->program().section(" ",0,0).section("/",-1);
+	    if( prog == "fluxbox" ){
              // qDebug() << "Sending Fluxbox signal to reload configs...";
               ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
-	    else if(this->program().section(" ",0,0).section("/",-1) == "compton" ){
+	    else if(prog == "compton" || prog == "picom" ){
               //qDebug() << "Sending Compton signal to reload configs...";
               ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
 	  }
@@ -61,8 +62,8 @@ class LSession : public QObject{
 private:
 	QList<QProcess*> PROCS;
 	bool stopping;
-	int wmfails;
-	QTimer *wmTimer;
+	int wmfails, compfails;
+	QTimer *wmTimer, *compTimer;
 
 	bool setupFluxboxFiles();
 	bool setupComptonFiles();
@@ -76,13 +77,18 @@ private slots:
 	void startProcess(QString ID, QString command, QStringList watchfiles = QStringList());
 
 	void resetWMCounter(){ wmfails = 0; }
+	void resetCompCounter(){ compfails = 0; }
 public:
 	LSession(){
-	stopping = false; wmfails = 0;
+	  stopping = false; wmfails = compfails = 0 ;
 	  wmTimer = new QTimer(this);
 	  wmTimer->setSingleShot(true);
 	  wmTimer->setInterval(2000); //2 second timeout
            connect(wmTimer, SIGNAL(timeout()), this, SLOT(resetWMCounter()) );
+	  compTimer = new QTimer(this);
+	  compTimer->setSingleShot(true);
+	  compTimer->setInterval(2000); //2 second timeout
+           connect(compTimer, SIGNAL(timeout()), this, SLOT(resetCompCounter()) );
 	}
 	~LSession(){ }
 
