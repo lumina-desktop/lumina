@@ -59,52 +59,52 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="257"/>
         <source>Name</source>
-        <translation type="unfinished">Ad</translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="258"/>
         <source>Size</source>
-        <translation type="unfinished">Boyut</translation>
+        <translation>Boyut</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="259"/>
         <source>Type</source>
-        <translation type="unfinished">Tür</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="260"/>
         <source>Date Modified</source>
-        <translation type="unfinished">Değiştirilme Tarihi</translation>
+        <translation>Değiştirilme Tarihi</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="261"/>
         <source>Date Created</source>
-        <translation type="unfinished">Oluşturulma Tarihi</translation>
+        <translation>Oluşturulma Tarihi</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="438"/>
         <source>Capacity: %1</source>
-        <translation type="unfinished">Kapasite: %1</translation>
+        <translation>Kapasite: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="463"/>
         <source>Files: %1 (%2)</source>
-        <translation type="unfinished">Dosyalar: %1 (%2)</translation>
+        <translation>Dosyalar: %1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="465"/>
         <source>Files: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyalar: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="471"/>
         <source>Dirs: %1</source>
-        <translation type="unfinished">Dizinler: %1</translation>
+        <translation>Dizinler: %1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="427"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizin İçeriği Yok</translation>
     </message>
 </context>
 <context>
@@ -117,17 +117,17 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="41"/>
         <source> * - FILE MANAGER RUNNING AS ROOT- * </source>
-        <translation type="unfinished"></translation>
+        <translation> * - KÖK OLARAK ÇALIŞAN DOSYA YÖNETİCİSİ- * </translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="182"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Boyutlarını Artırın</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="204"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge Boyutlarını Azaltın</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="228"/>
@@ -165,32 +165,32 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="267"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="270"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Eylemi Seç</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="278"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek Sütun</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="281"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek sütun görünümü</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="289"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Çift Sütun</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="292"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>Çift Sütun Görünümü</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="691"/>
@@ -235,27 +235,27 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="289"/>
         <source>Open Current Dir in a Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir Terminalde Aktif Dizini Aç</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="570"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya İşlemleri</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="607"/>
         <source>Directory Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizin İşlemleri</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="655"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="663"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Yükleniyor...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="721"/>
@@ -282,67 +282,67 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="279"/>
         <source>Create...</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluştur...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="281"/>
         <source>File</source>
-        <translation type="unfinished">Dosya</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="282"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizin</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="283"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama Başlatıcı</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="287"/>
         <source>Launch...</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlatıcı...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="290"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunum</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="291"/>
         <source>Multimedia Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Medya Oynatıcı</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="293"/>
         <source>Open Current Dir as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Dizini Root Olarak Aç</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="297"/>
         <source>Archive Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Arşiv Seçenekleri</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="320"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bununla aç...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="326"/>
         <source>View Files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyaları görüntüle...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="328"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağlama toplamları</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="330"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellikleri</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="520"/>
@@ -367,7 +367,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="567"/>
         <source>Set as Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Duvar kağıdı olarak ayarlama</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="575"/>
@@ -397,27 +397,27 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="597"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Buraya Çıkart</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="599"/>
         <source>Archive Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Arşiv Seçimi</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="907"/>
         <source>Select Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Arşiv Seçin</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="921"/>
         <source>Set Wallpaper on Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranda Duvar Kağıdını Ayarla</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="921"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran</translation>
     </message>
 </context>
 <context>
@@ -460,17 +460,17 @@
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümüne evet</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümüne hayır</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -542,107 +542,107 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Git Deposunu Klonlayın</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoşgeldiniz!</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sihirbaz, internetten bir GIT deposunu indirme sürecinde size rehberlik edecektir.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>GitHub Depo Ayarları</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
         <source>Organization/User</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuruluş / Kullanıcı</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Depo Adı</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Gizli Depo</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
         <source>Type of Access</source>
-        <translation type="unfinished"></translation>
+        <translation>Erişim Türü</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="95"/>
         <source>Use my SSH Key</source>
-        <translation type="unfinished"></translation>
+        <translation>SSH Anahtarımı kullan</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="105"/>
         <source>Login to server</source>
-        <translation type="unfinished"></translation>
+        <translation>Sunucuya giriş yapın</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="114"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı adı</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="124"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonim (yalnızca genel depolar)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
         <source>Optional SSH Password</source>
-        <translation type="unfinished"></translation>
+        <translation>İsteğe bağlı SSH Parolası</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="153"/>
         <source>Advanced Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş seçenekler</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel Derinlik</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek Şube</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
         <source>branch name</source>
-        <translation type="unfinished"></translation>
+        <translation>şube adı</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="232"/>
         <source>Click &quot;Next&quot; to start downloading the repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Depoyu indirmeye başlamak için &quot;İleri&quot; yi tıklayın</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Stop Download?</source>
-        <translation type="unfinished"></translation>
+        <translation>İndirmeyi durdur?</translation>
     </message>
     <message>
         <location filename="../gitWizard.h" line="58"/>
         <source>Kill the current download?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut indirme sonlandırılsın mı?</translation>
     </message>
 </context>
 <context>
@@ -670,7 +670,7 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="184"/>
         <source>New Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni sekme</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="187"/>
@@ -680,7 +680,7 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="258"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü Önizlemelerini Göster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="263"/>
@@ -755,37 +755,37 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="416"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="427"/>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Repo Durumu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="432"/>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Depoyu Klonla</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="440"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizin Ağacı Penceresini Göster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="443"/>
         <source>Show Directory Tree Pane</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizin Ağacı Bölmesini Göster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="446"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="451"/>
         <source>Open as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Root Olarak Aç</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="190"/>
@@ -795,27 +795,27 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dosya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="138"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görünüm</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="155"/>
         <source>&amp;Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Y&amp;erimleri</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="163"/>
         <source>&amp;External Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Harici Cihazlar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="170"/>
         <source>&amp;Git</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="198"/>
@@ -930,12 +930,12 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="238"/>
         <source>CTRL+B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="247"/>
         <source>CTRL+E</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="365"/>
@@ -975,7 +975,7 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="638"/>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Git Kod Deposu Durumu</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="728"/>
@@ -1005,7 +1005,7 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="101"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="452"/>
@@ -1091,48 +1091,48 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Form</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Değerlendiriliyor...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşı</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="53"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="54"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıkar</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="96"/>
         <source>File Operation Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya İşlem Hataları</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>%1 Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tamamlandı</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşan Hatalar</translation>
     </message>
 </context>
 <context>
@@ -1243,17 +1243,17 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitti</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="76"/>
         <source>Errors during operation. Click to view details</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlem sırasında hatalar. Detayları görmek için tıklayın</translation>
     </message>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışan Yeni Görevler</translation>
     </message>
 </context>
 <context>
@@ -1261,67 +1261,67 @@ Yeni Konum: %2</translation>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimedya</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>
