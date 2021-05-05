@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeyi Ayır</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Bul / değiştir seçeneklerini gizle</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="211"/>
@@ -107,22 +107,22 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekmeler Konumu</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="193"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dosya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görünüm</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="236"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Düzen</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="274"/>
@@ -223,53 +223,53 @@
     <message>
         <location filename="../MainUI.ui" line="388"/>
         <source>Show Popup Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılır Uyarıları Göster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="391"/>
         <location filename="../MainUI.ui" line="394"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmemiş değişikliklerle ilgili uyarıları göster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="405"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="413"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="421"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="429"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="434"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="437"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="448"/>
         <source>Show Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç Çubuğunu Göster</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="34"/>
         <source>Read-Only File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salt Okunur Dosya</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="75"/>
@@ -289,13 +289,13 @@
     <message>
         <location filename="../MainUI.cpp" line="290"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>İçeriği Yazdır</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="428"/>
         <location filename="../MainUI.cpp" line="439"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmemiş Değişiklikleri kaybedilsin mi?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="428"/>
@@ -304,12 +304,15 @@
 Do you want to close it anyway?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dosyada kaydedilmemiş değişiklikler var.
+Yine de kapatmak istiyor musun?
+
+%1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="546"/>
         <source>Save Changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapatmadan önce Değişiklikler Kaydedilsin mi?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="547"/>
@@ -317,7 +320,10 @@ Do you want to close it anyway?
 Do you want save them before you close the editor?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmemiş değişiklikler var.
+Düzenleyiciyi kapatmadan önce onları kaydetmek istiyor musunuz?
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -335,22 +341,22 @@ Do you want save them before you close the editor?
     <message>
         <location filename="../PlainTextEditor.cpp" line="346"/>
         <source>Row Number: %1, Column Number: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Numarası:%1, Sütun Numarası:%2</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="355"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağıdaki dosya başka bir yardımcı program tarafından değiştirildi. Yeniden yüklemek ister misin?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="357"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Not: Şu anda kaydedilmemiş tüm değişiklikleri kaybedeceksiniz)</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="361"/>
         <source>File Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Değiştirildi</translation>
     </message>
 </context>
 <context>
@@ -358,67 +364,67 @@ Do you want save them before you close the editor?
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliştirme</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğitim</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Oyunlar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafikler</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>İnternet</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Ofis</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilim</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Araçlar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer</translation>
     </message>
 </context>
 </TS>
