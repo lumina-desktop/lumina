@@ -59,102 +59,102 @@
         <location filename="../MainUI.ui" line="221"/>
         <location filename="../MainUI.cpp" line="232"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>ZFS Pool:</source>
-        <translation type="unfinished"></translation>
+        <translation>ZFS Havuzu:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="255"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellik</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="260"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="265"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynak</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="277"/>
         <source>Snapshot</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="282"/>
         <source>Date Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluşturma Tarihi</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="287"/>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleme Tarihi</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="617"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dosya</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="621"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Farklı kaydet</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="649"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Aç</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="652"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="664"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="667"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="679"/>
         <source>Save Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısayolu Kaydet</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="682"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="694"/>
         <source>Local Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Yerel Kısayol</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="703"/>
         <source>Register Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısayolu Kaydet</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="712"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Sözlük Aç</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="721"/>
         <source>New Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni Kısayol</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="319"/>
@@ -254,14 +254,14 @@
         <location filename="../MainUI.cpp" line="413"/>
         <location filename="../MainUI.cpp" line="430"/>
         <source>Save Application File</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama Dosyasını Kaydet</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="398"/>
         <location filename="../MainUI.cpp" line="413"/>
         <location filename="../MainUI.cpp" line="430"/>
         <source>XDG Shortcuts (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>XDG Kısayolları (* .desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="461"/>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../MainUI.cpp" line="516"/>
         <source>Valid Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli Ayarlar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="516"/>
         <source>Invalid Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz Ayarlar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="535"/>
@@ -326,67 +326,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>
