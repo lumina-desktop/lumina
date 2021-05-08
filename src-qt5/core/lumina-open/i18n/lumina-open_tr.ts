@@ -131,7 +131,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="211"/>
         <source>[default] </source>
-        <translation type="unfinished"></translation>
+        <translation>[varsayılan] </translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="278"/>
@@ -166,7 +166,7 @@
     <message>
         <location filename="../main.cpp" line="283"/>
         <source>Application entry is invalid: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Başvuru girişi geçersiz:%1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="294"/>
@@ -191,7 +191,7 @@
     <message>
         <location filename="../main.cpp" line="386"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; bulunamadı. Lütfen önce kurulduğundan emin olun.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="435"/>
@@ -209,67 +209,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimedya</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="unfinished">Geliştirme</translation>
+        <translation>Geliştirme</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="unfinished">Eğitim</translation>
+        <translation>Eğitim</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Oyunlar</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="unfinished">Grafik</translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="unfinished">Ağ</translation>
+        <translation>Ağ</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="unfinished">Ofis</translation>
+        <translation>Ofis</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="unfinished">Bilim</translation>
+        <translation>Bilim</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="unfinished">Ayarlar</translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="unfinished">Sistem</translation>
+        <translation>Sistem</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Araçlar</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer</translation>
     </message>
 </context>
 </TS>
