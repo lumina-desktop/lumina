@@ -5,55 +5,56 @@
     <name>XDGDesktopList</name>
     <message>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Oserterade</translation>
     </message>
 </context>
 </TS>
+    
