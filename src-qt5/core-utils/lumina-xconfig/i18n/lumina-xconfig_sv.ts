@@ -5,55 +5,55 @@
     <name>XDGDesktopList</name>
     <message>
         <source>Multimedia</source>
-        <translation type="Multimedia"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Development</source>
-        <translation type="Utveckling"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <source>Education</source>
-        <translation type="Utbildning"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <source>Games</source>
-        <translation type="Spel"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <source>Graphics</source>
-        <translation type="Grafik"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation type="Nätverk"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <source>Office</source>
-        <translation type="Kontor"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <source>Science</source>
-        <translation type="Vetenskap"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="Inställningar"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="System"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <source>Utility</source>
-        <translation type="Verktyg"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <source>Wine</source>
-        <translation type="Wine"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <source>Unsorted</source>
-        <translation type="Oserterade"></translation>
+        <translation>Oserterade</translation>
     </message>
 </context>
 </TS>
