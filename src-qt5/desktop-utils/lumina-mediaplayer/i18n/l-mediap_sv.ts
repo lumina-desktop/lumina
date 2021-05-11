@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainUI.ui" line="183"/>
         <source>down</source>
-        <translation>=ner></translation>
+        <translation>ner></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="267"/>
