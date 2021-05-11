@@ -99,67 +99,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="Multimedia"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="Utveckling"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="Utbildning"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="Spel"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="Grafik"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="Nätverk"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="Kontor"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="Vetenskap"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="Inställningar"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="System"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="Verktyg"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="Wine"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="Oserterade"></translation>
+        <translation>Oserterade</translation>
     </message>
 </context>
 </TS>
