@@ -7,24 +7,24 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translationMediaspelare></translation>
+        <translation>Mediaspelare></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translationSpelas nu></translation>
+        <translation>Spelas nu></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation(Ingen körande video)></translation>
+        <translation>(Ingen körande video)></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
         <source>Playlist</source>
-        <translationSpellista></translation>
+        <translation>Spellista></translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="167"/>
