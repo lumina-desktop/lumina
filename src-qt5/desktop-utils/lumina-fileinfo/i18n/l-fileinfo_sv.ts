@@ -59,102 +59,102 @@
         <location filename="../MainUI.ui" line="221"/>
         <location filename="../MainUI.cpp" line="232"/>
         <source>Advanced</source>
-        <translation type="Avancerad"></translation>
+        <translation>Avancerad</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="235"/>
         <source>ZFS Pool:</source>
-        <translation type="ZFS Pool:"></translation>
+        <translation>ZFS Pool:</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="255"/>
         <source>Property</source>
-        <translation type="Egenskap"></translation>
+        <translation>Egenskap</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="260"/>
         <source>Value</source>
-        <translation type="Värde"></translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="265"/>
         <source>Source</source>
-        <translation type="Källa"></translation>
+        <translation>Källa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="277"/>
         <source>Snapshot</source>
-        <translation type="Ögonblicksbild"></translation>
+        <translation>Ögonblicksbild</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="282"/>
         <source>Date Created</source>
-        <translation type="Datum skapad></translation>
+        <translation>Datum skapad></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="287"/>
         <source>Date Modified</source>
-        <translation type="Datum modiferad"></translation>
+        <translation>Datum modiferad</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="617"/>
         <source>&amp;File</source>
-        <translation type="&amp; Fil"></translation>
+        <translation>&amp; Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="621"/>
         <source>Save As</source>
-        <translation type="Spara som"></translation>
+        <translation>Spara som</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="649"/>
         <source>Open File</source>
-        <translation type="Öppna fil"></translation>
+        <translation>Öppna fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="652"/>
         <source>Ctrl+O</source>
-        <translation type="CTRL+O"></translation>
+        <translation>CTRL+O</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="664"/>
         <source>Quit</source>
-        <translation type="Avsluta"></translation>
+        <translation>Avsluta</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="667"/>
         <source>Ctrl+Q</source>
-        <translation type="CTRL+Q"></translation>
+        <translation>CTRL+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="679"/>
         <source>Save Shortcut</source>
-        <translation type="Spara genväg"></translation>
+        <translation>Spara genväg</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="682"/>
         <source>Ctrl+S</source>
-        <translation type="CTRL+S></translation>
+        <translation>CTRL+S></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="694"/>
         <source>Local Shortcut</source>
-        <translation type="Lokal genväg"></translation>
+        <translation>Lokal genväg</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="703"/>
         <source>Register Shortcut</source>
-        <translation type="Registrera genväg"></translation>
+        <translation>Registrera genväg</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="712"/>
         <source>Open Directory</source>
-        <translation type="Öppna katalog"></translation>
+        <translation>Öppna katalog</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="721"/>
         <source>New Shortcut</source>
-        <translation type="Ny genväg></translation>
+        <translation>Ny genväg></translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="319"/>
@@ -261,7 +261,7 @@
         <location filename="../MainUI.cpp" line="413"/>
         <location filename="../MainUI.cpp" line="430"/>
         <source>XDG Shortcuts (*.desktop)</source>
-        <translation type="XDG genvägar (*.desktop)"></translation>
+        <translation>XDG genvägar (*.desktop)</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="461"/>
@@ -296,12 +296,12 @@
     <message>
         <location filename="../MainUI.cpp" line="516"/>
         <source>Valid Settings</source>
-        <translation type="Giltiga inställningar"></translation>
+        <translation>Giltiga inställningar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="516"/>
         <source>Invalid Settings</source>
-        <translation type="Ogiltiga inställningar"></translation>
+        <translation>Ogiltiga inställningar</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="535"/>
@@ -326,67 +326,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
         <source>Multimedia</source>
-        <translation type="Multimedia"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
         <source>Development</source>
-        <translation type="Utveckling"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
         <source>Education</source>
-        <translation type="Utbildning"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
         <source>Games</source>
-        <translation type="Spel"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
         <source>Graphics</source>
-        <translation type="Grafik"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
         <source>Network</source>
-        <translation type="Nätverk"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
         <source>Office</source>
-        <translation type="Kontor"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
         <source>Science</source>
-        <translation type="Vetenskap"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
         <source>Settings</source>
-        <translation type="Inställningar"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
         <source>System</source>
-        <translation type="System"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Utility</source>
-        <translation type="Verktyg"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Wine</source>
-        <translation type="Wine"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Unsorted</source>
-        <translation type="Oserterat"></translation>
+        <translation>Oserterat</translation>
     </message>
 </context>
 </TS>
