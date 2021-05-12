@@ -321,7 +321,9 @@ Do you want save them before you close the editor?
 
 %1</source>
         <translation>Det finns osparade ändringar.
-                           Vill du spara dom innan du stänger editorn?</translation>
+                           Vill du spara dom innan du stänger editorn?
+                           
+                           %1</translation>
     </message>
 </context>
 <context>
