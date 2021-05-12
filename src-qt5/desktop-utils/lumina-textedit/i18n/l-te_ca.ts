@@ -120,186 +120,201 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="236"/>
+        <location filename="../MainUI.ui" line="238"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="274"/>
+        <location filename="../MainUI.ui" line="276"/>
         <source>Show Line Numbers</source>
         <translation>Mostra els números de les línies</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="279"/>
+        <location filename="../MainUI.ui" line="281"/>
         <source>None</source>
         <translation>Cap</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
-        <location filename="../MainUI.cpp" line="219"/>
+        <location filename="../MainUI.ui" line="286"/>
+        <location filename="../MainUI.cpp" line="246"/>
         <source>New File</source>
         <translation>Fitxer nou</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="287"/>
+        <location filename="../MainUI.ui" line="289"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="295"/>
+        <location filename="../MainUI.ui" line="297"/>
         <source>Open File</source>
         <translation>Obre el fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="300"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="306"/>
+        <location filename="../MainUI.ui" line="308"/>
         <source>Save File</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="309"/>
+        <location filename="../MainUI.ui" line="311"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="317"/>
+        <location filename="../MainUI.ui" line="319"/>
         <source>Save File As</source>
         <translation>Desa el fitxer com a...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="322"/>
+        <location filename="../MainUI.ui" line="324"/>
         <source>Close</source>
         <translation>Tanca</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="325"/>
+        <location filename="../MainUI.ui" line="327"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="333"/>
+        <location filename="../MainUI.ui" line="335"/>
         <source>Close File</source>
         <translation>Tanca el fitxer</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="336"/>
+        <location filename="../MainUI.ui" line="338"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="344"/>
+        <location filename="../MainUI.ui" line="346"/>
         <source>Customize Colors</source>
         <translation>Personalització dels colors</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="355"/>
+        <location filename="../MainUI.ui" line="357"/>
         <source>Wrap Lines</source>
         <translation>Ajusta les línies</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="360"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Find</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="363"/>
+        <location filename="../MainUI.ui" line="365"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="371"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Replace</source>
         <translation>Reemplaça</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="374"/>
+        <location filename="../MainUI.ui" line="376"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="388"/>
+        <location filename="../MainUI.ui" line="390"/>
         <source>Show Popup Warnings</source>
         <translation>Mostra avisos emergents</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="391"/>
-        <location filename="../MainUI.ui" line="394"/>
+        <location filename="../MainUI.ui" line="393"/>
+        <location filename="../MainUI.ui" line="396"/>
         <source>Show warnings about unsaved changes</source>
         <translation>Mostra avisos de canvis no desats</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="405"/>
+        <location filename="../MainUI.ui" line="407"/>
         <source>Top</source>
         <translation>A dalt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="413"/>
+        <location filename="../MainUI.ui" line="415"/>
         <source>Bottom</source>
         <translation>A baix</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="421"/>
+        <location filename="../MainUI.ui" line="423"/>
         <source>Left</source>
         <translation>A l&apos;esquerra</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="429"/>
+        <location filename="../MainUI.ui" line="431"/>
         <source>Right</source>
         <translation>A la dreta</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="436"/>
         <source>Print</source>
         <translation>Imprimeix</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="437"/>
+        <location filename="../MainUI.ui" line="439"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="448"/>
+        <location filename="../MainUI.ui" line="450"/>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="34"/>
+        <location filename="../MainUI.ui" line="464"/>
+        <source>Enable Spellcheck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="467"/>
+        <source>Enable Spellchecking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="472"/>
+        <source>Set Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="38"/>
         <source>Read-Only File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Text Editor</source>
         <translation>Editor de text</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="226"/>
+        <location filename="../MainUI.cpp" line="253"/>
         <source>Open File(s)</source>
         <translation>Obre fitxers</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="226"/>
+        <location filename="../MainUI.cpp" line="253"/>
         <source>Text Files (*)</source>
         <translation>Fitxers de text (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="333"/>
         <source>Print Content</source>
         <translation>Imprimeix-ne el contingut</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="428"/>
-        <location filename="../MainUI.cpp" line="439"/>
+        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="514"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Es perden els canvis no desats?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="428"/>
-        <location filename="../MainUI.cpp" line="439"/>
+        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="514"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -310,12 +325,12 @@ El voleu tancar tanmateix?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="546"/>
+        <location filename="../MainUI.cpp" line="700"/>
         <source>Save Changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="547"/>
+        <location filename="../MainUI.cpp" line="701"/>
         <source>There are unsaved changes.
 Do you want save them before you close the editor?
 
@@ -326,32 +341,32 @@ Do you want save them before you close the editor?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="127"/>
+        <location filename="../PlainTextEditor.cpp" line="136"/>
         <source>Save File</source>
         <translation>Desa el fitxer</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="127"/>
+        <location filename="../PlainTextEditor.cpp" line="136"/>
         <source>Text File (*)</source>
         <translation>Fitxer de text (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="346"/>
+        <location filename="../PlainTextEditor.cpp" line="358"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Número de fila: %1. Número de columna: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="355"/>
+        <location filename="../PlainTextEditor.cpp" line="367"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>El fitxer següent ha estat canviat per alguna altra utilitat. El voleu tornar a carregar?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="357"/>
+        <location filename="../PlainTextEditor.cpp" line="369"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Nota: perdreu tots els canvis que no estiguin desats ara mateix.)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="361"/>
+        <location filename="../PlainTextEditor.cpp" line="373"/>
         <source>File Modified</source>
         <translation>Fitxer modificat</translation>
     </message>
@@ -359,67 +374,67 @@ Do you want save them before you close the editor?
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>

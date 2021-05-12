@@ -5,7 +5,7 @@
 #==========================
 # NOTE: This does NOT need to be run prior to building Lumina - this is a developer tool only
 #==========================
-LUPDATE="/usr/local/lib/qt5/bin/lupdate"
+LUPDATE="/usr/lib/qt5/bin/lupdate"
 
 for i in `find . | grep 'pro'`
 do

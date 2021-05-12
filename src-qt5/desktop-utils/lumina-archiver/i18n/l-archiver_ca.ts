@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="243"/>
+        <location filename="../TarBackend.cpp" line="249"/>
         <source>Could not read archive</source>
         <translation>No s&apos;ha pogut llegir l&apos;arxiu</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="245"/>
+        <location filename="../TarBackend.cpp" line="251"/>
         <source>Archive Loaded</source>
         <translation>Arxiu carregat</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="278"/>
+        <location filename="../TarBackend.cpp" line="284"/>
         <source>Extraction Finished</source>
         <translation>Extracció acabada</translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="280"/>
+        <location filename="../TarBackend.cpp" line="286"/>
         <source>Modification Finished</source>
         <translation>Modificació acabada</translation>
     </message>
@@ -354,67 +354,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation>Multimèdia</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation>Desenvolupament</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation>Educació</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation>Jocs</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation>Gràfics</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation>Xarxa</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation>Oficina</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation>Ciència</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation>Paràmetres</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation>Utilitat</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation>Sense classificar</translation>
     </message>
@@ -472,11 +472,6 @@
         <translation>Inicia</translation>
     </message>
     <message>
-        <location filename="../imgDialog.cpp" line="21"/>
-        <source>Burn IMG to Device</source>
-        <translation>Grava la IMG en un dispositiu</translation>
-    </message>
-    <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
         <translation>Mode d&apos;administrador</translation>
@@ -502,14 +497,19 @@
         <translation>Cancel·lo la gravació de la imatge?</translation>
     </message>
     <message>
-        <location filename="../imgDialog.cpp" line="110"/>
-        <source>Do you wish to stop the current IMG burn process?</source>
-        <translation>Voleu aturar el procés actual de gravació de la IMG?</translation>
+        <location filename="../imgDialog.cpp" line="21"/>
+        <source>Burn Disk Image to Device</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
         <translation>Avís: aquest fet deixarà el dispositiu USB en un estat inconsistent.</translation>
+    </message>
+    <message>
+        <location filename="../imgDialog.cpp" line="110"/>
+        <source>Do you wish to stop the current disk image burn process?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -543,8 +543,8 @@
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
-        <source>The image was successfully burned to the USB device</source>
-        <translation>La imatge s&apos;ha gravat correctament al dispositiu USB.</translation>
+        <source>The image was successfully burned to the device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -208,67 +208,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation type="unfinished">マルチメディア</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation type="unfinished">開発</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation type="unfinished">教育</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation type="unfinished">グラフィックス</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation type="unfinished">ネットワーク</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation type="unfinished">オフィス</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation type="unfinished">科学</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation type="unfinished">設定</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation type="unfinished">システム</translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>

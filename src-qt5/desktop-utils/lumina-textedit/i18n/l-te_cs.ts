@@ -120,186 +120,201 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="236"/>
+        <location filename="../MainUI.ui" line="238"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="274"/>
+        <location filename="../MainUI.ui" line="276"/>
         <source>Show Line Numbers</source>
         <translation>Zobrazovat čísla řádků</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="279"/>
+        <location filename="../MainUI.ui" line="281"/>
         <source>None</source>
         <translation>Žádný</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="284"/>
-        <location filename="../MainUI.cpp" line="219"/>
+        <location filename="../MainUI.ui" line="286"/>
+        <location filename="../MainUI.cpp" line="246"/>
         <source>New File</source>
         <translation>Nový soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="287"/>
+        <location filename="../MainUI.ui" line="289"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="295"/>
+        <location filename="../MainUI.ui" line="297"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="298"/>
+        <location filename="../MainUI.ui" line="300"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="306"/>
+        <location filename="../MainUI.ui" line="308"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="309"/>
+        <location filename="../MainUI.ui" line="311"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="317"/>
+        <location filename="../MainUI.ui" line="319"/>
         <source>Save File As</source>
         <translation>Uložit soubor jako</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="322"/>
+        <location filename="../MainUI.ui" line="324"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="325"/>
+        <location filename="../MainUI.ui" line="327"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="333"/>
+        <location filename="../MainUI.ui" line="335"/>
         <source>Close File</source>
         <translation>Zavřít soubor</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="336"/>
+        <location filename="../MainUI.ui" line="338"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="344"/>
+        <location filename="../MainUI.ui" line="346"/>
         <source>Customize Colors</source>
         <translation>Přizpůsobit barvy</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="355"/>
+        <location filename="../MainUI.ui" line="357"/>
         <source>Wrap Lines</source>
         <translation>Zalamovat řádky</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="360"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>Find</source>
         <translation>Najít</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="363"/>
+        <location filename="../MainUI.ui" line="365"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="371"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Replace</source>
         <translation>Nahradit</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="374"/>
+        <location filename="../MainUI.ui" line="376"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="388"/>
+        <location filename="../MainUI.ui" line="390"/>
         <source>Show Popup Warnings</source>
         <translation>Zobrazovat vyskakovací varování</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="391"/>
-        <location filename="../MainUI.ui" line="394"/>
+        <location filename="../MainUI.ui" line="393"/>
+        <location filename="../MainUI.ui" line="396"/>
         <source>Show warnings about unsaved changes</source>
         <translation>Zobrazovat varování o neuložených změnách</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="405"/>
+        <location filename="../MainUI.ui" line="407"/>
         <source>Top</source>
         <translation>Nahoře</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="413"/>
+        <location filename="../MainUI.ui" line="415"/>
         <source>Bottom</source>
         <translation>Dole</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="421"/>
+        <location filename="../MainUI.ui" line="423"/>
         <source>Left</source>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="429"/>
+        <location filename="../MainUI.ui" line="431"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="434"/>
+        <location filename="../MainUI.ui" line="436"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="437"/>
+        <location filename="../MainUI.ui" line="439"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="448"/>
+        <location filename="../MainUI.ui" line="450"/>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="34"/>
+        <location filename="../MainUI.ui" line="464"/>
+        <source>Enable Spellcheck</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="467"/>
+        <source>Enable Spellchecking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="472"/>
+        <source>Set Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="38"/>
         <source>Read-Only File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="75"/>
+        <location filename="../MainUI.cpp" line="79"/>
         <source>Text Editor</source>
         <translation>Textový editor</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="226"/>
+        <location filename="../MainUI.cpp" line="253"/>
         <source>Open File(s)</source>
         <translation>Otevřít soubory</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="226"/>
+        <location filename="../MainUI.cpp" line="253"/>
         <source>Text Files (*)</source>
         <translation>Textové soubory (*)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="290"/>
+        <location filename="../MainUI.cpp" line="333"/>
         <source>Print Content</source>
         <translation>Vytisknout obsah</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="428"/>
-        <location filename="../MainUI.cpp" line="439"/>
+        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="514"/>
         <source>Lose Unsaved Changes?</source>
         <translation>Ztratit neuložené změny?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="428"/>
-        <location filename="../MainUI.cpp" line="439"/>
+        <location filename="../MainUI.cpp" line="503"/>
+        <location filename="../MainUI.cpp" line="514"/>
         <source>This file has unsaved changes.
 Do you want to close it anyway?
 
@@ -310,12 +325,12 @@ Přesto jej chcete zavřít?
 %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="546"/>
+        <location filename="../MainUI.cpp" line="700"/>
         <source>Save Changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="547"/>
+        <location filename="../MainUI.cpp" line="701"/>
         <source>There are unsaved changes.
 Do you want save them before you close the editor?
 
@@ -326,32 +341,32 @@ Do you want save them before you close the editor?
 <context>
     <name>PlainTextEditor</name>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="127"/>
+        <location filename="../PlainTextEditor.cpp" line="136"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="127"/>
+        <location filename="../PlainTextEditor.cpp" line="136"/>
         <source>Text File (*)</source>
         <translation>Textový soubor (*)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="346"/>
+        <location filename="../PlainTextEditor.cpp" line="358"/>
         <source>Row Number: %1, Column Number: %2</source>
         <translation>Řádek číslo: %1, sloupec číslo: %2</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="355"/>
+        <location filename="../PlainTextEditor.cpp" line="367"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
         <translation>Následující soubor byl změněn jiným programem. Chcete jej načíst znovu?</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="357"/>
+        <location filename="../PlainTextEditor.cpp" line="369"/>
         <source>(Note: You will lose all currently-unsaved changes)</source>
         <translation>(Poznámka: Ztratíte všechny doposud neuložené změny)</translation>
     </message>
     <message>
-        <location filename="../PlainTextEditor.cpp" line="361"/>
+        <location filename="../PlainTextEditor.cpp" line="373"/>
         <source>File Modified</source>
         <translation>Soubor byl změněn</translation>
     </message>
@@ -359,67 +374,67 @@ Do you want save them before you close the editor?
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>
