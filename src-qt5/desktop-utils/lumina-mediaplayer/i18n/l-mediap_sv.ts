@@ -14,7 +14,7 @@
         <location filename="../mainUI.ui" line="261"/>
         <location filename="../mainUI.cpp" line="631"/>
         <source>Now Playing</source>
-        <translation>Spelas nu></translation>
+        <translation>Spelas nu</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="74"/>
