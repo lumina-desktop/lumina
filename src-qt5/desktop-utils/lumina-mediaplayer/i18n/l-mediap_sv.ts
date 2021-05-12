@@ -7,7 +7,7 @@
         <location filename="../mainUI.ui" line="14"/>
         <location filename="../mainUI.cpp" line="285"/>
         <source>Media Player</source>
-        <translation>Mediaspelare></translation>
+        <translation>Mediaspelare</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
