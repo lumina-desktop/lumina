@@ -28,10 +28,13 @@ private slots:
             QString prog = this->program().section(" ",0,0).section("/",-1);
 	    if( prog == "fluxbox" ){
              // qDebug() << "Sending Fluxbox signal to reload configs...";
-              ::kill(this->pid(), SIGUSR2); } //Fluxbox needs SIGUSR2 to reload it's configs
-	    else if(prog == "compton" || prog == "picom" ){
+              ::kill(this->pid(), SIGUSR2);  //Fluxbox needs SIGUSR2 to reload it's configs
+	    }else if(prog == "compton" || prog == "picom" ){
               //qDebug() << "Sending Compton signal to reload configs...";
-              ::kill(this->pid(), SIGUSR1); } //Compton needs SIGUSR1 to reload it's configs
+              ::kill(this->pid(), SIGUSR1);  //Compton needs SIGUSR1 to reload it's configs
+	    }else if(prog == "openbox"){
+	      QProcess::startDetached("openbox", QStringList() << "--reconfigure");
+	    }
 	  }
 	  //Now make sure this file/dir was not removed from the watcher
 	  QStringList watched; watched << watcher->files() << watcher->directories();
@@ -66,6 +69,7 @@ private:
 	QTimer *wmTimer, *compTimer;
 
 	bool setupFluxboxFiles();
+	bool setupOpenboxConfig();
 	bool setupComptonFiles();
 	void setupCompositor(bool force = false);
 
@@ -74,7 +78,7 @@ private slots:
 
 	void procFinished();
 
-	void startProcess(QString ID, QString command, QStringList watchfiles = QStringList());
+	void startProcess(QString ID, QString command, QStringList args = QStringList(), QStringList watchfiles = QStringList());
 
 	void resetWMCounter(){ wmfails = 0; }
 	void resetCompCounter(){ compfails = 0; }

@@ -75,7 +75,7 @@ int main(int argc, char ** argv)
     //Configure X11 monitors if needed
     if(LUtils::isValidBinary("lumina-xconfig")){
       qDebug() << " - Resetting monitor configuration to last-used settings";
-      QProcess::execute("lumina-xconfig --reset-monitors");
+      QProcess::execute("lumina-xconfig", QStringList() << "--reset-monitors");
     }
     qDebug() << " - Starting the session...";
     //Setup any initialization values
