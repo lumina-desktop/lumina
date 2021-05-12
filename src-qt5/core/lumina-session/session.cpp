@@ -48,6 +48,22 @@ bool LSession::setupFluxboxFiles(){
   return true;
 }
 
+bool LSession::setupOpenboxConfig(){
+  QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/openbox-rc.xml";
+  QString fallback = QString(getenv("XDG_CONFIG_HOME"))+"/openbox/rc.xml";
+  bool replaceconf = !QFile::exists(set);
+  if(!replaceconf){ replaceconf = (QFileInfo(set).size()<1); }
+  if( replaceconf ){
+    if(QFile::exists(set)){ QFile::remove(set); }
+    if(QFile::exists(LOS::LuminaShare()+"/openbox-rc.xml")){
+      QFile::copy(LOS::LuminaShare()+"/openbox-rc.xml", set);
+    }else{
+      QFile::copy(fallback, set);
+    }
+  }
+  return true;
+}
+
 bool LSession::setupComptonFiles(){
   QString set = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/compton.conf";
   bool replaceconf = !QFile::exists(set);
@@ -106,7 +122,8 @@ void LSession::procFinished(){
     //Note about compton: It does not like running multiple sessions under the *same user*
     // (even on different displays). Run a blanket killall on it when closing down so that
     // any other Lumina sessions will automatically restart compton on that specific display
-    QProcess::execute("pkill compton"); //More OS's have pkill instead of killall
+    QProcess::execute("pkill", QStringList() <<  "compton"); //More OS's have pkill instead of killall
+    QProcess::execute("pkill", QStringList() <<  "picom"); //More OS's have pkill instead of killall
     QCoreApplication::exit(0);
   }else{
     //Make sure we restart the process as needed
@@ -121,7 +138,7 @@ void LSession::procFinished(){
   }
 }
 
-void LSession::startProcess(QString ID, QString command, QStringList watchfiles){
+void LSession::startProcess(QString ID, QString command, QStringList args, QStringList watchfiles){
   QString dir = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/logs";
   QString display = QString(getenv("DISPLAY")).section(":",1,1);
   if(!QFile::exists(dir)){ QDir tmp(dir); tmp.mkpath(dir); }
@@ -146,7 +163,7 @@ void LSession::startProcess(QString ID, QString command, QStringList watchfiles)
       }
    }
   }
-  proc->start(command, QIODevice::ReadOnly);
+  proc->start(command, args, QIODevice::ReadOnly);
   connect(proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(procFinished()) );
   PROCS << proc;
 }
@@ -185,7 +202,7 @@ void LSession::start(bool unified){
   unsetenv("QT_AUTO_SCREEN_SCALE_FACTOR"); //need exact-pixel measurements (no fake scaling)
   if(LUtils::isValidBinary("xdg-user-dirs-update")){
     //Make sure the XDG user directories are created as needed first
-    QProcess::execute("xdg-user-dirs-update");
+    QProcess::execute("xdg-user-dirs-update", QStringList());
   }
 
  if(!unified){
@@ -193,14 +210,18 @@ void LSession::start(bool unified){
   QString WM = sessionsettings.value("WindowManager", "fluxbox").toString();
   QString confDir = QString( getenv("XDG_CONFIG_HOME"))+"/lumina-desktop";
   //Window Manager First
+  qDebug() << "Starting WM:" << WM;
   if(WM=="fluxbox" || WM.endsWith("/fluxbox") || WM.simplified().isEmpty() ){
 	  // FLUXBOX BUG BYPASS: if the ~/.fluxbox dir does not exist, it will ignore the given config file
 	  if( !LUtils::isValidBinary("fluxbox") ){
 	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";
 	  }else{
-	    QString cmd = "fluxbox -rc "+confDir+"/fluxbox-init -no-slit -no-toolbar";
-	    startProcess("wm", cmd, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
+	    QStringList args; args << "-rc" << confDir+"/fluxbox-init -no-slit" << "-no-toolbar";
+	    startProcess("wm", "fluxbox", args, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
 	  }
+  } else if ( WM.split("/").last() == "openbox" ) {
+    setupOpenboxConfig();
+    startProcess("wm", "openbox", QStringList()<< "--config-file" << confDir+"/openbox-rc.xml", QStringList() << confDir+"/openbox-rc.xml");
   } else {
 	if(!LUtils::isValidBinary(WM)){
 	  exit(1);

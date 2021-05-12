@@ -909,7 +909,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../ThemeDialog.ui" line="28"/>
         <source>Theme Name:</source>
-        <translation>Nom du thème :</translation>
+        <translation>Nom du thème&#xa0;:</translation>
     </message>
     <message>
         <location filename="../ThemeDialog.ui" line="51"/>
@@ -943,73 +943,73 @@ Voulez-vous l&apos;écraser ?</translation>
         <source>This theme already exists.
  Overwrite it?</source>
         <translation>Ce thème existe déjà.
- Voulez-vous l&apos;écraser ?</translation>
+ Voulez-vous l&apos;écraser&#xa0;?</translation>
     </message>
 </context>
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation type="unfinished">Système</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1049,27 +1049,27 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="130"/>
+        <location filename="../mainWindow.cpp" line="146"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="130"/>
+        <location filename="../mainWindow.cpp" line="146"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="132"/>
+        <location filename="../mainWindow.cpp" line="148"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="133"/>
+        <location filename="../mainWindow.cpp" line="149"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="134"/>
+        <location filename="../mainWindow.cpp" line="150"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
     </message>
@@ -1150,12 +1150,7 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.ui" line="39"/>
-        <source>Only use compositing with GPU acceleration </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../pages/page_compton.cpp" line="37"/>
+        <location filename="../pages/page_compton.cpp" line="36"/>
         <source>Window Effects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1697,56 +1692,61 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="74"/>
+        <location filename="../pages/page_session_options.ui" line="72"/>
+        <source>Disable Startup Quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="81"/>
         <source>Change User Icon</source>
         <translation type="unfinished">Modifier l&apos;Icône Utilisateur</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="112"/>
+        <location filename="../pages/page_session_options.ui" line="119"/>
         <source>Time Format:</source>
         <translation type="unfinished">Format d&apos;Heure:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="124"/>
-        <location filename="../pages/page_session_options.ui" line="168"/>
+        <location filename="../pages/page_session_options.ui" line="131"/>
+        <location filename="../pages/page_session_options.ui" line="175"/>
         <source>View format codes</source>
         <translation type="unfinished">Voir les codes du format</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="139"/>
-        <location filename="../pages/page_session_options.ui" line="183"/>
+        <location filename="../pages/page_session_options.ui" line="146"/>
+        <location filename="../pages/page_session_options.ui" line="190"/>
         <source>Sample:</source>
         <translation type="unfinished">Exemple:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="156"/>
+        <location filename="../pages/page_session_options.ui" line="163"/>
         <source>Date Format:</source>
         <translation type="unfinished">Format de Date:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="203"/>
+        <location filename="../pages/page_session_options.ui" line="210"/>
         <source>Display Format</source>
         <translation type="unfinished">Format d&apos;Affichage</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="220"/>
+        <location filename="../pages/page_session_options.ui" line="227"/>
         <source>Window Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="248"/>
+        <location filename="../pages/page_session_options.ui" line="255"/>
         <source>Reset Desktop Settings</source>
         <translation type="unfinished">RAZ des Paramètres du Bureau</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="267"/>
-        <source>Return to system defaults</source>
-        <translation type="unfinished">Retour aux valeurs par défaut du système</translation>
+        <location filename="../pages/page_session_options.ui" line="274"/>
+        <source>Restore system defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="274"/>
-        <source>Return to Lumina defaults</source>
-        <translation type="unfinished">Retour aux valeurs par défaut de Lumina</translation>
+        <location filename="../pages/page_session_options.ui" line="281"/>
+        <source>Restore Lumina defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="18"/>
@@ -1769,147 +1769,157 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished">Date avant l&apos;heure</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="60"/>
+        <location filename="../pages/page_session_options.cpp" line="62"/>
         <source>Window manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="93"/>
+        <location filename="../pages/page_session_options.cpp" line="95"/>
         <source>Desktop Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <source>Verify Settings Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <source>Are you sure you want to reset your desktop settings? This change cannot be reversed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>Select an image</source>
         <translation type="unfinished">Choisir une image</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Images</source>
         <translation type="unfinished">Images</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Reset User Image</source>
         <translation type="unfinished">Réinitialiser l&apos;image de l&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation type="unfinished">Voulez-vous réinitialiser l&apos;image de l&apos;utilisateur aux paramètres par défaut du système ?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="218"/>
+        <location filename="../pages/page_session_options.cpp" line="236"/>
         <source>Valid Time Codes:</source>
         <translation type="unfinished">Codes valides:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="237"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation type="unfinished">%1: Heure format court (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="238"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation type="unfinished">%1: Heure format long (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="239"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation type="unfinished">%1: Minutes format court (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="240"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation type="unfinished">%1: Minutes format long (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation type="unfinished">%1: Secondes format court (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation type="unfinished">%1: Secondes format long (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation type="unfinished">%1: AM/PM (12-Heure) horloge (majuscule ou minuscule)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Timezone</source>
         <translation type="unfinished">%1 : Fuseau horaire</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>Time Codes</source>
         <translation type="unfinished">Règles de temps</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="241"/>
+        <location filename="../pages/page_session_options.cpp" line="259"/>
         <source>Valid Date Codes:</source>
         <translation type="unfinished">Règles de date valides:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="260"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation type="unfinished">%1: Jour en numérique sans les zéros devant (ex: 1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="261"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation type="unfinished">%1: Jour en numérique avec les zéros devant (ex: 01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="262"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation type="unfinished">%1: Jour en abrégé (localisé)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="263"/>
         <source>%1: Day as full name (localized)</source>
         <translation type="unfinished">%1: Jour nom complet (localisé)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="264"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation type="unfinished">%1: Mois en 1 ou 2 chiffres (ex: 2, 12)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="265"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation type="unfinished">%1: Mois en 2 chiffres (ex: 02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="266"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation type="unfinished">%1: Mois en lettres abrégé (localisé)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="267"/>
         <source>%1: Month as full name (localized)</source>
         <translation type="unfinished">%1: Mois en lettres (localisé)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="268"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation type="unfinished">%1: Année en 2 chiffres (ex: 15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="269"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation type="unfinished">%1: Année en format numérique sur 4 chiffres (ex: 2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="270"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation type="unfinished">Le texte peut être inclus dans des apostrophes afin d&apos;ignorer les substitutions</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="271"/>
         <source>Date Codes</source>
         <translation type="unfinished">Règles sur la date</translation>
     </message>
@@ -1922,31 +1932,31 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished">Formulaire</translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="22"/>
-        <location filename="../pages/page_soundtheme.ui" line="67"/>
-        <location filename="../pages/page_soundtheme.ui" line="112"/>
+        <location filename="../pages/page_soundtheme.ui" line="27"/>
+        <location filename="../pages/page_soundtheme.ui" line="34"/>
+        <location filename="../pages/page_soundtheme.ui" line="71"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="36"/>
-        <location filename="../pages/page_soundtheme.ui" line="81"/>
-        <location filename="../pages/page_soundtheme.ui" line="126"/>
+        <location filename="../pages/page_soundtheme.ui" line="61"/>
+        <location filename="../pages/page_soundtheme.ui" line="84"/>
+        <location filename="../pages/page_soundtheme.ui" line="100"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="56"/>
+        <location filename="../pages/page_soundtheme.ui" line="20"/>
         <source>Set Startup Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="101"/>
+        <location filename="../pages/page_soundtheme.ui" line="48"/>
         <source>Set Logout Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="146"/>
+        <location filename="../pages/page_soundtheme.ui" line="41"/>
         <source>Set Battery Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2001,7 +2011,7 @@ Voulez-vous l&apos;écraser ?</translation>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="133"/>
         <source>Layout:</source>
-        <translation type="unfinished">Disposition :</translation>
+        <translation type="unfinished">Disposition&#xa0;:</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="55"/>
@@ -2015,7 +2025,7 @@ Voulez-vous l&apos;écraser ?</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="66"/>
-        <location filename="../pages/page_wallpaper.cpp" line="236"/>
+        <location filename="../pages/page_wallpaper.cpp" line="239"/>
         <source>Solid Color: %1</source>
         <translation type="unfinished">Couleur unie : %1</translation>
     </message>
@@ -2096,33 +2106,33 @@ Voulez-vous l&apos;écraser ?</translation>
         <translation type="unfinished">En bas à droite</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="142"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation type="unfinished">Pas d&apos;arrière-plan</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="142"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation type="unfinished">(utiliser les réglages par défaut)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="156"/>
+        <location filename="../pages/page_wallpaper.cpp" line="160"/>
         <source>Image Directory: %1 valid images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="176"/>
+        <location filename="../pages/page_wallpaper.cpp" line="180"/>
         <source>File does not exist</source>
         <translation type="unfinished">Le fichier n&apos;existe pas</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="217"/>
+        <location filename="../pages/page_wallpaper.cpp" line="220"/>
         <source>Find Background Image(s)</source>
         <translation type="unfinished">Recherche d&apos;image(s) pour l&apos;arrière plan</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="248"/>
-        <location filename="../pages/page_wallpaper.cpp" line="266"/>
+        <location filename="../pages/page_wallpaper.cpp" line="251"/>
+        <location filename="../pages/page_wallpaper.cpp" line="269"/>
         <source>Find Background Image Directory</source>
         <translation type="unfinished">Trouver le Répertoire d&apos;Image des Arrière-Plans</translation>
     </message>

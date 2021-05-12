@@ -4,22 +4,22 @@
 <context>
     <name>Backend</name>
     <message>
-        <location filename="../TarBackend.cpp" line="243"/>
+        <location filename="../TarBackend.cpp" line="249"/>
         <source>Could not read archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="245"/>
+        <location filename="../TarBackend.cpp" line="251"/>
         <source>Archive Loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="278"/>
+        <location filename="../TarBackend.cpp" line="284"/>
         <source>Extraction Finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../TarBackend.cpp" line="280"/>
+        <location filename="../TarBackend.cpp" line="286"/>
         <source>Modification Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -354,67 +354,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation>Мультимедиа</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation>Разработка</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation>Образование</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation>Игры</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation>Графика</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation>Сети</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation>Офис</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation>Наука</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation>Система</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation>Вино</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation>Разное</translation>
     </message>
@@ -472,11 +472,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imgDialog.cpp" line="21"/>
-        <source>Burn IMG to Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../imgDialog.cpp" line="22"/>
         <source>Admin Mode</source>
         <translation type="unfinished"></translation>
@@ -502,13 +497,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imgDialog.cpp" line="110"/>
-        <source>Do you wish to stop the current IMG burn process?</source>
+        <location filename="../imgDialog.cpp" line="21"/>
+        <source>Burn Disk Image to Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../imgDialog.cpp" line="110"/>
+        <source>Do you wish to stop the current disk image burn process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -543,7 +543,7 @@
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
-        <source>The image was successfully burned to the USB device</source>
+        <source>The image was successfully burned to the device</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

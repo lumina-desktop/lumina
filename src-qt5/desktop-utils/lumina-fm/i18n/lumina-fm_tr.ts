@@ -57,52 +57,52 @@
 <context>
     <name>BrowserWidget</name>
     <message>
-        <location filename="../BrowserWidget.cpp" line="257"/>
+        <location filename="../BrowserWidget.cpp" line="268"/>
         <source>Name</source>
         <translation>Ad</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="258"/>
+        <location filename="../BrowserWidget.cpp" line="269"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="259"/>
+        <location filename="../BrowserWidget.cpp" line="270"/>
         <source>Type</source>
         <translation>Tür</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="260"/>
+        <location filename="../BrowserWidget.cpp" line="271"/>
         <source>Date Modified</source>
         <translation>Değiştirilme Tarihi</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="261"/>
+        <location filename="../BrowserWidget.cpp" line="272"/>
         <source>Date Created</source>
         <translation>Oluşturulma Tarihi</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="438"/>
+        <location filename="../BrowserWidget.cpp" line="454"/>
         <source>Capacity: %1</source>
         <translation>Kapasite: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="463"/>
+        <location filename="../BrowserWidget.cpp" line="479"/>
         <source>Files: %1 (%2)</source>
         <translation>Dosyalar: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="465"/>
+        <location filename="../BrowserWidget.cpp" line="481"/>
         <source>Files: %1</source>
         <translation>Dosyalar: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="471"/>
+        <location filename="../BrowserWidget.cpp" line="487"/>
         <source>Dirs: %1</source>
         <translation>Dizinler: %1</translation>
     </message>
     <message>
-        <location filename="../BrowserWidget.cpp" line="427"/>
+        <location filename="../BrowserWidget.cpp" line="443"/>
         <source>No Directory Contents</source>
         <translation>Dizin İçeriği Yok</translation>
     </message>
@@ -115,307 +115,307 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="41"/>
-        <source> * - FILE MANAGER RUNNING AS ROOT- * </source>
-        <translation> * - KÖK OLARAK ÇALIŞAN DOSYA YÖNETİCİSİ- * </translation>
+        <location filename="../widgets/DirWidget2.ui" line="53"/>
+        <source>Administrator Mode</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="182"/>
+        <location filename="../widgets/DirWidget2.ui" line="206"/>
         <source>Increase Icon Sizes</source>
         <translation>Simge Boyutlarını Artırın</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="204"/>
+        <location filename="../widgets/DirWidget2.ui" line="228"/>
         <source>Decrease Icon Sizes</source>
         <translation>Simge Boyutlarını Azaltın</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="228"/>
+        <location filename="../widgets/DirWidget2.ui" line="252"/>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="231"/>
-        <location filename="../widgets/DirWidget2.ui" line="234"/>
+        <location filename="../widgets/DirWidget2.ui" line="255"/>
+        <location filename="../widgets/DirWidget2.ui" line="258"/>
         <source>Go back to previous directory</source>
         <translation>Önceki dizine geri git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="242"/>
+        <location filename="../widgets/DirWidget2.ui" line="266"/>
         <source>Up</source>
         <translation>Yukarı</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="245"/>
-        <location filename="../widgets/DirWidget2.ui" line="248"/>
+        <location filename="../widgets/DirWidget2.ui" line="269"/>
+        <location filename="../widgets/DirWidget2.ui" line="272"/>
         <source>Go to parent directory</source>
         <translation>Üst dizine git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="256"/>
+        <location filename="../widgets/DirWidget2.ui" line="280"/>
         <source>Home</source>
         <translation>Ev</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="259"/>
-        <location filename="../widgets/DirWidget2.ui" line="262"/>
+        <location filename="../widgets/DirWidget2.ui" line="283"/>
+        <location filename="../widgets/DirWidget2.ui" line="286"/>
         <source>Go to home directory</source>
         <translation>Ev dizinine git</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="267"/>
+        <location filename="../widgets/DirWidget2.ui" line="291"/>
         <source>Menu</source>
         <translation>Menü</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="270"/>
+        <location filename="../widgets/DirWidget2.ui" line="294"/>
         <source>Select Action</source>
         <translation>Eylemi Seç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="278"/>
+        <location filename="../widgets/DirWidget2.ui" line="302"/>
         <source>Single Column</source>
         <translation>Tek Sütun</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="281"/>
+        <location filename="../widgets/DirWidget2.ui" line="305"/>
         <source>Single column view</source>
         <translation>Tek sütun görünümü</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="289"/>
+        <location filename="../widgets/DirWidget2.ui" line="313"/>
         <source>Dual Column</source>
         <translation>Çift Sütun</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.ui" line="292"/>
+        <location filename="../widgets/DirWidget2.ui" line="316"/>
         <source>Dual Column View</source>
         <translation>Çift Sütun Görünümü</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="691"/>
+        <location filename="../widgets/DirWidget2.cpp" line="698"/>
         <source>(Limited Access) </source>
         <translation>(Sınırlı Erişim) </translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="713"/>
-        <location filename="../widgets/DirWidget2.cpp" line="761"/>
+        <location filename="../widgets/DirWidget2.cpp" line="720"/>
+        <location filename="../widgets/DirWidget2.cpp" line="774"/>
         <source>New Document</source>
         <translation>Yeni Belge</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="713"/>
-        <location filename="../widgets/DirWidget2.cpp" line="738"/>
-        <location filename="../widgets/DirWidget2.cpp" line="761"/>
+        <location filename="../widgets/DirWidget2.cpp" line="720"/>
+        <location filename="../widgets/DirWidget2.cpp" line="746"/>
+        <location filename="../widgets/DirWidget2.cpp" line="774"/>
         <source>Name:</source>
         <translation>Ad:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="730"/>
+        <location filename="../widgets/DirWidget2.cpp" line="737"/>
         <source>Error Creating Document</source>
         <translation>Belge Oluşturmada Hata</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="730"/>
+        <location filename="../widgets/DirWidget2.cpp" line="737"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
         <translation>Belge oluşturulamadı. Lütfen uygun izinlere sahip olduğunuza emin olun.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="738"/>
+        <location filename="../widgets/DirWidget2.cpp" line="746"/>
         <source>New Directory</source>
         <translation>Yeni Dizin</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="721"/>
-        <location filename="../widgets/DirWidget2.cpp" line="748"/>
-        <location filename="../widgets/DirWidget2.cpp" line="770"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
+        <location filename="../widgets/DirWidget2.cpp" line="756"/>
+        <location filename="../widgets/DirWidget2.cpp" line="783"/>
         <source>Invalid Name</source>
         <translation>Geçersiz Ad</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="289"/>
+        <location filename="../widgets/DirWidget2.cpp" line="295"/>
         <source>Open Current Dir in a Terminal</source>
         <translation>Bir Terminalde Aktif Dizini Aç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="570"/>
+        <location filename="../widgets/DirWidget2.cpp" line="576"/>
         <source>File Operations</source>
         <translation>Dosya İşlemleri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="607"/>
+        <location filename="../widgets/DirWidget2.cpp" line="613"/>
         <source>Directory Operations</source>
         <translation>Dizin İşlemleri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="655"/>
+        <location filename="../widgets/DirWidget2.cpp" line="661"/>
         <source>Other...</source>
         <translation>Diğer...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="663"/>
+        <location filename="../widgets/DirWidget2.cpp" line="670"/>
         <source>Loading...</source>
         <translation>Yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="721"/>
-        <location filename="../widgets/DirWidget2.cpp" line="748"/>
-        <location filename="../widgets/DirWidget2.cpp" line="770"/>
+        <location filename="../widgets/DirWidget2.cpp" line="728"/>
+        <location filename="../widgets/DirWidget2.cpp" line="756"/>
+        <location filename="../widgets/DirWidget2.cpp" line="783"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
         <translation>Aynı adda bir dosya ya da dizin zaten mevcut! Lütfen farklı bir ad seçin.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="752"/>
+        <location filename="../widgets/DirWidget2.cpp" line="760"/>
         <source>Error Creating Directory</source>
         <translation>Dizin Oluşturmada Hata</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="752"/>
+        <location filename="../widgets/DirWidget2.cpp" line="760"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
         <translation>Dizin oluşturulamadı. Lütfen geçerli dizinde değişiklik yapmak için uygun izinlere sahip olduğunuza emin olun.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="384"/>
+        <location filename="../widgets/DirWidget2.cpp" line="390"/>
         <source>Current</source>
         <translation>Geçerli</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="279"/>
+        <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>Create...</source>
         <translation>Oluştur...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="281"/>
+        <location filename="../widgets/DirWidget2.cpp" line="287"/>
         <source>File</source>
         <translation>Dosya</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="282"/>
+        <location filename="../widgets/DirWidget2.cpp" line="288"/>
         <source>Directory</source>
         <translation>Dizin</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="283"/>
+        <location filename="../widgets/DirWidget2.cpp" line="289"/>
         <source>Application Launcher</source>
         <translation>Uygulama Başlatıcı</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="287"/>
+        <location filename="../widgets/DirWidget2.cpp" line="293"/>
         <source>Launch...</source>
         <translation>Başlatıcı...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="290"/>
+        <location filename="../widgets/DirWidget2.cpp" line="296"/>
         <source>SlideShow</source>
         <translation>Sunum</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="291"/>
+        <location filename="../widgets/DirWidget2.cpp" line="297"/>
         <source>Multimedia Player</source>
         <translation>Medya Oynatıcı</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="293"/>
+        <location filename="../widgets/DirWidget2.cpp" line="299"/>
         <source>Open Current Dir as Root</source>
         <translation>Mevcut Dizini Root Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="297"/>
+        <location filename="../widgets/DirWidget2.cpp" line="303"/>
         <source>Archive Options</source>
         <translation>Arşiv Seçenekleri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="320"/>
+        <location filename="../widgets/DirWidget2.cpp" line="326"/>
         <source>Open with...</source>
         <translation>Bununla aç...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="326"/>
+        <location filename="../widgets/DirWidget2.cpp" line="332"/>
         <source>View Files...</source>
         <translation>Dosyaları görüntüle...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="328"/>
+        <location filename="../widgets/DirWidget2.cpp" line="334"/>
         <source>Checksums</source>
         <translation>Sağlama toplamları</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="330"/>
+        <location filename="../widgets/DirWidget2.cpp" line="336"/>
         <source>Properties</source>
         <translation>Özellikleri</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="520"/>
+        <location filename="../widgets/DirWidget2.cpp" line="526"/>
         <source>File Checksums:</source>
         <translation>Dosya Sağlama Toplamları:</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="532"/>
+        <location filename="../widgets/DirWidget2.cpp" line="538"/>
         <source>Missing Utility</source>
         <translation>Eksik Gereç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="532"/>
+        <location filename="../widgets/DirWidget2.cpp" line="538"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
         <translation>Sistemde &quot;lumina-fileinfo&quot; gereci bulunamadı. Lütfen önce gereci yükleyin.</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="558"/>
+        <location filename="../widgets/DirWidget2.cpp" line="564"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="567"/>
+        <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Set as Wallpaper</source>
         <translation>Duvar kağıdı olarak ayarlama</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="575"/>
+        <location filename="../widgets/DirWidget2.cpp" line="581"/>
         <source>Rename...</source>
         <translation>Yeniden adlandır...</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="576"/>
+        <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>Cut Selection</source>
         <translation>Seçimi Kes</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="577"/>
+        <location filename="../widgets/DirWidget2.cpp" line="583"/>
         <source>Copy Selection</source>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="580"/>
+        <location filename="../widgets/DirWidget2.cpp" line="586"/>
         <source>Paste</source>
         <translation>Yapıştır</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="584"/>
+        <location filename="../widgets/DirWidget2.cpp" line="590"/>
         <source>Delete Selection</source>
         <translation>Seçimi Sil</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="597"/>
+        <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Extract Here</source>
         <translation>Buraya Çıkart</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="599"/>
+        <location filename="../widgets/DirWidget2.cpp" line="605"/>
         <source>Archive Selection</source>
         <translation>Arşiv Seçimi</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="907"/>
+        <location filename="../widgets/DirWidget2.cpp" line="922"/>
         <source>Select Archive</source>
         <translation>Arşiv Seçin</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="921"/>
+        <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Set Wallpaper on Screen</source>
         <translation>Ekranda Duvar Kağıdını Ayarla</translation>
     </message>
     <message>
-        <location filename="../widgets/DirWidget2.cpp" line="921"/>
+        <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Screen</source>
         <translation>Ekran</translation>
     </message>
@@ -653,142 +653,169 @@ Yeni Konum: %2</translation>
         <translation>Görü</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="98"/>
+        <location filename="../MainUI.cpp" line="124"/>
         <source>Shift+Left</source>
         <translation>Shift+Sol</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="99"/>
+        <location filename="../MainUI.cpp" line="125"/>
         <source>Shift+Right</source>
         <translation>Shift+Sağ</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="142"/>
+        <location filename="../MainUI.ui" line="144"/>
         <source>View Mode</source>
         <translation>Görünüm Modu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="184"/>
+        <location filename="../MainUI.ui" line="150"/>
+        <source>Sort Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="193"/>
         <source>New Tab</source>
         <translation>Yeni sekme</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="187"/>
+        <location filename="../MainUI.ui" line="196"/>
         <source>New Browser</source>
         <translation>Yeni Gözatıcı</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="258"/>
+        <location filename="../MainUI.ui" line="267"/>
         <source>Show Image Previews</source>
         <translation>Görüntü Önizlemelerini Göster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="263"/>
+        <location filename="../MainUI.ui" line="272"/>
         <source>Search Directory...</source>
         <translation>Dizinde Ara...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="296"/>
+        <location filename="../MainUI.ui" line="305"/>
         <source>Increase Icon Size</source>
         <translation>Simge Boyutunu Arttır</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="301"/>
+        <location filename="../MainUI.ui" line="310"/>
         <source>Decrease Icon Size</source>
         <translation>Simge Boyutunu Azalt</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="306"/>
+        <location filename="../MainUI.ui" line="315"/>
         <source>Larger Icons</source>
         <translation>Daha Büyük Simgeler</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="309"/>
+        <location filename="../MainUI.ui" line="318"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="317"/>
+        <location filename="../MainUI.ui" line="326"/>
         <source>Smaller Icons</source>
         <translation>Daha Küçük Simgeler</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="320"/>
+        <location filename="../MainUI.ui" line="329"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="328"/>
+        <location filename="../MainUI.ui" line="337"/>
         <source>New Window</source>
         <translation>Yeni Pencere</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="331"/>
+        <location filename="../MainUI.ui" line="340"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="339"/>
+        <location filename="../MainUI.ui" line="348"/>
         <source>Add Bookmark</source>
         <translation>Yer İmi Ekle</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="342"/>
+        <location filename="../MainUI.ui" line="351"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="394"/>
+        <location filename="../MainUI.ui" line="403"/>
         <source>Delete Selection</source>
         <translation>Seçimi Sil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="397"/>
+        <location filename="../MainUI.ui" line="406"/>
         <source>Del</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="405"/>
+        <location filename="../MainUI.ui" line="414"/>
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="416"/>
+        <location filename="../MainUI.ui" line="425"/>
         <source>Close Tab</source>
         <translation>Sekmeyi Kapat</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="427"/>
+        <location filename="../MainUI.ui" line="436"/>
         <source>Repo Status</source>
         <translation>Repo Durumu</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="432"/>
+        <location filename="../MainUI.ui" line="441"/>
         <source>Clone Repository</source>
         <translation>Depoyu Klonla</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="440"/>
+        <location filename="../MainUI.ui" line="449"/>
         <source>Show Directory Tree Window</source>
         <translation>Dizin Ağacı Penceresini Göster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="443"/>
+        <location filename="../MainUI.ui" line="452"/>
         <source>Show Directory Tree Pane</source>
         <translation>Dizin Ağacı Bölmesini Göster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="446"/>
+        <location filename="../MainUI.ui" line="455"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="451"/>
+        <location filename="../MainUI.ui" line="460"/>
         <source>Open as Root</source>
         <translation>Root Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="190"/>
+        <location filename="../MainUI.ui" line="471"/>
+        <source>Verify File Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="476"/>
+        <location filename="../MainUI.cpp" line="89"/>
+        <source>Sort by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="481"/>
+        <location filename="../MainUI.ui" line="484"/>
+        <source>Create Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="487"/>
+        <source>Ctrl+Shift+N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.ui" line="199"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
@@ -798,62 +825,62 @@ Yeni Konum: %2</translation>
         <translation>&amp;Dosya</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="138"/>
+        <location filename="../MainUI.ui" line="140"/>
         <source>&amp;View</source>
         <translation>&amp;Görünüm</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="155"/>
+        <location filename="../MainUI.ui" line="164"/>
         <source>&amp;Bookmarks</source>
         <translation>Y&amp;erimleri</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="163"/>
+        <location filename="../MainUI.ui" line="172"/>
         <source>&amp;External Devices</source>
         <translation>&amp;Harici Cihazlar</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="170"/>
+        <location filename="../MainUI.ui" line="179"/>
         <source>&amp;Git</source>
         <translation>&amp;Git</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="198"/>
+        <location filename="../MainUI.ui" line="207"/>
         <source>Exit</source>
         <translation>Çık</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="201"/>
+        <location filename="../MainUI.ui" line="210"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="209"/>
+        <location filename="../MainUI.ui" line="218"/>
         <source>&amp;Preferences</source>
         <translation>&amp;Tercihler</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="220"/>
+        <location filename="../MainUI.ui" line="229"/>
         <source>Show Hidden Files</source>
         <translation>Gizli Dosyaları Göster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="225"/>
+        <location filename="../MainUI.ui" line="234"/>
         <source>Scan for Devices</source>
         <translation>Aygıtlar için Tara</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="233"/>
+        <location filename="../MainUI.ui" line="242"/>
         <source>Manage Bookmarks</source>
         <translation>Yer İmlerini Yönet</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="247"/>
+        <location filename="../MainUI.ui" line="256"/>
         <source>Show Action Buttons</source>
         <translation>Eylem Düğmelerini Göster</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="266"/>
+        <location filename="../MainUI.ui" line="275"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
@@ -868,182 +895,202 @@ Yeni Konum: %2</translation>
         <translation>Temel Liste</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="419"/>
+        <location filename="../MainUI.ui" line="428"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="408"/>
+        <location filename="../MainUI.ui" line="417"/>
         <source>F5</source>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="375"/>
+        <location filename="../MainUI.ui" line="384"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="350"/>
+        <location filename="../MainUI.ui" line="359"/>
         <source>Rename...</source>
         <translation>Yeniden adlandır...</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="353"/>
+        <location filename="../MainUI.ui" line="362"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="361"/>
+        <location filename="../MainUI.ui" line="370"/>
         <source>Cut Selection</source>
         <translation>Seçimi Kes</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="372"/>
+        <location filename="../MainUI.ui" line="381"/>
         <source>Copy Selection</source>
         <translation>Seçimi Kopyala</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="383"/>
+        <location filename="../MainUI.ui" line="392"/>
         <source>Paste</source>
         <translation>Yapıştır</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="386"/>
+        <location filename="../MainUI.ui" line="395"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../MainUI.ui" line="364"/>
+        <location filename="../MainUI.ui" line="373"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="204"/>
+        <location filename="../MainUI.cpp" line="231"/>
         <source>Invalid Directories</source>
         <translation>Geçersiz Dizinler</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="204"/>
+        <location filename="../MainUI.cpp" line="231"/>
         <source>The following directories are invalid and could not be opened:</source>
         <translation>İzleyen dizinler geçersiz ve açılamadı:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="238"/>
+        <location filename="../MainUI.cpp" line="267"/>
         <source>CTRL+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="247"/>
+        <location filename="../MainUI.cpp" line="276"/>
         <source>CTRL+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="365"/>
+        <location filename="../MainUI.cpp" line="416"/>
         <source>Root</source>
         <translation>Kök</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="372"/>
+        <location filename="../MainUI.cpp" line="423"/>
         <source>%1 (Type: %2)</source>
         <translation>%1 (Tür: %2)</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="376"/>
+        <location filename="../MainUI.cpp" line="427"/>
         <source>Filesystem: %1</source>
         <translation>Dosya sistemi: %1</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="612"/>
+        <location filename="../MainUI.cpp" line="724"/>
         <source>New Bookmark</source>
         <translation>Yeni Yer İmi</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="612"/>
+        <location filename="../MainUI.cpp" line="724"/>
         <source>Name:</source>
         <translation>Ad:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="617"/>
+        <location filename="../MainUI.cpp" line="729"/>
         <source>Invalid Name</source>
         <translation>Geçersiz Ad</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="617"/>
+        <location filename="../MainUI.cpp" line="729"/>
         <source>This bookmark name already exists. Please choose another.</source>
         <translation>Bu yer imi adı zaten mevcut. Lütfen başka bir ad seçin.</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="638"/>
+        <location filename="../MainUI.cpp" line="750"/>
         <source>Git Repository Status</source>
         <translation>Git Kod Deposu Durumu</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="728"/>
+        <location filename="../MainUI.cpp" line="840"/>
         <source>Multimedia</source>
         <translation>Multimedya</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="746"/>
+        <location filename="../MainUI.cpp" line="858"/>
         <source>Slideshow</source>
         <translation>Slayt gösterisi</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="926"/>
+        <location filename="../MainUI.cpp" line="1039"/>
         <source>Items to be removed:</source>
         <translation>Kaldırılacak öğeler:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="452"/>
+        <location filename="../MainUI.cpp" line="503"/>
         <source>Verify Quit</source>
         <translation>Çıkışı Doğrula</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="100"/>
+        <location filename="../MainUI.cpp" line="90"/>
+        <source>Sort by Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="91"/>
+        <source>Sort by Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="92"/>
+        <source>Sort by Date Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="93"/>
+        <source>Sort by Date Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../MainUI.cpp" line="126"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="101"/>
+        <location filename="../MainUI.cpp" line="127"/>
         <source>Ctrl+L</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="452"/>
+        <location filename="../MainUI.cpp" line="503"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
         <translation>Açık birden çok sekmeniz mevcut. Çıkmak istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="925"/>
+        <location filename="../MainUI.cpp" line="1038"/>
         <source>Verify Removal</source>
         <translation>Kaldırmayı Doğrula</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="925"/>
+        <location filename="../MainUI.cpp" line="1038"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
         <translation>UYARI: Bu işlemle dosya(lar) sistemden kalıcı olarak silinecek!</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="925"/>
+        <location filename="../MainUI.cpp" line="1038"/>
         <source>Are you sure you want to continue?</source>
         <translation>Devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="885"/>
+        <location filename="../MainUI.cpp" line="997"/>
         <source>Rename File</source>
         <translation>Dosyayı Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="885"/>
+        <location filename="../MainUI.cpp" line="997"/>
         <source>New Name:</source>
         <translation>Yeni Ad:</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="899"/>
+        <location filename="../MainUI.cpp" line="1011"/>
         <source>Overwrite File?</source>
         <translation>Dosyanın Üzerine Yazılsın Mı?</translation>
     </message>
     <message>
-        <location filename="../MainUI.cpp" line="899"/>
+        <location filename="../MainUI.cpp" line="1011"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
         <translation>Aynı ada sahip mevcut bir dosya yenisiyle değiştirilecek. İlerlemek istediğinize emin misiniz?</translation>
     </message>
@@ -1259,67 +1306,67 @@ Yeni Konum: %2</translation>
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation>Multimedya</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation></translation>
     </message>

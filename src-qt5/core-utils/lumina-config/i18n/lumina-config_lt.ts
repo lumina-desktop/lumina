@@ -949,67 +949,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation type="unfinished">Sisteminis</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1049,27 +1049,27 @@
         <translation>Pasirinkite monitorių/darbalaukį, kurį konfigūruoti</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="130"/>
+        <location filename="../mainWindow.cpp" line="146"/>
         <source>Unsaved Changes</source>
         <translation>Neįrašyti pakeitimai</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="130"/>
+        <location filename="../mainWindow.cpp" line="146"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
         <translation>Šiuo metu šiame puslapyje yra neįrašytų pakeitimų, ar norite juos dabar įrašyti?</translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="132"/>
+        <location filename="../mainWindow.cpp" line="148"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="133"/>
+        <location filename="../mainWindow.cpp" line="149"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainWindow.cpp" line="134"/>
+        <location filename="../mainWindow.cpp" line="150"/>
         <source>Cancel</source>
         <translation type="unfinished">Atsisakyti</translation>
     </message>
@@ -1150,12 +1150,7 @@
         <translation>Išjungti komponuojamąją tvarkytuvę (reikalingas seanso paleidimas iš naujo)</translation>
     </message>
     <message>
-        <location filename="../pages/page_compton.ui" line="39"/>
-        <source>Only use compositing with GPU acceleration </source>
-        <translation>Naudoti komponavimą tik su vaizdo plokštės (GPU) spartinimu </translation>
-    </message>
-    <message>
-        <location filename="../pages/page_compton.cpp" line="37"/>
+        <location filename="../pages/page_compton.cpp" line="36"/>
         <source>Window Effects</source>
         <translation>Langų efektai</translation>
     </message>
@@ -1699,56 +1694,61 @@
         <translation>Rodyti programų trikčių duomenis</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="74"/>
+        <location filename="../pages/page_session_options.ui" line="72"/>
+        <source>Disable Startup Quotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.ui" line="81"/>
         <source>Change User Icon</source>
         <translation>Keisti naudotojo piktogramą</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="112"/>
+        <location filename="../pages/page_session_options.ui" line="119"/>
         <source>Time Format:</source>
         <translation>Laiko formatas:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="124"/>
-        <location filename="../pages/page_session_options.ui" line="168"/>
+        <location filename="../pages/page_session_options.ui" line="131"/>
+        <location filename="../pages/page_session_options.ui" line="175"/>
         <source>View format codes</source>
         <translation>Rodyti formato kodus</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="139"/>
-        <location filename="../pages/page_session_options.ui" line="183"/>
+        <location filename="../pages/page_session_options.ui" line="146"/>
+        <location filename="../pages/page_session_options.ui" line="190"/>
         <source>Sample:</source>
         <translation>Pavyzdys:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="156"/>
+        <location filename="../pages/page_session_options.ui" line="163"/>
         <source>Date Format:</source>
         <translation>Datos formatas:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="203"/>
+        <location filename="../pages/page_session_options.ui" line="210"/>
         <source>Display Format</source>
         <translation>Rodymo formatas</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="220"/>
+        <location filename="../pages/page_session_options.ui" line="227"/>
         <source>Window Manager</source>
         <translation>Langų tvarkytuvė</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="248"/>
+        <location filename="../pages/page_session_options.ui" line="255"/>
         <source>Reset Desktop Settings</source>
         <translation>Atstatyti darbalaukio nustatymus</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="267"/>
-        <source>Return to system defaults</source>
-        <translation>Grąžinti sistemos numatytąsias reikšmes</translation>
+        <location filename="../pages/page_session_options.ui" line="274"/>
+        <source>Restore system defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.ui" line="274"/>
-        <source>Return to Lumina defaults</source>
-        <translation>Grąžinti Lumina numatytąsias reikšmes</translation>
+        <location filename="../pages/page_session_options.ui" line="281"/>
+        <source>Restore Lumina defaults</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="18"/>
@@ -1771,147 +1771,157 @@
         <translation>Data, o paskui laikas</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="60"/>
+        <location filename="../pages/page_session_options.cpp" line="62"/>
         <source>Window manager</source>
         <translation>Langų tvarkytuvė</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="93"/>
+        <location filename="../pages/page_session_options.cpp" line="95"/>
         <source>Desktop Settings</source>
         <translation>Darbalaukio nustatymai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="174"/>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <source>Verify Settings Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.cpp" line="176"/>
+        <source>Are you sure you want to reset your desktop settings? This change cannot be reversed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>Select an image</source>
         <translation>Pasirinkite paveikslą</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="175"/>
+        <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Images</source>
         <translation>Paveikslai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Reset User Image</source>
         <translation>Atstatyti naudotojo paveikslą</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="179"/>
+        <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Would you like to reset the user image to the system default?</source>
         <translation>Ar norėtumėte atstatyti naudotojo paveikslą į sistemos numatytąjį?</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="218"/>
+        <location filename="../pages/page_session_options.cpp" line="236"/>
         <source>Valid Time Codes:</source>
         <translation>Tinkami laiko kodai:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="219"/>
+        <location filename="../pages/page_session_options.cpp" line="237"/>
         <source>%1: Hour without leading zero (1)</source>
         <translation>%1: Valanda be priekinio nulio (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="220"/>
+        <location filename="../pages/page_session_options.cpp" line="238"/>
         <source>%1: Hour with leading zero (01)</source>
         <translation>%1: Valanda su priekiniu nuliu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="221"/>
+        <location filename="../pages/page_session_options.cpp" line="239"/>
         <source>%1: Minutes without leading zero (2)</source>
         <translation>%1: Minutės be priekinio nulio (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="222"/>
+        <location filename="../pages/page_session_options.cpp" line="240"/>
         <source>%1: Minutes with leading zero (02)</source>
         <translation>%1: Minutės su priekiniu nuliu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="223"/>
+        <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>%1: Seconds without leading zero (3)</source>
         <translation>%1: Sekundės be priekinio nulio (3)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="224"/>
+        <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Seconds with leading zero (03)</source>
         <translation>%1: Sekundės su priekiniu nuliu (03)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="225"/>
+        <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
         <translation>%1: AM/PM (12-valandų) laikrodis (didžiosiomis ar mažosiomis raidėmis)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="226"/>
+        <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Timezone</source>
         <translation>%1: Laiko juosta</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="227"/>
+        <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>Time Codes</source>
         <translation>Laiko kodai</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="241"/>
+        <location filename="../pages/page_session_options.cpp" line="259"/>
         <source>Valid Date Codes:</source>
         <translation>Tinkami datos kodai:</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="242"/>
+        <location filename="../pages/page_session_options.cpp" line="260"/>
         <source>%1: Numeric day without a leading zero (1)</source>
         <translation>%1: Diena skaitmenimis be priekinio nulio (1)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="243"/>
+        <location filename="../pages/page_session_options.cpp" line="261"/>
         <source>%1: Numeric day with leading zero (01)</source>
         <translation>%1: Diena skaitmenimis su priekiniu nuliu (01)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="244"/>
+        <location filename="../pages/page_session_options.cpp" line="262"/>
         <source>%1: Day as abbreviation (localized)</source>
         <translation>%1: Diena kaip santrumpa (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="245"/>
+        <location filename="../pages/page_session_options.cpp" line="263"/>
         <source>%1: Day as full name (localized)</source>
         <translation>%1: Diena kaip pilnas pavadinimas (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="246"/>
+        <location filename="../pages/page_session_options.cpp" line="264"/>
         <source>%1: Numeric month without leading zero (2)</source>
         <translation>%1: Mėnesis skaitmenimis be priekinio nulio (2)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="247"/>
+        <location filename="../pages/page_session_options.cpp" line="265"/>
         <source>%1: Numeric month with leading zero (02)</source>
         <translation>%1: Mėnesis skaitmenimis su priekiniu nuliu (02)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="248"/>
+        <location filename="../pages/page_session_options.cpp" line="266"/>
         <source>%1: Month as abbreviation (localized)</source>
         <translation>%1: Mėnesis kaip santrumpa (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="249"/>
+        <location filename="../pages/page_session_options.cpp" line="267"/>
         <source>%1: Month as full name (localized)</source>
         <translation>%1: Mėnesis kaip pilnas pavadinimas (lokalizuota)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="250"/>
+        <location filename="../pages/page_session_options.cpp" line="268"/>
         <source>%1: Year as 2-digit number (15)</source>
         <translation>%1: Metai kaip 2-skaitmenų skaičius (15)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="251"/>
+        <location filename="../pages/page_session_options.cpp" line="269"/>
         <source>%1: Year as 4-digit number (2015)</source>
         <translation>%1: Metai kaip 4-skaitmenų skaičius (2015)</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="252"/>
+        <location filename="../pages/page_session_options.cpp" line="270"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
         <translation>Tekstas gali būti patalpintas į kabutes, kad būtų nepaisoma pakeitimų</translation>
     </message>
     <message>
-        <location filename="../pages/page_session_options.cpp" line="253"/>
+        <location filename="../pages/page_session_options.cpp" line="271"/>
         <source>Date Codes</source>
         <translation>Datų kodai</translation>
     </message>
@@ -1924,31 +1934,31 @@
         <translation type="unfinished">Forma</translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="22"/>
-        <location filename="../pages/page_soundtheme.ui" line="67"/>
-        <location filename="../pages/page_soundtheme.ui" line="112"/>
+        <location filename="../pages/page_soundtheme.ui" line="27"/>
+        <location filename="../pages/page_soundtheme.ui" line="34"/>
+        <location filename="../pages/page_soundtheme.ui" line="71"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="36"/>
-        <location filename="../pages/page_soundtheme.ui" line="81"/>
-        <location filename="../pages/page_soundtheme.ui" line="126"/>
+        <location filename="../pages/page_soundtheme.ui" line="61"/>
+        <location filename="../pages/page_soundtheme.ui" line="84"/>
+        <location filename="../pages/page_soundtheme.ui" line="100"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="56"/>
+        <location filename="../pages/page_soundtheme.ui" line="20"/>
         <source>Set Startup Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="101"/>
+        <location filename="../pages/page_soundtheme.ui" line="48"/>
         <source>Set Logout Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_soundtheme.ui" line="146"/>
+        <location filename="../pages/page_soundtheme.ui" line="41"/>
         <source>Set Battery Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2017,7 +2027,7 @@
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="66"/>
-        <location filename="../pages/page_wallpaper.cpp" line="236"/>
+        <location filename="../pages/page_wallpaper.cpp" line="239"/>
         <source>Solid Color: %1</source>
         <translation>Vientisa spalva: %1</translation>
     </message>
@@ -2098,33 +2108,33 @@
         <translation>Apačioje dešinėje</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="142"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
         <translation>Nėra fono</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="142"/>
+        <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
         <translation>(naudoti sistemos numatytąjį)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="156"/>
+        <location filename="../pages/page_wallpaper.cpp" line="160"/>
         <source>Image Directory: %1 valid images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="176"/>
+        <location filename="../pages/page_wallpaper.cpp" line="180"/>
         <source>File does not exist</source>
         <translation>Failo nėra</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="217"/>
+        <location filename="../pages/page_wallpaper.cpp" line="220"/>
         <source>Find Background Image(s)</source>
         <translation>Raskite fono paveikslą(-us)</translation>
     </message>
     <message>
-        <location filename="../pages/page_wallpaper.cpp" line="248"/>
-        <location filename="../pages/page_wallpaper.cpp" line="266"/>
+        <location filename="../pages/page_wallpaper.cpp" line="251"/>
+        <location filename="../pages/page_wallpaper.cpp" line="269"/>
         <source>Find Background Image Directory</source>
         <translation>Raskite fono paveikslų katalogą</translation>
     </message>

@@ -5,14 +5,14 @@
     <name>MainUI</name>
     <message>
         <location filename="../mainUI.ui" line="14"/>
-        <location filename="../mainUI.cpp" line="285"/>
+        <location filename="../mainUI.cpp" line="286"/>
         <source>Media Player</source>
         <translation>Přehrávač multimédií</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="50"/>
         <location filename="../mainUI.ui" line="261"/>
-        <location filename="../mainUI.cpp" line="631"/>
+        <location filename="../mainUI.cpp" line="632"/>
         <source>Now Playing</source>
         <translation>Nyní se přehrává</translation>
     </message>
@@ -258,7 +258,7 @@
     </message>
     <message>
         <location filename="../mainUI.ui" line="828"/>
-        <location filename="../mainUI.cpp" line="276"/>
+        <location filename="../mainUI.cpp" line="277"/>
         <source>Pandora Radio</source>
         <translation>Rádio Pandora</translation>
     </message>
@@ -303,54 +303,54 @@
         <translation>Vysoké</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="358"/>
+        <location filename="../mainUI.cpp" line="359"/>
         <source>Open Multimedia Files</source>
         <translation>Otevřít soubory s multimédii</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="406"/>
+        <location filename="../mainUI.cpp" line="407"/>
         <source>Now Playing:</source>
         <translation>Nyní se přehrává:</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="471"/>
+        <location filename="../mainUI.cpp" line="472"/>
         <source>[PLAYBACK ERROR]
 %1</source>
         <translation>[CHYBA PŘEHRÁVÁNÍ]
 %1</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="488"/>
+        <location filename="../mainUI.cpp" line="489"/>
         <source>Media Loading...</source>
         <translation>Načítání média…</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="490"/>
+        <location filename="../mainUI.cpp" line="491"/>
         <source>Media Stalled...</source>
         <translation>Médium se zastavilo…</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="492"/>
+        <location filename="../mainUI.cpp" line="493"/>
         <source>Media Buffering...</source>
         <translation>Ukládání média do vyrovnávací paměti…</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="576"/>
+        <location filename="../mainUI.cpp" line="577"/>
         <source>Pandora: Create Station</source>
         <translation>Pandora: vytvořit stanici</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="576"/>
+        <location filename="../mainUI.cpp" line="577"/>
         <source>Search Term</source>
         <translation>Hledat výraz</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="654"/>
+        <location filename="../mainUI.cpp" line="655"/>
         <source>Pandora Question</source>
         <translation>Dotaz z Pandora</translation>
     </message>
     <message>
-        <location filename="../mainUI.cpp" line="659"/>
+        <location filename="../mainUI.cpp" line="660"/>
         <source>Pandora Error</source>
         <translation>Chyba v Pandora</translation>
     </message>
@@ -358,7 +358,7 @@
 <context>
     <name>PianoBarProcess</name>
     <message>
-        <location filename="../PianoBarProcess.cpp" line="358"/>
+        <location filename="../PianoBarProcess.cpp" line="360"/>
         <source>Could not find any matches. Please try a different search term</source>
         <translation>Nepodařilo se najít nic odpovídajícího. Zkuste hledat jiný výraz</translation>
     </message>
@@ -366,67 +366,67 @@
 <context>
     <name>XDGDesktopList</name>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="608"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
         <translation>Multimédia</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="609"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
         <translation>Vývoj</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="610"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
         <translation>Výuka</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="611"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
         <translation>Hry</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="612"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
         <translation>Grafika</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="613"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
         <translation>Sítě</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="614"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
         <translation>Kancelář</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="615"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
         <translation>Věda</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="616"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="617"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
         <translation>Systém</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
         <translation>Nástroje</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
         <translation>Wine</translation>
     </message>
     <message>
-        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
+        <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
         <translation>Různé</translation>
     </message>
