@@ -89,7 +89,7 @@
     <message>
         <location filename="../mainUI.ui" line="482"/>
         <source>rm</source>
-        <translation>=rm</translation>
+        <translation>rm</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="492"/>
