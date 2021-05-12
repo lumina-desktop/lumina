@@ -45,7 +45,7 @@
     <message>
         <location filename="../DnDTabBar.h" line="43"/>
         <source>Detach Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort flik</translation>
     </message>
 </context>
 <context>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Hide the find/replace options</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj alternativet sök/ersätt</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="211"/>
@@ -107,22 +107,22 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Tabs Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Plats för flikar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="193"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Fil</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Visa</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Redigera</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
@@ -229,42 +229,42 @@
         <location filename="../MainUI.ui" line="393"/>
         <location filename="../MainUI.ui" line="396"/>
         <source>Show warnings about unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa varningar om osparade ändringar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="407"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Högst upp</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="415"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Längst ner</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="423"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="431"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Höger</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="439"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="450"/>
         <source>Show Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa Verktygsfält</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="464"/>
@@ -284,7 +284,7 @@
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>Read-Only File</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄS-ENDAST fil</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
@@ -304,13 +304,13 @@
     <message>
         <location filename="../MainUI.cpp" line="333"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut innehåll</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="503"/>
         <location filename="../MainUI.cpp" line="514"/>
         <source>Lose Unsaved Changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlora osparade förändringar?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="503"/>
@@ -327,7 +327,7 @@ Vill du stänga den ändå ?
     <message>
         <location filename="../MainUI.cpp" line="700"/>
         <source>Save Changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara ändringar innan du stänger?</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="701"/>
@@ -335,7 +335,10 @@ Vill du stänga den ändå ?
 Do you want save them before you close the editor?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns osparade ändringar.
+                           Vill du spara dom innan du stänger editorn?
+                           
+                           %1</translation>
     </message>
 </context>
 <context>
@@ -358,7 +361,7 @@ Do you want save them before you close the editor?
     <message>
         <location filename="../PlainTextEditor.cpp" line="367"/>
         <source>The following file has been changed by some other utility. Do you want to re-load it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Följande fil har ändrats av något annat verktyg. Vill du ladda om den?</translation>
     </message>
     <message>
         <location filename="../PlainTextEditor.cpp" line="369"/>
@@ -376,67 +379,67 @@ Do you want save them before you close the editor?
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontor</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Oserterade</translation>
     </message>
 </context>
 </TS>
