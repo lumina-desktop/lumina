@@ -6,7 +6,7 @@
     <message>
         <location filename="../mainUI.ui" line="14"/>
         <source>Image Viewer</source>
-        <translation>Bildvisare></translation>
+        <translation>Bildvisare</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="34"/>
