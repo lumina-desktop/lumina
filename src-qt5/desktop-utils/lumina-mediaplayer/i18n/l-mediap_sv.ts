@@ -359,7 +359,7 @@
     <message>
         <location filename="../PianoBarProcess.cpp" line="360"/>
         <source>Could not find any matches. Please try a different search term</source>
-        <translation type=Det gick inte att hitta några matchningar. Försök med en annan sökterm</translation>
+        <translation>Det gick inte att hitta några matchningar. Försök med en annan sökterm</translation>
     </message>
 </context>
 <context>
@@ -387,7 +387,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type=Grafik</translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
