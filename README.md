@@ -58,7 +58,7 @@ Translations <a name="translations"></a>
 ----
 **Legacy Versions (1.0.0 and older)**
 
-All the translation files for Lumina are available through the trueos/lumina-i18n reposotiry (Qt5+ only). Please follow the directions in that repository for installing localization files.
+All the translation files for Lumina are available through the trueos/lumina-i18n repository (Qt5+ only). Please follow the directions in that repository for installing localization files.
 
 **Version 1.1.0+**
 
