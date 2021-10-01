@@ -12,8 +12,8 @@ BASE_DIR = $${L_SHAREDIR}/icons/lumina-icons
 base.path = $${BASE_DIR}
 base.files = LICENSE index.theme
 
-actions.path = $${BASE_DIR}/scalable/actions
-actions.files = actions/*.svg
+icons.path = $${BASE_DIR}/scalable/
+icons.files = /*.svg
 
 #applications.path = $${BASE_DIR}/scalable/applications
 #applications.files = applications/*.svg
