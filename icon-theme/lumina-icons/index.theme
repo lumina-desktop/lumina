@@ -1,0 +1,16 @@
+[Icon Theme]
+Name=Lumina-Icone
+Comment=Icons for the Lumina Desktop
+Inherits=hicolor
+
+Example=folder
+
+Directories=scalable/actions
+
+
+[scalable/actions]
+Size=128
+Type=Scalable
+MinSize=1
+MaxSize=256
+Context=Actions
