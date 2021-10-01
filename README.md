@@ -7,7 +7,7 @@ https://lumina-desktop.org/
 
 **Community Chat Channels:**
  - Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
- - Matrix: ["Lumina Desktop" public channel on Matrix](#lumina-desktop:matrix.org)
+ - "Lumina Desktop" public channel on Matrix @ #lumina-desktop:matrix.org
 
 **Lumina Project Info: Table of Contents**
 
