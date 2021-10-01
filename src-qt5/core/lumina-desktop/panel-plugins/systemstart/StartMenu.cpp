@@ -49,8 +49,8 @@ void StartMenu::UpdateAll(){
   ui->tool_goto_settings->setIcon(LXDG::findIcon("preferences-system",""));
   ui->tool_launch_fm->setIcon(LXDG::findIcon("user-home",""));
   ui->tool_launch_desksettings->setIcon(LXDG::findIcon("preferences-desktop",""));
-  ui->tool_lock->setIcon(LXDG::findIcon("system-lock-screen",""));
-  ui->tool_goto_logout->setIcon(LXDG::findIcon("system-log-out",""));
+  ui->tool_lock->setIcon(LXDG::findIcon("lumina-system-lock-screen",""));
+  ui->tool_goto_logout->setIcon(LXDG::findIcon("lumina-system-log-out",""));
   ui->tool_back->setIcon(LXDG::findIcon("go-previous",""));
   ui->tool_launch_deskinfo->setIcon(LXDG::findIcon("system-help",""));
 
@@ -59,10 +59,10 @@ void StartMenu::UpdateAll(){
   ui->label_locale_icon->setPixmap( LXDG::findIcon("preferences-desktop-locale","").pixmap(ui->tool_goto_apps->iconSize()) );
   ui->tool_set_nextwkspace->setIcon(LXDG::findIcon("go-next-view",""));
   ui->tool_set_prevwkspace->setIcon(LXDG::findIcon("go-previous-view",""));
-  ui->tool_logout->setIcon(LXDG::findIcon("system-log-out",""));
-  ui->tool_restart->setIcon(LXDG::findIcon("system-reboot",""));
-  ui->tool_shutdown->setIcon(LXDG::findIcon("system-shutdown",""));
-  ui->tool_suspend->setIcon(LXDG::findIcon("system-suspend",""));
+  ui->tool_logout->setIcon(LXDG::findIcon("lumina-system-log-out",""));
+  ui->tool_restart->setIcon(LXDG::findIcon("lumina-system-reboot",""));
+  ui->tool_shutdown->setIcon(LXDG::findIcon("lumina-system-shutdown",""));
+  ui->tool_suspend->setIcon(LXDG::findIcon("lumina-system-suspend",""));
 
   //Update Visibility of system/session/OS options
   // -- Control Panel

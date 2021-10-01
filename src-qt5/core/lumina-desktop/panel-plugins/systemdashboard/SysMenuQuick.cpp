@@ -32,7 +32,7 @@ LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSys
   ui->label_bright_icon->setPixmap( LXDG::findIcon("redshift","preferences-desktop-brightness").pixmap(ui->label_bright_icon->maximumSize()) );
   ui->tool_wk_prev->setIcon( LXDG::findIcon("go-previous-view",""));
   ui->tool_wk_next->setIcon( LXDG::findIcon("go-next-view","") );
-  ui->tool_logout->setIcon( LXDG::findIcon("system-log-out","") );
+  ui->tool_logout->setIcon( LXDG::findIcon("lumina-system-log-out","") );
 }
 
 LSysMenuQuick::~LSysMenuQuick(){
