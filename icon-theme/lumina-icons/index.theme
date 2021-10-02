@@ -1,16 +1,14 @@
 [Icon Theme]
-Name=Lumina-Icone
+Name=Lumina-Icons
 Comment=Icons for the Lumina Desktop
-Inherits=hicolor
+Inherits=la-capitaine,,La-Capitaine,LaCapitaine,lacapitaine,la capitaine,La Capitaine
 
-Example=folder
-
-Directories=icons
+Directories=actions/symbolic
 
 
 [scalable/actions]
-Size=128
+Size=32
+Context=Actions
 Type=Scalable
 MinSize=1
 MaxSize=256
-Context=Actions
