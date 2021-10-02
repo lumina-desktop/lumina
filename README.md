@@ -50,7 +50,7 @@ Latest Versions <a name="latestversions"></a>
 ----
 Click [HERE](https://github.com/lumina-desktop/lumina/releases) to see all the available releases for the Lumina Desktop.
 
-Click [HERE]() to see all the available branches of the Lumina Desktop source tree (includes development versions: X.Y.(Z > 0)).
+Click [HERE](https://github.com/lumina-desktop/lumina/branches) to see all the available branches of the Lumina Desktop source tree (includes development versions: X.Y.(Z > 0)).
 The master branch is where all development is performed and tested before the next version is tagged. Additionally, every version (development **and** release) of the project gets branched off of master at the time the version is tagged, so older versions may be fetched/patched/used as desired.
 
 Occasionally there may be patches committed for particular versions which are not included in the static "release" archives. On the release page these can be identified by a note stating the release is a number of commits behind it's corresponding branch. In this situation, it may be preferable to fetch/use the corresponding branch of the source tree rather than the static archive if the patch(es) which were committed impact your particular operating system.
