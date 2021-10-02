@@ -87,7 +87,7 @@ fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
 fluxconf.path = $${L_SHAREDIR}/lumina-desktop/
 
-fluxtheme.path = fluxboxconf/lumina-dark
+fluxtheme.files = fluxboxconf/lumina-dark
 fluxtheme.path = $${L_SHAREDIR}/lumina-desktop/ 
 
 defaults.files = defaults/luminaDesktop.conf \
