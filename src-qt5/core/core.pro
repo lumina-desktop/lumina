@@ -30,9 +30,6 @@ themes.files=themes/*.qss.template
 fcfg.path=$${L_SHAREDIR}/lumina-desktop/lumina-dark
 fcfg.files=extrafiles/lumina-dark
 
-extrafiles.path = $${L_SHAREDIR}/lumina-desktop
-extrafiles.files = extrafiles/*
-
 #QtQuick plugins
 #quickplugins.path=$${L_SHAREDIR}/lumina-desktop/quickplugins/
 #quickplugins.files=quickplugins/*
