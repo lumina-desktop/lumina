@@ -16,12 +16,12 @@ SystemWindow::SystemWindow() : QDialog(), ui(new Ui::SystemWindow){
   //Setup the window flags
   this->setWindowFlags( Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   //Setup the icons based on the current theme
-  ui->tool_logout->setIcon( LXDG::findIcon("lumina-system-log-out","") );
-  ui->tool_restart->setIcon( LXDG::findIcon("lumina-system-reboot","") );
-  ui->tool_shutdown->setIcon( LXDG::findIcon("lumina-system-shutdown","") );
-  ui->tool_suspend->setIcon( LXDG::findIcon("lumina-system-suspend","") );
-  ui->push_cancel->setIcon( LXDG::findIcon("lumina-system-cancel","dialog-cancel") );
-  ui->push_lock->setIcon( LXDG::findIcon("lumina-system-lock-screen","") );
+  ui->tool_logout->setIcon( LXDG::findIcon("system-log-out","") );
+  ui->tool_restart->setIcon( LXDG::findIcon("system-reboot","") );
+  ui->tool_shutdown->setIcon( LXDG::findIcon("system-shutdown","") );
+  ui->tool_suspend->setIcon( LXDG::findIcon("system-suspend","") );
+  ui->push_cancel->setIcon( LXDG::findIcon("system-cancel","dialog-cancel") );
+  ui->push_lock->setIcon( LXDG::findIcon("system-lock-screen","") );
   //Connect the signals/slots
   connect(ui->tool_logout, SIGNAL(clicked()), this, SLOT(sysLogout()) );
   connect(ui->tool_restart, SIGNAL(clicked()), this, SLOT(sysRestart()) );

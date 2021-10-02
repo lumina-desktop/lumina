@@ -312,7 +312,7 @@ void LPlugins::LoadMenuPlugins(){
     info.name = QObject::tr("Lock Session");
     info.description = QObject::tr("Lock the current desktop session");
     info.ID = "lockdesktop";
-    info.icon = "lumina-system-lock-screen";
+    info.icon = "system-lock-screen";
   MENU.insert(info.ID, info);
 }
 

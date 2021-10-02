@@ -1017,7 +1017,7 @@
              <string>Update and Restart</string>
             </property>
             <property name="icon">
-             <iconset theme="lumina-system-reboot"/>
+             <iconset theme="system-reboot"/>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextBesideIcon</enum>

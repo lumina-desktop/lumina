@@ -32,7 +32,7 @@ Menu {
 
     MenuItem {
       text: "Lock Screen"
-      //iconName: "lumina-system-lock-screen"
+      //iconName: "system-lock-screen"
       onTriggered: {
         RootObject.lockscreen()
       }
@@ -40,7 +40,7 @@ Menu {
 
     MenuItem {
       text: "Logout"
-      //iconName: "lumina-system-log-out"
+      //iconName: "system-log-out"
       onTriggered: {
         RootObject.logout()
       }

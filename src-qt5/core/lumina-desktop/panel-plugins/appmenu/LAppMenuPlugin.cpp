@@ -136,7 +136,7 @@ void LAppMenuPlugin::UpdateMenu(){
   //Now add any logout options
   mainmenu->addSeparator();
   //QMenu *tmpmenu = mainmenu->addMenu(LXDG::findIcon("system-log-out",""), tr("Leave"));
-    tmpact =mainmenu->addAction(LXDG::findIcon("lumina-system-log-out"),tr("Leave"));
+    tmpact =mainmenu->addAction(LXDG::findIcon("system-log-out"),tr("Leave"));
       tmpact->setWhatsThis("internal::logout");
 
 }

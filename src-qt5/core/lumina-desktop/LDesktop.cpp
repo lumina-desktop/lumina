@@ -302,7 +302,7 @@ void LDesktop::UpdateMenu(bool fast){
   usewinmenu=false;
   for(int i=0; i<items.length(); i++){
     if(items[i]=="terminal"){ deskMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Terminal"), this, SLOT(SystemTerminal()) ); }
-    else if(items[i]=="lockdesktop"){ deskMenu->addAction(LXDG::findIcon("lumina-system-lock-screen",""), tr("Lock Session"), this, SLOT(SystemLock()) ); }
+    else if(items[i]=="lockdesktop"){ deskMenu->addAction(LXDG::findIcon("system-lock-screen",""), tr("Lock Session"), this, SLOT(SystemLock()) ); }
     else if(items[i]=="filemanager"){ deskMenu->addAction( LXDG::findIcon("user-home",""), tr("Browse Files"), this, SLOT(SystemFileManager()) ); }
     else if(items[i]=="applications"){ deskMenu->addMenu( LSession::handle()->applicationMenu() ); }
     else if(items[i]=="line"){ deskMenu->addSeparator(); }
@@ -337,7 +337,7 @@ void LDesktop::UpdateMenu(bool fast){
   }
   //Now add the system quit options
   deskMenu->addSeparator();
-  deskMenu->addAction(LXDG::findIcon("lumina-system-log-out",""), tr("Leave"), this, SLOT(SystemLogout()) );
+  deskMenu->addAction(LXDG::findIcon("system-log-out",""), tr("Leave"), this, SLOT(SystemLogout()) );
 }
 
 void LDesktop::UpdateWinMenu(){

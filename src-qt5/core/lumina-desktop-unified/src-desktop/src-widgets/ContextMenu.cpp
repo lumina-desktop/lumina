@@ -33,7 +33,7 @@ void DesktopContextMenu::UpdateMenu(bool fast){
     }
     else if(items[i]=="lockdesktop"){
       QAction *act = this->addAction( tr("Lock Session"), this, SIGNAL(LockSession()) );
-      LIconCache::instance()->loadIcon(act, "lumina-system-lock-screen");
+      LIconCache::instance()->loadIcon(act, "system-lock-screen");
     }
     else if(items[i]=="filemanager"){
       QAction *act = this->addAction( tr("Browse Files"));
@@ -75,7 +75,7 @@ void DesktopContextMenu::UpdateMenu(bool fast){
   }
   //Now add the system quit options
   this->addSeparator();
-  this->addAction(LXDG::findIcon("lumina-system-log-out",""), tr("Leave"), this, SIGNAL(showLeaveDialog()) );
+  this->addAction(LXDG::findIcon("system-log-out",""), tr("Leave"), this, SIGNAL(showLeaveDialog()) );
 }
 
 // === PRIVATE ===
