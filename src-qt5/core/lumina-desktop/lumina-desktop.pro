@@ -87,6 +87,9 @@ fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys
 fluxconf.path = $${L_SHAREDIR}/lumina-desktop/
 
+fluxtheme.path = fluxboxconf/lumina-dark
+fluxtheme.path = $${L_SHAREDIR}/lumina-desktop/ 
+
 defaults.files = defaults/luminaDesktop.conf \
 		defaults/compton.conf \
 		audiofiles/Logout.ogg \
@@ -188,7 +191,7 @@ dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INST
 manpage.path=$${L_MANDIR}/man1/
 manpage.extra="$${MAN_ZIP} $$PWD/lumina-desktop.1 > $(INSTALL_ROOT)$${L_MANDIR}/man1/lumina-desktop.1.gz"
 
-INSTALLS += target desktop icons defaults conf fluxconf manpage extrafiles
+INSTALLS += target desktop icons defaults conf fluxconf fluxtheme manpage extrafiles
 
 WITH_I18N{
   INSTALLS += dotrans
