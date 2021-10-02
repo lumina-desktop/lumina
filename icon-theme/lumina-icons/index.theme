@@ -1,12 +1,11 @@
 [Icon Theme]
 Name=Lumina-Icons
 Comment=Icons for the Lumina Desktop
-Inherits=la-capitaine,,La-Capitaine,LaCapitaine,lacapitaine,la capitaine,La Capitaine
+Inherits=La-Capitaine 
 
 Directories=actions/symbolic
 
-
-[scalable/actions]
+[actions/symbolic]
 Size=32
 Context=Actions
 Type=Scalable

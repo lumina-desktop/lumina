@@ -19,7 +19,7 @@ BootSplash::BootSplash() : QWidget(0, Qt::SplashScreen | Qt::X11BypassWindowMana
 
 void BootSplash::generateTipOfTheDay(){
   QSettings sessionsettings("lumina-desktop","sessionsettings");
-  bool disablequotes = false;
+  bool disablequotes = true;
   if(sessionsettings.contains("DisableQuotes")){
     disablequotes = sessionsettings.value("DisableQuotes").toBool();
   }
