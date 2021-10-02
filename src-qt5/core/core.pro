@@ -27,7 +27,7 @@ themes.path=$${L_SHAREDIR}/lumina-desktop/themes/
 themes.files=themes/*.qss.template
 
 #FluxBox Config
-fcfg.path=$${L_SHAREDIR}/lumina-desktop/lumina-dark/
+fcfg.path=$${L_SHAREDIR}/lumina-desktop/lumina-dark
 fcfg.files=extrafiles/theme.cfg
 
 #QtQuick plugins
