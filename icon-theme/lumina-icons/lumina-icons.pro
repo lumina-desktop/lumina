@@ -12,8 +12,8 @@ BASE_DIR = $${L_SHAREDIR}/icons/lumina-icons
 base.path = $${BASE_DIR}
 base.files = LICENSE index.theme
 
-icons.path = $${BASE_DIR}/scalable/
-icons.files = /*.svg
+icons.path = $${BASE_DIR}
+icons.files = icons/*.svg
 
 #applications.path = $${BASE_DIR}/scalable/applications
 #applications.files = applications/*.svg
@@ -42,6 +42,6 @@ icons.files = /*.svg
 #status.path = $${BASE_DIR}/scalable/status
 #status.files = status/*.svg
 
-INSTALLS = base actions
+INSTALLS = base icons
 
 #INSTALLS = base actions applications categories devices emblems emotes international mimetypes places status
