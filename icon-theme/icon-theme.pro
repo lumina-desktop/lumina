@@ -1,5 +1,6 @@
 TEMPLATE = subdirs
 CONFIG += recursive
 
-SUBDIRS+= material-design-light \
+SUBDIRS+= lumina-icons \
+		material-design-light \
 		material-design-dark

@@ -1,0 +1,13 @@
+[Icon Theme]
+Name=Lumina-Icons
+Comment=Icons for the Lumina Desktop
+Inherits=La-Capitaine 
+
+Directories=actions/symbolic
+
+[actions/symbolic]
+Size=32
+Context=Actions
+Type=Scalable
+MinSize=1
+MaxSize=256

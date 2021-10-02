@@ -47,6 +47,7 @@ Other Files that get installed if "core" is built directly:
    * `fluxbox`: Used for window management within the desktop session
    * `xscreensaver`: Screensaver/locker for the desktop session
 2. Optional (but recommended) Utilities
+   * `la-capitaine` : This icon set should be available in most package repositories. https://github.com/keeferrourke/la-capitaine-icon-theme
    * `numlockx`: Used to toggle the numlock key on session start
    * `compton` *or* `xcompmgr`: Compositor to provide cross-application transparency effects and graphical smoothing
    * `xterm`, `qterminal` or some other graphical terminal: XDG standards require the availability of a graphical terminal to launch particular types of applications.
