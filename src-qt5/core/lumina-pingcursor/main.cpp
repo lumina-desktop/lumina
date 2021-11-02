@@ -4,6 +4,10 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+// This function provides a simple visual ping for 8k and higher desktops to find the cursor.
+// This is clearly a 1st world problem, but it's still a problem that people with ultra high 
+// resolution desktops will face if they utilize a lower than normal DPI.
+//===========================================
 
 #include <QApplication>
 #include <QPixmap>

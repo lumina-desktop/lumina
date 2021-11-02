@@ -25,7 +25,7 @@ Description <a name="description"></a>
 
 The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
 
-
+![](https://github.com/lumina-desktop/lumina-themes/blob/master/artwork/screenshots/Screenshot-2021-10-02-15-55-58.png)
 Operating Systems and Distributions <a name="osdistros"></a>
 ----
 Supported operating systems include (but are not limited to):
