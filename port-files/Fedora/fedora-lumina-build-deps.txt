@@ -1,0 +1,1 @@
+qt5-qtbase-static rpm qt5-qtbase-private-devel libXcursor-devel pam-devel qt5-qtx11extras qt5-qtmultimedia qt5-qtmultimedia-devel qt5-qtsvg qt5-qtsvg-devel qt5-qtx11extras-devel xcb-util-wm-devel xcb-util-image-devel xorg-x11-proto-devel
