@@ -20,7 +20,7 @@
    <string>Requesting System Permissions</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="qsudo.qrc">
+   <iconset resource="lsudo.qrc">
     <normaloff>:/lock.png</normaloff>:/lock.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -69,7 +69,7 @@
          </size>
         </property>
         <property name="pixmap">
-         <pixmap resource="qsudo.qrc">:/lock.png</pixmap>
+         <pixmap resource="lsudo.qrc">:/lock.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -191,7 +191,7 @@ spacing: 1px;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="qsudo.qrc"/>
+  <include location="lsudo.qrc"/>
  </resources>
  <connections/>
 </ui>

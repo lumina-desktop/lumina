@@ -34,7 +34,7 @@ void MainWindow::ProgramInit()
 
   // Grab our arguments
   args = qApp->arguments();
-  if(args.length()>1){ args.removeAt(0); } //remove the "qsudo" line
+  if(args.length()>1){ args.removeAt(0); } //remove the "lsudo" line
   QString commText = args.join(" ");
 
   // Check if we can bypass the GUI and use saved creds
@@ -55,8 +55,8 @@ void MainWindow::ProgramInit()
   commandLabel->setVisible(false);
   commandLabel->setText(commText);
   //Initialize the settings file for this user
-  settings = new QSettings("TrueOS", "qsudo");
-  //if(!settings->contains("qsudosamplevalue")){ settings->setValue("qsudosamplevalue","-1"); }
+  settings = new QSettings("Lumina", "lsudo");
+  //if(!settings->contains("lsudosamplevalue")){ settings->setValue("lsudosamplevalue","-1"); }
   //qDebug() << "Settings File:" << settings->fileName() << commText;
   //Check that there is not a dialog already open for this command
   if(settings->contains(commText)){
@@ -65,7 +65,7 @@ void MainWindow::ProgramInit()
     QStringList proclist = runQuickCmd("ps -p "+PID+" -j");
     //qDebug() << "PID Match:" << PID << proclist;
     if( proclist.length()>1 ){ //Make sure this PID is active
-      if(proclist[1].contains(commText)){ //Make sure the PID is the same qsudo command
+      if(proclist[1].contains(commText)){ //Make sure the PID is the same lsudo command
 	qDebug() << "An identical process command is currently active: closing this one.";
         exit(0); //A QSudo process for this command is already running (stop this one)
       }
