@@ -22,8 +22,8 @@ FORMS    += mainUI.ui
 desktop.files = lumina-network-manager.desktop
 desktop.path = /usr/share/applications
 
-scripts.files = lumina-enable-dhcpcdconf
-scripts.path = /usr/bin
+#scripts.files = lumina-enable-dhcpcdconf
+#scripts.path = /usr/bin
 
 include(../common/SingleApp.pri)
 
