@@ -1,6 +1,6 @@
 [Desktop Entry]
-Exec=trident-networkmgr
-TryExec=trident-networkmgr
+Exec=lumina-network-manager
+TryExec=lumina-network-manager
 Icon=preferences-system-network
 Terminal=false
 Type=Application
