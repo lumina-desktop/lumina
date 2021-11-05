@@ -1,0 +1,11 @@
+[Desktop Entry]
+Exec=trident-networkmgr
+TryExec=trident-networkmgr
+Icon=preferences-system-network
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Settings;Utility;
+Name=Network Settings
+GenericName=
+Comment=Network Settings
