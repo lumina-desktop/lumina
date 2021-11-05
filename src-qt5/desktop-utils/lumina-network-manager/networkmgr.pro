@@ -1,6 +1,6 @@
 QT       += core gui widgets network concurrent
 
-TARGET = trident-networkmgr
+TARGET = lumina-network-manager
 target.path = /usr/bin
 
 isEmpty(LRELEASE){ LRELEASE = $$[QT_INSTALL_BINS]/lrelease }
@@ -16,13 +16,13 @@ HEADERS  += mainUI.h \
 
 FORMS    += mainUI.ui
 
-#sudoconf.files = sudoers.d/trident-networkmgr
+#sudoconf.files = sudoers.d/lumina-network-manager
 #sudoconf.path = /etc/sudoers.d
 
-desktop.files = trident-networkmgr.desktop
+desktop.files = lumina-network-manager.desktop
 desktop.path = /usr/share/applications
 
-scripts.files = trident-enable-dhcpcdconf
+scripts.files = lumina-enable-dhcpcdconf
 scripts.path = /usr/bin
 
 include(../common/SingleApp.pri)
@@ -91,8 +91,8 @@ TRANSLATIONS =  i18n/tri-nmgr_af.ts \
                 i18n/tri-nmgr_zh_TW.ts \
                 i18n/tri-nmgr_zu.ts
 
-dotrans.path=/usr/share/trident-networkmgr/i18n/
-dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/share/trident-networkmgr/i18n/
+dotrans.path=/usr/share/lumina-network-manager/i18n/
+dotrans.extra=cd $$PWD/i18n && $${LRELEASE} -nounfinished *.ts && cp *.qm $(INSTALL_ROOT)/usr/share/lumina-network-manager/i18n/
 
 #Some conf to redirect intermediate stuff in separate dirs
 UI_DIR=./.build/ui/
