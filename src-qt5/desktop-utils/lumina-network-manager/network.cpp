@@ -145,7 +145,7 @@ bool Networking::set_config(QJsonObject config){
   QStringList contents = readFile(DHCPConf);
   int startindex = -1;
   for(int i=0; i<contents.length(); i++){
-    if(contents[i].startsWith("# -- Trident-networkmgr config below --")){
+    if(contents[i].startsWith("# -- lumina-network-manager config below --")){
       startindex = i-1; break; //make sure we "start" one line above this
     }
   }
@@ -157,7 +157,7 @@ bool Networking::set_config(QJsonObject config){
   }
   if(!config.keys().isEmpty()){
     changed = true; //have to add entries to the bottom of the file
-    contents << "# -- Trident-networkmgr config below --";
+    contents << "# -- lumina-network-manager config below --";
     contents << "# -- Place all manual changes above this --";
     QStringList pings = config.keys();
     contents << "arping "+pings.join(" ");
