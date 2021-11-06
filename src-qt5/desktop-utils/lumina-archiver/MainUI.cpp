@@ -25,7 +25,7 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
     delayClose->setSingleShot(true);
     connect(delayClose, SIGNAL(timeout()), this, SLOT(close()) );
 
-  QString title = tr("Archive Manager");
+  QString title = tr("Lumina Archiver");
   if( getuid()==0){ title.append(" ("+tr("Admin Mode")+")"); }
   this->setWindowTitle(title);
   BACKEND = new Backend(this);
