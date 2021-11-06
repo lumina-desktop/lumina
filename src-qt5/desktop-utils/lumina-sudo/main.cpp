@@ -1,3 +1,9 @@
+//===========================================
+//  Originally written as qsudo by the TrueOS Project
+//  Copyright (c) 2016, TrueOS
+//  Relicensed with contributor consent from BSD-2 to BSD-3
+//  See the LICENSE file for full details
+//===========================================
 #include <qtranslator.h>
 #include <qlocale.h>
 #include <QApplication>
@@ -32,11 +38,11 @@ int main(int argc, char *argv[])
     QTranslator translator;
     QLocale mylocale;
     QString langCode = mylocale.name();
-    if ( ! QFile::exists(PREFIX + "/share/lumina-desktop/i18n/lsudo_" + langCode + ".qm" ) )
+    if ( ! QFile::exists(PREFIX + "/share/lumina-desktop/i18n/lum_sudo_" + langCode + ".qm" ) )
         langCode.truncate(langCode.indexOf("_"));
 
-    if ( QFile::exists(PREFIX + "/share/lumina-desktop/i18n/lsudo_" + langCode + ".qm" ) ) {
-      translator.load( QString("lsudo_") + langCode, PREFIX + "/share/lumina-desktop/i18n/" );
+    if ( QFile::exists(PREFIX + "/share/lumina-desktop/i18n/lum_sudo_" + langCode + ".qm" ) ) {
+      translator.load( QString("lum_sudo_") + langCode, PREFIX + "/share/lumina-desktop/i18n/" );
       a.installTranslator( &translator );
     }
     QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") ); //Force Utf-8 compliance

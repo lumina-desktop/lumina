@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>303</width>
-    <height>183</height>
+    <height>216</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,7 @@
    <string>Requesting System Permissions</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="lsudo.qrc">
+   <iconset resource="lumina-sudo.qrc">
     <normaloff>:/lock.png</normaloff>:/lock.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -69,10 +69,13 @@
          </size>
         </property>
         <property name="pixmap">
-         <pixmap resource="lsudo.qrc">:/lock.png</pixmap>
+         <pixmap>lock.svg</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -191,7 +194,7 @@ spacing: 1px;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="lsudo.qrc"/>
+  <include location="lumina-sudo.qrc"/>
  </resources>
  <connections/>
 </ui>

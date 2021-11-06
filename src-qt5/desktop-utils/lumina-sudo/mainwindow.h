@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QPoint>
 #define PREFIX QString("/usr/local")
+#include <LuminaXDG.h>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {

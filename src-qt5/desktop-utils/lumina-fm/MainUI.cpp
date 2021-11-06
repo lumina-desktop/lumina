@@ -143,7 +143,7 @@ QSize orig = settings->value("preferences/MainWindowSize", QSize()).toSize();
   TRAY = new TrayUI(this);
   connect(TRAY, SIGNAL(JobsFinished()), this, SLOT(TrayJobsFinished()) );
   if(DEBUG){ qDebug() << " - Done with init"; }
-  ui->actionOpen_as_Root->setVisible(LUtils::isValidBinary("qsudo"));
+  ui->actionOpen_as_Root->setVisible(LUtils::isValidBinary("lumina-sudo"));
   ui->transferTreeView->setVisible(false);
 }
 
@@ -1105,5 +1105,5 @@ void MainUI::closeEvent(QCloseEvent *ev){
 
 void MainUI::on_actionOpen_as_Root_triggered()
 {
-    ExternalProcess::launch("qsudo lumina-fm");
+    ExternalProcess::launch("lumina-sudo lumina-fm");
 }

@@ -295,7 +295,7 @@ void DirWidget::createMenus(){
   cOpenMenu->addAction(LXDG::findIcon("utilities-terminal",""), tr("Open Current Dir in a Terminal"), this, SLOT(openTerminal()), kOpTerm->key());
   cOpenMenu->addAction(LXDG::findIcon("media-slideshow","view-presentation"), tr("SlideShow"), this, SLOT(openInSlideshow()), kOpSS->key());
   cOpenMenu->addAction(LXDG::findIcon("media-playback-start-circled","media-playback-start"), tr("Multimedia Player"), this, SLOT(openMultimedia()), kOpMM->key());
-  if(LUtils::isValidBinary("qsudo")){
+  if(LUtils::isValidBinary("lumina-sudo")){
     cOpenMenu->addAction(LXDG::findIcon("system-file-manager-root", ""), tr("Open Current Dir as Root"), this, SLOT(openRootFM()));
   }
 
@@ -960,7 +960,7 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
 }
 
 void DirWidget::openRootFM(){
-  rootfmdir = "qsudo lumina-fm -new-instance " + currentDir();
+  rootfmdir = "lumina-sudo lumina-fm -new-instance " + currentDir();
   qDebug() << "rootfmdir" << rootfmdir;
   ExternalProcess::launch(rootfmdir);
 }

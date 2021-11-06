@@ -34,7 +34,7 @@ void MainWindow::ProgramInit()
 
   // Grab our arguments
   args = qApp->arguments();
-  if(args.length()>1){ args.removeAt(0); } //remove the "lsudo" line
+  if(args.length()>1){ args.removeAt(0); } //remove the "lumina-sudo" line
   QString commText = args.join(" ");
 
   // Check if we can bypass the GUI and use saved creds
@@ -55,7 +55,7 @@ void MainWindow::ProgramInit()
   commandLabel->setVisible(false);
   commandLabel->setText(commText);
   //Initialize the settings file for this user
-  settings = new QSettings("Lumina", "lsudo");
+  settings = new QSettings("Lumina", "lumina-sudo");
   //if(!settings->contains("lsudosamplevalue")){ settings->setValue("lsudosamplevalue","-1"); }
   //qDebug() << "Settings File:" << settings->fileName() << commText;
   //Check that there is not a dialog already open for this command
@@ -65,7 +65,7 @@ void MainWindow::ProgramInit()
     QStringList proclist = runQuickCmd("ps -p "+PID+" -j");
     //qDebug() << "PID Match:" << PID << proclist;
     if( proclist.length()>1 ){ //Make sure this PID is active
-      if(proclist[1].contains(commText)){ //Make sure the PID is the same lsudo command
+      if(proclist[1].contains(commText)){ //Make sure the PID is the same lumina-sudo command
 	qDebug() << "An identical process command is currently active: closing this one.";
         exit(0); //A QSudo process for this command is already running (stop this one)
       }
@@ -78,6 +78,7 @@ void MainWindow::ProgramInit()
   //qDebug() << "Settings Status:" << settings->status();
   //Make sure to activate this window (in case the WM does not do it)
   this->setWindowState( this->windowState() | Qt::WindowActive );
+
 }
 
 void MainWindow::slotReturnPressed()
@@ -102,6 +103,7 @@ void MainWindow::testPass()
   tP->write(passwordLineEdit->text().toLatin1() + "\n");
   tP->write(passwordLineEdit->text().toLatin1() + "\n");
   tP->write(passwordLineEdit->text().toLatin1() + "\n");
+
   while(tP->state() == QProcess::Starting || tP->state() == QProcess::Running ) {
      tP->waitForFinished(500);
      QCoreApplication::processEvents();
