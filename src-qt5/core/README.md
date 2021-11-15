@@ -17,7 +17,7 @@ Other Files that get installed if "core" is built directly:
 
 ### Library Dependencies
 
-1. Qt 5.4+ (specific modules listed below)
+1. Qt 5.12.x+ (specific modules listed below)
    * concurrent
    * core
    * gui
