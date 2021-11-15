@@ -86,7 +86,7 @@ void imgDialog::start_process(){
   }
   //Generate the command
   QString prog; QStringList args;
-  //if( ::getuid()!=0){ prog = "qsudo";  args<<"dd"; }
+  //if( ::getuid()!=0){ prog = "lumina-sudo";  args<<"dd"; }
   //else{ 
     prog = "dd"; 
   //}
@@ -166,9 +166,9 @@ void imgDialog::procFinished(){
   ui->frame_setup->setVisible(true);
   if(ddProc->exitStatus()==QProcess::NormalExit){
     if(ddProc->exitCode() !=0 ){
-      if(lastmsg.contains("permission denied", Qt::CaseInsensitive) && LUtils::isValidBinary("qsudo") ){
+      if(lastmsg.contains("permission denied", Qt::CaseInsensitive) && LUtils::isValidBinary("lumina-sudo") ){
         if(QMessageBox::Yes == QMessageBox::question(this, tr("Administrator Permissions Needed"), tr("This operation requires administrator priviledges.")+"\n\n"+tr("Would you like to enable these priviledges?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) ){
-          QProcess::startDetached("qsudo", QStringList() << "lumina-archiver" << "--burn-img" << ui->label_iso->whatsThis());
+          QProcess::startDetached("lumina-sudo", QStringList() << "lumina-archiver" << "--burn-img" << ui->label_iso->whatsThis());
           exit(0);
         }
       }else{
