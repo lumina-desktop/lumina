@@ -57,7 +57,7 @@ FORMS    += MainUI.ui \
 		gitWizard.ui \
 		OPWidget.ui
 
-icons.files = Insight-FileManager.png
+icons.files = Insight-FileManager.svg
 
 
 TRANSLATIONS =  i18n/lumina-fm_af.ts \
