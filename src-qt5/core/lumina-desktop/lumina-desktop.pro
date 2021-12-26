@@ -81,7 +81,7 @@ RESOURCES+= Lumina-DE.qrc
 desktop.path = $${L_SESSDIR}
 desktop.files = Lumina-DE.desktop
 
-icons.files = Lumina-DE.png
+icons.files = Lumina-DE.svg
 
 fluxconf.files = fluxboxconf/fluxbox-init-rc \
 			fluxboxconf/fluxbox-keys

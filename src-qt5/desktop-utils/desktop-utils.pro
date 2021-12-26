@@ -10,4 +10,5 @@ SUBDIRS+= lumina-fm \
 	lumina-textedit \
 	lumina-archiver \
 	lumina-mediaplayer \
-	lumina-photo
+	lumina-photo \
+	lumina-sudo

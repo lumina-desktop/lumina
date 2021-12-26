@@ -1,0 +1,105 @@
+#!/bin/sh
+
+# Slackware build script for lumina
+
+# 2019, 2020, updated by Chris Abela, Malta, <kristofru@gmail.com>
+# Sasongko Bawono <sasongko262@gmail.com>
+
+# Thanks to :
+# Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Ryan P.C. McQuen <ryanpcmcquen@member.fsf.org>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version, with the following exception:
+# the text of the GPL license may be omitted.
+
+# This program is distributed in the hope that it will be useful, but
+# without any warranty; without even the implied warranty of
+# merchantability or fitness for a particular purpose. Compiling,
+# interpreting, executing or merely reading the text of the program
+# may result in lapses of consciousness and/or very being, up to and
+# including the end of all existence and the Universe as we know it.
+# See the GNU General Public License for more details.
+
+# You may have received a copy of the GNU General Public License
+# along with this program (most likely, a file named COPYING). If
+# not, see <https://www.gnu.org/licenses/>.
+
+PRGNAM=lumina
+VERSION=${VERSION:-1.6.0}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+set -eu
+
+rm -rf $PKG
+mkdir -pv $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+sed -i "s|/media|/run/media/\$USER|" src-qt5/core/lumina-desktop/LDesktop.cpp
+qmake-qt5 \
+  PREFIX=/usr \
+  LIBPREFIX=/usr/lib${LIBDIRSUFFIX} \
+  QMAKE_CFLAGS_ISYSTEM= \
+  QMAKE_CFLAGS="$SLKCFLAGS" \
+  QMAKE_CXXFLAGS="$SLKCFLAGS" \
+  QT5LIBDIR=/usr/lib${LIBDIRSUFFIX}/qt5 \
+  CONFIG+=WITH_I18N \
+  L_ETCDIR=/etc
+
+make
+make install INSTALL_ROOT=$PKG DESTDIR=$PKG
+
+mkdir -p $PKG/etc/X11/xinit
+install -m 0755 $CWD/xinitrc.lumina $PKG/etc/X11/xinit/xinitrc.lumina
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}

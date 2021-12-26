@@ -37,7 +37,11 @@ void LAppMenuPlugin::updateButtonVisuals(){
     button->setToolTip( tr("Quickly launch applications or open files"));
     button->setText( tr("Applications") );
     //Use the TrueOS icon by default (or the Lumina icon for non-TrueOS systems)
-    button->setIcon( LXDG::findIcon("start-here-lumina","Lumina-DE") );
+    if( QFile::exists(QDir::homePath()+"/.loginIcon.png") ){
+      button->setIcon( QIcon(QDir::homePath()+"/.loginIcon.png") );
+    }else{
+      button->setIcon( LXDG::findIcon("user-identity", ":/images/default-user.png") ); //force icon refresh
+    }
 }
 
 // ========================
