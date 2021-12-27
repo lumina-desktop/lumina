@@ -18,7 +18,7 @@ FORMS    += mainwindow.ui
 
 RESOURCES += lumina-sudo.qrc
 
-TRANSLATIONS =  i18n/lsum_udo_af.ts \
+TRANSLATIONS =  i18n/lum_udo_af.ts \
                 i18n/lum_sudo_ar.ts \
                 i18n/lum_sudo_az.ts \
                 i18n/lum_sudo_bg.ts \
