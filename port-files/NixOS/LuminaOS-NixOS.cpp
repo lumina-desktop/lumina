@@ -83,7 +83,7 @@ void LOS::setScreenBrightness(int percent){
   //Save the result for later
   if(ret!=0){ screenbrightness = -1; }
   else{ screenbrightness = percent; }
-  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness", QStringList() << QString::number(screenbrightness), true);
+  LUtils::writeFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/currentxbrightness", QStringList() << QString::number(screenbrightness), true);
 }
 
 //Read the current volume
