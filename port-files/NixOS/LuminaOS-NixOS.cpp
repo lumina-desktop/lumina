@@ -61,8 +61,8 @@ QStringList LOS::ExternalDevicePaths(){
 int LOS::ScreenBrightness(){
    //Returns: Screen Brightness as a percentage (0-100, with -1 for errors)
   if(screenbrightness==-1){
-    if(QFile::exists(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness")){
-      int val = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/.currentxbrightness").join("").simplified().toInt();
+    if(QFile::exists(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/currentxbrightness")){
+      int val = LUtils::readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/currentxbrightness").join("").simplified().toInt();
       screenbrightness = val;
     }
   }
