@@ -76,7 +76,7 @@ void LOS::setScreenBrightness(int percent){
   else if(percent>100){ percent=100; }
   // float pf = percent/100.0; //convert to a decimel
   //Run the command
-  QString cmd = "@brightnessctl@ set %1%%";
+  QString cmd = "@brightnessctl@ set %1%";
   // cmd = cmd.arg( QString::number( int(65535*pf) ) );
   cmd = cmd.arg( QString::number( percent ) );
   int ret = LUtils::runCmd(cmd);
