@@ -20,11 +20,17 @@ add_library(
     systemtray/TrayIcon.cpp
     taskmanager/LTaskManagerPlugin.cpp
     taskmanager/LTaskButton.cpp
+    userbutton/LUserButton.cpp
     userbutton/UserWidget.cpp
     userbutton/UserItemWidget.cpp
     systemstart/LStartButton.cpp
     systemstart/StartMenu.cpp
     systemstart/ItemWidget.cpp
     jsonmenu/PPJsonMenu.cpp
+    # Header-only classes
+    LPPlugin.h
+    LTBWidget.h
+    line/LLine.h
+    spacer/LSpacer.h
 )
 target_link_libraries(integrated-panel PRIVATE libLumina Qt5::Quick)
