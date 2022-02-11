@@ -15,6 +15,7 @@ include_directories(
     src-screensaver
 )
 
+add_subdirectory(desktop-plugins)
 add_subdirectory(panel-plugins)
 add_subdirectory(src-screensaver)
 
@@ -33,7 +34,6 @@ add_executable(
     SettingsMenu.cpp
     SystemWindow.cpp
     BootSplash.cpp
-    desktop-plugins/LDPlugin.cpp
     # Header-only classes
     JsonMenu.h
 )
@@ -68,5 +68,5 @@ target_link_libraries(
 # The panel-plugins have their own static library
 target_link_libraries(
     lumina-desktop
-    PRIVATE integrated-panel integrated-screensaver
+    PRIVATE integrated-desktop integrated-panel integrated-screensaver
 )

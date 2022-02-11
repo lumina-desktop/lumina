@@ -21,6 +21,8 @@ add_library(
     LuminaXDG.cpp
     ResizeMenu.cpp
     XDGMime.cpp
+    # Header-only classes
+    ExternalProcess.h
 )
 if(CMAKE_SYSTEM MATCHES "FreeBSD")
     target_sources(libLumina PUBLIC LuminaOS-FreeBSD.cpp)
