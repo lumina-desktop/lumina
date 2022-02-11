@@ -36,4 +36,9 @@ target_link_libraries(
         Qt5::Svg
         Qt5::Widgets
         Qt5::X11Extras
+        XCB::XCB
+        XCB::AUX
+        XCB::DAMAGE
+        XCB::SCREENSAVER
+        X11::Xdamage
 )

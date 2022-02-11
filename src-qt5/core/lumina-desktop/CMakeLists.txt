@@ -58,6 +58,7 @@ target_link_libraries(
         Qt5::Quick
         Qt5::Qml
         XCB::XCB
+        XCB::COMPOSITE
         XCB::DAMAGE
         XCB::DPMS
         XCB::EWMH

@@ -53,7 +53,19 @@ find_package(X11)
 find_package(
     XCB
     MODULE
-    COMPONENTS XCB KEYSYMS XKB XFIXES DAMAGE DPMS EWMH ICCCM IMAGE
+    COMPONENTS
+        XCB
+        KEYSYMS
+        XKB
+        XFIXES
+        AUX
+        COMPOSITE
+        DAMAGE
+        DPMS
+        EWMH
+        ICCCM
+        IMAGE
+        SCREENSAVER
     OPTIONAL_COMPONENTS XTEST
 )
 if(NOT X11_FOUND OR NOT XCB_XCB_FOUND)
