@@ -70,3 +70,9 @@ target_link_libraries(
     lumina-desktop
     PRIVATE integrated-desktop integrated-panel integrated-screensaver
 )
+
+install(TARGETS lumina-desktop)
+install(
+    FILES audiofiles/Login.ogg audiofiles/Logout.ogg audiofiles/low-battery.ogg
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/
+)
