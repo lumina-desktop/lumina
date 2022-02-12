@@ -70,9 +70,21 @@ target_link_libraries(
     lumina-desktop
     PRIVATE integrated-desktop integrated-panel integrated-screensaver
 )
-
 install(TARGETS lumina-desktop)
+
+# Additional files
 install(
-    FILES audiofiles/Login.ogg audiofiles/Logout.ogg audiofiles/low-battery.ogg
+    FILES
+        audiofiles/Login.ogg
+        audiofiles/Logout.ogg
+        audiofiles/low-battery.ogg
+        fluxboxconf/fluxbox-init-rc
+        fluxboxconf/fluxbox-keys
+        fluxboxconf/theme.cfg
     DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/
+)
+install(FILES Lumina-DE.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/xsessions/)
+install(
+    FILES Lumina-DE.svg
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/
 )

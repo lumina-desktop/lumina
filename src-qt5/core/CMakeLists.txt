@@ -88,3 +88,29 @@ set(CMAKE_AUTOUIC ON)
 # Lumina Components
 add_subdirectory(libLumina)
 add_subdirectory(lumina-desktop)
+
+# Additional files
+
+install(
+    FILES menu-scripts/README.md menu-scripts/ls.json.sh
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/menu-scripts
+)
+install(
+    FILES
+        themes/DarkGlass.qss.template
+        themes/Glass.qss.template
+        themes/Lumina-default.qss.template
+        themes/None.qss.template
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/themes
+)
+
+# This is a typo, also in the original core.pro, should be xtrafiles/theme.cfg
+#
+#install(
+#    FILES extrafiles/theme.cfg
+#    DESTINATION ${CMAKE_INSTALL_DATADIR}/fluxbox/style/lumina-dark/theme.cfg
+#)
+install(
+    FILES xtrafiles/globs2
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop
+)
