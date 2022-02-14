@@ -88,6 +88,11 @@ set(CMAKE_AUTOUIC ON)
 # Lumina Components
 add_subdirectory(libLumina)
 add_subdirectory(lumina-desktop)
+add_subdirectory(lumina-session)
+add_subdirectory(lumina-open)
+add_subdirectory(lumina-info)
+add_subdirectory(lumina-pingcursor)
+add_subdirectory(lumina-theme-engine)
 
 # Additional files
 
