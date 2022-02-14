@@ -4,6 +4,9 @@
 # SPDX-FileCopyrightText: Copyright 2022 Adriaan de Groot <adridg@FreeBSD.org>
 
 add_subdirectory(src/lthemeengine)
+add_subdirectory(src/lthemeengine-qtplugin)
+add_subdirectory(src/lthemeengine-sstest)
+add_subdirectory(src/lthemeengine-style)
 
 install(
     DIRECTORY colors
