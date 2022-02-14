@@ -78,6 +78,7 @@ install(
         audiofiles/Login.ogg
         audiofiles/Logout.ogg
         audiofiles/low-battery.ogg
+        extrafiles/Lumina-DE.png
         fluxboxconf/fluxbox-init-rc
         fluxboxconf/fluxbox-keys
         fluxboxconf/theme.cfg
