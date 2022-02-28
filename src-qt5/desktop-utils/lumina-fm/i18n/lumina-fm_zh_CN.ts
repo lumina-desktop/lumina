@@ -119,7 +119,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="53"/>
         <source>Administrator Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>管理员模式</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="206"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="302"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>单列</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="305"/>
