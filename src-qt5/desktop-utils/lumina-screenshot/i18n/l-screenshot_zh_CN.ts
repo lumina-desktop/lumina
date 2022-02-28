@@ -194,7 +194,7 @@
     <message>
         <location filename="../MainUI.cpp" line="337"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>弃置</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="338"/>
@@ -222,67 +222,67 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>
