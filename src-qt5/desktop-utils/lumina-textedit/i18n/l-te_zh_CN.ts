@@ -112,17 +112,17 @@
     <message>
         <location filename="../MainUI.ui" line="193"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>>&amp;文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>>&amp;查看</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>>&amp;编辑</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
@@ -254,37 +254,37 @@
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>打印</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="439"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="450"/>
         <source>Show Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>显示工具栏</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="464"/>
         <source>Enable Spellcheck</source>
-        <translation type="unfinished"></translation>
+        <translation>开启拼写检查</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="467"/>
         <source>Enable Spellchecking</source>
-        <translation type="unfinished"></translation>
+        <translation>已经开启拼写</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="472"/>
         <source>Set Language</source>
-        <translation type="unfinished"></translation>
+        <translation>设置语言</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="38"/>
         <source>Read-Only File</source>
-        <translation type="unfinished"></translation>
+        <translation>只读文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="79"/>
@@ -304,7 +304,7 @@
     <message>
         <location filename="../MainUI.cpp" line="333"/>
         <source>Print Content</source>
-        <translation type="unfinished"></translation>
+        <translation>打印内容</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="503"/>
@@ -327,7 +327,7 @@ Do you want to close it anyway?
     <message>
         <location filename="../MainUI.cpp" line="700"/>
         <source>Save Changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>在关闭前保存文件？</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="701"/>
@@ -335,7 +335,10 @@ Do you want to close it anyway?
 Do you want save them before you close the editor?
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>有未保存的更改
+你想在关闭编辑器前保存他们吗？
+
+%1</translation>
     </message>
 </context>
 <context>
@@ -376,67 +379,67 @@ Do you want save them before you close the editor?
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>
