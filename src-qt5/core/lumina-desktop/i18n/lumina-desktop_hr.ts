@@ -201,7 +201,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
-        <translation>Verzija %1</translation>
+        <translation>Verzija: %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="48"/>
@@ -1687,7 +1687,7 @@
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation>Početak</translation>
+        <translation>Početna</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
@@ -1707,7 +1707,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
         <source>Open Directory</source>
-        <translation>Otvori direktorij</translation>
+        <translation>Otvori mapu</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="458"/>
