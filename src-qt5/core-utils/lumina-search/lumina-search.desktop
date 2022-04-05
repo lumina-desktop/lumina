@@ -7,5 +7,7 @@ StartupNotify=true
 Categories=Utility;
 Name=Lumina Search
 Name[pt]=Pesquisa Lumina
+Name[ru]=Поиск Lumina
 Comment=Search for files or applications
 Comment[pt]=Pesquisar ficheiros e aplicações
+Comment[ru]=Поиск файлов и приложений

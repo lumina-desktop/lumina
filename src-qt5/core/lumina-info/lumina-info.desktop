@@ -8,9 +8,12 @@ Categories=System;
 OnlyShowIn=Lumina;
 Name=Desktop Information
 Name[pt]=Informações do ambiente de trabalho
+Name[ru]=Информация о Lumina
 GenericName=Version and Legal Information
 GenericName[pt]=Versão e informações legais
+GenericName[ru]=Информация о версиях и юридических правах
 Comment=View information about the Lumina Desktop Environment
 Comment[pt]=Ver informações sobre Lumina Desktop Environment
+Comment[ru]=Просмотр информации о среде рабочего стола Lumina
 
 
