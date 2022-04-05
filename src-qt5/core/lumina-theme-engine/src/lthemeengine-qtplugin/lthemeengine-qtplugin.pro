@@ -21,6 +21,7 @@ SOURCES += \
 
 OTHER_FILES += lthemeengine.json
 
+LIBS += -lX11
 LIBS += -lXcursor
 QT += x11extras
 
