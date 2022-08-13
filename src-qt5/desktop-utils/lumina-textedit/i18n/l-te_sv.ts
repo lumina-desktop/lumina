@@ -269,17 +269,17 @@
     <message>
         <location filename="../MainUI.ui" line="464"/>
         <source>Enable Spellcheck</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera stavningskontroll</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="467"/>
         <source>Enable Spellchecking</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera stavningskontroll</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="472"/>
         <source>Set Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj språk</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="38"/>
