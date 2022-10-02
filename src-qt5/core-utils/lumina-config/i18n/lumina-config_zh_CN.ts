@@ -289,7 +289,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="123"/>
         <source>View or change system settings (audio volume, screen brightness, battery life, virtual desktops).</source>
-        <translation>查看及更改系统设置 (音量、屏幕亮度、电池寿命、虚拟桌面)。</translation>
+        <translation>查看及更改系统设置 (音量、屏幕亮度、电池续航时间、虚拟桌面)。</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="129"/>
