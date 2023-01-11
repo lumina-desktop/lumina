@@ -14,6 +14,9 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Include OS detection module
+include("../OS-detect.cmake" NO_POLICY_SCOPE)
+
 # ECM setup
 include(FeatureSummary)
 find_package(ECM 5.88.0 NO_MODULE)
@@ -49,6 +52,15 @@ find_package(
         Svg
         Widgets
         X11Extras
+        LinguistTools
+        ThemeSupport
+        DBus
+)
+find_package(
+	Qt5Gui
+	${QT_VERSION}
+	REQUIRED
+	Private
 )
 find_package(X11)
 find_package(
@@ -73,12 +85,9 @@ if(NOT X11_FOUND OR NOT XCB_XCB_FOUND)
     message(FATAL_ERROR "Required XCB component for X11 not found.")
 endif()
 
-# OS-detection
-#
-# This ignores the actual OS and just sets FreeBSD-useful values
 add_definitions(
-    -DL_ETCDIR=QStringLiteral\("${CMAKE_INSTALL_PREFIX}/etc"\)
-    -DL_SHAREDIR=QStringLiteral\("${CMAKE_INSTALL_PREFIX}/share"\)
+	-DL_ETCDIR=QStringLiteral\("${L_ETCDIR}"\)
+	-DL_SHAREDIR=QStringLiteral\("${L_SHAREDIR}"\)
 )
 
 # Build options
@@ -115,6 +124,7 @@ install(
 #    FILES extrafiles/theme.cfg
 #    DESTINATION ${CMAKE_INSTALL_DATADIR}/fluxbox/style/lumina-dark/theme.cfg
 #)
+
 install(
     FILES xtrafiles/globs2
     DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop

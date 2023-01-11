@@ -4,7 +4,6 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifdef __FreeBSD__
 #include "LuminaOS.h"
 #include <unistd.h>
 #include <sys/types.h>
@@ -430,5 +429,3 @@ QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for ea
 
   return out;
 }
-
-#endif

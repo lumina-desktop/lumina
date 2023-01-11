@@ -4,8 +4,6 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifdef __FreeBSD_kernel__
-#ifndef __FreeBSD__
 // The above two checks should make sure that we are on a
 // operating system using the FreeBSD kernel without actually being
 // on FreeBSD. That probably means Debian's kFreeBSD port.
@@ -203,4 +201,3 @@ int LOS::MemoryUsagePercent(){
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
   return QStringList(); //not implemented yet
 }
-#endif

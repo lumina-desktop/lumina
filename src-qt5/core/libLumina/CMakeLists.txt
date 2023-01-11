@@ -24,8 +24,11 @@ add_library(
     # Header-only classes
     ExternalProcess.h
 )
-if(CMAKE_SYSTEM MATCHES "FreeBSD")
-    target_sources(libLumina PUBLIC LuminaOS-FreeBSD.cpp)
+
+if (OS MATCHES "Unknown")
+    target_sources(libLumina PUBLIC LuminaOS-template.cpp)
+else()
+    target_sources(libLumina PUBLIC LuminaOS-${OS}.cpp)
 endif()
 
 target_include_directories(libLumina PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -41,6 +44,11 @@ target_link_libraries(
         XCB::XCB
         XCB::AUX
         XCB::DAMAGE
+        XCB::EWMH
+        XCB::ICCCM
+        XCB::DPMS
+        XCB::IMAGE
+        XCB::COMPOSITE
         XCB::SCREENSAVER
         X11::Xdamage
 )
