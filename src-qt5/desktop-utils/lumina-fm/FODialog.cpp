@@ -10,7 +10,7 @@
 #include <QApplication>
 #include <QFontMetrics>
 
-#include <ScrollDialog.h>
+#include "ScrollDialog.h"
 
 #define DEBUG 0
 
