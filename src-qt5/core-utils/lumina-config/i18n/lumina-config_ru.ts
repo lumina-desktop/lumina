@@ -278,7 +278,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="116"/>
         <source>View the current time and date.</source>
-        <translation>Показывает настоящее время и дату.</translation>
+        <translation>Просмотр текущего времени и даты.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="122"/>
@@ -493,12 +493,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
-        <translation>Заданное Приложение</translation>
+        <translation>Пользовательское приложение</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
-        <translation>Запустить заданное приложение</translation>
+        <translation>Запустить пользовательское приложение</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="178"/>
@@ -675,12 +675,12 @@
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Wallpaper Settings</source>
-        <translation>Обои рабочего стола настройки</translation>
+        <translation>Настройки обоев</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change background image(s)</source>
-        <translation>Изменить фоновое изображение (я)</translation>
+        <translation>Изменить фоновое изображение(я)</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="44"/>
@@ -731,7 +731,7 @@
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
         <source>Mimetype Settings</source>
-        <translation>Настройки Mimetype</translation>
+        <translation>Настройки MIME-типов</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
@@ -781,12 +781,12 @@
     <message>
         <location filename="../pages/getPage.cpp" line="55"/>
         <source>Sound Themeing</source>
-        <translation type="unfinished"></translation>
+        <translation>Звуковая тематика</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="55"/>
         <source>Change basic sound settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить основные настройки звука</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
@@ -949,57 +949,57 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультимедиа</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработка</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Обучение</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Игры</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Графика</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Сеть</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Офис</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Наука</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished">Система</translation>
+        <translation>Система</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Утилита</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
@@ -1009,7 +1009,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без сортировки</translation>
     </message>
 </context>
 <context>
@@ -1044,7 +1044,7 @@
         <location filename="../mainWindow.ui" line="72"/>
         <location filename="../mainWindow.ui" line="75"/>
         <source>Select monitor/desktop to configure</source>
-        <translation>Выберете монитор / рабочий стол для настройки</translation>
+        <translation>Выберете монитор/рабочий стол для настройки</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="146"/>
@@ -1059,12 +1059,12 @@
     <message>
         <location filename="../mainWindow.cpp" line="148"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="149"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="150"/>
@@ -1145,7 +1145,7 @@
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation>Отключить менеджер наборщика (требуется перезапуск сессии)</translation>
+        <translation>Отключить композитинг оконного менеджера (требуется перезапуск сессии)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="36"/>
@@ -1173,7 +1173,7 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="226"/>
         <source>Type/Group</source>
-        <translation>Тип / Группа</translation>
+        <translation>Тип/Группа</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="231"/>
@@ -1218,7 +1218,7 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
-        <translation>Менеджер Файлов:</translation>
+        <translation>Файловий менеджер:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="121"/>
@@ -1287,7 +1287,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="120"/>
         <source>Modify Shortcut</source>
-        <translation>Изменить ярлык</translation>
+        <translation>Изменить Сочетание</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="141"/>
@@ -1504,7 +1504,7 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="46"/>
         <source>Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="96"/>
@@ -1519,12 +1519,12 @@
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="110"/>
         <source>No Panels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без панелей</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="136"/>
         <source>Custom Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пользовательские профили</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="136"/>
@@ -1534,23 +1534,23 @@
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="143"/>
         <source>Apply</source>
-        <translation type="unfinished">Применить</translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="144"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="149"/>
         <location filename="../pages/page_interface_panels.cpp" line="204"/>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать профиль</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="204"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя:</translation>
     </message>
 </context>
 <context>
@@ -1694,7 +1694,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="72"/>
         <source>Disable Startup Quotes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Отключить стартовые котировки</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="81"/>
@@ -1731,7 +1731,7 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="227"/>
         <source>Window Manager</source>
-        <translation type="unfinished">Оконный менеджер</translation>
+        <translation>Оконный менеджер</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="255"/>
@@ -1741,12 +1741,12 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="274"/>
         <source>Restore system defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить системные настройки по умолчанию</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="281"/>
         <source>Restore Lumina defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить настройки Lumina по умолчанию</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="18"/>
@@ -1771,7 +1771,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="62"/>
         <source>Window manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Оконный менеджер</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="95"/>
@@ -1781,12 +1781,12 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>Verify Settings Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтверждение сброса настроек</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>Are you sure you want to reset your desktop settings? This change cannot be reversed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите сбросить настройки рабочего стола? Это изменение нельзя отменить!</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="190"/>
@@ -1846,7 +1846,7 @@
     <message>
         <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
-        <translation>%1: AM / PM (12-часовой) часы (верхний или нижний регистр)</translation>
+        <translation>%1: AM/PM (12-часовой) часы (верхний или нижний регистр)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="244"/>
@@ -1929,56 +1929,56 @@
     <message>
         <location filename="../pages/page_soundtheme.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+	<translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="27"/>
         <location filename="../pages/page_soundtheme.ui" line="34"/>
         <location filename="../pages/page_soundtheme.ui" line="71"/>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="61"/>
         <location filename="../pages/page_soundtheme.ui" line="84"/>
         <location filename="../pages/page_soundtheme.ui" line="100"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстовая метка</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="20"/>
         <source>Set Startup Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить звук при запуске</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="48"/>
         <source>Set Logout Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить звук выхода</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="41"/>
         <source>Set Battery Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить звук батареи</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="40"/>
         <source>Sound Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Звуковые темы</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="73"/>
         <source>Select Startup Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите звук запуска</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="83"/>
         <source>Select Logout Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите звук выхода</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="93"/>
         <source>Select Low Battery Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите Звук низкого заряда батареи</translation>
     </message>
 </context>
 <context>
@@ -2016,7 +2016,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
-        <translation>Обои рабочего стола настройки</translation>
+        <translation>Настройки обоев</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="65"/>
@@ -2118,7 +2118,7 @@
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="160"/>
         <source>Image Directory: %1 valid images</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталог изображений: %1 действительных изображений</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="180"/>
