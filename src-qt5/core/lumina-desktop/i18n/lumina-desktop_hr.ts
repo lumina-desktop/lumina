@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="hr_HR">
 <context>
     <name>AppLaunchButtonPlugin</name>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="37"/>
         <source>Click to assign an application</source>
-        <translation type="unfinished"></translation>
+        <translation>Pritisni za dodjeljivanje programa</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="41"/>
         <source>Launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokreni %1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="44"/>
         <source>Open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori %1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Select Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi program</translation>
     </message>
     <message>
         <location filename="../panel-plugins/applauncher/AppLaunchButton.cpp" line="62"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime:</translation>
     </message>
 </context>
 <context>
@@ -35,72 +35,72 @@
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="64"/>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="118"/>
         <source>Click to Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Pritisni za postavljanje</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="75"/>
         <source>Launch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokreni %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="136"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="138"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori pomoću</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="141"/>
         <source>View Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaz svojstava</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="143"/>
         <source>File Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Operacije nad datotekama</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="145"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Preimenuj</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="148"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiraj</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="151"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Izreži</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="153"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="156"/>
         <source>Drag to Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Povuci na program</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="217"/>
         <source>Select Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi program</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="217"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="318"/>
         <source>New Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo ime datoteke</translation>
     </message>
 </context>
 <context>
@@ -108,82 +108,82 @@
     <message>
         <location filename="../AppMenu.cpp" line="79"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravljaj programima</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="84"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolna ploča</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="94"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="95"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Razvoj</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="96"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovanje</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="97"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Igre</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="98"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="99"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="100"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Ured</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="101"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Znanost</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="102"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="103"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sustav</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="104"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Uslužni program</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="105"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="106"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerazvrstano</translation>
     </message>
     <message>
         <location filename="../AppMenu.cpp" line="41"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Programi</translation>
     </message>
 </context>
 <context>
@@ -191,47 +191,47 @@
     <message>
         <location filename="../BootSplash.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../BootSplash.ui" line="94"/>
         <source>Starting the Lumina Desktop...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokretanje radne površine Lumina …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="17"/>
         <source>Version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzija: %1</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="48"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovu radnu površinu pokreće kava, kava i još više kave.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="50"/>
         <source>Keep up with desktop news!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostani u tijeku s novostima o radnoj površini!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="52"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>Na internetu je dostupan priručnik s informacijama o radnoj površini.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="54"/>
         <source>Want to change the interface? Everything is customizable in the desktop configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Želiš promijeniti sučelje? Sve se može prilagoditi u konfiguraciji radne površine!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="56"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina je u stanju reproducirati sučelja većine drugih okruženja.</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="58"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovu radnu površinu velikodušno sponzorira iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="60"/>
@@ -436,52 +436,52 @@
     <message>
         <location filename="../BootSplash.cpp" line="148"/>
         <source>Initializing Session …</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicijaliziranje sesije …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="151"/>
         <source>Loading System Settings …</source>
-        <translation type="unfinished"></translation>
+        <translation>Učitavanje postavki sustava …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="154"/>
         <source>Loading User Preferences …</source>
-        <translation type="unfinished"></translation>
+        <translation>Učitavanje korisničkih osobitosti …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="157"/>
         <source>Preparing System Tray …</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripremanje trake sustava …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="160"/>
         <source>Starting Window Manager …</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokretanje upravljača prozora …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="163"/>
         <source>Detecting Applications …</source>
-        <translation type="unfinished"></translation>
+        <translation>Otkrivanje programa …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="166"/>
         <source>Preparing Menus …</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripremanje izbornika …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="169"/>
         <source>Preparing Workspace …</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripremanje radnog prostora …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="172"/>
         <source>Finalizing …</source>
-        <translation type="unfinished"></translation>
+        <translation>Završavanje …</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="175"/>
         <source>Starting App: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokretanje programa: %1</translation>
     </message>
 </context>
 <context>
@@ -489,37 +489,37 @@
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="28"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="30"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Izreži</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="31"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiraj</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="33"/>
         <source>Increase Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Povećaj ikone</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="34"/>
         <source>Decrease Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Smanji ikone</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="36"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/desktopview/DesktopViewPlugin.cpp" line="39"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Svojstva</translation>
     </message>
 </context>
 <context>
@@ -527,32 +527,32 @@
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="44"/>
         <source>Go Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Idi natrag</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="190"/>
         <source>Pin to Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikvači na radnu površinu</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="195"/>
         <source>Remove from Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni iz omiljenih</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="199"/>
         <source>Add to Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj u omiljene</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="204"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni iz brzog pokretanja</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/ItemWidget.cpp" line="208"/>
         <source>Add to Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj u brzo pokretanje</translation>
     </message>
 </context>
 <context>
@@ -560,7 +560,7 @@
     <message>
         <location filename="../JsonMenu.h" line="60"/>
         <source>Error parsing script output: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Greška u obradi rezultata skripta: %1</translation>
     </message>
 </context>
 <context>
@@ -568,97 +568,97 @@
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="37"/>
         <source>Quickly launch applications or open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Brzo pokreni programe ili otvori datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="38"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="68"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraži datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="73"/>
         <source>Install Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Instaliraj programe</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="79"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolna ploča</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="90"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="91"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Razvoj</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="92"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovanje</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="93"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Igre</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="94"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="95"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="96"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Ured</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="97"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Znanost</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="98"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="99"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sustav</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="100"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Uslužni program</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="101"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="102"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerazvrstano</translation>
     </message>
     <message>
         <location filename="../panel-plugins/appmenu/LAppMenuPlugin.cpp" line="139"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Napusti</translation>
     </message>
 </context>
 <context>
@@ -666,12 +666,12 @@
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="57"/>
         <source>%1 % (Charging)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % (punjenje)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/battery/LBattery.cpp" line="58"/>
         <source>%1 % (%2 Remaining)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % (%2 preostalo)</translation>
     </message>
 </context>
 <context>
@@ -679,12 +679,12 @@
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="139"/>
         <source>Time Zone (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vremenska zona (%1)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/clock/LClock.cpp" line="161"/>
         <source>Use System Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Koristi vrijeme sustava</translation>
     </message>
 </context>
 <context>
@@ -692,32 +692,32 @@
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="37"/>
         <source>Modify Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Promijeni element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="45"/>
         <source>Start Moving Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Počni pomicati element</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="46"/>
         <source>Start Resizing Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Počni mijenjati veličinu elementa</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="48"/>
         <source>Increase Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Povećaj veličine elementa</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="49"/>
         <source>Decrease Item Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Smanji veličine elementa</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/LDPlugin.cpp" line="51"/>
         <source>Remove Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni element</translation>
     </message>
 </context>
 <context>
@@ -725,42 +725,42 @@
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="192"/>
         <source>Favorite Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritni programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="194"/>
         <source>Favorite Folders</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritne mape</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="195"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="197"/>
         <source>Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="199"/>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="201"/>
         <source>Other Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Druge datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="203"/>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopbar/LDeskBar.cpp" line="206"/>
         <source>Favorite Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritne datoteke</translation>
     </message>
 </context>
 <context>
@@ -768,65 +768,65 @@
     <message>
         <location filename="../LDesktop.cpp" line="216"/>
         <source>Window List</source>
-        <translation type="unfinished"></translation>
+        <translation>Popis prozora</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Radnje na radnoj površini</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <location filename="../LDesktop.cpp" line="644"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova mapa</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="260"/>
         <location filename="../LDesktop.cpp" line="664"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova datoteka</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="261"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Umetni</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
         <source>Lumina Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Radna površina Lumina</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="294"/>
         <source>Workspace %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Radni prostor %1</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="304"/>
         <source>Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminal</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="305"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaključaj sesiju</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="306"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraži datoteke</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="340"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Napusti</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="650"/>
         <location filename="../LDesktop.cpp" line="670"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Radna površina</translation>
     </message>
 </context>
 <context>
@@ -834,13 +834,13 @@
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
         <source>Workspace 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Radni prostor 1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="139"/>
         <source>Workspace %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Radni prostor %1</translation>
     </message>
 </context>
 <context>
@@ -848,37 +848,37 @@
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="114"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Lozinka</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Otključaj sesiju</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="37"/>
         <source>Locked by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaključano od: %1</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="72"/>
         <source>Too Many Failures</source>
-        <translation type="unfinished"></translation>
+        <translation>Previše neuspjeha</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="72"/>
         <source>Wait %1 Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Čekaj %1 min</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="73"/>
         <source>Failed Attempts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuspjeli pokušaji: %1</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@
     <message>
         <location filename="../panel-plugins/systemstart/LStartButton.h" line="52"/>
         <source>Remove from Quicklaunch</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni iz brzog pokretanja</translation>
     </message>
 </context>
 <context>
@@ -894,7 +894,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/LSysDashboard.cpp" line="42"/>
         <source>System Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Pregledna ploča sustava</translation>
     </message>
 </context>
 <context>
@@ -902,54 +902,54 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Glasnoća</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
         <source>Launch Audio Mixer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokreni mikser zvuka</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="156"/>
         <source>Screen Brightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Svjetlina ekrana</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="231"/>
         <source>Battery Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Stanje baterije</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="296"/>
         <source>Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Radni prostor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="344"/>
         <source>Locale</source>
-        <translation type="unfinished"></translation>
+        <translation>Jezik</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="378"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Odjavi se</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.cpp" line="98"/>
         <source>connected</source>
-        <translation type="unfinished"></translation>
+        <translation>povezano</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.cpp" line="109"/>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.cpp" line="156"/>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.cpp" line="165"/>
         <source>%1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 od %2</translation>
     </message>
 </context>
 <context>
@@ -957,42 +957,42 @@
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="149"/>
         <source>Activate Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviraj prozor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="152"/>
         <source>Minimize Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Sklopi prozor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="154"/>
         <source>Restore Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnovi prozor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="156"/>
         <source>Maximize Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasklopi prozor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="159"/>
         <source>Close Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvori prozor</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="162"/>
         <source>Show All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži sve prozore</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="163"/>
         <source>Minimize All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Sklopi sve prozore</translation>
     </message>
     <message>
         <location filename="../panel-plugins/taskmanager/LTaskButton.cpp" line="164"/>
         <source>Close All Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvori sve prozore</translation>
     </message>
 </context>
 <context>
@@ -1000,7 +1000,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/LUserButton.cpp" line="41"/>
         <source>Quickly launch applications or open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Brzo pokreni programe ili otvori datoteke</translation>
     </message>
 </context>
 <context>
@@ -1008,35 +1008,35 @@
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="36"/>
         <source>Summary</source>
-        <translation type="unfinished"></translation>
+        <translation>Sažetak</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="42"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="20"/>
         <source>CPU Temp:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura CPU-a:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="56"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="21"/>
         <source>CPU Usage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Korištenje CPU-a:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="70"/>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.cpp" line="22"/>
         <source>Mem Usage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Korištenje memorije:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/systemmonitor/MonitorWidget.ui" line="85"/>
         <source>Disk I/O</source>
-        <translation type="unfinished"></translation>
+        <translation>Radnje na disku</translation>
     </message>
 </context>
 <context>
@@ -1044,52 +1044,52 @@
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Note Files (*.note)</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke bilješki (*.note)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="100"/>
         <source>Text Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstualne datoteke (*)</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="101"/>
         <source>Open a note file</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori datoteku bilješke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="138"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="140"/>
         <source>Invalid Note Name: Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Neispravno ime bilješke: Pokušaj ponovo</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="141"/>
         <source>Select a Note Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi ime bilješke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="168"/>
         <source>Open Text File</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori tekstualnu datoteku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="169"/>
         <source>Create a Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Stvori bilješku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="172"/>
         <source>Rename Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Preimenuj bilješku</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/notepad/NotepadPlugin.cpp" line="173"/>
         <source>Delete Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši bilješku</translation>
     </message>
 </context>
 <context>
@@ -1097,57 +1097,57 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši popis za reprodukciju</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Promiješaj popis za reprodukciju</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj direktorij</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj URL</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi direktorij za multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished"></translation>
+        <translation>Upiši ispravni URL multimedijske datoteke ili prijenosa:</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL multimedijske datoteke</translation>
     </message>
 </context>
 <context>
@@ -1155,57 +1155,57 @@
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="69"/>
         <source>Clear Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši popis za reprodukciju</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="70"/>
         <source>Shuffle Playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Promiješaj popis za reprodukciju</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="72"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj datoteke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="73"/>
         <source>Add Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj direktorij</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="74"/>
         <source>Add URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj URL</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="102"/>
         <source>Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="103"/>
         <source>Select Multimedia Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="130"/>
         <source>Select Multimedia Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi direktorij za multimedijske datoteke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="159"/>
         <source>Enter a valid URL for a multimedia file or stream:</source>
-        <translation type="unfinished"></translation>
+        <translation>Upiši ispravni URL multimedijske datoteke ili prijenosa:</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/audioplayer/PlayerWidget.cpp" line="161"/>
         <source>Multimedia URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL multimedijske datoteke</translation>
     </message>
 </context>
 <context>
@@ -1213,155 +1213,155 @@
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="62"/>
         <source>View Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaz opcija</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="89"/>
         <source>Open Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori web-stranicu</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="92"/>
         <source>More</source>
-        <translation type="unfinished"></translation>
+        <translation>Više</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="154"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="245"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="391"/>
         <source>Back to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Natrag na vijesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="172"/>
         <source>Feed Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaci vijesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="212"/>
         <source>Remove Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni vijest</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="263"/>
         <source>New Feed Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretplata na novu vijest</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="287"/>
         <source>RSS URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL RSS-a</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="302"/>
         <source>Load a preset RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Učitaj unaprijed određenu RSS vijest</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="332"/>
         <source>Add to Feeds</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj vijestima</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="409"/>
         <source>Feed Reader Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke čitača vijesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="430"/>
         <source>Manual Sync Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinkroniziraj samo ručno</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="437"/>
         <source>Some RSS feeds may request custom update intervals instead of using this setting</source>
-        <translation type="unfinished"></translation>
+        <translation>Neke RSS vijesti mogu zahtijevati prilagođene intervale aktualiziranja umjesto korištenja ove postavke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="440"/>
         <source>Default Sync Interval</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardni interval između sinkronizacija</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="471"/>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="483"/>
         <source>Hour(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>h</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="478"/>
         <source>Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.ui" line="522"/>
         <source>Save Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Spremi postavke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="70"/>
         <source>Add RSS Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj RSS vijest</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="71"/>
         <source>View Feed Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaz detalja vijesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="72"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="74"/>
         <source>Update Feeds Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualiziraj vijesti</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="78"/>
         <source>Lumina Desktop RSS</source>
-        <translation type="unfinished"></translation>
+        <translation>RSS radne površine Lumina</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="145"/>
         <source>Feed URL: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>URL vijesti: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="146"/>
         <source>Title: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Naslov: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="147"/>
         <source>Description: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Opis: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="148"/>
         <source>Website: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Web-stranica: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="149"/>
         <source>Last Build Date: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum zadnje izgradnje: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="150"/>
         <source>Last Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadnja sinkronizacija: %1</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/rssreader/RSSFeedPlugin.cpp" line="151"/>
         <source>Next Sync: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sljedeća sinkronizacija: %1</translation>
     </message>
 </context>
 <context>
@@ -1369,42 +1369,42 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="30"/>
         <source>Screensaver</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaštita ekrana</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="26"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Osobitosti</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="33"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Slika pozadine</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="36"/>
         <source>Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaz</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="42"/>
         <source>All Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sve postavke radne površine</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="57"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolna ploča</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="62"/>
         <source>About Lumina</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina informacije</translation>
     </message>
 </context>
 <context>
@@ -1412,134 +1412,134 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazac</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="38"/>
         <source>Type to search</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipkaj za pretragu</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="171"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraži datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="199"/>
         <source>Browse Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraži programe</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="234"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolna ploča</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="305"/>
         <source>Leave</source>
-        <translation type="unfinished"></translation>
+        <translation>Napusti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="379"/>
         <source>Manage Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravljaj programima</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="408"/>
         <source>Show Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži kategorije</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="488"/>
         <source>Configure Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguriraj radnu površinu</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripravno stanje</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokreni ponovo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Update and Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualiziraj i pokreni ponovo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Isključi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
         <source>(System Preparing Updates)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Sustav priprema aktualiziranja)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Odjavi se</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Osobitosti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1150"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Natrag</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Primijeniti nove verzije?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="293"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Postoje nove verzije sustava! Želiš li ih sada instalirati?</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="294"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Da</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="295"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="296"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Odustani</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
         <source>%1% (Plugged In)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % (priključeno)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="478"/>
         <source>%1% (%2 Estimated)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % (procijenjeno %2)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="479"/>
         <source>%1% Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % preostalo</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="495"/>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="665"/>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="676"/>
         <source>Workspace %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Radni prostor %1/%2</translation>
     </message>
 </context>
 <context>
@@ -1547,68 +1547,68 @@
     <message>
         <location filename="../SystemWindow.ui" line="14"/>
         <source>System Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcije sustava</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="68"/>
         <source>Log Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Odjavi se</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="84"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokreni ponovo</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="100"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Isključi</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="145"/>
         <source>Update Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualiziraj</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="167"/>
         <source>Updates ready to install</source>
-        <translation type="unfinished"></translation>
+        <translation>Nove verzije spremne za instaliranje</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="205"/>
         <location filename="../SystemWindow.cpp" line="63"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Odustani</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="234"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaključaj</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="250"/>
         <source>Suspend</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripravno stanje</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="60"/>
         <source>Apply Updates?</source>
-        <translation type="unfinished"></translation>
+        <translation>Primijeniti nove verzije?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="60"/>
         <source>You have system updates waiting to be applied! Do you wish to install them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Postoje nove verzije sustava! Želiš li ih sada instalirati?</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Da</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
 </context>
 <context>
@@ -1616,22 +1616,22 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="33"/>
         <source>Go Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Idi natrag</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="134"/>
         <source>Remove Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukloni prečac</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="139"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši datoteku</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserItemWidget.cpp" line="145"/>
         <source>Create Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Stvori prečac</translation>
     </message>
 </context>
 <context>
@@ -1639,180 +1639,180 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Korisnički widget</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="27"/>
         <source>Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoriti</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="65"/>
         <source>Favorite Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritni programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="68"/>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="187"/>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="102"/>
         <source>Favorite Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritni direktoriji</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="105"/>
         <source>Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Mjesta</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="139"/>
         <source>Favorite FIles</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoritne datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="142"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="184"/>
         <source>Apps</source>
-        <translation type="unfinished"></translation>
+        <translation>Programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="290"/>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="330"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Početna</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="293"/>
         <source>Home Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Početni direktorij</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="322"/>
         <source>Search this Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Pretraži ovaj direktorij</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="375"/>
         <source>Go back to home directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrati se na početni direktorij</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="350"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori mapu</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="458"/>
         <source>Config</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguracija</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="461"/>
         <source>Desktop Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Osobitosti radne površine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="473"/>
         <source>Control Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolna ploča</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="495"/>
         <source>Desktop Appearance/Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgled radne površine/Dodaci</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="517"/>
         <source>Screen Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguracija ekrana</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="539"/>
         <source>Screensaver Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke zaštita ekrana</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="581"/>
         <source>About the Lumina Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Informacije o radnoj površini Lumina</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="289"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Sve</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="290"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="291"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Razvoj</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="292"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovanje</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="293"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Igre</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="294"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="295"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="296"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Ured</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="297"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Znanost</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="298"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="299"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sustav</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="300"/>
         <source>Utilities</source>
-        <translation type="unfinished"></translation>
+        <translation>Uslužni programi</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerazvrstano</translation>
     </message>
 </context>
 <context>
@@ -1820,67 +1820,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Multimedija</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Razvoj</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovanje</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Igre</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Slike</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Ured</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Znanost</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sustav</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Uslužni program</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerazvrstano</translation>
     </message>
 </context>
 </TS>
