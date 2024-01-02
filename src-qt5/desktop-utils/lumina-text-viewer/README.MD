@@ -6,4 +6,4 @@ Thus the need for a quick text viewer.  Hence the name.
 
 It does exactly what its supposed to do... dont expect it to do anything else. ;)
 
-![qtv iamge](https://github.com/q5sys/qtv/blob/master/qtv.png)
+![qtv iamge](https://github.com/lumina-desktop/lumina/blob/ltv/src-qt5/desktop-utils/lumina-text-viewer/ltv.png)
