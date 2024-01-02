@@ -13,6 +13,7 @@ LIBS     += -lpam
 SOURCES += main.c
 
 perms.path = $$DESTDIR$${PREFIX}/sbin
-perms.extra = "chmod 4555 $$DESTDIR$${PREFIX}/sbin/lumina-checkpass"
+# FIXME: This does not work: DESTDIR is blank
+# perms.extra = "chmod 4555 $$DESTDIR$${PREFIX}/sbin/lumina-checkpass"
 
 INSTALLS += target perms
