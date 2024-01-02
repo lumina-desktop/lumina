@@ -9,4 +9,6 @@ Categories=Utility;
 Name=Lumina File Information
 Comment=View or edit file information including application links
 Name[pt]=Informações de ficheiros do Lumina
+Name[ru]=Информация о файле Lumina
 Comment[pt]=Ver e editar informações dos ficheiros
+Comment[ru]=просмотр и изменение информации о файлах
