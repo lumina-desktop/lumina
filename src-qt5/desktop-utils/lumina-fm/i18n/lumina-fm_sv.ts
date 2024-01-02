@@ -79,7 +79,7 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="272"/>
         <source>Date Created</source>
-        <translation type="unfinished">Datum skapad</translation>
+        <translation>Datum skapad</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="454"/>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="443"/>
         <source>No Directory Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget mappinnehåll</translation>
     </message>
 </context>
 <context>
@@ -117,17 +117,17 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="53"/>
         <source>Administrator Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Administratörsläge</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="206"/>
         <source>Increase Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Öka ikonstorlekar</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="228"/>
         <source>Decrease Icon Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Minska ikonstorlekar</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="252"/>
@@ -170,27 +170,27 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="294"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj åtgärd</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="302"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Enstaka kolumn</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="305"/>
         <source>Single column view</source>
-        <translation type="unfinished"></translation>
+        <translation>Enstaka kolumn vy</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="313"/>
         <source>Dual Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbla kolumner</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="316"/>
         <source>Dual Column View</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbla kolumner vy</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="698"/>
@@ -235,7 +235,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="295"/>
         <source>Open Current Dir in a Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna nuvarande katalog i en terminal</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="576"/>
@@ -250,7 +250,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="661"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>Andra...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="670"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="289"/>
         <source>Application Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Programstartare</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="293"/>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="296"/>
         <source>SlideShow</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildspel</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="297"/>
@@ -317,17 +317,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="299"/>
         <source>Open Current Dir as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna nuvarande katalog som Root</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="303"/>
         <source>Archive Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkiv alternativ</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="326"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna med...</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="332"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="334"/>
         <source>Checksums</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollsummor</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="336"/>
@@ -367,7 +367,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Set as Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd som bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="581"/>
@@ -397,27 +397,27 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Packa upp här</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="605"/>
         <source>Archive Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkivval</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="922"/>
         <source>Select Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj arkiv</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Set Wallpaper on Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ställ in som bakgrundsbild på skärm</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärm</translation>
     </message>
 </context>
 <context>
@@ -460,17 +460,17 @@
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>JatillAlla</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>NejtillAlla></translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -542,7 +542,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klona ett git förråd</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
@@ -552,12 +552,12 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den här guiden guidar dig genom processen att ladda ner ett GIT-förråd från internet.</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
         <source>GitHub Repository Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Github förråd inställningar</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="55"/>
@@ -567,12 +567,12 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="65"/>
         <source>Repository Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Förråd namn</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Privat förråd</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
@@ -602,7 +602,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonym (endast offentliga förråd)</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
@@ -617,12 +617,12 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../gitWizard.ui" line="159"/>
         <source>Custom Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassat djup</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation type="unfinished"></translation>
+        <translation>Enskild gren</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
@@ -670,7 +670,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="150"/>
         <source>Sort Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorteringsläge</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="193"/>
@@ -685,7 +685,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="267"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa bildförhandsvisningar</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="272"/>
@@ -765,17 +765,17 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Repo Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Förråd status</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="441"/>
         <source>Clone Repository</source>
-        <translation type="unfinished"></translation>
+        <translation>Klona förråd</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="449"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa mappträdsfönster</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="452"/>
@@ -785,12 +785,12 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="455"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="460"/>
         <source>Open as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna som Root</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="471"/>
@@ -801,18 +801,18 @@ Ny Plats: %2</translation>
         <location filename="../MainUI.ui" line="476"/>
         <location filename="../MainUI.cpp" line="89"/>
         <source>Sort by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter namn</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="481"/>
         <location filename="../MainUI.ui" line="484"/>
         <source>Create Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa mapp</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="487"/>
         <source>Ctrl+Shift+N</source>
-        <translation type="unfinished"></translation>
+        <translation><Ctrl+Shift+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>
@@ -822,27 +822,27 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Filer</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="140"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vy</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="164"/>
         <source>&amp;Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bokmärken</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="172"/>
         <source>&amp;External Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Externa enheter</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
         <source>&amp;Git</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -1002,7 +1002,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="750"/>
         <source>Git Repository Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Git förråd status</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="840"/>
@@ -1027,22 +1027,22 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.cpp" line="90"/>
         <source>Sort by Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter storlek</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="91"/>
         <source>Sort by Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter typ</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
         <source>Sort by Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter modiferingsdatum</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="93"/>
         <source>Sort by Date Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter skapande datum</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="126"/>
@@ -1149,7 +1149,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvärderar...</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
@@ -1179,7 +1179,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../OPWidget.cpp" line="108"/>
         <source>Errors Occured</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel uppstod</translation>
     </message>
 </context>
 <context>
@@ -1300,7 +1300,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../TrayUI.cpp" line="91"/>
         <source>New Tasks Running</source>
-        <translation type="unfinished"></translation>
+        <translation>Nya uppgifter körs</translation>
     </message>
 </context>
 <context>
@@ -1308,67 +1308,67 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished">Multimedia</translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Utveckling</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Utbildning</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Spel</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontorsprogramvara</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetenskap</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktyg</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>Osorterade</translation>
     </message>
 </context>
 </TS>
