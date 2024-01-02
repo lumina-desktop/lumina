@@ -85,7 +85,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="156"/>
         <source>Drag to Application</source>
-        <translation type="unfinished"></translation>
+        <translation>拖动到应用程序</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="217"/>
@@ -206,17 +206,17 @@
     <message>
         <location filename="../BootSplash.cpp" line="48"/>
         <source>This desktop is powered by coffee, coffee, and more coffee.</source>
-        <translation type="unfinished"></translation>
+        <translation>这个桌面由咖啡、咖啡和更多的咖啡提供动力。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="50"/>
         <source>Keep up with desktop news!</source>
-        <translation>保持桌面最新！</translation>
+        <translation>紧跟桌面新闻!</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="52"/>
         <source>There is a full handbook of information about the desktop available online.</source>
-        <translation type="unfinished"></translation>
+        <translation>网上有一本关于桌面的完整信息手册。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="54"/>
@@ -226,22 +226,22 @@
     <message>
         <location filename="../BootSplash.cpp" line="56"/>
         <source>Lumina can easily reproduce the interface from most other desktop environments.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumina 可以很容易地重现大多数其他桌面环境的界面。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="58"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation>这个桌面是由 iXsystems 慷慨赞助</translation>
+        <translation>这个桌面由 iXsystems 慷慨赞助</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="60"/>
         <source>I have never been hurt by what I have not said</source>
-        <translation type="unfinished"></translation>
+        <translation>我从未因我没有说过的话而受到伤害</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="62"/>
         <source>Gotta have more cowbell!</source>
-        <translation type="unfinished"></translation>
+        <translation>必须有更多的牛铃！</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="64"/>
@@ -266,22 +266,22 @@
     <message>
         <location filename="../BootSplash.cpp" line="72"/>
         <source>Don&apos;t expect to build up the weak by pulling down the strong.</source>
-        <translation type="unfinished"></translation>
+        <translation>不要指望通过拉低强者来建立弱者。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="74"/>
         <source>You can&apos;t know too much, but you can say too much.</source>
-        <translation type="unfinished"></translation>
+        <translation>你不能知道太多，但你可以说得太多。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="76"/>
         <source>Duty is not collective; it is personal.</source>
-        <translation type="unfinished"></translation>
+        <translation>责任不是集体的，而是个人的。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="78"/>
         <source>Any society that would give up a little liberty to gain a little security will deserve neither and lose both.</source>
-        <translation type="unfinished"></translation>
+        <translation>任何为了获得一点安全感而放弃一点自由的社会，都不值得拥有，而且会失去两者。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="80"/>
@@ -346,7 +346,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="104"/>
         <source>Political correctness is tyranny with manners.</source>
-        <translation type="unfinished"></translation>
+        <translation>政治正确是有礼貌的暴政。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="106"/>
@@ -366,7 +366,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="112"/>
         <source>A mathematician is a device for turning coffee into theorems.</source>
-        <translation type="unfinished"></translation>
+        <translation>数学家是一个将咖啡变成定理的装置。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="114"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="116"/>
         <source>Black holes are where God divided by zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>黑洞是上帝除以零的地方。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="118"/>
@@ -391,7 +391,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="122"/>
         <source>A witty saying proves nothing.</source>
-        <translation type="unfinished"></translation>
+        <translation>一句俏皮话证明不了什么。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="124"/>
@@ -401,12 +401,12 @@
     <message>
         <location filename="../BootSplash.cpp" line="126"/>
         <source>Well-timed silence hath more eloquence than speech.</source>
-        <translation type="unfinished"></translation>
+        <translation>适时的沉默比说话更有说服力。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="128"/>
         <source>I have never let my schooling interfere with my education.</source>
-        <translation type="unfinished"></translation>
+        <translation>我从未让我的学业干扰我的教育。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="130"/>
@@ -426,7 +426,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="136"/>
         <source>The truth is more important than the facts.</source>
-        <translation type="unfinished"></translation>
+        <translation>真相比事实更重要。</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="138"/>
@@ -773,29 +773,29 @@
     <message>
         <location filename="../LDesktop.cpp" line="257"/>
         <source>Desktop Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>桌面动作</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="259"/>
         <location filename="../LDesktop.cpp" line="644"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>新建文件夹</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="260"/>
         <location filename="../LDesktop.cpp" line="664"/>
         <source>New File</source>
-        <translation type="unfinished"></translation>
+        <translation>新建文件</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="261"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
         <source>Lumina Desktop</source>
-        <translation>Lumina桌面</translation>
+        <translation>Lumina 桌面</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="294"/>
@@ -826,7 +826,7 @@
         <location filename="../LDesktop.cpp" line="650"/>
         <location filename="../LDesktop.cpp" line="670"/>
         <source>Desktop</source>
-        <translation type="unfinished">桌面</translation>
+        <translation>桌面</translation>
     </message>
 </context>
 <context>
@@ -834,7 +834,7 @@
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="19"/>
         <source>Workspace 1</source>
-        <translation type="unfinished"></translation>
+        <translation>工作空间 1</translation>
     </message>
     <message>
         <location filename="../panel-plugins/desktopswitcher/LDesktopSwitcher.cpp" line="135"/>
@@ -848,37 +848,37 @@
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表单</translation>
+        <translation>表单</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="114"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="126"/>
         <source>Unlock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>解锁会话</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="37"/>
         <source>Locked by: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>由 %1 解锁</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="72"/>
         <source>Too Many Failures</source>
-        <translation type="unfinished"></translation>
+        <translation>错误过多</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="72"/>
         <source>Wait %1 Minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>等待 %1 分钟</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.cpp" line="73"/>
         <source>Failed Attempts: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>失败次数 %1</translation>
     </message>
 </context>
 <context>
@@ -907,7 +907,7 @@
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="50"/>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>卷</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemdashboard/SysMenuQuick.ui" line="111"/>
@@ -1097,7 +1097,7 @@
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表单</translation>
+        <translation>表单</translation>
     </message>
     <message>
         <location filename="../panel-plugins/audioplayer/PPlayerWidget.cpp" line="69"/>
@@ -1389,7 +1389,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="39"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="../SettingsMenu.cpp" line="42"/>
@@ -1404,7 +1404,7 @@
     <message>
         <location filename="../SettingsMenu.cpp" line="62"/>
         <source>About Lumina</source>
-        <translation>关于Lumina</translation>
+        <translation>关于 Lumina</translation>
     </message>
 </context>
 <context>
@@ -1457,32 +1457,32 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="924"/>
         <source>Suspend</source>
-        <translation type="unfinished">休眠</translation>
+        <translation>休眠</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="989"/>
         <source>Restart</source>
-        <translation type="unfinished">重启</translation>
+        <translation>重启</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1017"/>
         <source>Update and Restart</source>
-        <translation type="unfinished"></translation>
+        <translation>更新与重启</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1042"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>关机</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1061"/>
         <source>(System Preparing Updates)</source>
-        <translation type="unfinished"></translation>
+        <translation>(准备系统更新)</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="1090"/>
         <source>Log Out</source>
-        <translation type="unfinished">注销</translation>
+        <translation>注销</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.ui" line="262"/>
@@ -1507,17 +1507,17 @@
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="294"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="295"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="296"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../panel-plugins/systemstart/StartMenu.cpp" line="475"/>
@@ -1562,17 +1562,17 @@
     <message>
         <location filename="../SystemWindow.ui" line="100"/>
         <source>Power Off</source>
-        <translation type="unfinished"></translation>
+        <translation>关机</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="145"/>
         <source>Update Now</source>
-        <translation type="unfinished"></translation>
+        <translation>现在更新</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="167"/>
         <source>Updates ready to install</source>
-        <translation type="unfinished"></translation>
+        <translation>准备安装更新</translation>
     </message>
     <message>
         <location filename="../SystemWindow.ui" line="205"/>
@@ -1603,12 +1603,12 @@
     <message>
         <location filename="../SystemWindow.cpp" line="61"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../SystemWindow.cpp" line="62"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>否</translation>
     </message>
 </context>
 <context>
@@ -1639,7 +1639,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="14"/>
         <source>UserWidget</source>
-        <translation>用户的Widget</translation>
+        <translation>用户的 Widget</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.ui" line="24"/>
@@ -1807,7 +1807,7 @@
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="301"/>
         <source>Wine</source>
-        <translation>Wine 模拟器</translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../panel-plugins/userbutton/UserWidget.cpp" line="302"/>
@@ -1820,67 +1820,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished">多媒体</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished">开发</translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished">教育</translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished">游戏</translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished">图像</translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished">网络</translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished">办公</translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished">科学</translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished">系统</translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished">工具</translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>
