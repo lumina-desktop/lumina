@@ -6,7 +6,7 @@
     <message>
         <location filename="../TarBackend.cpp" line="249"/>
         <source>Could not read archive</source>
-        <translation>不能读取压缩文件</translation>
+        <translation>无法读取压缩文件</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="251"/>
@@ -16,12 +16,12 @@
     <message>
         <location filename="../TarBackend.cpp" line="284"/>
         <source>Extraction Finished</source>
-        <translation>解压完毕</translation>
+        <translation>解压完成</translation>
     </message>
     <message>
         <location filename="../TarBackend.cpp" line="286"/>
         <source>Modification Finished</source>
-        <translation>修改完毕</translation>
+        <translation>修改完成</translation>
     </message>
 </context>
 <context>
@@ -29,13 +29,13 @@
     <message>
         <location filename="../MainUI.ui" line="35"/>
         <source>Archive:</source>
-        <translation>归档：</translation>
+        <translation>压缩：</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
         <location filename="../MainUI.cpp" line="331"/>
         <source>File</source>
-        <translation>文科</translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="125"/>
@@ -55,22 +55,22 @@
     <message>
         <location filename="../MainUI.ui" line="178"/>
         <source>&amp;Open Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;打开压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="181"/>
         <source>Open archive</source>
-        <translation>打开归档文件</translation>
+        <translation>打开压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="186"/>
         <source>&amp;New Archive</source>
-        <translation>&amp;新的归档文件</translation>
+        <translation>&amp;新建压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="189"/>
         <source>New archive</source>
-        <translation>新建归档文件</translation>
+        <translation>新建压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="194"/>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../MainUI.ui" line="202"/>
         <source>Add files to archive</source>
-        <translation>添加文件到归档文件</translation>
+        <translation>添加文件到压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -95,7 +95,7 @@
     <message>
         <location filename="../MainUI.ui" line="210"/>
         <source>Remove selection from archive</source>
-        <translation>从归档中删除</translation>
+        <translation>从压缩文件中删除</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="215"/>
@@ -115,7 +115,7 @@
     <message>
         <location filename="../MainUI.ui" line="226"/>
         <source>Add directory to archive</source>
-        <translation>添加文件夹到归档</translation>
+        <translation>添加文件夹到压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="231"/>
@@ -135,17 +135,17 @@
     <message>
         <location filename="../MainUI.ui" line="242"/>
         <source>Copy an IMG to a USB device (may require admin permission)</source>
-        <translation>将一个 IMG 文件复制到USB设备上（可能需要管理员的许可）</translation>
+        <translation>将 img 文件复制到 USB 存储设备上（可能需要管理员权限）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="28"/>
         <source>Archive Manager</source>
-        <translation>归档管理器</translation>
+        <translation>压缩文件管理器</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="29"/>
         <source>Admin Mode</source>
-        <translation>管理模式</translation>
+        <translation>管理员模式</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="55"/>
@@ -160,7 +160,7 @@
     <message>
         <location filename="../MainUI.cpp" line="57"/>
         <source>CTRL+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL+Q</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="58"/>
@@ -171,7 +171,7 @@
         <location filename="../MainUI.cpp" line="69"/>
         <location filename="../MainUI.cpp" line="331"/>
         <source>MimeType</source>
-        <translation>术语类型</translation>
+        <translation>默认程序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="69"/>
@@ -183,7 +183,7 @@
         <location filename="../MainUI.cpp" line="94"/>
         <location filename="../MainUI.cpp" line="236"/>
         <source>Opening Archive...</source>
-        <translation>用其打开归档文件</translation>
+        <translation>用其打开压缩文件……</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="180"/>
@@ -194,108 +194,108 @@
         <location filename="../MainUI.cpp" line="181"/>
         <location filename="../MainUI.cpp" line="199"/>
         <source>Uncompressed Archive (*.tar)</source>
-        <translation>未经压缩的归档（*.tar）。</translation>
+        <translation>未经压缩的压缩文件（*.tar）。</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="182"/>
         <location filename="../MainUI.cpp" line="200"/>
         <source>GZip Compressed Archive (*.tar.gz *.tgz)</source>
-        <translation>GZip 压缩文件 (*.tar.gz *.tgz)</translation>
+        <translation>GZip 压缩文件（*.tar.gz *.tgz）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="183"/>
         <location filename="../MainUI.cpp" line="201"/>
         <source>BZip Compressed Archive (*.tar.bz *.tbz)</source>
-        <translation>BZip 压缩文件 (*.tar.bz *.tbz)</translation>
+        <translation>BZip 压缩文件（*.tar.bz *.tbz）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="184"/>
         <location filename="../MainUI.cpp" line="202"/>
         <source>BZip2 Compressed Archive (*.tar.bz2 *.tbz2)</source>
-        <translation>BZip2 压缩文件 (*.tar.bz2 *.tbz2)</translation>
+        <translation>BZip2 压缩文件（*.tar.bz2 *.tbz2）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="185"/>
         <location filename="../MainUI.cpp" line="204"/>
         <source>LMZA Compressed Archive (*.tar.lzma *.tlz)</source>
-        <translation>LMZA 压缩文件 (*.tar.lzma *.tlz)</translation>
+        <translation>LMZA 压缩文件（*.tar.lzma *.tlz）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="186"/>
         <location filename="../MainUI.cpp" line="203"/>
         <source>XZ Compressed Archive (*.tar.xz *.txz)</source>
-        <translation>XZ 压缩文件 (*.tar.xz *.txz)</translation>
+        <translation>XZ 压缩文件（*.tar.xz *.txz）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="187"/>
         <location filename="../MainUI.cpp" line="205"/>
         <source>CPIO Archive (*.cpio)</source>
-        <translation>CPIO 文件 (*.cpio)</translation>
+        <translation>CPIO 文件（*.cpio）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="188"/>
         <location filename="../MainUI.cpp" line="206"/>
         <source>PAX Archive (*.pax)</source>
-        <translation>PAX 文件 (*.pax)</translation>
+        <translation>PAX 文件（*.pax）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="189"/>
         <location filename="../MainUI.cpp" line="207"/>
         <source>AR Archive (*.ar)</source>
-        <translation>AR 文件 (*.ar)</translation>
+        <translation>AR 文件（*.ar）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="190"/>
         <location filename="../MainUI.cpp" line="208"/>
         <source>SHAR Archive (*.shar)</source>
-        <translation>SHAR 文件 (*.shar)</translation>
+        <translation>SHAR 文件（*.shar）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="191"/>
         <location filename="../MainUI.cpp" line="209"/>
         <source>Zip Archive (*.zip)</source>
-        <translation>Zip 文件 (*.zip)</translation>
+        <translation>Zip 压缩文件（*.zip）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="192"/>
         <location filename="../MainUI.cpp" line="210"/>
         <source>7-Zip Archive (*.7z)</source>
-        <translation>7-Zip 文件 (*.7z)</translation>
+        <translation>7-Zip 压缩文件（*.7z）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="198"/>
         <source>All Known Types %1</source>
-        <translation>未知文件类型 %1</translation>
+        <translation>文件类型未知 %1</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="211"/>
         <source>READ-ONLY: ISO image (*.iso *.img)</source>
-        <translation>只读：ISO 文件 (*.iso *.img)</translation>
+        <translation>只读：ISO 镜像（*.iso *.img）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="212"/>
         <source>READ-ONLY: XAR archive (*.xar)</source>
-        <translation>只读: XAR 归档 (*.xar)</translation>
+        <translation>只读: XAR 压缩文件（*.xar）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="213"/>
         <source>READ-ONLY: Java archive (*.jar)</source>
-        <translation>只读： Java 归档 (*.jar)</translation>
+        <translation>只读： Java 文件（*.jar）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="214"/>
         <source>READ-ONLY: RedHat Package (*.rpm)</source>
-        <translation>只读：RedHat 文件 (*.rpm)</translation>
+        <translation>只读：RedHat 软件包（*.rpm）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="215"/>
         <source>Show All Files (*)</source>
-        <translation>显示所有文件(*)</translation>
+        <translation>显示所有文件（*）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="223"/>
         <source>Create Archive</source>
-        <translation>创建归档</translation>
+        <translation>创建压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="226"/>
@@ -310,13 +310,13 @@
     <message>
         <location filename="../MainUI.cpp" line="234"/>
         <source>Open Archive</source>
-        <translation>打开归档文件</translation>
+        <translation>打开压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="242"/>
         <location filename="../MainUI.cpp" line="249"/>
         <source>Add to Archive</source>
-        <translation>添加到归档文件</translation>
+        <translation>添加到压缩文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="244"/>
@@ -366,12 +366,12 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation教育></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation游戏></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
@@ -424,12 +424,12 @@
     <message>
         <location filename="../imgDialog.ui" line="14"/>
         <source>Burn IMG to device</source>
-        <translation>刻录 IMG 到设备</translation>
+        <translation>刻录 img 到设备</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="29"/>
         <source>IMG File</source>
-        <translation>IMG 文件</translation>
+        <translation>img 文件</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="54"/>
@@ -444,12 +444,12 @@
     <message>
         <location filename="../imgDialog.ui" line="96"/>
         <source>Refresh Device List</source>
-        <translation>刷新设备</translation>
+        <translation>刷新设备列表</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="108"/>
         <source>Wipe all extra space on device (conv = sync)</source>
-        <translation>擦除设备上所有多余的空间 (conv = sync)</translation>
+        <translation>擦除设备上所有多余的空间（conv = sync）</translation>
     </message>
     <message>
         <location filename="../imgDialog.ui" line="132"/>
@@ -479,17 +479,17 @@
     <message>
         <location filename="../imgDialog.cpp" line="36"/>
         <source>Kilobyte(s)</source>
-        <translation>千字节</translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="37"/>
         <source>Megabyte(s)</source>
-        <translation>兆字节</translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="38"/>
         <source>Gigabyte(s)</source>
-        <translation>千兆字节</translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
@@ -504,7 +504,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Warning: This will leave the USB device in an inconsistent state</source>
-        <translation>警告。这将使USB设备处于不一致的状态</translation>
+        <translation>警告：这将使 USB 设备处于不一致状态</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
@@ -544,7 +544,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the device</source>
-        <translation>镜像已成功刻录到设备上</translation>
+        <translation>镜像已成功刻录至设备</translation>
     </message>
 </context>
 </TS>

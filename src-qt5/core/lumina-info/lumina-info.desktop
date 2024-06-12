@@ -10,13 +10,16 @@ Name=Desktop Information
 Name[pt]=Informações do ambiente de trabalho
 Name[sv]=Skrivbordsinformation
 Name[ru]=Информация о Lumina
+Name[zh_CN]=桌面信息
 GenericName=Version and Legal Information
 GenericName[pt]=Versão e informações legais
 GenericName[sv]=Version och juridisk information
 GenericName[ru]=Информация о версиях и юридических правах
+GenericName[zh_CN]=版本与法律信息
 Comment=View information about the Lumina Desktop Environment
 Comment[pt]=Ver informações sobre Lumina Desktop Environment
 Comment[sv]=Information om Lumina skrivbordsmiljön
 Comment[ru]=Просмотр информации о среде рабочего стола Lumina
+Comment[zh_CN]=关于 Lumina 桌面环境
 
 
