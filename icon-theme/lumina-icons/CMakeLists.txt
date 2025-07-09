@@ -11,6 +11,7 @@ install_theme(
     NAME "lumina-icons"
     TOPLEVEL 
         "index.theme"
+        "LICENSE"
     SUBDIRS
         "actions/symbolic"
 )

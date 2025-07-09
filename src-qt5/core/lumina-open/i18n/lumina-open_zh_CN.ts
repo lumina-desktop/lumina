@@ -6,12 +6,12 @@
     <message>
         <location filename="../LFileDialog.ui" line="14"/>
         <source>Open With...</source>
-        <translation>打开方式...</translation>
+        <translation>打开方式……</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="68"/>
         <source>Preferred</source>
-        <translation>首选</translation>
+        <translation>偏好设置</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="75"/>
@@ -31,7 +31,7 @@
     <message>
         <location filename="../LFileDialog.ui" line="138"/>
         <source>Find</source>
-        <translation>查找</translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../LFileDialog.ui" line="199"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../LFileDialog.cpp" line="41"/>
         <source>(Internet URL - %1)</source>
-        <translation>(网址 URL - %1)</translation>
+        <translation>（网址 - %1）</translation>
     </message>
     <message>
         <location filename="../LFileDialog.cpp" line="114"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../main.cpp" line="262"/>
         <source>Invalid file or URL: %1</source>
-        <translation>无效的文件或网址：%1%</translation>
+        <translation>无效的文件或链接：%1%</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="283"/>
@@ -176,12 +176,12 @@
     <message>
         <location filename="../main.cpp" line="307"/>
         <source>URL shortcut is missing the URL: %1</source>
-        <translation>网址快捷方式缺少网址 : %1</translation>
+        <translation>网址快捷方式缺少网址：%1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="318"/>
         <source>Directory shortcut is missing the path to the directory: %1</source>
-        <translation>目录的快捷方式是丢失目录的路径 : %1</translation>
+        <translation>目录快捷方式缺少到目录的路径：%1</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="323"/>
@@ -191,7 +191,7 @@
     <message>
         <location filename="../main.cpp" line="386"/>
         <source>Could not find &quot;%1&quot;. Please ensure it is installed first.</source>
-        <translation>无法找到 “%1”。请确认它已被安装。</translation>
+        <translation>无法找到 “%1”。请确认已安装。</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="435"/>
@@ -201,7 +201,7 @@
     <message>
         <location filename="../main.cpp" line="435"/>
         <source>The following application experienced an error and needed to close:</source>
-        <translation>下面的应用程序遇到错误，需要关闭:</translation>
+        <translation>以下的应用程序发生错误，需要关闭：</translation>
     </message>
 </context>
 <context>
@@ -209,67 +209,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished">多媒体</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished">开发</translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished">教育</translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished">图像</translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished">网络</translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished">办公</translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished">科学</translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished">系统</translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>

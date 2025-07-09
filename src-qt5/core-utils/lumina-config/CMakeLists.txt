@@ -106,8 +106,9 @@ target_link_libraries(
 
 add_custom_command(	
 	TARGET lumina-config
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-config.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-config.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-config.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-config.1.gz
 )
 
 install(TARGETS lumina-config)

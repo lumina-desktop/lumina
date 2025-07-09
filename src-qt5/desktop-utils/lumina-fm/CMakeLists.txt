@@ -90,8 +90,9 @@ add_executable(lumina-fm
 
 add_custom_command(	
 	TARGET lumina-fm
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-fm.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-fm.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-fm.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-fm.1.gz
 )
 
 target_link_libraries(
@@ -109,3 +110,4 @@ install(
 	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-fm.1.gz
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
 )
+install(FILES Insight-FileManager.svg DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps)

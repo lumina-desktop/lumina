@@ -77,8 +77,9 @@ add_executable(lumina-info main.cpp MainUI.cpp ${RESOURCE_FILES} ${TS_FILES} ${Q
 
 add_custom_command(	
 	TARGET lumina-info
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-info.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
 )
 
 target_link_libraries(

@@ -30,19 +30,19 @@ add_subdirectory(src/lthemeengine-style)
 
 install(
     DIRECTORY colors
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine/colors
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine
     FILES_MATCHING
     PATTERN *.conf
 )
 install(
     DIRECTORY qss
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine/qss
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine
     FILES_MATCHING
     PATTERN *.qss
 )
 install(
     DIRECTORY desktop_qss
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine/desktop_qss
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/lthemeengine
     FILES_MATCHING
     PATTERN *.qss
 )

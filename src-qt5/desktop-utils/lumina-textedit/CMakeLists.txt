@@ -81,8 +81,9 @@ add_executable(lumina-textedit
 
 add_custom_command(	
 	TARGET lumina-textedit
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-textedit.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-textedit.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-textedit.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-textedit.1.gz
 )
 
 target_link_libraries(
@@ -100,3 +101,4 @@ install(
 	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-textedit.1.gz
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
 )
+install(DIRECTORY syntax_rules DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/)

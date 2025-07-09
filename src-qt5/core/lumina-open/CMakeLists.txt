@@ -77,8 +77,9 @@ add_executable(lumina-open main.cpp LFileDialog.cpp ${RESOURCE_FILES} ${TS_FILES
 
 add_custom_command(	
 	TARGET lumina-open
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-open.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
 )
 
 target_link_libraries(

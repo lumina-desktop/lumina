@@ -8,7 +8,7 @@
 # the source-repository layout doesn't suggest that is the case.
 
 install_theme(
-    NAME "material-design-light"
+    NAME "material-design-dark"
     TARGET_SUBDIR "scalable"
     TOPLEVEL 
         "index.theme"

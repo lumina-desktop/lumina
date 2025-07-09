@@ -78,8 +78,9 @@ add_executable(lumina-archiver
 
 add_custom_command(	
 	TARGET lumina-archiver
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-archiver.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-archiver.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-archiver.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-archiver.1.gz
 )
 
 target_link_libraries(

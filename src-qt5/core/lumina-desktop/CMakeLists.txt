@@ -6,7 +6,7 @@
 # The plugins, as well as sources in this directory, expect to
 # include from this directory, from src-screensaver/, but **also* from
 # the top-level (outside of lumina-core entirely!) src-cpp.
-set(TOPLEVEL_SRC_CPP ${CMAKE_SOURCE_DIR}/../src-cpp/)
+set(TOPLEVEL_SRC_CPP ${CMAKE_SOURCE_DIR}/src-qt5/src-cpp/)
 include_directories(
     lumina-desktop
     PRIVATE
@@ -123,8 +123,9 @@ target_sources(
 
 add_custom_command(	
 	TARGET lumina-desktop
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-desktop.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
 )
 
 # Picks up many Qt libraries from libLumina's PUBLIC settings

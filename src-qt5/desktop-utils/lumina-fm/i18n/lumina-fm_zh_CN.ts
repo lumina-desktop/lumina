@@ -11,7 +11,6 @@
     <message>
         <location filename="../BMMDialog.ui" line="35"/>
         <source>Name</source>
-        <translatorcomment>名字</translatorcomment>
         <translation>名称</translation>
     </message>
     <message>
@@ -47,13 +46,12 @@
     <message>
         <location filename="../BMMDialog.cpp" line="64"/>
         <source>Invalid Name</source>
-        <translation>无效的名称</translation>
+        <translation>名称无效</translation>
     </message>
     <message>
         <location filename="../BMMDialog.cpp" line="64"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translatorcomment>已经存在这个书签名称。请输入另外一个缩写名称！</translatorcomment>
-        <translation>已经存在这个书签名称。请输入另外一个缩写名称.</translation>
+        <translation>该书签名称已存在。请请重新选择。</translation>
     </message>
 </context>
 <context>
@@ -81,32 +79,32 @@
     <message>
         <location filename="../BrowserWidget.cpp" line="272"/>
         <source>Date Created</source>
-        <translation>建立日期</translation>
+        <translation>创建日期</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="454"/>
         <source>Capacity: %1</source>
-        <translation>容量: %1</translation>
+        <translation>容量：%1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="479"/>
         <source>Files: %1 (%2)</source>
-        <translation>文件: %1 (%2)</translation>
+        <translation>文件：%1 (%2)</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="481"/>
         <source>Files: %1</source>
-        <translation>文件: %1</translation>
+        <translation>文件：%1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="487"/>
         <source>Dirs: %1</source>
-        <translation>目录: %1</translation>
+        <translation>目录：%1</translation>
     </message>
     <message>
         <location filename="../BrowserWidget.cpp" line="443"/>
         <source>No Directory Contents</source>
-        <translation>目录无内容</translation>
+        <translation>空目录</translation>
     </message>
 </context>
 <context>
@@ -119,7 +117,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="53"/>
         <source>Administrator Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>管理员模式</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="206"/>
@@ -156,13 +154,13 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="280"/>
         <source>Home</source>
-        <translation>用户目录</translation>
+        <translation>家目录</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="283"/>
         <location filename="../widgets/DirWidget2.ui" line="286"/>
         <source>Go to home directory</source>
-        <translation>回到用户目录</translation>
+        <translation>回到家目录</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="291"/>
@@ -177,7 +175,7 @@
     <message>
         <location filename="../widgets/DirWidget2.ui" line="302"/>
         <source>Single Column</source>
-        <translation type="unfinished"></translation>
+        <translation>单列</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.ui" line="305"/>
@@ -197,7 +195,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="698"/>
         <source>(Limited Access) </source>
-        <translation>(有限访问) </translation>
+        <translation>（访问受限） </translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="720"/>
@@ -210,34 +208,34 @@
         <location filename="../widgets/DirWidget2.cpp" line="746"/>
         <location filename="../widgets/DirWidget2.cpp" line="774"/>
         <source>Name:</source>
-        <translation>名称:</translation>
+        <translation>名称：</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="737"/>
         <source>Error Creating Document</source>
-        <translation>建立文档出错</translation>
+        <translation>创建文档时发生错误</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="737"/>
         <source>The document could not be created. Please ensure that you have the proper permissions.</source>
-        <translation>无法建立文档。请确定您有适当的权限。</translation>
+        <translation>无法创建文档。请确定您有适当的权限。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="746"/>
         <source>New Directory</source>
-        <translation>新目录</translation>
+        <translation>新建目录</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <location filename="../widgets/DirWidget2.cpp" line="756"/>
         <location filename="../widgets/DirWidget2.cpp" line="783"/>
         <source>Invalid Name</source>
-        <translation>无效的名称</translation>
+        <translation>名称无效</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="295"/>
         <source>Open Current Dir in a Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>在当前路径打开终端</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="576"/>
@@ -252,29 +250,29 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="661"/>
         <source>Other...</source>
-        <translation type="unfinished"></translation>
+        <translation>其他……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="670"/>
         <source>Loading...</source>
-        <translation>载入中...</translation>
+        <translation>载入中……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="728"/>
         <location filename="../widgets/DirWidget2.cpp" line="756"/>
         <location filename="../widgets/DirWidget2.cpp" line="783"/>
         <source>A file or directory with that name already exists! Please pick a different name.</source>
-        <translation>已有相同名字的文件或目录存在！请选择一个不同的名字。</translation>
+        <translation>已有相同名字的文件或目录存在！请选择其他的名字。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="760"/>
         <source>Error Creating Directory</source>
-        <translation>创建目录错误</translation>
+        <translation>创建目录时发生错误</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="760"/>
         <source>The directory could not be created. Please ensure that you have the proper permissions to modify the current directory.</source>
-        <translation>目录无法被建立。请检查您有更改当前目录的适当权限。</translation>
+        <translation>无法创建目录。请检查您有更改当前目录的适当权限。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="390"/>
@@ -284,7 +282,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="285"/>
         <source>Create...</source>
-        <translation>创建...</translation>
+        <translation>创建……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="287"/>
@@ -304,7 +302,7 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="293"/>
         <source>Launch...</source>
-        <translation>启动...</translation>
+        <translation>启动……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="296"/>
@@ -319,22 +317,22 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="299"/>
         <source>Open Current Dir as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>以 root 权限打开当前文件夹</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="303"/>
         <source>Archive Options</source>
-        <translation type="unfinished"></translation>
+        <translation>压缩选项</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="326"/>
         <source>Open with...</source>
-        <translation type="unfinished"></translation>
+        <translation>用其打开……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="332"/>
         <source>View Files...</source>
-        <translation>查看文件...</translation>
+        <translation>查看文件……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="334"/>
@@ -349,17 +347,17 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="526"/>
         <source>File Checksums:</source>
-        <translation>文件校验值:</translation>
+        <translation>文件校验值：</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="538"/>
         <source>Missing Utility</source>
-        <translation>缺少的工具</translation>
+        <translation>缺失工具</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="538"/>
         <source>The &quot;lumina-fileinfo&quot; utility could not be found on the system. Please install it first.</source>
-        <translation>无法在您的系统里找到 &quot;lumina-fileinfo&quot; 工具。请先安装它。</translation>
+        <translation>无法在您的系统里找到工具 &quot;lumina-fileinfo&quot;。请先安装。</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="564"/>
@@ -369,22 +367,22 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="573"/>
         <source>Set as Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>设置为壁纸</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="581"/>
         <source>Rename...</source>
-        <translation>重命名...</translation>
+        <translation>重命名……</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="582"/>
         <source>Cut Selection</source>
-        <translation>剪切选中部分</translation>
+        <translation>剪切所选部分</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="583"/>
         <source>Copy Selection</source>
-        <translation>复制选中部分</translation>
+        <translation>复制所选部分</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="586"/>
@@ -394,32 +392,32 @@
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="590"/>
         <source>Delete Selection</source>
-        <translation>删除选中部分</translation>
+        <translation>删除所选部分</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="603"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>解压到此</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="605"/>
         <source>Archive Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>压缩选择</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="922"/>
         <source>Select Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>选择压缩</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Set Wallpaper on Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>设置屏幕上的壁纸</translation>
     </message>
     <message>
         <location filename="../widgets/DirWidget2.cpp" line="936"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕</translation>
     </message>
 </context>
 <context>
@@ -442,38 +440,37 @@
     <message>
         <location filename="../FODialog.cpp" line="19"/>
         <source>Calculating</source>
-        <translation>计算</translation>
+        <translation>计算中</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Overwrite Files?</source>
-        <translation>覆盖文件吗？</translation>
+        <translation>要覆盖文件吗？</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Do you want to overwrite the existing files?</source>
-        <translatorcomment>你要改写现有的文件吗？</translatorcomment>
-        <translation>你要改写现有的文件吗？</translation>
+        <translation>你要覆盖现有的文件吗？</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="131"/>
         <source>Note: It will just add a number to the filename otherwise.</source>
-        <translation>提示：否则的话它就只是在文件名后面加一个数字。</translation>
+        <translation>主义：如选否，将在其在文件名后面加一个数字。</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="133"/>
         <source>YesToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>全部选是</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="134"/>
         <source>NoToAll</source>
-        <translation type="unfinished"></translation>
+        <translation>全部选否</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="135"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="154"/>
@@ -483,12 +480,12 @@
     <message>
         <location filename="../FODialog.cpp" line="155"/>
         <source>Copying: %1 to %2</source>
-        <translation>复制 %1 至 %2</translation>
+        <translation>复制： %1 至 %2</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="156"/>
         <source>Restoring: %1 as %2</source>
-        <translation>回复中: %1 到 %2</translation>
+        <translation>还原中：%1 到 %2</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="157"/>
@@ -505,19 +502,16 @@
     <message>
         <location filename="../FODialog.cpp" line="171"/>
         <source>Could not copy these files:</source>
-        <translatorcomment>无法复制这些文件：</translatorcomment>
         <translation>无法复制这些文件：</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="172"/>
         <source>Could not restore these files:</source>
-        <translatorcomment>无法恢复这些文件：</translatorcomment>
-        <translation>无法恢复这些文件：</translation>
+        <translation>无法还原这些文件：</translation>
     </message>
     <message>
         <location filename="../FODialog.cpp" line="173"/>
         <source>Could not move these files:</source>
-        <translatorcomment>无法移动这些文件：</translatorcomment>
         <translation>无法移动这些文件：</translation>
     </message>
     <message>
@@ -547,7 +541,7 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="14"/>
         <source>Clone a Git Repository</source>
-        <translation>克隆一个 Git 存储库</translation>
+        <translation>克隆 Git 存储库</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="24"/>
@@ -557,7 +551,7 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="27"/>
         <source>This wizard will guide you through the process of downloading a GIT repository from the internet.</source>
-        <translation>该向导将引导您完成从互联网下载 GIT 存储库的过程。</translation>
+        <translation>该向导将引导您完成从互联网下载 Git 存储库的过程。</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="46"/>
@@ -577,7 +571,7 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="75"/>
         <source>Is Private Repository</source>
-        <translation>私人存储库</translation>
+        <translation>私有存储库</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="89"/>
@@ -607,7 +601,7 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="133"/>
         <source>Anonymous (public repositories only)</source>
-        <translation>匿名（仅限公共资料库）</translation>
+        <translation>匿名（仅限公共存储库）</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="143"/>
@@ -627,7 +621,7 @@ New Location: %2</source>
     <message>
         <location filename="../gitWizard.ui" line="166"/>
         <source>Single Branch</source>
-        <translation>单分支</translation>
+        <translation>单个分支</translation>
     </message>
     <message>
         <location filename="../gitWizard.ui" line="175"/>
@@ -655,7 +649,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Insight</source>
-        <translation>启示</translation>
+        <translation>Insight</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="124"/>
@@ -675,7 +669,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="150"/>
         <source>Sort Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>排序模式</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="193"/>
@@ -685,12 +679,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="196"/>
         <source>New Browser</source>
-        <translation>新浏览器</translation>
+        <translation>新建浏览器</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="267"/>
         <source>Show Image Previews</source>
-        <translation type="unfinished"></translation>
+        <translation>显示图片预览</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="272"/>
@@ -770,7 +764,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="436"/>
         <source>Repo Status</source>
-        <translation>回复状态</translation>
+        <translation>项目状态</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="441"/>
@@ -780,44 +774,44 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="449"/>
         <source>Show Directory Tree Window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示目录树窗口</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="452"/>
         <source>Show Directory Tree Pane</source>
-        <translation type="unfinished"></translation>
+        <translation>显示目录树面板</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="455"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="460"/>
         <source>Open as Root</source>
-        <translation type="unfinished"></translation>
+        <translation>以 root 打开</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="471"/>
         <source>Verify File Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>确认删除文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="476"/>
         <location filename="../MainUI.cpp" line="89"/>
         <source>Sort by Name</source>
-        <translation type="unfinished"></translation>
+        <translation>按名称排序</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="481"/>
         <location filename="../MainUI.ui" line="484"/>
         <source>Create Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>创建文件夹</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="487"/>
         <source>Ctrl+Shift+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>
@@ -827,27 +821,27 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="124"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="140"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;查看</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="164"/>
         <source>&amp;Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;书签</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="172"/>
         <source>&amp;External Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;外置设备</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
         <source>&amp;Git</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Git</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
@@ -862,7 +856,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>&amp;Preferences</source>
-        <translation>首选项(&amp;P)</translation>
+        <translation>&amp;偏好设置</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="229"/>
@@ -927,12 +921,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.ui" line="370"/>
         <source>Cut Selection</source>
-        <translation>剪切选中部分</translation>
+        <translation>剪切所选部分</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="381"/>
         <source>Copy Selection</source>
-        <translation>复制选择部分</translation>
+        <translation>复制所选部分</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="392"/>
@@ -952,7 +946,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
         <source>Invalid Directories</source>
-        <translation>无效的目录</translation>
+        <translation>目录无效</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="231"/>
@@ -972,7 +966,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="416"/>
         <source>Root</source>
-        <translation>根</translation>
+        <translation>root</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="423"/>
@@ -993,7 +987,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="724"/>
         <source>Name:</source>
-        <translation>名称:</translation>
+        <translation>名称：</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="729"/>
@@ -1003,7 +997,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="729"/>
         <source>This bookmark name already exists. Please choose another.</source>
-        <translation>已经存在这个书签名。请输入另一个名字。</translation>
+        <translation>该书签名已存在。请输入另一个名字。</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="750"/>
@@ -1034,22 +1028,22 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="90"/>
         <source>Sort by Size</source>
-        <translation type="unfinished"></translation>
+        <translation>按大小排序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="91"/>
         <source>Sort by Type</source>
-        <translation type="unfinished"></translation>
+        <translation>按类型排序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="92"/>
         <source>Sort by Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>按最后修改日期排序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="93"/>
         <source>Sort by Date Created</source>
-        <translation type="unfinished"></translation>
+        <translation>按创建日期排序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="126"/>
@@ -1064,8 +1058,8 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="503"/>
         <source>You have multiple tabs open. Are you sure you want to quit?</source>
-        <translatorcomment>你有多个标签打开。你确定要退出吗？</translatorcomment>
-        <translation>你有多个标签打开。你确定要退出吗？</translation>
+        <translatorcomment>你已打开多个标签。你确定要退出吗？</translatorcomment>
+        <translation>你已打开多个标签。你确定要退出吗？</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="1038"/>
@@ -1076,7 +1070,7 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="1038"/>
         <source>WARNING: This will permanently delete the file(s) from the system!</source>
-        <translation>警告：这将永久删除系统中的文件！</translation>
+        <translation>警告：这将永久从系统中删除文件！！</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="1038"/>
@@ -1096,13 +1090,12 @@ New Location: %2</source>
     <message>
         <location filename="../MainUI.cpp" line="1011"/>
         <source>Overwrite File?</source>
-        <translation>覆盖文件吗？</translation>
+        <translation>要覆盖文件吗？</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="1011"/>
         <source>An existing file with the same name will be replaced. Are you sure you want to proceed?</source>
-        <translatorcomment>将替换同名的现有文件。你确定要继续吗？</translatorcomment>
-        <translation>将替换同名的现有文件。你确定要继续吗？</translation>
+        <translation>将替换同名的现有文件。您确定要继续吗？</translation>
     </message>
 </context>
 <context>
@@ -1120,12 +1113,12 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.ui" line="107"/>
         <source>(No Running Video)</source>
-        <translation>(没有播放中的视频)</translation>
+        <translation>（没有正在播放的视频）</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="124"/>
         <source>Playing:</source>
-        <translation>正在播放:</translation>
+        <translation>正在播放：</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="130"/>
@@ -1135,7 +1128,7 @@ New Location: %2</source>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="157"/>
         <source>Error Playing File: %1</source>
-        <translation>播放文件出错: %1</translation>
+        <translation>播放文件时发生错误：%1</translation>
     </message>
     <message>
         <location filename="../widgets/MultimediaWidget.cpp" line="168"/>
@@ -1154,12 +1147,12 @@ New Location: %2</source>
         <location filename="../OPWidget.ui" line="44"/>
         <location filename="../OPWidget.ui" line="51"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>……</translation>
     </message>
     <message>
         <location filename="../OPWidget.ui" line="60"/>
         <source>Evaluating...</source>
-        <translation>评估...</translation>
+        <translation>评估中……</translation>
     </message>
     <message>
         <location filename="../OPWidget.cpp" line="52"/>
@@ -1237,7 +1230,7 @@ New Location: %2</source>
         <location filename="../widgets/SlideshowWidget.ui" line="304"/>
         <location filename="../widgets/SlideshowWidget.ui" line="320"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>……</translation>
     </message>
     <message>
         <location filename="../widgets/SlideshowWidget.ui" line="218"/>
@@ -1318,67 +1311,67 @@ New Location: %2</source>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished">多媒体</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>

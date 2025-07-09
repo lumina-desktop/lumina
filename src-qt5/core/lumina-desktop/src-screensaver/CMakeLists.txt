@@ -11,3 +11,4 @@ add_library(
     animations/BaseAnimGroup.cpp
 )
 target_link_libraries(integrated-screensaver PRIVATE libLumina Qt5::Quick)
+install(DIRECTORY ../extrafiles/screensavers DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/)

@@ -78,8 +78,9 @@ add_executable(lumina-search
 
 add_custom_command(	
 	TARGET lumina-search
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-search.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
 )
 
 target_link_libraries(

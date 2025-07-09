@@ -5,3 +5,5 @@ Icon=Lumina-DE
 Type=Application
 Name=Lumina 2
 Comment=Illuminating the desktop
+Name[zh_CN]=Lumina 桌面环境
+Comment[zh_CN]=启动桌面

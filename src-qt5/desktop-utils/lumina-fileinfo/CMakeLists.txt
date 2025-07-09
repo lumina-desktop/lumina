@@ -76,8 +76,9 @@ add_executable(lumina-fileinfo
 
 add_custom_command(	
 	TARGET lumina-fileinfo
+	POST_BUILD
 	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-fileinfo.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-fileinfo.1.gz
-	OUTPUTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-fileinfo.1.gz
+	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-fileinfo.1.gz
 )
 
 target_link_libraries(

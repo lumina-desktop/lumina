@@ -11,7 +11,7 @@
     <message>
         <location filename="../AppDialog.ui" line="20"/>
         <source>Search for....</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шукати...</translation>
     </message>
 </context>
 <context>
@@ -70,7 +70,7 @@
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
         <source>Color Exists</source>
-        <translation>Типи кольорів</translation>
+        <translation>Колір існує</translation>
     </message>
     <message>
         <location filename="../ColorDialog.cpp" line="98"/>
@@ -101,12 +101,12 @@
     <message>
         <location filename="../GetPluginDialog.ui" line="14"/>
         <source>Select Plugin</source>
-        <translation>Виберіть підключення</translation>
+        <translation>Виберіть Плагін</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="26"/>
         <source>Select a Plugin:</source>
-        <translation>Виберіть підключення:</translation>
+        <translation>Виберіть Плагін:</translation>
     </message>
     <message>
         <location filename="../GetPluginDialog.ui" line="57"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="151"/>
         <source>Hide all open windows and show the desktop</source>
-        <translation>Сховати всі  відкриті вікна та показати робочий стіл</translation>
+        <translation>Сховати всі відкриті вікна та показати робочий стіл</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="157"/>
@@ -341,12 +341,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="66"/>
         <source>User Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню користувача</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="67"/>
         <source>Start menu alternative focusing on the user&apos;s files, directories, and favorites.</source>
-        <translation type="unfinished"></translation>
+        <translation>Альтернативне стартове меню, сфокусоване на файлах користувача, каталогах і Вибраному.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="73"/>
@@ -356,7 +356,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="74"/>
         <source>Start menu alternative which focuses on launching applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Альтернативне меню старту, сфокусоване на запуску програм.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="94"/>
@@ -376,12 +376,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="130"/>
         <source>View and control any running application windows (group similar windows under a single button).</source>
-        <translation type="unfinished"></translation>
+        <translation>Перегляд та керування всіма запущеними вікнами програм (група аналогічних вікон під однією кнопкою).</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="137"/>
         <source>View and control any running application windows (every individual window has a button)</source>
-        <translation type="unfinished"></translation>
+	<translation>Перегляд та керування всіма запущеними вікнами програм (у кожного індивідуального вікна своя кнопка)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="150"/>
@@ -448,7 +448,7 @@
     <message>
         <location filename="../LPlugins.cpp" line="233"/>
         <source>Monitor RSS Feeds (Requires internet connection)</source>
-        <translation>Монітор RSS каналів</translation>
+        <translation>Монітор RSS каналів (Потрібен підключення до Інтернету)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="256"/>
@@ -494,54 +494,54 @@
     <message>
         <location filename="../LPlugins.cpp" line="298"/>
         <source>Custom App</source>
-        <translation>Нетипова програма</translation>
+        <translation>Спеціальна програма</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="299"/>
         <source>Start a custom application</source>
-        <translation>Запустити задану програму.</translation>
+        <translation>Запустіть спеціальну програму</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="178"/>
         <location filename="../LPlugins.cpp" line="305"/>
         <source>Menu Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Сценарій меню</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="205"/>
         <source>Configurable area for automatically showing desktop icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Настроювана область для автоматичного відображення іконок робочого столу</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="263"/>
         <source>Browse Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Перегляд файлів</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="284"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Переваги</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="292"/>
         <source>List the open, minimized, active, and urgent application windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Список відкритих, згорнутих, активних та екстрених вікон додатків</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="179"/>
         <location filename="../LPlugins.cpp" line="306"/>
         <source>Run an external script to generate a user defined menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск зовнішнього скрипта для створення певного меню користувача</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="312"/>
         <source>Lock Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Блокування сесії</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="313"/>
         <source>Lock the current desktop session</source>
-        <translation type="unfinished"></translation>
+        <translation>Блокування поточної сесії робочого столу</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="323"/>
@@ -566,12 +566,12 @@
     <message>
         <location filename="../LPlugins.cpp" line="335"/>
         <source>Text (Highlighted)</source>
-        <translation>Текст(Виділено)</translation>
+        <translation>Текст (Виділено)</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="336"/>
         <source>Text color when selection is highlighted.</source>
-        <translation>Колір тексту  для виділених елементів.</translation>
+        <translation>Колір тексту для виділених елементів.</translation>
     </message>
     <message>
         <location filename="../LPlugins.cpp" line="341"/>
@@ -676,178 +676,178 @@
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Wallpaper Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування шпалер</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Change background image(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити фонове зображення</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="44"/>
         <source>Theme Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування теми</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="44"/>
         <source>Change interface fonts and colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити шрифти та колір інтерфейсу</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Window Effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Віконні ефекти</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="45"/>
         <source>Adjust transparency levels and window effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Регулювання рівнів прозорості та віконних ефектів</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
         <source>Startup Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск налаштувань</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
         <source>Automatically start applications or services</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматичний запуск програм або служб</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="43"/>
         <source>Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>Шпалери</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="44"/>
         <location filename="../pages/getPage.cpp" line="55"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="46"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Автостарт</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
         <source>Mimetype Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування MIME-типів</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="47"/>
         <source>Change default applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити програми за замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="48"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished">Комбінації клавіш</translation>
+        <translation>Гарячі клавіші</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="48"/>
         <source>Change keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити сполучення клавіш</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Window Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Віконний менеджер</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Window Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування вікна</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="49"/>
         <source>Change window settings and appearances</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити зовнішній вигляд та параметри вікна</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Робочий стіл</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Panels</source>
-        <translation type="unfinished"></translation>
+        <translation>Панелі</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="55"/>
         <source>Sound Themeing</source>
-        <translation type="unfinished"></translation>
+        <translation>Тематика звуку</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="55"/>
         <source>Change basic sound settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити основні налаштування звуку</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Desktop Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Плагіни робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="50"/>
         <source>Change what icons or tools are embedded on the desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити, які іконки або інструменти вбудовані в робочий стіл</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Panels and Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Панелі та плагіни</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="51"/>
         <source>Change any floating panels and what they show</source>
-        <translation type="unfinished"></translation>
+        <translation>Змініть будь-які плаваючі панелі та те, що вони показують</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Menu Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Плагіни меню</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="52"/>
         <source>Change what options are shown on the desktop context menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити варіанти, які відображаються в контекстному меню робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
         <source>Locale Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Регіональні налаштування</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
         <source>Change the default locale settings for this user</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміна параметрів за замовчуванням для локалі користувача</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="53"/>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Локалізація</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="54"/>
         <source>General Options</source>
-        <translation type="unfinished">Загальні параметри</translation>
+        <translation>Загальні параметри</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="54"/>
         <source>User Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Користувацькі налаштування</translation>
     </message>
     <message>
         <location filename="../pages/getPage.cpp" line="54"/>
         <source>Change basic user settings such as time/date formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміна основних налаштувань користувача, таких як час/формат дати</translation>
     </message>
 </context>
 <context>
@@ -855,22 +855,22 @@
     <message>
         <location filename="../ScriptDialog.ui" line="14"/>
         <source>Setup a JSON Menu Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування скрипту JSON меню</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="25"/>
         <source>Visible Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Видиме ім'я:</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="32"/>
         <source>Executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>Виконувані:</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="39"/>
         <source>Icon:</source>
-        <translation type="unfinished"></translation>
+        <translation>Піктограма:</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.ui" line="54"/>
@@ -891,12 +891,12 @@
     <message>
         <location filename="../ScriptDialog.cpp" line="57"/>
         <source>Select a menu script</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть скрипт для меню</translation>
     </message>
     <message>
         <location filename="../ScriptDialog.cpp" line="64"/>
         <source>Select an icon file</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть файл для піктограми</translation>
     </message>
 </context>
 <context>
@@ -942,7 +942,7 @@
         <location filename="../ThemeDialog.cpp" line="82"/>
         <source>This theme already exists.
  Overwrite it?</source>
-        <translation>Тема вже існує. Перезаписати його?</translation>
+        <translation>Тема вже існує. Перезаписати її?</translation>
     </message>
 </context>
 <context>
@@ -950,57 +950,57 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультимедіа</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>Розробка</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>Навчання</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Ігри</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Графіка</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>Мережа</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>Офіс</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>Наука</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished">Система</translation>
+        <translation>Система</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Утиліта</translation>
     </message>
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="629"/>
@@ -1010,7 +1010,7 @@
     <message>
         <location filename="../../../core/libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без сортування</translation>
     </message>
 </context>
 <context>
@@ -1018,12 +1018,12 @@
     <message>
         <location filename="../mainWindow.ui" line="44"/>
         <source>Save</source>
-        <translation type="unfinished">Зберегти</translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="47"/>
         <source>Save current changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти дані зміни</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="50"/>
@@ -1033,44 +1033,44 @@
     <message>
         <location filename="../mainWindow.ui" line="55"/>
         <source>Back to settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Повернутися до налаштувань</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="58"/>
         <location filename="../mainWindow.ui" line="61"/>
         <source>Back to overall settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад до загальних налаштувань</translation>
     </message>
     <message>
         <location filename="../mainWindow.ui" line="72"/>
         <location filename="../mainWindow.ui" line="75"/>
         <source>Select monitor/desktop to configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть монітор/робочий стіл для налаштування</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="146"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Незбережені зміни</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="146"/>
         <source>This page currently has unsaved changes, do you wish to save them now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ця сторінка в даний час має незбережені зміни, ви хочете зберегти їх зараз?</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="148"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="149"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ні</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="150"/>
         <source>Cancel</source>
-        <translation type="unfinished">Скасувати</translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -1078,52 +1078,52 @@
     <message>
         <location filename="../pages/page_autostart.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="39"/>
         <source>Add New Startup Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати нову службу запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="75"/>
         <source>Application</source>
-        <translation type="unfinished">Програма</translation>
+        <translation>Програма</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="85"/>
         <source>Binary</source>
-        <translation type="unfinished">Двійковий</translation>
+        <translation>Бінарний файл</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.ui" line="95"/>
         <source>File</source>
-        <translation type="unfinished">Файл</translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="66"/>
         <source>Startup Services</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cлужби запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Select Binary</source>
-        <translation type="unfinished">Виберіть бінарний файл</translation>
+        <translation>Виберіть бінарний файл</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="133"/>
         <source>Application Binaries (*)</source>
-        <translation type="unfinished">Бінарні додатки (*)</translation>
+        <translation type="unfinished">Бінарні файлы (*)</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>Invalid Binary</source>
-        <translation type="unfinished">Некоректний бінарний файл</translation>
+        <translation type="unfinished">Невірний бінарний файл</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="136"/>
         <source>The selected file is not executable!</source>
-        <translation type="unfinished">Вибраний файл не виконується!</translation>
+        <translation>Обраний файл не є виконуваним!</translation>
     </message>
     <message>
         <location filename="../pages/page_autostart.cpp" line="150"/>
@@ -1146,12 +1146,12 @@
     <message>
         <location filename="../pages/page_compton.ui" line="32"/>
         <source>Disable Compositing Manager (session restart required)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути композитинг віконного менеджера (потрібно перезапуск сесії)</translation>
     </message>
     <message>
         <location filename="../pages/page_compton.cpp" line="36"/>
         <source>Window Effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Віконні ефекти</translation>
     </message>
 </context>
 <context>
@@ -1159,17 +1159,17 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="166"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розширені</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="189"/>
         <source>Specific File Types</source>
-        <translation type="unfinished">Специфічні типи файлів</translation>
+        <translation type="unfinished">Конкретні типи файлів</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="226"/>
@@ -1179,22 +1179,22 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="231"/>
         <source>Default Application</source>
-        <translation type="unfinished">Типова програма</translation>
+        <translation>Програма за замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="236"/>
         <source>Description</source>
-        <translation type="unfinished">Опис</translation>
+        <translation>Опис</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="246"/>
         <source>Clear</source>
-        <translation type="unfinished">Очистити</translation>
+        <translation>Очистити</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="269"/>
         <source>Set App</source>
-        <translation type="unfinished">Встановити дотаток</translation>
+        <translation type="unfinished">Вибрати програму</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="279"/>
@@ -1204,27 +1204,27 @@
     <message>
         <location filename="../pages/page_defaultapps.ui" line="39"/>
         <source>Basic Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Основні налаштування</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="58"/>
         <source>Web Browser:</source>
-        <translation type="unfinished">Веб Браузер:</translation>
+        <translation>Веб Браузер:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="81"/>
         <source>E-Mail Client:</source>
-        <translation type="unfinished">Клієнт електронної пошти:</translation>
+        <translation>Клієнт електронної пошти:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="108"/>
         <source>File Manager:</source>
-        <translation type="unfinished">Файловий менеджер:</translation>
+        <translation>Файловий менеджер:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="121"/>
         <source>Virtual Terminal:</source>
-        <translation type="unfinished">Віртуальний Порт:</translation>
+        <translation type="unfinished">Віртуальний термінал:</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.ui" line="128"/>
@@ -1235,12 +1235,12 @@
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="42"/>
         <source>Default Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Програми за замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="152"/>
         <source>Click to Set</source>
-        <translation type="unfinished">Натисніть, щоб встановити</translation>
+        <translation>Натисніть, щоб вибрати</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="88"/>
@@ -1250,17 +1250,17 @@
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="272"/>
         <source>Select Binary</source>
-        <translation type="unfinished">Виберіть бінарний файл</translation>
+        <translation>Виберіть бінарний файл</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>Invalid Binary</source>
-        <translation type="unfinished">Некоректний бінарний файл</translation>
+        <translation>Некоректний бінарний файл</translation>
     </message>
     <message>
         <location filename="../pages/page_defaultapps.cpp" line="279"/>
         <source>The selected binary is not executable!</source>
-        <translation type="unfinished">Вибраний бінарний файл не виконується!</translation>
+        <translation>Обраний бінарний файл не є виконуваним!</translation>
     </message>
 </context>
 <context>
@@ -1268,42 +1268,42 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="34"/>
         <source>Basic Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Основний редактор</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="44"/>
         <source>Advanced Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширений редактор</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="107"/>
         <source>Action</source>
-        <translation type="unfinished">Дія</translation>
+        <translation>Дія</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="112"/>
         <source>Keyboard Shortcut</source>
-        <translation type="unfinished">Клавіатурне скорочення</translation>
+        <translation>Комбінація Клавіш</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="120"/>
         <source>Modify Shortcut</source>
-        <translation type="unfinished">Змінити ярлик</translation>
+        <translation>Змінити комбінацію</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="141"/>
         <source>Clear Shortcut</source>
-        <translation type="unfinished">Очистити ярлик</translation>
+        <translation>Очистити комбінацію</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="151"/>
         <source>Apply Change</source>
-        <translation type="unfinished">Застосувати зміну</translation>
+        <translation>Застосувати зміну</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="161"/>
         <source>Change Key Binding:</source>
-        <translation type="unfinished">Змінити гарячі клавіші:</translation>
+        <translation>Змінити гарячі клавіші:</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="184"/>
@@ -1313,7 +1313,7 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="220"/>
         <source>View Syntax Codes</source>
-        <translation type="unfinished"></translation>
+        <translation>Переглянути синтаксис коду</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.ui" line="244"/>
@@ -1325,17 +1325,17 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="70"/>
         <source>Keyboard Shortcuts</source>
-        <translation type="unfinished">Комбінації клавіш</translation>
+        <translation>Комбінації клавіш</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="78"/>
         <source>Audio Volume Up</source>
-        <translation type="unfinished">Збільшити гучність</translation>
+        <translation>Збільшити гучність</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="79"/>
         <source>Audio Volume Down</source>
-        <translation type="unfinished">Зменшити гучність</translation>
+        <translation>Зменшити гучність</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="80"/>
@@ -1350,12 +1350,12 @@
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="82"/>
         <source>Take Screenshot</source>
-        <translation type="unfinished">Зробіть знімок екрану</translation>
+        <translation>Зробіть знімок екрану</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_keys.cpp" line="83"/>
         <source>Lock Screen</source>
-        <translation type="unfinished">Блокувати екран</translation>
+        <translation>Блокувати екран</translation>
     </message>
 </context>
 <context>
@@ -1363,22 +1363,22 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="34"/>
         <source>Simple Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Простий редактор</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="44"/>
         <source>Advanced Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширений редактор</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="81"/>
         <source>Number of Workspaces</source>
-        <translation type="unfinished">Кількість робочих просторів:</translation>
+        <translation>Кількість робочих просторів:</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="98"/>
@@ -1388,17 +1388,17 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="108"/>
         <source>Focus Policy</source>
-        <translation type="unfinished">Правила фокусування</translation>
+        <translation>Правила фокусування</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="118"/>
         <source>Window Theme</source>
-        <translation type="unfinished">Тема вікна</translation>
+        <translation>Тема вікна</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="136"/>
         <source>Window Theme Preview</source>
-        <translation type="unfinished">Попередній перегляд теми вікна</translation>
+        <translation>Попередній перегляд теми вікна</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.ui" line="190"/>
@@ -1409,42 +1409,42 @@
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="70"/>
         <source>Window Manager Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування віконного менеджера</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="75"/>
         <source>Click To Focus</source>
-        <translation type="unfinished">Клацнути, щоб отримати фокус</translation>
+        <translation>Клацнути, щоб сфокусувати</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="76"/>
         <source>Active Mouse Focus</source>
-        <translation type="unfinished">Активний фокус миші</translation>
+        <translation>Активний фокус миші</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="77"/>
         <source>Strict Mouse Focus</source>
-        <translation type="unfinished">Точний фокус миші</translation>
+        <translation>Точний фокус миші</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="80"/>
         <source>Align in a Row</source>
-        <translation type="unfinished">Вирівняти в ряд</translation>
+        <translation>Вирівняти в ряд</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="81"/>
         <source>Align in a Column</source>
-        <translation type="unfinished">Вирівняти в стовпчик</translation>
+        <translation>Вирівняти в стовпчик</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="82"/>
         <source>Cascade</source>
-        <translation type="unfinished">Каскадом</translation>
+        <translation>Каскадом</translation>
     </message>
     <message>
         <location filename="../pages/page_fluxbox_settings.cpp" line="83"/>
         <source>Underneath Mouse</source>
-        <translation type="unfinished">Нижче миші</translation>
+        <translation>Нижче миші</translation>
     </message>
 </context>
 <context>
@@ -1452,27 +1452,27 @@
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="26"/>
         <source>Embedded Utilities</source>
-        <translation type="unfinished">Вбудовані Утиліти</translation>
+        <translation>Вбудовані Утиліти</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="79"/>
         <source>Display Desktop Folder Contents</source>
-        <translation type="unfinished">Показати вміст папки Робочого стола</translation>
+        <translation>Показати вміст папки Робочого стола</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.ui" line="86"/>
         <source>Display Removable Media Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображение значков съемных носителей</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_desktop.cpp" line="56"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри робочого столу</translation>
     </message>
 </context>
 <context>
@@ -1480,17 +1480,17 @@
     <message>
         <location filename="../pages/page_interface_menu.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.ui" line="38"/>
         <source>Context Menu Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Плагины контекстного меню</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_menu.cpp" line="46"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри робочого столу</translation>
     </message>
 </context>
 <context>
@@ -1498,32 +1498,32 @@
     <message>
         <location filename="../pages/page_interface_panels.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="46"/>
         <source>Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Панель</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.ui" line="96"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Профіль</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="59"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="110"/>
         <source>No Panels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Без панелей</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="136"/>
         <source>Custom Profiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Спеціальні профілі</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="136"/>
@@ -1533,23 +1533,23 @@
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="143"/>
         <source>Apply</source>
-        <translation type="unfinished">Прийняти</translation>
+        <translation>Прийняти</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="144"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="149"/>
         <location filename="../pages/page_interface_panels.cpp" line="204"/>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити профіль</translation>
     </message>
     <message>
         <location filename="../pages/page_interface_panels.cpp" line="204"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім'я:</translation>
     </message>
 </context>
 <context>
@@ -1557,42 +1557,42 @@
     <message>
         <location filename="../pages/page_main.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_main.ui" line="32"/>
         <source>Search for....</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="56"/>
         <source>Interface Configuration</source>
-        <translation type="unfinished">Налаштування інтерфейсу</translation>
+        <translation>Налаштування інтерфейсу</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="60"/>
         <source>Appearance</source>
-        <translation type="unfinished">Вигляд</translation>
+        <translation>Вигляд</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="64"/>
         <source>Desktop Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Робочий стіл за замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="68"/>
         <source>User Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Користувацькі налаштування</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="72"/>
         <source>System Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування системи</translation>
     </message>
     <message>
         <location filename="../pages/page_main.cpp" line="158"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри робочого столу</translation>
     </message>
 </context>
 <context>
@@ -1600,27 +1600,27 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="32"/>
         <source>System localization settings (restart required)</source>
-        <translation type="unfinished">Налаштування локалізації системи (потребує перезапуск)</translation>
+        <translation>Налаштування локалізації системи (потрібний перезапуск)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="39"/>
         <source>Language</source>
-        <translation type="unfinished">Мова</translation>
+        <translation>Мова</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="49"/>
         <source>Messages</source>
-        <translation type="unfinished">Повідомлення</translation>
+        <translation>Повідомлення</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="59"/>
         <source>Time</source>
-        <translation type="unfinished">Час</translation>
+        <translation>Час</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="69"/>
@@ -1630,12 +1630,12 @@
     <message>
         <location filename="../pages/page_session_locale.ui" line="79"/>
         <source>Monetary</source>
-        <translation type="unfinished">Гроші</translation>
+        <translation>Гроші</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="89"/>
         <source>Collate</source>
-        <translation type="unfinished">Порівняння</translation>
+        <translation>Порівняння</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.ui" line="99"/>
@@ -1645,12 +1645,12 @@
     <message>
         <location filename="../pages/page_session_locale.cpp" line="47"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/page_session_locale.cpp" line="91"/>
         <source>System Default</source>
-        <translation type="unfinished">За замовчуванням</translation>
+        <translation>За замовчуванням</translation>
     </message>
 </context>
 <context>
@@ -1658,269 +1658,269 @@
     <message>
         <location filename="../pages/page_session_options.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="34"/>
         <source>Enable numlock on startup</source>
-        <translation type="unfinished">Увімкнути Numlock під час запуску</translation>
+        <translation>Увімкнути Numlock під час запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="41"/>
         <source>Play chimes on startup</source>
-        <translation type="unfinished">Відтворити дзвіночки на початку</translation>
+        <translation>Програти куранти під час старту</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="48"/>
         <source>Play chimes on exit</source>
-        <translation type="unfinished">Відтворити дзвіночки при виході</translation>
+        <translation>Програти куранти при виході</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="55"/>
         <source>Automatically create/remove desktop symlinks for applications that are installed/removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматичне створення/видалення посилань на робочому столі для програм, які встановлюються/видаляються</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="58"/>
         <source>Manage desktop app links</source>
-        <translation type="unfinished"></translation>
+        <translation>Управління посиланнями на робочому столі</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="65"/>
         <source>Show application crash data</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати дані при помилці програми</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="72"/>
         <source>Disable Startup Quotes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вимкнути котирування при запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="81"/>
         <source>Change User Icon</source>
-        <translation type="unfinished">Змінити Піктограму  Користувача</translation>
+        <translation>Змінити Піктограму Користувача</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="119"/>
         <source>Time Format:</source>
-        <translation type="unfinished">Формат Часу:</translation>
+        <translation>Формат Часу:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="131"/>
         <location filename="../pages/page_session_options.ui" line="175"/>
         <source>View format codes</source>
-        <translation type="unfinished">Переглянути формат коду</translation>
+        <translation>Переглянути формат коду</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="146"/>
         <location filename="../pages/page_session_options.ui" line="190"/>
         <source>Sample:</source>
-        <translation type="unfinished">Зразок:</translation>
+        <translation>Зразок:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="163"/>
         <source>Date Format:</source>
-        <translation type="unfinished">Формат дати:</translation>
+        <translation>Формат дати:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="210"/>
         <source>Display Format</source>
-        <translation type="unfinished">Формат Показу</translation>
+        <translation>Формат Показу</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="227"/>
         <source>Window Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Віконний менеджер</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="255"/>
         <source>Reset Desktop Settings</source>
-        <translation type="unfinished">Скинути налаштування Робочого столу</translation>
+        <translation>Скинути налаштування Робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="274"/>
         <source>Restore system defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити налаштування системи за замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.ui" line="281"/>
         <source>Restore Lumina defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити стандартні налаштування Lumina</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="18"/>
         <source>Time (Date as tooltip)</source>
-        <translation type="unfinished">Час (Дата як підказка)</translation>
+        <translation>Час (Дата як підказка)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="19"/>
         <source>Date (Time as tooltip)</source>
-        <translation type="unfinished">Дата (Час як підказка)</translation>
+        <translation>Дата (Час як підказка)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="20"/>
         <source>Time first then Date</source>
-        <translation type="unfinished">Спочатку час, потім Дата</translation>
+        <translation>Спочатку час, потім Дата</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="21"/>
         <source>Date first then Time</source>
-        <translation type="unfinished">Спочатку дата, потім Час</translation>
+        <translation>Спочатку дата, потім Час</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="62"/>
         <source>Window manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Віконний менеджер</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="95"/>
         <source>Desktop Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметри робочого столу</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>Verify Settings Reset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Підтвердження скидання налаштувань</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="176"/>
         <source>Are you sure you want to reset your desktop settings? This change cannot be reversed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви впевнені, що бажаєте скинути налаштування робочого столу? Цю зміну неможливо скасувати!</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="190"/>
         <source>Select an image</source>
-        <translation type="unfinished">Вибрати зображення</translation>
+        <translation>Вибрати зображення</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="191"/>
         <source>Images</source>
-        <translation type="unfinished">Зображення</translation>
+        <translation>Зображення</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Reset User Image</source>
-        <translation type="unfinished">Скинути зображення користувача</translation>
+        <translation>Скидання зображення користувача</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="195"/>
         <source>Would you like to reset the user image to the system default?</source>
-        <translation type="unfinished">Хочете повернути зображення користувача на початкове?</translation>
+        <translation>Бажаєте повернути зображення користувача за замовчуванням?</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="236"/>
         <source>Valid Time Codes:</source>
-        <translation type="unfinished">Доступні часові коди:</translation>
+        <translation>Доступні часові коди:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="237"/>
         <source>%1: Hour without leading zero (1)</source>
-        <translation type="unfinished">%1: Годинник без початкового нуля (1)</translation>
+        <translation>%1: Годинник без першого нуля (1)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="238"/>
         <source>%1: Hour with leading zero (01)</source>
-        <translation type="unfinished">%1: Годинник з початковим нулем (01)</translation>
+        <translation>%1: Годинник з першим нулем (01)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="239"/>
         <source>%1: Minutes without leading zero (2)</source>
-        <translation type="unfinished">%1: Хвилини без початкового нуля (2)</translation>
+        <translation>%1: Хвилини без першого нуля (2)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="240"/>
         <source>%1: Minutes with leading zero (02)</source>
-        <translation type="unfinished">%1: Хвилини з початковим нулем (02)</translation>
+        <translation>%1: Хвилини з першим нулем (02)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="241"/>
         <source>%1: Seconds without leading zero (3)</source>
-        <translation type="unfinished">%1: Секунди без початкового нуля (3)</translation>
+        <translation>%1: Секунди без першого нуля (3)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="242"/>
         <source>%1: Seconds with leading zero (03)</source>
-        <translation type="unfinished">%1: Секунди з початковим нулем (03)</translation>
+        <translation>%1: Секунди з першим нулем (03)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="243"/>
         <source>%1: AM/PM (12-hour) clock (upper or lower case)</source>
-        <translation type="unfinished">%1: AM/PM (12-годинний) годинник (верхній або нижній регістр)</translation>
+        <translation>%1: AM/PM (12-годинний) годинник (верхній або нижній регістр)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="244"/>
         <source>%1: Timezone</source>
-        <translation type="unfinished">%1: Часовий пояс</translation>
+        <translation>%1: Часовий пояс</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="245"/>
         <source>Time Codes</source>
-        <translation type="unfinished">Часові коди</translation>
+        <translation>Часові коди</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="259"/>
         <source>Valid Date Codes:</source>
-        <translation type="unfinished">Допустимі коди дати:</translation>
+        <translation>Допустимі коди дати:</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="260"/>
         <source>%1: Numeric day without a leading zero (1)</source>
-        <translation type="unfinished">%1: Дні без початкового нуля (1)</translation>
+        <translation>%1: Дні без першого нуля (1)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="261"/>
         <source>%1: Numeric day with leading zero (01)</source>
-        <translation type="unfinished">%1: Дні з першим нулем (01)</translation>
+        <translation>%1: Дні з першим нулем (01)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="262"/>
         <source>%1: Day as abbreviation (localized)</source>
-        <translation type="unfinished">%1: День як абревіатура</translation>
+        <translation>%1: День як абревіатура</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="263"/>
         <source>%1: Day as full name (localized)</source>
-        <translation type="unfinished">%1: День як повне найменування</translation>
+        <translation>%1: День як повне найменування</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="264"/>
         <source>%1: Numeric month without leading zero (2)</source>
-        <translation type="unfinished">%1: Місяць без початкового нуля (2)</translation>
+        <translation>%1: Місяць без першого нуля (2)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="265"/>
         <source>%1: Numeric month with leading zero (02)</source>
-        <translation type="unfinished">%1: Місяць з початковим нулем(02)</translation>
+        <translation>%1: Місяць з першим нулем(02)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="266"/>
         <source>%1: Month as abbreviation (localized)</source>
-        <translation type="unfinished">%1: Місяць як абревіатура</translation>
+        <translation>%1: Місяць як абревіатура</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="267"/>
         <source>%1: Month as full name (localized)</source>
-        <translation type="unfinished">%1: Місяць як повне найменування</translation>
+        <translation>%1: Місяць як повне найменування</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="268"/>
         <source>%1: Year as 2-digit number (15)</source>
-        <translation type="unfinished">%1: Рік як 2-зачне число (15)</translation>
+        <translation>%1: Рік як 2-зачне число (15)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="269"/>
         <source>%1: Year as 4-digit number (2015)</source>
-        <translation type="unfinished">%1: Рік як 4-значне число (2015)</translation>
+        <translation>%1: Рік як 4-значне число (2015)</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="270"/>
         <source>Text may be contained within single-quotes to ignore replacements</source>
-        <translation type="unfinished">Текст може бути в одинарних лапках, щоб ігнорувати заміни</translation>
+        <translation>Текст може бути в одинарних лапках, щоб ігнорувати заміни</translation>
     </message>
     <message>
         <location filename="../pages/page_session_options.cpp" line="271"/>
         <source>Date Codes</source>
-        <translation type="unfinished">Код дати</translation>
+        <translation>Коди Дати</translation>
     </message>
 </context>
 <context>
@@ -1942,42 +1942,42 @@
         <location filename="../pages/page_soundtheme.ui" line="84"/>
         <location filename="../pages/page_soundtheme.ui" line="100"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстова мітка</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="20"/>
         <source>Set Startup Audio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштувати аудіо при запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="48"/>
         <source>Set Logout Audio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштувати аудіо для виходу</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.ui" line="41"/>
         <source>Set Battery Audio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Встановити звук батареї</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="40"/>
         <source>Sound Themes</source>
-        <translation type="unfinished"></translation>
+        <translation>Звукові теми</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="73"/>
         <source>Select Startup Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть Звук при запуску</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="83"/>
         <source>Select Logout Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть звук виходу</translation>
     </message>
     <message>
         <location filename="../pages/page_soundtheme.cpp" line="93"/>
         <source>Select Low Battery Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть Звук низького заряду батареї</translation>
     </message>
 </context>
 <context>
@@ -1985,155 +1985,155 @@
     <message>
         <location filename="../pages/page_wallpaper.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Форма</translation>
+        <translation>Форма</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="90"/>
         <source>Single Background</source>
-        <translation type="unfinished">Тло фону</translation>
+        <translation>Одиночне тло</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="100"/>
         <source>Rotate Background</source>
-        <translation type="unfinished">Поворот фону</translation>
+        <translation type="unfinished">Змінне тло</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="107"/>
         <source> Minutes</source>
-        <translation type="unfinished"> хв</translation>
+        <translation> хв</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="110"/>
         <source>Every </source>
-        <translation type="unfinished">Кожні </translation>
+        <translation>Кожні </translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.ui" line="133"/>
         <source>Layout:</source>
-        <translation type="unfinished">Розкладка:</translation>
+        <translation>Розташування:</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="55"/>
         <source>Wallpaper Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштування шпалер</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="65"/>
         <source>System Default</source>
-        <translation type="unfinished">За замовчуванням</translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="66"/>
         <location filename="../pages/page_wallpaper.cpp" line="239"/>
         <source>Solid Color: %1</source>
-        <translation type="unfinished">Суцільний колір: %1</translation>
+        <translation>Суцільний колір: %1</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="77"/>
         <source>Screen Resolution:</source>
-        <translation type="unfinished">Роздільна здатність екрану:</translation>
+        <translation>Роздільна здатність екрану:</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="99"/>
         <location filename="../pages/page_wallpaper.cpp" line="100"/>
         <source>Select Color</source>
-        <translation type="unfinished">Вибрати колір</translation>
+        <translation>Вибрати колір</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="119"/>
         <source>File(s)</source>
-        <translation type="unfinished">Файл(и)</translation>
+        <translation>Файл(и)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="120"/>
         <source>Directory (Single)</source>
-        <translation type="unfinished">Каталог (один)</translation>
+        <translation>Каталог (один)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="121"/>
         <source>Directory (Recursive)</source>
-        <translation type="unfinished">Каталог (Рекурсивно)</translation>
+        <translation>Каталог (Рекурсивно)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="122"/>
         <source>Solid Color</source>
-        <translation type="unfinished">Суцільний колір</translation>
+        <translation>Суцільний колір</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="126"/>
         <source>Automatic</source>
-        <translation type="unfinished">Автоматично</translation>
+        <translation>Автоматично</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="127"/>
         <source>Fullscreen</source>
-        <translation type="unfinished">На повний екран</translation>
+        <translation>На повний екран</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="128"/>
         <source>Fit screen</source>
-        <translation type="unfinished">Заповнити екран</translation>
+        <translation>Заповнити екран</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="129"/>
         <source>Tile</source>
-        <translation type="unfinished">Плитка</translation>
+        <translation>Плитка</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="130"/>
         <source>Center</source>
-        <translation type="unfinished">Центр</translation>
+        <translation>Центр</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="131"/>
         <source>Top Left</source>
-        <translation type="unfinished">Зверху зліва</translation>
+        <translation>Зверху зліва</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="132"/>
         <source>Top Right</source>
-        <translation type="unfinished">Вгорі праворуч</translation>
+        <translation>Вгорі праворуч</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="133"/>
         <source>Bottom Left</source>
-        <translation type="unfinished">Внизу ліворуч</translation>
+        <translation>Внизу ліворуч</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="134"/>
         <source>Bottom Right</source>
-        <translation type="unfinished">Внизу праворуч</translation>
+        <translation>Внизу праворуч</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>No Background</source>
-        <translation type="unfinished">Немає заднього плану</translation>
+        <translation>Немає заднього фону</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="143"/>
         <source>(use system default)</source>
-        <translation type="unfinished">(Використовувати налаштування системи за умовчуванням)</translation>
+        <translation type="unfinished">(використовувати за замовчуванням)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="160"/>
         <source>Image Directory: %1 valid images</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталог зображень: %1 дійсних зображень</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="180"/>
         <source>File does not exist</source>
-        <translation type="unfinished">Файл не існує</translation>
+        <translation>Файл не існує</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="220"/>
         <source>Find Background Image(s)</source>
-        <translation type="unfinished">Знайти фоновий малюнок(и)</translation>
+        <translation>Знайти фоновий малюнок(и)</translation>
     </message>
     <message>
         <location filename="../pages/page_wallpaper.cpp" line="251"/>
         <location filename="../pages/page_wallpaper.cpp" line="269"/>
         <source>Find Background Image Directory</source>
-        <translation type="unfinished">Знайти каталог фонового зображення</translation>
+        <translation>Знайти каталог фонового зображення</translation>
     </message>
 </context>
 </TS>

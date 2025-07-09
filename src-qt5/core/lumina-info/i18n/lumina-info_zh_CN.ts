@@ -6,17 +6,17 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Lumina Desktop Information</source>
-        <translation>Lumina桌面信息</translation>
+        <translation>Lumina 桌面信息</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="60"/>
         <source>General</source>
-        <translation>常规</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation>源代码仓库</translation>
+        <translation>源代码存储库</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation>问题报告</translation>
+        <translation>故障报告</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
@@ -41,12 +41,12 @@
     <message>
         <location filename="../MainUI.ui" line="218"/>
         <source>Qt Version:</source>
-        <translation>QT版本：</translation>
+        <translation>QT 版本：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>
         <source>Ask the Community</source>
-        <translation>询问社区</translation>
+        <translation>寻求社区支持</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="233"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../MainUI.ui" line="333"/>
         <source>Project Lead:</source>
-        <translation>项目领导：</translation>
+        <translation>项目负责人：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;打开网络浏览器&lt;a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;在浏览器访问&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>
@@ -99,67 +99,67 @@
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="618"/>
         <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="619"/>
         <source>Development</source>
-        <translation type="unfinished"></translation>
+        <translation>开发</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="620"/>
         <source>Education</source>
-        <translation type="unfinished"></translation>
+        <translation>教育</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="621"/>
         <source>Games</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="622"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="623"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="624"/>
         <source>Office</source>
-        <translation type="unfinished"></translation>
+        <translation>办公</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="625"/>
         <source>Science</source>
-        <translation type="unfinished"></translation>
+        <translation>科学</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="626"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="627"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>系统</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="628"/>
         <source>Utility</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="629"/>
         <source>Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine</translation>
     </message>
     <message>
         <location filename="../../libLumina/LuminaXDG.cpp" line="630"/>
         <source>Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>未排序</translation>
     </message>
 </context>
 </TS>

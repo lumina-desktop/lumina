@@ -499,7 +499,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="21"/>
         <source>Burn Disk Image to Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Bränn diskavbild till enhet</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
@@ -509,7 +509,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="110"/>
         <source>Do you wish to stop the current disk image burn process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du stoppa den pågående bränningen av diskavbild?</translation>
     </message>
     <message>
         <location filename="../imgDialog.cpp" line="170"/>
@@ -544,7 +544,7 @@
     <message>
         <location filename="../imgDialog.cpp" line="178"/>
         <source>The image was successfully burned to the device</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskavbilden brändes framgångsrikt till enheten</translation>
     </message>
 </context>
 </TS>
