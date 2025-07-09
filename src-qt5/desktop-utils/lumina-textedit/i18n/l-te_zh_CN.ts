@@ -112,17 +112,17 @@
     <message>
         <location filename="../MainUI.ui" line="193"/>
         <source>&amp;File</source>
-        <translation>>&amp;文件</translation>
+        <translation>&amp;文件</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="207"/>
         <source>&amp;View</source>
-        <translation>>&amp;查看</translation>
+        <translation>&amp;查看</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="238"/>
         <source>&amp;Edit</source>
-        <translation>>&amp;编辑</translation>
+        <translation>&amp;编辑</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="276"/>

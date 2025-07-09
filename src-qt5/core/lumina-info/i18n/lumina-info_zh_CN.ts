@@ -11,12 +11,12 @@
     <message>
         <location filename="../MainUI.ui" line="60"/>
         <source>General</source>
-        <translation>常规</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="89"/>
         <source>Source Repository</source>
-        <translation>源代码仓库</translation>
+        <translation>源代码存储库</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="124"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../MainUI.ui" line="152"/>
         <source>Bug Reports</source>
-        <translation>问题报告</translation>
+        <translation>故障报告</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="179"/>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../MainUI.ui" line="276"/>
         <source>Ask the Community</source>
-        <translation>询问社区</translation>
+        <translation>寻求社区支持</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="233"/>
@@ -66,7 +66,7 @@
     <message>
         <location filename="../MainUI.ui" line="333"/>
         <source>Project Lead:</source>
-        <translation>项目领导：</translation>
+        <translation>项目负责人：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="340"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../MainUI.ui" line="428"/>
         <source>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;Open in web browser&lt;a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;打开网络浏览器&lt;a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/pcbsd/lumina/graphs/contributors&quot;&gt;在浏览器访问&lt;a&gt;</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="454"/>

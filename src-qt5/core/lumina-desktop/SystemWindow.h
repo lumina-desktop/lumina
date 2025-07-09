@@ -3,8 +3,6 @@
 
 #include <QDialog>
 
-#include "ui_SystemWindow.h"
-
 namespace Ui{
 	class SystemWindow;
 };

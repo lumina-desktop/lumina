@@ -812,7 +812,7 @@ Ny Plats: %2</translation>
     <message>
         <location filename="../MainUI.ui" line="487"/>
         <source>Ctrl+Shift+N</source>
-        <translation><Ctrl+Shift+N</translation>
+        <translation>Ctrl+Shift+N</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="199"/>

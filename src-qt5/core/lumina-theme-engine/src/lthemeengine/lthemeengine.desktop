@@ -9,5 +9,7 @@ Type=Application
 Categories=Settings;DesktopSettings;Qt;
 Name[ru]=Движок темы Lumina
 Name[sv]=Lumina-temamotor
+Name[zh_CN]=Lumina 主题引擎
 Comment[ru]=Движок темы Lumina
 Comment[sv]=Lumina-temamotor
+Comment[zh_CN]=Lumina 主题引擎

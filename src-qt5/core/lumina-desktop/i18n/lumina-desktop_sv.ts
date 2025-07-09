@@ -85,7 +85,7 @@
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="156"/>
         <source>Drag to Application</source>
-        <translation type=>Drag till program</translation>
+        <translation type="unfinished">Drag till program</translation>
     </message>
     <message>
         <location filename="../desktop-plugins/applauncher/AppLauncherPlugin.cpp" line="217"/>
@@ -231,7 +231,7 @@
     <message>
         <location filename="../BootSplash.cpp" line="58"/>
         <source>This desktop is generously sponsored by iXsystems</source>
-        <translation type="">Denna skrivbordsmiljö är generöst sponsrad av iXsystems</translation>
+        <translation>Denna skrivbordsmiljö är generöst sponsrad av iXsystems</translation>
     </message>
     <message>
         <location filename="../BootSplash.cpp" line="60"/>
@@ -779,18 +779,18 @@
         <location filename="../LDesktop.cpp" line="259"/>
         <location filename="../LDesktop.cpp" line="644"/>
         <source>New Folder</source>
-        <translation type="Ny mapp"></translation>
+        <translation>Ny mapp</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="260"/>
         <location filename="../LDesktop.cpp" line="664"/>
         <source>New File</source>
-        <translation type="Ny fil"></translation>
+        <translation>Ny fil</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="261"/>
         <source>Paste</source>
-        <translation type="Klistra in"></translation>
+        <translation>Klistra in</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="293"/>
@@ -810,7 +810,7 @@
     <message>
         <location filename="../LDesktop.cpp" line="305"/>
         <source>Lock Session</source>
-        <translation type="Lås session"></translation>
+        <translation>Lås session</translation>
     </message>
     <message>
         <location filename="../LDesktop.cpp" line="306"/>
@@ -853,7 +853,7 @@
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="114"/>
         <source>Password</source>
-        <translation type=>Lösenord</translation>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <location filename="../src-screensaver/LLockScreen.ui" line="126"/>

@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Science</source>
-        <translation科学></translation>
+        <translation>科学</translation>
     </message>
     <message>
         <source>Settings</source>
