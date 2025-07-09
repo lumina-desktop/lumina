@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Compositor Settings
+Comment=Configure window effects and compositing
+Icon=preferences-desktop-effects
+Exec=lcc-compositor
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

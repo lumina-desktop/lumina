@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Lumina Control Center
+GenericName=Control Center
+Comment=Unified access to all system configuration utilities
+Icon=preferences-system
+Exec=lcc-main
+Path=
+StartupNotify=true
+Categories=Settings;DesktopSettings;Qt;
+Keywords=settings;preferences;configuration;control;panel;system;desktop;
