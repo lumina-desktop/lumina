@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Default Applications
+Comment=Configure default applications for file types
+Icon=preferences-desktop-filetype-association
+Exec=lcc-defaultapps
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

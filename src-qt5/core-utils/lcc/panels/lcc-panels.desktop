@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Panel Configuration
+Comment=Configure desktop panels and their plugins
+Icon=preferences-system-windows
+Exec=lcc-panels
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

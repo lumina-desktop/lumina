@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Desktop Settings
+Comment=Configure desktop plugins and embedded utilities
+Icon=preferences-desktop
+Exec=lcc-desktop
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

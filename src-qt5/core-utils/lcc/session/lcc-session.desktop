@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Session Options
+Comment=Configure general session options and preferences
+Icon=preferences-desktop-session
+Exec=lcc-session
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

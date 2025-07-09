@@ -4,7 +4,6 @@ include("../OS-detect.pri")
 TEMPLATE = subdirs
 CONFIG += recursive
 
-SUBDIRS+= lumina-config \
+SUBDIRS+= lcc \
 	 lumina-search \
 	 lumina-xconfig
-

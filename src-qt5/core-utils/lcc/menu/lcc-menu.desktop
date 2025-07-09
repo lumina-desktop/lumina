@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Desktop Menu Configuration
+Comment=Configure desktop context menu plugins and items
+Icon=preferences-desktop
+Exec=lcc-menu
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Sound Theme Settings
+Comment=Configure system sound events
+Icon=preferences-desktop-sound
+Exec=lcc-sound-theme
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

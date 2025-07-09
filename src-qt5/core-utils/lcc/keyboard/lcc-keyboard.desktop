@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Keyboard Shortcuts
+Comment=Configure keyboard shortcuts for the Lumina Desktop
+Icon=input-keyboard
+Exec=lcc-keyboard
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

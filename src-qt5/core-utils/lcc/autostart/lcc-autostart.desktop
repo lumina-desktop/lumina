@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Autostart Configuration
+GenericName=Startup Services
+Comment=Configure which applications and services start automatically when you log in
+Icon=preferences-system-startup
+Exec=lcc-autostart
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true
