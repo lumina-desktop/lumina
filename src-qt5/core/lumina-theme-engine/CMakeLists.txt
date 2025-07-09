@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 # SPDX-FileCopyrightText: Copyright 2022 Adriaan de Groot <adridg@FreeBSD.org>
+# SPDX-FileCopyrightText: Copyright 2025 jt (q5sys) <jt@obs-sec.com>
 
 get_target_property(QT_LRELEASE_EXECUTABLE Qt5::lrelease IMPORTED_LOCATION)
 

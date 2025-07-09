@@ -4,22 +4,14 @@ add_subdirectory(lumina-session)
 add_subdirectory(lumina-open)
 add_subdirectory(lumina-info)
 add_subdirectory(lumina-pingcursor)
+add_subdirectory(lumina-checkpass)
+# add_subdirectory(lumina-desktop-unified)  # DISABLED - requires src-cpp framework
 add_subdirectory(lumina-theme-engine)
+# add_subdirectory(colors)  # LEGACY - deprecated color files (use lumina-theme-engine instead)
+add_subdirectory(menu-scripts)
+add_subdirectory(themes)
 
 # Additional files
-
-install(
-    FILES menu-scripts/README.md menu-scripts/ls.json.sh
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/menu-scripts
-)
-install(
-    FILES
-        themes/DarkGlass.qss.template
-        themes/Glass.qss.template
-        themes/Lumina-default.qss.template
-        themes/None.qss.template
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/themes
-)
 
 # This is a typo, also in the original core.pro, should be xtrafiles/theme.cfg
 #
