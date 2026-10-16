@@ -1,57 +1,20 @@
-# lumina-core-utils/lcc/defaultapps build, CMake edition. EXPERIMENTAL.
+# lumina-core-utils/lcc/defaultapps build
 #
 # SPDX-License-Identifier: BSD-2-Clause
-# SPDX-FileCopyrightText: Copyright 2022 Adriaan de Groot <adridg@FreeBSD.org>
+# SPDX-FileCopyrightText: Copyright 2025 jt (q5sys) <jt@obs-sec.com>
 
-# LCC Defaultapps Module
+# LCC Default Applications Module
+# UI forms and moc are handled by CMAKE_AUTOUIC / CMAKE_AUTOMOC (set in src-qt6/CMakeLists.txt)
 
-# Find required Qt5 modules
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
-
-# Source files
-set(SOURCES
-    main.cpp
-    MainWindow.cpp
-)
-
-set(HEADERS
-    MainWindow.h
-)
-
-set(FORMS
-    MainWindow.ui
-)
-
-# Process UI forms
-qt5_wrap_ui(UI_HEADERS ${FORMS})
-
-# Create the executable
 add_executable(lcc-defaultapps
-    ${SOURCES}
-    ${HEADERS}
-    ${UI_HEADERS}
+	main.cpp
+	MainWindow.cpp
 )
 
-# Include directories
-target_include_directories(lcc-defaultapps PRIVATE
-    ${CMAKE_CURRENT_BINARY_DIR}  # For UI headers
+target_link_libraries(
+    lcc-defaultapps
+    PRIVATE libLumina ${QT}::Core ${QT}::Gui ${QT}::Widgets
 )
 
-# Link libraries
-target_link_libraries(lcc-defaultapps PRIVATE
-    libLumina
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-)
-
-# Install executable
-install(TARGETS lcc-defaultapps DESTINATION bin)
-
-# Install desktop file
-install(
-    FILES lcc-defaultapps.desktop
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/applications
-)
-
-message(STATUS "LCC defaultapps module configured")
+install(TARGETS lcc-defaultapps)
+install(FILES lcc-defaultapps.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)

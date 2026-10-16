@@ -11,7 +11,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStandardPaths>
-#include <QX11Info>
+#include <QGuiApplication>
 
 #include <X11/Xlib.h>
 #include <X11/extensions/XInput.h>
@@ -178,8 +178,8 @@ void MainWindow::showAbout(){
 }
 
 void MainWindow::applyMouseSettings(){
-    // Apply settings using X11 calls
-    if(!QX11Info::isPlatformX11()){
+    // Apply settings using X11 calls (QX11Info was removed in Qt6; check the platform plugin name)
+    if(QGuiApplication::platformName() != "xcb"){
         qDebug() << "Not running on X11, mouse settings may not apply";
         return;
     }
@@ -228,7 +228,7 @@ QString MainWindow::getMouseDevice(){
 }
 
 void MainWindow::setMouseAcceleration(double accel){
-    if(!QX11Info::isPlatformX11()) return;
+    if(QGuiApplication::platformName() != "xcb") return;
     
     Display *display = XOpenDisplay(NULL);
     if(!display) return;
@@ -238,7 +238,7 @@ void MainWindow::setMouseAcceleration(double accel){
 }
 
 void MainWindow::setMouseThreshold(int threshold){
-    if(!QX11Info::isPlatformX11()) return;
+    if(QGuiApplication::platformName() != "xcb") return;
     
     Display *display = XOpenDisplay(NULL);
     if(!display) return;
@@ -253,7 +253,7 @@ void MainWindow::setMouseSensitivity(double sensitivity){
 }
 
 void MainWindow::setLeftHanded(bool leftHanded){
-    if(!QX11Info::isPlatformX11()) return;
+    if(QGuiApplication::platformName() != "xcb") return;
     
     Display *display = XOpenDisplay(NULL);
     if(!display) return;

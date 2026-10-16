@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->setWindowIcon(LXDG::findIcon("preferences-system", ""));
     
     // Setup keyboard shortcut for search
-    findShort = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_F), this, SLOT(showFind()));
+    findShort = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this, SLOT(showFind()));
     
     // Configure tree widget
     ui->treeWidget->setMouseTracking(true);

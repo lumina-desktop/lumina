@@ -59,13 +59,13 @@ private slots:
     void itemTriggered(QTreeWidgetItem*, int);
     void searchChanged(QString);
     void showAbout();
+    void LoadApplications(); // must be a slot: connected to actionRefresh
 
 private:
     Ui::MainWindow *ui;
     QList<APPINFO> INFO;
     QShortcut *findShort;
     
-    void LoadApplications();
     void UpdateItems(QString search = "");
     QList<APPINFO> GetLCCApplications();
     QList<APPINFO> GetSystemApplications();

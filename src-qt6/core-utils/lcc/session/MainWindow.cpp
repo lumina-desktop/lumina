@@ -7,6 +7,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
+#include <QLocale>
+
 //==========
 //    PUBLIC
 //==========
@@ -180,7 +182,7 @@ void MainWindow::sessionResetLumina(){
 
 void MainWindow::sessionLoadTimeSample(){
     if(ui->line_session_time->text().simplified().isEmpty()){
-        ui->label_session_timesample->setText( QTime::currentTime().toString(Qt::DefaultLocaleShortDate) );
+        ui->label_session_timesample->setText( QLocale().toString(QTime::currentTime(), QLocale::ShortFormat) );
     }else{
         ui->label_session_timesample->setText( QTime::currentTime().toString( ui->line_session_time->text() ) );
     }
@@ -203,7 +205,7 @@ void MainWindow::sessionShowTimeCodes(){
 
 void MainWindow::sessionLoadDateSample(){
     if(ui->line_session_date->text().simplified().isEmpty()){
-        ui->label_session_datesample->setText( QDate::currentDate().toString(Qt::DefaultLocaleShortDate) );
+        ui->label_session_datesample->setText( QLocale().toString(QDate::currentDate(), QLocale::ShortFormat) );
     }else{
         ui->label_session_datesample->setText( QDate::currentDate().toString( ui->line_session_date->text() ) );
     }

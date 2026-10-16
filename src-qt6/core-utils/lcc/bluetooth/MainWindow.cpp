@@ -61,7 +61,8 @@ void MainWindow::setupConnections(){
     // Process connections
     connect(bluetoothProcess, SIGNAL(finished(int, QProcess::ExitStatus)), 
             this, SLOT(slotProcessFinished(int, QProcess::ExitStatus)));
-    connect(bluetoothProcess, SIGNAL(error(QProcess::ProcessError)), 
+    // QProcess::error(ProcessError) was removed in Qt6; errorOccurred exists since Qt 5.6
+    connect(bluetoothProcess, SIGNAL(errorOccurred(QProcess::ProcessError)), 
             this, SLOT(slotProcessError(QProcess::ProcessError)));
     
     // UI connections
