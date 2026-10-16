@@ -1,0 +1,58 @@
+.Dd October 16, 2026
+.Dt LCC-WALLPAPER 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-wallpaper
+.Nd configure Lumina desktop background images.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+.Op Fl s | -screen Ar screen
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It sets the background for one screen and shows a preview along with the
+screen resolution.
+Backgrounds can be single images, whole directories of images, or solid
+colors, and the layout of the image on the screen can be chosen.
+When more than one background is configured, they can be rotated
+automatically at a set interval in minutes.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.It Fl s Ar screen , Fl -screen Ar screen
+Show the configuration for screen number
+.Ar screen ,
+counted from 0.
+The default is 0.
+An invalid screen number is ignored and screen 0 is used.
+.El
+
+.Sh EXAMPLES
+.Dl % lcc-wallpaper --screen 1
+Configure the background of the second monitor.
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-wallpaper
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/desktopsettings.conf
+Background settings shared with
+.Xr lumina-desktop 1 .
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-desktop 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

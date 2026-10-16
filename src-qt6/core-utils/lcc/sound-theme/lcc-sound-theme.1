@@ -1,0 +1,51 @@
+.Dd October 16, 2026
+.Dt LCC-SOUND-THEME 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-sound-theme
+.Nd configure the sounds played for Lumina session events.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It selects an audio file for each of the following session events, and
+enables or disables each one:
+.Bl -bullet -offset indent
+.It
+Startup (login)
+.It
+Logout
+.It
+Low battery
+.El
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-sound-theme
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/sessionsettings.conf
+Sound file paths are stored in the
+.Qq audiofiles
+group.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-session 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

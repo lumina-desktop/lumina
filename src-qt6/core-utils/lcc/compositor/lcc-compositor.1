@@ -1,0 +1,48 @@
+.Dd October 16, 2026
+.Dt LCC-COMPOSITOR 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-compositor
+.Nd configure window effects and compositing.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It edits the configuration file used by the compositing manager that the
+Lumina session starts, which controls effects such as transparency and
+shadows.
+The file is edited as plain text.
+.Pp
+Compositing can also be disabled for the session entirely.
+This takes effect after the session is restarted.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-compositor
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/compton.conf
+Compositing manager configuration.
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/sessionsettings.conf
+Stores whether compositing is enabled.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

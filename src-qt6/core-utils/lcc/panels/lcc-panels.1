@@ -1,0 +1,62 @@
+.Dd October 16, 2026
+.Dt LCC-PANELS 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-panels
+.Nd configure Lumina desktop panels and panel plugins.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+.Op Fl s | -screen Ar number
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It manages the panels on one screen.
+Panels can be added and removed.
+For each panel the screen edge and alignment, thickness in pixels, length as
+a percentage of the screen edge, a custom color, and auto-hide can be set.
+Panel plugins can be added, removed and reordered, including launchers for
+specific applications and custom scripts.
+Predefined panel profiles can be applied as a starting point.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.It Fl s Ar number , Fl -screen Ar number
+Configure the panels on screen
+.Ar number ,
+counted from 0.
+The default is 0.
+.Nm
+exits with an error if the screen does not exist.
+The screen can also be changed from within the window.
+.El
+
+.Sh EXAMPLES
+.Dl % lcc-panels -s 1
+Configure the panels on the second monitor.
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-panels
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/desktopsettings.conf
+Panel settings shared with
+.Xr lumina-desktop 1 .
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-desktop 1 ,
+.Xr lcc-menu 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

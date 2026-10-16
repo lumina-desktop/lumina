@@ -1,0 +1,45 @@
+.Dd October 16, 2026
+.Dt LCC-AUTOSTART 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-autostart
+.Nd configure applications and services started at login.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It lists the XDG autostart entries for the current user and lets each one be
+enabled or disabled.
+New entries can be added from an installed application, from an arbitrary
+binary, or from a file, which is opened with
+.Xr lumina-open 1
+at login.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-autostart
+.It Pa $XDG_CONFIG_HOME/autostart/
+Per-user autostart entries, as defined by the XDG Autostart specification.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lumina-open 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

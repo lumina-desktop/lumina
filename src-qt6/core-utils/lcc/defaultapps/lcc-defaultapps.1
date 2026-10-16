@@ -1,0 +1,47 @@
+.Dd October 16, 2026
+.Dt LCC-DEFAULTAPPS 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-defaultapps
+.Nd configure default applications and file associations.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+The Basic Settings tab sets the default web browser, e-mail client, file
+manager and virtual terminal.
+The Advanced tab lists MIME types by group and sets the default application
+for each, either from an installed application or from an arbitrary binary.
+.Pp
+These defaults are used by
+.Xr lumina-open 1
+when opening files and URLs.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-defaultapps
+.It Pa $XDG_CONFIG_HOME/lumina-mimeapps.list
+Per-user default application for each MIME type.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lumina-open 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

@@ -1,0 +1,69 @@
+.Dd October 16, 2026
+.Dt LCC-BLUETOOTH 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-bluetooth
+.Nd configure Bluetooth devices and settings.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It enables or disables Bluetooth, controls discoverability and its timeout,
+scans for nearby devices, and pairs, connects, disconnects and removes
+devices.
+Output from the underlying tools is shown in a log pane.
+.Pp
+.Nm
+is a front end and does not talk to the Bluetooth stack directly.
+At startup it detects the first available backend, in this order:
+.Bl -enum -offset indent
+.It
+.Xr bluetoothctl 1
+(BlueZ, most Linux systems)
+.It
+.Xr hcitool 1
+(older BlueZ)
+.It
+.Xr hccontrol 8
+(FreeBSD)
+.El
+.Pp
+If none is found, the log reports that no Bluetooth management system was
+detected.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh DEPENDENCIES
+One of the following runtime utilities is required:
+.Bl -tag -width indent
+.It Ic bluetoothctl
+.It Ic hcitool
+.It Ic hccontrol
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-bluetooth
+.It Pa ~/.config/lumina-desktop/lcc-bluetooth.conf
+Saved settings for this utility.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr bluetoothctl 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

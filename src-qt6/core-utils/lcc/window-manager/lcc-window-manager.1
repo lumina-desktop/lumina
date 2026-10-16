@@ -1,0 +1,52 @@
+.Dd October 16, 2026
+.Dt LCC-WINDOW-MANAGER 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-window-manager
+.Nd configure window manager behavior and theme.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It configures the window manager used in the Lumina session.
+.Pp
+The Simple Editor sets the number of workspaces, the window focus policy,
+where new windows are placed, and the window theme, with a preview of the
+selected theme.
+The Advanced Editor shows the window manager configuration file as plain
+text for direct editing.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-window-manager
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/fluxbox-init
+Window manager configuration used by
+.Xr fluxbox 1
+in the Lumina session.
+.It Pa ~/.fluxbox/styles/
+.It Pa /usr/local/share/fluxbox/styles/
+Searched for window themes.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-keyboard 1 ,
+.Xr fluxbox 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

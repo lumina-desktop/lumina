@@ -1,0 +1,62 @@
+.Dd October 16, 2026
+.Dt LCC-MOUSE 1
+.Os 1.6.2
+
+.Sh NAME
+.Nm lcc-mouse
+.Nd configure mouse and pointer settings.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It adjusts:
+.Bl -bullet -offset indent
+.It
+Pointer sensitivity, acceleration and acceleration threshold.
+.It
+Left-handed button mapping, which swaps the primary and secondary buttons.
+.It
+Double-click interval.
+.It
+Number of lines scrolled per mouse wheel step.
+.El
+.Pp
+Pointer acceleration, threshold and button mapping are applied immediately
+to the X server.
+Double-click interval and wheel scroll lines are written to the Qt settings
+and apply to Qt applications started afterwards.
+.Pp
+.Nm
+requires an X11 session.
+Under any other display server it saves its settings but does not apply the
+pointer changes.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-mouse
+.It Pa ~/.config/lumina-desktop/lcc-mouse.conf
+Saved settings for this utility.
+.It Pa ~/.config/Trolltech.conf
+Qt double-click interval and wheel scroll lines.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr xset 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com
