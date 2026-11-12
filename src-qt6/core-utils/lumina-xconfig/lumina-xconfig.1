@@ -1,0 +1,61 @@
+.Dd November 6, 2017
+.Dt LUMINA-XCONFIG 1
+.Os 1.4.2
+
+.Sh NAME
+.Nm lumina-xconfig
+.Nd graphical front-end to xrandr, which manages monitor
+configurations.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl -reset-monitors
+.Nm
+.Op Fl -mirror-monitors
+.Nm
+.Op Fl -list-profiles
+.Nm
+.Op Fl -apply-profile Ao profile Ac
+
+.Sh DESCRIPTION
+.Nm
+opens the graphical utility for managing monitor configurations and
+requires the runtime utility xrandr.
+.Nm
+offers the ability to drag connected displays and orient them freely.
+It is also easy to select the resolution and rotation from a drop down
+box for each screen.
+The Add Screen tab provides an option to enable a connected monitor that
+is not in use.
+
+.Nm
+Options:
+.Bl -tag -width indent
+.It Ic --reset-monitors
+Reset the monitor configuration to the default profile
+.It Ic --mirror-monitors
+Setup all connected monitors as a single display output
+.It Ic --list-profiles
+Return the list of all the currently-known profiles
+.It Ic --apply-profile <profile>
+Apply the given monitor profile (will do nothing if profile does not exist)
+.El
+
+.Sh DEPENDENCIES
+A single extra runtime dependency is required:
+.Bl -tag -width indent
+.It Ic xrandr
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-xconfig
+.It Pa {XDG_CONFIG_HOME}/lumina-desktop/lumina-xconfig.conf
+.El
+
+.Sh SEE ALSO
+.Xr xrandr(1)
+
+.Sh AUTHORS
+.An Aaron St. John
+.Aq aaron@ixsystems.com

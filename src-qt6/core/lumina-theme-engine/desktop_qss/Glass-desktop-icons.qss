@@ -1,0 +1,11 @@
+LDPlugin#applauncher  QToolButton, LDPlugin, LDPlugin#desktopview QListWidget::item{
+  background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(250, 250, 250, 30), stop:1 rgba(252, 252, 252, 70));
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 5px;
+  border-top-color: qradialgradient(spread:pad, cx:0.5, cy:1, radius:0.5, fx:0.5, fy:1, stop:0 rgba(255,255,255, 30), stop:0.724868 rgba(255,255,255, 60), stop:1 rgba(255,255,255, 10));
+  border-bottom-color: qradialgradient(spread:pad, cx:0.5, cy:0, radius:0.5, fx:0.5, fy:0, stop:0 rgba(255,255,255, 30), stop:0.724868 rgba(255,255,255, 60), stop:1 rgba(255,255,255, 10));
+  border-left-color: qradialgradient(spread:pad, cx:1, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255,255,255, 30), stop:0.724868 rgba(255,255,255, 60), stop:1 rgba(255,255,255, 10));
+  border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255,255,255, 30), stop:0.724868 rgba(255,255,255, 60), stop:1 rgba(255,255,255, 10));
+  color: white;
+}

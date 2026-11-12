@@ -1,0 +1,18 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  Basic text file support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "Simple Text",
+		"file_suffix": ["txt", "note"]
+	},
+	"format": {
+		"line_wrap": true,
+		"highlight_whitespace_eol": false
+	},
+	"rules": [	]
+}

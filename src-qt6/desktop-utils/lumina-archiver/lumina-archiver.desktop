@@ -1,0 +1,18 @@
+[Desktop Entry]
+Exec=lumina-archiver %f
+Icon=utilities-file-archiver
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Utility;
+MimeType=application/x-xz-compressed-tar;application/x-lzma-compressed-tar;application/x-bzip-compressed-tar;application/x-tar;application/x-compressed-tar;application/zip;application/gzip;application/bzip;application/x-cd-image;application/x-raw-disk-image;
+Name=Lumina Archiver
+Comment=Archive creator and viewer
+Name[pt]=Arquivador Lumina
+Name[sv]=Lumina arkiverare
+Name[ru]=Архиватор Lumina
+Name[zh_CN]=Lumina 压缩工具
+Comment[pt]=Aplicação para criar, editar e ver arquivos
+Comment[sv]=Arkivskapare och visare
+Comment[ru]=Просмотр и создание архивов
+Comment[zh_CN]=创建和查看压缩文件

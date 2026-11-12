@@ -1,0 +1,11 @@
+Notes about "tar" on FreeBSD:
+
+1) Use "-a" when creating archive with "-c" to automatically determine compression type from the file extension
+2) Valid file extensions:
+Read-Write: *.zip, *.tar.gz, *.tar.xz, *.tar.bz, *.tar.bz2, *.tar, *.zip, *.tgz, *.txz, *.tbz, *.tbz2, *.cpio, *.pax, *.ar, *.shar, *.7z
+Read-Only: *.iso, *.xar, *.jar, *.rpm
+
+To Extract: use "-x"
+To List: use "-t" with "-v" for detailed info (space-delimited:  [perms, ?, user, group, size, month, day, time, filename])
+To pass a file on the command line use "-f <file>"
+If no compression flag (z, j, J, etc...) are given when reading/extracting, then it will automatically determine the type to use.

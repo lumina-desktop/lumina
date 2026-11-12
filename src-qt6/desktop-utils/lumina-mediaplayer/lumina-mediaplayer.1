@@ -1,0 +1,57 @@
+.Dd November 2, 2017
+.Dt LUMINA-MEDIAPLAYER 1
+.Os 1.3.3
+
+.Sh NAME
+.Nm lumina-mediaplayer
+.Nd a graphical utility to play media files and stream online radio
+services.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl -pandora
+.Op Ar FILES
+
+
+.Sh DESCRIPTION
+.Nm
+opens the graphical interface for the media player.
+The user can sync a Pandora account and stream music.
+The user can also create and manage a playlist of media files.
+.Pp
+Listing multiple files opens them in a playlist.
+It can open .mp3, .mp4, .flac, .acc, .mpeg2, and mpeg4 files.
+The user can use the command line to add songs by listing media file names.
+.Pp
+.Nm
+has one optional argument:
+.Bl -tag -width indent
+.It Ic --pandora
+Opens the interface on the Pandora account page.
+.El
+
+.Sh EXAMPLES
+.Pp
+.Dl % lumina-mediaplayer Downloads/Testing.mp3
+Opens the interface and adds Testing.mp3 into the playlist.
+.Dl % lumina-mediaplayer Downloads/Testing.mp3 Testing2.mp4
+Opens the interface and adds Testing.mp3 and Testing2.mp4 into the
+playlist.
+
+.Sh OPTIONAL RUNTIME DEPENDENCIES
+Installing other utilities can make more options available.
+These extra utilities are supported:
+.Pp
+.Bl -tag -width indent
+.It Ic pianobar
+This provides streaming from the Pandora online radio service.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lumina-mediaplayer
+.El
+
+.Sh AUTHORS
+.An Aaron St. John and Tim Moore
+.Aq aaron@ixsystems.com

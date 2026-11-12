@@ -1,0 +1,36 @@
+Settings file located at: ~/.lumina/settings/LuminaDE/desktopsettings.conf
+This file will pretty much be empty initially, except for the current background set to "default"
+
+
+Example Code:
+QSettings *settings = new QSettings(<file>);
+settings->setValue(<variable>,<value>); //to set a value
+value = settings->value(<variable>, <default value>); //to read the current value
+
+Current Variable/Value combinations for the Lumina Desktop
+
+===DESKTOP SETTINGS===
+Prefix: "desktop-<number>" (so the first screen is "desktop-0")
+
+--- Background settings ---
+Prefix/background/current -> (QString) filepath for current background image (do not modify - handled internally)
+   === Note: a background filepath of "default" corresponds to "/usr/local/share/Lumina-DE/desktop-background.jpg" internally
+Prefix/background/filelist -> (QStringList) list of filepaths to use for backgrounds
+Prefix/background/minutesToChange -> (Integer) Number of minutes between background changes (ignored for single image)
+   === Note: Default minutes setting is 5, but you can change that if you want in this tool
+   
+--- Panel Settings ---
+Prefix/panels -> (Integer) Number of panels to create on this screen (0->2 only)
+
+--- Desktop Plugins ---
+Prefix/pluginlist -> (QStringList) List of different plugins in use on this screen
+   
+==== PANEL SETTINGS ====
+Prefix: "panel<screen number>.<panel number>"
+
+defaultpanel -> (QString) <screen number>.<panel number> (0.0 by default, might be removing this later, most used for testing at the moment)
+Prefix/location -> (QString) "top" or "bottom" (where to place the panel, should not have 2 panels with the same location on the same screen)
+Prefix/height -> (Integer) height in pixels for the panel
+Prefix/pluginlist -> (QStringList) List of plugins to put on the panel in order of Left->Right
+   
+I will be adding a "Panel Color" option soon as well (some kind of rgba color code), but that is not implemented yet

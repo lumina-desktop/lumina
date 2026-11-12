@@ -1,0 +1,5 @@
+<RCC>
+  <qresource>
+    <file alias="pandora">pandora.png</file>
+  </qresource>
+</RCC>

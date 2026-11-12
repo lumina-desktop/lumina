@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1">
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimedia</translation>
+    </message>
+    <message>
+        <source>Development</source>
+        <translation>Utveckling</translation>
+    </message>
+    <message>
+        <source>Education</source>
+        <translation>Utbildning</translation>
+    </message>
+    <message>
+        <source>Games</source>
+        <translation>Spel</translation>
+    </message>
+    <message>
+        <source>Graphics</source>
+        <translation>Grafik</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Nätverk</translation>
+    </message>
+    <message>
+        <source>Office</source>
+        <translation>Kontor</translation>
+    </message>
+    <message>
+        <source>Science</source>
+        <translation>Vetenskap</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Inställningar</translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation>System</translation>
+    </message>
+    <message>
+        <source>Utility</source>
+        <translation>Verktyg</translation>
+    </message>
+    <message>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <source>Unsorted</source>
+        <translation>Oserterade</translation>
+    </message>
+</context>
+</TS>
+    

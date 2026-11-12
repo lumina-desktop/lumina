@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="hr_HR">
+<context>
+    <name>XDGDesktopList</name>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimedija</translation>
+    </message>
+    <message>
+        <source>Development</source>
+        <translation>Razvoj</translation>
+    </message>
+    <message>
+        <source>Education</source>
+        <translation>Obrazovanje</translation>
+    </message>
+    <message>
+        <source>Games</source>
+        <translation>Igre</translation>
+    </message>
+    <message>
+        <source>Graphics</source>
+        <translation>Slike</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Mreža</translation>
+    </message>
+    <message>
+        <source>Office</source>
+        <translation>Ured</translation>
+    </message>
+    <message>
+        <source>Science</source>
+        <translation>Znanost</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Postavke</translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation>Sustav</translation>
+    </message>
+    <message>
+        <source>Utility</source>
+        <translation>Uslužni program</translation>
+    </message>
+    <message>
+        <source>Wine</source>
+        <translation>Wine</translation>
+    </message>
+    <message>
+        <source>Unsorted</source>
+        <translation>Nerazvrstano</translation>
+    </message>
+</context>
+</TS>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InterfacePage</class>
+ <widget class="QWidget" name="InterfacePage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>498</width>
+    <height>449</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>259</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0">
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Double click interval:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Cursor flash time:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>ComboBox effect:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>ToolTip effect:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>ToolBox effect:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="doubleClickIntervalSpinBox">
+       <property name="suffix">
+        <string> ms</string>
+       </property>
+       <property name="maximum">
+        <number>2000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="cursorFlashTimeSpinBox">
+       <property name="suffix">
+        <string> ms</string>
+       </property>
+       <property name="maximum">
+        <number>4000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QComboBox" name="comboBoxEffectComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Disable</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Animate</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QComboBox" name="toolTipEffectComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Disable</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Animate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fade</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="toolBoxEffectComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Disable</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Animate</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Menu effect:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QComboBox" name="menuEffectComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Disable</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Animate</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fade</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QCheckBox" name="guiEffectsCheckBox">
+       <property name="text">
+        <string>Enable gui effects</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Dialog buttons layout:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QComboBox" name="buttonLayoutComboBox"/>
+     </item>
+     <item row="10" column="0" colspan="2">
+      <widget class="QCheckBox" name="menuIconsCheckBox">
+       <property name="text">
+        <string>Menus have icons</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0" colspan="2">
+      <widget class="QCheckBox" name="dialogIconsCheckBox">
+       <property name="text">
+        <string>Dialog buttons have icons</string>
+       </property>
+       <property name="tristate">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QCheckBox" name="singleClickCheckBox">
+       <property name="text">
+        <string>Activate item on single-click</string>
+       </property>
+       <property name="tristate">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Toolbar button style:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QComboBox" name="toolButtonStyleComboBox"/>
+     </item>
+     <item row="12" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Mouse wheel scroll lines:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QSpinBox" name="wheelScrollLinesSpinBox">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>20</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>238</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>guiEffectsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>menuEffectComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>86</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>guiEffectsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBoxEffectComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>160</x>
+     <y>153</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>guiEffectsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolTipEffectComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>155</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>guiEffectsCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolBoxEffectComboBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>36</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,74 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  HTML language support rules
+#  Written by Ken Moore <ken@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "HTML",
+		"file_suffix": ["html", "htm"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : true,
+		"font_type" : "monospace",
+		"tab_width": 8
+	},
+	"rules": [{
+			"name": "8 spaces rather than a tab",
+			"regex": "([ ]{8})+",
+			"background": "colors/bracket-missing"
+		},
+		{
+			"name": "tabs after spaces",
+			"regex": "( )+\\t",
+			"background": "colors/bracket-missing"
+		},
+		{
+			"name" : "odd number of spaces within indentation",
+			"regex": "(^|\\t)([ ]{2})*[ ](?=\\<)",
+			"background": "colors/bracket-missing"
+		},
+		{
+			"name" : "ID of a tag",
+			"regex": "<[^> ]+[>]?",
+			"font_weight" : "bold",
+			"foreground" : "colors/function"
+		},
+		{
+			"name" : "tag modifiers",
+			"regex" : "\\s[^\\= ]+(?=\\=)",
+			"foreground" : "colors/class"
+		},
+		{
+			"name" : "strings inside a tag",
+			"regex": "\\\"[^\\\"]*\\\"",
+			"foreground" : "colors/text"
+		},
+		{
+			"name" : "comment",
+			"regex_start" : "<!DOCTYPE",
+			"regex_end" : "[/]?>",
+			"foreground" : "colors/comment"
+		},
+		{
+			"name" : "comment",
+			"regex_start" : "<!--",
+			"regex_end" : "-->",
+			"foreground" : "colors/comment"
+		},
+		{
+			"name" : "escapes",
+			"regex" : "&[^;]*;",
+			"foreground" : "colors/preprocessor"
+		},
+		{
+			"name" : "HTML preprocessor",
+			"regex_start" : "\\<\\?html ",
+			"regex_end" : "\\?>",
+			"foreground" : "colors/preprocessor"
+		}
+	]
+}
