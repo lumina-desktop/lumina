@@ -40,6 +40,7 @@ public:
 	static QString runCommand(bool &success, QString command, QStringList arguments = QStringList(), QString workdir = "", QStringList env = QStringList());
 
 	//Run an external command and return the exit code
+	// (0 on success, the command's own exit code on failure, -1 if it could not start, crashed, or timed out)
 	static int runCmd(QString cmd, QStringList args = QStringList());
 	//Run an external command and return any text output (one line per entry)
 	static QStringList getCmdOutput(QString cmd, QStringList args = QStringList());

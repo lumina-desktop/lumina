@@ -154,7 +154,7 @@ void LSession::startProcess(QString ID, QString command, QStringList args, QStri
   if(ID=="runtime"){
     //Bypass for a hidden dbus file requirement for Qt itself (Qt 5.5.1+?)
     if(!QFile::exists("/etc/machine-id") && !QFile::exists("/var/db/dbus/machine-id")){
-      if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure") ){ } //good - the UUID was created successfully
+      if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure")==0 ){ } //good - the UUID was created successfully
       else if(LUtils::isValidBinary("dbus-launch")){
         //Wrap the command: dbus-launch --exit-with-session <command> <args...>
         args.prepend(command);

@@ -11,6 +11,7 @@
 
 #include <QApplication>
 #include <QtConcurrent>
+#include <QElapsedTimer>
 
 #include <unistd.h>
 
@@ -110,7 +111,16 @@ QString LUtils::standardDirectory(StandardDir dir, bool createAsNeeded){
   return val;
 }
 
-QString LUtils::runCommand(bool &success, QString command, QStringList arguments, QString workdir, QStringList env){
+//Upper bound on how long a synchronous command may run before it is stopped.
+// Commands are NOT stopped just for being quiet (md5sum, xrandr, df on slow mounts
+// legitimately print nothing for a while) - only when they exceed this total time.
+static const int RUNCOMMAND_TIMEOUT_MS = 120000;
+
+//Shared implementation for runCommand()/runCmd()
+// exitcode: the process exit code, or -1 if it failed to start, crashed, or timed out
+static QString runProcess(bool &success, int &exitcode, QString command, QStringList arguments, QString workdir, QStringList env){
+  success = false;
+  exitcode = -1;
   QProcess proc;
     proc.setProcessChannelMode(QProcess::MergedChannels); //need output
   //First setup the process environment as necessary
@@ -135,23 +145,41 @@ QString LUtils::runCommand(bool &success, QString command, QStringList arguments
     #endif
   }
   else{ proc.start(command, arguments); }
-  //Wait for the process to finish (but don't block the event loop)
+  if(!proc.waitForStarted()){ return QString(); } //could not launch (missing binary, permissions, ...)
+  //Wait for the process to finish (NOTE: this blocks the calling thread)
   QString info;
+  QElapsedTimer timer;
+  timer.start();
+  bool timedout = false;
   while(!proc.waitForFinished(1000)){
     if(proc.state() == QProcess::NotRunning){ break; } //somehow missed the finished signal
-    QString tmp = proc.readAllStandardOutput();
-    if(tmp.isEmpty()){ proc.terminate(); }
-    else{ info.append(tmp); }
+    info.append(proc.readAllStandardOutput()); //drain output as we go
+    if(timer.elapsed() > RUNCOMMAND_TIMEOUT_MS){
+      qWarning() << "Command timed out after" << RUNCOMMAND_TIMEOUT_MS/1000 << "seconds - stopping it:" << command << arguments;
+      timedout = true;
+      proc.terminate();
+      if(!proc.waitForFinished(2000)){ proc.kill(); proc.waitForFinished(1000); }
+      break;
+    }
   }
   info.append(proc.readAllStandardOutput()); //make sure we don't miss anything in the output
-  success = (proc.exitCode()==0); //return success/failure
+  if(!timedout && proc.exitStatus()==QProcess::NormalExit){
+    exitcode = proc.exitCode();
+    success = (exitcode==0);
+  }
   return info;
+}
+
+QString LUtils::runCommand(bool &success, QString command, QStringList arguments, QString workdir, QStringList env){
+  int exitcode;
+  return runProcess(success, exitcode, command, arguments, workdir, env);
 }
 
 int LUtils::runCmd(QString cmd, QStringList args){
   bool success;
-  LUtils::runCommand(success, cmd, args);
-  return success;
+  int exitcode;
+  runProcess(success, exitcode, cmd, args, "", QStringList());
+  return exitcode; //0 on success, the command's exit code on failure, -1 if it could not run/crashed/timed out
 
   /*QFuture<QStringList> future = QtConcurrent::run(ProcessRun, cmd, args);
   return future.result()[0].toInt(); //turn it back into an integer return code*/
