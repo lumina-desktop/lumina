@@ -22,8 +22,18 @@
 #include <sys/types.h>
 #include "mainwindow.h"
 
-void MainWindow::ProgramInit()
+bool MainWindow::ProgramInit()
 {
+  // Grab our arguments
+  args = qApp->arguments();
+  if(args.length()>1){ args.removeAt(0); } //remove the "lumina-sudo" line
+  QString commText = args.join(" ");
+
+  // Check if we can bypass the GUI and use saved creds
+  // (done before the group check: if sudo accepts us without a password, we clearly have sudo rights)
+  if ( checkSudoCache() )
+     return false;
+
   if( ! checkUserGroup() ) {
     QMessageBox::critical(this, tr("Access Denied"),
                                 tr("This user does not have administrator permissions on this system!"),
@@ -31,15 +41,6 @@ void MainWindow::ProgramInit()
                                 QMessageBox::Ok);
     exit(1);
   }
-
-  // Grab our arguments
-  args = qApp->arguments();
-  if(args.length()>1){ args.removeAt(0); } //remove the "lumina-sudo" line
-  QString commText = args.join(" ");
-
-  // Check if we can bypass the GUI and use saved creds
-  if ( checkSudoCache() )
-     return;
 
   tries=3;
   connect(buttonBox, SIGNAL(clicked(QAbstractButton *)), this, SLOT(slotButtonClicked(QAbstractButton *)));
@@ -78,7 +79,7 @@ void MainWindow::ProgramInit()
   //qDebug() << "Settings Status:" << settings->status();
   //Make sure to activate this window (in case the WM does not do it)
   this->setWindowState( this->windowState() | Qt::WindowActive );
-
+  return true;
 }
 
 void MainWindow::slotReturnPressed()

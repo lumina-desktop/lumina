@@ -28,7 +28,7 @@ public:
         }
 
 public slots:
-    void ProgramInit();
+    bool ProgramInit(); //returns true if the password dialog needs to be shown
 
 private slots:
     void slotButtonClicked(QAbstractButton *myBut);

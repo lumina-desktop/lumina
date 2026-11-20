@@ -26,14 +26,9 @@ int main(int argc, char *argv[])
        qDebug() << "Error: Need to specify argument to run!";
        exit(1);
     }
-    //Test that the user needs to provide a password first
-    QStringList args; for(int i=1; i<argc; i++){ args << argv[i]; }
-    QProcess P;
-    P.setProcessEnvironment(QProcessEnvironment::systemEnvironment());
-    P.start("sudo", QStringList() << "-n" << args);
-    P.waitForFinished();
-    int ret = P.exitCode(); //QProcess::execute("sudo", QStringList() << "-n" << args);
-    if(ret==0){ return 0; } //all finished. No password needed
+    //NOTE: Whether a password is needed is checked in MainWindow::ProgramInit() with "sudo -n -v",
+    // which only validates credentials. Do NOT probe with "sudo -n <command>": that runs the real
+    // command (and could run it a second time below if it exits non-zero).
 
     QTranslator translator;
     QLocale mylocale;
@@ -48,8 +43,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( QTextCodec::codecForName("UTF-8") ); //Force Utf-8 compliance
 
     MainWindow w;
-    w.ProgramInit();
-    w.show();
+    if( w.ProgramInit() ){ w.show(); } //false: command already running with cached credentials - no password prompt
 
     return a.exec();
 }
