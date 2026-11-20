@@ -125,9 +125,13 @@ protected:
 	  QString home = QDir::homePath();
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
+	    if(filepath.isEmpty()){ continue; } //not a local file (remote URL) - not supported
+	    //Dropping an item back into its own directory, or onto itself, is a no-op (not a move/copy)
+	    const QString cleanfile = QDir::cleanPath(filepath), cleandir = QDir::cleanPath(dirpath);
+	    if(cleanfile == cleandir || QFileInfo(cleanfile).absolutePath() == cleandir){ continue; }
 	    //If the target file is modifiable, assume a move - otherwise copy
 	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){
-	      if(filepath.section("/",0,-2)!=dirpath){ files << "cut::::"+filepath;  } //don't "cut" a file into the same dir
+	      files << "cut::::"+filepath;
 	    }else{ files << "copy::::"+filepath; }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath << files;
@@ -250,13 +254,18 @@ protected:
 	  QString home = QDir::homePath();
 	  foreach(const QUrl &url, ev->mimeData()->urls()){
 	    const QString filepath = url.toLocalFile();
-	   //If the target file is modifiable, assume a move - otherwise copy
+	    if(filepath.isEmpty()){ continue; } //not a local file (remote URL) - not supported
+	    //Dropping an item back into its own directory, or onto itself, is a no-op (not a move/copy)
+	    const QString cleanfile = QDir::cleanPath(filepath), cleandir = QDir::cleanPath(dirpath);
+	    if(cleanfile == cleandir || QFileInfo(cleanfile).absolutePath() == cleandir){ continue; }
+	    //If the target file is modifiable, assume a move - otherwise copy
 	    if(QFileInfo(filepath).isWritable() && (filepath.startsWith(home) && dirpath.startsWith(home))){
-	      if(filepath.section("/",0,-2)!=dirpath){ files << "cut::::"+filepath;  } //don't "cut" a file into the same dir
+	      files << "cut::::"+filepath;
 	    }else{ files << "copy::::"+filepath; }
 	  }
 	  //qDebug() << "Drop Event:" << dirpath;
-	  emit DataDropped( dirpath, files );
+	  //NOTE: never emit an empty list - the receiver (MainUI::PasteFiles) treats that as "paste the clipboard"
+	  if(!files.isEmpty()){ emit DataDropped( dirpath, files ); }
 	}
 
 	void mouseReleaseEvent(QMouseEvent *ev){
