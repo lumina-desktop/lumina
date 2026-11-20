@@ -17,7 +17,7 @@
 #include "LuminaThemes.h"
 
 QString LDesktopUtils::LuminaDesktopVersion(){
-  QString ver = "1.98.0";
+  QString ver = LUMINA_VERSION;
   #ifdef GIT_VERSION
   ver.append( QString(" (Git Revision: %1)").arg(GIT_VERSION) );
   #endif

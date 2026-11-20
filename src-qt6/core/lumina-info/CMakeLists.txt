@@ -75,12 +75,7 @@ qt_add_resources(RESOURCE_FILES lumina-info.qrc)
 
 add_executable(lumina-info main.cpp MainUI.cpp ${RESOURCE_FILES} ${TS_FILES} ${QM_FILES})
 
-add_custom_command(	
-	TARGET lumina-info
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-info.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
-)
+lumina_add_manpage(lumina-info lumina-info.1 1)
 
 target_link_libraries(
     lumina-info
@@ -96,7 +91,3 @@ install(
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/applications
 )
 
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-info.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

@@ -33,6 +33,8 @@ else()
 endif()
 
 target_include_directories(libLumina PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+# Version string comes from project() in the top-level CMakeLists.txt
+target_compile_definitions(libLumina PRIVATE LUMINA_VERSION="${PROJECT_VERSION}")
 target_link_libraries(
     libLumina
     PUBLIC

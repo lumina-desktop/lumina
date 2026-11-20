@@ -5,12 +5,7 @@
 
 add_executable(start-lumina-desktop main.cpp session.cpp)
 
-add_custom_command(     
-        TARGET start-lumina-desktop
-        POST_BUILD
-        COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/start-lumina-desktop.8 > ${CMAKE_CURRENT_BINARY_DIR}/start-lumina-desktop.8.gz
-        BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/start-lumina-desktop.8.gz
-)
+lumina_add_manpage(start-lumina-desktop start-lumina-desktop.8 8)
 
 target_link_libraries(
     start-lumina-desktop
@@ -20,7 +15,3 @@ target_link_libraries(
 install(TARGETS start-lumina-desktop)
 install(PROGRAMS lumina-session.sh DESTINATION /etc/X11/Sessions RENAME lumina)
 
-install(
-        FILES ${CMAKE_CURRENT_BINARY_DIR}/start-lumina-desktop.8.gz
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man8
-)

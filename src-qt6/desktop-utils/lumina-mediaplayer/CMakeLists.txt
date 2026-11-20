@@ -79,12 +79,7 @@ add_executable(lumina-mediaplayer
 	${QM_FILES}
 )
 
-add_custom_command(	
-	TARGET lumina-mediaplayer
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-mediaplayer.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-mediaplayer.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-mediaplayer.1.gz
-)
+lumina_add_manpage(lumina-mediaplayer lumina-mediaplayer.1 1)
 
 target_link_libraries(
     lumina-mediaplayer
@@ -98,7 +93,3 @@ install(
 )
 
 install(FILES lumina-mediaplayer.desktop lumina-mediaplayer-pandora.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-mediaplayer.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

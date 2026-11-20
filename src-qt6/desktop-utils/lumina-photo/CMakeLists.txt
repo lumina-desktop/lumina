@@ -76,12 +76,7 @@ add_executable(lumina-photo
 	${QM_FILES}
 )
 
-add_custom_command(	
-	TARGET lumina-photo
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-photo.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-photo.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-photo.1.gz
-)
+lumina_add_manpage(lumina-photo lumina-photo.1 1)
 
 target_link_libraries(
     lumina-photo
@@ -94,7 +89,3 @@ install(
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/i18n/
 )
 install(FILES lumina-photo.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-photo.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

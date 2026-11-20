@@ -16,16 +16,7 @@ target_link_libraries(
     PRIVATE libLumina ${QT}::Core ${QT}::Gui ${QT}::Widgets
 )
 
-add_custom_command(
-	TARGET lcc-sound-theme
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lcc-sound-theme.1 > ${CMAKE_CURRENT_BINARY_DIR}/lcc-sound-theme.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lcc-sound-theme.1.gz
-)
+lumina_add_manpage(lcc-sound-theme lcc-sound-theme.1 1)
 
 install(TARGETS lcc-sound-theme)
 install(FILES lcc-sound-theme.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lcc-sound-theme.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

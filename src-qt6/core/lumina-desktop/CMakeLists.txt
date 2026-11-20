@@ -121,12 +121,7 @@ target_sources(
         ${TOPLEVEL_SRC_CPP}/plugins-screensaver.cpp
 )
 
-add_custom_command(	
-	TARGET lumina-desktop
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-desktop.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
-)
+lumina_add_manpage(lumina-desktop lumina-desktop.1 1)
 
 # Picks up many Qt libraries from libLumina's PUBLIC settings
 target_link_libraries(
@@ -180,7 +175,3 @@ install(
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/i18n/
 )
 
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-desktop.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

@@ -75,12 +75,7 @@ qt_add_resources(RESOURCE_FILES lumina-open.qrc)
 
 add_executable(lumina-open main.cpp LFileDialog.cpp ${RESOURCE_FILES} ${TS_FILES} ${QM_FILES})
 
-add_custom_command(	
-	TARGET lumina-open
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-open.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
-)
+lumina_add_manpage(lumina-open lumina-open.1 1)
 
 target_link_libraries(
     lumina-open
@@ -94,7 +89,3 @@ install(
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/i18n/
 )
 
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-open.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

@@ -17,16 +17,7 @@ target_link_libraries(
     PRIVATE libLumina ${QT}::Core ${QT}::Gui ${QT}::Widgets X11::X11 X11::Xi
 )
 
-add_custom_command(
-	TARGET lcc-mouse
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lcc-mouse.1 > ${CMAKE_CURRENT_BINARY_DIR}/lcc-mouse.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lcc-mouse.1.gz
-)
+lumina_add_manpage(lcc-mouse lcc-mouse.1 1)
 
 install(TARGETS lcc-mouse)
 install(FILES lcc-mouse.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lcc-mouse.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

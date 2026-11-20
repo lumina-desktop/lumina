@@ -76,12 +76,7 @@ add_executable(lumina-search
 	${QM_FILES}
 )
 
-add_custom_command(	
-	TARGET lumina-search
-	POST_BUILD
-	COMMAND gzip -c ${CMAKE_CURRENT_SOURCE_DIR}/lumina-search.1 > ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
-	BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
-)
+lumina_add_manpage(lumina-search lumina-search.1 1)
 
 target_link_libraries(
     lumina-search
@@ -94,7 +89,3 @@ install(
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/lumina-desktop/i18n/
 )
 install(FILES lumina-search.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(
-	FILES ${CMAKE_CURRENT_BINARY_DIR}/lumina-search.1.gz
-	DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1
-)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(lumina-desktop LANGUAGES C CXX)
+project(lumina-desktop VERSION 1.98.0 LANGUAGES C CXX)
 
 # CMake Settings (policies to do AUTOMOC as much as possible)
 cmake_policy(SET CMP0057 NEW)
@@ -15,6 +15,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Include OS detection module
 include("OS-detect.cmake" NO_POLICY_SCOPE)
+
+# Man page helper: lumina_add_manpage(<target> <file> <section>)
+include("LuminaManPage.cmake")
 
 # ECM setup
 include(FeatureSummary)
