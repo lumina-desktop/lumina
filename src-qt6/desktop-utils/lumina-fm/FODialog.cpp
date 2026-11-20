@@ -10,6 +10,9 @@
 #include <QApplication>
 #include <QFontMetrics>
 
+#include <unistd.h> //readlink()
+#include <limits.h> //PATH_MAX
+
 #include "ScrollDialog.h"
 
 #define DEBUG 0
@@ -191,7 +194,11 @@ QStringList FOWorker::subfiles(QString dirpath, bool dirsfirst){
   //NOTE: dirpath (input) is always the first/last item in the output as well!
   QStringList out;
   if(dirsfirst){ out << dirpath; }
-  if( QFileInfo(dirpath).isDir() ){
+  //NOTE: QFileInfo::isDir() follows symlinks. Never descend into a symlinked directory:
+  // the link itself is the item (removing must not touch the target's contents, and
+  // copying must not recurse through links such as a link to a parent directory).
+  QFileInfo info(dirpath);
+  if( info.isDir() && !info.isSymLink() ){
     QDir dir(dirpath);
     if(dirsfirst){
       //Now recursively add any subdirectories and their contents
@@ -232,7 +239,8 @@ QStringList FOWorker::removeItem(QString path, bool recursive){
   //qDebug() << " - Subfiles:" << items;
   QStringList err;
   for(int i=0; i<items.length(); i++){
-    if(QFileInfo(items[i]).isDir()){
+    QFileInfo info(items[i]);
+    if(info.isDir() && !info.isSymLink()){ //symlinks (even to dirs) are removed as plain files below
       if(items[i]==path){
         //Current Directory Removal
         QDir dir;
@@ -252,7 +260,14 @@ QStringList FOWorker::removeItem(QString path, bool recursive){
 QStringList FOWorker::copyItem(QString oldpath, QString newpath){
   QStringList err;
   if(oldpath == newpath){ return err; } //copy something onto itself - just skip it
-  if(QFileInfo(oldpath).isDir()){
+  QFileInfo info(oldpath);
+  if(info.isSymLink()){
+    //Recreate the link itself (keeping a relative target relative) instead of following it
+    QByteArray target(PATH_MAX, '\0');
+    QByteArray src = QFile::encodeName(oldpath);
+    ssize_t len = ::readlink(src.constData(), target.data(), target.size()-1);
+    if(len < 0 || !QFile::link(QFile::decodeName(target.left(len)), newpath)){ err << oldpath; }
+  }else if(info.isDir()){
     //Create a new directory with the same name (no way to copy dir+contents)
     QDir dir;
     if( !dir.mkpath(newpath) ){ err << oldpath; }
