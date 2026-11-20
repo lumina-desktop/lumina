@@ -155,7 +155,12 @@ void LSession::startProcess(QString ID, QString command, QStringList args, QStri
     //Bypass for a hidden dbus file requirement for Qt itself (Qt 5.5.1+?)
     if(!QFile::exists("/etc/machine-id") && !QFile::exists("/var/db/dbus/machine-id")){
       if(LUtils::isValidBinary("dbus-uuidgen") && LUtils::runCmd("dbus-uuidgen --ensure") ){ } //good - the UUID was created successfully
-      else if(LUtils::isValidBinary("dbus-launch")){ command.prepend("dbus-launch --exit-with-session "); }
+      else if(LUtils::isValidBinary("dbus-launch")){
+        //Wrap the command: dbus-launch --exit-with-session <command> <args...>
+        args.prepend(command);
+        args.prepend("--exit-with-session");
+        command = "dbus-launch";
+      }
       else{
         //create a simple DBUS UUID and put it in the universal-fallback location (OS-independent)
         // TO-DO - root vs user level permissions issue?
@@ -177,12 +182,12 @@ void LSession::setupCompositor(bool force){
     if(LUtils::isValidBinary("picom")){
       //New name for compton - removed the "-d" startup option (finally reads DISPLAY instead) (May 2020)
       //Always use the GLX backend for picom - the xrender and hybrid backends cause lots of flickering
-      startProcess("compositing","picom --backend glx --config "+set, QStringList() << set);
+      startProcess("compositing", "picom", QStringList() << "--backend" << "glx" << "--config" << set, QStringList() << set);
 
     }else if(LUtils::isValidBinary("compton")){
       QString disp = getenv("DISPLAY");
       //Always use the GLX backend for compton - the xrender and hybrid backends cause lots of flickering
-      startProcess("compositing","compton --backend glx -d "+disp+" --config "+set, QStringList() << set);
+      startProcess("compositing", "compton", QStringList() << "--backend" << "glx" << "-d" << disp << "--config" << set, QStringList() << set);
 
     }else if(LUtils::isValidBinary("xcompmgr") && !settings.value("compositingWithGpuAccelOnly",true).toBool() ){
       startProcess("compositing","xcompmgr");
