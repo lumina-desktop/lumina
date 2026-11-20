@@ -216,7 +216,7 @@ void LSession::start(bool unified){
 	  if( !LUtils::isValidBinary("fluxbox") ){
 	    qDebug() << "[INCOMPLETE LUMINA INSTALLATION] fluxbox binary is missing - cannot continue";
 	  }else{
-	    QStringList args; args << "-rc" << confDir+"/fluxbox-init -no-slit" << "-no-toolbar";
+	    QStringList args; args << "-rc" << confDir+"/fluxbox-init" << "-no-slit" << "-no-toolbar";
 	    startProcess("wm", "fluxbox", args, QStringList() << confDir+"/fluxbox-init" << confDir+"/fluxbox-keys");
 	  }
   } else if ( WM.split("/").last() == "openbox" ) {

@@ -5,11 +5,10 @@
 
 project(lthemeengine-qtplugin)
 
-# The Qt platform theme plugin requires ThemeSupportPrivate and GuiPrivate,
-# which are Qt5-specific private modules. Qt6 does not have ThemeSupport.
-# This component is deferred for Qt6 migration (Phase 5).
-if(NOT LUMINA_HAS_THEMESUPPORT)
-    message(STATUS "Skipping lthemeengine-qtplugin: ThemeSupport not available (Qt6 build)")
+# The platform theme plugin subclasses QGenericUnixTheme, which is a
+# private QtGui class, so it needs Qt6::GuiPrivate.
+if(NOT LUMINA_HAS_GUIPRIVATE)
+    message(STATUS "Skipping lthemeengine-qtplugin: Qt6 GuiPrivate not available")
     return()
 endif()
 
@@ -22,11 +21,9 @@ add_library(lthemeengine-qtplugin MODULE
 )
 set_target_properties(lthemeengine-qtplugin PROPERTIES OUTPUT_NAME lthemeengine)
 target_link_libraries(lthemeengine-qtplugin PRIVATE
-    ${QT}::Widgets
-    ${QT}::GuiPrivate
-    ${QT}::DBus
-    Qt5::ThemeSupportPrivate
-    Qt5::X11Extras
+    Qt6::Widgets
+    Qt6::GuiPrivate
+    X11::X11
     X11::Xcursor
 )
 install(TARGETS lthemeengine-qtplugin DESTINATION ${PLUGINDIR}/platformthemes)

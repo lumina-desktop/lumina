@@ -25,15 +25,8 @@
 
 #include <lthemeengine/lthemeengine.h>
 #include "lthemeengineplatformtheme.h"
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
-#include <private/qdbusmenubar_p.h>
-#endif
-#if !defined(QT_NO_DBUS) && !defined(QT_NO_SYSTEMTRAYICON)
-#include <QDBusArgument>
-#include <private/qdbustrayicon_p.h>
-#endif
 
-#include <QX11Info>
+#include <QtGui/qguiapplication_platform.h>
 #include <QCursor>
 //Need access to the private QCursor header so we can refresh the mouse cursor cache
 //#include <private/qcursor_p.h> //Does not work - looks like we need to use X11 stuff instead
@@ -65,29 +58,6 @@ lthemeenginePlatformTheme::~lthemeenginePlatformTheme(){
     delete m_customPalette;
 }
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)) && !defined(QT_NO_DBUS)
-QPlatformMenuBar *lthemeenginePlatformTheme::createPlatformMenuBar() const{
-  if(m_checkDBusGlobalMenu){
-    QDBusConnection conn = QDBusConnection::sessionBus();
-    m_dbusGlobalMenuAvailable = conn.interface()->isServiceRegistered("com.canonical.AppMenu.Registrar");
-    //qCDebug(llthemeengine) << "D-Bus global menu:" << (m_dbusGlobalMenuAvailable ? "yes" : "no");
-    }
-  return (m_dbusGlobalMenuAvailable ? new QDBusMenuBar() : nullptr);
-}
-#endif
-
-#if !defined(QT_NO_DBUS) && !defined(QT_NO_SYSTEMTRAYICON)
-QPlatformSystemTrayIcon *lthemeenginePlatformTheme::createPlatformSystemTrayIcon() const{
-  if(m_checkDBusTray){
-    QDBusMenuConnection conn;
-    m_dbusTrayAvailable = conn.isStatusNotifierHostRegistered();
-    m_checkDBusTray = false;
-    //qCDebug(llthemeengine) << "D-Bus system tray:" << (m_dbusTrayAvailable ? "yes" : "no");
-    }
-  return (m_dbusTrayAvailable ? new QDBusTrayIcon() : nullptr);
-}
-#endif
-
 const QPalette *lthemeenginePlatformTheme::palette(QPlatformTheme::Palette type) const{
   Q_UNUSED(type);
   return (m_usePalette ? m_customPalette : nullptr);
@@ -108,16 +78,13 @@ QVariant lthemeenginePlatformTheme::themeHint(QPlatformTheme::ThemeHint hint) co
     case QPlatformTheme::IconThemeSearchPaths: return lthemeengine::iconPaths();
     case DialogButtonBoxLayout: return m_buttonBoxLayout;
     case QPlatformTheme::UiEffects: return m_uiEffects;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     case QPlatformTheme::WheelScrollLines: return m_wheelScrollLines;
-#endif
-    default: return QPlatformTheme::themeHint(hint);
+    default: return QGenericUnixTheme::themeHint(hint);
     }
 }
 
 void lthemeenginePlatformTheme::applySettings(){
   if(!QGuiApplication::desktopSettingsAware()){ return; }
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
  if(!m_update){
    //do not override application palette
    if(QCoreApplication::testAttribute(Qt::AA_SetPalette)){
@@ -125,18 +92,13 @@ void lthemeenginePlatformTheme::applySettings(){
      qCDebug(llthemeengine) << "palette support is disabled";
      }
    }
-#endif
 #ifdef QT_WIDGETS_LIB
   if(hasWidgets()){
     qApp->setFont(m_generalFont);
     //Qt 5.6 or higher should be use themeHint function on application startup.
     //So, there is no need to call this function first time.
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     if(m_update)
       qApp->setWheelScrollLines(m_wheelScrollLines);
-#else
-      qApp->setWheelScrollLines(m_wheelScrollLines);
-#endif
       if(m_update && qApp->style()->objectName() == "lthemeengine-style") /* ignore application style */ { qApp->setStyle("lthemeengine-style"); } //recreate style object
       if(m_update && m_usePalette){
         if(m_customPalette){ qApp->setPalette(*m_customPalette); }
@@ -236,21 +198,27 @@ void lthemeenginePlatformTheme::readSettings(){
   m_iconTheme = settings.value("icon_theme", "material-design-light").toString();
   settings.endGroup();
   settings.beginGroup("Fonts");
-  m_generalFont = settings.value("general", QPlatformTheme::font(QPlatformTheme::SystemFont)).value<QFont>();
-  m_fixedFont = settings.value("fixed", QPlatformTheme::font(QPlatformTheme::FixedFont)).value<QFont>();
+  QFont defaultGeneralFont;
+  const QFont *systemFont = QGenericUnixTheme::font(QPlatformTheme::SystemFont);
+  if(systemFont != nullptr){ defaultGeneralFont = *systemFont; }
+  QFont defaultFixedFont;
+  const QFont *fixedFont = QGenericUnixTheme::font(QPlatformTheme::FixedFont);
+  if(fixedFont != nullptr){ defaultFixedFont = *fixedFont; }
+  m_generalFont = settings.value("general", defaultGeneralFont).value<QFont>();
+  m_fixedFont = settings.value("fixed", defaultFixedFont).value<QFont>();
   settings.endGroup();
   settings.beginGroup("Interface");
-  m_doubleClickInterval = QPlatformTheme::themeHint(QPlatformTheme::MouseDoubleClickInterval).toInt();
+  m_doubleClickInterval = QGenericUnixTheme::themeHint(QPlatformTheme::MouseDoubleClickInterval).toInt();
   m_doubleClickInterval = settings.value("double_click_interval", m_doubleClickInterval).toInt();
-  m_cursorFlashTime = QPlatformTheme::themeHint(QPlatformTheme::CursorFlashTime).toInt();
+  m_cursorFlashTime = QGenericUnixTheme::themeHint(QPlatformTheme::CursorFlashTime).toInt();
   m_cursorFlashTime = settings.value("cursor_flash_time", m_cursorFlashTime).toInt();
-  m_buttonBoxLayout = QPlatformTheme::themeHint(QPlatformTheme::DialogButtonBoxLayout).toInt();
+  m_buttonBoxLayout = QGenericUnixTheme::themeHint(QPlatformTheme::DialogButtonBoxLayout).toInt();
   m_buttonBoxLayout = settings.value("buttonbox_layout", m_buttonBoxLayout).toInt();
   QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !settings.value("menus_have_icons", true).toBool());
   m_toolButtonStyle = settings.value("toolbutton_style", Qt::ToolButtonFollowStyle).toInt();
   m_wheelScrollLines = settings.value("wheel_scroll_lines", 3).toInt();
   //load effects
-  m_uiEffects = QPlatformTheme::themeHint(QPlatformTheme::UiEffects).toInt();
+  m_uiEffects = QGenericUnixTheme::themeHint(QPlatformTheme::UiEffects).toInt();
     if(settings.childKeys().contains("gui_effects")){
       QStringList effectList = settings.value("gui_effects").toStringList();
       m_uiEffects = 0;
@@ -323,7 +291,7 @@ QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
       customPalette.setColor(QPalette::Disabled, role, QColor(disabledColors.at(i)));
       }
     }
-  else{ customPalette = *QPlatformTheme::palette(SystemPalette); } //load fallback palette
+  else{ customPalette = *QGenericUnixTheme::palette(SystemPalette); } //load fallback palette
   return customPalette;
 }
 
@@ -341,11 +309,14 @@ void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
     file.close();
   }
   if(newtheme.isEmpty()){ return; } //nothing to do
-  QString curtheme = QString(XcursorGetTheme(QX11Info::display()) ); //currently-used theme
+  QNativeInterface::QX11Application *x11App = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
+  if(x11App == nullptr){ return; } //not running on X11
+  Display *display = x11App->display();
+  QString curtheme = QString(XcursorGetTheme(display) ); //currently-used theme
   //qDebug() << "Sync Mouse Cursur Theme:" << curtheme << newtheme;
   if(curtheme!=newtheme){
     qDebug() << " - Setting new cursor theme:" << newtheme;
-    XcursorSetTheme(QX11Info::display(), newtheme.toLocal8Bit().data()); //save the new theme name
+    XcursorSetTheme(display, newtheme.toLocal8Bit().data()); //save the new theme name
   }else{
     return;
   }
@@ -356,11 +327,11 @@ void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
 
   //XcursorSetThemeCore( QX11Info::display(), XcursorGetThemeCore(QX11Info::display()) ); //reset the theme core
   //Load the cursors from the new theme
-  int defsize = XcursorGetDefaultSize(QX11Info::display());
+  int defsize = XcursorGetDefaultSize(display);
   //qDebug() << "Default cursor size:" << defsize;
   XcursorImages *imgs = XcursorLibraryLoadImages("left_ptr", NULL, defsize);
   //qDebug() << "imgs:" << imgs << imgs->nimage;
-  XcursorCursors *curs = XcursorImagesLoadCursors(QX11Info::display(), imgs);
+  XcursorCursors *curs = XcursorImagesLoadCursors(display, imgs);
   if(curs==0){ return; } //not found
   //qDebug() << "Got Cursors:" << curs->ncursor;
   //Now re-set the cursors for the current top-level X windows

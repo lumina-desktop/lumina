@@ -7,13 +7,13 @@ class lthemeenginePlatformThemePlugin: public QPlatformThemePlugin{
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QPA.QPlatformThemeFactoryInterface.5.1" FILE "lthemeengine.json")
 public:
-    QPlatformTheme *create(const QString &key, const QStringList &params);
+    QPlatformTheme *create(const QString &key, const QStringList &params) override;
 };
 
 QPlatformTheme *lthemeenginePlatformThemePlugin::create(const QString &key, const QStringList &params){
   Q_UNUSED(params);
   if (key.toLower() == "lthemeengine") { return new lthemeenginePlatformTheme(); }
-  return NULL;
+  return nullptr;
 }
 
 QT_END_NAMESPACE
