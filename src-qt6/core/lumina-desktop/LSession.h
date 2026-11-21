@@ -88,7 +88,10 @@ public:
 	  return static_cast<LSession*>(LSession::instance());
 	}
 
-	static void LaunchApplication(QString cmd);
+	static void LaunchApplication(QString cmd); //cmd is re-split on spaces/quotes - only for fixed commands
+	static void LaunchApplication(QString program, QStringList args); //arguments passed through verbatim (use for file paths)
+	static void LaunchOpen(QString file){ LaunchApplication("lumina-open", QStringList() << file); }
+	static void LaunchOpenAction(QString actionID, QString file){ LaunchApplication("lumina-open", QStringList() << "-action" << actionID << file); }
 	QFileInfoList DesktopFiles();
 
 	QRect screenGeom(int num);

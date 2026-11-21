@@ -139,7 +139,7 @@ void AppMenu::updateAppList(){
               if(ICONS->exists(appL[a]->actions[sa].icon)){ ICONS->loadIcon(sact, appL[a]->actions[sa].icon); }
               else{ ICONS->loadIcon(sact, appL[a]->icon); }
               sact->setToolTip(appL[a]->comment);
-              sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
+              sact->setWhatsThis("action::::"+appL[a]->actions[sa].ID+"::::"+appL[a]->filePath);
               submenu->addAction(sact);
 	    }
 	  menu->addMenu(submenu);
@@ -167,23 +167,22 @@ void AppMenu::watcherUpdate(){
 }
 
 void AppMenu::launchStore(){
-  LSession::LaunchApplication("lumina-open \""+appstorelink+"\"");
+  LSession::LaunchOpen(appstorelink);
 }
 
 void AppMenu::launchControlPanel(){
-  LSession::LaunchApplication("lumina-open \""+controlpanellink+"\"");
+  LSession::LaunchOpen(controlpanellink);
 }
 
 void AppMenu::launchFileManager(){
-  QString fm = "lumina-open \""+QDir::homePath()+"\"";
-  LSession::LaunchApplication(fm);
+  LSession::LaunchOpen(QDir::homePath());
 }
 
 void AppMenu::launchApp(QAction *act){
   QString appFile = act->whatsThis();
-  if(appFile.startsWith("-action")){
-    LSession::LaunchApplication("lumina-open "+appFile); //already has quotes put in place properly
+  if(appFile.startsWith("action::::")){
+    LSession::LaunchOpenAction(appFile.section("::::",1,1), appFile.section("::::",2,-1));
   }else{
-    LSession::LaunchApplication("lumina-open \""+appFile+"\"");
+    LSession::LaunchOpen(appFile);
   }
 }

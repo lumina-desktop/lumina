@@ -109,7 +109,7 @@ void LStartButtonPlugin::LaunchQuick(QString file){
   //Need to get which button was clicked
   //qDebug() << "Quick Launch triggered:" << file;
   if(!file.isEmpty()){
-    LSession::LaunchApplication("lumina-open \""+file+"\"");
+    LSession::LaunchOpen(file);
     emit MenuClosed();
   }
 }

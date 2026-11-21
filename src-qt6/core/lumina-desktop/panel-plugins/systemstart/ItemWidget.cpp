@@ -295,8 +295,6 @@ void ItemWidget::ItemClicked(){
 
 void ItemWidget::actionClicked(QAction *act){
   actButton->menu()->hide();
-  QString cmd = "lumina-open -action \""+act->whatsThis()+"\" \"%1\"";
-  if(!linkPath.isEmpty()){ cmd = cmd.arg(linkPath); }
-  else{ cmd = cmd.arg(icon->whatsThis()); }
-  emit RunItem(cmd);
+  //(launched with an argument list by the menu's LaunchItem() - see there)
+  emit RunItem("action::::"+act->whatsThis()+"::::"+(linkPath.isEmpty() ? icon->whatsThis() : linkPath));
 }

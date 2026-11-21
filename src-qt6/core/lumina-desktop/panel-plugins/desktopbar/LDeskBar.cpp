@@ -94,9 +94,8 @@ QAction* LDeskBarPlugin::newAction(QMenu *menu, QString filepath, QString name, 
 // =======================
 void LDeskBarPlugin::ActionTriggered(QAction* act){
  //Open up the file with the appropriate application
- QString cmd = "lumina-open \""+act->whatsThis()+"\"";
- qDebug() << "Open File:" << cmd;
- LSession::LaunchApplication(cmd);
+ qDebug() << "Open File:" << act->whatsThis();
+ LSession::LaunchOpen(act->whatsThis());
 }
 void LDeskBarPlugin::filechanged(QString file){
   updateFiles();

@@ -67,6 +67,6 @@ void AppLaunchButtonPlugin::AppClicked(){
     // --- "applauncher::broken---<something>"  -> "applauncher::fixed---<something>" ?
     QTimer::singleShot(0,this, SLOT(updateButtonVisuals()));
   }else{
-    LSession::LaunchApplication("lumina-open \""+appfile+"\"");
+    LSession::LaunchOpen(appfile);
   }
 }

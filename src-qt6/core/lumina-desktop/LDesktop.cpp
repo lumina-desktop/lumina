@@ -125,18 +125,17 @@ void LDesktop::SystemTerminal(){
   LSession::handle()->sessionSettings()->sync(); //make sure it is up to date
   QString term = LXDG::findDefaultAppForMime("application/terminal"); //LSession::handle()->sessionSettings()->value("default-terminal","xterm").toString();
   if(term.isEmpty() ||(!term.endsWith(".desktop") && !LUtils::isValidBinary(term)) ){ term = "xterm"; }
-  LSession::LaunchApplication("lumina-open \""+term+"\"");
+  LSession::LaunchOpen(term);
 }
 
 void LDesktop::SystemFileManager(){
   //Just open the home directory
-  QString fm =  "lumina-open \""+QDir::homePath()+"\"";
-  LSession::LaunchApplication(fm);
+  LSession::LaunchOpen(QDir::homePath());
 }
 
 void LDesktop::SystemApplication(QAction* act){
   if(!act->whatsThis().isEmpty() && act->parent()==deskMenu){
-    LSession::LaunchApplication("lumina-open \""+act->whatsThis()+"\"");
+    LSession::LaunchOpen(act->whatsThis());
   }
 }
 

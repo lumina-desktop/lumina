@@ -776,6 +776,11 @@ void LSession::LaunchApplication(QString cmd){
   //LUtils::startDetached(cmd);
 }
 
+void LSession::LaunchApplication(QString program, QStringList args){
+  //(building "prog \"path\"" strings broke on paths containing quotes: the command splitter re-parses them)
+  ExternalProcess::launch(program, args, true); //(callers always pass arguments, so this never goes through startCommand())
+}
+
 QFileInfoList LSession::DesktopFiles(){
   return desktopFiles;
 }

@@ -59,8 +59,10 @@ void LAppMenuPlugin::LaunchItem(QAction* item){
   if(appFile.startsWith("internal::")){
     appFile = appFile.section("::",1,50); //cut off the "internal" flag
     if(appFile=="logout"){ LSession::handle()->systemWindow(); }
+  }else if(appFile.startsWith("action::::")){
+    LSession::LaunchOpenAction(appFile.section("::::",1,1), appFile.section("::::",2,-1));
   }else if(!appFile.isEmpty()){
-    LSession::LaunchApplication("lumina-open "+appFile);
+    LSession::LaunchOpen(appFile);
   }	
 }
 
@@ -73,18 +75,18 @@ void LAppMenuPlugin::UpdateMenu(){
     //Now Re-create the menu (orignally copied from the AppMenu class)
     //Add link to the file manager
     QAction *tmpact = mainmenu->addAction( LXDG::findIcon("user-home", ""), tr("Browse Files") );
-      tmpact->setWhatsThis("\""+QDir::homePath()+"\"");
+      tmpact->setWhatsThis(QDir::homePath());
     //--Look for the app store
     XDGDesktop store(LOS::AppStoreShortcut());
     if(store.isValid()){
       tmpact = mainmenu->addAction( LXDG::findIcon(store.icon, ""), tr("Install Applications") ); 
-      tmpact->setWhatsThis("\""+store.filePath+"\"");
+      tmpact->setWhatsThis(store.filePath);
     }
     //--Look for the control panel
     XDGDesktop controlp(LOS::ControlPanelShortcut());
     if(controlp.isValid()){
       tmpact = mainmenu->addAction( LXDG::findIcon(controlp.icon, ""), tr("Control Panel") ); 
-      tmpact->setWhatsThis("\""+controlp.filePath+"\"");
+      tmpact->setWhatsThis(controlp.filePath);
     }
     mainmenu->addSeparator();
     //--Now create the sub-menus
@@ -116,7 +118,7 @@ void LAppMenuPlugin::UpdateMenu(){
 	  //Just a single entry point - no extra actions
           QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, menu);
           act->setToolTip(appL[a]->comment);
-          act->setWhatsThis("\""+appL[a]->filePath+"\"");
+          act->setWhatsThis(appL[a]->filePath);
           menu->addAction(act);
 	}else{
 	  //This app has additional actions - make this a sub menu
@@ -126,13 +128,13 @@ void LAppMenuPlugin::UpdateMenu(){
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
 	      QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, submenu);
               act->setToolTip(appL[a]->comment);
-              act->setWhatsThis("\""+appL[a]->filePath+"\""); //quoted like every other entry (launched as "lumina-open "+this)
+              act->setWhatsThis(appL[a]->filePath);
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
 	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
               QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, submenu);
               sact->setToolTip(appL[a]->comment);
-              sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
+              sact->setWhatsThis("action::::"+appL[a]->actions[sa].ID+"::::"+appL[a]->filePath);
               submenu->addAction(sact);		    
 	    }
 	  menu->addMenu(submenu);

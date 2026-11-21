@@ -267,7 +267,7 @@ void RSSFeedPlugin::openFeedPage(){ //Open main website for feed
   //qDebug() << "Open Feed Page:" << url;
   //Now launch the browser
   if(!url.isEmpty()){
-    LSession::LaunchApplication("lumina-open \""+url+"\"");
+    LSession::LaunchOpen(url);
   }
 }
 

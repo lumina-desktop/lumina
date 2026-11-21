@@ -189,8 +189,10 @@ void UserWidget::UpdateMenu(bool forceall){
 void UserWidget::LaunchItem(QString path, bool fix){
   if(!path.isEmpty()){
     qDebug() << "Launch Application:" << path;
-    if( fix && !path.startsWith("lumina-open") ){ LSession::LaunchApplication("lumina-open \""+path+"\""); }
-    else{ LSession::LaunchApplication(path); }
+    //("action::::<id>::::<file>" comes from an item's action menu - it used to be a pre-quoted command string)
+    if(path.startsWith("action::::")){ LSession::LaunchOpenAction(path.section("::::",1,1), path.section("::::",2,-1)); }
+    else if(fix){ LSession::LaunchOpen(path); }
+    else{ LSession::LaunchApplication(path); } //fixed commands only (e.g. "lumina-config")
     emit CloseMenu(); //so the menu container will close
   }
 }
@@ -378,7 +380,8 @@ void UserWidget::slotOpenDir(){
 }
 
 void UserWidget::slotOpenSearch(){
-  LaunchItem("lumina-search -dir \""+ui->label_home_dir->whatsThis()+"\"", false); //use command as-is
+  LSession::LaunchApplication("lumina-search", QStringList() << "-dir" << ui->label_home_dir->whatsThis());
+  emit CloseMenu();
 }
 
 void UserWidget::mouseMoveEvent( QMouseEvent *event){

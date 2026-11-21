@@ -53,7 +53,7 @@ DesktopViewPlugin::~DesktopViewPlugin(){
 void DesktopViewPlugin::runItems(){
     QList<QListWidgetItem*> sel = list->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      LSession::LaunchApplication("lumina-open \""+sel[i]->whatsThis()+"\"");
+      LSession::LaunchOpen(sel[i]->whatsThis());
     }
 }
 
@@ -205,6 +205,6 @@ void DesktopViewPlugin::updateContents(){
 void DesktopViewPlugin::displayProperties(){
     QList<QListWidgetItem*> sel = list->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis()+"\""); //(closing quote was missing)
+      LSession::LaunchApplication("lumina-fileinfo", QStringList() << sel[i]->whatsThis());
     }
 }

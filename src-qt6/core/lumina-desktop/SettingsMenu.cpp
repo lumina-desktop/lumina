@@ -55,7 +55,7 @@ void SettingsMenu::UpdateMenu(){
     XDGDesktop cpan(CONTROLPANEL);
     if(cpan.isValid()){
       act = new QAction( LXDG::findIcon(cpan.icon,""), tr("Control Panel"), this);
-	act->setWhatsThis("lumina-open \""+CONTROLPANEL+"\"");
+	act->setWhatsThis("open::::"+CONTROLPANEL); //(a file path - launched with an argument list in runApp())
 	this->addAction(act);
     }
   }
@@ -66,5 +66,7 @@ void SettingsMenu::UpdateMenu(){
 
 
 void SettingsMenu::runApp(QAction* act){
-  LSession::LaunchApplication(act->whatsThis());
+  QString cmd = act->whatsThis();
+  if(cmd.startsWith("open::::")){ LSession::LaunchOpen(cmd.section("::::",1,-1)); }
+  else{ LSession::LaunchApplication(cmd); } //fixed commands only
 }

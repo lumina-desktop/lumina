@@ -219,9 +219,9 @@ void AppLauncherPlugin::buttonClicked(bool openwith){
     this->saveSetting("applicationpath", apps[ names.indexOf(app) ]->filePath);
     QTimer::singleShot(0,this, SLOT(loadButton()));
   }else if(openwith){
-    LSession::LaunchApplication("lumina-open -select \""+path+"\"");
+    LSession::LaunchApplication("lumina-open", QStringList() << "-select" << path);
   }else{
-    LSession::LaunchApplication("lumina-open \""+path+"\"");
+    LSession::LaunchOpen(path);
   }
 
 }
@@ -261,7 +261,7 @@ void AppLauncherPlugin::actionTriggered(QAction *act){
   if(act->whatsThis().isEmpty()){ return; }
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
-  LSession::LaunchApplication("lumina-open -action \""+act->whatsThis()+"\" \""+path+"\"");
+  LSession::LaunchOpenAction(act->whatsThis(), path);
 }
 
 void AppLauncherPlugin::openWith(){
@@ -271,7 +271,7 @@ void AppLauncherPlugin::openWith(){
 void AppLauncherPlugin::fileProperties(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
-  LSession::LaunchApplication("lumina-fileinfo \""+path+"\"");
+  LSession::LaunchApplication("lumina-fileinfo", QStringList() << path);
 }
 
 void AppLauncherPlugin::fileDelete(){
