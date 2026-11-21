@@ -104,6 +104,7 @@ void LInputDevice::getProperties(){
   devProps.clear();
   xcb_input_list_device_properties_cookie_t cookie = xcb_input_list_device_properties_unchecked(LuminaX11Bridge::connection(), devID);
   xcb_input_list_device_properties_reply_t *reply = xcb_input_list_device_properties_reply(LuminaX11Bridge::connection(), cookie, NULL);
+  if(reply==0){ return; } //device gone (unplugged) or XInput error - no properties to list
   //Get the atoms
   xcb_atom_t *atoms = xcb_input_list_device_properties_atoms(reply);
   //qDebug() << "Property Response Type:" << reply->response_type; //Always seems to be "1"
@@ -111,6 +112,7 @@ void LInputDevice::getProperties(){
   for(int i=0; i<reply->num_atoms; i++){  cookies <<  xcb_get_atom_name(LuminaX11Bridge::connection(), atoms[i]);  }
   for(int i=0; i<reply->num_atoms; i++){
     xcb_get_atom_name_reply_t *nr = xcb_get_atom_name_reply(LuminaX11Bridge::connection(), cookies[i], NULL);
+    if(nr==0){ continue; } //could not resolve this atom name - skip just this property
     propData DATA;
       DATA.name = QString::fromUtf8( xcb_get_atom_name_name(nr), xcb_get_atom_name_name_length(nr) );
       DATA.atom = atoms[i];
