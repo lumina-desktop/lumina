@@ -42,9 +42,14 @@ MultimediaWidget::MultimediaWidget(QWidget *parent) : QWidget(parent), ui(new Ui
   connect(mediaObj, SIGNAL(positionChanged(qint64)), this, SLOT(playerTimeChanged(qint64)) );
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   connect(mediaObj, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged(QMediaPlayer::State)) );
-#endif
   connect(mediaObj, SIGNAL(videoAvailableChanged(bool)), this, SLOT(playerVideoAvailable(bool)) );
   connect(mediaObj, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(playerError()) );
+#else
+  //Qt6 renamed these signals - the old names fail to connect at runtime (only a console warning)
+  connect(mediaObj, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)), this, SLOT(playerStateChanged(QMediaPlayer::PlaybackState)) );
+  connect(mediaObj, SIGNAL(hasVideoChanged(bool)), this, SLOT(playerVideoAvailable(bool)) );
+  connect(mediaObj, SIGNAL(errorOccurred(QMediaPlayer::Error,QString)), this, SLOT(playerError()) );
+#endif
 
   //Disable some of the initial states
   ui->tool_player_stop->setEnabled(false); //nothing to stop yet
@@ -126,8 +131,12 @@ void MultimediaWidget::playerStatusChanged(QMediaPlayer::MediaStatus stat){
   }
 }
 
+//NOTE: Qt6 renamed the enum (State -> PlaybackState) but kept the value names, so the body is shared
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void MultimediaWidget::playerStateChanged(QMediaPlayer::State newstate){
+#else
+void MultimediaWidget::playerStateChanged(QMediaPlayer::PlaybackState newstate){
+#endif
   //This function keeps track of updating the visuals of the player
   bool running = false;
   bool showVideo = false;
@@ -135,7 +144,11 @@ void MultimediaWidget::playerStateChanged(QMediaPlayer::State newstate){
   switch(newstate){
     case QMediaPlayer::PlayingState:
 	running=true;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	showVideo = mediaObj->isVideoAvailable();
+#else
+	showVideo = mediaObj->hasVideo();
+#endif
 	msg = "";//mediaObj->metaData(Phonon::TitleMetaData).join(" ");
 	if(msg.simplified().isEmpty()){ msg = ui->combo_player_list->currentText(); }
 	ui->label_player_novideo->setText(tr("Playing:")+"\n"+msg);
@@ -153,7 +166,6 @@ void MultimediaWidget::playerStateChanged(QMediaPlayer::State newstate){
   ui->label_player_novideo->setVisible(!showVideo);
   videoDisplay->setVisible(showVideo);
 }
-#endif
 
 void MultimediaWidget::playerVideoAvailable(bool showVideo){
   ui->label_player_novideo->setVisible(!showVideo);

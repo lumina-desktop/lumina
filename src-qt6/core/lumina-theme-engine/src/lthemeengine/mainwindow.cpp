@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent), m_ui(new Ui::MainWind
   bgroup->addButton(m_ui->tool_page_styles, m_ui->stackedWidget->addWidget(new QSSPage(this, false)));
   bgroup->addButton(m_ui->tool_page_deskstyles, m_ui->stackedWidget->addWidget(new QSSPage(this, true)));
   bgroup->addButton(m_ui->tool_page_cursors, m_ui->stackedWidget->addWidget(new CursorThemePage(this)) );
-  connect(bgroup, SIGNAL(buttonClicked(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)) );
+  connect(bgroup, SIGNAL(idClicked(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)) );
   connect(m_ui->push_close, SIGNAL(clicked()), this, SLOT(closeWindow()) );
   connect(m_ui->push_apply, SIGNAL(clicked()), this, SLOT(applyWindow()) );
 

@@ -20,7 +20,7 @@ public:
     void writeSettings();
 
 private slots:
-    void on_styleComboBox_activated(const QString &text);
+    void on_styleComboBox_textActivated(const QString &text);
     void on_colorSchemeComboBox_activated(int);
     void createColorScheme();
     void changeColorScheme();

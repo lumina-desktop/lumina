@@ -99,6 +99,8 @@ private slots:
 	void LocalMediaStatusChanged(QMediaPlayer::MediaStatus);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	void LocalStateChanged(QMediaPlayer::State);
+#else
+	void LocalStateChanged(QMediaPlayer::PlaybackState);
 #endif
 	void LocalDurationChanged(qint64);
 	void LocalPositionChanged(qint64);

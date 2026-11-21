@@ -57,6 +57,8 @@ private slots:
 	void playerStatusChanged(QMediaPlayer::MediaStatus stat);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	void playerStateChanged(QMediaPlayer::State newstate);
+#else
+	void playerStateChanged(QMediaPlayer::PlaybackState newstate);
 #endif
 	void playerVideoAvailable(bool showVideo);
 	void playerDurationChanged(qint64 dur);

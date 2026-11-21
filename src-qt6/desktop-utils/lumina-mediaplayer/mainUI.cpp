@@ -103,6 +103,8 @@ void MainUI::setupPlayer(){
   connect(PLAYER, SIGNAL(durationChanged(qint64)), this, SLOT(LocalDurationChanged(qint64)) );
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   connect(PLAYER, SIGNAL(error(QMediaPlayer::Error)), this, SLOT(LocalError(QMediaPlayer::Error)) );
+#else
+  connect(PLAYER, SIGNAL(errorOccurred(QMediaPlayer::Error,QString)), this, SLOT(LocalError(QMediaPlayer::Error)) );
 #endif
   connect(PLAYER, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(LocalMediaStatusChanged(QMediaPlayer::MediaStatus)) );
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -120,7 +122,7 @@ void MainUI::setupPlayer(){
   connect(PLAYLIST, SIGNAL(mediaInserted(int,int)), this, SLOT(LocalListMediaInserted(int,int)) );
   connect(PLAYLIST, SIGNAL(mediaRemoved(int,int)), this, SLOT(LocalListMediaRemoved(int,int)) );
 #else
-  connect(PLAYER, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)), this, SLOT(LocalVolumeChanged(int)) ); //placeholder
+  connect(PLAYER, SIGNAL(playbackStateChanged(QMediaPlayer::PlaybackState)), this, SLOT(LocalStateChanged(QMediaPlayer::PlaybackState)) );
   connect(PLAYER, SIGNAL(hasVideoChanged(bool)), this, SLOT(LocalVideoAvailable(bool)) );
 #endif
 
@@ -205,8 +207,8 @@ void MainUI::setupConnections(){
   connect(ui->tool_local_movedown, SIGNAL(clicked()), this, SLOT(downLocalMedia()) );
 
   connect(ui->push_pandora_apply, SIGNAL(clicked()), this, SLOT(applyPandoraSettings()) );
-  connect(ui->combo_pandora_station, SIGNAL(activated(QString)), this, SLOT(changePandoraStation(QString)) );
-  connect(ui->combo_pandora_driver, SIGNAL(activated(QString)), this, SLOT(checkPandoraSettings()) );
+  connect(ui->combo_pandora_station, SIGNAL(textActivated(QString)), this, SLOT(changePandoraStation(QString)) );
+  connect(ui->combo_pandora_driver, SIGNAL(textActivated(QString)), this, SLOT(checkPandoraSettings()) );
   connect(ui->tool_pandora_ban, SIGNAL(clicked()), PANDORA, SLOT(banSong()) );
   connect(ui->tool_pandora_love, SIGNAL(clicked()), PANDORA, SLOT(loveSong()) );
   connect(ui->tool_pandora_tired, SIGNAL(clicked()), PANDORA, SLOT(tiredSong()) );
@@ -569,8 +571,12 @@ void MainUI::LocalMediaStatusChanged(QMediaPlayer::MediaStatus stat){
   else{ ui->statusbar->showMessage(txt, 1500); }
 }
 
+//NOTE: Qt6 renamed the enum (State -> PlaybackState) but kept the value names, so the body is shared
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void MainUI::LocalStateChanged(QMediaPlayer::State state){
+#else
+void MainUI::LocalStateChanged(QMediaPlayer::PlaybackState state){
+#endif
   //qDebug() << "Local Player State Changed:" << state;
   ui->actionPlay->setVisible(state != QMediaPlayer::PlayingState);
   ui->actionStop->setVisible(state != QMediaPlayer::StoppedState);
@@ -584,11 +590,15 @@ void MainUI::LocalStateChanged(QMediaPlayer::State state){
     ui->tabWidget_local->setTabEnabled(0,true);
     ui->tabWidget_local->setCurrentWidget(ui->tab_local_playing);
   }else if(!DISABLE_VIDEO && (PLAYER->mediaStatus()== QMediaPlayer::BufferingMedia || PLAYER->mediaStatus()==QMediaPlayer::BufferedMedia) ){
-    if(VIDEO->isVisible() != PLAYER->isVideoAvailable()){ VIDEO->setVisible(PLAYER->isVideoAvailable()); }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    bool hasvideo = PLAYER->isVideoAvailable();
+#else
+    bool hasvideo = PLAYER->hasVideo();
+#endif
+    if(VIDEO->isVisible() != hasvideo){ VIDEO->setVisible(hasvideo); }
   }
 
 }
-#endif
 
 void MainUI::LocalDurationChanged(qint64 tot){
     ui->slider_local->setRange(0,tot);

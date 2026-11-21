@@ -58,7 +58,7 @@ void AppearancePage::writeSettings(){
   settings.endGroup();
 }
 
-void AppearancePage::on_styleComboBox_activated(const QString &text){
+void AppearancePage::on_styleComboBox_textActivated(const QString &text){
   QStyle *style = QStyleFactory::create(text);
   if(!style){ return; }
   setStyle(m_previewWidget, style);
@@ -210,7 +210,7 @@ void AppearancePage::readSettings(){
     m_ui->colorSchemeComboBox->setCurrentIndex(index);
     m_customPalette = loadColorScheme(m_ui->colorSchemeComboBox->currentData().toString());
     }
-  on_styleComboBox_activated(m_ui->styleComboBox->currentText());
+  on_styleComboBox_textActivated(m_ui->styleComboBox->currentText());
   settings.endGroup();
 }
 
