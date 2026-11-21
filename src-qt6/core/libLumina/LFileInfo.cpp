@@ -10,29 +10,25 @@
 #include <unistd.h>
 
 LFileInfo::LFileInfo() : QFileInfo(){
-  desk = 0;
   c_uid = -1;
 }
 
 LFileInfo::LFileInfo(QString filepath) : QFileInfo(){ //overloaded contructor
-  desk = 0;
   this->setFile(filepath);
   loadExtraInfo();
 }
 
 LFileInfo::LFileInfo(QFileInfo info) : QFileInfo(){ //overloaded contructor
-  desk = 0;
   this->swap(info); //use the given QFileInfo without re-loading it
   loadExtraInfo();
 }
 LFileInfo::~LFileInfo(){
-  if(desk!=0){ desk->deleteLater(); }
+  //desk is released automatically once the last copy sharing it is gone
 }
 
 //Need some extra information not usually available by a QFileInfo
 void LFileInfo::loadExtraInfo(){
-  if(desk!=0){ desk->deleteLater(); }
-  desk = 0;
+  desk.reset();
   c_uid = geteuid();
   //Now load the extra information
   QString abspath = this->absoluteFilePath();
@@ -54,7 +50,7 @@ void LFileInfo::loadExtraInfo(){
     iconList << "folder";
   }else if( this->suffix()=="desktop"){
     mime = "application/x-desktop";
-    desk = new XDGDesktop(this->absoluteFilePath(), 0);
+    desk.reset(new XDGDesktop(this->absoluteFilePath(), 0));
     if(desk->type!=XDGDesktop::BAD){
       //use the specific desktop file info (if possible)
       if(!desk->icon.isEmpty()){ iconList << desk->icon; }
@@ -133,7 +129,7 @@ QString LFileInfo::iconfile(){
   //Go through the icon list and find the first one that exists in the current theme
   for(int i=0; i<iconList.length(); i++){
     if( QIcon::hasThemeIcon(iconList[i])){ return iconList[i]; }
-    else if(desk!=0 && iconList[i] == desk->icon){
+    else if(!desk.isNull() && iconList[i] == desk->icon){
       //See if this icon is in the old "pixmaps" icon directory
       QDir dir("/usr/local/share/pixmaps");
       QStringList matches = dir.entryList(QStringList() << desk->icon+".png" << desk->icon+".jpg");
@@ -154,13 +150,13 @@ QIcon LFileInfo::icon(){
 
 // -- Check if this is an XDG desktop file
 bool LFileInfo::isDesktopFile(){
-  if(desk==0){ return false; }
+  if(desk.isNull()){ return false; }
   return (!desk->filePath.isEmpty());
 }
 
 // -- Allow access to the XDG desktop data structure
 XDGDesktop* LFileInfo::XDG(){
-  return desk;
+  return desk.data();
 }
 
 // -- Check if this is a readable video file (for thumbnail support)

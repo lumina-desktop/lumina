@@ -14,13 +14,16 @@
 #include <QString>
 #include <QFileInfo>
 #include <QJsonObject>
+#include <QSharedPointer>
 
 class LFileInfo : public QFileInfo{
 private:
 	QString mime, zfs_ds, zfs_dspath;
 	QStringList iconList, zfs_perms;
 	int c_uid;
-	XDGDesktop *desk;
+	//Shared, not raw: LFileInfo is copied by value (QList<LFileInfo>, signals), and every copy used to
+	// hold the same raw pointer - the first copy destroyed freed it and the others were left dangling
+	QSharedPointer<XDGDesktop> desk;
 
 	void loadExtraInfo();
 	bool zfsAvailable();
