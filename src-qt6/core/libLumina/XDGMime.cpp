@@ -70,12 +70,21 @@ QString XDGMime::findAppMimeForFile(QString filename, bool multiple){
   QStringList mimefull = XDGMime::loadMimeFileGlobs2();
   QStringList mimes;
   //Just in case the filename is a mimetype itself
-  if( mimefull.filter(":"+filename+":").length() == 1){
+  //Is <name> itself a mimetype? Compare against the mime field (field 1) only: the old substring test
+  // ":name:" also matched the glob field (e.g. a file named "core" via "50:application/x-core:core:cs"),
+  // and required exactly one line, which fails for real mimetypes that have several globs.
+  auto isMimeName = [&mimefull](const QString &name){
+    if(name.isEmpty() || !name.contains("/")){ return false; }
+    const QStringList hits = mimefull.filter(":"+name+":");
+    for(const QString &line : hits){ if(line.section(":",1,1) == name){ return true; } }
+    return false;
+  };
+  if( isMimeName(filename) ){
     return filename;
   }
 while(mimes.isEmpty()){
   //Check for an exact mimetype match
-  if(mimefull.filter(":"+extension+":").length() == 1){
+  if( isMimeName(extension) ){
     return extension;
   }
   //Look for globs at the end of the filename
@@ -92,11 +101,20 @@ while(mimes.isEmpty()){
   }
   //Look for globs at the start of the filename
   if(mimes.isEmpty()){
-    mimes = mimefull.filter(":"+filename.left(2)); //look for the first 2 characters initially
+    mimes = mimefull.filter(":"+filename.left(2), Qt::CaseInsensitive); //look for the first 2 characters initially (globs2 stores most globs lowercase, e.g. "makefile")
 	//Note: This initial filter will only work if the wildcard (*) is not within the first 2 characters of the pattern
     //Now ensure that the filter was accurate
     for(int i=0; i<mimes.length(); i++){
-      if(!filename.startsWith( mimes[i].section(":",3,-1,QString::SectionSkipEmpty).section("*",0,0), Qt::CaseInsensitive )){ mimes.removeAt(i); i--; }
+      //globs2 line format: <weight>:<mime>:<glob>[:<flags>] - the glob is field 2
+      // (was field 3 - the flags, nearly always empty - so every line passed this check)
+      QString glob = mimes[i].section(":",2,2);
+      Qt::CaseSensitivity cs = mimes[i].section(":",3,3).split(",").contains("cs") ? Qt::CaseSensitive : Qt::CaseInsensitive; //"cs" flag
+      int star = glob.indexOf("*");
+      bool match = false;
+      if(star < 0){ match = (filename.compare(glob, cs) == 0); } //literal name, e.g. "makefile"
+      else if(star > 0){ match = filename.startsWith(glob.left(star), cs); } //prefix glob, e.g. "readme*"
+      //star == 0 ("*.ext" etc): suffix globs are handled above - not a prefix match
+      if(!match){ mimes.removeAt(i); i--; }
     }
   }
     if(mimes.isEmpty()){
@@ -225,7 +243,7 @@ QString XDGMime::findDefaultAppForMime(QString mime){
       //Now go through the XDG DATA dirs and see if the file is in there
       else{
         white[w] = LUtils::AppToAbsolute(white[w]);
-        if(QFile::exists(white[w])){ cdefault = white[w]; }
+        if(QFile::exists(white[w])){ cdefault = white[w]; break; } //highest-priority match wins (was missing the break)
       }
     }
     /* WRITTEN BUT UNUSED CODE FOR MIMETYPE ASSOCIATIONS
