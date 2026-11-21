@@ -211,8 +211,9 @@ void LIconCache::clearIconTheme(){
    //use when the icon theme changes to refresh all requested icons
   QStringList keys = HASH.keys();
   for(int i=0; i<keys.length(); i++){
-    //remove all relative icons (
-    if(!keys.startsWith("/")){ HASH.remove(keys[i]); }
+    //remove all relative (theme) icons - absolute file paths do not depend on the icon theme
+    // (was keys.startsWith(): a QList check against the first element, so every entry got removed)
+    if(!keys[i].startsWith("/")){ HASH.remove(keys[i]); }
   }
 }
 
@@ -276,20 +277,32 @@ QStringList LIconCache::getChildIconDirs(QString path){
   return out;
 }
 
-QStringList LIconCache::getIconThemeDepChain(QString theme, QStringList paths){
-  QStringList results;
+//Walk the "Inherits=" chain of an icon theme (depth first, each theme listed once).
+// Per the icon theme spec the list is comma-separated (";" is accepted too, for older/odd files).
+// The "seen" set stops infinite recursion when themes inherit from each other.
+static void iconThemeDepChain_helper(const QString &theme, const QStringList &paths, QStringList &results, QSet<QString> &seen){
   for(int i=0; i<paths.length(); i++){
     if( QFile::exists(paths[i]+theme+"/index.theme") ){
       QStringList deps = LUtils::readFile(paths[i]+theme+"/index.theme").filter("Inherits=");
       if(!deps.isEmpty()){
-        deps = deps.first().section("=",1,-1).split(";",Qt::SkipEmptyParts);
+        deps = deps.first().section("=",1,-1).split(QRegularExpression("[,;]"), Qt::SkipEmptyParts);
         for(int j=0; j<deps.length(); j++){
-          results << deps[j] << getIconThemeDepChain(deps[j],paths);
+          QString dep = deps[j].trimmed();
+          if(dep.isEmpty() || seen.contains(dep)){ continue; }
+          seen.insert(dep);
+          results << dep;
+          iconThemeDepChain_helper(dep, paths, results, seen);
         }
       }
       break; //found primary theme index file - stop here
     }
   }
+}
+
+QStringList LIconCache::getIconThemeDepChain(QString theme, QStringList paths){
+  QStringList results;
+  QSet<QString> seen; seen.insert(theme);
+  iconThemeDepChain_helper(theme, paths, results, seen);
   return results;
 }
 
@@ -362,6 +375,9 @@ void LIconCache::IconLoaded(QString id, QDateTime sync, QByteArray *data){
     idat.pendingLabels.clear();
     for(int i=0; i<idat.pendingActions.length(); i++){ if(!idat.pendingActions[i].isNull()){ idat.pendingActions[i]->setIcon(idat.icon); } }
     idat.pendingActions.clear();
+    //(menus were missed here - only the SVG path in startReadFile() handled them)
+    for(int i=0; i<idat.pendingMenus.length(); i++){ if(!idat.pendingMenus[i].isNull()){ idat.pendingMenus[i]->setIcon(idat.icon); } }
+    idat.pendingMenus.clear();
     //Now update the hash and let the world know it is available now
     HASH.insert(id, idat);
     this->emit IconAvailable(id);

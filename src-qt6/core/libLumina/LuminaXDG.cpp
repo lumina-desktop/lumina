@@ -13,6 +13,7 @@
 #include <QMediaPlayer>
 #include <QSvgRenderer>
 #include <QMutex>
+#include <QSet>
 
 //Cached mime glob database - shared by every thread that resolves mimetypes (lumina-fm loads file
 // info from QtConcurrent workers), so all access goes through mimeglobsMutex
@@ -897,7 +898,12 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
   bool DEBUG =false;
   if(DEBUG){ qDebug() << "[LXDG] Find icon for:" << iconName; }
   if(QFile::exists(iconName) && iconName.startsWith("/")){ return QIcon(iconName); }
-  else if(iconName.startsWith("/")){ iconName.section("/",-1); } //Invalid absolute path, just look for the icon
+  else if(iconName.startsWith("/")){
+    //Invalid absolute path, just look for the icon by its base name (was computed and discarded before)
+    iconName = iconName.section("/",-1);
+    QString suffix = iconName.section(".",-1).toLower();
+    if(suffix=="png" || suffix=="svg" || suffix=="xpm"){ iconName.chop(suffix.length()+1); } //"app.png" -> "app" (keep dots in names like "org.kde.app")
+  }
   //Check if the icon is actually given
   if(iconName.isEmpty()){
     if(fallback.isEmpty()){  return QIcon(); }
@@ -1035,21 +1041,33 @@ QStringList LXDG::getChildIconDirs(QString parent){
   return out;
 }
 
-QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
-  QStringList results;
+//Walk the "Inherits=" chain of an icon theme (depth first, each theme listed once).
+// Per the icon theme spec the list is comma-separated (";" is accepted too, for older/odd files).
+// The "seen" set stops infinite recursion when themes inherit from each other.
+static void iconThemeDepChain_helper(const QString &theme, const QStringList &paths, QStringList &results, QSet<QString> &seen){
   for(int i=0; i<paths.length(); i++){
     if( QFile::exists(paths[i]+theme+"/index.theme") ){
       QStringList deps = LUtils::readFile(paths[i]+theme+"/index.theme").filter("Inherits=");
       if(!deps.isEmpty()){
-        deps = deps.first().section("=",1,-1).split(";",Qt::SkipEmptyParts);
+        deps = deps.first().section("=",1,-1).split(QRegularExpression("[,;]"), Qt::SkipEmptyParts);
         for(int j=0; j<deps.length(); j++){
-          results << deps[j] << getIconThemeDepChain(deps[j],paths);
+          QString dep = deps[j].trimmed();
+          if(dep.isEmpty() || seen.contains(dep)){ continue; }
+          seen.insert(dep);
+          results << dep;
+          iconThemeDepChain_helper(dep, paths, results, seen);
         }
       }
       break; //found primary theme index file - stop here
     }
   }
-  return results;;
+}
+
+QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
+  QStringList results;
+  QSet<QString> seen; seen.insert(theme);
+  iconThemeDepChain_helper(theme, paths, results, seen);
+  return results;
 }
 
 QStringList LXDG::systemMimeDirs(){
