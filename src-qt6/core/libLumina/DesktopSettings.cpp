@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QDir>
 #include <QDebug>
+#include <QSet>
+#include <QVector>
 
 #include <unistd.h>
 #include <pwd.h>
@@ -138,30 +140,34 @@ void DesktopSettings::parseSystemSettings(){
       else if( settings[path]->value("staticinterface_users", QStringList()).toStringList().contains(cuser) ){ runmode = DesktopSettings::SystemInterface; }
       else{
         //No rule found for this specific user - check the group rules
-        //Read off the list of groups
-        gid_t grpList[100];
-        int grpSize = 100;
-        if( getgrouplist(cuser.toLocal8Bit(), getgid(), grpList, &grpSize) > 0 ){
-          QStringList groups;
+        //Read off the list of groups this user belongs to
+        // (getgrouplist() reports the real count when the buffer is too small - retry with that size)
+        int grpSize = 64;
+        QVector<gid_t> grpList(grpSize);
+        int ret = getgrouplist(cuser.toLocal8Bit().constData(), getgid(), grpList.data(), &grpSize);
+        if(ret < 0 && grpSize > grpList.size()){
+          grpList.resize(grpSize);
+          ret = getgrouplist(cuser.toLocal8Bit().constData(), getgid(), grpList.data(), &grpSize);
+        }
+        if(ret >= 0){
+          QSet<QString> groups;
           for(int i=0; i<grpSize; i++){
             struct group *g = getgrgid(grpList[i]);
             if(g!=0){
               groups << QString(g->gr_name); //NOTE: g points to static libc storage - do not free()
             }
           }
-          QStringList fromfile = settings[path]->value("fulluser_groups", QStringList()).toStringList();
-            fromfile.removeDuplicates();
-          if( (fromfile+groups).removeDuplicates() > 0 ){ runmode = DesktopSettings::UserFull; }
-          else{
-            fromfile = settings[path]->value("fullsystem_groups", QStringList()).toStringList();
-            fromfile.removeDuplicates();
-            if((fromfile+groups).removeDuplicates() > 0 ){ runmode = DesktopSettings::SystemFull; }
-            else{
-              fromfile = settings[path]->value("staticinterface_groups", QStringList()).toStringList();
-              fromfile.removeDuplicates();
-              if((fromfile+groups).removeDuplicates() > 0 ){ runmode =  DesktopSettings::SystemInterface; }
-            }
-          }
+          //A rule matches if any group listed for it in the file is one of the user's groups
+          // (the previous test - "does merging the lists remove a duplicate" - also fired on duplicates
+          //  within either list on its own, e.g. the primary group reported twice)
+          auto groupRuleMatches = [&](const QString &key){
+            const QStringList fromfile = settings[path]->value(key, QStringList()).toStringList();
+            for(const QString &grp : fromfile){ if(groups.contains(grp)){ return true; } }
+            return false;
+          };
+          if( groupRuleMatches("fulluser_groups") ){ runmode = DesktopSettings::UserFull; }
+          else if( groupRuleMatches("fullsystem_groups") ){ runmode = DesktopSettings::SystemFull; }
+          else if( groupRuleMatches("staticinterface_groups") ){ runmode = DesktopSettings::SystemInterface; }
         } //end group list read
       }
     }else{
