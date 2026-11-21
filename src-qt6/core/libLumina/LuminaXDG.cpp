@@ -12,9 +12,13 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include <QSvgRenderer>
+#include <QMutex>
 
+//Cached mime glob database - shared by every thread that resolves mimetypes (lumina-fm loads file
+// info from QtConcurrent workers), so all access goes through mimeglobsMutex
 static QStringList mimeglobs;
-static qint64 mimechecktime;
+static qint64 mimechecktime = 0;
+static QMutex mimeglobsMutex;
 
 //=============================
 //  XDGDesktop CLASS
@@ -1369,6 +1373,7 @@ QStringList LXDG::findAVFileExtensions(){
 
 QStringList LXDG::loadMimeFileGlobs2(){
   //output format: <weight>:<mime type>:<file extension (*.something)>
+  QMutexLocker locker(&mimeglobsMutex); //returned list is a copy (implicitly shared), safe after unlock
   if(mimeglobs.isEmpty() || (mimechecktime < (QDateTime::currentMSecsSinceEpoch()-30000)) ){
     //qDebug() << "Loading globs2 mime DB files";
     mimeglobs.clear();
@@ -1390,7 +1395,8 @@ QStringList LXDG::loadMimeFileGlobs2(){
       }
       if(i==dirs.length()-1 && mimeglobs.isEmpty()){
         //Could not find the mimetype database on the system - use the fallback file distributed with Lumina
-        dirs << LOS::LuminaShare();
+        //(only once - otherwise this loop keeps appending the same dir and never ends)
+        if(dirs.last()!= LOS::LuminaShare()){ dirs << LOS::LuminaShare(); }
       }
     }//end loop over dirs
   }

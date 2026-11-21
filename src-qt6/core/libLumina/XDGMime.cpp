@@ -8,9 +8,13 @@
 #include <LUtils.h>
 #include <LuminaOS.h>
 #include <QRegularExpression>
+#include <QMutex>
 
+//Cached mime glob database - shared by every thread that resolves mimetypes (lumina-fm loads file
+// info from QtConcurrent workers), so all access goes through mimeglobsMutex
 static QStringList mimeglobs;
-static qint64 mimechecktime;
+static qint64 mimechecktime = 0;
+static QMutex mimeglobsMutex;
 
 QString XDGMime::fromFileName(QString filename){
   if(QFile::exists(filename) && QFileInfo(filename).isDir()){
@@ -337,6 +341,7 @@ QStringList XDGMime::findAVFileExtensions(){
 
 QStringList XDGMime::loadMimeFileGlobs2(){
   //output format: <weight>:<mime type>:<file extension (*.something)>
+  QMutexLocker locker(&mimeglobsMutex); //returned list is a copy (implicitly shared), safe after unlock
   if(mimeglobs.isEmpty() || (mimechecktime < (QDateTime::currentMSecsSinceEpoch()-30000)) ){
     //qDebug() << "Loading globs2 mime DB files";
     mimeglobs.clear();

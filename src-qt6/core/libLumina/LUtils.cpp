@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QtConcurrent>
 #include <QElapsedTimer>
+#include <QMutex>
 
 #include <unistd.h>
 
@@ -88,13 +89,19 @@ QString LUtils::standardDirectory(StandardDir dir, bool createAsNeeded){
   if(configdir.isEmpty()){ configdir = QDir::homePath()+"/.config"; }
   QString conffile=configdir+"/user-dirs.dirs";
   if(QFile::exists(conffile)){
+    //Cached file contents - this is called from worker threads too (lumina-fm), so guard the cache
     static QStringList _contents;
     static QDateTime _lastread;
-    if(_contents.isEmpty() || _lastread < QFileInfo(conffile).lastModified()){
-      _contents = LUtils::readFile(conffile);
-      _lastread = QDateTime::currentDateTime();
+    static QMutex _mutex;
+    QStringList match;
+    {
+      QMutexLocker locker(&_mutex);
+      if(_contents.isEmpty() || _lastread < QFileInfo(conffile).lastModified()){
+        _contents = LUtils::readFile(conffile);
+        _lastread = QDateTime::currentDateTime();
+      }
+      match = _contents.filter(var+"=");
     }
-    QStringList match = _contents.filter(var+"=");
     if(!match.isEmpty()){
       val = match.first().section("=",-1).simplified();
       if(val.startsWith("\"")){ val = val.remove(0,1); }
@@ -368,22 +375,26 @@ QString LUtils::AppToAbsolute(QString path){
 }
 
 QStringList LUtils::videoExtensions() {
-  static QStringList vidExtensions;
-  vidExtensions << "avi" << "mkv" << "mp4" << "mov" << "webm" << "wmv";
+  //Built once (function-local static init is thread-safe). Previously this appended
+  // six more entries on every call, growing without bound.
+  static const QStringList vidExtensions = QStringList() << "avi" << "mkv" << "mp4" << "mov" << "webm" << "wmv";
   return vidExtensions;
 }
 
 QStringList LUtils::imageExtensions(bool wildcards){
   //Note that all the image extensions are lowercase!!
-  static QStringList imgExtensions;
-  static QStringList imgExtensionsWC;
-  if(imgExtensions.isEmpty()){
+  //Built once - function-local static init is thread-safe (the old lazy "if empty, fill" was not)
+  static const QStringList imgExtensions = [](){
+    QStringList out;
     QList<QByteArray> fmt = QImageReader::supportedImageFormats();
-    for(int i=0; i<fmt.length(); i++){
-      imgExtensionsWC << "*."+QString::fromLocal8Bit(fmt[i]);
-      imgExtensions << QString::fromLocal8Bit(fmt[i]);
-    }
-  }
+    for(int i=0; i<fmt.length(); i++){ out << QString::fromLocal8Bit(fmt[i]); }
+    return out;
+  }();
+  static const QStringList imgExtensionsWC = [](){
+    QStringList out;
+    for(int i=0; i<imgExtensions.length(); i++){ out << "*."+imgExtensions[i]; }
+    return out;
+  }();
   if(wildcards){ return imgExtensionsWC; }
   return imgExtensions;
 }
