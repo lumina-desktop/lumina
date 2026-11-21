@@ -32,7 +32,8 @@ struct p_objects{
 	bool primary;
 	QRect geometry;
 
-	QSize physicalSizeMM; //physical size of the display in MM
+	QSize physicalSizeMM; //physical size of the display in MM (panel orientation - not rotated)
+	bool rotated90; //output is rotated 90 or 270 degrees (portrait): geometry axes are swapped relative to physicalSizeMM
 	QString name;
 
 	xcb_randr_mode_t current_mode;

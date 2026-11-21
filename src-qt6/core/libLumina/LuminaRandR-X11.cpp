@@ -38,6 +38,7 @@ inline bool loadScreenInfo(p_objects *p_obj){
   p_obj->current_mode = 0;
   p_obj->geometry = QRect();
   p_obj->physicalSizeMM = QSize();
+  p_obj->rotated90 = false;
   p_obj->primary = false;
   p_obj->modes.clear();
   p_obj->resolutions.clear();
@@ -72,6 +73,7 @@ inline bool loadScreenInfo(p_objects *p_obj){
   if(cinfo!=0){
     p_obj->geometry = QRect(cinfo->x, cinfo->y, cinfo->width, cinfo->height);
     p_obj->current_mode = cinfo->mode;
+    p_obj->rotated90 = (cinfo->rotation & (XCB_RANDR_ROTATION_ROTATE_90 | XCB_RANDR_ROTATION_ROTATE_270)) != 0;
     free(cinfo); //done with crtc_info
   }
 
@@ -239,6 +241,7 @@ OutputDevice::OutputDevice(QString id){
   //p_obj = new p_objects();
   p_obj.name = id;
   p_obj.primary = false;
+  p_obj.rotated90 = false;
   p_obj.output = 0;
   bool ok = false;
   p_obj.output = id.toInt(&ok);
@@ -266,7 +269,9 @@ QSize OutputDevice::physicalSizeMM(){ return p_obj.physicalSizeMM; }
 QSize OutputDevice::physicalDPI(){
   //Physical size is reported as 0x0 by many VMs, projectors and some TVs - no DPI can be computed
   if(p_obj.physicalSizeMM.width() <= 0 || p_obj.physicalSizeMM.height() <= 0){ return QSize(); }
-  QSize dpi( qRound((p_obj.geometry.width() * 25.4)/p_obj.physicalSizeMM.width()), qRound((p_obj.geometry.height() * 25.4)/p_obj.physicalSizeMM.height() ) );
+  //The physical size is in panel orientation, but the geometry is rotated - line up the axes first
+  QSize mm = p_obj.rotated90 ? p_obj.physicalSizeMM.transposed() : p_obj.physicalSizeMM;
+  QSize dpi( qRound((p_obj.geometry.width() * 25.4)/mm.width()), qRound((p_obj.geometry.height() * 25.4)/mm.height() ) );
   return dpi;
 }
 
