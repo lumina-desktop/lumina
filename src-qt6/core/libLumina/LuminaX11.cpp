@@ -170,22 +170,12 @@ void LXCB::RegisterVirtualRoots(QList<WId> roots){
 
 // ===== SetCurrentWorkspace() =====
 void LXCB::SetCurrentWorkspace(int number){
-  //Need to send a client message event for the window so the WM picks it up
-  xcb_client_message_event_t event;
-    event.response_type = XCB_CLIENT_MESSAGE;
-    event.format = 32;
-    event.window = LuminaX11Bridge::appRootWindow();
-    event.type = EWMH._NET_CURRENT_DESKTOP;
-    event.data.data32[0] = number; //set to enabled
-    event.data.data32[1] = XCB_TIME_CURRENT_TIME;
-    event.data.data32[2] = 0;
-    event.data.data32[3] = 0;
-    event.data.data32[4] = 0;
-
-  xcb_send_event(LuminaX11Bridge::connection(), 0, LuminaX11Bridge::appRootWindow(),  XCB_EVENT_MASK_STRUCTURE_NOTIFY | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT, (const char *) &event);
-
-  //EWMH function (does not seem to be recognized by Fluxbox)
-  xcb_ewmh_request_change_showing_desktop(&EWMH, LuminaX11Bridge::appScreen(), number);
+  //Ask the WM to switch: a _NET_CURRENT_DESKTOP client message to the root window
+  // (xcb-ewmh sends it with the SubstructureNotify|SubstructureRedirect mask the EWMH spec requires).
+  //NOTE: this previously also sent a _NET_SHOWING_DESKTOP request with the workspace number as its value,
+  // which asks the WM to hide all windows for any workspace other than 0.
+  xcb_ewmh_request_change_current_desktop(&EWMH, LuminaX11Bridge::appScreen(), number, XCB_CURRENT_TIME);
+  xcb_flush(LuminaX11Bridge::connection());
 }
 
 //Display Power Management System (DPMS)
@@ -1311,12 +1301,16 @@ QString LXCB::WM_ICCCM_GetName(WId win){
   if(1 != xcb_icccm_get_wm_name_reply(LuminaX11Bridge::connection(), cookie, &reply, NULL) ){
     return ""; //error in fetching name
   }else{
-    return QString::fromLocal8Bit(reply.name);
+    //Text properties are NOT NUL-terminated - use the reported length, then free the reply
+    QString out = QString::fromLocal8Bit(reply.name, reply.name_len);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return out;
   }
 }
 
 void LXCB::WM_ICCCM_SetName(WId win, QString name){
-  xcb_icccm_set_wm_name(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+  QByteArray data = name.toLocal8Bit(); //length must be the byte count, not the QString character count
+  xcb_icccm_set_wm_name(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, data.length(), data.constData());
 }
 
 // -- WM_ICON_NAME
@@ -1326,12 +1320,16 @@ QString LXCB::WM_ICCCM_GetIconName(WId win){
   if(1 != xcb_icccm_get_wm_icon_name_reply(LuminaX11Bridge::connection(), cookie, &reply, NULL) ){
     return ""; //error in fetching name
   }else{
-    return QString::fromLocal8Bit(reply.name);
+    //Text properties are NOT NUL-terminated - use the reported length, then free the reply
+    QString out = QString::fromLocal8Bit(reply.name, reply.name_len);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return out;
   }
 }
 
 void LXCB::WM_ICCCM_SetIconName(WId win, QString name){
-  xcb_icccm_set_wm_icon_name(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+  QByteArray data = name.toLocal8Bit(); //length must be the byte count, not the QString character count
+  xcb_icccm_set_wm_icon_name(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, data.length(), data.constData());
 }
 
 // -- WM_CLIENT_MACHINE
@@ -1341,12 +1339,16 @@ QString LXCB::WM_ICCCM_GetClientMachine(WId win){
   if(1 != xcb_icccm_get_wm_client_machine_reply(LuminaX11Bridge::connection(), cookie, &reply, NULL) ){
     return ""; //error in fetching name
   }else{
-    return QString::fromLocal8Bit(reply.name);
+    //Text properties are NOT NUL-terminated - use the reported length, then free the reply
+    QString out = QString::fromLocal8Bit(reply.name, reply.name_len);
+    xcb_icccm_get_text_property_reply_wipe(&reply);
+    return out;
   }
 }
 
 void LXCB::WM_ICCCM_SetClientMachine(WId win, QString name){
-  xcb_icccm_set_wm_client_machine(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, name.length(), name.toLocal8Bit());
+  QByteArray data = name.toLocal8Bit(); //length must be the byte count, not the QString character count
+  xcb_icccm_set_wm_client_machine(LuminaX11Bridge::connection(), win, XCB_ATOM_STRING, 8, data.length(), data.constData());
 }
 
 // -- WM_CLASS
@@ -1496,7 +1498,7 @@ void LXCB::WM_Set_Root_Supported(){
 		EWMH._NET_WM_WINDOW_TYPE_DROPDOWN_MENU, EWMH._NET_WM_WINDOW_TYPE_POPUP_MENU, EWMH._NET_WM_WINDOW_TYPE_TOOLTIP,
 		EWMH._NET_WM_WINDOW_TYPE_NOTIFICATION, EWMH._NET_WM_WINDOW_TYPE_COMBO, EWMH._NET_WM_WINDOW_TYPE_DND,
 		};
-  xcb_ewmh_set_supported(&EWMH, LuminaX11Bridge::appScreen(), 0,list);
+  xcb_ewmh_set_supported(&EWMH, LuminaX11Bridge::appScreen(), sizeof(list)/sizeof(list[0]), list); //(length was 0 - an empty list)
 }
 
 // _NET_CLIENT_LIST
@@ -1682,8 +1684,8 @@ void LXCB::WM_Set_Workarea(QList<QRect> list){
 WId LXCB::WM_Get_Supporting_WM(WId win){
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_supporting_wm_check_unchecked(&EWMH, win);
   xcb_window_t out = 0;
-  xcb_ewmh_get_supporting_wm_check_reply(&EWMH, cookie, &out, NULL);
-  return win;
+  if(1 != xcb_ewmh_get_supporting_wm_check_reply(&EWMH, cookie, &out, NULL)){ out = 0; }
+  return out; //(returned the input window before)
 }
 
 void LXCB::WM_Set_Supporting_WM(WId child){
@@ -1778,12 +1780,14 @@ QString LXCB::WM_Get_Name(WId win){
   xcb_ewmh_get_utf8_strings_reply_t reply;
   QString out;
   if(1==xcb_ewmh_get_wm_name_reply(&EWMH, cookie,&reply, NULL) ){
-    out = QString::fromUtf8(reply.strings);
+    out = QString::fromUtf8(reply.strings, reply.strings_len); //not NUL-terminated - use the length
+    xcb_ewmh_get_utf8_strings_reply_wipe(&reply);
   }
   return out;
 }
 void LXCB::WM_Set_Name(WId win, QString txt){
-  xcb_ewmh_set_wm_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+  QByteArray data = txt.toUtf8(); //length must be the UTF-8 byte count, not the QString character count
+  xcb_ewmh_set_wm_name(&EWMH, win, data.length(), data.constData());
 }
 
 // _NET_WM_VISIBLE_NAME
@@ -1792,12 +1796,14 @@ QString LXCB::WM_Get_Visible_Name(WId win){
   xcb_ewmh_get_utf8_strings_reply_t reply;
   QString out;
   if(1==xcb_ewmh_get_wm_visible_name_reply(&EWMH, cookie,&reply, NULL) ){
-    out = QString::fromUtf8(reply.strings);
+    out = QString::fromUtf8(reply.strings, reply.strings_len); //not NUL-terminated - use the length
+    xcb_ewmh_get_utf8_strings_reply_wipe(&reply);
   }
   return out;
 }
 void LXCB::WM_Set_Visible_Name(WId win, QString txt){
-  xcb_ewmh_set_wm_visible_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+  QByteArray data = txt.toUtf8(); //length must be the UTF-8 byte count, not the QString character count
+  xcb_ewmh_set_wm_visible_name(&EWMH, win, data.length(), data.constData());
 }
 
 // _NET_WM_ICON_NAME
@@ -1806,12 +1812,14 @@ QString LXCB::WM_Get_Icon_Name(WId win){
   xcb_ewmh_get_utf8_strings_reply_t reply;
   QString out;
   if(1==xcb_ewmh_get_wm_icon_name_reply(&EWMH, cookie,&reply, NULL) ){
-    out = QString::fromUtf8(reply.strings);
+    out = QString::fromUtf8(reply.strings, reply.strings_len); //not NUL-terminated - use the length
+    xcb_ewmh_get_utf8_strings_reply_wipe(&reply);
   }
   return out;
 }
 void LXCB::WM_Set_Icon_Name(WId win, QString txt){
-  xcb_ewmh_set_wm_icon_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+  QByteArray data = txt.toUtf8(); //length must be the UTF-8 byte count, not the QString character count
+  xcb_ewmh_set_wm_icon_name(&EWMH, win, data.length(), data.constData());
 }
 
 // _NET_WM_VISIBLE_ICON_NAME
@@ -1820,12 +1828,14 @@ QString LXCB::WM_Get_Visible_Icon_Name(WId win){
   xcb_ewmh_get_utf8_strings_reply_t reply;
   QString out;
   if(1==xcb_ewmh_get_wm_visible_icon_name_reply(&EWMH, cookie,&reply, NULL) ){
-    out = QString::fromUtf8(reply.strings);
+    out = QString::fromUtf8(reply.strings, reply.strings_len); //not NUL-terminated - use the length
+    xcb_ewmh_get_utf8_strings_reply_wipe(&reply);
   }
   return out;
 }
 void LXCB::WM_Set_Visible_Icon_Name(WId win, QString txt){
-  xcb_ewmh_set_wm_visible_icon_name(&EWMH, win, txt.length(), txt.toUtf8().data());
+  QByteArray data = txt.toUtf8(); //length must be the UTF-8 byte count, not the QString character count
+  xcb_ewmh_set_wm_visible_icon_name(&EWMH, win, data.length(), data.constData());
 }
 
 // _NET_WM_DESKTOP
