@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -23,7 +24,9 @@ int main(int argc, char ** argv)
         CLIdone = true;
         break;
       }else if(QString(argv[i]) == "--list-profiles"){
-        qDebug() << RRSettings::savedProfiles().join("\n");
+        //plain stdout, one profile per line (qDebug printed one quoted string with literal "\n" on stderr)
+        QStringList profiles = RRSettings::savedProfiles();
+        for(int p=0; p<profiles.length(); p++){ fprintf(stdout, "%s\n", profiles[p].toLocal8Bit().constData()); }
         CLIdone = true;
         break;
       }else if(QString(argv[i]) == "--apply-profile" && argc > (i+1) ){

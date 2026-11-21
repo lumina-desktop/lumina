@@ -5,14 +5,41 @@
 #include <LUtils.h>
 
 Worker::Worker(QObject *parent) : QObject(parent){
+  //(the application list used to be parsed here - every .desktop file, on the GUI thread, before the window
+  // was even shown, and also for file-only searches: it is now loaded on the first app search, in the worker)
+  appsLoaded = false;
+  stopsearch = false;
+}
+
+void Worker::loadApps(){
   //Get the list of all applications and save them in an easily-searchable form
+  appsLoaded = true;
   XDGDesktopList APPS;
   APPS.updateList();
   QList<XDGDesktop*> apps = APPS.apps(false,false);
   for(int i=0; i<apps.length(); i++){
     applist << ":::1:::"+apps[i]->name+":::2:::"+apps[i]->genericName+":::3:::"+apps[i]->comment+":::4:::"+apps[i]->filePath;
   }
-  stopsearch = false;
+}
+
+void Worker::setStartDir(QString dir){
+  QMutexLocker lock(&dirMutex);
+  m_startDir = dir;
+}
+
+QString Worker::startDir() const{
+  QMutexLocker lock(&dirMutex);
+  return m_startDir;
+}
+
+void Worker::setSkipDirs(QStringList dirs){
+  QMutexLocker lock(&dirMutex);
+  m_skipDirs = dirs;
+}
+
+QStringList Worker::skipDirs() const{
+  QMutexLocker lock(&dirMutex);
+  return m_skipDirs;
 }
 
 Worker::~Worker(){
@@ -48,11 +75,12 @@ bool Worker::searchDir(QString dirpath){
     emit FoundItem( dir.absoluteFilePath(tmp[i]) );
   }
   if(stopsearch){ return true; }
-  //Now recursively scan the sub directories
-  tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot , QDir::Name);
+  //Now recursively scan the sub directories (not through symlinks: a link back up the tree recursed until the
+  // stack overflowed, and links into other trees re-scanned them)
+  tmp = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDir::Name);
   for(int i=0; i<tmp.length(); i++){
     if(stopsearch){ return true; }
-    if( skipDirs.contains(dir.absoluteFilePath(tmp[i])) || tmp[i]=="proc" ){ continue; } //this dir is skipped
+    if( curSkipDirs.contains(dir.absoluteFilePath(tmp[i])) || tmp[i]=="proc" ){ continue; } //this dir is skipped
        //Special case - skip the "proc" directory heirarchy (highly-recursive layout for *every* process which is running)
     if( searchDir(dir.absoluteFilePath(tmp[i])) ){ return true; }
   }
@@ -64,6 +92,7 @@ void Worker::beginsearch(){
   emit SearchUpdate( QString(tr("Starting Search: %1")).arg(sterm) );
   //Now Perform the search
   if(sapp){
+    if(!appsLoaded){ loadApps(); }
     //First try to match based on the name
     QStringList tmp = applist.filter(":::1:::"+sterm, Qt::CaseInsensitive);
     tmp.sort();
@@ -105,8 +134,10 @@ void Worker::beginsearch(){
     if(!sterm.contains("*")){
       sterm.prepend("*"); sterm.append("*"); //make sure it is a search glob pattern
     }
-    if(startDir.isEmpty()){ startDir = QDir::homePath(); }
-    searchDir(startDir);
+    QString start;
+    { QMutexLocker lock(&dirMutex); start = m_startDir; curSkipDirs = m_skipDirs; }
+    if(start.isEmpty()){ start = QDir::homePath(); }
+    searchDir(start);
     
   }
   emit SearchUpdate( tr("Search Finished") );

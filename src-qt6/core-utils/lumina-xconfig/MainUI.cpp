@@ -150,6 +150,7 @@ void MainUI::UpdateScreens(QString profile){
     if(SCREENS[i].isactive){ tot = tot.united( SCREENS[i].geom ); }
   }
   int wid = tot.boundingRect().width();
+  if(wid <= 0){ wid = 1920; } //no active screen parsed (e.g. everything off / xrandr failed): avoid a divide by zero
   scaleFactor = (0.9*ui->mdiArea->width())/wid;
   //Now go through the screens and arrange them in order from left->right in the UI
   //bool found = true;
@@ -157,9 +158,12 @@ void MainUI::UpdateScreens(QString profile){
   //int cnum = 0;
   QString csel = currentSelection();
   //Clear all the current widgets
-  while(ui->mdiArea->currentSubWindow()!=0 ){
-    QMdiSubWindow *tmp = ui->mdiArea->currentSubWindow();
-    tmp->widget()->deleteLater();
+  //(all of them: the old loop walked currentSubWindow(), which is null when no tile is active, so a rescan
+  // could leave the previous tiles in place next to the new ones)
+  QList<QMdiSubWindow*> oldWins = ui->mdiArea->subWindowList();
+  for(int i=0; i<oldWins.length(); i++){
+    QMdiSubWindow *tmp = oldWins[i];
+    if(tmp->widget()!=nullptr){ tmp->widget()->deleteLater(); }
     ui->mdiArea->removeSubWindow(tmp);
     tmp->deleteLater();
   }
@@ -370,6 +374,7 @@ void MainUI::ActivateScreen(){
   //Assemble the command;
   QString ID = ui->combo_availscreens->currentText();
   QStringList res = ui->combo_resolutions->currentText().split("x");
+  if(ID.isEmpty() || res.length()<2){ return; } //no screen / resolution available to activate
   //Find the screen infor associated with this ID
   for(int i=0; i<SCREENS.length(); i++){
     if(SCREENS[i].ID==ID){

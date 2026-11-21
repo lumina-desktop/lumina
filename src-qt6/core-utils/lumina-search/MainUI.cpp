@@ -49,8 +49,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
   
   //Setup the settings file
   settings = LUtils::openSettings("lumina-desktop", "lumina-search",this);
-  searcher->startDir = settings->value("StartSearchDir", QDir::homePath()).toString();
-  searcher->skipDirs = settings->value("SkipSearchDirs", QStringList()).toStringList();
+  searcher->setStartDir( settings->value("StartSearchDir", QDir::homePath()).toString() );
+  searcher->setSkipDirs( settings->value("SkipSearchDirs", QStringList()).toStringList() );
   updateDefaultStatusTip();
   this->show();
   workthread->start();
@@ -76,13 +76,13 @@ void MainUI::setupIcons(){
 //    PUBLIC FUNCTIONS (for input handling primarily)
 // ===============
 void MainUI::disableExcludes(){
-  searcher->skipDirs.clear();
+  searcher->setSkipDirs(QStringList());
   updateDefaultStatusTip();
 }
 
 void MainUI::setSearchDirectory(QString path){
   ui->radio_files->setChecked(true);
-  searcher->startDir = path;
+  searcher->setStartDir(path);
   updateDefaultStatusTip();
 }
 
@@ -96,9 +96,9 @@ void MainUI::setSearchTerm(QString text){
 void MainUI::updateDefaultStatusTip(){
   if(ui->radio_files->isChecked()){
     QString txt = tr("Search: %1 -- Smart: %2");
-    QString dir = searcher->startDir;
+    QString dir = searcher->startDir();
       dir.replace(QDir::homePath(), "~");
-    QString smart = searcher->skipDirs.isEmpty() ? tr("Off"): tr("On");
+    QString smart = searcher->skipDirs().isEmpty() ? tr("Off"): tr("On");
     txt = txt.arg(dir,smart);
     ui->statusbar->showMessage(txt);
   }
@@ -141,8 +141,8 @@ void MainUI::configureSearch(){
   }
   
   //Set these values in the searcher
-  searcher->startDir = startdir;
-  searcher->skipDirs = skipdirs;
+  searcher->setStartDir(startdir);
+  searcher->setSkipDirs(skipdirs);
   updateDefaultStatusTip();
 }
 

@@ -33,8 +33,7 @@ page_fluxbox_settings::~page_fluxbox_settings(){
 //================
 void page_fluxbox_settings::SaveSettings(){
   QStringList FB;
-  QStringList FBNS;
-    FBNS = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init -no-slit");
+  //(a second file literally named "fluxbox-init -no-slit" used to be read and written here: nothing uses it)
   if(ui->radio_simple->isChecked()){
     FB = readFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init");
     // - window placement
@@ -47,16 +46,14 @@ void page_fluxbox_settings::SaveSettings(){
     line = "session.screen0.focusModel:\t"+ui->combo_session_wfocus->itemData( ui->combo_session_wfocus->currentIndex() ).toString();
     if(index < 0){ FB << line; } //add line to the end of the file
     else{ FB[index] = line; } //replace the current setting with the new one
-    // - window theme
-    index = FBNS.indexOf( FBNS.filter("session.styleFile:").join("") );
-    line = "session.styleFile:\t"+ui->combo_session_wtheme->itemData( ui->combo_session_wtheme->currentIndex() ).toString();
-    if(index < 0){ FBNS << line; } //add line to the end of the file
-    else{ FBNS[index] = line; } //replace the current setting with the new one
-    // - window theme lumina-config
-    index = FB.indexOf( FB.filter("session.styleFile:").join("") );
-    line = "session.styleFile:\t"+ui->combo_session_wtheme->itemData( ui->combo_session_wtheme->currentIndex() ).toString();
-    if(index < 0){ FB << line; } //add line to the end of the file
-    else{ FB[index] = line; } //replace the current setting with the new one
+    // - window theme (only for a real theme: an empty combo used to write "session.styleFile:" with no file)
+    QString style = ui->combo_session_wtheme->itemData( ui->combo_session_wtheme->currentIndex() ).toString();
+    if(!style.isEmpty()){
+      index = FB.indexOf( FB.filter("session.styleFile:").join("") );
+      line = "session.styleFile:\t"+style;
+      if(index < 0){ FB << line; } //add line to the end of the file
+      else{ FB[index] = line; } //replace the current setting with the new one
+    }
     // - workspace number
     index = FB.indexOf( FB.filter("session.screen0.workspaces:").join("") );
     line = "session.screen0.workspaces:\t"+QString::number(ui->spin_session_wkspaces->value());
@@ -68,7 +65,6 @@ void page_fluxbox_settings::SaveSettings(){
   }
   //Save the fluxbox settings
   bool ok = overwriteFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init", FB);
-  overwriteFile(QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/fluxbox-init -no-slit", FBNS);
   if(!ok){ qDebug() << "Warning: Could not save fluxbox-init"; }
   emit HasPendingChanges(false);
 }

@@ -11,6 +11,15 @@
 #include "../GetPluginDialog.h"
 #include "../AppDialog.h"
 
+//Is "group" the settings group of one of the panels of "id" ("panel_<id>.<number>")?
+static bool isPanelGroupOf(const QString &group, const QString &id){
+  QString prefix = "panel_"+id+".";
+  if(!group.startsWith(prefix)){ return false; }
+  bool ok = false;
+  group.mid(prefix.length()).toInt(&ok);
+  return ok;
+}
+
 //==========
 //    PUBLIC
 //==========
@@ -32,6 +41,8 @@ page_interface_panels::page_interface_panels(QWidget *parent) : PageWidget(paren
 
 page_interface_panels::~page_interface_panels(){
   delete PINFO;
+  delete settings; //were leaked on every visit to this page
+  delete ui;
 }
 
 //================
@@ -183,7 +194,7 @@ void page_interface_panels::removePanel(int pan){
   for(int i=0; i<PANELS.length(); i++){
     int num = PANELS[i]->PanelNumber();
     if(num==pan){
-      delete PANELS.takeAt(i);
+      PANELS.takeAt(i)->deleteLater(); //we are inside that widget's own signal emission: don't delete it under itself
       i--;
       changed = true;
     }else if(num > pan){
@@ -216,10 +227,13 @@ void page_interface_panels::applyProfile(QAction *act){
      applyImport(wt.section("::::",-1) );
     }else if(wt.startsWith("profile_remove::::") ){
       QString pname = wt.section("::::",-1);
-      QStringList keys = settings->allKeys().filter(pname);
-      for(int i=0; i<keys.length(); i++){
-        if(keys[i].section("/",0,0).contains(pname)){ settings->remove(keys[i]); }
+      //Only this profile's own groups ("desktop-<pname>" and "panel_<pname>.<num>"): substring matching also
+      // deleted every profile whose name merely contains this one ("work" took "work2" with it)
+      QStringList groups = settings->childGroups();
+      for(int i=0; i<groups.length(); i++){
+        if(groups[i]=="desktop-"+pname || isPanelGroupOf(groups[i], pname)){ settings->remove(groups[i]); }
       }
+      settings->sync();
       setupProfiles();
     }
     return;
@@ -315,7 +329,13 @@ void page_interface_panels::applyImport(QString fromID){
   qDebug() << "Import Panels from " << fromID << " to " << cID;
   //First find all the values associated with this ID
     int pannum = settings->value("desktop-"+fromID+"/panels").toInt();
-    QStringList pans = settings->allKeys().filter("panel_"+fromID);
+    //Keys of exactly this ID's panels ("panel_<ID>.<num>/..."): a substring filter also copied the panels of
+    // any ID containing this one (screen "HDMI-1" grabbed "HDMI-10", profile "work" grabbed "work2")
+    QStringList pans;
+    QStringList allkeys = settings->allKeys();
+    for(int i=0; i<allkeys.length(); i++){
+      if(isPanelGroupOf(allkeys[i].section("/",0,0), fromID)){ pans << allkeys[i]; }
+    }
     fromID.prepend("panel_");
 
   //save the number of panels which is active
@@ -323,8 +343,7 @@ void page_interface_panels::applyImport(QString fromID){
  //Now move over all the panel settings associated with the fromID
   cID.prepend("panel_");
   for(int i=0; i<pans.length(); i++){
-    QString newvar = pans[i];
-      newvar.replace(fromID, cID);
+    QString newvar = cID + pans[i].mid(fromID.length()); //swap the prefix only
     settings->setValue(newvar, settings->value(pans[i]) );
   }
   //Now flush the settings to disk and reload the interface

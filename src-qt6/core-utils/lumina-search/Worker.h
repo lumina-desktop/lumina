@@ -10,6 +10,8 @@
 #include <QObject>
 #include <QString>
 #include <QDir>
+#include <QMutex>
+#include <atomic>
 
 
 class Worker : public QObject{
@@ -18,8 +20,12 @@ public:
 	Worker(QObject *parent = 0);
 	~Worker();
 
-	QString startDir;
-	QStringList skipDirs;
+	//The search directories are set from the GUI thread while a search may be running in the worker
+	// thread: access them only through these (a running search uses its own snapshot)
+	void setStartDir(QString dir);
+	QString startDir() const;
+	void setSkipDirs(QStringList dirs);
+	QStringList skipDirs() const;
 
 public slots:
 	void StartSearch(QString term, bool isApp);
@@ -27,7 +33,13 @@ public slots:
 
 private:
 	QStringList applist;
-	bool stopsearch;
+	bool appsLoaded; //applist is filled on the first app search, in the worker thread
+	void loadApps();
+	std::atomic_bool stopsearch; //set from the GUI thread (StopSearch) while the worker thread searches
+	mutable QMutex dirMutex;
+	QString m_startDir;
+	QStringList m_skipDirs;
+	QStringList curSkipDirs; //snapshot for the running search
 	QString sterm;
 	bool sapp;
 	bool searchDir(QString);

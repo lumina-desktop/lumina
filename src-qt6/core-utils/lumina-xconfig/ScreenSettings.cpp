@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QProcess>
 #include "ScreenSettings.h"
 #include <LUtils.h>
 #include <QDebug>
@@ -147,7 +148,8 @@ QList<ScreenInfo> RRSettings::PreviousSettings(QString profile){
         screens[i].geom = set.value("geometry", QRect()).toRect();
         screens[i].isprimary = set.value("isprimary", false).toBool();
         if(screens[i].isprimary){ primary = screens[i].ID; }
-        screens[i].applyChange = (screens[i].isactive && !lastactive.contains(screens[i].ID) ? 1 : 0); //disable/ignore
+        if(screens[i].isactive){ screens[i].applyChange = (lastactive.contains(screens[i].ID) ? 0 : 1); } //keep/disable
+        else{ screens[i].applyChange = (lastactive.contains(screens[i].ID) ? 2 : 0); } //turn on a saved-active monitor that is off now
         screens[i].rotation = set.value("rotation",0).toInt();
       set.endGroup();
     }else if(screens[i].isactive){
@@ -230,10 +232,14 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
   //qDebug() << "Apply:" << screens.length();
   for(int i=0; i<screens.length(); i++){
     qDebug() << " -- Screen:" << i << screens[i].ID << screens[i].isactive;
-    if( !screens[i].isactive){ continue; } //skip this screen - non-active
+    //Skip screens that are off and stay off - but not ones being switched on (applyChange==2): those were
+    // skipped too, so mirror/reset/profiles/"Activate" could never turn on a connected-but-off monitor
+    if( !screens[i].isactive && screens[i].applyChange!=2){ continue; }
     else if(screens[i].applyChange==1){ opts << "--output" << screens[i].ID << "--off"; continue; } //deactivate a screen
     opts << "--output" << screens[i].ID;
-    if(screens[i].applyChange==2){ opts << "--auto"; }
+    //Switching a monitor on: use the requested size (mirror's common mode, the saved geometry, or the resolution
+    // picked in "Activate" - all were ignored for "--auto"), and only fall back to the preferred mode without one
+    if(screens[i].applyChange==2 && screens[i].geom.size().isEmpty()){ opts << "--auto"; }
     else{ opts << "--mode" << QString::number(screens[i].geom.width())+"x"+QString::number(screens[i].geom.height()); }
     opts << "--pos" << QString::number(screens[i].geom.x())+"x"+QString::number(screens[i].geom.y());
       if(screens[i].rotation==-90){ opts << "--rotate" << "left"; }
@@ -243,5 +249,7 @@ void RRSettings::Apply(QList<ScreenInfo> screens){
     if(screens[i].isprimary){ opts << "--primary"; }
   }
   qDebug() << "Run command: xrandr" << opts;
-  LUtils::runCmd("xrandr", opts);
+  //No timeout here: stopping xrandr in the middle of a modeset (slow on some drivers/docks) can leave the
+  // outputs half-configured
+  QProcess::execute("xrandr", opts);
 }

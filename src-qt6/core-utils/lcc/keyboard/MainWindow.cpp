@@ -214,6 +214,8 @@ void MainWindow::clearKeyBinding(){
 
 void MainWindow::applyKeyBinding(){
     QKeySequence seq = ui->keyEdit_shortcut->keySequence();
+    //Nothing selected (e.g. after the tree was reloaded/cleared, or Return pressed in the key editor): nothing to apply
+    if(ui->tree_shortcut->currentItem()==nullptr){ ui->keyEdit_shortcut->clear(); return; }
     qDebug() << "New Key Sequence:" << seq.toString(QKeySequence::NativeText) << seq.toString(QKeySequence::PortableText);
     if(seq.isEmpty()){
         //Verify removal of the action first
