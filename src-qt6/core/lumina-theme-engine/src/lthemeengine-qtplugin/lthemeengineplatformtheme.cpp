@@ -26,7 +26,11 @@
 #include <lthemeengine/lthemeengine.h>
 #include "lthemeengineplatformtheme.h"
 
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
 #include <QtGui/qguiapplication_platform.h>
+#else
+#include <QX11Info>
+#endif
 #include <QCursor>
 //Need access to the private QCursor header so we can refresh the mouse cursor cache
 //#include <private/qcursor_p.h> //Does not work - looks like we need to use X11 stuff instead
@@ -314,9 +318,14 @@ void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
     file.close();
   }
   if(newtheme.isEmpty()){ return; } //nothing to do
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
   QNativeInterface::QX11Application *x11App = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
   if(x11App == nullptr){ return; } //not running on X11
   Display *display = x11App->display();
+#else
+  if(!QX11Info::isPlatformX11()){ return; } //not running on X11
+  Display *display = QX11Info::display();
+#endif
   QString curtheme = QString(XcursorGetTheme(display) ); //currently-used theme
   //qDebug() << "Sync Mouse Cursur Theme:" << curtheme << newtheme;
   if(curtheme!=newtheme){

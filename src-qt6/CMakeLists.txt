@@ -70,8 +70,10 @@ if(WITH_QT6)
     set(LUMINA_HAS_X11EXTRAS OFF)
     set(LUMINA_HAS_THEMESUPPORT OFF)
     # Qt6 GuiPrivate for theme engine
-    find_package(Qt6 ${QT_MIN_VERSION} CONFIG COMPONENTS GuiPrivate)
-    if(Qt6GuiPrivate_FOUND)
+    # (Qt 6.9+ ships GuiPrivate as its own CMake package; older Qt6 defines the Qt6::GuiPrivate target together
+    # with Qt6::Gui, where find_package(... GuiPrivate) fails although the target exists)
+    find_package(Qt6 ${QT_MIN_VERSION} QUIET CONFIG COMPONENTS GuiPrivate)
+    if(TARGET Qt6::GuiPrivate)
         set(LUMINA_HAS_GUIPRIVATE ON)
     else()
         set(LUMINA_HAS_GUIPRIVATE OFF)

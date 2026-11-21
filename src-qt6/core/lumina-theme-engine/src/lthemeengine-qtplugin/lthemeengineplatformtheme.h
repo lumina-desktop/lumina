@@ -2,7 +2,15 @@
 #define LTHEMEENGINEPLATFORMTHEME_H
 
 #include <qpa/qplatformtheme.h>
+//QGenericUnixTheme's header was renamed in Qt 6.10 (qgenericunixthemes_p.h -> qgenericunixtheme_p.h); in Qt5 it
+// lives in the ThemeSupport module
+#if __has_include(<private/qgenericunixtheme_p.h>)
 #include <private/qgenericunixtheme_p.h>
+#elif __has_include(<private/qgenericunixthemes_p.h>)
+#include <private/qgenericunixthemes_p.h>
+#else
+#include <QtThemeSupport/private/qgenericunixthemes_p.h>
+#endif
 #include <QObject>
 #include <QFont>
 #include <QPalette>

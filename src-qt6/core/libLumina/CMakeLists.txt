@@ -26,10 +26,13 @@ add_library(
     ExternalProcess.h
 )
 
-if (OS MATCHES "Unknown")
-    target_sources(libLumina PUBLIC LuminaOS-template.cpp)
-else()
+#(not every detected OS has its own backend - e.g. Fedora - so fall back to the generic Linux one, as qmake did)
+if (NOT OS MATCHES "Unknown" AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/LuminaOS-${OS}.cpp)
     target_sources(libLumina PUBLIC LuminaOS-${OS}.cpp)
+elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    target_sources(libLumina PUBLIC LuminaOS-Linux.cpp)
+else()
+    target_sources(libLumina PUBLIC LuminaOS-template.cpp)
 endif()
 
 target_include_directories(libLumina PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
