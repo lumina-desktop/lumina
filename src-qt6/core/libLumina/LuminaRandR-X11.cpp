@@ -10,6 +10,7 @@
 
 inline QString atomToName(xcb_atom_t atom){
   xcb_get_atom_name_reply_t *nreply = xcb_get_atom_name_reply(LuminaX11Bridge::connection(), xcb_get_atom_name_unchecked(LuminaX11Bridge::connection(), atom), NULL);
+  if(nreply==0){ return QString(); } //invalid atom / X error
     QString name = QString::fromLocal8Bit(xcb_get_atom_name_name(nreply), xcb_get_atom_name_name_length(nreply));
     free(nreply);
   return name;
@@ -173,12 +174,14 @@ inline bool showOutput(QRect geom, p_objects *p_obj){
     xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(LuminaX11Bridge::connection(),
 		xcb_randr_get_screen_resources_unchecked(LuminaX11Bridge::connection(), LuminaX11Bridge::appRootWindow()),
 		NULL);
+    if(reply==0){ qDebug() << "[ERROR] Could not read screen resources"; return false; }
     int num = xcb_randr_get_screen_resources_crtcs_length(reply);
     for(int i=0; i<num && p_obj->crtc==0; i++){
       xcb_randr_crtc_t crt = xcb_randr_get_screen_resources_crtcs(reply)[i];
       xcb_randr_get_crtc_info_reply_t *info = xcb_randr_get_crtc_info_reply(LuminaX11Bridge::connection(),
 		xcb_randr_get_crtc_info_unchecked(LuminaX11Bridge::connection(), crt, LuminaX11Bridge::appTime()),
 		NULL);
+      if(info==0){ continue; } //crtc vanished / X error - try the next one
       //Verify that the output is supported by this crtc
       QList<xcb_randr_output_t> possible;
       if(xcb_randr_get_crtc_info_outputs_length(info) < 1){ //make sure it is not already associated with an output
@@ -261,6 +264,8 @@ QSize OutputDevice::currentResolution(){ return p_obj.geometry.size(); } //no co
 QRect OutputDevice::currentGeometry(){ return p_obj.geometry; }
 QSize OutputDevice::physicalSizeMM(){ return p_obj.physicalSizeMM; }
 QSize OutputDevice::physicalDPI(){
+  //Physical size is reported as 0x0 by many VMs, projectors and some TVs - no DPI can be computed
+  if(p_obj.physicalSizeMM.width() <= 0 || p_obj.physicalSizeMM.height() <= 0){ return QSize(); }
   QSize dpi( qRound((p_obj.geometry.width() * 25.4)/p_obj.physicalSizeMM.width()), qRound((p_obj.geometry.height() * 25.4)/p_obj.physicalSizeMM.height() ) );
   return dpi;
 }
@@ -317,12 +322,14 @@ void OutputDevice::updateInfoCache(){
       xcb_randr_get_screen_resources_reply_t *reply = xcb_randr_get_screen_resources_reply(LuminaX11Bridge::connection(),
 		xcb_randr_get_screen_resources_unchecked(LuminaX11Bridge::connection(), LuminaX11Bridge::appRootWindow()),
 		NULL);
+    if(reply==0){ return; } //could not read screen resources - leave the output unresolved
     int outputnum = xcb_randr_get_screen_resources_outputs_length(reply);
     for(int i=0; i<outputnum; i++){
       xcb_randr_output_t output = xcb_randr_get_screen_resources_outputs(reply)[i];
       xcb_randr_get_output_info_reply_t *info = xcb_randr_get_output_info_reply(LuminaX11Bridge::connection(),
 		xcb_randr_get_output_info_unchecked(LuminaX11Bridge::connection(), output, LuminaX11Bridge::appTime()),
 		NULL);
+      if(info==0){ continue; } //output vanished (hotplug) / X error
       //Compare names
       QString name = QString::fromLocal8Bit( (char*) xcb_randr_get_output_info_name(info), xcb_randr_get_output_info_name_length(info));
       free(info);
