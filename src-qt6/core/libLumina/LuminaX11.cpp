@@ -101,6 +101,7 @@ QList<WId> LXCB::WindowList(bool rawlist){
         output << winlist.windows[i];
       }
     }
+    xcb_ewmh_get_windows_reply_wipe(&winlist); //free the reply (leaked on every call before)
   }
   return output;
 }
@@ -222,6 +223,7 @@ unsigned int LXCB::WindowWorkspace(WId win){
     for(unsigned int i=0; i<reply.atoms_len; i++){
       if(reply.atoms[i]==EWMH._NET_WM_STATE_STICKY){ wkspace = LXCB::CurrentWorkspace(); break; }
     }
+    xcb_ewmh_get_atoms_reply_wipe(&reply);
   }
   //qDebug() << " - done: " << wkspace;
   return wkspace;
@@ -304,6 +306,7 @@ LXCB::WINDOWVISIBILITY LXCB::WindowState(WId win){
       if(states.atoms[i] == EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ cstate = ATTENTION; break; } //nothing more urgent - stop here
       else if(states.atoms[i] == EWMH._NET_WM_STATE_HIDDEN){ cstate = INVISIBLE; }
     }
+    xcb_ewmh_get_atoms_reply_wipe(&states);
   }
   //Now check to see if the window is the active one
   if(cstate == IGNORE){
@@ -344,6 +347,7 @@ QString LXCB::WindowVisibleIconName(WId win){ //_NET_WM_VISIBLE_ICON_NAME
   xcb_ewmh_get_utf8_strings_reply_t data;
   if( 1 == xcb_ewmh_get_wm_visible_icon_name_reply(&EWMH, cookie, &data, NULL) ){
       out = QString::fromUtf8(data.strings, data.strings_len);
+      xcb_ewmh_get_utf8_strings_reply_wipe(&data);
   }
   return out;
 }
@@ -358,6 +362,7 @@ QString LXCB::WindowIconName(WId win){ //_NET_WM_ICON_NAME
   xcb_ewmh_get_utf8_strings_reply_t data;
   if( 1 == xcb_ewmh_get_wm_icon_name_reply(&EWMH, cookie, &data, NULL) ){
       out = QString::fromUtf8(data.strings, data.strings_len);
+      xcb_ewmh_get_utf8_strings_reply_wipe(&data);
   }
   return out;
 }
@@ -372,6 +377,7 @@ QString LXCB::WindowVisibleName(WId win){ //_NET_WM_VISIBLE_NAME
   xcb_ewmh_get_utf8_strings_reply_t data;
   if( 1 == xcb_ewmh_get_wm_visible_name_reply(&EWMH, cookie, &data, NULL) ){
       out = QString::fromUtf8(data.strings, data.strings_len);
+      xcb_ewmh_get_utf8_strings_reply_wipe(&data);
   }
   return out;
 }
@@ -386,6 +392,7 @@ QString LXCB::WindowName(WId win){ //_NET_WM_NAME
   xcb_ewmh_get_utf8_strings_reply_t data;
   if( 1 == xcb_ewmh_get_wm_name_reply(&EWMH, cookie, &data, NULL) ){
       out = QString::fromUtf8(data.strings, data.strings_len);
+      xcb_ewmh_get_utf8_strings_reply_wipe(&data);
   }
   return out;
 }
@@ -428,16 +435,15 @@ bool LXCB::WindowIsMaximized(WId win){
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return false; }
   xcb_ewmh_get_atoms_reply_t states;
+  bool maxed = false;
   if( 1 == xcb_ewmh_get_wm_state_reply(&EWMH, cookie, &states, NULL) ){
     //Loop over the states
-    for(unsigned int i=0; i<states.atoms_len; i++){
-      if(states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_HORZ \
-	      || states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_VERT ){
-	return true;
-      }
+    for(unsigned int i=0; i<states.atoms_len && !maxed; i++){
+      maxed = (states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_HORZ || states.atoms[i] == EWMH._NET_WM_STATE_MAXIMIZED_VERT);
     }
+    xcb_ewmh_get_atoms_reply_wipe(&states); //(the early "return true" used to skip freeing the reply)
   }
-  return false;
+  return maxed;
 }
 
 // === WindowIsFullscreen() ===
@@ -579,6 +585,7 @@ void LXCB::paintRoot(QRect area, const QPixmap *pix){
   //Apply the change right now
   xcb_flush(LuminaX11Bridge::connection());
   xcb_image_destroy(image);
+  xcb_free_gc(LuminaX11Bridge::connection(), gc); //server-side GC was created on every call and never freed
 }
 
 // === SetAsSticky() ===
@@ -641,11 +648,10 @@ void LXCB::SetAsPanel(WId win){
   if(preply && freply){
     WM_PROTOCOLS = preply->atom;
     WM_TAKE_FOCUS = freply->atom;
-    free(preply);
-    free(freply);
     gotatoms = true;
     //qDebug() << " -- success";
   }
+  free(preply); free(freply); //free(NULL) is fine - previously one leaked when only the other failed
   //  - - Now update the protocols for the window
   if(gotatoms){ //requires the atoms
     //qDebug() << " - Get WM_PROTOCOLS";
@@ -674,6 +680,7 @@ void LXCB::SetAsPanel(WId win){
 	}
 	//qDebug() << " -- Re-save modified protocols";
 	xcb_icccm_set_wm_protocols(LuminaX11Bridge::connection(), win, WM_PROTOCOLS, num, protolist);
+	delete[] protolist;
       }
       //qDebug() << " -- Clear protocols reply";
       xcb_icccm_get_wm_protocols_reply_wipe(&proto);
@@ -1244,7 +1251,7 @@ bool LXCB::WM_ManageWindow(WId win, bool needsmap){
     qDebug() << " - Could not change event mask";
     return false;
   }
-
+  free(attr); //done with the attributes (leaked on this success path before)
   return true;
 }
 
@@ -1359,7 +1366,9 @@ QString LXCB::WM_ICCCM_GetClass(WId win){
     return ""; //error in fetching name
   }else{
     //Returns: "<instance name>::::<class name>"
-    return ( QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name) );
+    QString out = QString::fromLocal8Bit(reply.instance_name)+"::::"+QString::fromLocal8Bit(reply.class_name);
+    xcb_icccm_get_wm_class_reply_wipe(&reply);
+    return out;
   }
 }
 
@@ -1452,31 +1461,17 @@ LXCB::ICCCM_PROTOCOLS LXCB::WM_ICCCM_GetProtocols(WId win){
       if(reply.atoms[i]==ATOMS[atoms.indexOf("WM_TAKE_FOCUS")]){ flags = flags | TAKE_FOCUS; }
       else if(reply.atoms[i]==ATOMS[atoms.indexOf("WM_DELETE_WINDOW")]){ flags = flags | DELETE_WINDOW; }
     }
+    xcb_icccm_get_wm_protocols_reply_wipe(&reply);
   }
   return flags;
 }
 
 void LXCB::WM_ICCCM_SetProtocols(WId win, LXCB::ICCCM_PROTOCOLS flags){
   if(atoms.isEmpty()){ createWMAtoms(); }
-  xcb_atom_t *list;
-  int num;
-  if(flags.testFlag(TAKE_FOCUS) && flags.testFlag(DELETE_WINDOW)){
-    num = 2;
-    list = new xcb_atom_t[2];
-    list[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")];
-    list[1] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")];
-  }else if(flags.testFlag(TAKE_FOCUS)){
-    num = 1;
-    list = new xcb_atom_t[1];
-    list[0] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")];
-  }else if(flags.testFlag(DELETE_WINDOW)){
-    num = 1;
-    list = new xcb_atom_t[1];
-    list[0] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")];
-  }else{
-    num = 0;
-    list = new xcb_atom_t[0];
-  }
+  xcb_atom_t list[2]; //(was heap-allocated with new[] and never deleted)
+  int num = 0;
+  if(flags.testFlag(TAKE_FOCUS)){ list[num++] = ATOMS[atoms.indexOf("WM_TAKE_FOCUS")]; }
+  if(flags.testFlag(DELETE_WINDOW)){ list[num++] = ATOMS[atoms.indexOf("WM_DELETE_WINDOW")]; }
   xcb_icccm_set_wm_protocols(LuminaX11Bridge::connection(), win, EWMH.WM_PROTOCOLS, num, list);
 
 }
@@ -1511,6 +1506,7 @@ QList<WId> LXCB::WM_Get_Client_List(bool stacking){
       for(unsigned int i=0; i<reply.windows_len; i++){
         out << reply.windows[i];
       }
+      xcb_ewmh_get_windows_reply_wipe(&reply);
     }
   }else{
     xcb_get_property_cookie_t cookie = xcb_ewmh_get_client_list(&EWMH, LuminaX11Bridge::appScreen());
@@ -1519,6 +1515,7 @@ QList<WId> LXCB::WM_Get_Client_List(bool stacking){
       for(unsigned int i=0; i<reply.windows_len; i++){
         out << reply.windows[i];
       }
+      xcb_ewmh_get_windows_reply_wipe(&reply);
     }
   }
   return out;
@@ -1704,6 +1701,7 @@ QList<WId> LXCB::WM_Get_Virtual_Roots(){
     for(unsigned int i=0; i<reply.windows_len; i++){
       out << reply.windows[i];
     }
+    xcb_ewmh_get_windows_reply_wipe(&reply);
   }
   return out;
 }
@@ -1884,6 +1882,7 @@ QList<LXCB::WINDOWTYPE> LXCB::WM_Get_Window_Type(WId win){
       else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_DND){ out << LXCB::T_DND; }
       else if(reply.atoms[i]==EWMH._NET_WM_WINDOW_TYPE_NORMAL){ out << LXCB::T_NORMAL; }
     }
+    xcb_ewmh_get_atoms_reply_wipe(&reply);
   }
   return out;
 }
@@ -1948,6 +1947,7 @@ QList<LXCB::WINDOWSTATE> LXCB::WM_Get_Window_States(WId win){
       else if(reply.atoms[i]==EWMH._NET_WM_STATE_DEMANDS_ATTENTION){ out << LXCB::S_ATTENTION; }
       //else if(reply.atoms[i]==EWMH._NET_WM_STATE_FOCUSED){ out << LXCB::FOCUSED; }
     }
+    xcb_ewmh_get_atoms_reply_wipe(&reply);
   }
   return out;
 }
@@ -2009,6 +2009,7 @@ QList<LXCB::WINDOWACTION> LXCB::WM_Get_Window_Actions(WId win){
       else if(reply.atoms[i]==EWMH._NET_WM_ACTION_ABOVE){ out << LXCB::A_ABOVE; }
       else if(reply.atoms[i]==EWMH._NET_WM_ACTION_BELOW){ out << LXCB::A_BELOW; }
     }
+    xcb_ewmh_get_atoms_reply_wipe(&reply);
   }
   return out;
 }

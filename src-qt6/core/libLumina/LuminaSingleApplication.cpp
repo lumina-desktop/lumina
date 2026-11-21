@@ -141,12 +141,15 @@ void LSingleApplication::newInputsAvailable(){
   while(lserver->hasPendingConnections()){
     QLocalSocket *sock = lserver->nextPendingConnection();
     QByteArray bytes;
-    sock->waitForReadyRead();
+    //NOTE: this blocks the GUI thread - keep it short (default timeout is 30 seconds). The other
+    // instance writes immediately after connecting, so 500 ms is ample.
+    sock->waitForReadyRead(500);
     while(sock->bytesAvailable() > 0){ //if(sock->waitForReadyRead()){
 	//qDebug() << "Info Available";
 	bytes.append( sock->readAll() );
     }
     sock->disconnectFromServer();
+    sock->deleteLater(); //owned by the server; was never freed (one leaked socket per forwarded launch)
     QStringList inputs = QString::fromLocal8Bit(bytes).split("::::");
     //qDebug() << " - New Inputs Detected:" << inputs;
     emit InputsAvailable(inputs);

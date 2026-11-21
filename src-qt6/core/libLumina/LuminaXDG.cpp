@@ -480,7 +480,7 @@ void XDGDesktop::addToMenu(QMenu *topmenu){
     submenu->addAction(act);
     //Now add entries for every sub-action listed
     for(int sa=0; sa<this->actions.length(); sa++){
-      QAction *sact = new QAction( this->actions[sa].name, this);
+      QAction *sact = new QAction( this->actions[sa].name, submenu); //owned by the submenu (was "this": outlived every menu rebuild)
       sact->setIcon(LXDG::findIcon( this->actions[sa].icon, this->icon));
       sact->setToolTip(this->comment);
       sact->setWhatsThis("-action \""+this->actions[sa].ID+"\" \""+this->filePath+"\"");
@@ -612,6 +612,10 @@ XDGDesktop* XDGDesktopList::findAppFile(QString filename){
 }
 
 void XDGDesktopList::populateMenu(QMenu *topmenu, bool byCategory){
+  //QMenu::clear() removes the actions but does not delete the category/app submenus created below
+  // (each submenu owns its own menuAction) - delete them, or every rebuild leaks the whole previous tree
+  QList<QMenu*> oldmenus = topmenu->findChildren<QMenu*>(QString(), Qt::FindDirectChildrenOnly);
+  for(int i=0; i<oldmenus.length(); i++){ oldmenus[i]->deleteLater(); }
   topmenu->clear();
   if(byCategory){
     QHash<QString, QList<XDGDesktop*> > APPS = LXDG::sortDesktopCats( this->apps(false,false) );
@@ -1451,7 +1455,7 @@ QList<XDGDesktop*> LXDG::findAutoStartFiles(bool includeInvalid){
     QStringList tmp = dir.entryList(QStringList() << "*.desktop", QDir::Files, QDir::Name);
     for(int t=0; t<tmp.length(); t++){
       XDGDesktop *desk = new XDGDesktop(dir.absoluteFilePath(tmp[t]));
-      if(desk->type == XDGDesktop::BAD){ continue; } //could not read file
+      if(desk->type == XDGDesktop::BAD){ delete desk; continue; } //could not read file (was leaked)
       //Now figure out what to do with it
       if(filenames.contains(tmp[t])){
 	//This is an overwrite of a lower-priority (system?) autostart file
@@ -1468,6 +1472,7 @@ QList<XDGDesktop*> LXDG::findAutoStartFiles(bool includeInvalid){
 	  //Small override file (only the "Hidden" field listed in spec)
 	  files[old]->isHidden = desk->isHidden; //replace this value with the override
 	  //files << desk; //still add this to the array (will be ignored/skipped later)
+	  delete desk; //value copied - this object is not kept anywhere (was leaked)
 	}
       }else{
         //This is a new autostart file

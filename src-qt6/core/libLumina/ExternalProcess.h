@@ -65,6 +65,11 @@ public:
 	  //Setup the connection for automatic cleanup
 	  connect(this, SIGNAL(started()), this, SLOT(processStarting()) );
 	  connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(processFinished()) );
+	  //finished() is never emitted when the program fails to start (missing binary, permissions):
+	  // clean up on that error too, or every failed launch() leaks this object
+	  connect(this, &QProcess::errorOccurred, this, [this](QProcess::ProcessError err){
+	    if(err == QProcess::FailedToStart){ processFinished(); }
+	  });
 	}
 
 	~ExternalProcess(){
