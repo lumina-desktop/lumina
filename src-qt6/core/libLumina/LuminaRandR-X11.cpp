@@ -124,7 +124,9 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
         }else if(!res.isNull()){
           sz = QSize(minfo.width, minfo.height);
            //qDebug() << "Compare Sizes:" << sz << res;
-          if(sz == res && minfo.dot_clock > refreshrate){ det_mode = minfo.id; refreshrate = minfo.dot_clock; }
+          //Prefer the highest refresh rate, but always accept the first match: virtual outputs (Xvfb, some VMs)
+          // report a dot clock of 0, which never beat the initial 0 so no mode was ever selected
+          if(sz == res && (det_mode == XCB_NONE || minfo.dot_clock > refreshrate)){ det_mode = minfo.id; refreshrate = minfo.dot_clock; }
         }
       }
     }
@@ -134,7 +136,7 @@ inline xcb_randr_mode_t modeForResolution(QSize res, QList<xcb_randr_mode_t> mod
 }
 
 inline void adjustScreenTotal(xcb_randr_crtc_t output, QRect geom, bool addingoutput){
-  QRect total, mmTotal;
+  QRect total;
   xcb_randr_get_screen_resources_reply_t *srreply = xcb_randr_get_screen_resources_reply(LuminaX11Bridge::connection(),
 		xcb_randr_get_screen_resources_unchecked(LuminaX11Bridge::connection(), LuminaX11Bridge::appRootWindow()), NULL);
   if(srreply!=0){
@@ -160,8 +162,20 @@ inline void adjustScreenTotal(xcb_randr_crtc_t output, QRect geom, bool addingou
     }
     free(srreply);
   }
-  QSize newRes = total.size();
-  QSize newMM = mmTotal.size();
+  if(total.isEmpty()){ return; } //no active outputs - never shrink the screen to 0x0
+  //The screen always starts at 0,0 and must reach the far edge of every output
+  QSize newRes(total.x()+total.width(), total.y()+total.height());
+  //Physical size: the old code sent 0x0 mm (mmTotal was never filled), which the server rejects with
+  // BadValue - so the screen was never resized. Keep the screen's current mm-per-pixel ratio (96 DPI fallback).
+  double mmPerPxW = 25.4/96.0, mmPerPxH = 25.4/96.0;
+  xcb_screen_iterator_t sit = xcb_setup_roots_iterator(xcb_get_setup(LuminaX11Bridge::connection()));
+  for( ; sit.rem; xcb_screen_next(&sit)){
+    if(sit.data->root != LuminaX11Bridge::appRootWindow()){ continue; }
+    if(sit.data->width_in_pixels > 0 && sit.data->width_in_millimeters > 0){ mmPerPxW = double(sit.data->width_in_millimeters)/sit.data->width_in_pixels; }
+    if(sit.data->height_in_pixels > 0 && sit.data->height_in_millimeters > 0){ mmPerPxH = double(sit.data->height_in_millimeters)/sit.data->height_in_pixels; }
+    break;
+  }
+  QSize newMM( qMax(1, qRound(newRes.width()*mmPerPxW)), qMax(1, qRound(newRes.height()*mmPerPxH)) );
   xcb_randr_set_screen_size(LuminaX11Bridge::connection(), LuminaX11Bridge::appRootWindow(), newRes.width(), newRes.height(), newMM.width(), newMM.height());
 }
 
