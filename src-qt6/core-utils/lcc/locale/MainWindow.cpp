@@ -27,8 +27,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     
     setupMenus();
     setupLocales();
-    setupConnections();
+    //NOTE: load before connecting - every change auto-saves all seven keys, so loading with the
+    // connections live would save half-loaded values (and wipe the keys not loaded yet)
     loadSettings();
+    setupConnections();
     
     // Set window properties
     setWindowTitle(tr("Lumina Locale Settings"));

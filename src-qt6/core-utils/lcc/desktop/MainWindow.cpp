@@ -68,13 +68,22 @@ void LPlugins::LoadDesktopPlugins(){
     info.icon = "accessories-text-editor";
     DESKTOP.insert(info.ID, info);
     
-    // System Tray plugin
+    // Audio Player plugin
     info = LPI();
-    info.ID = "systemtray";
-    info.name = "System Tray";
-    info.description = "System notification area";
-    info.icon = "preferences-desktop-notification";
+    info.ID = "audioplayer";
+    info.name = "Audio Player";
+    info.description = "Play through lists of audio files";
+    info.icon = "media-playback-start";
     DESKTOP.insert(info.ID, info);
+    
+    // RSS Reader plugin
+    info = LPI();
+    info.ID = "rssreader";
+    info.name = "RSS Reader";
+    info.description = "Monitor RSS Feeds (Requires internet connection)";
+    info.icon = "application-rss+xml";
+    DESKTOP.insert(info.ID, info);
+    // NOTE: keep this list in sync with core/lumina-desktop/desktop-plugins/NewDP.h
 }
 
 //==========
@@ -367,18 +376,31 @@ void MainWindow::LoadSettings(){
         
         if(pluginID.startsWith("applauncher::")){
             XDGDesktop app(pluginID.section("::",1,50));
-            if(app.type == XDGDesktop::BAD){ continue; } //invalid for some reason
-            //Now fill the item with the necessary info
-            it->setText(app.name);
-            it->setIcon(LXDG::findIcon(app.icon,""));
-            it->setToolTip(app.comment);
+            if(app.type == XDGDesktop::BAD){
+              //Application file missing/unreadable: still keep the entry (it is saved back from the
+              // list), just show the raw path so the user can see it and remove it if wanted
+              it->setText(pluginID.section("::",1,50).section("/",-1));
+              it->setToolTip(pluginID.section("::",1,50));
+              it->setIcon(LXDG::findIcon("application-x-executable",""));
+            }else{
+              //Now fill the item with the necessary info
+              it->setText(app.name);
+              it->setIcon(LXDG::findIcon(app.icon,""));
+              it->setToolTip(app.comment);
+            }
         }else{
             //Load the info for this plugin
             LPI info = PINFO->desktopPluginInfo(pluginID);
-            if( info.ID.isEmpty() ){ continue; } //invalid plugin for some reason
-            it->setText(info.name);
-            it->setToolTip(info.description);
-            it->setIcon( LXDG::findIcon(info.icon,"") );
+            if( info.ID.isEmpty() ){
+              //Plugin unknown to this tool: keep it anyway - the list is written back as-is on
+              // save, so skipping it here would silently delete it from the desktop config
+              it->setText(pluginID);
+              it->setToolTip(pluginID);
+            }else{
+              it->setText(info.name);
+              it->setToolTip(info.description);
+              it->setIcon( LXDG::findIcon(info.icon,"") );
+            }
         }
         if(!num.isEmpty()){ it->setText( it->text()+" ("+num+")"); } //append the number
         ui->list_desktop_plugins->addItem(it);
@@ -415,7 +437,7 @@ void MainWindow::deskplugadded(){
     if(newplug=="applauncher"){
         //Prompt for the application to add
         QString app = getSysApp();
-        if(app.isEmpty()){ return; } //cancelled
+        if(app.isEmpty()){ delete it; return; } //cancelled
         newplug.append("::"+app);
         XDGDesktop desk(app);
         //Now fill the item with the necessary info
@@ -426,7 +448,7 @@ void MainWindow::deskplugadded(){
     }else{
         //Load the info for this plugin
         LPI info = PINFO->desktopPluginInfo(newplug);
-        if( info.ID.isEmpty() ){ return; } //invalid plugin for some reason (should never happen)
+        if( info.ID.isEmpty() ){ delete it; return; } //invalid plugin for some reason (should never happen)
         it->setWhatsThis(newplug);
         it->setText(info.name);
         it->setToolTip(info.description);

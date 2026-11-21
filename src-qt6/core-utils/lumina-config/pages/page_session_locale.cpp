@@ -59,19 +59,19 @@ void page_session_locale::LoadSettings(int){
     index = ui->combo_locale_time->findData(val);
     if(index<0){ index = 0; } //system default
     ui->combo_locale_time->setCurrentIndex(index);
-      val = sessionsettings.value("InitLocale/NUMERIC", "").toString();
+      val = sessionsettings.value("InitLocale/LC_NUMERIC", "").toString();
     index = ui->combo_locale_numeric->findData(val);
     if(index<0){ index = 0; } //system default
     ui->combo_locale_numeric->setCurrentIndex(index);
-      val = sessionsettings.value("InitLocale/MONETARY", "").toString();
+      val = sessionsettings.value("InitLocale/LC_MONETARY", "").toString();
     index = ui->combo_locale_monetary->findData(val);
     if(index<0){ index = 0; } //system default
     ui->combo_locale_monetary->setCurrentIndex(index);
-      val = sessionsettings.value("InitLocale/COLLATE", "").toString();
+      val = sessionsettings.value("InitLocale/LC_COLLATE", "").toString();
     index = ui->combo_locale_collate->findData(val);
     if(index<0){ index = 0; } //system default
     ui->combo_locale_collate->setCurrentIndex(index);
-      val = sessionsettings.value("InitLocale/CTYPE", "").toString();
+      val = sessionsettings.value("InitLocale/LC_CTYPE", "").toString();
     index = ui->combo_locale_ctype->findData(val);
     if(index<0){ index = 0; } //system default
     ui->combo_locale_ctype->setCurrentIndex(index);
