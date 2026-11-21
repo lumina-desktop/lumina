@@ -215,8 +215,10 @@ bool LUtils::writeFile(QString filepath, QStringList contents, bool overwrite){
     QTextStream out(&file);
     out << contents.join("\n");
     if(!contents.last().isEmpty()){ out << "\n"; } //always end with a new line
-    file.close();
-    ok = true;
+    out.flush();
+    ok = (out.status() == QTextStream::Ok);
+    file.close(); //flushes any remaining buffered data - errors (disk full, I/O) show up in error()
+    if(file.error() != QFileDevice::NoError){ ok = false; }
   }
   return ok;
 }

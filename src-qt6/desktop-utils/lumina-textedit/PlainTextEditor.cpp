@@ -147,8 +147,13 @@ bool PlainTextEditor::SaveFile(bool newname){
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
-  watcher->addPath(currentFile());
+  if(QFile::exists(currentFile())){ watcher->addPath(currentFile()); }
   readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
+  if(!ok){
+    //Do not report success: callers (close window/tab) would otherwise discard the unsaved text
+    QMessageBox::warning(this, tr("Save Failed"), tr("Could not save the file. Your changes have not been saved:")+"\n\n"+currentFile());
+    return false;
+  }
   return true;
   //qDebug() << " - Success:" << ok << hasChanges;
 }
@@ -363,6 +368,19 @@ void PlainTextEditor::cursorMoved(){
 //Function for prompting the user if the file changed externally
 void PlainTextEditor::fileChanged(){
   qDebug() << "File Changed:" << currentFile();
+  if(!QFile::exists(currentFile())){
+    //File removed or in the middle of being replaced (many tools save by writing a temp file and
+    // renaming it over the original). Give it a moment to reappear before deciding anything -
+    // reloading now would replace the editor contents with an empty document.
+    QTimer::singleShot(500, this, [this](){
+      if(QFile::exists(currentFile())){ fileChanged(); return; } //replaced: handle as a normal change
+      //Really gone: keep the text and flag it as unsaved so closing will prompt to save it
+      lastSaveContents.clear();
+      hasChanges = true;
+      emit UnsavedChanges(currentFile());
+    });
+    return;
+  }
   bool update = !hasChanges; //Go ahead and reload the file automatically - no custom changes in the editor
   QString text = tr("The following file has been changed by some other utility. Do you want to re-load it?");
   text.append("\n");

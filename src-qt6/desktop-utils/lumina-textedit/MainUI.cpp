@@ -244,7 +244,11 @@ QStringList MainUI::unsavedFiles(){
 //=================
 //Main Actions
 void MainUI::NewFile(){
-  OpenFile(QString::number(tabWidget->count()+1)+"/"+tr("New File"));
+  //NOTE: use an ever-increasing number - basing this on the tab count could reuse the
+  // name of a still-open "New File" tab after an earlier tab was closed (and wipe it)
+  static int newFileCount = 0;
+  newFileCount++;
+  OpenFile(QString::number(newFileCount)+"/"+tr("New File"));
 }
 
 void MainUI::OpenFile(QString file){
@@ -258,6 +262,7 @@ void MainUI::OpenFile(QString file){
   }
   for(int i=0; i<files.length(); i++){
     PlainTextEditor *edit = 0;
+    bool newEditor = false;
     //Try to see if this file is already opened first
     for(int j=0; j<tabWidget->count(); j++){
       PlainTextEditor *tmp = static_cast<PlainTextEditor*>(tabWidget->widget(j));
@@ -266,6 +271,7 @@ void MainUI::OpenFile(QString file){
     if(edit ==0){
       //New file - need to create a new editor for it
       edit = new PlainTextEditor(settings, this);
+      newEditor = true;
       connect(edit, SIGNAL(FileLoaded(QString)), this, SLOT(updateTab(QString)) );
       connect(edit, SIGNAL(UnsavedChanges(QString)), this, SLOT(updateTab(QString)) );
       if(DEBUG)
@@ -292,7 +298,9 @@ void MainUI::OpenFile(QString file){
       }
     }
     tabWidget->setCurrentWidget(edit);
-    edit->LoadFile(files[i]);
+    //Only load into a freshly-created editor. An already-open file just gets focused: reloading it
+    // here would discard any unsaved edits (external changes are handled by the file watcher).
+    if(newEditor){ edit->LoadFile(files[i]); }
     if(DEBUG)
       checkSpelling(-1);
     edit->setFocus();
