@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "TarBackend.h"
+#include <cstdio>
+#include <unistd.h>
 #include <LUtils.h>
 #include <QFile>
 #include <QDir>
@@ -142,8 +144,13 @@ void Backend::startRemove(QStringList paths){
   args << flags;
   args.replaceInStrings(filepath, tmpfilepath);
   //Add the include rules for all the files we want to keep (no exclude option in "tar")
+  //bsdtar exclude patterns are unanchored and glob-interpreted: "--exclude README" also dropped "sub/README",
+  // and a name like "a[1].txt" matched "a1.txt" instead. Escape glob characters and anchor the pattern;
+  // the second pattern removes a directory's contents ("^dir$" only matches the directory entry itself).
   for(int i=0; i<paths.length(); i++){
-     args << "--exclude" << paths[i];
+     QString esc;
+     for(const QChar c : paths[i]){ if(c=='\\' || c=='[' || c==']' || c=='*' || c=='?'){ esc.append('\\'); } esc.append(c); }
+     args << "--exclude" << "^"+esc+"$" << "--exclude" << "^"+esc+"/";
   }
   args<< "@"+filepath;
   STARTING=true;
@@ -174,7 +181,11 @@ void Backend::startExtract(QString path, bool overwrite, QStringList files){
 
 void Backend::startViewFile(QString path){
   QStringList args;
-  QString newfilename = QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+"-"+path.section("/",-1);
+  //Extract into a per-user temp dir (was a relative name: the file landed in the process working directory)
+  QString tmpdir = QDir::tempPath()+"/lumina-archiver-"+QString::number(getuid());
+  QDir().mkpath(tmpdir);
+  QFile::setPermissions(tmpdir, QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner);
+  QString newfilename = tmpdir+"/"+QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+"-"+path.section("/",-1);
   args << "-x";
   //args << flags <<"--include" << path <<"--strip-components" << QString::number(path.count("/")) << "-C" << QDir::tempPath();
   args << flags <<"--include" << path <<"--to-stdout";
@@ -183,7 +194,7 @@ void Backend::startViewFile(QString path){
   emit ProcessStarting();
   QProcess tmpProc;
     tmpProc.setStandardOutputFile(newfilename);
-    tmpProc.start("tar",args);
+    tmpProc.start(TAR_CMD, args); //(was the literal "tar" - GNU tar on Linux does not know the bsdtar --include flag)
   while(!tmpProc.waitForFinished(500)){ QCoreApplication::processEvents(); }
   emit ProcessFinished(tmpProc.exitCode()==0, "");
   QProcess::startDetached("xdg-open", QStringList() << newfilename);
@@ -201,13 +212,14 @@ void Backend::parseLines(QStringList lines){
   for(int i=0; i<lines.length(); i++){
       QStringList info = lines[i].split(" ",Qt::SkipEmptyParts);
       //Format: [perms, ?, user, group, size, month, day, time, file]
-      if(info.startsWith("x ") && filepath.endsWith(".zip")){
+      //(tested the QStringList with startsWith() before - never true - and its while loop never shrank the list)
+      if(lines[i].startsWith("x ") && filepath.endsWith(".zip")){
         //ZIP archives do not have all the extra information - just filenames
-        while(info.length()>2){ info[1]=info[1]+" "+info[2]; }
-        QString file = info[1];
+        QString file = lines[i].section(" ",1,-1);
         QString perms = "";
          if(file.endsWith("/")){ perms = "d"; file.chop(1); }
         contents.insert(file, QStringList() << perms << "-1" <<""); //Save the [perms, size, linkto ]
+        continue; //done with this line (falling through to the tar parsing below would index info[8] on a short list)
       }
       else if(info.length()<9){ continue; } //invalid line
       //TAR Archive parsing
@@ -276,8 +288,10 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
 
     }else if(args.contains("-c") && QFile::exists(tmpfilepath)){
       if(retcode==0){
-        QFile::remove(filepath);
-        QFile::rename(tmpfilepath, filepath);
+        //Atomic replace (was remove + unchecked rename: a failed rename lost the original archive)
+        if( ::rename(QFile::encodeName(tmpfilepath).constData(), QFile::encodeName(filepath).constData()) != 0 ){
+          qWarning() << "Could not replace archive:" << filepath << "- the updated copy was kept as" << tmpfilepath;
+        }
       }else{
         QFile::remove(tmpfilepath);
       }

@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "imgDialog.h"
+#include <QRegularExpression>
 #include "ui_imgDialog.h"
 
 #include <QMessageBox>
@@ -30,6 +31,9 @@ imgDialog::imgDialog(QWidget *parent) : QDialog(parent), ui(new Ui::imgDialog())
   connect(ui->push_cancel, SIGNAL(clicked()), this, SLOT(cancel()) );
   connect(ui->push_start, SIGNAL(clicked()), this, SLOT(start_process()) );
   connect(ui->tool_refresh, SIGNAL(clicked()), this, SLOT(loadDeviceList()) );
+  //Determine which type of system this is for the process status signal (and the /dev filter used by
+  // loadDeviceList() just below - this was set only at the end, so the first list used an uninitialised value)
+  BSD_signal = LOS::OSName().contains("BSD"); //assume everything else is Linux-like
   loadDeviceList(); //do the initial load of the available devices
   //Setup the possible transfer rate units
   ui->combo_rate_units->clear();
@@ -41,8 +45,6 @@ imgDialog::imgDialog(QWidget *parent) : QDialog(parent), ui(new Ui::imgDialog())
   procTimer = new QTimer(this);
     procTimer->setInterval(1000); //1 second updates
   connect(procTimer, SIGNAL(timeout()), this, SLOT(getProcStatus()) );
-  //Determine which type of system this is for the process status signal
-  BSD_signal = LOS::OSName().contains("BSD"); //assume everything else is Linux-like
 }
 
 imgDialog::~imgDialog(){
@@ -129,9 +131,11 @@ void imgDialog::loadDeviceList(){
 
 void imgDialog::getProcStatus(){
   if(ddProc==0 || ddProc->state()!=QProcess::Running ){ return; }
-  QStringList pidlist = LUtils::getCmdOutput("pgrep -S -f \"dd if="+ui->label_iso->whatsThis()+"\"");
-  if(pidlist.isEmpty()){ return; }
-  int pid = pidlist.first().simplified().toInt(); //just use the first pid - the pgrep should be detailed enough to only match one
+  //Signal dd itself: we started it directly, so QProcess knows its PID.
+  //(This used "pgrep -S", a BSD-only flag: on Linux pgrep printed its usage text, which parsed to PID 0,
+  // and kill(0, SIGUSR1) then hit our own process group - SIGUSR1's default action terminates lumina-archiver.)
+  qint64 pid = ddProc->processId();
+  if(pid <= 0){ return; }
   //qDebug() << "Sending signal to show status on PID:" << pid;
 #ifndef __linux__
   ::kill(pid, SIGINFO); //On BSD systems, the INFO signal is used to poke dd for status updates
@@ -150,12 +154,17 @@ void imgDialog::procInfoAvailable(){
   lastmsg = ddProc->readAll();
   if(lastmsg.endsWith("\n")){ lastmsg.chop(1); }
   //qDebug() << "Got Process Info:" << lastmsg;
-  //Now look for the " bytes transferred" line
-  QStringList records = lastmsg.split("\n").filter(" bytes transferred ");
-  if(!records.isEmpty()){
-    //Update the progress bar
-    //qDebug() << "Got status update:" << records.last();
-    ui->progressBar->setValue( qRound(records.last().section(" bytes",0,0).toDouble()/unitdiv) );
+  //Now look for the status line: "<N> bytes transferred in ..." (BSD dd) or "<N> bytes (...) copied, ..." (GNU dd)
+  // (only the BSD wording was matched before, so the progress bar stayed at 0 on Linux)
+  static const QRegularExpression rx("^(\\d+) bytes");
+  QStringList lines = lastmsg.split("\n");
+  for(int i=lines.length()-1; i>=0; i--){
+    QRegularExpressionMatch m = rx.match(lines[i].trimmed());
+    if(m.hasMatch()){
+      //qDebug() << "Got status update:" << lines[i];
+      ui->progressBar->setValue( qRound(m.captured(1).toDouble()/unitdiv) );
+      break;
+    }
   }
 }
 
