@@ -243,6 +243,9 @@ void PianoBarProcess::saveSettingsFile(){
   //Now save the settings
   QFile file(settingsPath);
   if(file.open(QIODevice::WriteOnly | QIODevice::Truncate)){
+    //The config holds the Pandora password: owner-only *before* writing it (was created with default
+    // permissions, typically world-readable)
+    file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     QTextStream out(&file);
     out << currentSettings.join("\n");
     file.close();

@@ -9,6 +9,8 @@ PhotoView::PhotoView (QWidget *parent) : QGraphicsView (parent)
     setViewportUpdateMode (BoundingRectViewportUpdate);
     setRenderHint (QPainter::Antialiasing);
     setTransformationAnchor (AnchorUnderMouse);
+    //Wheel events go to the viewport - the filter was never installed, so wheel zoom/navigation was dead code
+    viewport ()->installEventFilter (this);
 }
 
 void PhotoView::zoomIn ()

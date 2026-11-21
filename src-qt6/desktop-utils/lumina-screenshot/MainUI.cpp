@@ -294,7 +294,7 @@ void MainUI::mousePressEvent(QMouseEvent *ev){
       areaOverlay->setStyleSheet("background-color: rgba(150,150,150,120)");
     }
   }
-  QMainWindow::mouseMoveEvent(ev);
+  QMainWindow::mousePressEvent(ev); //(was forwarded to mouseMoveEvent)
 }
 
 void MainUI::mouseMoveEvent(QMouseEvent *ev){

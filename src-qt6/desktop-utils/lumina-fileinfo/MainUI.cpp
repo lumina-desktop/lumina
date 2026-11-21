@@ -30,7 +30,8 @@ MainUI::MainUI() : QMainWindow(), ui(new Ui::MainUI){
 }
 
 MainUI::~MainUI(){
-  terminate_thread = true;
+  //Stop the directory-size task and *wait* for it: it emits signals on "this", which is being destroyed
+  stopDirSize();
   this->close();
 }
 
@@ -78,6 +79,7 @@ void MainUI::stopDirSize(){
 
 void MainUI::GetDirSize(const QString dirname) const {
   const quint16 update_frequency = 2000; //For reducing the number of folder_size_changed calls
+  quint64 seen = 0; //entries examined across all directories (throttles the updates below)
   quint64 filesize = 0;
   quint64 file_number = 0;
   quint64 dir_number = 1;
@@ -109,6 +111,7 @@ void MainUI::GetDirSize(const QString dirname) const {
     }
     file_list = folder.entryInfoList();
     for(int i=0; i<file_list.size(); ++i) {
+      if(terminate_thread){ break; } //(only checked between directories before)
       if(file_list[i].isDir() && !file_list[i].isSymLink()) {
         ++dir_number;
         head.prepend(file_list[i].absoluteFilePath());
@@ -117,7 +120,9 @@ void MainUI::GetDirSize(const QString dirname) const {
         ++file_number;
       if(!file_list[i].isSymLink())
         filesize += file_list[i].size();
-      if(i%update_frequency == 0)
+      //One update every update_frequency entries overall (was "i % update_frequency == 0", true at i==0 of
+      // every directory - so each sub-directory queued another UI update)
+      if(++seen % update_frequency == 0)
         emit folder_size_changed(filesize, file_number, dir_number, false);
     }
   }
@@ -465,7 +470,7 @@ void MainUI::open_file_clicked(){
 void MainUI::getXdgCommand(QString prev){
   //Find a binary to run
   QString dir = prev; //start with the previous attempt (if there was one)
-  if(dir.isEmpty()){ ui->line_xdg_command->text(); }//then try current selection
+  if(dir.isEmpty()){ dir = ui->line_xdg_command->text(); }//then try current selection (the value was read and discarded)
   if(dir.isEmpty()){ dir = LOS::AppPrefix()+"bin"; } //then open the application binaries directory
   QString file = QFileDialog::getOpenFileName(this, tr("Select a binary"), dir );
   if(file.isEmpty()){ return; } //cancelled

@@ -126,6 +126,7 @@ void MainUI::zoomInToggled ()
 
 void MainUI::firstToggled ()
 {
+    if (files.isEmpty ()) { return; } //no image loaded (files.at() used to read out of range)
     if (idx != 0)
     {
         idx = 0;
@@ -135,6 +136,7 @@ void MainUI::firstToggled ()
 
 void MainUI::lastToggled ()
 {
+    if (files.isEmpty ()) { return; } //no image loaded (files.at() used to read out of range)
     if (idx != files.count () - 1)
     {
         idx = files.count () - 1;
@@ -144,6 +146,7 @@ void MainUI::lastToggled ()
 
 void MainUI::backToggled ()
 {
+    if (files.isEmpty ()) { return; } //no image loaded (files.at() used to read out of range)
     if (idx > 0)
     {
         idx -= 1;
@@ -153,6 +156,7 @@ void MainUI::backToggled ()
 
 void MainUI::nextToggled ()
 {
+    if (files.isEmpty ()) { return; } //no image loaded (files.at() used to read out of range)
     if (idx < files.count () - 1)
     {
         idx += 1;
@@ -221,8 +225,8 @@ bool MainUI::save ()
         if (!writer.write (actualImage))
         {
             QMessageBox::information (this, QGuiApplication::applicationDisplayName (),
-                                      tr ("Cannot write %1: %2").arg (QDir::toNativeSeparators (filename)),
-                                      writer.errorString ());
+                                      tr ("Cannot write %1: %2").arg (QDir::toNativeSeparators (filename), writer.errorString ()));
+                                      //(errorString() used to be passed as a button argument instead of filling %2)
             return false;
         }
     }

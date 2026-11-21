@@ -38,5 +38,12 @@ int main (int argc, char *argv[])
     MainUI W;
     W.show ();
     W.loadArguments (args);
+    //Files opened while we are already running arrive here (they were dropped before)
+    QObject::connect (&a, &LSingleApplication::InputsAvailable, &W, [&W] (QStringList in) {
+        QStringList abs;
+        for (const QString &arg : in) { abs << (arg.startsWith ("--") ? arg : LUtils::PathToAbsolute (arg)); }
+        W.loadArguments (abs);
+        W.showNormal (); W.raise (); W.activateWindow ();
+    });
     return a.exec ();
 }

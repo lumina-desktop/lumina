@@ -36,13 +36,23 @@ public:
 	MainUI();
 	~MainUI();
 
-	void loadArguments(QStringList);
+public slots:
+	void loadArguments(QStringList); //also receives files forwarded by a second instance
+public:
 
 private:
 	Ui::MainUI *ui;
 	PianoBarProcess *PANDORA;
 	QMediaPlayer *PLAYER;
 	QVideoWidget *VIDEO;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	//Qt6 has no QMediaPlaylist: a simple list + current index replaces it (modes from the shuffle/repeat buttons)
+	QList<QUrl> playlist;
+	int playIndex;
+	void setPlayIndex(int idx); //select an entry (sets the player source, updates the list icons)
+	int nextPlayIndex(); //-1 at the end (no repeat)
+	int prevPlayIndex();
+#endif
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QMediaPlaylist *PLAYLIST;
 #endif

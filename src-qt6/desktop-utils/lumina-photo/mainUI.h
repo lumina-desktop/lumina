@@ -28,7 +28,8 @@ class MainUI : public QMainWindow
     MainUI ();
     ~MainUI ();
 
-    void loadArguments (QStringList);
+public slots:
+    void loadArguments (QStringList); //also receives files forwarded by a second instance
 
 private:
     Ui::MainUI *ui;

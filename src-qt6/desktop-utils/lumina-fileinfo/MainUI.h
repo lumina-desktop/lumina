@@ -23,6 +23,7 @@
 #include <LFileInfo.h>
 #include <QElapsedTimer>
 #include <QFuture>
+#include <atomic>
 
 #include <LuminaXDG.h>
 
@@ -54,7 +55,7 @@ private:
 	QFuture<void> sizeThread;
 
 	bool canwrite;
-	bool terminate_thread; //flag for terminating the GetDirSize task
+	std::atomic_bool terminate_thread; //flag for terminating the GetDirSize task (read by the worker thread)
 	void stopDirSize();
 
 	void GetDirSize(const QString dirname) const; //function to get folder size

@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "mainUI.h"
+#include <algorithm>
+#include <QRandomGenerator>
 #include "ui_mainUI.h"
 #include <QDebug>
 
@@ -59,7 +61,7 @@ MainUI::~MainUI(){
 void MainUI::loadArguments(QStringList args){
   //Parse out the arguments
   for(int i=0; i<args.length(); i++){
-    if(args.startsWith("--")){ continue; } //skip this one - not a file to try loading
+    if(args[i].startsWith("--")){ continue; } //skip this one - not a file to try loading (was args.startsWith() - a QStringList check)
     loadFile(args[i]);
   }
   //
@@ -68,7 +70,7 @@ void MainUI::loadArguments(QStringList args){
     ui->radio_pandora->toggle();
   }
 #else
-  if( args.contains("--pandora") && ui->radio_pandora->isEnabled()){
+  if( (playlist.isEmpty() || args.contains("--pandora")) && ui->radio_pandora->isEnabled()){
     ui->radio_pandora->toggle();
   }
 #endif
@@ -90,6 +92,7 @@ void MainUI::setupPlayer(){
   PLAYER->setPlaylist(PLAYLIST);
   PLAYER->setVolume(100); //just maximize this - will be managed outside this app
 #else
+  playIndex = -1;
   QAudioOutput *audioOutput = new QAudioOutput(this);
   audioOutput->setVolume(1.0);
   PLAYER->setAudioOutput(audioOutput);
@@ -287,8 +290,9 @@ void MainUI::loadFile(QString file){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->addMedia( QUrl::fromLocalFile(file));
 #else
-  // Qt6: No playlist support - just set the source directly
-  PLAYER->setSource( QUrl::fromLocalFile(file));
+  //Queue it (this used to replace the current source, so only the last file was ever kept)
+  playlist << QUrl::fromLocalFile(file);
+  LocalListMediaInserted(playlist.length()-1, playlist.length()-1);
 #endif
 }
 
@@ -352,6 +356,11 @@ void MainUI::playToggled(){
     if( ui->list_local->selectedItems().count()==1){
       PLAYLIST->setCurrentIndex( ui->list_local->row(ui->list_local->selectedItems().first()) );
     }
+#else
+    if( ui->list_local->selectedItems().count()==1){
+      int row = ui->list_local->row(ui->list_local->selectedItems().first());
+      if(row != playIndex){ setPlayIndex(row); }
+    }else if(playIndex < 0 && !playlist.isEmpty()){ setPlayIndex(0); }
 #endif
     PLAYER->play();
   }
@@ -380,6 +389,13 @@ void MainUI::nextToggled(){
   }else{
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     PLAYLIST->next();
+#else
+    int n = nextPlayIndex();
+    if(n >= 0){
+      bool playing = (PLAYER->playbackState() == QMediaPlayer::PlayingState);
+      setPlayIndex(n);
+      if(playing){ PLAYER->play(); }
+    }
 #endif
   }
 }
@@ -389,6 +405,13 @@ void MainUI::backToggled(){
   else{
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     PLAYLIST->previous();
+#else
+    int n = prevPlayIndex();
+    if(n >= 0){
+      bool playing = (PLAYER->playbackState() == QMediaPlayer::PlayingState);
+      setPlayIndex(n);
+      if(playing){ PLAYER->play(); }
+    }
 #endif
   }
 }
@@ -421,9 +444,17 @@ void MainUI::rmLocalMedia(){
     PLAYLIST->removeMedia( ui->list_local->row(sel[i]) );
   }
 #else
-  for(int i=0; i<sel.length(); i++){
-    delete ui->list_local->takeItem( ui->list_local->row(sel[i]) );
+  QList<int> rows;
+  for(int i=0; i<sel.length(); i++){ rows << ui->list_local->row(sel[i]); }
+  std::sort(rows.begin(), rows.end(), std::greater<int>()); //remove from the end so earlier rows stay valid
+  for(int r : rows){
+    if(r < 0 || r >= playlist.length()){ continue; }
+    if(r == playIndex){ PLAYER->stop(); PLAYER->setSource(QUrl()); playIndex = -1; }
+    else if(r < playIndex){ playIndex--; }
+    playlist.removeAt(r);
+    LocalListMediaRemoved(r, r);
   }
+  LocalListIndexChanged(playIndex);
 #endif
 }
 
@@ -434,6 +465,13 @@ void MainUI::upLocalMedia(){
      int row = ui->list_local->row(sel[i]);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     PLAYLIST->moveMedia(row, row-1 );
+#else
+    int to = row-1;
+    if(row < 0 || to < 0 || to >= playlist.length()){ continue; }
+    playlist.move(row, to);
+    ui->list_local->insertItem(to, ui->list_local->takeItem(row));
+    if(playIndex == row){ playIndex = to; } else if(playIndex == to){ playIndex = row; }
+    LocalListIndexChanged(playIndex);
 #endif
     QApplication::processEvents(); //this runs the inserted/removed functions
     ui->list_local->setCurrentRow(row-1);
@@ -447,6 +485,13 @@ void MainUI::downLocalMedia(){
      int row = ui->list_local->row(sel[i]);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     PLAYLIST->moveMedia(row, row+1 );
+#else
+    int to = row+1;
+    if(row < 0 || to < 0 || to >= playlist.length()){ continue; }
+    playlist.move(row, to);
+    ui->list_local->insertItem(to, ui->list_local->takeItem(row));
+    if(playIndex == row){ playIndex = to; } else if(playIndex == to){ playIndex = row; }
+    LocalListIndexChanged(playIndex);
 #endif
     QApplication::processEvents(); //this runs the inserted/removed functions
     ui->list_local->setCurrentRow(row+1);
@@ -484,7 +529,8 @@ void MainUI::LocalListMediaChanged(int start, int end){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QUrl url = PLAYLIST->media(i).request().url();
 #else
-    QUrl url = PLAYER->source();
+    if(i < 0 || i >= playlist.length() || ui->list_local->item(i)==0){ continue; }
+    QUrl url = playlist[i]; //(was PLAYER->source() - the current file, for every row)
 #endif
     ui->list_local->item(i)->setText(url.toLocalFile().section("/",-1).simplified());
     if(ui->list_local->item(i)->text()==selItem){
@@ -499,7 +545,8 @@ void MainUI::LocalListMediaInserted(int start, int end){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QUrl url = PLAYLIST->media(i).request().url();
 #else
-    QUrl url = PLAYER->source();
+    if(i < 0 || i >= playlist.length()){ continue; }
+    QUrl url = playlist[i]; //(was PLAYER->source() - the current file, for every row)
 #endif
     ui->list_local->insertItem(i, url.toLocalFile().section("/",-1).simplified());
   }
@@ -569,7 +616,40 @@ void MainUI::LocalMediaStatusChanged(QMediaPlayer::MediaStatus stat){
   }
   if(txt.isEmpty()){ ui->statusbar->clearMessage(); }
   else{ ui->statusbar->showMessage(txt, 1500); }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  //Move on at the end of each entry (QMediaPlaylist used to do this)
+  if(stat == QMediaPlayer::EndOfMedia){
+    int n = nextPlayIndex();
+    if(n >= 0){ setPlayIndex(n); PLAYER->play(); }
+  }
+#endif
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void MainUI::setPlayIndex(int idx){
+  if(idx < 0 || idx >= playlist.length()){ idx = -1; }
+  playIndex = idx;
+  PLAYER->setSource( idx >= 0 ? playlist[idx] : QUrl() );
+  LocalListIndexChanged(playIndex);
+}
+
+int MainUI::nextPlayIndex(){
+  if(playlist.isEmpty()){ return -1; }
+  if(ui->tool_local_shuffle->isChecked() && playlist.length() > 1){
+    int n = playIndex;
+    while(n == playIndex){ n = QRandomGenerator::global()->bounded(playlist.length()); }
+    return n;
+  }
+  if(playIndex+1 < playlist.length()){ return playIndex+1; }
+  return ui->tool_local_repeat->isChecked() ? 0 : -1; //loop or stop at the end
+}
+
+int MainUI::prevPlayIndex(){
+  if(playlist.isEmpty()){ return -1; }
+  if(playIndex > 0){ return playIndex-1; }
+  return ui->tool_local_repeat->isChecked() ? playlist.length()-1 : -1;
+}
+#endif
 
 //NOTE: Qt6 renamed the enum (State -> PlaybackState) but kept the value names, so the body is shared
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
