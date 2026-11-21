@@ -433,7 +433,7 @@ QString LXCB::OldWindowIconName(WId win){ //WM_ICON_NAME (old standard)
 // === WindowIsMaximized() ===
 bool LXCB::WindowIsMaximized(WId win){
   if(DEBUG){ qDebug() << "XCB: WindowIsMaximized()"; }
-  if(win==0){ return ""; }
+  if(win==0){ return false; } //(was 'return "";' - a string literal converts to true in a bool function)
   //See if the _NET_WM_STATE_MAXIMIZED_[VERT/HORZ] flags are set on the window
   xcb_get_property_cookie_t cookie = xcb_ewmh_get_wm_state_unchecked(&EWMH, win);
   if(cookie.sequence == 0){ return false; }
