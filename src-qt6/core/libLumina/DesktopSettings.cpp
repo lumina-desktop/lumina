@@ -131,8 +131,8 @@ void DesktopSettings::parseSystemSettings(){
     //Now determine the runmode for this user
     struct passwd *pw = getpwuid(getuid());
     if(pw!=0){
+      //NOTE: do not free() pw - getpwuid() returns a pointer to static storage owned by libc
       QString cuser = QString(pw->pw_name);
-      free(pw); //done with this structure
       if( settings[path]->value("fulluser_users", QStringList()).toStringList().contains(cuser) ){ runmode = DesktopSettings::UserFull; }
       else if( settings[path]->value("fullsystem_users", QStringList()).toStringList().contains(cuser) ){ runmode = DesktopSettings::SystemFull; }
       else if( settings[path]->value("staticinterface_users", QStringList()).toStringList().contains(cuser) ){ runmode = DesktopSettings::SystemInterface; }
@@ -146,8 +146,7 @@ void DesktopSettings::parseSystemSettings(){
           for(int i=0; i<grpSize; i++){
             struct group *g = getgrgid(grpList[i]);
             if(g!=0){
-              groups << QString(g->gr_name);
-              free(g);
+              groups << QString(g->gr_name); //NOTE: g points to static libc storage - do not free()
             }
           }
           QStringList fromfile = settings[path]->value("fulluser_groups", QStringList()).toStringList();
