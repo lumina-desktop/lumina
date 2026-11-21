@@ -12,7 +12,23 @@
 
 #define DEBUG 0
 
-static bool hascompositer = !LUtils::getCmdOutput("ps -x").filter("compton").filter("--backend").isEmpty(); //LUtils::isValidBinary("xcompmgr"); //NOT WORKING YET - xcompmgr issue with special window flags?
+//Is a compositing manager running (real translucency available)? Evaluated once, on first use - not during
+// static initialization (that ran "ps" before QApplication even existed, and earlier in startup than needed).
+//Matches picom (what lumina-session prefers now) as well as compton; it used to match only "compton ... --backend",
+// so picom users got the slow fake-transparency path in paintEvent(). xcompmgr stays excluded on purpose
+// (issue with special window flags).
+static bool hasCompositor(){
+  static int cached = -1;
+  if(cached < 0){
+    QStringList procs = LUtils::getCmdOutput("ps", QStringList() << "-x" << "-o" << "comm=");
+    cached = 0;
+    for(int i=0; i<procs.length(); i++){
+      QString name = procs[i].trimmed();
+      if(name == "picom" || name == "compton"){ cached = 1; break; }
+    }
+  }
+  return (cached == 1);
+}
 
 LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent, bool reservespace) : QWidget(){
   //Take care of inputs
@@ -71,7 +87,7 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent, bool rese
   LSession::handle()->XCB->SetAsPanel(this->winId());
   //}
   LSession::handle()->XCB->SetAsSticky(this->winId());
-  if(hascompositer){
+  if(hasCompositor()){
     //qDebug() << "Enable Panel compositing";
     //this->setStyleSheet("QWidget#LuminaPanelBackgroundWidget{ background: transparent; }");
     //this->setWindowOpacity(0.5); //fully transparent background for the main widget
@@ -376,7 +392,7 @@ void LPanel::resizeEvent(QResizeEvent *event){
 }
 
 void LPanel::paintEvent(QPaintEvent *event){
-  if(!hascompositer && reserveloc){
+  if(!hasCompositor() && reserveloc){
     QPainter *painter = new QPainter(this);
     //qDebug() << "Paint Panel:" << PPREFIX;
     //Make sure the base background of the event rectangle is the associated rectangle from the BGWindow

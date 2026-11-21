@@ -14,6 +14,7 @@
 #include <QMediaPlaylist>
 #endif
 #include <QMediaPlayer>
+#include <QUrl>
 #include <QTimer>
 #include <QWidget>
 #include <QMenu>
@@ -37,6 +38,12 @@ private:
 	Ui::PlayerWidget *ui;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	QMediaPlaylist *PLAYLIST;
+#else
+	//Qt6 has no QMediaPlaylist - a simple list + current index replaces it (sequential playback)
+	QList<QUrl> playlist;
+	int playlistIndex;
+	void setPlaylistIndex(int idx); //select an entry (sets the player source)
+	void appendToPlaylist(const QList<QUrl> &urls);
 #endif
 	QMediaPlayer *PLAYER;
 	QMenu *configMenu, *addMenu;
@@ -60,6 +67,9 @@ private slots:
 	void currentSongChanged();
 	void updateProgress(qint64 val);
 	void updateMaxProgress(qint64 val);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	void mediaStatusChanged(QMediaPlayer::MediaStatus stat); //advance to the next entry at the end of each one
+#endif
 };
 
 // Wrapper class to put this into a desktop plugin container

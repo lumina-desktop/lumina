@@ -13,6 +13,8 @@
 #include <QFileDialog>
 #include <LuminaXDG.h>
 #include <QDebug>
+#include <random>
+#include <algorithm>
 #include <QtGlobal>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
@@ -35,6 +37,7 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
     QAudioOutput *audioOutput = new QAudioOutput(this);
     audioOutput->setVolume(1.0);
     PLAYER->setAudioOutput(audioOutput);
+    playlistIndex = -1;
 #endif
 	
   configMenu = new QMenu(this);
@@ -57,6 +60,9 @@ PlayerWidget::PlayerWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Player
   connect(PLAYLIST, SIGNAL(mediaChanged(int, int)), this, SLOT(playlistChanged()) );
   connect(PLAYER, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(playerStateChanged()) );
   connect(PLAYLIST, SIGNAL(currentMediaChanged(const QMediaContent&)), this, SLOT(currentSongChanged()) );
+#else
+  connect(PLAYER, &QMediaPlayer::playbackStateChanged, this, &PlayerWidget::playerStateChanged);
+  connect(PLAYER, &QMediaPlayer::mediaStatusChanged, this, &PlayerWidget::mediaStatusChanged);
 #endif
   connect(ui->combo_playlist, SIGNAL(currentIndexChanged(int)), this, SLOT(userlistSelectionChanged()) );
   connect(ui->tool_play, SIGNAL(clicked()), this, SLOT(playClicked()) );
@@ -90,6 +96,9 @@ void PlayerWidget::LoadIcons(){
 }
 
 void PlayerWidget::playClicked(){
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+  if(playlistIndex < 0 && !playlist.isEmpty()){ setPlaylistIndex(0); }
+#endif
   PLAYER->play();	
 }
 
@@ -104,12 +113,24 @@ void PlayerWidget::stopClicked(){
 void PlayerWidget::nextClicked(){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->next();
+#else
+  if(playlistIndex+1 < playlist.length()){
+    bool playing = (PLAYER->playbackState() == QMediaPlayer::PlayingState);
+    setPlaylistIndex(playlistIndex+1);
+    if(playing){ PLAYER->play(); }
+  }
 #endif
 }
 
 void PlayerWidget::prevClicked(){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->previous();
+#else
+  if(playlistIndex > 0){
+    bool playing = (PLAYER->playbackState() == QMediaPlayer::PlayingState);
+    setPlaylistIndex(playlistIndex-1);
+    if(playing){ PLAYER->play(); }
+  }
 #endif
 }
 
@@ -144,6 +165,8 @@ void PlayerWidget::AddFilesToPlaylist(){
   }
   PLAYLIST->addMedia(urls);
   playlistChanged();
+#else
+  appendToPlaylist(files);
 #endif
 }
 
@@ -181,6 +204,10 @@ void PlayerWidget::AddDirToPlaylist(){
   }
   PLAYLIST->addMedia(urls);
   playlistChanged();
+#else
+  QList<QUrl> urls;
+  for(int i=0; i<files.length(); i++){ urls << QUrl::fromLocalFile(files[i].absoluteFilePath()); }
+  appendToPlaylist(urls);
 #endif
 }
 
@@ -212,6 +239,8 @@ void PlayerWidget::AddURLToPlaylist(){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->addMedia(newurl);
   playlistChanged();
+#else
+  appendToPlaylist(QList<QUrl>() << newurl);
 #endif
 }
 
@@ -219,6 +248,9 @@ void PlayerWidget::ClearPlaylist(){
   PLAYER->stop();
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->clear();
+#else
+  playlist.clear();
+  setPlaylistIndex(-1);
 #endif
   playlistChanged();
 }
@@ -226,6 +258,13 @@ void PlayerWidget::ClearPlaylist(){
 void PlayerWidget::ShufflePlaylist(){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->shuffle();
+#else
+  if(playlist.length() < 2){ return; }
+  QUrl current = (playlistIndex >= 0) ? playlist[playlistIndex] : QUrl();
+  std::shuffle(playlist.begin(), playlist.end(), std::mt19937(std::random_device{}()));
+  playlistIndex = current.isEmpty() ? -1 : playlist.indexOf(current); //keep the current song current (like QMediaPlaylist)
+  playlistChanged();
+  currentSongChanged();
 #endif
 }
 
@@ -234,12 +273,39 @@ void PlayerWidget::userlistSelectionChanged(){ //front-end combobox was changed 
   if(updatinglists){ return; }
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   PLAYLIST->setCurrentIndex( ui->combo_playlist->currentIndex() );
+#else
+  int idx = ui->combo_playlist->currentIndex();
+  if(idx == playlistIndex){ return; }
+  bool playing = (PLAYER->playbackState() == QMediaPlayer::PlayingState);
+  setPlaylistIndex(idx);
+  if(playing){ PLAYER->play(); }
 #endif
 }
 
 void PlayerWidget::playerStateChanged(){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   switch( PLAYER->state() ){
+    case QMediaPlayer::StoppedState:
+      ui->tool_stop->setVisible(false);
+      ui->tool_play->setVisible(true);
+      ui->tool_pause->setVisible(false);
+      ui->progressBar->setVisible(false);
+      break;
+    case QMediaPlayer::PausedState:
+      ui->tool_stop->setVisible(true);
+      ui->tool_play->setVisible(true);
+      ui->tool_pause->setVisible(false);
+      ui->progressBar->setVisible(true);
+      break;
+    case QMediaPlayer::PlayingState:
+      ui->tool_stop->setVisible(true);
+      ui->tool_play->setVisible(false);
+      ui->tool_pause->setVisible(true);
+      ui->progressBar->setVisible(true);
+      break;
+  }
+#else
+  switch( PLAYER->playbackState() ){
     case QMediaPlayer::StoppedState:
       ui->tool_stop->setVisible(false);
       ui->tool_play->setVisible(true);
@@ -277,6 +343,17 @@ void PlayerWidget::playlistChanged(){
   }
   if(PLAYLIST->currentIndex()<0 && PLAYLIST->mediaCount()>0){ PLAYLIST->setCurrentIndex(0); }
   ui->combo_playlist->setCurrentIndex(PLAYLIST->currentIndex());
+#else
+  for(int i=0; i<playlist.length(); i++){
+    QUrl url = playlist[i];
+    if(url.isLocalFile()){
+      ui->combo_playlist->addItem(LXDG::findMimeIcon(url.fileName().section(".",-1)), url.fileName() );
+    }else{
+      ui->combo_playlist->addItem(LXDG::findIcon("download",""), url.toString() );
+    }
+  }
+  if(playlistIndex < 0 && !playlist.isEmpty()){ setPlaylistIndex(0); }
+  ui->combo_playlist->setCurrentIndex(playlistIndex);
 #endif
   
   updatinglists = false;
@@ -294,8 +371,42 @@ void PlayerWidget::currentSongChanged(){
   ui->label_num->setText( QString::number( PLAYLIST->currentIndex()+1)+"/"+QString::number(PLAYLIST->mediaCount()) );
   ui->progressBar->setRange(0, PLAYER->duration() );
   ui->progressBar->setValue(0);
+#else
+  if(playlistIndex != ui->combo_playlist->currentIndex()){
+    updatinglists = true;
+    ui->combo_playlist->setCurrentIndex(playlistIndex);
+    updatinglists = false;
+  }
+  ui->tool_next->setEnabled( playlistIndex+1 < playlist.length() );
+  ui->tool_prev->setEnabled( playlistIndex > 0 );
+  ui->label_num->setText( QString::number(playlistIndex+1)+"/"+QString::number(playlist.length()) );
+  ui->progressBar->setRange(0, PLAYER->duration() );
+  ui->progressBar->setValue(0);
 #endif
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void PlayerWidget::setPlaylistIndex(int idx){
+  if(idx < 0 || idx >= playlist.length()){ idx = -1; }
+  playlistIndex = idx;
+  PLAYER->setSource( idx >= 0 ? playlist[idx] : QUrl() );
+  currentSongChanged();
+}
+
+void PlayerWidget::appendToPlaylist(const QList<QUrl> &urls){
+  for(int i=0; i<urls.length(); i++){ if(urls[i].isValid()){ playlist << urls[i]; } }
+  playlistChanged();
+  currentSongChanged();
+}
+
+void PlayerWidget::mediaStatusChanged(QMediaPlayer::MediaStatus stat){
+  //Sequential playback (the old QMediaPlaylist mode): move on at the end of each entry, stop after the last
+  if(stat == QMediaPlayer::EndOfMedia && playlistIndex+1 < playlist.length()){
+    setPlaylistIndex(playlistIndex+1);
+    PLAYER->play();
+  }
+}
+#endif
 
 void PlayerWidget::updateProgress(qint64 val){
   //qDebug() << "Update Progress Bar:" << val;
