@@ -103,9 +103,9 @@ QIcon IconThemePage::findIcon(const QString &themePath, int size, const QString 
       QDir iconDir = QFileInfo(themePath).path() + "/" + dir;
       iconDir.setFilter(QDir::Files);
       iconDir.setNameFilters(QStringList () << name + ".*");
-      if(iconDir.entryInfoList().isEmpty())
-        continue;
-        return QIcon(iconDir.entryInfoList().first().absoluteFilePath());
+      QFileInfoList found = iconDir.entryInfoList(); //listed once (was twice)
+      if(!found.isEmpty()){ return QIcon(found.first().absoluteFilePath()); }
+      //(no "continue" here: it skipped config.endGroup(), so the following groups nested and "Size" read the wrong group)
       }
       config.endGroup();
     }
@@ -115,9 +115,9 @@ QIcon IconThemePage::findIcon(const QString &themePath, int size, const QString 
     QDir iconDir = QFileInfo(themePath).path() + "/" + dir;
     iconDir.setFilter(QDir::Files);
     iconDir.setNameFilters(QStringList () << name + ".*");
-    if(iconDir.entryInfoList().isEmpty())
-      continue;
-      return QIcon(iconDir.entryInfoList().first().absoluteFilePath());
+    QFileInfoList found = iconDir.entryInfoList(); //listed once (was twice)
+    if(!found.isEmpty()){ return QIcon(found.first().absoluteFilePath()); }
+    //(no "continue" here: it skipped config.endGroup(), so the following groups nested and "Size" read the wrong group)
     }
     config.endGroup();
     }

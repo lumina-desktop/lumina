@@ -125,8 +125,9 @@ void lthemeenginePlatformTheme::applySettings(){
       if(!winIcon.isEmpty() && QIcon::hasThemeIcon(winIcon)){ wins[i]->setIcon(QIcon::fromTheme(winIcon)); }
     }
   }
-  bool cthemechange = m_cursorTheme != QString(getenv("X_CURSOR_THEME"));
-  setenv("X_CURSOR_THEME", m_cursorTheme.toLocal8Bit().data(), 1);
+  //libXcursor reads XCURSOR_THEME (this used to set "X_CURSOR_THEME", which nothing reads)
+  bool cthemechange = m_cursorTheme != QString(getenv("XCURSOR_THEME"));
+  if(!m_cursorTheme.isEmpty()){ setenv("XCURSOR_THEME", m_cursorTheme.toLocal8Bit().data(), 1); }
   //qDebug() << "Icon Theme Change:" << m_iconTheme << QIcon::themeSearchPaths();
   if(m_customPalette && m_usePalette){ QGuiApplication::setPalette(*m_customPalette); } //apply palette
 #ifdef QT_WIDGETS_LIB
@@ -150,8 +151,12 @@ void lthemeenginePlatformTheme::applySettings(){
   }*/
   //Now cleanup any old palette as needed
   if(outgoingpalette != 0){
+    //Take ownership first: processEvents() can re-enter updateSettings() (the 500 ms watcher timer), which
+    // reassigns outgoingpalette - deleting the member afterwards could delete the same palette twice
+    QPalette *old = outgoingpalette;
+    outgoingpalette = 0;
     QCoreApplication::processEvents(); //make sure everything switches to the new palette first
-    delete outgoingpalette;
+    delete old;
   }
 }
 #ifdef QT_WIDGETS_LIB
@@ -265,10 +270,7 @@ QString lthemeenginePlatformTheme::loadStyleSheets(const QStringList &paths){
 QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
   if(!filePath.contains("/") && !filePath.endsWith(".conf") && !filePath.isEmpty()){
     //relative theme name, auto-complete it
-    QStringList dirs;
-    dirs << getenv("XDG_CONFIG_HOME");
-    dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
-    dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
+    QStringList dirs = lthemeengine::searchBaseDirs(); //(empty XDG variables used to give "/lthemeengine/..." paths)
     QString relpath = "/lthemeengine/colors/%1.conf";
     relpath = relpath.arg(filePath);
     for(int i=0; i<dirs.length(); i++){
@@ -284,7 +286,10 @@ QPalette lthemeenginePlatformTheme::loadColorScheme(QString filePath){
   QStringList disabledColors = settings.value("disabled_colors").toStringList();
   settings.endGroup();
   if(activeColors.count() <= QPalette::NColorRoles && inactiveColors.count() <= QPalette::NColorRoles && disabledColors.count() <= QPalette::NColorRoles){
-    for (int i = 0; i < QPalette::NColorRoles && i<activeColors.count(); i++){
+    //Bound by the shortest list: this loop reads all three (was bounded by the active list only, so a
+    // scheme with shorter inactive/disabled lists read out of range in every app loading the theme)
+    int count = qMin(activeColors.count(), qMin(inactiveColors.count(), disabledColors.count()));
+    for (int i = 0; i < QPalette::NColorRoles && i<count; i++){
       QPalette::ColorRole role = QPalette::ColorRole(i);
       customPalette.setColor(QPalette::Active, role, QColor(activeColors.at(i)));
       customPalette.setColor(QPalette::Inactive, role, QColor(inactiveColors.at(i)));
@@ -330,8 +335,10 @@ void lthemeenginePlatformTheme::syncMouseCursorTheme(QString indexfile){
   int defsize = XcursorGetDefaultSize(display);
   //qDebug() << "Default cursor size:" << defsize;
   XcursorImages *imgs = XcursorLibraryLoadImages("left_ptr", NULL, defsize);
+  if(imgs==0){ return; } //theme has no left_ptr cursor (was passed on unchecked)
   //qDebug() << "imgs:" << imgs << imgs->nimage;
   XcursorCursors *curs = XcursorImagesLoadCursors(display, imgs);
+  XcursorImagesDestroy(imgs); //the cursors are created now - free the images (were never freed)
   if(curs==0){ return; } //not found
   //qDebug() << "Got Cursors:" << curs->ncursor;
   //Now re-set the cursors for the current top-level X windows

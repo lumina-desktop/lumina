@@ -6,6 +6,8 @@
 #include <QMenu>
 #include <QAction>
 #include <QTimer>
+#include <QProcess>
+#include <QTemporaryFile>
 
 namespace Ui {
 class QSSEditorDialog;
@@ -25,7 +27,8 @@ private slots:
     void on_buttonBox_clicked(QAbstractButton *button);
     void colorPicked(QAction*);
     bool isStyleSheetValid(const QString&);
-    void validateStyleSheet();
+    void validateStyleSheet(); //starts an asynchronous check (lthemeengine-sstest)
+    void validationFinished(); //updates the status icon from the check's output
 
 private:
     void save();
@@ -34,6 +37,8 @@ private:
     QString m_filePath;
     QMenu *colorMenu;
     QTimer *validateTimer;
+    QProcess *validateProc; //runs lthemeengine-sstest without blocking the editor
+    QTemporaryFile *validateFile; //kept alive until the check has read it
 
 };
 

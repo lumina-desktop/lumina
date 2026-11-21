@@ -27,6 +27,9 @@ public:
     static QString userColorSchemePath();
     static QStringList sharedColorSchemePath();
     static QString systemLanguageID();
+    //Base dirs searched for shared lthemeengine data, in priority order: $XDG_CONFIG_HOME, $XDG_CONFIG_DIRS,
+    // $XDG_DATA_DIRS (each with the XDG spec default when unset), then the install data dir
+    static QStringList searchBaseDirs();
     //Cursor Theme Management
     static QStringList availableSystemCursors();
     static QString currentCursor();

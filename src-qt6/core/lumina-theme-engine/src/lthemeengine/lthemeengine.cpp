@@ -52,20 +52,29 @@ QStringList lthemeengine::iconPaths(){
   return paths;
 }
 
+QStringList lthemeengine::searchBaseDirs(){
+  QStringList dirs;
+  QString cfghome = QString(getenv("XDG_CONFIG_HOME"));
+  dirs << (cfghome.isEmpty() ? QDir::homePath()+"/.config" : cfghome);
+  QStringList cfgdirs = QString(getenv("XDG_CONFIG_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(cfgdirs.isEmpty()){ cfgdirs << "/etc/xdg"; }
+  QStringList datadirs = QString(getenv("XDG_DATA_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(datadirs.isEmpty()){ datadirs << "/usr/local/share" << "/usr/share"; }
+  dirs << cfgdirs << datadirs << QString(LTHEMEENGINE_DATADIR);
+  for(int i=0; i<dirs.length(); i++){ dirs[i] = QDir::cleanPath(dirs[i]); }
+  dirs.removeDuplicates();
+  return dirs;
+}
+
 QString lthemeengine::userStyleSheetPath(){
   return configPath() + "qss/";
 }
 
 QStringList lthemeengine::sharedStyleSheetPath(){
-  QStringList dirs;
-  dirs << QString(getenv("XDG_CONFIG_HOME"));
-  dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
-  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  for(int i=0; i<dirs.length(); i++){
-      if (!dirs[i].endsWith("/")){ dirs[i].append("/"); }
-      dirs[i].append("lthemeengine/qss/");
-  }
-  if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/qss/"; } //no XDG settings - use the hardcoded path
+  //(QString("").split(":") is never empty, so the old "no XDG settings" fallback could not trigger and unset
+  // variables produced paths like "/lthemeengine/qss/")
+  QStringList dirs = searchBaseDirs();
+  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/qss/"); }
   return dirs;
  }
 
@@ -74,15 +83,10 @@ QString lthemeengine::userDesktopStyleSheetPath(){
 }
 
 QStringList lthemeengine::sharedDesktopStyleSheetPath(){
-  QStringList dirs;
-  dirs << QString(getenv("XDG_CONFIG_HOME"));
-  dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
-  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  for(int i=0; i<dirs.length(); i++){
-      if (!dirs[i].endsWith("/")){ dirs[i].append("/"); }
-      dirs[i].append("lthemeengine/desktop_qss/");
-  }
-  if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/desktop_qss/"; } //no XDG settings - use the hardcoded path
+  //(QString("").split(":") is never empty, so the old "no XDG settings" fallback could not trigger and unset
+  // variables produced paths like "/lthemeengine/desktop_qss/")
+  QStringList dirs = searchBaseDirs();
+  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/desktop_qss/"); }
   return dirs;
  }
 
@@ -91,15 +95,10 @@ QString lthemeengine::userColorSchemePath(){
 }
 
 QStringList lthemeengine::sharedColorSchemePath(){
-  QStringList dirs;
-  dirs << QString(getenv("XDG_CONFIG_HOME"));
-  dirs << QString(getenv("XDG_CONFIG_DIRS")).split(":");
-  dirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  for(int i=0; i<dirs.length(); i++){
-      if (!dirs[i].endsWith("/")){ dirs[i].append("/"); }
-      dirs[i].append("lthemeengine/colors/");
-  }
-  if(dirs.isEmpty()){ dirs << LTHEMEENGINE_DATADIR"/lthemeengine/colors/"; } //no XDG settings - use the hardcoded path
+  //(QString("").split(":") is never empty, so the old "no XDG settings" fallback could not trigger and unset
+  // variables produced paths like "/lthemeengine/colors/")
+  QStringList dirs = searchBaseDirs();
+  for(int i=0; i<dirs.length(); i++){ dirs[i].append("/lthemeengine/colors/"); }
   qDebug() << "Got Color Dirs:" << dirs;
   return dirs;
 }
@@ -118,8 +117,12 @@ QStringList lthemeengine::availableSystemCursors(){	//returns: [name] for each i
   //Find all the directories which could contain themes
  QStringList paths;
   paths << QDir::homePath()+"/.icons";
-  QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
-  xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
+  //(empty variables used to give "/icons" etc. - use the XDG spec defaults instead)
+  QString datahome = QString(getenv("XDG_DATA_HOME"));
+  QStringList xdd; xdd << (datahome.isEmpty() ? QDir::homePath()+"/.local/share" : datahome);
+  QStringList datadirs = QString(getenv("XDG_DATA_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(datadirs.isEmpty()){ datadirs << "/usr/local/share" << "/usr/share"; }
+  xdd << datadirs;
   for(int i=0; i<xdd.length(); i++){
     if(QFile::exists(xdd[i]+"/icons")){
       paths << xdd[i]+"/icons";

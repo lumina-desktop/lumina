@@ -164,7 +164,8 @@ void QSSPage::on_removeButton_clicked(){
   QListWidgetItem *item = currentSelection();
   if(!item){ return; }
   int button = QMessageBox::question(this, tr("Confirm Remove"),tr("Are you sure you want to remove style sheet \"%1\"?").arg(item->text()), QMessageBox::Yes | QMessageBox::No);
-  if(button == QMessageBox::Yes){ QFile::remove(item->data(QSS_FULL_PATH_ROLE).toString()); }
+  if(button != QMessageBox::Yes){ return; } //"No": keep the style sheet (the item used to be removed from the list anyway)
+  QFile::remove(item->data(QSS_FULL_PATH_ROLE).toString());
   delete item;
 }
 
@@ -283,7 +284,8 @@ void QSSPage::on_renameButton_clicked(){
     return;
     }
   if(!name.endsWith(".qss", Qt::CaseInsensitive)){ name.append(".qss"); }
-  QString newPath = lthemeengine::userStyleSheetPath() + name;
+  //Stay in the same kind of directory (renaming a desktop style sheet used to move it out of desktop_qss/)
+  QString newPath = (desktop_qss ? lthemeengine::userDesktopStyleSheetPath() : lthemeengine::userStyleSheetPath()) + name;
   if(!QFile::rename(item->data(QSS_FULL_PATH_ROLE).toString(), newPath)){
     QMessageBox::warning(this, tr("Error"), tr("Unable to rename file"));
     return;

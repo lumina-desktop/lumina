@@ -43,6 +43,10 @@ QSSEditorDialog::QSSEditorDialog(const QString &filePath, QWidget *parent) : QDi
   for(int i=0; i<colors.length(); i++){ colorMenu->addAction( colors[i].section("::::",0,0) )->setWhatsThis(colors[i].section("::::",1,1) ); }
   m_ui->tool_color->setMenu(colorMenu);
   connect(colorMenu, SIGNAL(triggered(QAction*)), this, SLOT(colorPicked(QAction*)) );
+  validateProc = new QProcess(this);
+    validateProc->setProcessChannelMode(QProcess::MergedChannels);
+  connect(validateProc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(validationFinished()) );
+  validateFile = 0;
   validateTimer = new QTimer(this);
     validateTimer->setInterval(500); //1/2 second after finish typing
     validateTimer->setSingleShot(true);
@@ -95,8 +99,24 @@ bool QSSEditorDialog::isStyleSheetValid(const QString &styleSheet){
 }
 
 void QSSEditorDialog::validateStyleSheet(){
-  qDebug() << "Validating StyleSheet:";
-  bool ok = isStyleSheetValid(m_ui->textEdit->toPlainText());
+  //Run the check asynchronously: lthemeengine-sstest starts a whole QApplication, and running it
+  // synchronously here (as before) froze the editor 500 ms after every edit.
+  if(validateProc->state() != QProcess::NotRunning){ validateProc->kill(); validateProc->waitForFinished(1000); } //stale check
+  delete validateFile;
+  validateFile = new QTemporaryFile(this);
+  if(!validateFile->open()){ return; }
+  QTextStream out(validateFile);
+  out << m_ui->textEdit->toPlainText();
+  out.flush();
+  validateFile->close();
+  validateProc->start("lthemeengine-sstest", QStringList() << validateFile->fileName());
+}
+
+void QSSEditorDialog::validationFinished(){
+  if(validateProc->exitStatus() != QProcess::NormalExit){ return; } //killed for a newer check
+  QString log = QString::fromLocal8Bit(validateProc->readAll());
+  qDebug() << "Got Validation Log:" << log;
+  bool ok = log.simplified().isEmpty();
 
   //Now update the button/label as needed
   int sz = this->fontMetrics().height();
