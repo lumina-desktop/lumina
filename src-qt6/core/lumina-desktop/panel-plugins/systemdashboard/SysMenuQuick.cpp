@@ -12,6 +12,11 @@
 
 LSysMenuQuick::LSysMenuQuick(QWidget *parent) : QWidget(parent), ui(new Ui::LSysMenuQuick){
   ui->setupUi(this);
+  appliedVol = -1;
+  voltimer = new QTimer(this);
+    voltimer->setSingleShot(true);
+    voltimer->setInterval(100);
+    connect(voltimer, SIGNAL(timeout()), this, SLOT(applyVolume()) );
   brighttimer = new QTimer(this);
     brighttimer->setSingleShot(true);
     brighttimer->setInterval(50); //50ms delay in setting the new value
@@ -56,6 +61,7 @@ void LSysMenuQuick::UpdateMenu(){
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
   ui->label_vol_text->setText(txt);
+  appliedVol = val; //(the current value - nothing to send back)
   if(ui->slider_volume->value()!= val){ ui->slider_volume->setValue(val); }
   //Screen Brightness
   val = LOS::ScreenBrightness();
@@ -111,7 +117,8 @@ void LSysMenuQuick::UpdateMenu(){
 
 void LSysMenuQuick::volSliderChanged(){
   int val = ui->slider_volume->value();
-  LOS::setAudioVolume(val);
+  //(used to run the mixer command on every slider tick)
+  if(!voltimer->isActive()){ voltimer->start(); }
   QString txt = QString::number(val)+"%";
   if(val<100){ txt.prepend(" "); } //make sure no widget resizing
   ui->label_vol_text->setText( txt );
@@ -119,6 +126,13 @@ void LSysMenuQuick::volSliderChanged(){
   else if(val > 33){ ui->label_vol_icon->setPixmap( LXDG::findIcon("audio-volume-medium","").pixmap(ui->label_vol_icon->maximumSize()) ); }
   else if(val > 0){ ui->label_vol_icon->setPixmap( LXDG::findIcon("audio-volume-low","").pixmap(ui->label_vol_icon->maximumSize()) ); }
   else{ ui->label_vol_icon->setPixmap( LXDG::findIcon("audio-volume-muted","").pixmap(ui->label_vol_icon->maximumSize()) ); }
+}
+
+void LSysMenuQuick::applyVolume(){
+  int val = ui->slider_volume->value();
+  if(val == appliedVol){ return; }
+  appliedVol = val;
+  LOS::setAudioVolume(val);
 }
 
 void LSysMenuQuick::startMixer(){

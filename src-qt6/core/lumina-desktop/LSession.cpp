@@ -58,6 +58,10 @@ LSession::LSession(int &argc, char ** argv) : LSingleApplication(argc, argv, "lu
     screenTimer->setSingleShot(true);
     screenTimer->setInterval(50);
     connect(screenTimer, SIGNAL(timeout()), this, SLOT(updateDesktops()) );
+  winListTimer = new QTimer(this);
+    winListTimer->setSingleShot(true);
+    winListTimer->setInterval(20);
+    connect(winListTimer, SIGNAL(timeout()), this, SLOT(updateWindowList()) );
   for(int i=1; i<argc; i++){
     if( QString::fromLocal8Bit(argv[i]) == "--noclean" ){ cleansession = false; break; }
   }
@@ -895,6 +899,13 @@ void LSession::RootSizeChange(){
 }
 
 void LSession::WindowPropertyEvent(){
+  //Every property change and every ConfigureNotify (continuous while a window is moved/resized) lands here, and
+  // each used to re-query the whole window list and refresh every task manager synchronously. Collect them into
+  // one update at most every 20 ms instead (not restarted on each event, so a long drag still updates).
+  if(!winListTimer->isActive()){ winListTimer->start(); }
+}
+
+void LSession::updateWindowList(){
   if(DEBUG){ qDebug() << "Window Property Event"; }
   QList<WId> newapps = XCB->WindowList();
   if(RunningApps.length() < newapps.length()){

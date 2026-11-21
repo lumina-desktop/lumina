@@ -4,6 +4,9 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QSaveFile>
+#include <qplatformdefs.h> //QT_STAT
+#include <unistd.h> //getuid()
 #include "PlainTextEditor.h"
 
 #include <QColor>
@@ -125,6 +128,29 @@ void PlainTextEditor::LoadFile(QString filepath){
   emit FileLoaded(this->whatsThis());
 }
 
+//Write the editor text to disk. Where it is safe, this goes through QSaveFile (write a temporary file, then
+// rename it over the original), so a crash or full disk mid-save leaves the old file intact instead of a cut-off
+// one. QSaveFile follows symlinks and keeps the permissions, but replacing the file would detach other hard
+// links and give the file to us - so files with several links, or owned by someone else, are still rewritten
+// in place (LUtils::writeFile, as before).
+static bool saveTextFile(const QString &path, QString text){
+  if(!text.isEmpty() && !text.endsWith("\n")){ text.append("\n"); } //always end with a new line (as writeFile did)
+  QT_STATBUF st;
+  QByteArray local = QFile::encodeName(QFileInfo(path).canonicalFilePath().isEmpty() ? path : QFileInfo(path).canonicalFilePath());
+  bool exists = (QT_STAT(local.constData(), &st) == 0);
+  if(exists && (st.st_nlink > 1 || st.st_uid != ::getuid())){
+    QStringList lines = text.split("\n");
+    if(lines.length()>1 && lines.last().isEmpty()){ lines.removeLast(); } //(writeFile adds the final newline itself)
+    return LUtils::writeFile(path, lines, true);
+  }
+  QSaveFile file(path);
+  file.setDirectWriteFallback(true); //directory not writable by us: fall back to writing the file directly
+  if(!file.open(QIODevice::WriteOnly)){ return false; }
+  QByteArray data = text.toUtf8();
+  if(file.write(data) != data.size()){ file.cancelWriting(); return false; }
+  return file.commit();
+}
+
 bool PlainTextEditor::SaveFile(bool newname){
   //NOTE: This returns true for proper behaviour, and false for a user-cancelled process
   //qDebug() << "Save File:" << this->whatsThis();
@@ -145,7 +171,7 @@ bool PlainTextEditor::SaveFile(bool newname){
     SYNTAX->rehighlight();
   }
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
-  bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
+  bool ok = saveTextFile(this->whatsThis(), this->toPlainText());
   hasChanges = !ok;
   if(ok){ lastSaveContents = this->toPlainText(); this->document()->setModified(false); emit FileLoaded(this->whatsThis()); }
   if(QFile::exists(currentFile())){ watcher->addPath(currentFile()); }

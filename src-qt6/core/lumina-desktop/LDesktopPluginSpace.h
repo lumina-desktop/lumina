@@ -45,6 +45,7 @@ public:
 	void cleanup();
 
 	void setBackground(QPixmap pix); //should already be sized appropriately for this widget
+	const QPixmap& background() const{ return wallpaper; } //(used by panels to fake transparency without grab())
 	void setDesktopArea(QRect area);
 
 public slots:

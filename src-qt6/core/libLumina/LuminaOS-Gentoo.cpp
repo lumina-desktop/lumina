@@ -6,6 +6,7 @@
 //===========================================
 #include <QDebug>
 #include "LuminaOS.h"
+#include "LuminaOS-common.h"
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
 
@@ -188,25 +189,12 @@ void LOS::systemSuspend(){
 
 //Battery Availability
 bool LOS::hasBattery(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool no_battery = my_status.contains("No support");
-  if (no_battery) return false;
-  return true;
+  return LOSLinuxBattery::hasBattery(); //(sysfs - see LuminaOS-common.h)
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  int my_start = my_status.indexOf("%");
-  // get the number right before the % sign
-  int my_end = my_start;
-  my_start--;
-  while ( (my_status[my_start] != ' ') && (my_start > 0) )
-      my_start--;
-  my_start++;
-  int my_charge = my_status.mid(my_start, my_end - my_start).toInt();
-  if ( (my_charge < 0) || (my_charge > 100) ) return -1;
-  return my_charge;
+  return LOSLinuxBattery::charge();
 }
 
 //Battery Charging State
@@ -216,15 +204,12 @@ int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside th
 // on battery and that is "Discharging". So if the value we get
 // is NOT Discharging then we assume the battery is charging.
 bool LOS::batteryIsCharging(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool discharging = my_status.contains("Discharging");
-  if (discharging) return false;
-  return true;
+  return LOSLinuxBattery::isCharging();
 }
 
 //Battery Time Remaining
 int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
-  return 0; //not implemented yet for Linux
+  return LOSLinuxBattery::secondsLeft(); //(-1 when unknown or charging)
 }
 
 //File Checksums
@@ -243,11 +228,7 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
-  QStringList mountInfo = LUtils::getCmdOutput("df -h \"" + dir + "\"");
-  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  //output: 200G of 400G available on /mount/point
-  QString capacity = mountInfo[1].section(" ",3,3, skipEmpty) + " of " + mountInfo[1].section(" ",1,1, skipEmpty) + " available on " +  mountInfo[1].section(" ",5,5, skipEmpty);
-  return capacity;
+  return LOSCommon::capacityPercent(dir); //(statvfs instead of parsing df output - see LuminaOS-common.h)
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)

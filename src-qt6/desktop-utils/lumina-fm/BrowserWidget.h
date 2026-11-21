@@ -40,6 +40,10 @@ private:
 	//The drag and drop brower widgets
 	DDListWidget *listWidget;
 	DDTreeWidget *treeWidget;
+	//path -> item for the current list/tree (each arriving item used to be found with a linear findItems(), making
+	// a large directory load quadratic). Kept in step with every place items are created/deleted below.
+	QHash<QString, QListWidgetItem*> listItems;
+	QHash<QString, QTreeWidgetItem*> treeItems;
 
 	QString DTtoString(QDateTime dt);  //QDateTime to string simplification routine
 

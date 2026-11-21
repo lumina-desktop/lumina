@@ -7,6 +7,7 @@
 #include "LPanel.h"
 #include "LSession.h"
 #include <QScreen>
+#include "LDesktopPluginSpace.h"
 
 #include "panel-plugins/systemtray/LSysTray.h"
 
@@ -402,7 +403,15 @@ void LPanel::paintEvent(QPaintEvent *event){
     //qDebug() << " - Rec:" << rec << hidden << this->geometry() << bgWindow->geometry();
     rec.moveTo( bgWindow->mapFromGlobal( this->mapToGlobal(rec.topLeft()) ) ); //(rec.x()-LSession::handle()->screenGeom(Screen()).x(), rec.y()-LSession::handle()->screenGeom(Screen()).y() );
     //qDebug() << " - Adjusted Window Rec:" << rec;
-    painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec));
+    //Draw straight from the desktop's wallpaper pixmap when there is one: grab() re-rendered the whole background
+    // widget *and every desktop plugin on it* into a new pixmap on each panel repaint. (A panel that reserves its
+    // space has no desktop plugins behind it, so the wallpaper is all that shows through.)
+    LDesktopPluginSpace *space = qobject_cast<LDesktopPluginSpace*>(bgWindow);
+    if(space!=0 && !space->background().isNull()){
+      painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), space->background(), rec);
+    }else{
+      painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), bgWindow->grab(rec));
+    }
     //painter->drawPixmap(event->rect().adjusted(-1,-1,2,2), QApplication::screens().at(Screen())->grabWindow(LuminaX11Bridge::appRootWindow(), rec.x(), rec.y(), rec.width(), rec.height()) );
     delete(painter);
   }

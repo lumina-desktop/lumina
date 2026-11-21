@@ -93,12 +93,14 @@ void LTaskButton::UpdateButton(){
 
   winMenu->clear();
   LXCB::WINDOWVISIBILITY showstate = LXCB::IGNORE;
+  //(drop closed windows first, so we know up front whether the multi-window menu is needed: filling it fetched
+  // the full icon and title of every window on every update, even for single-window buttons that never show it)
+  for(int i=WINLIST.length()-1; i>=0; i--){
+    if(WINLIST[i].windowID() == 0){ WINLIST.removeAt(i); }
+  }
+  const bool fillMenu = (WINLIST.length() > 1);
+  const WId activeWin = LSession::handle()->activeWindow(); //(was queried once per window)
   for(int i=0; i<WINLIST.length(); i++){
-    if(WINLIST[i].windowID() == 0){
-      WINLIST.removeAt(i);
-      i--;
-      continue;
-    }
     if(i==0 && (!statusOnly || noicon) ){
       //Update the button visuals from the first window
       this->setIcon(WINLIST[i].icon(noicon));
@@ -110,11 +112,13 @@ void LTaskButton::UpdateButton(){
       }
       this->setToolTip(cname);
     }
-    bool junk;
-    QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
-      tmp->setData(i); //save which number in the WINLIST this entry is for
+    if(fillMenu){
+      bool junk;
+      QAction *tmp = winMenu->addAction( WINLIST[i].icon(junk), WINLIST[i].text() );
+        tmp->setData(i); //save which number in the WINLIST this entry is for
+    }
     LXCB::WINDOWVISIBILITY stat = WINLIST[i].status(true); //update the saved state for the window
-    if(stat<LXCB::ACTIVE && WINLIST[i].windowID() == LSession::handle()->activeWindow()){ stat = LXCB::ACTIVE; }
+    if(stat<LXCB::ACTIVE && WINLIST[i].windowID() == activeWin){ stat = LXCB::ACTIVE; }
     if(stat > showstate){ showstate = stat; } //higher priority
   }
   //Now setup the button appropriately

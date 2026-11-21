@@ -121,6 +121,7 @@ private:
 	QList<LDesktop*> DESKTOPS;
 	QFileSystemWatcher *watcher;
 	QTimer *screenTimer;
+	QTimer *winListTimer; //coalesces bursts of window events into one WindowList() scan
 	QRect screenRect;
 	bool xchange; //flag for when the x11 session was adjusted
 
@@ -170,6 +171,7 @@ private slots:
 	void screensChanged();
 	void screenResized(int);
 	void checkWindowGeoms();
+	void updateWindowList();
 
 	//System Tray Functions
 	void startSystemTray();

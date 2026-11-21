@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QEventLoop>
 #include "PPlayerWidget.h"
 #include "ui_PPlayerWidget.h"
 
@@ -150,10 +151,12 @@ void PPlayerWidget::AddFilesToPlaylist(){
       QPoint center = QGuiApplication::primaryScreen()->geometry().center();
 #endif
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  //(was a while(isVisible()){ processEvents(); } loop, which kept a core at 100% while the dialog was open;
+  // a local event loop waits without spinning and keeps the dialog non-modal as before)
+  QEventLoop waitloop;
+  QObject::connect(&dlg, &QDialog::finished, &waitloop, &QEventLoop::quit);
   dlg.show();
-  while( dlg.isVisible() ){
-    QApplication::processEvents();
-  }
+  waitloop.exec();
   QList<QUrl> files = dlg.selectedUrls();
   if(files.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   //Make this use show/processEvents later
@@ -185,10 +188,12 @@ void PPlayerWidget::AddDirToPlaylist(){
       QPoint center = QGuiApplication::primaryScreen()->geometry().center();
 #endif
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  //(was a while(isVisible()){ processEvents(); } loop, which kept a core at 100% while the dialog was open;
+  // a local event loop waits without spinning and keeps the dialog non-modal as before)
+  QEventLoop waitloop;
+  QObject::connect(&dlg, &QDialog::finished, &waitloop, &QEventLoop::quit);
   dlg.show();
-  while( dlg.isVisible() ){
-    QApplication::processEvents();
-  }
+  waitloop.exec();
   if(dlg.result() != QDialog::Accepted){ return; } //cancelled
   QStringList sel = dlg.selectedFiles();
   if(sel.isEmpty()){ return; } //cancelled
@@ -225,10 +230,12 @@ void PPlayerWidget::AddURLToPlaylist(){
       QPoint center = QGuiApplication::primaryScreen()->geometry().center();
 #endif
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  //(was a while(isVisible()){ processEvents(); } loop, which kept a core at 100% while the dialog was open;
+  // a local event loop waits without spinning and keeps the dialog non-modal as before)
+  QEventLoop waitloop;
+  QObject::connect(&dlg, &QDialog::finished, &waitloop, &QEventLoop::quit);
   dlg.show();
-  while( dlg.isVisible() ){
-    QApplication::processEvents();
-  }
+  waitloop.exec();
   QString url = dlg.textValue();
   if(url.isEmpty() || dlg.result()!=QDialog::Accepted){ return; } //cancelled
 	

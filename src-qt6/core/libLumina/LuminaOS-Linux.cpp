@@ -6,6 +6,7 @@
 //===========================================
 #include <QDebug>
 #include "LuminaOS.h"
+#include "LuminaOS-common.h"
 #include <QStorageInfo>
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
@@ -92,11 +93,16 @@ QString info = LUtils::getCmdOutput("amixer get Master").join("").simplified();;
   int start_position, end_position;
   QString current_volume;
   if(!info.isEmpty()){
-     start_position = info.indexOf("[");
-     start_position++;
+     //(no "[..%]" in the output - e.g. no Master control - used to give 0 instead of the -1 error value)
      end_position = info.indexOf("%");
-     current_volume = info.mid(start_position, end_position - start_position);
-     out = current_volume.toInt();
+     start_position = (end_position<0) ? -1 : info.lastIndexOf("[", end_position);
+     if(start_position>=0){
+       start_position++;
+       current_volume = info.mid(start_position, end_position - start_position);
+       bool ok = false;
+       int vol = current_volume.toInt(&ok);
+       if(ok){ out = vol; }
+     }
   }
   return out;
 
@@ -171,65 +177,15 @@ void LOS::systemSuspend(){
 
 }
 
-//Battery information is read straight from the kernel (sysfs) instead of parsing "acpi -b":
-// no external tool needed, no process spawned on every panel update.
-static const QString POWER_SUPPLY_DIR = "/sys/class/power_supply/";
-
-static QString readSysValue(const QString &path){
-  QFile file(path);
-  if(!file.open(QIODevice::ReadOnly)){ return QString(); }
-  return QString::fromLatin1(file.readAll()).trimmed();
-}
-
-//System batteries only: skip peripheral batteries (mice, keyboards, headsets), which report scope "Device"
-static QStringList systemBatteryDirs(){
-  QStringList out;
-  QDir dir(POWER_SUPPLY_DIR);
-  QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::System, QDir::Name);
-  for(int i=0; i<entries.length(); i++){
-    QString path = POWER_SUPPLY_DIR + entries[i] + "/";
-    if(readSysValue(path+"type") != "Battery"){ continue; }
-    if(readSysValue(path+"scope") == "Device"){ continue; }
-    if(readSysValue(path+"present") == "0"){ continue; } //empty battery bay
-    out << path;
-  }
-  return out;
-}
-
+//Battery information is read straight from the kernel (sysfs) - shared with the other Linux backends in LuminaOS-common.h
 //Battery Availability
 bool LOS::hasBattery(){
-  return !systemBatteryDirs().isEmpty();
+  return LOSLinuxBattery::hasBattery(); //(sysfs - see LuminaOS-common.h)
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  QStringList bats = systemBatteryDirs();
-  if(bats.isEmpty()){ return -1; }
-  //Combine multiple batteries by stored energy (or charge) where the kernel provides it
-  double now = 0, full = 0;
-  bool haveAbsolute = true;
-  for(int i=0; i<bats.length() && haveAbsolute; i++){
-    QString n = readSysValue(bats[i]+"energy_now"), f = readSysValue(bats[i]+"energy_full");
-    if(n.isEmpty() || f.isEmpty()){ n = readSysValue(bats[i]+"charge_now"); f = readSysValue(bats[i]+"charge_full"); }
-    if(n.isEmpty() || f.isEmpty()){ haveAbsolute = false; break; }
-    now += n.toDouble(); full += f.toDouble();
-  }
-  int charge = -1;
-  if(haveAbsolute && full > 0){
-    charge = qRound(100.0 * now / full);
-  }else{
-    //Fall back to the average of the per-battery percentages
-    int total = 0, count = 0;
-    for(int i=0; i<bats.length(); i++){
-      bool ok = false;
-      int cap = readSysValue(bats[i]+"capacity").toInt(&ok);
-      if(ok){ total += cap; count++; }
-    }
-    if(count > 0){ charge = qRound(double(total) / count); }
-  }
-  if(charge > 100){ charge = 100; } //energy_now can slightly exceed energy_full on some hardware
-  if(charge < 0){ return -1; }
-  return charge;
+  return LOSLinuxBattery::charge();
 }
 
 //Battery Charging State
@@ -237,16 +193,12 @@ int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside th
 // on battery power they report "Discharging". So anything that is NOT Discharging is
 // treated as charging/plugged in (same behaviour as the previous acpi-based check).
 bool LOS::batteryIsCharging(){
-  QStringList bats = systemBatteryDirs();
-  for(int i=0; i<bats.length(); i++){
-    if(readSysValue(bats[i]+"status") == "Discharging"){ return false; }
-  }
-  return true;
+  return LOSLinuxBattery::isCharging();
 }
 
 //Battery Time Remaining
 int LOS::batterySecondsLeft(){ //Returns: estimated number of seconds remaining
-  return 0; //not implemented yet for Linux
+  return LOSLinuxBattery::secondsLeft(); //(-1 when unknown or charging)
 }
 
 //File Checksums
@@ -265,17 +217,10 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity, same value as the "Use%" column of df
-  //Read the numbers directly (statvfs via QStorageInfo) instead of parsing "df" output: no process spawn
-  // (this is called from lumina-fm worker threads), no out-of-range read when df prints nothing,
-  // and no breakage on paths containing quotes or long device names that make df wrap its lines.
-  QStorageInfo info(dir);
-  if(!info.isValid() || !info.isReady()){ return QString(); }
-  qint64 used = info.bytesTotal() - info.bytesFree();
-  qint64 avail = info.bytesAvailable();
-  if(used < 0 || avail < 0 || (used + avail) <= 0){ return QString(); }
-  //df rounds the percentage up: used / (used + available)
-  int percent = int( (used * 100 + (used + avail) - 1) / (used + avail) );
-  return QString::number(percent) + "% used";
+  //(same value as the "Use%" column of df)
+  QString pct = LOSCommon::capacityPercent(dir);
+  if(pct.isEmpty()){ return QString(); }
+  return pct + " used";
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)

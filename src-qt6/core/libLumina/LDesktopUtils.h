@@ -42,7 +42,7 @@ public:
 	static void upgradeFavorites(int fromoldversionnumber);
 
 	//Load the default setup for the system
-	static void LoadSystemDefaults(bool skipOS = false);
+	static void LoadSystemDefaults(bool skipOS = false, bool resetDefaultApps = false); //resetDefaultApps: also drop the user's default-application choices ("reset to defaults" buttons)
 	static bool checkUserFiles(QString lastversion, QString currentversion); //returns true if something changed
 	static int VersionStringToNumber(QString version); //convert the lumina version string to a number for comparisons
 

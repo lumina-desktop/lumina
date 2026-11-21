@@ -32,11 +32,14 @@ public:
 private:
 	Ui::LSysMenuQuick *ui;
 	QTimer *brighttimer;
+	QTimer *voltimer; //throttles volume changes (each one runs the mixer command)
+	int appliedVol; //last volume read from/sent to the system (-1: unknown)
 	bool firstrun, hasBat;
 	QString getRemainingTime(); //battery time left
 
 private slots:
 	void volSliderChanged();
+	void applyVolume();
 	void brightSliderChanged(); //start the delay/collection timer
 	void setCurrentBrightness(); //perform the change
 	void startMixer();

@@ -176,13 +176,13 @@ void MainWindow::sessionChangeUserIcon(){
 
 void MainWindow::sessionResetSys(){
     if( !verifySettingsReset() ){ return; } //cancelled
-    LDesktopUtils::LoadSystemDefaults();
+    LDesktopUtils::LoadSystemDefaults(false, true); //(true: reset default applications as well)
     QTimer::singleShot(500,this, SLOT(LoadSettings()) );
 }
 
 void MainWindow::sessionResetLumina(){
     if( !verifySettingsReset() ){ return; } //cancelled
-    LDesktopUtils::LoadSystemDefaults(true); //skip OS customizations
+    LDesktopUtils::LoadSystemDefaults(true, true); //skip OS customizations; reset default applications as well
     QTimer::singleShot(500,this, SLOT(LoadSettings()) );
 }
 

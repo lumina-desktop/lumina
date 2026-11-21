@@ -42,38 +42,45 @@ void page_session_locale::SaveSettings(){
   emit HasPendingChanges(false);
 }
 
+//Index of a saved locale in one of the locale combo boxes. The lists are built from Lumina's own translation
+// files, so a locale set elsewhere (or one Lumina has no translation for) was not listed: it showed as "System
+// Default" and was then cleared by the next save. Add such a value as its own entry instead.
+static int localeIndex(QComboBox *combo, const QString &val){
+  int index = combo->findData(val);
+  if(index<0 && !val.isEmpty()){
+    QString name = QLocale(val).nativeLanguageName();
+    combo->addItem( name.isEmpty() ? val : name+" ("+val+")", val);
+    index = combo->count()-1;
+  }
+  if(index<0){ index = 0; } //system default
+  return index;
+}
+
 void page_session_locale::LoadSettings(int){
   emit HasPendingChanges(false);
   emit ChangePageTitle( tr("Desktop Settings") );
   QSettings sessionsettings("lumina-desktop","sessionsettings");
 
   QString val = sessionsettings.value("InitLocale/LANG", "").toString();
-    int index = ui->combo_locale_lang->findData(val);
-    if(index<0){ index = 0; } //system default
+    int index = localeIndex(ui->combo_locale_lang, val);
     ui->combo_locale_lang->setCurrentIndex(index);
   val = sessionsettings.value("InitLocale/LC_MESSAGES", "").toString();
-    index = ui->combo_locale_message->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_message, val);
     ui->combo_locale_message->setCurrentIndex(index);
   val = sessionsettings.value("InitLocale/LC_TIME", "").toString();
-    index = ui->combo_locale_time->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_time, val);
     ui->combo_locale_time->setCurrentIndex(index);
       val = sessionsettings.value("InitLocale/LC_NUMERIC", "").toString();
-    index = ui->combo_locale_numeric->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_numeric, val);
     ui->combo_locale_numeric->setCurrentIndex(index);
       val = sessionsettings.value("InitLocale/LC_MONETARY", "").toString();
-    index = ui->combo_locale_monetary->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_monetary, val);
     ui->combo_locale_monetary->setCurrentIndex(index);
       val = sessionsettings.value("InitLocale/LC_COLLATE", "").toString();
-    index = ui->combo_locale_collate->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_collate, val);
     ui->combo_locale_collate->setCurrentIndex(index);
       val = sessionsettings.value("InitLocale/LC_CTYPE", "").toString();
-    index = ui->combo_locale_ctype->findData(val);
-    if(index<0){ index = 0; } //system default
+    index = localeIndex(ui->combo_locale_ctype, val);
     ui->combo_locale_ctype->setCurrentIndex(index);
 }
 

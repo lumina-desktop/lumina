@@ -93,11 +93,13 @@ void BrowserWidget::showDetails(bool show){
     this->layout()->removeWidget(listWidget);
     listWidget->deleteLater();
     listWidget = 0;
+    listItems.clear();
   }else if(!show && treeWidget!=0){
     iconsize = treeWidget->iconSize();
     this->layout()->removeWidget(treeWidget);
     treeWidget->deleteLater();
     treeWidget = 0;
+    treeItems.clear();
   }
  // qDebug() << "Create Widget: details:" << show;
   //Now create any new widgets
@@ -320,20 +322,22 @@ void BrowserWidget::clearItems(){
   //qDebug() << "Clear Items";
   if(listWidget!=0){ listWidget->clear(); }
   else if(treeWidget!=0){ treeWidget->clear(); }
+  listItems.clear(); treeItems.clear();
   freshload = true;
   //videoMap.clear();
 }
 
 void BrowserWidget::itemRemoved(QString item){
   //qDebug() << "item removed" << item;
+  //(by path: the old name match missed .desktop entries, which are shown under their display name)
   if(treeWidget!=0){
-    QList<QTreeWidgetItem*> found = treeWidget->findItems(item.section("/",-1), Qt::MatchExactly, 0); //look for exact name match
-    if(found.isEmpty()){ return; } //no match
-    delete found[0];
+    QTreeWidgetItem *found = treeItems.take(item);
+    if(found==0){ return; } //no match
+    delete found;
   }else if(listWidget!=0){
-    QList<QListWidgetItem*> found = listWidget->findItems(item.section("/",-1), Qt::MatchExactly); //look for exact name match
-    if(found.isEmpty()){ return; }
-    delete found[0];
+    QListWidgetItem *found = listItems.take(item);
+    if(found==0){ return; }
+    delete found;
   }
 }
 
@@ -351,24 +355,12 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     //LIST WIDGET - name and icon only
     QListWidgetItem *it = 0;
     //Find the existing item for this
-    if(info->isDesktopFile() && info->XDG()->isValid()){
-      QList<QListWidgetItem*> items = listWidget->findItems(info->XDG()->name, Qt::MatchExactly);
-      //Could be multiple items with the same text in this case - check paths as well
-      for(int i=0; i<items.length() && it==0; i++){
-        if(items[i]->whatsThis()==info->absoluteFilePath()){ it = items[i]; }
-      }
-    }else{
-      //non-desktop entry
-      QList<QListWidgetItem*> items = listWidget->findItems(info->fileName(), Qt::MatchExactly);
-      //Could be multiple items with the same text in this case - check paths as well
-      for(int i=0; i<items.length() && it==0; i++){
-        if(items[i]->whatsThis()==info->absoluteFilePath()){ it = items[i]; }
-      }
-    }
+    it = listItems.value(info->absoluteFilePath(), 0);
     //No existing item - make a new one
     if(it==0){
       it = new CQListWidgetItem(ico, info->fileName(), listWidget);
           it->setWhatsThis(info->absoluteFilePath());
+      listItems.insert(info->absoluteFilePath(), it);
           it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
         listWidget->addItem(it);
     }
@@ -383,12 +375,9 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
 
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
+    QTreeWidgetItem *existing = treeItems.value(info->absoluteFilePath(), 0);
     if(info->isDesktopFile()){
-      QList<QTreeWidgetItem*> items = treeWidget->findItems(info->XDG()->name, Qt::MatchExactly, 0);
-      for(int i=0; i<items.length() && it==0; i++){
-        //Can be multiple with the same name - check paths too
-        if(items[i]->whatsThis(0)==info->absoluteFilePath()){ it = items[i]; }
-      }
+      it = existing;
       if(it==0){
         //New item
         it = new CQTreeWidgetItem(treeWidget);
@@ -396,9 +385,8 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
-      QList<QTreeWidgetItem*> existing = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0); //looked up once (was twice)
-      if( ! existing.isEmpty() ) {
-        it = existing.first();
+      if( existing!=0 ) {
+        it = existing;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
       }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && !videoMap.contains(info->absoluteFilePath()) ) {
         it = new CQTreeWidgetItem(treeWidget);
@@ -428,6 +416,7 @@ void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
     it->setText(4, DTtoString(info->birthTime()) ); //creation date (4)
     //Now all the hidden data
     it->setWhatsThis(0, info->absoluteFilePath());
+    treeItems.insert(info->absoluteFilePath(), it);
     it->setWhatsThis(3, info->lastModified().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     it->setWhatsThis(4, info->birthTime().toString("yyyyMMddhhmmsszzz") ); //sorts by this actually
     num = treeWidget->topLevelItemCount();

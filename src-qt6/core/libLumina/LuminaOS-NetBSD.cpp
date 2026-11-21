@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LuminaOS.h"
+#include "LuminaOS-common.h"
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
 
@@ -151,16 +152,7 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
-  // on NetBSD, df has the following layout:
-  // $ df /home
-  // Filesystem   512-blocks       Used      Avail %Cap Mounted on
-  // /dev/cgd0a     39711132   37140376     585200  98% /home
-
-  QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
-  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  //we take the 5th word on the 2 line
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
-  return capacity;
+  return LOSCommon::capacityPercent(dir); //(statvfs instead of parsing df output - see LuminaOS-common.h)
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)

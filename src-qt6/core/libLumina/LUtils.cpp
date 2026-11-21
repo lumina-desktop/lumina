@@ -463,7 +463,8 @@ QStringList LUtils::imageExtensions(bool wildcards){
     if(app !=0){
       qDebug() << "Loading Locale:" << appname << langCode << langEnc;
       //If an existing translator was provided, remove it first (will be replaced)
-      if(cTrans!=0){ app->removeTranslator(cTrans); }
+      //(every caller replaces its pointer with the return value, so the old translator is ours to delete)
+      if(cTrans!=0){ app->removeTranslator(cTrans); delete cTrans; }
       //Setup the translator
       cTrans = new QTranslator();
       //Use the shortened locale code if specific code does not have a corresponding file
@@ -475,7 +476,8 @@ QStringList LUtils::imageExtensions(bool wildcards){
       if( cTrans->load( filename, LOS::LuminaShare()+"i18n/" ) ){
         app->installTranslator( cTrans );
       }else{
-	//Translator could not be loaded for some reason
+	//Translator could not be loaded for some reason (it used to be leaked here)
+	delete cTrans;
 	cTrans = 0;
 	if(langCode!="en_US"){
 	  qWarning() << " - Could not load Locale:" << langCode;
@@ -574,6 +576,7 @@ double LUtils::DisplaySizeToBytes(QString num){
   num = num.remove(" ");
   if(num.isEmpty()){ return 0.0; }
   if(num.endsWith("b")){ num.chop(1); } //remove the "bytes" marker (if there is one)
+  if(num.isEmpty()){ return 0.0; } //(just "b" - the check below used to read num[-1])
   QString lab = "b";
   if(!num[num.size()-1].isNumber()){
     lab = num.right(1); num.chop(1);
@@ -594,7 +597,7 @@ QString LUtils::BytesToDisplaySize(qint64 ibytes){
   //Now get the dominant unit
   int c=0;
   double bytes = ibytes; //need to keep decimel places for calculations
-  while(bytes>=1000 && c<labs.length() ){
+  while(bytes>=1000 && c<labs.length()-1 ){ //(stop at the last unit - this used to step past the end of labs)
     bytes = bytes/1024;
     c++;
   } //labs[c] is the unit

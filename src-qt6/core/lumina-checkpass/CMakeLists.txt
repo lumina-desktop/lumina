@@ -5,6 +5,13 @@
 
 # lumina-checkpass is a simple C program for password validation
 # It requires PAM library and needs to be installed with setuid permissions
+#
+# NOTE FOR PACKAGERS: no PAM service file is installed, on purpose - its contents are distro-specific.
+# lumina-checkpass uses the PAM service "lumina-checkpass" when /etc/pam.d/lumina-checkpass exists, and
+# otherwise falls back to "system-auth" (Arch, Fedora, ...) and then "login" (Debian/Ubuntu, ...).
+# To pin it, ship a one-line /etc/pam.d/lumina-checkpass with your distro's auth stack, e.g.
+#   auth include system-auth      (Red Hat/Arch style)
+#   @include common-auth          (Debian style)
 
 # Find PAM library
 find_library(PAM_LIBRARY pam REQUIRED)

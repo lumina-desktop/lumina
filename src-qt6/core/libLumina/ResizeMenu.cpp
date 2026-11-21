@@ -26,6 +26,8 @@ ResizeMenu::~ResizeMenu(){
 }
 
 void ResizeMenu::setContents(QWidget *con){
+  //clear() deletes the actions this menu owns - including cAct - so take it out first and keep reusing it
+  this->removeAction(cAct);
   this->clear();
   cAct->setDefaultWidget(con);
   this->addAction(cAct);

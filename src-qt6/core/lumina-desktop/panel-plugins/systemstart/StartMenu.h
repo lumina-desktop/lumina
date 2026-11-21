@@ -36,6 +36,8 @@ private:
 	QStringList favs;
 	QString CCat, CSearch, topsearch; //current category/search
 	QTimer *searchTimer;
+	QTimer *volTimer, *brightTimer; //throttle slider changes (each one runs an external command)
+	int appliedVol, appliedBright; //last value read from/sent to the system (-1: unknown)
 	QMutex searchmutex;
 
 	//Simple utility functions
@@ -81,11 +83,13 @@ private slots:
 
 	//Audio Volume
 	void on_slider_volume_valueChanged(int);
+	void applyVolume();
 	void on_tool_launch_mixer_clicked();
 	void on_tool_mute_audio_clicked();
 
 	//Screen Brightness
 	void on_slider_bright_valueChanged(int);
+	void applyBrightness();
 
 	//Workspace
 	void on_tool_set_nextwkspace_clicked();

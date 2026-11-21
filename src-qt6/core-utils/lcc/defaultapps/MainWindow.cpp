@@ -346,14 +346,16 @@ void MainWindow::cleardefaultitem(){
     }
     if(list.isEmpty()){ list << it; } //just do the current item
     //Now clear the items
+    QStringList mimes;
     for(int i=0; i<list.length(); i++){
         //Clear it in the back end
-        LXDG::setDefaultAppForMime(list[i]->whatsThis(0), "");
+        mimes << list[i]->whatsThis(0);
         //Now clear it in the UI
         list[i]->setWhatsThis(1,""); //clear the app path
         list[i]->setIcon(1,QIcon()); //clear the icon
         list[i]->setText(1,""); //clear the name
     }
+    LXDG::setDefaultAppForMimes(mimes, ""); //one file write for the whole group (was one per mimetype)
 }
 
 void MainWindow::setdefaultitem(){
@@ -375,15 +377,17 @@ void MainWindow::setdefaultitem(){
     //Now set the items
     XDGDesktop desk(app); //same app for every item: parse it (and look up its icon) once, not per mimetype
     QIcon deskIcon = LXDG::findIcon(desk.icon,"");
+    QStringList mimes;
     for(int i=0; i<list.length(); i++){
         //Set it in the back end
-        LXDG::setDefaultAppForMime(list[i]->whatsThis(0), app);
+        mimes << list[i]->whatsThis(0);
         //Set it in the UI
         list[i]->setWhatsThis(1,app); //app path
         list[i]->setIcon(1,deskIcon); //reset the icon
         list[i]->setText(1,desk.name); //reset the name
         list[i]->setData(1, Qt::UserRole, app);
     }
+    LXDG::setDefaultAppForMimes(mimes, app); //one file write for the whole group (was one per mimetype)
 }
 
 void MainWindow::setdefaultbinary(){
@@ -409,14 +413,16 @@ void MainWindow::setdefaultbinary(){
         return;
     }
     //Now set the items
+    QStringList mimes;
     for(int i=0; i<list.length(); i++){
         //Set it in the back end
-        LXDG::setDefaultAppForMime(list[i]->whatsThis(0), path);
+        mimes << list[i]->whatsThis(0);
         //Set it in the UI
         list[i]->setWhatsThis(1,path); //app path
         list[i]->setIcon(1,LXDG::findIcon("application-x-executable","")); //clear the icon
         list[i]->setText(1,path.section("/",-1)); //clear the name
     }
+    LXDG::setDefaultAppForMimes(mimes, path); //one file write for the whole group (was one per mimetype)
 }
 
 void MainWindow::checkdefaulticons(){

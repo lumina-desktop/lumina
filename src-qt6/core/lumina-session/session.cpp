@@ -241,8 +241,9 @@ void LSession::start(bool unified){
 	}
 	startProcess("wm", WM);
   }
-  //Compositing manager
-  setupCompositor(true);
+  //Compositing manager - only when enabled in the settings (lumina-config / lcc-compositor), which default to off
+  // (this used to pass force=true, starting picom/compton even with compositing switched off)
+  setupCompositor(false);
   //Desktop Next
   LSingleApplication::removeLocks("lumina-desktop");
   startProcess("runtime","lumina-desktop");

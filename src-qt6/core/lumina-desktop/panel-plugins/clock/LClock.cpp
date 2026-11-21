@@ -123,7 +123,7 @@ void LClock::updateFormats(){
   defdate = datefmt.simplified().isEmpty();
   //Adjust the timer interval based on the smallest unit displayed
   if(deftime){ timer->setInterval(500); } //1/2 second
-  else if(timefmt.contains("z")){ timer->setInterval(1); } //every millisecond (smallest unit)
+  else if(timefmt.contains("z")){ timer->setInterval(50); } //milliseconds shown: 20 updates/s is as fast as it can be read (was 1 ms - a repaint every millisecond)
   else if(timefmt.contains("s")){ timer->setInterval(500); } //1/2 second
   else if(timefmt.contains("m")){ timer->setInterval(2000); } //2 seconds
   else{ timer->setInterval(1000); } //unknown format - use 1 second interval

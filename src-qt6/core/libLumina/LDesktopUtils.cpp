@@ -144,7 +144,7 @@ void LDesktopUtils::upgradeFavorites(int){ //fromoldversionnumber
   // Example: 1.2.3 -> 1002003
 }
 
-void LDesktopUtils::LoadSystemDefaults(bool skipOS){
+void LDesktopUtils::LoadSystemDefaults(bool skipOS, bool resetDefaultApps){
   //Will create the Lumina configuration files based on the current system template (if any)
   qDebug() << "Loading System Defaults";
   //Ensure that the settings directory exists
@@ -157,6 +157,8 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
   //Keep the user's own default-application choices if they have any (same file LXDG::setDefaultAppForMime() writes)
   QString cfghome = QString(getenv("XDG_CONFIG_HOME"));
   if(cfghome.isEmpty()){ cfghome = QDir::homePath()+"/.config"; }
+  //(an explicit "reset to defaults" resets these too: remove them first so the system defaults below are applied)
+  if(resetDefaultApps && QFile::exists(cfghome+"/lumina-mimeapps.list")){ QFile::remove(cfghome+"/lumina-mimeapps.list"); }
   bool skipmime = QFile::exists( cfghome+"/lumina-mimeapps.list" ); //(was misspelled "lumina-mimapps.list", so this was never true)
   //qDebug() << " - Skipping mimetype default apps" << skipmime;
   QStringList sysDefaults;

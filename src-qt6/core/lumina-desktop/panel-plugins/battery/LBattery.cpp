@@ -54,11 +54,14 @@ void LBattery::updateBattery(bool force){
    *  rises to 80%.  This will help the user maintain their battery
    *  in an optimal way.
    */
-  if(charge<=20 && !charging){ label->setStyleSheet("QLabel{ background: red;}"); }
-  else if(charge<=30 && !charging){ label->setStyleSheet("QLabel{ background: orange;}"); }
-  else if(charge<=40 && !charging){ label->setStyleSheet("QLabel{ background: yellow;}"); }
-  else if(charge>80 && charging){ label->setStyleSheet("QLabel{ background: green;}"); }
-  else{ label->setStyleSheet("QLabel{ background: transparent;}"); }
+  QString bg = "transparent";
+  if(charge<=20 && !charging){ bg = "red"; }
+  else if(charge<=30 && !charging){ bg = "orange"; }
+  else if(charge<=40 && !charging){ bg = "yellow"; }
+  else if(charge>80 && charging){ bg = "green"; }
+  //(setting a stylesheet re-polishes the widget, so only do it when the color actually changes - it was every 5 s)
+  QString style = "QLabel{ background: "+bg+";}";
+  if(label->styleSheet() != style){ label->setStyleSheet(style); }
 
   //Now update the display
   QString tt;

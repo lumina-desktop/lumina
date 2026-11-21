@@ -216,6 +216,7 @@ public:
 	static QStringList findAvailableAppsForMime(QString mime);
 	//Set the default application for a mime-type
 	static void setDefaultAppForMime(QString mime, QString app);
+	static void setDefaultAppForMimes(QStringList mimes, QString app); //same, for several mimetypes with one file write
 	//List all the registered audio/video file extensions
 	static QStringList findAVFileExtensions();
 	//Load all the "globs2" mime database files

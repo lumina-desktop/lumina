@@ -28,8 +28,10 @@ LInputDevice::LInputDevice(unsigned int id, unsigned int type){
   devType = type;
   //ATOM_FLOAT = 0; //init this when needed later
   //devName = name;
-  getProperties(); //need to populate the name/atom correlations for properties
-  readProperties(); //populate the hash with the current values of the properties
+  valuesRead = false;
+  getProperties(); //need to populate the name/atom correlations for properties (XCB - no process spawned)
+  //(readProperties() - one synchronous "xinput list-props" per device - used to run here, so listDevices()
+  // blocked for N process spawns; it now runs the first time a value is asked for)
 }
 
 LInputDevice::~LInputDevice(){
@@ -67,6 +69,7 @@ QString LInputDevice::propertyName(int prop){
 }
 
 QVariant LInputDevice::getPropertyValue(int prop){
+  if(!valuesRead){ readProperties(); }
   if(devProps.contains(prop)){ return devProps[prop].value; }
   else{ return QVariant(); }
 }
@@ -125,6 +128,7 @@ void LInputDevice::getProperties(){
 }
 
 void LInputDevice::readProperties(){
+  valuesRead = true;
   QList<int> props = devProps.keys();
   //XINPUT UTILITY USAGE (alternative to XCB which actually works right now)
   QStringList info = LUtils::getCmdOutput("xinput list-props "+QString::number(devID));

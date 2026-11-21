@@ -1426,27 +1426,36 @@ QStringList LXDG::findAvailableAppsForMime(QString mime){
 }
 
 void LXDG::setDefaultAppForMime(QString mime, QString app){
-  //qDebug() << "Set Default App For Mime:" << mime << app;
+  setDefaultAppForMimes(QStringList() << mime, app);
+}
+
+void LXDG::setDefaultAppForMimes(QStringList mimes, QString app){
+  //(setting a whole mime group used to read and rewrite this file once per child mimetype)
+  //qDebug() << "Set Default App For Mimes:" << mimes << app;
   QString filepath = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list";
   QStringList cinfo = LUtils::readFile(filepath);
   //If this is a new file, make sure to add the header appropriately
   if(cinfo.isEmpty()){ cinfo << "#Automatically generated with lumina-config" << "# DO NOT CHANGE MANUALLY" << "[Default Applications]"; }
-  //Check for any current entry for this mime type
-  QStringList tmp = cinfo.filter(mime+"=");
-  int index = -1;
-  if(!tmp.isEmpty()){ index = cinfo.indexOf(tmp.first()); }
-  //Now add the new default entry (if necessary)
-  if(app.isEmpty()){
-    if(index>=0){ cinfo.removeAt(index); } //Remove entry
-  }else{
-    if(index<0){
-      cinfo << mime+"="+app+";"; //new entry
+  for(int m=0; m<mimes.length(); m++){
+    QString mime = mimes[m];
+    if(mime.isEmpty()){ continue; }
+    //Check for any current entry for this mime type (matched at the start of the line rather than anywhere in it)
+    int index = -1;
+    for(int i=0; i<cinfo.length() && index<0; i++){
+      if(cinfo[i].startsWith(mime+"=")){ index = i; }
+    }
+    //Now add the new default entry (if necessary)
+    if(app.isEmpty()){
+      if(index>=0){ cinfo.removeAt(index); } //Remove entry
     }else{
-      cinfo[index] = mime+"="+app+";"; //overwrite existing entry
+      if(index<0){
+        cinfo << mime+"="+app+";"; //new entry
+      }else{
+        cinfo[index] = mime+"="+app+";"; //overwrite existing entry
+      }
     }
   }
   LUtils::writeFile(filepath, cinfo, true);
-  return;
 }
 
 QStringList LXDG::findAVFileExtensions(){

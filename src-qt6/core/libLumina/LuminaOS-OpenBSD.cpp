@@ -6,6 +6,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "LuminaOS.h"
+#include "LuminaOS-common.h"
 #include <unistd.h>
 
 //can't read xbrightness settings - assume invalid until set
@@ -234,16 +235,7 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 
 //file system capacity
 QString LOS::FileSystemCapacity(QString dir) {
-  // on OpenBSD, df has the following layout:
-  //>df /home/wi
-  //>Filesystem  512-blocks      Used     Avail Capacity  Mounted on
-  //>/dev/sd2l     14334588    739900  12877960     5%    /home
-
-  QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
-  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  //we take the 5th word on the 2 line
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty);
-  return capacity;
+  return LOSCommon::capacityPercent(dir); //(statvfs instead of parsing df output - see LuminaOS-common.h)
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)

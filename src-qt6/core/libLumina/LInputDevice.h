@@ -48,6 +48,7 @@ private:
 	unsigned int devID; //device ID number - assigned at class creation
 	unsigned int devType; //device "use" identifier - assigned at class creation
 	QHash<int, propData> devProps; //Known device properties <id#, properties struct>
+	bool valuesRead; //property values are read (one "xinput list-props" run) on first use, not per device at listing time
 
 	void getProperties();
 	void readProperties();

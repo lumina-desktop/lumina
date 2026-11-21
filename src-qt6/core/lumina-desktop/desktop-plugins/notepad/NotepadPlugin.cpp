@@ -1,3 +1,4 @@
+#include <QEventLoop>
 #include "NotepadPlugin.h"
 
 #include <LuminaXDG.h>
@@ -113,10 +114,12 @@ void NotePadPlugin::openNote(){
       QPoint center = QGuiApplication::primaryScreen()->geometry().center();
 #endif
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  //(was a while(isVisible()){ processEvents(); } loop, which kept a core at 100% while the dialog was open;
+  // a local event loop waits without spinning and keeps the dialog non-modal as before)
+  QEventLoop waitloop;
+  QObject::connect(&dlg, &QDialog::finished, &waitloop, &QEventLoop::quit);
   dlg.show();
-  while( dlg.isVisible() ){
-    QApplication::processEvents();
-  }
+  waitloop.exec();
   QStringList sel = dlg.selectedFiles();
   if(sel.isEmpty()  || dlg.result()!=QDialog::Accepted){ return; } //cancelled
   QString fullpath = sel.first();
@@ -157,11 +160,12 @@ QString NotePadPlugin::newNoteName(QString oldname, bool tryagain){
       QPoint center = QGuiApplication::primaryScreen()->geometry().center();
 #endif
       dlg.move( center.x()-(dlg.width()/2), center.y()-(dlg.height()/2) );
+  //(was a while(isVisible()){ processEvents(); } loop, which kept a core at 100% while the dialog was open;
+  // a local event loop waits without spinning and keeps the dialog non-modal as before)
+  QEventLoop waitloop;
+  QObject::connect(&dlg, &QDialog::finished, &waitloop, &QEventLoop::quit);
   dlg.show();
-  while( dlg.isVisible() ){
-    //this->thread()->usleep(300000); //300 ms between updates
-    QApplication::processEvents();
-  }
+  waitloop.exec();
   QString name = dlg.textValue();
   //make sure to remove any "bad" characters from the name
   name.remove("\""); name.remove(";"); name.remove("\'"); name.replace("/","_");

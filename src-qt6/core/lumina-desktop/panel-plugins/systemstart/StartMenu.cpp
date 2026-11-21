@@ -17,6 +17,17 @@
 StartMenu::StartMenu(QWidget *parent) : QWidget(parent), ui(new Ui::StartMenu){
   ui->setupUi(this); //load the designer file
   this->setMouseTracking(true);
+  appliedVol = appliedBright = -1;
+  //(every slider tick used to run the volume/brightness command synchronously - at most one per interval now,
+  // always with the slider's current value)
+  volTimer = new QTimer(this);
+    volTimer->setSingleShot(true);
+    volTimer->setInterval(100);
+    connect(volTimer, SIGNAL(timeout()), this, SLOT(applyVolume()) );
+  brightTimer = new QTimer(this);
+    brightTimer->setSingleShot(true);
+    brightTimer->setInterval(150);
+    connect(brightTimer, SIGNAL(timeout()), this, SLOT(applyBrightness()) );
   searchTimer = new QTimer(this);
     searchTimer->setInterval(300); //~1/3 second
     searchTimer->setSingleShot(true);
@@ -501,11 +512,11 @@ void StartMenu::on_stackedWidget_currentChanged(int val){
     // -- Brightness Controls
     int tmp = LOS::ScreenBrightness();
     ui->frame_bright->setVisible(tmp >= 0);
-    if(tmp >= 0){ ui->slider_bright->setValue(tmp); }
+    if(tmp >= 0){ appliedBright = tmp; ui->slider_bright->setValue(tmp); } //(the current value - nothing to send back)
     // -- Audio Controls
     tmp = LOS::audioVolume();
     ui->frame_audio->setVisible(tmp >= 0);
-    if(tmp >= 0){ ui->slider_volume->setValue(tmp); }
+    if(tmp >= 0){ appliedVol = tmp; ui->slider_volume->setValue(tmp); }
 
   }else if(page == ui->page_leave){
     if( !ui->frame_leave_system->whatsThis().isEmpty() ){
@@ -626,7 +637,7 @@ void StartMenu::on_tool_suspend_clicked(){
 //Audio Volume
 void StartMenu::on_slider_volume_valueChanged(int val){
   ui->label_vol->setText(QString::number(val)+"%");
-  LOS::setAudioVolume(val);
+  if(!volTimer->isActive()){ volTimer->start(); }
   //Also adjust the icon for the volume
   if(val<1){ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-muted","")); }
   else if(val<33){ ui->tool_mute_audio->setIcon(LXDG::findIcon("audio-volume-low","")); }
@@ -653,6 +664,20 @@ void StartMenu::on_tool_mute_audio_clicked(){
 //Screen Brightness
 void StartMenu::on_slider_bright_valueChanged(int val){
   ui->label_bright->setText(QString::number(val)+"%");
+  if(!brightTimer->isActive()){ brightTimer->start(); }
+}
+
+void StartMenu::applyVolume(){
+  int val = ui->slider_volume->value();
+  if(val == appliedVol){ return; }
+  appliedVol = val;
+  LOS::setAudioVolume(val);
+}
+
+void StartMenu::applyBrightness(){
+  int val = ui->slider_bright->value();
+  if(val == appliedBright){ return; }
+  appliedBright = val;
   LOS::setScreenBrightness(val);
 }
 
