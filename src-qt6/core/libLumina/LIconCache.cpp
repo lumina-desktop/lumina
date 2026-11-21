@@ -129,6 +129,7 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
+  if(!needload && HASH[icon].fullpath.isEmpty()){ return; } //known missing (negative cache entry) - nothing to load
   if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ button->setIcon( HASH[icon].thumbnail ); return; }
     else if(!HASH[icon].icon.isNull()){ button->setIcon( HASH[icon].icon ); return; }
@@ -136,7 +137,12 @@ void LIconCache::loadIcon(QAbstractButton *button, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = createData(icon); }
+  else {
+    idata = createData(icon);
+    //Not found anywhere: remember that (relative names only - cleared by clearIconTheme() on a theme change)
+    // instead of queueing a load that fails, removes the entry, and repeats the whole search next time
+    if(idata.fullpath.isEmpty()){ HASH.insert(icon, idata); return; }
+  }
     idata.pendingButtons << QPointer<QAbstractButton>(button); //save this button for later
   HASH.insert(icon, idata);
   if(needload){ startReadFile(icon, idata.fullpath); }
@@ -150,6 +156,7 @@ void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
   }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
+  if(!needload && HASH[icon].fullpath.isEmpty()){ return; } //known missing (negative cache entry) - nothing to load
   if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ action->setIcon( HASH[icon].thumbnail ); return; }
     else if(!HASH[icon].icon.isNull()){ action->setIcon( HASH[icon].icon ); return; }
@@ -157,7 +164,12 @@ void LIconCache::loadIcon(QAction *action, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = createData(icon); }
+  else {
+    idata = createData(icon);
+    //Not found anywhere: remember that (relative names only - cleared by clearIconTheme() on a theme change)
+    // instead of queueing a load that fails, removes the entry, and repeats the whole search next time
+    if(idata.fullpath.isEmpty()){ HASH.insert(icon, idata); return; }
+  }
     idata.pendingActions << QPointer<QAction>(action); //save this button for later
   HASH.insert(icon, idata);
   if(needload){ startReadFile(icon, idata.fullpath); }
@@ -171,6 +183,7 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
+  if(!needload && HASH[icon].fullpath.isEmpty()){ return; } //known missing (negative cache entry) - nothing to load
   if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ label->setPixmap( HASH[icon].thumbnail.pixmap(label->sizeHint()) ); return; }
     else if(!HASH[icon].icon.isNull()){ label->setPixmap( HASH[icon].icon.pixmap(label->sizeHint()) ); return; }
@@ -179,7 +192,7 @@ void LIconCache::loadIcon(QLabel *label, QString icon, bool noThumb){
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
   else { idata = createData(icon);
-    if(idata.fullpath.isEmpty()){ return; } //nothing to do
+    if(idata.fullpath.isEmpty()){ HASH.insert(icon, idata); return; } //nothing to do - cache the miss
   }
   idata.pendingLabels << QPointer<QLabel>(label); //save this QLabel for later
   HASH.insert(icon, idata);
@@ -194,6 +207,7 @@ void LIconCache::loadIcon(QMenu *action, QString icon, bool noThumb){
   }
   //See if the icon has already been loaded into the HASH
   bool needload = !HASH.contains(icon);
+  if(!needload && HASH[icon].fullpath.isEmpty()){ return; } //known missing (negative cache entry) - nothing to load
   if(!needload){
     if(!noThumb && !HASH[icon].thumbnail.isNull()){ action->setIcon( HASH[icon].thumbnail ); return; }
     else if(!HASH[icon].icon.isNull()){ action->setIcon( HASH[icon].icon ); return; }
@@ -201,7 +215,12 @@ void LIconCache::loadIcon(QMenu *action, QString icon, bool noThumb){
   //Need to load the icon
   icon_data idata;
   if(HASH.contains(icon)){ idata = HASH.value(icon); }
-  else { idata = createData(icon); }
+  else {
+    idata = createData(icon);
+    //Not found anywhere: remember that (relative names only - cleared by clearIconTheme() on a theme change)
+    // instead of queueing a load that fails, removes the entry, and repeats the whole search next time
+    if(idata.fullpath.isEmpty()){ HASH.insert(icon, idata); return; }
+  }
     idata.pendingMenus << QPointer<QMenu>(action); //save this button for later
   HASH.insert(icon, idata);
   if(needload){ startReadFile(icon, idata.fullpath); }
@@ -229,7 +248,7 @@ QIcon LIconCache::loadIcon(QString icon, bool noThumb){
   icon_data idat;
   if(HASH.contains(icon)){ idat = HASH[icon]; }
   else{ idat = createData(icon); }
-  if(idat.fullpath.isEmpty()){ return QIcon(); } //non-existant file
+  if(idat.fullpath.isEmpty()){ HASH.insert(icon, idat); return QIcon(); } //non-existant file - cache the miss
   idat.icon = QIcon(idat.fullpath);
   //Now save into the hash and return
   HASH.insert(icon, idat);
@@ -349,8 +368,12 @@ bool LIconCache::isThemeIcon(QString id){
 QIcon LIconCache::iconFromTheme(QString id){
   QIcon ico = QIcon::fromTheme(id);
   if(ico.isNull()){
-    //icon missing in theme? run the old icon-finder system
-    ico = QIcon(findFile(id));
+    //icon missing in theme? run the old icon-finder system - but only once per name: a miss is remembered
+    // as an entry with an empty path (theme-name entries are dropped by clearIconTheme() on a theme change)
+    if(HASH.contains(id) && HASH[id].fullpath.isEmpty()){ return ico; }
+    QString path = findFile(id);
+    if(path.isEmpty()){ HASH.insert(id, icon_data()); }
+    else{ ico = QIcon(path); }
   }
   return ico;
 }

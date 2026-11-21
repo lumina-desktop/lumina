@@ -201,6 +201,22 @@ QStringList LUtils::getCmdOutput(QString cmd, QStringList args){
   return future.result()[1].split("\n"); //Split the return message into lines*/
 }
 
+QStringList LUtils::readFileCached(QString filepath){
+  static QMutex mutex;
+  static QHash<QString, QPair<QDateTime, QStringList> > cache;
+  QFileInfo info(filepath);
+  if(!info.exists()){ QMutexLocker lock(&mutex); cache.remove(filepath); return QStringList(); }
+  QDateTime mod = info.lastModified();
+  {
+    QMutexLocker lock(&mutex);
+    if(cache.contains(filepath) && cache[filepath].first == mod){ return cache[filepath].second; }
+  }
+  QStringList contents = LUtils::readFile(filepath);
+  QMutexLocker lock(&mutex);
+  cache.insert(filepath, qMakePair(mod, contents));
+  return contents;
+}
+
 QStringList LUtils::readFile(QString filepath){
   QStringList out;
   QFile file(filepath);
@@ -288,7 +304,7 @@ QStringList LUtils::xdgDataDirs(QStringList sysDefaults){
   return dirs;
 }
 
-QStringList LUtils::systemApplicationDirs(){
+static QStringList systemApplicationDirs_uncached(){
   //Returns a list of all the directories where *.desktop files can be found
   QStringList appDirs = LUtils::xdgDataDirs(QStringList() << "/usr/local/share" << "/usr/share" << LOS::AppPrefix()+"/share" << LOS::SysPrefix()+"/share" << L_SHAREDIR);
   appDirs.removeDuplicates();
@@ -304,6 +320,23 @@ QStringList LUtils::systemApplicationDirs(){
   }
   //qDebug() << "System Application Dirs:" << out;
   return out;
+}
+
+QStringList LUtils::systemApplicationDirs(){
+  //Cached for a short time: this walks every application dir recursively, and it is called on every
+  // LUtils::AppToAbsolute() (i.e. every default-app / launcher lookup). Keyed on the XDG variables so a
+  // change to them takes effect immediately.
+  static QMutex mutex;
+  static QStringList cache;
+  static QString cacheKey;
+  static QElapsedTimer age;
+  const QString key = QString(getenv("XDG_DATA_HOME"))+"|"+QString(getenv("XDG_DATA_DIRS"));
+  QMutexLocker lock(&mutex);
+  if(cacheKey != key || !age.isValid() || age.elapsed() > 30000){
+    cache = systemApplicationDirs_uncached();
+    cacheKey = key; age.start();
+  }
+  return cache;
 }
 
 QString LUtils::GenerateOpenTerminalExec(QString term, QString dirpath){

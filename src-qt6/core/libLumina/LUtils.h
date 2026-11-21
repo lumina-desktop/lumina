@@ -47,6 +47,9 @@ public:
 
 	//Read a text file
 	static QStringList readFile(QString filepath);
+	//Same as readFile(), but returns a cached copy until the file's modification time changes (thread-safe).
+	// For small config files that are read repeatedly (e.g. mimeapps.list).
+	static QStringList readFileCached(QString filepath);
 	//Write a text file
 	static bool writeFile(QString filepath, QStringList contents, bool overwrite=false);
 

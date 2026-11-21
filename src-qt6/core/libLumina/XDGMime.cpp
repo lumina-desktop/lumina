@@ -170,9 +170,14 @@ QStringList XDGMime::listFileMimeDefaults(){
 
 QString XDGMime::findMimeComment(QString mime){
   QString comment;
-  QStringList dirs = XDGMime::systemMimeDirs();
   QString lang = QString(getenv("LANG")).section(".",0,0);
   QString shortlang = lang.section("_",0,0);
+  //Cache results per mime+language: listing all mimetypes used to open one XML file per type, every time
+  static QMutex cmutex;
+  static QHash<QString, QString> ccache;
+  const QString ckey = mime+"|"+lang;
+  { QMutexLocker lock(&cmutex); if(ccache.contains(ckey)){ return ccache.value(ckey); } }
+  QStringList dirs = XDGMime::systemMimeDirs();
   for(int i=0; i<dirs.length(); i++){
     if(QFile::exists(dirs[i]+"/"+mime+".xml")){
       QStringList info = LUtils::readFile(dirs[i]+"/"+mime+".xml");
@@ -186,28 +191,31 @@ QString XDGMime::findMimeComment(QString mime){
       }
     }
   }
+  { QMutexLocker lock(&cmutex); ccache.insert(ckey, comment); }
   return comment;
 }
 
 QString XDGMime::findDefaultAppForMime(QString mime){
   //First get the priority-ordered list of default file locations
+  //Priority order: config home, config dirs, then data home/dirs "applications" subdirs.
+  // Unset/empty XDG variables fall back per the spec (they used to produce paths like "/mimeapps.list").
+  QString cfghome = QString(getenv("XDG_CONFIG_HOME"));
+  if(cfghome.isEmpty()){ cfghome = QDir::homePath()+"/.config"; }
+  QStringList cfgdirs = QString(getenv("XDG_CONFIG_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(cfgdirs.isEmpty()){ cfgdirs << "/etc/xdg"; }
   QStringList dirs;
-  dirs << QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list" \
-	 << QString(getenv("XDG_CONFIG_HOME"))+"/mimeapps.list";
-  QStringList tmp = QString(getenv("XDG_CONFIG_DIRS")).split(":");
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/lumina-mimeapps.list"; }
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/mimeapps.list"; }
-  dirs << QString(getenv("XDG_DATA_HOME"))+"/applications/lumina-mimeapps.list" \
-	 << QString(getenv("XDG_DATA_HOME"))+"/applications/mimeapps.list";
-  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/lumina-mimeapps.list"; }
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/mimeapps.list"; }
+  dirs << cfghome+"/lumina-mimeapps.list" << cfghome+"/mimeapps.list";
+	for(int i=0; i<cfgdirs.length(); i++){ dirs << cfgdirs[i]+"/lumina-mimeapps.list"; }
+	for(int i=0; i<cfgdirs.length(); i++){ dirs << cfgdirs[i]+"/mimeapps.list"; }
+  QStringList datadirs = LUtils::xdgDataDirs(); //data home first, then system data dirs
+	for(int i=0; i<datadirs.length(); i++){ dirs << datadirs[i]+"/applications/lumina-mimeapps.list"; }
+	for(int i=0; i<datadirs.length(); i++){ dirs << datadirs[i]+"/applications/mimeapps.list"; }
 
   //Now go through all the files in order of priority until a default is found
   QString cdefault;
   for(int i=0; i<dirs.length() && cdefault.isEmpty(); i++){
     if(!QFile::exists(dirs[i])){ continue; }
-    QStringList info = LUtils::readFile(dirs[i]);
+    QStringList info = LUtils::readFileCached(dirs[i]); //cached until the file changes (was re-read on every call)
     if(info.isEmpty()){ continue; }
     QStringList white; //lists to keep track of during the search (black unused at the moment)
     QString workdir = dirs[i].section("/",0,-2); //just the directory

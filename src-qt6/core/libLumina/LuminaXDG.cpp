@@ -14,6 +14,7 @@
 #include <QSvgRenderer>
 #include <QMutex>
 #include <QSet>
+#include <QElapsedTimer>
 
 //Cached mime glob database - shared by every thread that resolves mimetypes (lumina-fm loads file
 // info from QtConcurrent workers), so all access goes through mimeglobsMutex
@@ -573,10 +574,19 @@ void XDGDesktopList::updateList(){
   //If this class is automatically managing the lists, update the watched files/dirs and send out notifications
   if(watcher!=0){
     if(appschanged){ qDebug() << "Auto App List Update:" << lastCheck  << "Files Found:" << files.count(); }
-    watcher->removePaths(QStringList() << watcher->files() << watcher->directories());
-    watcher->addPaths(appDirs);
+    //Only adjust the watched dirs that actually changed (re-adding everything each time also logged a
+    // Qt warning whenever the watcher was empty)
+    QStringList watched = watcher->directories() + watcher->files();
+    QStringList stale, added;
+    for(const QString &w : watched){ if(!appDirs.contains(w)){ stale << w; } }
+    for(const QString &d : appDirs){ if(!watched.contains(d)){ added << d; } }
+    if(!stale.isEmpty()){ watcher->removePaths(stale); }
+    if(!added.isEmpty()){ watcher->addPaths(added); }
     if(appschanged){ emit appsUpdated(); }
-    synctimer->setInterval(60000); //Update in 1 minute if nothing changes before then
+    //The directory watcher already reports added/removed/renamed .desktop files (package installs);
+    // this periodic pass only catches in-place edits of existing files, so it does not need to run every
+    // minute (it re-lists every app dir and stats every .desktop file each time)
+    synctimer->setInterval(600000); //10 minutes
     synctimer->start();
   }
   hashmutex.unlock();
@@ -869,7 +879,44 @@ void LXDG::setEnvironmentVars(){
   //Don't set "XDG_RUNTIME_DIR" yet - need to look into the specs
 }
 
+//--- findIcon() helpers ---
+//Negative cache: icon names (+fallback) already known to be missing in the current icon theme.
+// A miss is expensive (pixmaps scans, then recursion on shortened names), and the same missing
+// names are requested over and over (every menu/panel refresh). Cleared when the theme changes.
+static QMutex findIconMutex; //findIcon() is also reached from worker threads (lumina-fm)
+static QSet<QString> findIconMisses;
+static QString findIconMissTheme;
+static QElapsedTimer findIconMissAge;
+static bool findIconKnownMissing(const QString &key){
+  QMutexLocker lock(&findIconMutex);
+  //Reset on a theme change, and every 5 minutes so icons installed mid-session (new apps) get picked up
+  if(findIconMissTheme != QIcon::themeName() || !findIconMissAge.isValid() || findIconMissAge.elapsed() > 300000){
+    findIconMisses.clear(); findIconMissTheme = QIcon::themeName(); findIconMissAge.start();
+  }
+  return findIconMisses.contains(key);
+}
+static void findIconRememberMissing(const QString &key){
+  QMutexLocker lock(&findIconMutex);
+  findIconMisses.insert(key);
+}
+//Listing of the "pixmaps" fallback dir, re-read only when the directory changes (was 1-2 wildcard scans per call)
+static QStringList findIconPixmapFiles(const QString &dirpath){
+  static QStringList files;
+  static QDateTime stamp;
+  static QString lastdir;
+  QMutexLocker lock(&findIconMutex);
+  QDateTime mod = QFileInfo(dirpath).lastModified();
+  if(dirpath != lastdir || mod != stamp){
+    files = QDir(dirpath).entryList(QDir::Files, QDir::Unsorted);
+    stamp = mod; lastdir = dirpath;
+  }
+  return files;
+}
+
 QIcon LXDG::findIcon(QString iconName, QString fallback){
+  //Skip names already known to be missing in the current theme (see findIconKnownMissing())
+  const QString missKey = iconName+"\n"+fallback;
+  if(!iconName.isEmpty() && findIconKnownMissing(missKey)){ return QIcon(); }
   //With the addition of the Lumina theme engine (8/3/17), switch back to using the Qt icon from theme method for apps
   QIcon tmp;
   if(!iconName.contains("libreoffice") || !QIcon::themeName().startsWith("material-design") ){ //libreoffice is stupid - their svg icons are un-renderable with Qt
@@ -988,8 +1035,10 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
       //Need to scan for any close match in the directory
       QDir pix(LOS::AppPrefix()+"share/pixmaps");
       QStringList formats = LUtils::imageExtensions();
-      QStringList found = pix.entryList(QStringList() << iconName, QDir::Files, QDir::Unsorted);
-      if(found.isEmpty()){ found = pix.entryList(QStringList() << iconName+"*", QDir::Files, QDir::Unsorted); }
+      const QStringList all = findIconPixmapFiles(pix.absolutePath());
+      QStringList found;
+      if(all.contains(iconName)){ found << iconName; }
+      else{ for(const QString &f : all){ if(f.startsWith(iconName)){ found << f; } } } //same as the old "<name>*" wildcard
       //qDebug() << "Found pixmaps:" << found << formats;
       //Use the first one found that is a valid format
       for(int i=0; i<found.length(); i++){
@@ -1013,7 +1062,8 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     }
   }
   if(ico.isNull()){
-    qDebug() << "Could not find icon:" << iconName << fallback;
+    qDebug() << "Could not find icon:" << iconName << fallback; //(now logged once per theme, not on every request)
+    if(!iconName.isEmpty()){ findIconRememberMissing(missKey); }
   }
   //Return the icon
   return ico;
@@ -1220,9 +1270,14 @@ QStringList LXDG::listFileMimeDefaults(){
 
 QString LXDG::findMimeComment(QString mime){
   QString comment;
-  QStringList dirs = LXDG::systemMimeDirs();
   QString lang = QString(getenv("LANG")).section(".",0,0);
   QString shortlang = lang.section("_",0,0);
+  //Cache results per mime+language: listing all mimetypes used to open one XML file per type, every time
+  static QMutex cmutex;
+  static QHash<QString, QString> ccache;
+  const QString ckey = mime+"|"+lang;
+  { QMutexLocker lock(&cmutex); if(ccache.contains(ckey)){ return ccache.value(ckey); } }
+  QStringList dirs = LXDG::systemMimeDirs();
   for(int i=0; i<dirs.length(); i++){
     if(QFile::exists(dirs[i]+"/"+mime+".xml")){
       QStringList info = LUtils::readFile(dirs[i]+"/"+mime+".xml");
@@ -1236,28 +1291,31 @@ QString LXDG::findMimeComment(QString mime){
       }
     }
   }
+  { QMutexLocker lock(&cmutex); ccache.insert(ckey, comment); }
   return comment;
 }
 
 QString LXDG::findDefaultAppForMime(QString mime){
   //First get the priority-ordered list of default file locations
+  //Priority order: config home, config dirs, then data home/dirs "applications" subdirs.
+  // Unset/empty XDG variables fall back per the spec (they used to produce paths like "/mimeapps.list").
+  QString cfghome = QString(getenv("XDG_CONFIG_HOME"));
+  if(cfghome.isEmpty()){ cfghome = QDir::homePath()+"/.config"; }
+  QStringList cfgdirs = QString(getenv("XDG_CONFIG_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(cfgdirs.isEmpty()){ cfgdirs << "/etc/xdg"; }
   QStringList dirs;
-  dirs << QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimeapps.list" \
-	 << QString(getenv("XDG_CONFIG_HOME"))+"/mimeapps.list";
-  QStringList tmp = QString(getenv("XDG_CONFIG_DIRS")).split(":");
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/lumina-mimeapps.list"; }
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/mimeapps.list"; }
-  dirs << QString(getenv("XDG_DATA_HOME"))+"/applications/lumina-mimeapps.list" \
-	 << QString(getenv("XDG_DATA_HOME"))+"/applications/mimeapps.list";  
-  tmp = QString(getenv("XDG_DATA_DIRS")).split(":");
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/lumina-mimeapps.list"; }
-	for(int i=0; i<tmp.length(); i++){ dirs << tmp[i]+"/applications/mimeapps.list"; }
+  dirs << cfghome+"/lumina-mimeapps.list" << cfghome+"/mimeapps.list";
+	for(int i=0; i<cfgdirs.length(); i++){ dirs << cfgdirs[i]+"/lumina-mimeapps.list"; }
+	for(int i=0; i<cfgdirs.length(); i++){ dirs << cfgdirs[i]+"/mimeapps.list"; }
+  QStringList datadirs = LUtils::xdgDataDirs(); //data home first, then system data dirs
+	for(int i=0; i<datadirs.length(); i++){ dirs << datadirs[i]+"/applications/lumina-mimeapps.list"; }
+	for(int i=0; i<datadirs.length(); i++){ dirs << datadirs[i]+"/applications/mimeapps.list"; }
 	
   //Now go through all the files in order of priority until a default is found
   QString cdefault;
   for(int i=0; i<dirs.length() && cdefault.isEmpty(); i++){
     if(!QFile::exists(dirs[i])){ continue; }
-    QStringList info = LUtils::readFile(dirs[i]);
+    QStringList info = LUtils::readFileCached(dirs[i]); //cached until the file changes (was re-read on every call)
     if(info.isEmpty()){ continue; }
     QStringList white; //lists to keep track of during the search (black unused at the moment)
     QString workdir = dirs[i].section("/",0,-2); //just the directory
