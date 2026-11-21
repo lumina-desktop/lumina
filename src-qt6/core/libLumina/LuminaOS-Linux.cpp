@@ -170,39 +170,76 @@ void LOS::systemSuspend(){
 
 }
 
+//Battery information is read straight from the kernel (sysfs) instead of parsing "acpi -b":
+// no external tool needed, no process spawned on every panel update.
+static const QString POWER_SUPPLY_DIR = "/sys/class/power_supply/";
+
+static QString readSysValue(const QString &path){
+  QFile file(path);
+  if(!file.open(QIODevice::ReadOnly)){ return QString(); }
+  return QString::fromLatin1(file.readAll()).trimmed();
+}
+
+//System batteries only: skip peripheral batteries (mice, keyboards, headsets), which report scope "Device"
+static QStringList systemBatteryDirs(){
+  QStringList out;
+  QDir dir(POWER_SUPPLY_DIR);
+  QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::System, QDir::Name);
+  for(int i=0; i<entries.length(); i++){
+    QString path = POWER_SUPPLY_DIR + entries[i] + "/";
+    if(readSysValue(path+"type") != "Battery"){ continue; }
+    if(readSysValue(path+"scope") == "Device"){ continue; }
+    if(readSysValue(path+"present") == "0"){ continue; } //empty battery bay
+    out << path;
+  }
+  return out;
+}
+
 //Battery Availability
 bool LOS::hasBattery(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool no_battery = my_status.contains("No support");
-  if (no_battery) return false;
-  return true;
+  return !systemBatteryDirs().isEmpty();
 }
 
 //Battery Charge Level
 int LOS::batteryCharge(){ //Returns: percent charge (0-100), anything outside that range is counted as an error
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  int my_start = my_status.indexOf("%");
-  // get the number right before the % sign
-  int my_end = my_start;
-  my_start--;
-  while ( (my_status[my_start] != ' ') && (my_start > 0) )
-      my_start--;
-  my_start++;
-  int my_charge = my_status.mid(my_start, my_end - my_start).toInt();
-  if ( (my_charge < 0) || (my_charge > 100) ) return -1;
-  return my_charge;
+  QStringList bats = systemBatteryDirs();
+  if(bats.isEmpty()){ return -1; }
+  //Combine multiple batteries by stored energy (or charge) where the kernel provides it
+  double now = 0, full = 0;
+  bool haveAbsolute = true;
+  for(int i=0; i<bats.length() && haveAbsolute; i++){
+    QString n = readSysValue(bats[i]+"energy_now"), f = readSysValue(bats[i]+"energy_full");
+    if(n.isEmpty() || f.isEmpty()){ n = readSysValue(bats[i]+"charge_now"); f = readSysValue(bats[i]+"charge_full"); }
+    if(n.isEmpty() || f.isEmpty()){ haveAbsolute = false; break; }
+    now += n.toDouble(); full += f.toDouble();
+  }
+  int charge = -1;
+  if(haveAbsolute && full > 0){
+    charge = qRound(100.0 * now / full);
+  }else{
+    //Fall back to the average of the per-battery percentages
+    int total = 0, count = 0;
+    for(int i=0; i<bats.length(); i++){
+      bool ok = false;
+      int cap = readSysValue(bats[i]+"capacity").toInt(&ok);
+      if(ok){ total += cap; count++; }
+    }
+    if(count > 0){ charge = qRound(double(total) / count); }
+  }
+  if(charge > 100){ charge = 100; } //energy_now can slightly exceed energy_full on some hardware
+  if(charge < 0){ return -1; }
+  return charge;
 }
 
 //Battery Charging State
-// Many possible values are returned if the laptop is plugged in
-// these include "Unknown, Full and No support.
-// However, it seems just one status is returned when running
-// on battery and that is "Discharging". So if the value we get
-// is NOT Discharging then we assume the battery is charging.
+// While plugged in, batteries report "Charging", "Full", "Not charging" or "Unknown";
+// on battery power they report "Discharging". So anything that is NOT Discharging is
+// treated as charging/plugged in (same behaviour as the previous acpi-based check).
 bool LOS::batteryIsCharging(){
-  QString my_status = LUtils::getCmdOutput("acpi -b").join("");
-  bool discharging = my_status.contains("Discharging");
-  if (discharging) return false;
+  QStringList bats = systemBatteryDirs();
+  for(int i=0; i<bats.length(); i++){
+    if(readSysValue(bats[i]+"status") == "Discharging"){ return false; }
+  }
   return true;
 }
 
