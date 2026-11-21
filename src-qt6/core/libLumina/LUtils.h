@@ -62,6 +62,9 @@ public:
 
 	//Return all the dirs on the system which contain .desktop files
         static QStringList systemApplicationDirs();
+        //XDG base data directories in priority order: $XDG_DATA_HOME (default ~/.local/share), then
+        // $XDG_DATA_DIRS (default: sysDefaults). Unset/empty variables fall back per the XDG spec.
+        static QStringList xdgDataDirs(QStringList sysDefaults = QStringList() << "/usr/local/share" << "/usr/share");
 
 	//Create the exec string to open a terminal in a particular directory
 	static QString GenerateOpenTerminalExec(QString term, QString dirpath);

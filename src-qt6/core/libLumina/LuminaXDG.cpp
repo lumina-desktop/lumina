@@ -762,9 +762,7 @@ bool LXDG::checkExec(QString exec){
 
 QStringList LXDG::systemApplicationDirs(){
   //Returns a list of all the directories where *.desktop files can be found
-  QStringList appDirs = QString(getenv("XDG_DATA_HOME")).split(":");
-  appDirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  if(appDirs.isEmpty()){ appDirs << "/usr/local/share" << "/usr/share" << LOS::AppPrefix()+"/share" << LOS::SysPrefix()+"/share" << L_SHAREDIR; }
+  QStringList appDirs = LUtils::xdgDataDirs(QStringList() << "/usr/local/share" << "/usr/share" << LOS::AppPrefix()+"/share" << LOS::SysPrefix()+"/share" << L_SHAREDIR);
   appDirs.removeDuplicates();
   //Now create a valid list
   QStringList out;
@@ -919,8 +917,7 @@ QIcon LXDG::findIcon(QString iconName, QString fallback){
     // - Get all the base icon directories
     QStringList paths;
       paths << QDir::homePath()+"/.icons/"; //ordered by priority - local user dirs first
-      QStringList xdd = QString(getenv("XDG_DATA_HOME")).split(":");
-        xdd << QString(getenv("XDG_DATA_DIRS")).split(":");
+      QStringList xdd = LUtils::xdgDataDirs();
         for(int i=0; i<xdd.length(); i++){
           if(QFile::exists(xdd[i]+"/icons")){ paths << xdd[i]+"/icons/"; }
         }
@@ -1057,9 +1054,7 @@ QStringList LXDG::getIconThemeDepChain(QString theme, QStringList paths){
 
 QStringList LXDG::systemMimeDirs(){
   //Returns a list of all the directories where *.xml MIME files can be found
-  QStringList appDirs = QString(getenv("XDG_DATA_HOME")).split(":");
-  appDirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  if(appDirs.isEmpty()){ appDirs << "/usr/local/share" << "/usr/share"; }
+  QStringList appDirs = LUtils::xdgDataDirs();
   //Now create a valid list
   QStringList out;
   for(int i=0; i<appDirs.length(); i++){

@@ -85,7 +85,8 @@ QString LUtils::standardDirectory(StandardDir dir, bool createAsNeeded){
       break;
   }
   //Read the XDG user dirs file (if it exists)
-  QString configdir = getenv("XDG_DATA_HOME");
+  //NOTE: user-dirs.dirs lives in the *config* dir ($XDG_CONFIG_HOME), not the data dir
+  QString configdir = getenv("XDG_CONFIG_HOME");
   if(configdir.isEmpty()){ configdir = QDir::homePath()+"/.config"; }
   QString conffile=configdir+"/user-dirs.dirs";
   if(QFile::exists(conffile)){
@@ -274,11 +275,22 @@ QSettings* LUtils::openSettings(QString org, QString name, QObject *parent){
 
 }
 
+QStringList LUtils::xdgDataDirs(QStringList sysDefaults){
+  //NOTE: QString("").split(":") yields [""] (never empty), so the empty parts must be skipped
+  // for the "variable not set" fallbacks to ever apply
+  QStringList dirs = QString(getenv("XDG_DATA_HOME")).split(":", Qt::SkipEmptyParts);
+  if(dirs.isEmpty()){ dirs << QDir::homePath()+"/.local/share"; }
+  QStringList sys = QString(getenv("XDG_DATA_DIRS")).split(":", Qt::SkipEmptyParts);
+  if(sys.isEmpty()){ sys = sysDefaults; }
+  dirs << sys;
+  for(int i=0; i<dirs.length(); i++){ dirs[i] = QDir::cleanPath(dirs[i]); } //"/usr/" + "/share" -> "/usr/share" (so duplicates match)
+  dirs.removeDuplicates();
+  return dirs;
+}
+
 QStringList LUtils::systemApplicationDirs(){
   //Returns a list of all the directories where *.desktop files can be found
-  QStringList appDirs = QString(getenv("XDG_DATA_HOME")).split(":");
-  appDirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  if(appDirs.isEmpty()){ appDirs << "/usr/local/share" << "/usr/share" << LOS::AppPrefix()+"/share" << LOS::SysPrefix()+"/share" << L_SHAREDIR; }
+  QStringList appDirs = LUtils::xdgDataDirs(QStringList() << "/usr/local/share" << "/usr/share" << LOS::AppPrefix()+"/share" << LOS::SysPrefix()+"/share" << L_SHAREDIR);
   appDirs.removeDuplicates();
   //Now create a valid list
   QStringList out;

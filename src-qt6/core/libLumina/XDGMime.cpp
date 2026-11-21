@@ -51,9 +51,7 @@ QStringList XDGMime::toFileExtensions(QString mime){
 // ====================
 QStringList XDGMime::systemMimeDirs(){
   //Returns a list of all the directories where *.xml MIME files can be found
-  QStringList appDirs = QString(getenv("XDG_DATA_HOME")).split(":");
-  appDirs << QString(getenv("XDG_DATA_DIRS")).split(":");
-  if(appDirs.isEmpty()){ appDirs << "/usr/local/share" << "/usr/share"; }
+  QStringList appDirs = LUtils::xdgDataDirs();
   //Now create a valid list
   QStringList out;
   for(int i=0; i<appDirs.length(); i++){
