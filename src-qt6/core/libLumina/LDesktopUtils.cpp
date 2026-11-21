@@ -154,7 +154,10 @@ void LDesktopUtils::LoadSystemDefaults(bool skipOS){
     dir.mkpath(setdir);
   }
 
-  bool skipmime = QFile::exists( QString(getenv("XDG_CONFIG_HOME"))+"/lumina-mimapps.list" );
+  //Keep the user's own default-application choices if they have any (same file LXDG::setDefaultAppForMime() writes)
+  QString cfghome = QString(getenv("XDG_CONFIG_HOME"));
+  if(cfghome.isEmpty()){ cfghome = QDir::homePath()+"/.config"; }
+  bool skipmime = QFile::exists( cfghome+"/lumina-mimeapps.list" ); //(was misspelled "lumina-mimapps.list", so this was never true)
   //qDebug() << " - Skipping mimetype default apps" << skipmime;
   QStringList sysDefaults;
   if(!skipOS){ sysDefaults = LUtils::readFile(LOS::AppPrefix()+"etc/luminaDesktop.conf"); }
