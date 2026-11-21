@@ -103,7 +103,7 @@ void LPanel::prepareToClose(){
   //Go through and remove all the plugins
   for(int i=0; i<PLUGINS.length(); i++){
     PLUGINS[i]->AboutToClose(); //any last cleanup for this plugin
-    layout->takeAt(i); //remove from the layout
+    delete layout->takeAt(i); //remove from the layout (the QLayoutItem is ours to delete - not the widget)
     PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     LSession::processEvents();
     i--; //need to back up one space to not miss another plugin
@@ -277,7 +277,7 @@ void LPanel::UpdatePanel(bool geomonly){
 	PLUGINS[p]->OrientationChange();
 	//Now check the location of the plugin in the panel
 	if(p!=i){ //wrong place in the panel
-	  layout->takeAt(p); //remove the item from the current location
+	  delete layout->takeAt(p); //remove the item from the current location (insertWidget() makes a new one)
 	  layout->insertWidget(i, PLUGINS[p]); //add the item into the correct location
 	  PLUGINS.move(p,i); //move the identifier in the list to match
 	}
@@ -310,7 +310,7 @@ void LPanel::UpdatePanel(bool geomonly){
     if( PLUGINS[i]->type().startsWith("systemtray---") ){
       static_cast<LSysTray*>(PLUGINS[i])->stop();
     }
-    layout->takeAt(i); //remove from the layout
+    delete layout->takeAt(i); //remove from the layout (the QLayoutItem is ours to delete - not the widget)
     PLUGINS.takeAt(i)->deleteLater(); //delete the actual widget
     //LSession::processEvents();
     i--; //need to back up one space to not miss another plugin

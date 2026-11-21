@@ -273,6 +273,7 @@ void RSSReader::replyFinished(QNetworkReply *reply){
   //qDebug() << "Got RSS Reply:" << url;
   QString key = keyForUrl(url); //current hash key for this URL
   QByteArray data = reply->readAll();
+  reply->deleteLater(); //once, for every exit path (the early return below used to skip it - one leak per failed fetch)
   outstandingURLS.removeAll(url);
   //if(data.isEmpty()){
     //see if the URL can be adjusted for known issues
@@ -315,11 +316,9 @@ void RSSReader::replyFinished(QNetworkReply *reply){
         break;
       }
     }
-    reply->deleteLater();
   }else{
     //RSS reply
     RSSchannel info = readRSS(data); //QNetworkReply can be used as QIODevice
-    reply->deleteLater(); //clean up
     //Validate the info and announce any changes (4/21/17 - make the description optional even if RSS format requires it - Ken Moore)
     if(info.title.isEmpty() || info.link.isEmpty() ){
       qDebug() << "Missing XML Information:" << url << info.title << info.link;

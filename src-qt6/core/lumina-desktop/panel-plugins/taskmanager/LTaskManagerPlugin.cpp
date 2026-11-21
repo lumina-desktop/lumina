@@ -68,7 +68,7 @@ void LTaskManagerPlugin::UpdateButtons(){
 	if(WI.length()==1){
 	  //Remove the entire button
 	  //qDebug() << "Window Closed: Remove Button" ;
-	  this->layout()->takeAt(i); //remove from the layout
+	  delete this->layout()->takeAt(i); //remove from the layout (free the QLayoutItem - one per closed window)
 	  BUTTONS.takeAt(i)->deleteLater();
 	  i--;
 	  updated = true; //prevent updating a removed button

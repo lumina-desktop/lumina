@@ -77,12 +77,14 @@ void LDeskBarPlugin::initializeDesktop(){
     updateIcons(); //set all the text/icons
 }
 
-QAction* LDeskBarPlugin::newAction(QString filepath, QString name, QString iconpath){
-  return newAction(filepath, name, QIcon(iconpath));
+QAction* LDeskBarPlugin::newAction(QMenu *menu, QString filepath, QString name, QString iconpath){
+  return newAction(menu, filepath, name, QIcon(iconpath));
 }
 
-QAction* LDeskBarPlugin::newAction(QString filepath, QString name, QIcon icon){
-  QAction *act = new QAction(icon, name, this);
+QAction* LDeskBarPlugin::newAction(QMenu *menu, QString filepath, QString name, QIcon icon){
+  //Parented to the menu (was the plugin): QMenu::clear() only deletes actions the menu owns, so every
+  // rebuild (desktop folder / favorites change) used to leak all of these
+  QAction *act = new QAction(icon, name, menu);
     act->setWhatsThis(filepath);
   return act;	 
 }
@@ -132,30 +134,30 @@ void LDeskBarPlugin::updateFiles(){
       bool ok = false;
       XDGDesktop df(path);
       if(df.isValid() && !df.isHidden){
-	  appM->addAction( newAction(df.filePath, df.name, LXDG::findIcon(df.icon, ":/images/default-application.png")) );
+	  appM->addAction( newAction(appM, df.filePath, df.name, LXDG::findIcon(df.icon, ":/images/default-application.png")) );
       }
     }else if(type=="dir"){
       //Add it to dirM
-      dirM->addAction( newAction(path, name, LXDG::findIcon("folder","")) );
+      dirM->addAction( newAction(dirM, path, name, LXDG::findIcon("folder","")) );
     }else if(type.startsWith("audio/")){
       //Add it to audioM
-      audioM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      audioM->addAction( newAction(audioM, path, name, LXDG::findMimeIcon(type)) );
     }else if(type.startsWith("video/")){
       //Add it to videoM
-      videoM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      videoM->addAction( newAction(videoM, path, name, LXDG::findMimeIcon(type)) );
     }else if(type.startsWith("image/")){
       //Add it to pictureM
       if(LUtils::imageExtensions().contains(path.section("/",-1).section(".",-1).toLower()) ){
-	pictureM->addAction( newAction(path, name, QIcon(path)) );
+	pictureM->addAction( newAction(pictureM, path, name, QIcon(path)) );
       }else{
-        pictureM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+        pictureM->addAction( newAction(pictureM, path, name, LXDG::findMimeIcon(type)) );
       }
     }else if(type.startsWith("text/")){
       //Add it to docM
-      docM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      docM->addAction( newAction(docM, path, name, LXDG::findMimeIcon(type)) );
     }else{
       //Add it to otherM
-      otherM->addAction( newAction(path, name, LXDG::findMimeIcon(type)) );
+      otherM->addAction( newAction(otherM, path, name, LXDG::findMimeIcon(type)) );
     }
 
   }

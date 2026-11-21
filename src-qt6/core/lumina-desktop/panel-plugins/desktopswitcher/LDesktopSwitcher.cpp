@@ -120,7 +120,9 @@ void LDesktopSwitcher::openMenu(){
 }
 
 QAction* LDesktopSwitcher::newAction(int what, QString name) {
-  QAction *act = new QAction(LXDG::findIcon("preferences-desktop-display", ""), name, this);
+  //Owned by the menu (was the plugin): menu->clear() in createMenu() only deletes actions the menu owns,
+  // and the menu is rebuilt every time it opens and on every workspace change
+  QAction *act = new QAction(LXDG::findIcon("preferences-desktop-display", ""), name, menu);
   act->setWhatsThis(QString::number(what));
   return act;
 }

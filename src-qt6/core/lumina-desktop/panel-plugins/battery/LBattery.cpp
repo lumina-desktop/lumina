@@ -20,7 +20,7 @@ LBattery::LBattery(QWidget *parent, QString id, bool horizontal) : LPPlugin(pare
   connect(timer,SIGNAL(timeout()), this, SLOT(updateBattery()) );
   timer->start();
   QTimer::singleShot(0,this,SLOT(OrientationChange()) ); //update the sizing/icon
-  sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
+  sessionsettings = new QSettings("lumina-desktop", "sessionsettings", this); //owned by the plugin (was parentless and never deleted)
 }
 
 LBattery::~LBattery(){

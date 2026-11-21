@@ -47,8 +47,9 @@ private:
 	void initializeDesktop();
 	//bool readDesktopFile(QString path, QString &name, QString &iconpath);
 	
-	QAction* newAction(QString filepath, QString name, QString iconpath);
-	QAction* newAction(QString filepath, QString name, QIcon icon);
+	//The new action is owned by "menu" so QMenu::clear() frees it on the next rebuild
+	QAction* newAction(QMenu *menu, QString filepath, QString name, QString iconpath);
+	QAction* newAction(QMenu *menu, QString filepath, QString name, QIcon icon);
 
 	//void updateMenu(QMenu* menu, QFileInfoList files, bool trim = true);
 

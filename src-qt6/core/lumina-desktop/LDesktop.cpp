@@ -45,6 +45,9 @@ LDesktop::~LDesktop(){
   //delete bgWindow;
   delete workspacelabel;
   delete wkspaceact;
+  //bgDesktop is a parentless top-level widget holding the full-screen wallpaper - it was never deleted,
+  // so every removed screen leaked one
+  if(bgDesktop != 0){ bgDesktop->deleteLater(); bgDesktop = 0; }
 }
 
 int LDesktop::Screen(){
@@ -68,6 +71,7 @@ void LDesktop::hide(){
 }
 
 void LDesktop::prepareToClose(){
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   //Get any panels ready to close
   issyncing = true; //Stop handling any watcher events
   for(int i=0; i<PANELS.length(); i++){ PANELS[i]->prepareToClose(); PANELS.takeAt(i)->deleteLater(); i--; }
@@ -295,6 +299,9 @@ void LDesktop::UpdateMenu(bool fast){
   else{ workspacelabel->setText( "<b>"+QString(tr("Workspace %1")).arg(QString::number(num+1))+"</b>"); }
   if(fast && usewinmenu){ UpdateWinMenu(); }
   if(fast){ return; } //already done
+  //Free the custom JSON submenus from the previous build (clear() only removes them from the menu)
+  QList<JsonMenu*> oldjson = deskMenu->findChildren<JsonMenu*>(QString(), Qt::FindDirectChildrenOnly);
+  for(int i=0; i<oldjson.length(); i++){ oldjson[i]->deleteLater(); }
   deskMenu->clear(); //clear it for refresh
   deskMenu->addAction(wkspaceact);
   deskMenu->addSeparator();
@@ -359,6 +366,7 @@ void LDesktop::winClicked(QAction* act){
 }
 
 void LDesktop::UpdateDesktop(){
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   if(DEBUG){ qDebug() << " - Update Desktop Plugins for screen:" << screenID; }
   QStringList plugins = settings->value(DPREFIX+"pluginlist", QStringList()).toStringList();
   if(defaultdesktop && plugins.isEmpty()){
@@ -426,6 +434,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 
 void LDesktop::IncreaseDesktopPluginIcons(){
   if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
   if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){  cur = 100; }
@@ -439,6 +448,7 @@ void LDesktop::IncreaseDesktopPluginIcons(){
 
 void LDesktop::DecreaseDesktopPluginIcons(){
   if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
   if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){ cur = 100; }
@@ -489,6 +499,7 @@ void LDesktop::UpdatePanels(){
 
 void LDesktop::UpdateDesktopPluginArea(){
   if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   QRegion visReg(QGuiApplication::screens().at(Screen())->availableGeometry() ); //visible region (not hidden behind a panel)
   QRect rawRect = visReg.boundingRect(); //initial value (screen size)
   //qDebug() << "Update Desktop Plugin Area:" << bgWindow->geometry();
@@ -541,6 +552,7 @@ void LDesktop::UpdateDesktopPluginArea(){
 }
 
 void LDesktop::UpdateBackground(){
+  if(bgDesktop == 0){ return; } //desktop never initialised (e.g. its screen was already gone in InitDesktop())
   //Get the current Background
   if(bgupdating || bgDesktop==0){ return; } //prevent multiple calls to this at the same time
   bgupdating = true;

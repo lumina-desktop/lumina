@@ -157,6 +157,10 @@ void LClock::ChangeTZ(QAction *act){
 
 void LClock::LocaleChange(){
   //Refresh all the time zone information
+  //clear() does not delete the continent/country submenus - delete the previous tree first (it is
+  // rebuilt on every locale change; all of it used to be parented to the clock and never freed)
+  QList<QMenu*> oldmenus = TZMenu->findChildren<QMenu*>(QString(), Qt::FindDirectChildrenOnly);
+  for(int i=0; i<oldmenus.length(); i++){ oldmenus[i]->deleteLater(); }
   TZMenu->clear();
     TZMenu->addAction(tr("Use System Time"));
     TZMenu->addSeparator();
@@ -184,21 +188,21 @@ void LClock::LocaleChange(){
 	}
 	if(!tmpC->isEmpty()){ TZMenu->addMenu(tmpC); }
       }
-      tmpC = new QMenu(this);
+      tmpC = new QMenu(TZMenu); //continent - owned by TZMenu
 	tmpC->setTitle(info[i].section("::::",1,1));
-      tmpCM = new QMenu(this);
+      tmpCM = new QMenu(tmpC); //country - owned by its continent
 	  tmpCM->setTitle(info[i].section("::::",2,2));
     //Check if different country
     }else if(info[i].section("::::",2,2)!=country){
         if(tmpC!=0 && tmpCM!=0 && !tmpCM->isEmpty()){
 	  tmpC->addMenu(tmpCM);
 	}
-	tmpCM = new QMenu(this);
+	tmpCM = new QMenu(tmpC!=0 ? tmpC : TZMenu);
 	  tmpCM->setTitle(info[i].section("::::",2,2));
     }
     //Now create the entry within the country menu
     if(tmpCM!=0){
-      QAction *act = new QAction(info[i].section("::::",3,3), this);
+      QAction *act = new QAction(info[i].section("::::",3,3), tmpCM); //city - owned by its country menu
 	act->setWhatsThis(info[i].section("::::",4,4) );
       tmpCM->addAction(act);
     }

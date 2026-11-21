@@ -54,6 +54,9 @@ private slots:
 	}
 
 	void updateMenu(){
+	  //clear() does not delete nested JsonMenu submenus - free the previous ones (this runs on every show)
+	  QList<JsonMenu*> old = this->findChildren<JsonMenu*>(QString(), Qt::FindDirectChildrenOnly);
+	  for(int i=0; i<old.length(); i++){ old[i]->deleteLater(); }
           this->clear();
 	  QJsonDocument doc = QJsonDocument::fromJson( LUtils::getCmdOutput(exec).join(" ").toLocal8Bit() );
           if(doc.isNull() || !doc.isObject()){

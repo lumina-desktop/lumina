@@ -41,6 +41,10 @@ void AppMenu::updateAppList(){
   this->setTitle(tr("Applications"));
   this->setIcon( LXDG::findIcon("system-run","") );
   //Now update the lists
+  //QMenu::clear() does not delete the category/app submenus built below - delete the previous tree
+  // (each category menu owns its actions and submenus), otherwise every refresh leaked all of it
+  QList<QMenu*> oldmenus = this->findChildren<QMenu*>(QString(), Qt::FindDirectChildrenOnly);
+  for(int i=0; i<oldmenus.length(); i++){ oldmenus[i]->deleteLater(); }
   this->clear();
   APPS.clear(); //NOTE: Don't delete these pointers - the pointers are managed by the sysApps class and these are just references to them
   //qDebug() << "New Apps List:";
@@ -113,7 +117,7 @@ void AppMenu::updateAppList(){
       for( int a=0; a<appL.length(); a++){
 	if(appL[a]->actions.isEmpty()){
 	  //Just a single entry point - no extra actions
-          QAction *act = new QAction(appL[a]->name, this);
+          QAction *act = new QAction(appL[a]->name, menu); //owned by its menu (freed with it on refresh)
           ICONS->loadIcon(act, appL[a]->icon);
           act->setToolTip(appL[a]->comment);
           act->setWhatsThis(appL[a]->filePath);
@@ -121,17 +125,17 @@ void AppMenu::updateAppList(){
 	}else{
 	  //This app has additional actions - make this a sub menu
 	  // - first the main menu/action
-	  QMenu *submenu = new QMenu(appL[a]->name, this);
+	  QMenu *submenu = new QMenu(appL[a]->name, menu);
 	    submenu->setIcon( ICONS->loadIcon(appL[a]->icon ));
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
-	      QAction *act = new QAction(appL[a]->name, this);
+	      QAction *act = new QAction(appL[a]->name, submenu);
                ICONS->loadIcon(act, appL[a]->icon);
               act->setToolTip(appL[a]->comment);
               act->setWhatsThis(appL[a]->filePath);
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
 	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
-              QAction *sact = new QAction( appL[a]->actions[sa].name, this);
+              QAction *sact = new QAction( appL[a]->actions[sa].name, submenu);
               if(ICONS->exists(appL[a]->actions[sa].icon)){ ICONS->loadIcon(sact, appL[a]->actions[sa].icon); }
               else{ ICONS->loadIcon(sact, appL[a]->icon); }
               sact->setToolTip(appL[a]->comment);

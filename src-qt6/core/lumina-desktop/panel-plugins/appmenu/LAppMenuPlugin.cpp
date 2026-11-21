@@ -65,6 +65,9 @@ void LAppMenuPlugin::LaunchItem(QAction* item){
 }
 
 void LAppMenuPlugin::UpdateMenu(){
+  //clear() does not delete the category submenus (or their actions) - delete the previous tree first
+  QList<QMenu*> oldmenus = mainmenu->findChildren<QMenu*>(QString(), Qt::FindDirectChildrenOnly);
+  for(int i=0; i<oldmenus.length(); i++){ oldmenus[i]->deleteLater(); }
   mainmenu->clear();
   QHash<QString, QList<XDGDesktop*> > *HASH = LSession::handle()->applicationMenu()->currentAppHash();
     //Now Re-create the menu (orignally copied from the AppMenu class)
@@ -105,7 +108,7 @@ void LAppMenuPlugin::UpdateMenu(){
       else if(cats[i] == "Wine"){ name = tr("Wine"); icon = "wine"; }
       else{ name = tr("Unsorted"); icon = "applications-other"; }
 
-      QMenu *menu = new QMenu(name, this);
+      QMenu *menu = new QMenu(name, mainmenu); //owned by mainmenu (was the plugin widget, so never freed on refresh)
       menu->setIcon(LXDG::findIcon(icon,""));
       QList<XDGDesktop*> appL = HASH->value(cats[i]);
       for( int a=0; a<appL.length(); a++){
@@ -127,7 +130,7 @@ void LAppMenuPlugin::UpdateMenu(){
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
 	    for(int sa=0; sa<appL[a]->actions.length(); sa++){
-              QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, this);
+              QAction *sact = new QAction(LXDG::findIcon(appL[a]->actions[sa].icon, appL[a]->icon), appL[a]->actions[sa].name, submenu);
               sact->setToolTip(appL[a]->comment);
               sact->setWhatsThis("-action \""+appL[a]->actions[sa].ID+"\" \""+appL[a]->filePath+"\"");
               submenu->addAction(sact);		    
