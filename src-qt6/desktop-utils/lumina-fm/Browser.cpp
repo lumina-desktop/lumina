@@ -10,6 +10,8 @@
 #include <QTimer>
 #include <QtConcurrent>
 #include <QDebug>
+#include <QImageReader>
+#include <QSet>
 
 #include <LUtils.h>
 
@@ -62,11 +64,11 @@ bool Browser::showingThumbnails(){
 //   PRIVATE
 void Browser::loadItem(const QString info, Browser *obj){
   //qDebug() << "Load Thumbnail in separate thread:" << info;
-  QImage pix(info);
-  //Make sure we only keep a small version in memory - not the full thing
-  if(pix.width() > 256 || pix.height() > 256 ){
-    pix = pix.scaled(256,256, Qt::KeepAspectRatio, Qt::FastTransformation);
-  }
+  //Decode at thumbnail size directly (was: decode the full image, then scale it down)
+  QImageReader reader(info);
+  QSize full = reader.size();
+  if(full.isValid() && (full.width() > 256 || full.height() > 256)){ reader.setScaledSize(full.scaled(256,256, Qt::KeepAspectRatio)); }
+  QImage pix = reader.read();
   obj->emit threadDone(info, pix);
   //qDebug() << " - Done:" << info;
  /* QImage* pix = new QImage();
@@ -84,14 +86,14 @@ void Browser::loadItem(const QString info, Browser *obj){
   obj->emit threadDone(info, pix);*/
 }
 
-QIcon* Browser::loadIcon(QString icon){
-  hashMutex.lock();
+QIcon Browser::loadIcon(QString icon){
+  //Return a copy: a pointer into the hash (as before) could dangle once the QHash grows (Qt6 moves nodes)
+  // while the queued itemDataAvailable() signal is still on its way to the GUI thread
+  QMutexLocker lock(&hashMutex);
   if(!mimeIcons.contains(icon)){
     mimeIcons.insert(icon, LXDG::findIcon(icon, "unknown"));
   }
-  QIcon *tmp = &mimeIcons[icon];
-  hashMutex.unlock();
-  return tmp;
+  return mimeIcons.value(icon);
 }
 
 
@@ -132,11 +134,11 @@ void Browser::futureFinished(QString name, const QImage icon){
     //Haven't added the extra files in a directory fix, but that should be easy to do
     //Try to load a file with multiple videos and lots of other stuff before any other directory. It crashes for some reason
     //qDebug() << "Finished:" << name;
-    QIcon *ico = new QIcon();
-    LFileInfo *info = new LFileInfo(name);
+    QIcon ico; //by value (was a new QIcon() leaked for every non-thumbnail item)
+    LFileInfo *info = new LFileInfo(name); //ownership passes to the receiver of itemDataAvailable()
     if(!icon.isNull() && showThumbs){
       QPixmap pix = QPixmap::fromImage(icon);
-      ico->addPixmap(pix);
+      ico.addPixmap(pix);
     /*}else if(info->isVideo() && showThumbs) {
       if(videoImages.find(name) == videoImages.end()) {
         LVideoLabel *mediaLabel = new LVideoLabel(name);
@@ -202,7 +204,7 @@ void Browser::loadDirectory(QString dir, bool force){
   //clean up the watcher first
   QStringList watched; watched << watcher->files() << watcher->directories();
   if(!watched.isEmpty()){ watcher->removePaths(watched); }
-  QStringList old = oldFiles; //copy this over for the moment (both lists will change in a moment)
+  QSet<QString> old(oldFiles.begin(), oldFiles.end()); //previous contents (a set: was an O(n) list lookup per file)
   oldFiles.clear(); //get ready for re-creating this list
   // read the given directory
   QDir directory(dir);
@@ -212,20 +214,23 @@ void Browser::loadDirectory(QString dir, bool force){
     else{ files = directory.entryList( QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::NoSort); }
     if(dirupdate || old.isEmpty()){ emit itemsLoading(files.length()); }
     //qDebug() << "Files Found:" << files.length() << currentDir;
+    QStringList watchpaths;
     for(int i=0; i<files.length(); i++){
-      watcher->addPath(directory.absoluteFilePath(files[i]));
       QString path = directory.absoluteFilePath(files[i]);
+      watchpaths << path; //added to the watcher in one call below (was one addPath() per file)
       oldFiles << path; //add to list for next time
-      bool reloaditem = !dirupdate || lastcheck.isNull() || (QFileInfo(path).lastModified() > lastcheck || QFileInfo(path).birthTime() > lastcheck);
+      bool reloaditem = !dirupdate || lastcheck.isNull();
+      if(!reloaditem){ QFileInfo fi(path); reloaditem = (fi.lastModified() > lastcheck || fi.birthTime() > lastcheck); } //one stat, only when needed
       //if(dirupdate){ qDebug() << "Reload Item:" << reloaditem << path.section("/",-1); }
       //reloaditem = true;
-      if(old.contains(path)){ old.removeAll(path); } //still in existance
+      if(old.contains(path)){ old.remove(path); } //still in existance
       else{ reloaditem = true; } //new file - make sure this gets loaded
       //qDebug() << "Item:" << files[i] << reloaditem;
       //if(showThumbs && imageFormats.contains(path.section(".",-1).toLower())){
       //qDebug() << "Future Starting:" << path;
       if(reloaditem){
-	if(imageFormats.contains(path.section(".",-1).toLower()) ){
+	//Only decode images when thumbnails are shown (the decoded image was thrown away otherwise)
+	if(showThumbs && imageFormats.contains(path.section(".",-1).toLower()) ){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	         QtConcurrent::run(this, &Browser::loadItem, path, this);
 #else
@@ -237,11 +242,12 @@ void Browser::loadDirectory(QString dir, bool force){
         }
       }
     }
-    watcher->addPath(directory.absolutePath());
+    watchpaths << directory.absolutePath();
+    watcher->addPaths(watchpaths);
     if(!old.isEmpty()){
-      old.removeAll(directory.absolutePath());
-      for(int i=0; i<old.length(); i++){
-        emit itemRemoved(old[i]);
+      old.remove(directory.absolutePath());
+      for(const QString &gone : old){
+        emit itemRemoved(gone);
       }
     }
   }else{

@@ -112,13 +112,13 @@ int index = ui->listWidget->currentRow();
 if(index<0 && ui->listWidget->count()>0){ index = 0; } //grab the first item instead
 else if(index<0){ return; } //no items available/selected
 QString item = ui->listWidget->item(index)->whatsThis();
-LUtils::startDetached("lumina-open \""+item+"\"");
+QProcess::startDetached("lumina-open", QStringList() << item); //argument list - the quoted command string broke on names containing a quote
 //Close the search utility if an application was launched (quick launch functionality)
 if(ui->radio_apps->isChecked()){ this->close(); }
 }
 
 void MainUI::LaunchItem(QListWidgetItem *item){
-    LUtils::startDetached("lumina-open \""+item->whatsThis()+"\"");
+    QProcess::startDetached("lumina-open", QStringList() << item->whatsThis()); //argument list - the quoted command string broke on names containing a quote
 }
 
 void MainUI::searchTypeChanged(){

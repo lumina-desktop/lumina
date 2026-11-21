@@ -163,8 +163,8 @@ MainUI::~MainUI(){
     DWLIST[i]->cleanup();
   }
   workThread->quit();
-  //Also ensure the work thread is stopped
-//  workThread->wait();
+  //Also ensure the work thread is stopped (bounded, so a busy worker cannot hang the exit)
+  workThread->wait(3000);
 }
 
 void MainUI::OpenDirs(QStringList dirs){
@@ -502,7 +502,7 @@ void MainUI::on_actionNew_Tab_triggered(){
 void MainUI::on_actionSearch_triggered(){
   DirWidget *dir = FindActiveBrowser();
   if(dir==0){ return; }
-  LUtils::startDetached("lumina-search -dir \""+dir->currentDir()+"\"");
+  QProcess::startDetached("lumina-search", QStringList() << "-dir" << dir->currentDir()); //argument list - the quoted command string broke on names containing a quote
 }
 
 void MainUI::on_actionClose_Browser_triggered(){
@@ -521,7 +521,10 @@ void MainUI::on_actionClose_triggered(){
 
 void MainUI::on_actionNew_Dir_triggered()
 {
-    DirWidget::createNewFolder(this, DWLIST.at( tabBar->currentIndex())->currentBrowser() );
+    //(was DWLIST.at(tabBar->currentIndex()) - tabs are movable and include the multimedia/slideshow tabs,
+    // so the tab index is not a DWLIST index: wrong folder, or out of range)
+    DirWidget *dir = FindActiveBrowser();
+    if(dir != 0){ DirWidget::createNewFolder(this, dir->currentBrowser()); }
 }
 
 void MainUI::on_actionRefresh_triggered(){
@@ -541,7 +544,7 @@ void MainUI::on_actionView_Hidden_Files_triggered(){
 
 void MainUI::on_actionVerify_File_Delete_triggered(){
 //Now save this setting for later
-  settings->setValue("showdeleteprompt", ui->actionView_Hidden_Files->isChecked());
+  settings->setValue("showdeleteprompt", ui->actionVerify_File_Delete->isChecked()); //(was saved from the "View Hidden Files" action)
 }
 
 void MainUI::treeWidgetWidthChanged(float percent){
@@ -730,7 +733,9 @@ void MainUI::on_actionSmaller_Icons_triggered(){
 }
 
 void MainUI::CreateBookMark(){
-  QString dir = FindActiveBrowser()->currentDir();
+  DirWidget *active = FindActiveBrowser();
+  if(active == 0){ return; }
+  QString dir = active->currentDir();
   bool ok = false;
   QString name = QInputDialog::getText(this, tr("New Bookmark"), tr("Name:"), QLineEdit::Normal, dir, \
         &ok, Qt::WindowFlags(), Qt::ImhFormattedNumbersOnly | Qt::ImhUppercaseOnly | Qt::ImhLowercaseOnly);
@@ -738,7 +743,7 @@ void MainUI::CreateBookMark(){
   QStringList BM = settings->value("bookmarks",QStringList()).toStringList();
   if(BM.filter(name+"::::").length() >0){
     QMessageBox::warning(this, tr("Invalid Name"), tr("This bookmark name already exists. Please choose another.") );
-    QTimer::singleShot(0,this, SLOT(on_actionBookMark_triggered()));
+    QTimer::singleShot(0, this, [this](){ CreateBookMark(); }); //ask again (the old SLOT name did not exist, so nothing happened)
     return;
   }
   BM.append(name+"::::"+dir);
@@ -1016,12 +1021,13 @@ void MainUI::RenameFiles(QStringList list){
     if(next.isEmpty() && !oext.isEmpty()){
       nname.append( "."+oext );
     }
+    if(nname == fname){ continue; } //name unchanged - nothing to do (used to end up renamed to "name-1")
     //Check if this filename already exists
-    bool overwrite = QFile::exists(path+nname);
-    if(overwrite){
-      if(QMessageBox::Yes != QMessageBox::question(this, tr("Overwrite File?"), tr("An existing file with the same name will be replaced. Are you sure you want to proceed?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){
-        return; //cancelled
-      }
+    //NOTE: the file operation worker never overwrites on a move (it picks "name-1" instead), so offering
+    // to replace the existing file was misleading - refuse the rename for this item instead.
+    if(QFile::exists(path+nname)){
+      QMessageBox::warning(this, tr("File Exists"), tr("A file with this name already exists. Please choose a different name or remove the existing file first:")+"\n\n"+nname);
+      continue;
     }
     //Now perform the move
     //Don't pause the background worker for a simple rename - this operation is extremely fast
@@ -1104,7 +1110,9 @@ void MainUI::TrayJobsFinished(){
 void MainUI::closeEvent(QCloseEvent *ev){
   //See if the tray is active or not first
   if(TRAY!=0){
-    if(TRAY->isVisible() && !waitingToClose){
+    //Also wait for jobs that are still running: the tray only becomes visible ~1 s after a job starts,
+    // so closing right after starting a copy/move used to quit with the operation half done
+    if( (TRAY->isVisible() || TRAY->hasRunningJobs()) && !waitingToClose){
       this->hide();
       ev->ignore();
       waitingToClose = true;
@@ -1116,5 +1124,5 @@ void MainUI::closeEvent(QCloseEvent *ev){
 
 void MainUI::on_actionOpen_as_Root_triggered()
 {
-    ExternalProcess::launch("lumina-sudo lumina-fm");
+    ExternalProcess::launch("lumina-sudo", QStringList() << "lumina-fm");
 }

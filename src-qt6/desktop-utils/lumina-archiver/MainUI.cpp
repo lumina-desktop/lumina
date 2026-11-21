@@ -156,17 +156,23 @@ bool MainUI::cleanItems(QStringList list, QTreeWidgetItem *start){
   bool changed = false;
   if(start==0){
     for(int i=0; i<ui->tree_contents->topLevelItemCount(); i++){
-      changed = changed || cleanItems(list, ui->tree_contents->topLevelItem(i));
+      //NOTE: always recurse (the old "changed || cleanItems(...)" skipped every subtree after the first
+      // change), and step back after a delete so the next sibling is not skipped
+      bool sub = cleanItems(list, ui->tree_contents->topLevelItem(i));
+      changed = changed || sub;
       if(!list.contains(ui->tree_contents->topLevelItem(i)->whatsThis(0)) ){
         delete ui->tree_contents->topLevelItem(i);
         changed = true;
+        i--;
       }
     }
   }else{
     for(int i=0; i<start->childCount(); i++){
-      changed = changed || cleanItems(list, start->child(i));
+      bool sub = cleanItems(list, start->child(i));
+      changed = changed || sub;
       if(!list.contains(start->child(i)->whatsThis(0)) ){
         delete start->child(i);
+        i--;
         changed = true;
       }
     }
@@ -333,18 +339,30 @@ void MainUI::UpdateTree(){
   files.sort();
   //Remove any entries for file no longer in the archive
   bool changed = cleanItems(files);
+  //Map archive path -> tree item once (was a recursive findItem() search per file, twice when it had a parent)
+  QHash<QString, QTreeWidgetItem*> items;
+  {
+    QList<QTreeWidgetItem*> stack;
+    for(int t=0; t<ui->tree_contents->topLevelItemCount(); t++){ stack << ui->tree_contents->topLevelItem(t); }
+    while(!stack.isEmpty()){
+      QTreeWidgetItem *cur = stack.takeLast();
+      items.insert(cur->whatsThis(0), cur);
+      for(int c=0; c<cur->childCount(); c++){ stack << cur->child(c); }
+    }
+  }
   for(int i=0; i<files.length(); i++){
-    if(0 != findItem(files[i]) ){ continue; } //already in the tree widget
+    if(items.contains(files[i]) ){ continue; } //already in the tree widget
     QString mime = LXDG::findAppMimeForFile(files[i].section("/",-1), false); //first match only
     QTreeWidgetItem *it = new QTreeWidgetItem();
       it->setText(0, files[i].section("/",-1) );
       if(!BACKEND->isLink(files[i])){
-        it->setText(1, LXDG::findAppMimeForFile(files[i].section("/",-1), false) );
+        it->setText(1, mime ); //(was looked up a second time here)
         it->setText(2, LUtils::BytesToDisplaySize( BACKEND->size(files[i])) );
       }else{
         it->setText(1, QString(tr("Link To: %1")).arg(BACKEND->linkTo(files[i]) ) );
       }
     it->setWhatsThis(0, files[i]);
+    items.insert(files[i], it);
     if(BACKEND->isDir(files[i])){
       it->setIcon(0, LXDG::findIcon("folder",""));
       it->setText(1,""); //clear the mimetype
@@ -355,8 +373,7 @@ void MainUI::UpdateTree(){
     }
      //Now find which item to add this too
     if(files[i].contains("/")){
-      QTreeWidgetItem *parent = findItem(files[i].section("/",0,-2));
-      QList<QTreeWidgetItem*> list = ui->tree_contents->findItems(files[i].section("/",-3,-2), Qt::MatchExactly, 0);
+      QTreeWidgetItem *parent = items.value(files[i].section("/",0,-2), 0); //(files are sorted, so parents come first)
       if(parent==0){ ui->tree_contents->addTopLevelItem(it); }
       else{ parent->addChild(it); }
     }else{

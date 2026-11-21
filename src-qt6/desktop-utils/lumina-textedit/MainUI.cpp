@@ -523,7 +523,7 @@ void MainUI::tabDetached(int tab){
     if(QMessageBox::Yes != QMessageBox::question(this, tr("Lose Unsaved Changes?"), QString(tr("This file has unsaved changes.\nDo you want to close it anyway?\n\n%1")).arg(edit->currentFile()), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) ){ return; }
   }
   //Launch this file with a new LTE process
-  LUtils::startDetached("lumina-textedit \""+edit->currentFile()+"\"");
+  QProcess::startDetached("lumina-textedit", QStringList() << edit->currentFile()); //argument list - the quoted command string broke on names containing a quote
   tabWidget->removeTab(tab);
   edit->deleteLater();
 }

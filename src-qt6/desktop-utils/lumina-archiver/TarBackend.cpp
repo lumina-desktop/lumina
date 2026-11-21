@@ -263,7 +263,7 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
         //Need to find the full path to the (single) extracted file
         QString path = args.last() +"/"+ args[ args.indexOf("--include")+1].section("/",-1);
         QFile::setPermissions(path, QFileDevice::ReadOwner);
-        LUtils::startDetached("xdg-open  \""+path+"\"");
+        QProcess::startDetached("xdg-open", QStringList() << path); //argument list - the quoted command string broke on names containing a quote
       }else{
         //Multi-file extract - open the dir instead
         QString dir = args.last();
@@ -271,7 +271,7 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
         if(QFile::exists(dir+"/"+filepath.section("/",-1).section(".",0,0) ) ){
           dir = dir+"/"+filepath.section("/",-1).section(".",0,0);
         }
-        LUtils::startDetached("xdg-open \""+ dir+"\""); //just extracted to a dir - open it now
+        QProcess::startDetached("xdg-open", QStringList() << dir); //just extracted to a dir - open it now (argument list: names with quotes broke the old command string)
       }
 
     }else if(args.contains("-c") && QFile::exists(tmpfilepath)){

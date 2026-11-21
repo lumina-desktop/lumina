@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "DirWidget2.h"
+#include <QElapsedTimer>
+#include <QPointer>
 #include "ui_DirWidget2.h"
 
 #include <QActionGroup>
@@ -540,7 +542,7 @@ void DirWidget::fileProperties(){
     return;
   }
   for(int i=0; i<sel.length(); i++){
-    LUtils::startDetached("lumina-fileinfo \""+sel[i]+"\""); //use absolute paths
+    QProcess::startDetached("lumina-fileinfo", QStringList() << sel[i]); //use absolute paths (argument list: names with quotes broke the old command string)
   }
 }
 
@@ -593,11 +595,12 @@ void DirWidget::UpdateContextMenu(){
     }
     if(LUtils::isValidBinary("lumina-archiver") && sel.length() >=1 && canmodify){
       cArchiveMenu->clear();
-      if(sel.length()==1 && ( XDGMime::fromFileName(sel[0]).endsWith("-tar") ||
-                                                XDGMime::fromFileName(sel[0]).endsWith("-image") ||
-                                                 ( XDGMime::fromFileName(sel[0]).contains("zip") &&
-                                                   !XDGMime::fromFileName(sel[0]).endsWith("epub+zip") &&
-                                                   !XDGMime::fromFileName(sel[0]).endsWith("vnd.comicbook+zip" )
+      const QString selmime = (sel.length()==1) ? XDGMime::fromFileName(sel[0]) : QString(); //looked up once (was 5 times)
+      if(sel.length()==1 && ( selmime.endsWith("-tar") ||
+                                                selmime.endsWith("-image") ||
+                                                 ( selmime.contains("zip") &&
+                                                   !selmime.endsWith("epub+zip") &&
+                                                   !selmime.endsWith("vnd.comicbook+zip" )
                                                   )
                                                  )
                                                ){
@@ -639,7 +642,9 @@ void DirWidget::UpdateContextMenu(){
   //Now add all the detected applications
   if(!mimetypes.isEmpty()){
     static XDGDesktopList applist;
-    applist.updateList();
+    //Re-scanning every application dir on each right-click is expensive - refresh at most every 30 seconds
+    static QElapsedTimer applistAge;
+    if(!applistAge.isValid() || applistAge.elapsed() > 30000){ applist.updateList(); applistAge.start(); }
     QList<XDGDesktop*> apps = applist.apps(false,true);
     QList<XDGDesktop*> found;
     for(int a=0; a<apps.length(); a++){
@@ -755,7 +760,9 @@ void DirWidget::createNewFolder(QWidget *parent, BrowserWidget *browser){
     //Verify that the new dir does not already exist
     if(dir.exists(full)){
       QMessageBox::warning(parent, tr("Invalid Name"), tr("A file or directory with that name already exists! Please pick a different name."));
-      QTimer::singleShot(0,parent, SLOT(createNewDir(parent, browser)) ); //repeat this function
+      //Ask again (the old SLOT(createNewDir(parent, browser)) was not a valid signature - it never fired)
+      QPointer<BrowserWidget> bw(browser);
+      QTimer::singleShot(0, parent, [parent, bw](){ if(!bw.isNull()){ DirWidget::createNewFolder(parent, bw.data()); } });
     }else{
       if(!dir.mkdir(newdir) ){
         QMessageBox::warning(parent, tr("Error Creating Directory"), tr("The directory could not be created. Please ensure that you have the proper permissions to modify the current directory."));
@@ -782,10 +789,10 @@ void DirWidget::createNewXDGEntry(){
   //Verify the file does not already exist
   if(QFile::exists(full+newdocument)){
     QMessageBox::warning(this, tr("Invalid Name"), tr("A file or directory with that name already exists! Please pick a different name."));
-    QTimer::singleShot(0,this, SLOT(createNewFile()) ); //repeat this function
+    QTimer::singleShot(0, this, [this](){ createNewXDGEntry(); }); //repeat this function (was retrying createNewFile() instead)
     return;
   }
-  LUtils::startDetached("lumina-fileinfo -application \""+full+newdocument+"\"");
+  QProcess::startDetached("lumina-fileinfo", QStringList() << "-application" << full+newdocument); //argument list - the quoted command string broke on names containing a quote
 }
 
 /*void DirWidget::createNewSymlink{
@@ -841,7 +848,7 @@ void DirWidget::runFiles(){
     if(QFileInfo(sel[i]).isDir()){
       dirs << sel[i];
     }else{
-      LUtils::startDetached("lumina-open \""+sel[i]+"\"");
+      QProcess::startDetached("lumina-open", QStringList() << sel[i]); //argument list - the quoted command string broke on names containing a quote
     }
   }
   //qDebug() << " - got Dirs:" << dirs;
@@ -861,7 +868,7 @@ void DirWidget::runWithFiles(){
     if(QFileInfo(sel[i]).isDir()){
       dirs << sel[i];
     }else{
-      LUtils::startDetached("lumina-open -select \""+sel[i]+"\"");
+      QProcess::startDetached("lumina-open", QStringList() << "-select" << sel[i]); //argument list - the quoted command string broke on names containing a quote
     }
   }
   if(!dirs.isEmpty()){
@@ -880,7 +887,7 @@ void DirWidget::openInSlideshow(){
   //Now turn them all into a list and emit them
     LFileInfoList list;
     for(int i=0; i<sel.length(); i++){
-      if(sel.endsWith(".desktop")){ continue; } //simplification to make sure we don't read any files which are not needed
+      if(sel[i].endsWith(".desktop")){ continue; } //skip .desktop files (was sel.endsWith() - a QStringList check that was always false)
       LFileInfo info(sel[i]);
       if( info.isImage() ){  list << info; } //add to the list
     }
@@ -893,7 +900,7 @@ void DirWidget::openMultimedia(){
   //Now turn them all into a list and emit them
     LFileInfoList list;
     for(int i=0; i<sel.length(); i++){
-      if(sel.endsWith(".desktop")){ continue; } //simplification to make sure we don't read any files which are not needed
+      if(sel[i].endsWith(".desktop")){ continue; } //skip .desktop files (was sel.endsWith() - a QStringList check that was always false)
       LFileInfo info(sel[i]);
       if( info.isAVFile() ){  list << info; } //add to the list
     }
@@ -961,7 +968,9 @@ void DirWidget::mouseReleaseEvent(QMouseEvent *ev){
 }
 
 void DirWidget::openRootFM(){
-  rootfmdir = "lumina-sudo lumina-fm -new-instance " + currentDir();
+  //Argument list: the old unquoted command string opened the wrong path(s) as root for any directory
+  // name containing a space
+  rootfmdir = currentDir();
   qDebug() << "rootfmdir" << rootfmdir;
-  ExternalProcess::launch(rootfmdir);
+  ExternalProcess::launch("lumina-sudo", QStringList() << "lumina-fm" << "-new-instance" << rootfmdir);
 }

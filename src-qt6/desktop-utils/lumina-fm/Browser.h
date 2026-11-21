@@ -47,7 +47,7 @@ private:
 	QMutex hashMutex;
 
 	void loadItem(const QString info, Browser *obj); //this is the main loader class - multiple instances each run in a separate thread
-	QIcon* loadIcon(QString icon); //simplification for using/populating the mimIcons cache
+	QIcon loadIcon(QString icon); //simplification for using/populating the mimIcons cache (returns a copy - QIcon is implicitly shared)
 
 private slots:
 	void fileChanged(QString); //tied into the watcher - for file change notifications
@@ -62,7 +62,7 @@ signals:
 	//Main Signals
 	void itemRemoved(QString item); //emitted if a file was removed from the underlying
 	void clearItems(); //emitted when dirs change for example
-	void itemDataAvailable(const QIcon*, LFileInfo*);
+	void itemDataAvailable(QIcon, LFileInfo*); //receiver takes ownership of the LFileInfo
 
 	//Start/Stop signals for loading of data
 	void itemsLoading(int); //number of items which are getting loaded

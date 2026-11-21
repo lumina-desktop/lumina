@@ -27,6 +27,7 @@ private:
 	Browser *BROWSER;
 	QThread *bThread; //browserThread
 	int numItems; //used for checking if all the items have loaded yet
+	QTimer *statsTimer; //debounces loadStatistics() (was one background task per item, touching GUI widgets off-thread)
 	QString ID, statustip;
 	QStringList date_format, historyList;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -86,10 +87,11 @@ private slots:
 	//Browser connections
 	void clearItems();
 	void itemRemoved(QString);
-	void itemDataAvailable(const QIcon*, LFileInfo*);
+	void itemDataAvailable(QIcon, LFileInfo*); //takes ownership of the LFileInfo
 	void itemsLoading(int total);
 	void selectionChanged();
-	void loadStatistics(BrowserWidget *bw); //designed to be run in a background thread
+	void loadStatistics(BrowserWidget *bw); //runs on the GUI thread (it reads the list/tree widgets)
+	void updateStatistics(); //statsTimer timeout
 
 
 protected:

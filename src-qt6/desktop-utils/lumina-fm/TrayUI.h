@@ -17,6 +17,7 @@
 class TrayUI : public QSystemTrayIcon{
 	Q_OBJECT
 public:
+	bool hasRunningJobs(); //any file operation still in progress (true right after StartOperation())
 	enum FILEOP{MOVE, COPY, DELETE}; //File Operations
 
 	TrayUI(QObject *parent = 0);

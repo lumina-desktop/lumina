@@ -29,7 +29,11 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
   bThread->start();
   connect(BROWSER, SIGNAL(clearItems()), this, SLOT(clearItems()) );
   connect(BROWSER, SIGNAL(itemRemoved(QString)), this, SLOT(itemRemoved(QString)) );
-  connect(BROWSER, SIGNAL(itemDataAvailable(const QIcon *, LFileInfo*)), this, SLOT(itemDataAvailable(const QIcon *, LFileInfo*)) );
+  connect(BROWSER, SIGNAL(itemDataAvailable(QIcon, LFileInfo*)), this, SLOT(itemDataAvailable(QIcon, LFileInfo*)) );
+  statsTimer = new QTimer(this);
+    statsTimer->setSingleShot(true);
+    statsTimer->setInterval(150);
+  connect(statsTimer, SIGNAL(timeout()), this, SLOT(updateStatistics()) );
   connect(BROWSER, SIGNAL(itemsLoading(int)), this, SLOT(itemsLoading(int)) );
   connect(this, SIGNAL(dirChange(QString, bool)), BROWSER, SLOT(loadDirectory(QString, bool)) );
   listWidget = 0;
@@ -42,9 +46,13 @@ BrowserWidget::BrowserWidget(QString objID, QWidget *parent) : QWidget(parent){
 }
 
 BrowserWidget::~BrowserWidget(){
-  if(bThread->isRunning()){ bThread->exit(); }
-  BROWSER->deleteLater();
-  bThread->deleteLater();
+  //Stop the browser thread and wait for it before deleting anything: deleteLater() on a QThread that is
+  // still inside loadDirectory() aborted with "Destroyed while thread is still running", and a deleteLater()
+  // posted to a thread whose event loop is exiting never runs (Browser + its inotify watches leaked)
+  bThread->quit();
+  bThread->wait();
+  delete BROWSER;
+  delete bThread;
 }
 
 void BrowserWidget::stop(){
@@ -242,21 +250,22 @@ QStringList BrowserWidget::currentItems(int type){
   QStringList paths;
   if(listWidget!=0){
     for(int i=0; i<listWidget->count(); i++){
-      if(i<0 && (listWidget->item(i)->data(Qt::UserRole).toString()=="file") ){ //FILES
+      //NOTE: filter on "type" (was the loop index "i", so type=-1 returned item 0 plus every directory)
+      if(type<0 && (listWidget->item(i)->data(Qt::UserRole).toString()=="file") ){ //FILES
         paths << listWidget->item(i)->whatsThis();
-      }else if(i>0 &&  (listWidget->item(i)->data(Qt::UserRole).toString()=="dir")){ //DIRS
+      }else if(type>0 &&  (listWidget->item(i)->data(Qt::UserRole).toString()=="dir")){ //DIRS
         paths << listWidget->item(i)->whatsThis();
-      }else if(i==0){ //ALL
+      }else if(type==0){ //ALL
         paths << listWidget->item(i)->whatsThis();
       }
     }
   }else if(treeWidget!=0){
     for(int i=0; i<treeWidget->topLevelItemCount(); i++){
-      if(i<0 && !treeWidget->topLevelItem(i)->text(1).isEmpty()){ //FILES
+      if(type<0 && !treeWidget->topLevelItem(i)->text(1).isEmpty()){ //FILES
         paths << treeWidget->topLevelItem(i)->whatsThis(0);
-      }else if(i>0 && treeWidget->topLevelItem(i)->text(1).isEmpty()){ //DIRS
+      }else if(type>0 && treeWidget->topLevelItem(i)->text(1).isEmpty()){ //DIRS
         paths << treeWidget->topLevelItem(i)->whatsThis(0);
-      }else if(i==0){ //ALL
+      }else if(type==0){ //ALL
         paths << treeWidget->topLevelItem(i)->whatsThis(0);
       }
     }
@@ -328,9 +337,10 @@ void BrowserWidget::itemRemoved(QString item){
   }
 }
 
-void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
+void BrowserWidget::itemDataAvailable(QIcon ico, LFileInfo *info){
   //qDebug() << "itemDataAvailable";
   if(info==0){ return; }
+  QScopedPointer<LFileInfo> infoGuard(info); //we own it - freed on every return path (was never deleted)
   if(info->absolutePath() != BROWSER->currentDirectory()){ return; } //leftover item from a previous load
   widgetMutex.lock();
   if(listWidget!=0){ listWidget->setWhatsThis( BROWSER->currentDirectory() ); }
@@ -357,7 +367,7 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     }
     //No existing item - make a new one
     if(it==0){
-      it = new CQListWidgetItem(*ico, info->fileName(), listWidget);
+      it = new CQListWidgetItem(ico, info->fileName(), listWidget);
           it->setWhatsThis(info->absoluteFilePath());
           it->setData(Qt::UserRole, (info->isDir() ? "dir" : "file")); //used for sorting
         listWidget->addItem(it);
@@ -369,7 +379,7 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     }else{
       it->setText(info->fileName());
     }
-    if(ico!=0){ it->setIcon(*ico); }
+    if(!ico.isNull()){ it->setIcon(ico); }
 
   }else if(treeWidget!=0){
     QTreeWidgetItem *it = 0;
@@ -386,8 +396,9 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
         treeWidget->addTopLevelItem(it);
       }
     }else{
-      if( ! treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).isEmpty() ) {
-        it = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0).first();
+      QList<QTreeWidgetItem*> existing = treeWidget->findItems(info->fileName(), Qt::MatchExactly, 0); //looked up once (was twice)
+      if( ! existing.isEmpty() ) {
+        it = existing.first();
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
       }else if(USE_VIDEO_LABEL && hasThumbnails() && info->isVideo() && !videoMap.contains(info->absoluteFilePath()) ) {
         it = new CQTreeWidgetItem(treeWidget);
@@ -409,7 +420,7 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
     }
     //Now set/update all the data
     if(!info->isVideo() || !hasThumbnails() || !USE_VIDEO_LABEL){
-        if(ico!=0){ it->setIcon(0, *ico); }
+        if(!ico.isNull()){ it->setIcon(0, ico); }
     }
     it->setText(1, info->isDir() ? "" : LUtils::BytesToDisplaySize(info->size()) ); //size (1)
     it->setText(2, info->mimetype() ); //type (2)
@@ -433,11 +444,7 @@ void BrowserWidget::itemDataAvailable(const QIcon* ico, LFileInfo *info){
       //treeWidget->resizeColumnToContents(0);
     }
     freshload = false; //any further changes are updates - not a fresh load of a dir
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QtConcurrent::run(this, &BrowserWidget::loadStatistics, this);
-#else
-    QtConcurrent::run([this]{ loadStatistics(this); });
-#endif
+    statsTimer->start(); //restartable: one statistics pass after the last item arrives (on the GUI thread)
     //QTimer::singleShot(0, this, SLOT(loadStatistics()));
     //Done loading items
     //this->setEnabled(true);
@@ -460,6 +467,10 @@ void BrowserWidget::itemsLoading(int total){
 
 void BrowserWidget::selectionChanged(){
   emit hasFocus(ID); //let the parent know the widget is "active" with the user
+}
+
+void BrowserWidget::updateStatistics(){
+  loadStatistics(this);
 }
 
 void BrowserWidget::loadStatistics(BrowserWidget* bw){

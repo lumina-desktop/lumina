@@ -157,7 +157,7 @@ void MainUI::quicksave(){
     QString path = savedir + QString( "Screenshot-%1.png" ).arg( lastScreenShot.toString("yyyy-MM-dd-hh-mm-ss") );
     if(IMG->image().save(path, "png") ){
       picSaved = true;
-      LUtils::startDetached("lumina-open -select \""+path+"\"");
+      QProcess::startDetached("lumina-open", QStringList() << "-select" << path); //argument list - the quoted command string broke on names containing a quote
     }else{
       showSaveError(path);
     }

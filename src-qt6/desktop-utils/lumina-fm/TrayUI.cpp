@@ -19,6 +19,11 @@ TrayUI::~TrayUI(){
   this->contextMenu()->deleteLater();
 }
 
+bool TrayUI::hasRunningJobs(){
+  for(int i=0; i<OPS.length(); i++){ if(!OPS[i]->isDone()){ return true; } }
+  return false;
+}
+
 void TrayUI::StartOperation( FILEOP op, QStringList oldF, QStringList newF){
   createOP(op, oldF, newF);
   QTimer::singleShot(1000, this, SLOT(checkJobs()));

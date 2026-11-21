@@ -140,7 +140,7 @@ void ZBackend::procFinished(int retcode, QProcess::ExitStatus){
     if(retcode==0){
       QStringList args = PROC.arguments();
       for(int i=0; i<args.length(); i++){
-        if(args[i].startsWith("-o")){ LUtils::startDetached("xdg-open \""+ args[i].section("-o",1,-1)+"\""); } //just extracted to a dir - open it now
+        if(args[i].startsWith("-o")){ QProcess::startDetached("xdg-open", QStringList() << args[i].section("-o",1,-1)); } //just extracted to a dir - open it now
       }
     }
     startList();

@@ -330,7 +330,9 @@ void FOWorker::slotStartOperations(){
       QStringList subs = subfiles(ofiles[i], true); //dirs need to be first for additions
       for(int s=0; s<subs.length(); s++){
         olist << subs[s];
-	QString newsub = subs[s].section(ofiles[i],0,100, QString::SectionSkipEmpty);
+	//subs[s] always starts with ofiles[i] - strip that prefix (using the source path as a section
+	// *separator*, as before, mangled sub-paths that contain the source path again further down)
+	QString newsub = subs[s].mid(ofiles[i].length());
 	    newsub.prepend(nfiles[i]);
 	nlist << newsub;
       }
@@ -341,6 +343,7 @@ void FOWorker::slotStartOperations(){
 	QStringList err; err << tr("Invalid Move") << QString(tr("It is not possible to move a directory into itself. Please make a copy of the directory instead.\n\nOld Location: %1\nNew Location: %2")).arg(ofiles[i], nfiles[i]);
 	emit finished(err); return;
       }else{
+	if(nfiles[i] == ofiles[i]){ continue; } //moving onto itself (e.g. cut + paste into the same folder) - nothing to do (was renamed to "name-1")
 	//Check for existance of the new name
 	if(QFile::exists(nfiles[i])){
 	  if(overwrite!=1){
@@ -367,12 +370,15 @@ void FOWorker::slotStartOperations(){
       emit startingItem(i+1,olist.length(), olist[i],nlist[i]);
       if(QFile::exists(nlist[i])){
 	if(overwrite==1){
+	  //Never delete a destination that contains (or is) the source - that would destroy the source too
+	  if(olist[i]==nlist[i] || olist[i].startsWith(nlist[i]+"/")){ errlist << olist[i]; continue; }
 	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
 	}
       }
       //If a parent directory fails to copy, skip all the children as well (they will also fail)
+      // (parent dir = section 0..-2; this used "0,-1" - the whole path - so it never matched)
       //QApplication::processEvents();
-      if( !errlist.contains(olist[i].section("/",0,-1)) ){
+      if( !errlist.contains(olist[i].section("/",0,-2)) ){
         errlist << copyItem(olist[i], nlist[i]);
       }
     }else if(isMV){
@@ -382,13 +388,30 @@ void FOWorker::slotStartOperations(){
       //Clean up any overwritten files/dirs
       if(QFile::exists(nlist[i])){
 	if(overwrite==1){
+	  //Never delete a destination that contains (or is) the source - that would destroy the source too
+	  if(olist[i]==nlist[i] || olist[i].startsWith(nlist[i]+"/")){ errlist << olist[i]; continue; }
 	  errlist << removeItem(nlist[i], true); //recursively remove the file/dir since we are supposed to overwrite it
 	}
       }
       //Perform the move if no error yet (including skipping all children)
-      if( !errlist.contains(olist[i].section("/",0,-1)) ){
-        if( !QFile::rename(ofiles[i], nfiles[i]) ){
-          errlist << ofiles[i];
+      //NOTE: use olist/nlist (was ofiles/nfiles - misaligned as soon as any entry was skipped above)
+      if( !errlist.contains(olist[i].section("/",0,-2)) ){
+        if( !QFile::rename(olist[i], nlist[i]) ){
+          QFileInfo src(olist[i]);
+          if(src.isDir() && !src.isSymLink()){
+            //QFile::rename() cannot move a directory across filesystems: copy the tree, then remove the
+            // source only if every item copied successfully
+            QStringList subs = subfiles(olist[i], true); //dirs first for additions
+            QStringList cperr;
+            for(int s=0; s<subs.length() && cperr.isEmpty(); s++){
+              cperr << copyItem(subs[s], nlist[i]+subs[s].mid(olist[i].length()));
+            }
+            cperr.removeAll("");
+            if(cperr.isEmpty()){ errlist << removeItem(olist[i], true); }
+            else{ errlist << olist[i]; }
+          }else{
+            errlist << olist[i]; //(QFile::rename already falls back to copy+remove for single files)
+          }
         }
       }
     }
