@@ -20,7 +20,10 @@ public:
           setupUi(this);
 	  //Have this always centered on the screen and on top of other windows
 	  this->setWindowFlags(Qt::Tool | Qt::WindowStaysOnTopHint );
-	  QPoint center = QGuiApplication::screenAt(QCursor::pos())->availableGeometry().center();
+	  //screenAt() is null when the cursor sits in a dead zone between differently-sized monitors
+	  QScreen *scr = QGuiApplication::screenAt(QCursor::pos());
+	  if(scr == nullptr){ scr = QGuiApplication::primaryScreen(); }
+	  QPoint center = (scr != nullptr) ? scr->availableGeometry().center() : QPoint(this->width()/2, this->height()/2);
 	  //Move from center of widget to top-left corner point
 	  center.setX( center.x() - (this->width()/2) );
 	  center.setY( center.y() - (this->height()/2) );

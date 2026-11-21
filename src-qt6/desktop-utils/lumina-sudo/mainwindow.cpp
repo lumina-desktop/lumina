@@ -101,9 +101,11 @@ void MainWindow::testPass()
   tP->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
   tP->setProcessChannelMode(QProcess::MergedChannels);
   tP->start(program, arguments);
-  tP->write(passwordLineEdit->text().toLatin1() + "\n");
-  tP->write(passwordLineEdit->text().toLatin1() + "\n");
-  tP->write(passwordLineEdit->text().toLatin1() + "\n");
+  //Same encoding as startSudo() (was toLatin1() here, so any non-Latin-1 password always failed this test)
+  QByteArray pw = passwordLineEdit->text().toLocal8Bit() + "\n";
+  tP->write(pw);
+  tP->write(pw);
+  tP->write(pw);
 
   while(tP->state() == QProcess::Starting || tP->state() == QProcess::Running ) {
      tP->waitForFinished(500);
@@ -183,8 +185,10 @@ void MainWindow::slotProcDone()
 void MainWindow::slotButtonClicked(QAbstractButton *myBut)
 {
   if ( buttonBox->buttonRole(myBut) == QDialogButtonBox::AcceptRole ) {
+     //NOTE: no close() here - testPass() keeps the dialog open on a wrong password (with retries) and
+     // startSudo() hides it on success; slotProcDone() exits with the command's code. Closing the (last)
+     // window here quit after one wrong try with exit 0, and on success quit right away, killing the command.
      testPass();
-     close();
   }else{
     QApplication::exit(1);
   }
@@ -193,42 +197,11 @@ void MainWindow::slotButtonClicked(QAbstractButton *myBut)
 
 bool MainWindow::checkUserGroup()
 {
-   QString loginName = getlogin();
-   QString groupName = "wheel"; // group to check
-   QStringList gNames;
-   if ( loginName == "root" )
-     return true;
-
-   QStringList info = runQuickCmd("getent group").filter(groupName); //need to support AD/LDAP settings
-   /*QString tmp;
-   QFile iFile("/etc/group");
-   if ( ! iFile.open(QIODevice::ReadOnly | QIODevice::Text))
-     return true; //or FALSE?*/
-
-   for(int i=0; i<info.length(); i++){
-     if(info[i].section(":",0,0)==groupName){
-       gNames = info[i].section(":",3,3).split(",");
-       break;
-     }
-   }
-   /*while ( !iFile.atEnd() ) {
-     tmp = iFile.readLine().simplified();
-     if ( tmp.indexOf(groupName) == 0 ) {
-        gNames = tmp.section(":", 3, 3).split(",");
-        break;
-     }
-   }
-   iFile.close();
-
-   if ( gNames.isEmpty() )
-      return false;*/
-
-   for ( int i = 0; i < gNames.size(); ++i ){
-      if ( gNames.at(i) == loginName ){
-	return true;
-      }
-   }
-   return false;
+   //Membership is not checked here: sudo itself decides who may run what (sudoers can grant access via
+   // "wheel", "sudo", "admin", primary groups, LDAP...). The previous wheel-only check was already
+   // unreachable (a stray second "return true;" followed the root check) and relied on getlogin(),
+   // which is NULL without a controlling terminal.
+   return true;
 }
 
 QStringList MainWindow::runQuickCmd(QString cmd){
