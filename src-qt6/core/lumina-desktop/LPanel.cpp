@@ -391,7 +391,11 @@ void LPanel::paintEvent(QPaintEvent *event){
   QWidget::paintEvent(event); //now pass the event along to the normal painting event
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void LPanel::enterEvent(QEnterEvent *event){
+#else
 void LPanel::enterEvent(QEvent *event){
+#endif
   //qDebug() << "Panel Enter Event:";
   checkPanelFocus();
   /*if(hidden){

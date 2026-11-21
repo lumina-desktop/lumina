@@ -77,10 +77,16 @@ private slots:
 	void checkPanelFocus();
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void paintEvent(QPaintEvent *event);
-	void enterEvent(QEvent *event);
-	void leaveEvent(QEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	//NOTE: Qt6 changed the enterEvent() argument to QEnterEvent* - with the old signature this
+	// silently stops overriding and auto-hidden panels never pop out on mouse-over
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	void enterEvent(QEnterEvent *event) override;
+#else
+	void enterEvent(QEvent *event) override;
+#endif
+	void leaveEvent(QEvent *event) override;
 };
 
 #endif
