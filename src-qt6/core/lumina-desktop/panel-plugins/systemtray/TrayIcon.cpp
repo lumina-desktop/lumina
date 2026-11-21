@@ -15,6 +15,7 @@ TrayIcon::TrayIcon(QWidget *parent) : QWidget(parent){
   IID = 0;
   dmgID = 0;
   badpaints = 0;
+  sizeRetries = 0;
   if("1" == QString(getenv("QT_AUTO_SCREEN_SCALE_FACTOR")) ){
   scalefactor = 2; //Auto-adjust this later to the physicalDotsPerInch of the current screen
   }else{ scalefactor = 1; }
@@ -106,7 +107,9 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 	//qDebug() << " - Pix size:" << pix.size().width() << pix.size().height();
 	//qDebug() << " - Geom:" << this->geometry().x() << this->geometry().y() << this->geometry().width() << this->geometry().height();
 	if(!pix.isNull()){
-	  if((this->size()*scalefactor) != pix.size()){ QTimer::singleShot(10, this, SLOT(updateIcon())); return; }
+	  //Ask the tray app to match our size a few times, then just draw it scaled: some apps ignore the resize,
+	  // and this used to retry (resize + X round-trip + repaint) forever without ever drawing the icon
+	  if((this->size()*scalefactor) != pix.size() && sizeRetries < 3){ sizeRetries++; QTimer::singleShot(10, this, SLOT(updateIcon())); return; }
 	  painter.drawPixmap(0,0,this->width(), this->height(), pix.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation) );
 	  badpaints = 0; //good paint
 	}else{
@@ -123,6 +126,7 @@ void TrayIcon::paintEvent(QPaintEvent *event){
 }
 
 void TrayIcon::resizeEvent(QResizeEvent *event){
+  sizeRetries = 0; //new size - allow the tray app a few attempts to match it
   //qDebug() << "Resize Event:" << event->size().width() << event->size().height();
   if(AID!=0){
     LSession::handle()->XCB->ResizeWindow(AID,  event->size());

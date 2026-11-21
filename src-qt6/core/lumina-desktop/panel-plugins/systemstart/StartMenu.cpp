@@ -614,7 +614,9 @@ void StartMenu::on_tool_shutdown_clicked(){
 void StartMenu::on_tool_suspend_clicked(){
   //Make sure to lock the system first (otherwise anybody can access it again)
   emit CloseMenu();
-  LUtils::runCmd("xscreensaver-command -lock");
+  //Use Lumina's own screen locker (as SystemWindow::sysSuspend does). xscreensaver is no longer the
+  // locker, so the old "xscreensaver-command -lock" did nothing and the machine suspended unlocked.
+  LSession::handle()->LockScreen();
   LOS::systemSuspend();
 }
 

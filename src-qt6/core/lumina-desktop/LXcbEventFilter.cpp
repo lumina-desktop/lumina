@@ -22,8 +22,15 @@ XCBEventFilter::XCBEventFilter(LSession *sessionhandle) : QAbstractNativeEventFi
 }
 
 void XCBEventFilter::setTrayDamageFlag(int flag){
-  //Special flag for system tray damage events
-  TrayDmgFlag = flag + XCB_DAMAGE_NOTIFY; //save the whole flag (no calculations later)
+  //Enable (flag != 0) or disable tray damage handling.
+  //The event code to match is the DAMAGE extension's first_event + XCB_DAMAGE_NOTIFY, as assigned by the
+  // X server. (This used to add XCB_DAMAGE_NOTIFY to the damage *object ID* passed in, which is not an
+  // event code at all - and the comparison was commented out, so every unhandled event counted as damage.)
+  TrayDmgFlag = 0;
+  if(flag != 0){
+    const xcb_query_extension_reply_t *ext = xcb_get_extension_data(LuminaX11Bridge::connection(), &xcb_damage_id);
+    if(ext != 0 && ext->present){ TrayDmgFlag = ext->first_event + XCB_DAMAGE_NOTIFY; }
+  }
 }
 
 //This function format taken directly from the Qt5.3 documentation
@@ -108,10 +115,9 @@ bool XCBEventFilter::nativeEventFilter(const QByteArray &eventType, void *messag
 	        break;
 //==============================
 	    default:
-		if(TrayDmgFlag!=0){
-		  //if( (ev->response_type & ~0x80)==TrayDmgFlag){
+		//Only genuine DAMAGE notify events (everything else used to be cast to a damage event here)
+		if(TrayDmgFlag!=0 && (ev->response_type & ~0x80)==TrayDmgFlag){
 		    session->WindowDamageEvent( ((xcb_damage_notify_event_t*)ev)->drawable );
-		  //}
 		}/*else{
 	          qDebug() << "Default Event:" << (ev->response_type & ~0x80);
 	        }*/

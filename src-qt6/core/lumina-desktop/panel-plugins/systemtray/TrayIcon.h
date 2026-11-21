@@ -43,6 +43,7 @@ public slots:
 private:
 	WId IID, AID; //icon ID and app ID
 	int badpaints;
+	int sizeRetries; //resize attempts for the current widget size (apps that ignore the resize request)
 	uint dmgID;
 	int scalefactor;
 

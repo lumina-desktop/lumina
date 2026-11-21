@@ -105,7 +105,7 @@ ItemWidget::ItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
   if(LDesktopUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
     isShortcut=true;
-  }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+  }else if( item->filePath.section("/",0,-2)==LUtils::standardDirectory(LUtils::Desktop) ){
     isShortcut = true;
   }else{
     isShortcut = false;
@@ -185,7 +185,7 @@ void ItemWidget::setupContextMenu(){
   //Now refresh the context menu
   contextMenu->clear();
   QAction *tmp = 0;
-  if(!QFile::exists(QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1)) ){
+  if(!QFile::exists(LUtils::standardDirectory(LUtils::Desktop)+"/"+icon->whatsThis().section("/",-1)) ){
     //Does not have a desktop link
     tmp = contextMenu->addAction( tr("Pin to Desktop"), this, SLOT(PinToDesktop()) );
     ICONS->loadIcon(tmp, "preferences-desktop-icons");
@@ -260,7 +260,7 @@ void ItemWidget::updateItems(){
 
 void ItemWidget::PinToDesktop(){
   qDebug() << "Create Link on Desktop:" << icon->whatsThis();
-  bool ok = QFile::link(icon->whatsThis(), QDir::homePath()+"/Desktop/"+icon->whatsThis().section("/",-1));
+  bool ok = QFile::link(icon->whatsThis(), LUtils::standardDirectory(LUtils::Desktop)+"/"+icon->whatsThis().section("/",-1));
   qDebug() << " - " << (ok ? "Success": "Failure");
 }
 

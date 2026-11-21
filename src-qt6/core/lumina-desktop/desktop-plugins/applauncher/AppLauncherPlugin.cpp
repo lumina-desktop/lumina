@@ -277,8 +277,7 @@ void AppLauncherPlugin::fileProperties(){
 void AppLauncherPlugin::fileDelete(){
   QString path = button->whatsThis();
   if(path.isEmpty() || !QFile::exists(path)){ return; } //invalid file
-  if(QFileInfo(path).isDir()){ LUtils::startDetached("rm -r \""+path+"\""); }
-  else{ QFile::remove(path); }
+  LuminaRemoveDesktopItem(path); //(was "rm -r" through a quoted command string)
 }
 
 void AppLauncherPlugin::fileCut(){

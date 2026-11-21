@@ -341,7 +341,7 @@ void LSession::CleanupSession(){
       LSession::processEvents();
     }
     //Now wait a moment for things to close down before quitting
-    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25); } //1/2 second pause
+    for(int i=0; i<20; i++){ LSession::processEvents(); usleep(25000); } //1/2 second pause (was usleep(25) = 25 microseconds)
     //Kill any remaining windows
     WL = XCB->WindowList(true); //all workspaces
     for(int i=0; i<WL.length(); i++){
@@ -599,7 +599,10 @@ void LSession::updateDesktops(){
   QList<int> dnums; //keep track of which screens are already managed
   QList<QRect> geoms;
   for(int i=0; i<DESKTOPS.length(); i++){
-    if ( DESKTOPS[i]->Screen() < 0 || DESKTOPS[i]->Screen() >= sC || geoms.contains(screens.at(i)->geometry())) {
+    //NOTE: look the geometry up by the desktop's own screen index - DESKTOPS[i] is not screens[i]
+    // (the order differs once a screen is inserted ahead of an existing one, e.g. a new primary)
+    int ds = DESKTOPS[i]->Screen();
+    if ( ds < 0 || ds >= sC || geoms.contains(screens.at(ds)->geometry())) {
         //qDebug() << " - Close desktop:" << i;
         qDebug() << " - Close desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->prepareToClose();
@@ -610,8 +613,8 @@ void LSession::updateDesktops(){
         qDebug() << " - Show desktop on screen:" << DESKTOPS[i]->Screen();
         DESKTOPS[i]->UpdateGeometry();
         DESKTOPS[i]->show();
-	dnums << DESKTOPS[i]->Screen();
-	geoms << screens.at(i)->geometry();
+	dnums << ds;
+	geoms << screens.at(ds)->geometry();
       }
   }
 
@@ -812,7 +815,7 @@ WId LSession::activeWindow(){
   else if(RunningApps.contains(lastActiveWin) && XCB->WindowState(lastActiveWin) >= LXCB::VISIBLE){} //no change needed
   else if(RunningApps.contains(lastActiveWin) && RunningApps.length()>1){
     int start = RunningApps.indexOf(lastActiveWin);
-    if(start<1){ lastActiveWin = RunningApps.length()-1; } //wrap around to the last item
+    if(start<1){ lastActiveWin = RunningApps.last(); } //wrap around to the last item (was assigning the index, not the window ID)
     else{ lastActiveWin = RunningApps[start-1]; }
   }else{
     //Need to change the last active window - find the first one which is visible

@@ -164,7 +164,7 @@ void LDesktop::checkResolution(){
     }
     //Update any panels in the config file
     for(int i=0; i<4; i++){
-      QString PPREFIX = "panel"+QString::number(Screen())+"."+QString::number(i)+"/";
+      QString PPREFIX = "panel_"+screenID+"."+QString::number(i)+"/"; //same key format LPanel uses (was the old "panel<N>." format, so heights were never rescaled)
       int ht = settings->value(PPREFIX+"height",-1).toInt();
       if(ht<1){ continue; } //no panel height defined
       QString loc = settings->value(PPREFIX+"location","top").toString().toLower();
@@ -369,7 +369,8 @@ void LDesktop::UpdateDesktop(){
   for(int i=0; i<plugins.length(); i++){
 	if(!plugins[i].contains("---") ){
 	  int num=1;
-	  while( plugins.contains(plugins[i]+"---"+QString::number(Screen())+"."+QString::number(num)) ){
+	  //Check uniqueness with the same ID format that is assigned below (screen *name*, not number)
+	  while( plugins.contains(plugins[i]+"---"+screenID+"."+QString::number(num)) ){
 	    num++;
 	  }
 	  plugins[i] = plugins[i]+"---"+screenID+"."+QString::number(num);

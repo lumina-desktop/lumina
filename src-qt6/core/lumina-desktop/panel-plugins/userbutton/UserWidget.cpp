@@ -223,7 +223,7 @@ void UserWidget::updateFavItems(bool newfilter){
   //qDebug() << "Updating User Favorite Items";
   QStringList newfavs = LDesktopUtils::listFavorites();
   //qDebug() << "Favorites:" << newfavs;
-  if(lastHomeUpdate.isNull() || (QFileInfo(QDir::homePath()+"/Desktop").lastModified() > lastHomeUpdate) || newfavs!=favs ){
+  if(lastHomeUpdate.isNull() || (QFileInfo(LUtils::standardDirectory(LUtils::Desktop)).lastModified() > lastHomeUpdate) || newfavs!=favs ){
     favs = newfavs;
    
     homefiles = LSession::handle()->DesktopFiles();
@@ -343,7 +343,7 @@ void UserWidget::updateHome(){
   ui->label_home_dir->setToolTip(ui->label_home_dir->whatsThis());
   items << homedir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst); 
   QString type = "";
-  if(homedir.absolutePath() == QDir::homePath()+"/Desktop"){ type.append("-home"); }//internal code
+  if(homedir.absolutePath() == LUtils::standardDirectory(LUtils::Desktop)){ type.append("-home"); }//internal code
   for(int i=0; i<items.length(); i++){
     qDebug() << " - New item:" << homedir.absoluteFilePath(items[i]);
     UserItemWidget *it;

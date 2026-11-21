@@ -14,8 +14,11 @@
 LTaskButton::LTaskButton(QWidget *parent, bool smallDisplay) : LTBWidget(parent){
   actMenu = new QMenu(this);
   winMenu = new QMenu(this);
-  UpdateMenus();
+  //Initialise state before UpdateMenus() reads it (cstate/noicon were uninitialised here)
+  cstate = LXCB::IGNORE;
+  noicon = true;
   showText = !smallDisplay;
+  UpdateMenus();
   this->setAutoRaise(false); //make sure these always look like buttons
   this->setContextMenuPolicy(Qt::CustomContextMenu);
   this->setFocusPolicy(Qt::NoFocus);

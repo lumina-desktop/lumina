@@ -537,6 +537,14 @@ void LXCB::SelectInput(WId win, bool isEmbed){
 
 // === GenerateDamageID() ===
 uint LXCB::GenerateDamageID(WId win){
+  //The DAMAGE extension rejects every request (BadRequest) from a client that has not negotiated the
+  // version first - without this, damage objects were never created and no damage events ever arrived.
+  static bool damageNegotiated = false;
+  if(!damageNegotiated){
+    free( xcb_damage_query_version_reply(LuminaX11Bridge::connection(),
+		xcb_damage_query_version(LuminaX11Bridge::connection(), XCB_DAMAGE_MAJOR_VERSION, XCB_DAMAGE_MINOR_VERSION), NULL) );
+    damageNegotiated = true;
+  }
   //Now create/register the damage handler
   xcb_damage_damage_t dmgID = xcb_generate_id(LuminaX11Bridge::connection()); //This is a typedef for a 32-bit unsigned integer
   xcb_damage_create(LuminaX11Bridge::connection(), dmgID, win, XCB_DAMAGE_REPORT_LEVEL_RAW_RECTANGLES);

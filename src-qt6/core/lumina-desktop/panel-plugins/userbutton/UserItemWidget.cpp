@@ -7,6 +7,7 @@
 #include "UserItemWidget.h"
 #include <LUtils.h>
 #include <LDesktopUtils.h>
+#include "../../global-includes.h" //LuminaRemoveDesktopItem()
 #include <QMenu>
 
 #define TEXTCUTOFF 165
@@ -73,7 +74,7 @@ UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(paren
   if(LDesktopUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
     isShortcut=true;
-  }else if( item->filePath.section("/",0,-2)==QDir::homePath()+"/Desktop" ){
+  }else if( item->filePath.section("/",0,-2)==LUtils::standardDirectory(LUtils::Desktop) ){
     isShortcut = true;
   }else{
     isShortcut = false;
@@ -181,11 +182,7 @@ void UserItemWidget::buttonClicked(){
   }else if(button->whatsThis()=="remove"){
     if(linkPath.isEmpty()){
       //This is a desktop file
-      if(isDirectory){
-	LUtils::startDetached("rm -r \""+icon->whatsThis()+"\"");
-      }else{
-	QFile::remove(icon->whatsThis());
-      }
+      LuminaRemoveDesktopItem(icon->whatsThis()); //(was "rm -r" through a quoted command string)
       //Don't emit the RemovedShortcut signal here - the automatic ~/Desktop watcher will see the change when finished
     }else{
       LDesktopUtils::removeFavorite(icon->whatsThis()); //This is a favorite

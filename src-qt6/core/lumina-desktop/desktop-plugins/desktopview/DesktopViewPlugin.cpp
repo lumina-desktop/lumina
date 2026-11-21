@@ -92,11 +92,7 @@ void DesktopViewPlugin::cutItems(){
 void DesktopViewPlugin::deleteItems(){
   QList<QListWidgetItem*> sel = list->selectedItems();
   for(int i=0; i<sel.length(); i++){
-    if(QFileInfo(sel[i]->whatsThis()).isDir()){
-      LUtils::startDetached("rm -r \""+sel[i]->whatsThis()+"\"");
-    }else{
-      QFile::remove(sel[i]->whatsThis());
-    }
+    LuminaRemoveDesktopItem(sel[i]->whatsThis()); //(was "rm -r" for dirs - and a dir symlink must only be unlinked)
   }
 }
 
@@ -136,7 +132,7 @@ void DesktopViewPlugin::updateContents(){
   //qDebug() << "Icon Size:" << icosize <<"Grid Size:" << gridSZ.width() << gridSZ.height();
   list->setGridSize(gridSZ);
   list->setIconSize(QSize(icosize,icosize));
-  QDir dir(QDir::homePath()+"/Desktop");
+  QDir dir(LUtils::standardDirectory(LUtils::Desktop));
   QFileInfoList files = dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::Type | QDir::DirsFirst);
   for(int i=0; i<files.length(); i++){
     QListWidgetItem *it = new QListWidgetItem;
@@ -209,6 +205,6 @@ void DesktopViewPlugin::updateContents(){
 void DesktopViewPlugin::displayProperties(){
     QList<QListWidgetItem*> sel = list->selectedItems();
     for(int i=0; i<sel.length(); i++){
-      LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis());
+      LSession::LaunchApplication("lumina-fileinfo \""+sel[i]->whatsThis()+"\""); //(closing quote was missing)
     }
 }

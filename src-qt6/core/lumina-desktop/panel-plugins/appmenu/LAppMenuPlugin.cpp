@@ -123,7 +123,7 @@ void LAppMenuPlugin::UpdateMenu(){
 	      //This is the normal behavior - not a special sub-action (although it needs to be at the top of the new menu)
 	      QAction *act = new QAction(LXDG::findIcon(appL[a]->icon, ""), appL[a]->name, submenu);
               act->setToolTip(appL[a]->comment);
-              act->setWhatsThis(appL[a]->filePath);
+              act->setWhatsThis("\""+appL[a]->filePath+"\""); //quoted like every other entry (launched as "lumina-open "+this)
 	    submenu->addAction(act);
 	    //Now add entries for every sub-action listed
 	    for(int sa=0; sa<appL[a]->actions.length(); sa++){

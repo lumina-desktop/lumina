@@ -17,6 +17,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include "global-includes.h" //LuminaRemoveDesktopItem()
 #include <QProcess>
 #include <LUtils.h>
 
@@ -180,10 +181,9 @@ private slots:
 	  //Special case - desktop file/dir link using the "applauncher" plugin	
 	  if(ID.startsWith("applauncher::")){
 	    QFileInfo info(ID.section("---",0,0).section("::",1,50) );
-	    if(info.exists() && info.absolutePath()==QDir::homePath()+"/Desktop"){
+	    if(info.exists() && info.absolutePath()==LUtils::standardDirectory(LUtils::Desktop)){
 	      qDebug() << "Deleting Desktop Item:" << info.absoluteFilePath();
-	      if(!info.isSymLink() && info.isDir()){ LUtils::startDetached("rm -r \""+info.absoluteFilePath()+"\""); }
-              else{ QFile::remove(info.absoluteFilePath()); } //just remove the file/symlink directly  
+	      LuminaRemoveDesktopItem(info.absoluteFilePath()); //file/symlink removed directly, directory tree in the background
 	      emit PluginRemovedByUser(ID);
 	      return;
 	    }
@@ -295,9 +295,9 @@ protected:
 	      //If this file is not in the desktop folder, move/copy it here
 	      if(urls[i].isLocalFile()){
 		QFileInfo info(urls[i].toLocalFile());
-		if(info.exists() && !QFile::exists(QDir::homePath()+"/Desktop/"+info.fileName())){
+		if(info.exists() && !QFile::exists(LUtils::standardDirectory(LUtils::Desktop)+"/"+info.fileName())){
 		  //Make a link to the file here
-		  QFile::link(info.absoluteFilePath(), QDir::homePath()+"/Desktop/"+info.fileName());
+		  QFile::link(info.absoluteFilePath(), LUtils::standardDirectory(LUtils::Desktop)+"/"+info.fileName());
 		}else{
 		  qWarning() << "Invalid desktop file drop (ignored):" << urls[i].toString();
 		}

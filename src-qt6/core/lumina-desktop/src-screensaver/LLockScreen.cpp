@@ -82,7 +82,12 @@ void LLockScreen::TryUnlock(){
   // Create a temporary file for the password, then pass that file descriptor
   // to lumina-checkpass. Might seem wacky to shell this out, but we need
   // SUID to authenticate the pw with PAM.
-  QTemporaryFile *TF = new QTemporaryFile(".XXXXXXXXXX");
+  //Create it in the per-user runtime dir (tmpfs, mode 0700) rather than the process working directory:
+  // the old relative template put the password file wherever the session was started (often $HOME),
+  // and unlocking failed outright if that directory was not writable. QTemporaryFile uses mode 0600.
+  QString tmpdir = QString(getenv("XDG_RUNTIME_DIR"));
+  if(tmpdir.isEmpty() || !QFileInfo(tmpdir).isWritable()){ tmpdir = QDir::tempPath(); }
+  QTemporaryFile *TF = new QTemporaryFile(tmpdir+"/.lumina-unlock-XXXXXXXXXX");
   TF->setAutoRemove(true);
   bool ok = false;
   if( TF->open() ){

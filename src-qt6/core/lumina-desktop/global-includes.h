@@ -72,6 +72,18 @@
 #include <LUtils.h>
 #include <LDesktopUtils.h>
 #include <LuminaSingleApplication.h>
+#include <QThreadPool>
+
+//Delete a desktop item (file, symlink or directory tree) without going through a shell command.
+// - A symlink (even one pointing at a directory) is unlinked, never followed: QDir::removeRecursively()
+//   on a link would empty the link's *target*.
+// - Directory trees are removed on a pool thread so a large folder does not freeze the desktop.
+// (Replaces LUtils::startDetached("rm -r \"<path>\""), which broke on names containing a quote.)
+inline void LuminaRemoveDesktopItem(const QString &path){
+  QFileInfo info(path);
+  if(info.isSymLink() || !info.isDir()){ QFile::remove(path); return; }
+  QThreadPool::globalInstance()->start([path](){ QDir(path).removeRecursively(); });
+}
 #include <DesktopSettings.h>
 #include <ExternalProcess.h>
 #include <XDGMime.h>
