@@ -6,6 +6,7 @@
 //===========================================
 #include <QDebug>
 #include "LuminaOS.h"
+#include <QStorageInfo>
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
 
@@ -263,12 +264,18 @@ QStringList LOS::Checksums(QStringList filepaths){ //Return: checksum of the inp
 }
 
 //file system capacity
-QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity as give by the df command
-  QStringList mountInfo = LUtils::getCmdOutput("df \"" + dir+"\"");
-  QString::SectionFlag skipEmpty = QString::SectionSkipEmpty;
-  //we take the 5th word on the 2 line
-  QString capacity = mountInfo[1].section(" ",4,4, skipEmpty) + " used";
-  return capacity;
+QString LOS::FileSystemCapacity(QString dir) { //Return: percentage capacity, same value as the "Use%" column of df
+  //Read the numbers directly (statvfs via QStorageInfo) instead of parsing "df" output: no process spawn
+  // (this is called from lumina-fm worker threads), no out-of-range read when df prints nothing,
+  // and no breakage on paths containing quotes or long device names that make df wrap its lines.
+  QStorageInfo info(dir);
+  if(!info.isValid() || !info.isReady()){ return QString(); }
+  qint64 used = info.bytesTotal() - info.bytesFree();
+  qint64 avail = info.bytesAvailable();
+  if(used < 0 || avail < 0 || (used + avail) <= 0){ return QString(); }
+  //df rounds the percentage up: used / (used + available)
+  int percent = int( (used * 100 + (used + avail) - 1) / (used + avail) );
+  return QString::number(percent) + "% used";
 }
 
 QStringList LOS::CPUTemperatures(){ //Returns: List containing the temperature of any CPU's ("50C" for example)
