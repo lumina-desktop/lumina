@@ -9,6 +9,14 @@
 
 #include <QDialog>
 #include <QString>
+#include <QWidget>
+
+// Forward declarations
+class QLineEdit;
+class QListWidget;
+class QListWidgetItem;
+class QDialogButtonBox;
+class QAbstractButton;
 
 namespace Ui{
 	class AppDialog;
@@ -17,7 +25,7 @@ namespace Ui{
 class AppDialog : public QDialog{
 	Q_OBJECT
 public:
-	AppDialog(QWidget* parent = 0);
+	AppDialog(QWidget* parent = 0, QString defaultPath = "");
 	~AppDialog();
 	
 	void allowReset(bool allow);
@@ -27,9 +35,16 @@ public:
 
 private:
 	Ui::AppDialog *ui;
+	QLineEdit *lineSearch;
+	QListWidget *listApps;
+	QDialogButtonBox *buttonBox;
 
 private slots:
-	void accept();
+	void on_buttonBox_accepted();
+	void on_buttonBox_rejected();
+	void on_buttonBox_clicked(QAbstractButton *button);
+	void on_listApps_itemDoubleClicked(QListWidgetItem *item);
+	void on_lineSearch_textChanged(const QString &term);
 	
 };
 

@@ -65,5 +65,9 @@ int main(int argc, char ** argv)
     MainWindow w(screen);
     w.show();
 
+    //A second launch is forwarded here (and exits): bring this window up instead of doing nothing
+
+    QObject::connect(&a, &LSingleApplication::InputsAvailable, &w, [&w](QStringList){ w.showNormal(); w.raise(); w.activateWindow(); });
+
     return a.exec();
 }

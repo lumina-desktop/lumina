@@ -5,6 +5,8 @@
 //  See the LICENSE file for full details 
 //===========================================
 #include "MainWindow.h"
+#include <QApplication>
+#include <QSignalBlocker>
 #include "ui_MainWindow.h"
 
 #include <QDir>
@@ -16,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     
     // Initialize variables
     bluetoothEnabled = false;
+    newBlueZ = true;
     bluetoothProcess = new QProcess(this);
     saveTimer = new QTimer(this);
     saveTimer->setSingleShot(true);
@@ -87,7 +90,7 @@ void MainWindow::setupConnections(){
 void MainWindow::setupMenus(){
     // File menu actions
     connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(slotSaveSettings()));
-    connect(ui->action_Quit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->action_Quit, SIGNAL(triggered()), qApp, SLOT(quit()));
     
     // Help menu actions
     connect(ui->action_About, SIGNAL(triggered()), this, SLOT(slotAbout()));
@@ -110,29 +113,20 @@ void MainWindow::detectBluetoothSystem(){
 }
 
 QString MainWindow::getBluetoothBackend(){
-    // Check for bluetoothctl (BlueZ - most common on Linux)
-    QProcess proc;
-    proc.start("which", QStringList() << "bluetoothctl");
-    proc.waitForFinished(3000);
-    if(proc.exitCode() == 0){
-        return "BlueZ (bluetoothctl)";
-    }
-    
-    // Check for hcitool (older BlueZ interface)
-    proc.start("which", QStringList() << "hcitool");
-    proc.waitForFinished(3000);
-    if(proc.exitCode() == 0){
-        return "BlueZ (hcitool)";
-    }
-    
-    // Check for FreeBSD bluetooth tools
-    proc.start("which", QStringList() << "hccontrol");
-    proc.waitForFinished(3000);
-    if(proc.exitCode() == 0){
-        return "FreeBSD (hccontrol)";
-    }
-    
-    return "None detected";
+    //Detected once and cached: this is called on every button press/timer, and used to run up to three
+    // blocking "which" processes each time (and "which" itself may not be installed)
+    if(!backendCache.isEmpty()){ return backendCache; }
+    newBlueZ = true;
+    if(!QStandardPaths::findExecutable("bluetoothctl").isEmpty()){
+        backendCache = "BlueZ (bluetoothctl)";
+        //"paired-devices" was removed in BlueZ 5.65 ("devices Paired" replaces it)
+        QProcess ver; ver.start("bluetoothctl", QStringList() << "--version"); ver.waitForFinished(2000);
+        QString v = QString(ver.readAllStandardOutput()).section(":",-1).trimmed(); //"bluetoothctl: 5.88"
+        if(!v.isEmpty()){ newBlueZ = (v.section(".",0,0).toInt() > 5) || (v.section(".",0,0).toInt()==5 && v.section(".",1,1).toInt() >= 65); }
+    }else if(!QStandardPaths::findExecutable("hcitool").isEmpty()){ backendCache = "BlueZ (hcitool)"; }
+    else if(!QStandardPaths::findExecutable("hccontrol").isEmpty()){ backendCache = "FreeBSD (hccontrol)"; }
+    else{ backendCache = "None detected"; }
+    return backendCache;
 }
 
 void MainWindow::updateBluetoothStatus(){
@@ -158,12 +152,14 @@ void MainWindow::updateDeviceList(){
     ui->listWidget_paired->clear();
     
     if(backend.contains("BlueZ")){
-        // Scan for devices
-        runBluetoothCommand("bluetoothctl", QStringList() << "scan" << "on");
-        QTimer::singleShot(5000, this, SLOT(slotDiscoveryFinished()));
-        
+        // Scan for devices: a bounded scan that ends by itself (bluetoothctl stops a client's discovery when it
+        // exits), then list what was found. These are queued, so each runs after the previous one finished
+        // (they used to kill each other: "scan on" died as soon as the next command started).
+        runBluetoothCommand("bluetoothctl", QStringList() << "--timeout" << "5" << "scan" << "on");
+        runBluetoothCommand("bluetoothctl", QStringList() << "devices");
         // Get paired devices
-        runBluetoothCommand("bluetoothctl", QStringList() << "paired-devices");
+        if(newBlueZ){ runBluetoothCommand("bluetoothctl", QStringList() << "devices" << "Paired"); }
+        else{ runBluetoothCommand("bluetoothctl", QStringList() << "paired-devices"); }
     } else if(backend.contains("FreeBSD")){
         // FreeBSD bluetooth device discovery
         runBluetoothCommand("hccontrol", QStringList() << "inquiry");
@@ -173,13 +169,16 @@ void MainWindow::updateDeviceList(){
 }
 
 void MainWindow::runBluetoothCommand(const QString &command, const QStringList &args){
-    if(bluetoothProcess->state() != QProcess::NotRunning){
-        bluetoothProcess->kill();
-        bluetoothProcess->waitForFinished(3000);
-    }
-    
-    ui->textEdit_log->append(tr("Running: %1 %2").arg(command).arg(args.join(" ")));
-    bluetoothProcess->start(command, args);
+    cmdQueue << qMakePair(command, args);
+    if(bluetoothProcess->state() == QProcess::NotRunning){ startNextCommand(); }
+}
+
+void MainWindow::startNextCommand(){
+    if(cmdQueue.isEmpty()){ runningArgs.clear(); return; }
+    QPair<QString, QStringList> next = cmdQueue.takeFirst();
+    runningArgs = next.second;
+    ui->textEdit_log->append(tr("Running: %1 %2").arg(next.first).arg(next.second.join(" ")));
+    bluetoothProcess->start(next.first, next.second);
 }
 
 void MainWindow::showStatusMessage(const QString &message, int timeout){
@@ -200,7 +199,9 @@ void MainWindow::slotSaveSettings(){
 void MainWindow::slotLoadSettings(){
     if(!settings) return;
     
-    ui->checkBox_enable->setChecked(settings->value("bluetooth/enabled", false).toBool());
+    //Restore the checkbox without triggering slotBluetoothToggle() - that ran "bluetoothctl power on" just
+    // from opening the tool (the real state is read back by "show" in updateBluetoothStatus())
+    { QSignalBlocker block(ui->checkBox_enable); ui->checkBox_enable->setChecked(settings->value("bluetooth/enabled", false).toBool()); }
     ui->checkBox_discoverable->setChecked(settings->value("bluetooth/discoverable", false).toBool());
     ui->spinBox_timeout->setValue(settings->value("bluetooth/discovery_timeout", 30).toInt());
 }
@@ -320,12 +321,7 @@ void MainWindow::slotDeviceSelectionChanged(){
 }
 
 void MainWindow::slotDiscoveryFinished(){
-    QString backend = getBluetoothBackend();
-    if(backend.contains("BlueZ")){
-        runBluetoothCommand("bluetoothctl", QStringList() << "scan" << "off");
-        runBluetoothCommand("bluetoothctl", QStringList() << "devices");
-    }
-    
+    //(the scan is now bounded with --timeout and followed by a queued "devices" - see updateDeviceList())
     showStatusMessage(tr("Device scan completed"), 2000);
 }
 
@@ -333,11 +329,19 @@ void MainWindow::slotProcessFinished(int exitCode, QProcess::ExitStatus exitStat
     QString output = bluetoothProcess->readAllStandardOutput();
     QString error = bluetoothProcess->readAllStandardError();
     
+    //Which command produced this output (it used to be guessed from the text: "paired-devices" output contains
+    // no "Paired", so paired devices landed in the available list)
+    const QStringList args = runningArgs;
+    bool pairedList = args.contains("paired-devices") || (args.contains("devices") && args.contains("Paired"));
+    bool availList = !pairedList && args.contains("devices");
+    //Replace (not append to) the list with each fresh result: queued refreshes otherwise duplicated every entry
+    if(availList){ ui->listWidget_available->clear(); }
+    if(pairedList){ ui->listWidget_paired->clear(); }
     if(!output.isEmpty()){
         ui->textEdit_log->append(tr("Output: %1").arg(output));
         
         // Parse output for device information
-        if(output.contains("Device ")){
+        if(availList && output.contains("Device ")){
             QStringList lines = output.split("\n");
             for(const QString &line : lines){
                 if(line.contains("Device ") && line.contains(":")){
@@ -351,7 +355,7 @@ void MainWindow::slotProcessFinished(int exitCode, QProcess::ExitStatus exitStat
         }
         
         // Parse paired devices
-        if(output.contains("paired-devices") || output.contains("Paired")){
+        if(pairedList){
             QStringList lines = output.split("\n");
             for(const QString &line : lines){
                 if(line.contains("Device ") && line.contains(":")){
@@ -372,6 +376,12 @@ void MainWindow::slotProcessFinished(int exitCode, QProcess::ExitStatus exitStat
             ui->label_status->setText(tr("Status: Disabled"));
             bluetoothEnabled = false;
         }
+        if(args.contains("show")){
+            //Reflect the real power state without toggling it
+            QSignalBlocker block(ui->checkBox_enable);
+            ui->checkBox_enable->setChecked(bluetoothEnabled);
+            ui->tabWidget->setEnabled(bluetoothEnabled);
+        }
     }
     
     if(!error.isEmpty()){
@@ -381,6 +391,7 @@ void MainWindow::slotProcessFinished(int exitCode, QProcess::ExitStatus exitStat
     if(exitStatus != QProcess::NormalExit || exitCode != 0){
         ui->textEdit_log->append(tr("Command failed with exit code: %1").arg(exitCode));
     }
+    startNextCommand(); //run whatever was queued meanwhile
 }
 
 void MainWindow::slotProcessError(QProcess::ProcessError error){

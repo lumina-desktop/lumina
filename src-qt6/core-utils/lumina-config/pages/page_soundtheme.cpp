@@ -23,41 +23,43 @@ page_soundtheme::~page_soundtheme(){
 //    PUBLIC SLOTS
 //================
 void page_soundtheme::SaveSettings(){
-  sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
+  //Stack object: a new QSettings was allocated (and leaked) on every save/load
+  QSettings settings("lumina-desktop", "sessionsettings");
 
-  sessionsettings->setValue("PlayStartupAudio", ui->checkBox_startup->isChecked());
-  sessionsettings->setValue("audiofiles/login", ui->label_startup->whatsThis());
+  settings.setValue("PlayStartupAudio", ui->checkBox_startup->isChecked());
+  settings.setValue("audiofiles/login", ui->label_startup->whatsThis());
 
-  sessionsettings->setValue("PlayLogoutAudio", ui->checkBox_logout->isChecked());
-  sessionsettings->setValue("audiofiles/logout", ui->label_logout->whatsThis());
+  settings.setValue("PlayLogoutAudio", ui->checkBox_logout->isChecked());
+  settings.setValue("audiofiles/logout", ui->label_logout->whatsThis());
 
-  sessionsettings->setValue("PlayBatteryLowAudio", ui->checkBox_battery->isChecked());
-  sessionsettings->setValue("audiofiles/batterylow", ui->label_battery->whatsThis());
+  settings.setValue("PlayBatteryLowAudio", ui->checkBox_battery->isChecked());
+  settings.setValue("audiofiles/batterylow", ui->label_battery->whatsThis());
 
 }
 
 void page_soundtheme::LoadSettings(int){
   emit ChangePageTitle( tr("Sound Themes") );
 
-  sessionsettings = new QSettings("lumina-desktop", "sessionsettings");
+  QSettings settings("lumina-desktop", "sessionsettings");
+  //Defaults match the desktop (sounds play unless disabled), and each label gets its own file as tooltip
+  // (all three tooltips used to be written to the startup label, with the battery file)
+  QString file = settings.value("audiofiles/login").toString();
+  ui->label_startup->setText(file.section("/",-1));
+  ui->label_startup->setToolTip(file);
+  ui->label_startup->setWhatsThis(file);
+  ui->checkBox_startup->setChecked( settings.value("PlayStartupAudio", true).toBool() );
 
-  ui->label_startup->setText(sessionsettings->value("audiofiles/login").toString().section("/",-1));
-  ui->label_startup->setToolTip(sessionsettings->value("audiofiles/batterylow").toString());
-  ui->label_startup->setWhatsThis(sessionsettings->value("audiofiles/login").toString());
-  bool playstartup = sessionsettings->value("PlayStartupAudio").toBool();
-  if( playstartup ){ ui->checkBox_startup->setChecked(true); }
+  file = settings.value("audiofiles/logout").toString();
+  ui->label_logout->setText(file.section("/",-1));
+  ui->label_logout->setToolTip(file);
+  ui->label_logout->setWhatsThis(file);
+  ui->checkBox_logout->setChecked( settings.value("PlayLogoutAudio", true).toBool() );
 
-  ui->label_logout->setText(sessionsettings->value("audiofiles/logout").toString().section("/",-1));
-  ui->label_startup->setToolTip(sessionsettings->value("audiofiles/batterylow").toString());
-  ui->label_logout->setWhatsThis(sessionsettings->value("audiofiles/logout").toString());
-  bool playlogout = sessionsettings->value("PlayLogoutAudio").toBool();
-  if( playlogout ){ ui->checkBox_logout->setChecked(true); }
-
-  ui->label_battery->setText(sessionsettings->value("audiofiles/batterylow").toString().section("/",-1));
-  ui->label_startup->setToolTip(sessionsettings->value("audiofiles/batterylow").toString());
-  ui->label_battery->setWhatsThis(sessionsettings->value("audiofiles/batterylow").toString());
-  bool playbattery = sessionsettings->value("PlayBatteryLowAudio").toBool();
-  if( playbattery ){ ui->checkBox_battery->setChecked(true);}
+  file = settings.value("audiofiles/batterylow").toString();
+  ui->label_battery->setText(file.section("/",-1));
+  ui->label_battery->setToolTip(file);
+  ui->label_battery->setWhatsThis(file);
+  ui->checkBox_battery->setChecked( settings.value("PlayBatteryLowAudio", true).toBool() );
   emit HasPendingChanges(false);
 }
 

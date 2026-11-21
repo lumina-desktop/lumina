@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "MainWindow.h"
+#include <QMenu>
 #include "ui_MainWindow.h"
 
 //==========
@@ -166,7 +167,16 @@ void MainWindow::setupUI(){
     
     // Add context menu for removing items
     ui->list_session_start->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->list_session_start, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(rmsessionstartitem()));
+    //Right-click opens a small menu for the item under the cursor (it used to delete the *current* row
+    // immediately, without a menu or confirmation, wherever you clicked)
+    connect(ui->list_session_start, &QWidget::customContextMenuRequested, this, [this](const QPoint &pt){
+        QListWidgetItem *it = ui->list_session_start->itemAt(pt);
+        if(it == 0){ return; }
+        ui->list_session_start->setCurrentItem(it);
+        QMenu menu(this);
+        QAction *rm = menu.addAction(LXDG::findIcon("list-remove",""), tr("Remove from autostart"));
+        if(menu.exec(ui->list_session_start->viewport()->mapToGlobal(pt)) == rm){ rmsessionstartitem(); }
+    });
 }
 
 //================
@@ -199,6 +209,17 @@ void MainWindow::SaveSettings(){
             //newstartapps = true;
         }
     } //end loop over GUI items
+    //Entries removed from the list: disable them, or they simply reappeared on the next load
+    // (same validity filter as LoadSettings(), so hidden/invalid entries are left alone)
+    QStringList listed;
+    for(int i=0; i<ui->list_session_start->count(); i++){ listed << ui->list_session_start->item(i)->whatsThis(); }
+    for(int i=0; i<STARTAPPS.length(); i++){
+        if( !STARTAPPS[i]->isValid() || !QFile::exists(STARTAPPS[i]->filePath) ){ continue; }
+        if( !listed.contains(STARTAPPS[i]->filePath) && !STARTAPPS[i]->isHidden ){
+            qDebug() << "Removing AutoStart:" << STARTAPPS[i]->filePath;
+            STARTAPPS[i]->setAutoStarted(false);
+        }
+    }
     //Now cleanup all the STARTAPPS data
     for(int i=STARTAPPS.length()-1; i>=0; i--){ STARTAPPS[i]->deleteLater(); }
 }

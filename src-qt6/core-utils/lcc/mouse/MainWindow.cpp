@@ -264,10 +264,11 @@ void MainWindow::setLeftHanded(bool leftHanded){
     
     if(nbuttons >= 3){
         if(leftHanded){
-            // Swap buttons 1 and 3 (left and right)
-            unsigned char temp = buttons[0];
-            buttons[0] = buttons[2];
-            buttons[2] = temp;
+            // Explicit left-handed mapping: swapping the current mapping un-did it when it was already
+            // left-handed (e.g. applying the settings twice, or set at login and again here)
+            buttons[0] = 3;
+            buttons[1] = 2;
+            buttons[2] = 1;
         } else {
             // Standard mapping: 1, 2, 3
             buttons[0] = 1;
@@ -283,11 +284,13 @@ void MainWindow::setLeftHanded(bool leftHanded){
 
 void MainWindow::setDoubleClickTime(int time){
     // Set double-click time using Qt settings
-    QSettings qtSettings(QSettings::UserScope, "Trolltech");
-    qtSettings.beginGroup("Qt");
-    qtSettings.setValue("doubleClickInterval", time);
-    qtSettings.endGroup();
-    qtSettings.sync();
+    //Qt5/6 no longer read Trolltech.conf: the lthemeengine platform theme provides this value to all Qt apps
+    // (see lthemeengineplatformtheme.cpp, [Interface] double_click_interval)
+    QSettings ltSettings(QDir::homePath() + "/.config/lthemeengine/lthemeengine.conf", QSettings::IniFormat);
+    ltSettings.beginGroup("Interface");
+    ltSettings.setValue("double_click_interval", time);
+    ltSettings.endGroup();
+    ltSettings.sync();
     
     // Also set it for the current application
     QApplication::setDoubleClickInterval(time);
@@ -295,11 +298,13 @@ void MainWindow::setDoubleClickTime(int time){
 
 void MainWindow::setWheelScrollLines(int lines){
     // Set wheel scroll lines using Qt settings
-    QSettings qtSettings(QSettings::UserScope, "Trolltech");
-    qtSettings.beginGroup("Qt");
-    qtSettings.setValue("wheelScrollLines", lines);
-    qtSettings.endGroup();
-    qtSettings.sync();
+    //Qt5/6 no longer read Trolltech.conf: the lthemeengine platform theme provides this value to all Qt apps
+    // (see lthemeengineplatformtheme.cpp, [Interface] wheel_scroll_lines)
+    QSettings ltSettings(QDir::homePath() + "/.config/lthemeengine/lthemeengine.conf", QSettings::IniFormat);
+    ltSettings.beginGroup("Interface");
+    ltSettings.setValue("wheel_scroll_lines", lines);
+    ltSettings.endGroup();
+    ltSettings.sync();
     
     // Also set it for the current application
     QApplication::setWheelScrollLines(lines);

@@ -57,7 +57,7 @@ void MainWindow::LoadSettings(){
     
     // Load startup sound settings
     QString startupFile = sessionsettings->value("audiofiles/login").toString();
-    bool playStartup = sessionsettings->value("PlayStartupAudio", false).toBool();
+    bool playStartup = sessionsettings->value("PlayStartupAudio", true) /*the desktop default*/.toBool();
     
     if(!startupFile.isEmpty() && QFile::exists(startupFile)){
         ui->label_startup->setText(startupFile.section("/",-1));
@@ -72,7 +72,7 @@ void MainWindow::LoadSettings(){
     
     // Load logout sound settings
     QString logoutFile = sessionsettings->value("audiofiles/logout").toString();
-    bool playLogout = sessionsettings->value("PlayLogoutAudio", false).toBool();
+    bool playLogout = sessionsettings->value("PlayLogoutAudio", true) /*the desktop default*/.toBool();
     
     if(!logoutFile.isEmpty() && QFile::exists(logoutFile)){
         ui->label_logout->setText(logoutFile.section("/",-1));
@@ -87,7 +87,7 @@ void MainWindow::LoadSettings(){
     
     // Load battery sound settings
     QString batteryFile = sessionsettings->value("audiofiles/batterylow").toString();
-    bool playBattery = sessionsettings->value("PlayBatteryLowAudio", false).toBool();
+    bool playBattery = sessionsettings->value("PlayBatteryLowAudio", true) /*the desktop default*/.toBool();
     
     if(!batteryFile.isEmpty() && QFile::exists(batteryFile)){
         ui->label_battery->setText(batteryFile.section("/",-1));

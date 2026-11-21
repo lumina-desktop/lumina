@@ -161,9 +161,8 @@ void MainWindow::loadSettings()
 void MainWindow::saveSettings()
 {
     QStringList FB;
-    QStringList FBNS;
-    
-    FBNS = readFile(QString(getenv("XDG_CONFIG_HOME")) + "/lumina-desktop/fluxbox-init -no-slit");
+    //(A second file literally named "fluxbox-init -no-slit" used to be read and written here: that is the
+    // fluxbox command line "-rc fluxbox-init -no-slit", not a file - every save created a junk file.)
     
     if(ui->radio_simple->isChecked()) {
         FB = readFile(QString(getenv("XDG_CONFIG_HOME")) + "/lumina-desktop/fluxbox-init");
@@ -188,24 +187,16 @@ void MainWindow::saveSettings()
             FB[index] = line;
         }
         
-        // Window theme (for no-slit file)
-        index = FBNS.indexOf(FBNS.filter("session.styleFile:").join(""));
-        line = "session.styleFile:\t" + 
-               ui->combo_session_wtheme->itemData(ui->combo_session_wtheme->currentIndex()).toString();
-        if(index < 0) {
-            FBNS << line;
-        } else {
-            FBNS[index] = line;
-        }
-        
-        // Window theme (for main file)
-        index = FB.indexOf(FB.filter("session.styleFile:").join(""));
-        line = "session.styleFile:\t" + 
-               ui->combo_session_wtheme->itemData(ui->combo_session_wtheme->currentIndex()).toString();
-        if(index < 0) {
-            FB << line;
-        } else {
-            FB[index] = line;
+        // Window theme (only when one is selected - an empty combo wrote an empty "session.styleFile:")
+        QString style = ui->combo_session_wtheme->itemData(ui->combo_session_wtheme->currentIndex()).toString();
+        if(!style.isEmpty()) {
+            index = FB.indexOf(FB.filter("session.styleFile:").join(""));
+            line = "session.styleFile:\t" + style;
+            if(index < 0) {
+                FB << line;
+            } else {
+                FB[index] = line;
+            }
         }
         
         // Workspace number
@@ -224,7 +215,6 @@ void MainWindow::saveSettings()
     
     // Save the fluxbox settings
     bool ok = overwriteFile(QString(getenv("XDG_CONFIG_HOME")) + "/lumina-desktop/fluxbox-init", FB);
-    overwriteFile(QString(getenv("XDG_CONFIG_HOME")) + "/lumina-desktop/fluxbox-init -no-slit", FBNS);
     
     if(ok) {
         showStatusMessage(tr("Settings saved successfully"));

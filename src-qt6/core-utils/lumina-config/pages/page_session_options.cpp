@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QStandardPaths>
 #include "page_session_options.h"
 #include "ui_page_session_options.h"
 
@@ -57,8 +58,8 @@ void page_session_options::SaveSettings(){
   sessionsettings.setValue("DisableQuotes", ui->check_quotes->isChecked());
 
   QString my_win = ui->mywindowmanager->currentData().toString();
-  // Warn user if they select a non-default window manager
-  if (! my_win.isEmpty() )
+  // Warn user if they select a non-default window manager (only when it was changed, not on every save)
+  if (! my_win.isEmpty() && my_win != sessionsettings.value("WindowManager").toString() )
       QMessageBox::information(this, tr("Window manager"), "Warning: Please note window managers other than Lumina are not supported." );
   // If we selected "Lumina" as the window manager, leave the field blank to get default
   if ( my_win.isEmpty() )
@@ -68,7 +69,7 @@ void page_session_options::SaveSettings(){
 
 
 
-  QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
+  QString lopenWatchFile = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)+"/lumina-desktop/nowatch"; //XDG_CONFIG_HOME may be unset ("/lumina-desktop/nowatch")
   if(QFile::exists(lopenWatchFile) && ui->check_watch_app_procs->isChecked()){
     QFile::remove(lopenWatchFile);
   }else if(!QFile::exists(lopenWatchFile) && !ui->check_watch_app_procs->isChecked()){
@@ -80,12 +81,16 @@ void page_session_options::SaveSettings(){
   QString path = QDir::homePath()+"/.loginIcon.png"; //where the icon should be placed
   QString icopath = ui->push_session_setUserIcon->whatsThis();
   qDebug() << "User Icon:" << icopath;
-  if(icopath != path && QFile::exists(icopath)){
+  if(icopath == "reset"){
+    //"Reset to system default" used to do nothing at all (the "reset" marker is not a file)
+    QFile::remove(path);
+  }else if(icopath != path && QFile::exists(icopath)){
     QPixmap ico(icopath);
     ico = ico.scaled(64,64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     bool ok = ico.save(path);
     qDebug() << "  - Saved User Icon:" << ok;
   }
+  ui->push_session_setUserIcon->setWhatsThis(""); //applied - don't re-apply it on the next save
 
   emit HasPendingChanges(false);
 }
@@ -125,7 +130,7 @@ void page_session_options::LoadSettings(int){
 
   ui->mywindowmanager->setCurrentIndex(index);
 
-  QString lopenWatchFile = QString(getenv("XDG_CONFIG_HOME"))+"/lumina-desktop/nowatch";
+  QString lopenWatchFile = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation)+"/lumina-desktop/nowatch"; //XDG_CONFIG_HOME may be unset ("/lumina-desktop/nowatch")
   ui->check_watch_app_procs->setChecked( !QFile::exists(lopenWatchFile) );
 
   sessionLoadTimeSample();

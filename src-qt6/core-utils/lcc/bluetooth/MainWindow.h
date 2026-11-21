@@ -74,10 +74,8 @@ private slots:
     void slotAbout();
 
 protected:
-    void closeEvent(QCloseEvent *ev){
-        this->hide();
-        ev->ignore(); //just hide the window
-    }
+    //(closeEvent used to always hide the window and ignore the close - with no tray icon there was no way
+    // back, and Quit (wired to close()) could never exit the process)
 
 private:
     Ui::MainWindow *ui;
@@ -90,6 +88,12 @@ private:
     QStringList availableDevices;
     QStringList pairedDevices;
     QStringList connectedDevices;
+    //Commands run one after another (starting a new one used to kill the one still running)
+    QList< QPair<QString, QStringList> > cmdQueue;
+    QStringList runningArgs; //arguments of the command currently running - used to parse its output
+    QString backendCache; //detected once (was re-detected with blocking "which" calls on every action)
+    bool newBlueZ; //BlueZ >= 5.65: "devices Paired" replaces the removed "paired-devices"
+    void startNextCommand();
     
     void setupUI();
     void setupConnections();

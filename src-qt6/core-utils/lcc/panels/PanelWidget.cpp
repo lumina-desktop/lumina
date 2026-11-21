@@ -194,6 +194,16 @@ void PanelWidget::on_tool_addplugin_clicked(){
     XDGDesktop desk(app);
     it = new QListWidgetItem(LXDG::findIcon(desk.icon,""), desk.name);
     it->setWhatsThis(pan);
+  }else if(pan=="jsonmenu"){
+    //Prompt for the script, name and icon (as lumina-config does) - a bare "jsonmenu" ID has nothing to run
+    //ID format: "jsonmenu"::::<exec to run>::::<name>::::<icon>
+    ScriptDialog SD(this);
+    SD.exec();
+    if(!SD.isValid()){ return; }
+    LPI info = PINFO->panelPluginInfo(pan);
+    it = new QListWidgetItem( LXDG::findIcon(SD.icon(),"text-x-script"), SD.name()+" ("+info.ID+")" );
+    it->setWhatsThis(info.ID+"::::"+SD.command()+"::::"+SD.name()+"::::"+SD.icon());
+    it->setToolTip( info.description );
   }else{
     if(pan.isEmpty()){ return; }
     LPI info = PINFO->panelPluginInfo(pan);

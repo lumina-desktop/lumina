@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QElapsedTimer>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -27,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     
     // Connect signals
     connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)));
-    connect(ui->treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)));
+    connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)));
     connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)));
     
     // Connect menu actions
@@ -112,8 +113,10 @@ QList<APPINFO> MainWindow::GetLCCApplications()
     lccInfo["lcc-mouse"] = QStringList() << tr("Mouse Settings") << tr("Mouse Settings") << "preferences-desktop-mouse" << tr("Adjust mouse devices") << "user" << "user,speed,accel,mouse";
     lccInfo["lcc-bluetooth"] = QStringList() << tr("Bluetooth Settings") << tr("Bluetooth Settings") << "preferences-desktop-bluetooth" << tr("Setup Bluetooth devices") << "user" << "user,bluetooth,audio";
     
-    // Get the base path for LCC executables
-    QString lccPath = QApplication::applicationDirPath() + "/../core-utils/lcc";
+    // Get the base path for LCC executables.
+    // Build tree: <build>/core-utils/lcc/main/lcc and <build>/core-utils/lcc/<dir>/lcc-<dir>, i.e. "../<dir>/"
+    // relative to this binary (the old "/../core-utils/lcc" matched neither the build tree nor an install).
+    QString lccPath = QApplication::applicationDirPath() + "/..";
     
     // Check for each LCC application
     for(auto it = lccInfo.begin(); it != lccInfo.end(); ++it) {
@@ -268,11 +271,11 @@ void MainWindow::UpdateItems(QString search)
     }
     
     // Add categories to tree widget if they have children
-    if(interface->childCount() > 0) { ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); }
-    if(appearance->childCount() > 0) { ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
-    if(session->childCount() > 0) { ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
-    if(user->childCount() > 0) { ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); }
-    if(system->childCount() > 0) { ui->treeWidget->addTopLevelItem(system); system->setExpanded(true); }
+    if(interface->childCount() > 0) { ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); } else { delete interface; } //not in the tree: would leak on every refresh/search keystroke
+    if(appearance->childCount() > 0) { ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); } else { delete appearance; } //not in the tree: would leak on every refresh/search keystroke
+    if(session->childCount() > 0) { ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); } else { delete session; } //not in the tree: would leak on every refresh/search keystroke
+    if(user->childCount() > 0) { ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); } else { delete user; } //not in the tree: would leak on every refresh/search keystroke
+    if(system->childCount() > 0) { ui->treeWidget->addTopLevelItem(system); system->setExpanded(true); } else { delete system; } //not in the tree: would leak on every refresh/search keystroke
     
     ui->treeWidget->sortItems(0, Qt::AscendingOrder);
     ui->treeWidget->resizeColumnToContents(0);
@@ -285,8 +288,20 @@ void MainWindow::showFind()
     ui->lineEdit->selectAll();
 }
 
+//Clicking an entry emits itemClicked, and a double-click (or a single-click-activate style) then also emits
+// itemActivated for the same entry: only launch once (the old itemPressed+itemActivated pair launched twice)
+static bool repeatTrigger(QTreeWidgetItem *it, int col){
+  static QElapsedTimer timer;
+  static QTreeWidgetItem *lastIt = nullptr;
+  static int lastCol = -1;
+  bool repeat = (it==lastIt && col==lastCol && timer.isValid() && timer.elapsed() < QApplication::doubleClickInterval()+100);
+  lastIt = it; lastCol = col; timer.start();
+  return repeat;
+}
+
 void MainWindow::itemTriggered(QTreeWidgetItem *it, int col)
 {
+    if(it==nullptr || repeatTrigger(it, col)){ return; }
     if(it->childCount() > 0) {
         // Category item - expand/collapse
         it->setExpanded(!it->isExpanded());

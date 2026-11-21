@@ -4,6 +4,7 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QHash>
 #include "page_defaultapps.h"
 #include "ui_page_defaultapps.h"
 #include "../AppDialog.h"
@@ -67,6 +68,7 @@ void page_defaultapps::LoadSettings(int){
   //Now fill the tree by group/mime
   QTreeWidgetItem *group = 0;
   QString ccat;
+  QHash<QString, QPair<QString,QIcon> > defNameCache; //default app -> (name, icon)
   for(int i=0; i<defMimeList.length(); i++){
     //Get the info from this entry
     QString mime = defMimeList[i].section("::::",0,0);
@@ -92,15 +94,19 @@ void page_defaultapps::LoadSettings(int){
     it->setWhatsThis(1,def); //save for later
     it->setData(1, Qt::UserRole, def);
     if(def.endsWith(".desktop")){
-      XDGDesktop file(def);
-      if(file.type == XDGDesktop::BAD){
-        //Might be a binary - just print out the raw "path"
-        it->setText(1, def.section("/",-1));
-        it->setIcon(1, LXDG::findIcon("application-x-executable","") );
-      }else{
-        it->setText(1, file.name);
-        it->setIcon(1, LXDG::findIcon(file.icon,"") );
+      //Parse each default app once (the same few apps are the default for hundreds of mimetypes)
+      if(!defNameCache.contains(def)){
+        XDGDesktop file(def);
+        if(file.type == XDGDesktop::BAD){
+          //Might be a binary - just print out the raw "path"
+          defNameCache.insert(def, qMakePair(def.section("/",-1), LXDG::findIcon("application-x-executable","")));
+        }else{
+          defNameCache.insert(def, qMakePair(file.name, LXDG::findIcon(file.icon,"")));
+        }
       }
+      const QPair<QString,QIcon> &info = defNameCache[def];
+      it->setText(1, info.first);
+      it->setIcon(1, info.second );
     }else if(!def.isEmpty()){
       //Binary/Other default
       it->setText(1, def.section("/",-1));
@@ -243,13 +249,14 @@ void page_defaultapps::setdefaultitem(){
   QString app = getSysApp(false, path); //no "reset"  option
     if(app.isEmpty()){ return; }//nothing selected
   //Now set the items
+  XDGDesktop desk(app); //same app for every item: parse it (and look up its icon) once
+  QIcon deskIcon = LXDG::findIcon(desk.icon,"");
   for(int i=0; i<list.length(); i++){
     //Set it in the back end
     LXDG::setDefaultAppForMime(list[i]->whatsThis(0), app);
     //Set it in the UI
-    XDGDesktop desk(app);
     list[i]->setWhatsThis(1,app); //app path
-    list[i]->setIcon(1,LXDG::findIcon(desk.icon,"")); //reset the icon
+    list[i]->setIcon(1,deskIcon); //reset the icon
     list[i]->setText(1,desk.name); //reset the name
     list[i]->setData(1, Qt::UserRole, app);
   }

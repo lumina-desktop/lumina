@@ -176,7 +176,9 @@ void MainWindow::removePanel(int pan)
     for(int i = 0; i < PANELS.length(); i++) {
         int num = PANELS[i]->PanelNumber();
         if(num == pan) {
-            delete PANELS.takeAt(i);
+            //deleteLater: this runs from the panel widget's own remove signal - deleting it here destroyed
+            // the sender while its handler was still running
+            PANELS.takeAt(i)->deleteLater();
             i--;
             changed = true;
         } else if(num > pan) {

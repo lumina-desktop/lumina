@@ -4,6 +4,8 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
+#include <QApplication>
+#include <QElapsedTimer>
 #include "page_main.h"
 #include "ui_page_main.h"
 #include "getPage.h"
@@ -19,7 +21,7 @@ page_main::page_main(QWidget *parent) : PageWidget(parent), ui(new Ui::page_main
   ui->treeWidget->setMouseTracking(true);
   ui->treeWidget->setSortingEnabled(false); //the QTreeView sort flag always puts them in backwards (reverse-alphabetical)
   connect(ui->treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)) );
-  connect(ui->treeWidget, SIGNAL(itemPressed(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)) );
+  connect(ui->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(itemTriggered(QTreeWidgetItem*, int)) );
 
   connect(ui->lineEdit, SIGNAL(textChanged(QString)), this, SLOT(searchChanged(QString)) );
   connect(APPSLIST, SIGNAL(appsUpdated()), this, SLOT(LoadSettings()) );
@@ -115,11 +117,11 @@ void page_main::UpdateItems(QString search){
     }
   }
   //Now add the categories to the tree widget if they are non-empty
-  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); }
-  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); }
-  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); }
-  if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); }
-  if(system->childCount()>0){ ui->treeWidget->addTopLevelItem(system); system->setExpanded(true); }
+  if(interface->childCount()>0){ ui->treeWidget->addTopLevelItem(interface); interface->setExpanded(true); } else { delete interface; } //not in the tree: would leak on every refresh/search keystroke
+  if(appearance->childCount()>0){ ui->treeWidget->addTopLevelItem(appearance); appearance->setExpanded(true); } else { delete appearance; } //not in the tree: would leak on every refresh/search keystroke
+  if(session->childCount()>0){ ui->treeWidget->addTopLevelItem(session); session->setExpanded(true); } else { delete session; } //not in the tree: would leak on every refresh/search keystroke
+  if(user->childCount()>0){ ui->treeWidget->addTopLevelItem(user); user->setExpanded(true); } else { delete user; } //not in the tree: would leak on every refresh/search keystroke
+  if(system->childCount()>0){ ui->treeWidget->addTopLevelItem(system); system->setExpanded(true); } else { delete system; } //not in the tree: would leak on every refresh/search keystroke
   ui->treeWidget->sortItems(0, Qt::AscendingOrder);
   ui->treeWidget->resizeColumnToContents(0);
   ui->treeWidget->resizeColumnToContents(1);
@@ -192,7 +194,19 @@ void page_main::showFind(){
   ui->treeWidget->setCurrentItem(0);
 }
 
+//Clicking an entry emits itemClicked, and a double-click (or a single-click-activate style) then also emits
+// itemActivated for the same entry: only launch once (the old itemPressed+itemActivated pair launched twice)
+static bool repeatTrigger(QTreeWidgetItem *it, int col){
+  static QElapsedTimer timer;
+  static QTreeWidgetItem *lastIt = nullptr;
+  static int lastCol = -1;
+  bool repeat = (it==lastIt && col==lastCol && timer.isValid() && timer.elapsed() < QApplication::doubleClickInterval()+100);
+  lastIt = it; lastCol = col; timer.start();
+  return repeat;
+}
+
 void page_main::itemTriggered(QTreeWidgetItem *it, int col){
+  if(it==nullptr || repeatTrigger(it, col)){ return; }
   if(it->childCount()>0){
     it->setExpanded( !it->isExpanded() );
     it->setSelected(false);

@@ -16,7 +16,8 @@ ScriptDialog::~ScriptDialog(){
 }
 
 bool ScriptDialog::isValid(){
-  return !ui->line_name->text().isEmpty() && !ui->line_command->text().isEmpty();
+  //Only when the user accepted the dialog (Cancel with both fields filled used to add the entry anyway)
+  return this->result()==QDialog::Accepted && !ui->line_name->text().isEmpty() && !ui->line_command->text().isEmpty();
 }
 
 QString ScriptDialog::name(){
