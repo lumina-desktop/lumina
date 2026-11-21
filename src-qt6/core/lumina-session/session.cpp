@@ -5,6 +5,7 @@
 //  See the LICENSE file for full details
 //===========================================
 #include "session.h"
+#include <QElapsedTimer>
 
 #include <QObject>
 #include <QProcess>
@@ -79,12 +80,19 @@ bool LSession::setupComptonFiles(){
 
 void LSession::stopall(){
   stopping = true;
-  for(int i=0; i<PROCS.length(); i++){
-    if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->kill(); }
-  }
-  QCoreApplication::processEvents();
+  //Ask everything to close cleanly first (SIGTERM) so the WM/compositor can save state and exit,
+  // then give them up to 2 seconds in total, and only then force-kill what is left.
+  // (This used to send SIGKILL first and SIGTERM afterwards, so nothing ever got a clean shutdown.)
   for(int i=0; i<PROCS.length(); i++){
     if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->terminate(); }
+  }
+  QElapsedTimer waited; waited.start();
+  for(int i=0; i<PROCS.length(); i++){
+    int remaining = 2000 - int(waited.elapsed());
+    if(PROCS[i]->state()!=QProcess::NotRunning && remaining > 0){ PROCS[i]->waitForFinished(remaining); }
+  }
+  for(int i=0; i<PROCS.length(); i++){
+    if(PROCS[i]->state()!=QProcess::NotRunning){ PROCS[i]->kill(); PROCS[i]->waitForFinished(500); }
   }
   QCoreApplication::exit(0);
 }

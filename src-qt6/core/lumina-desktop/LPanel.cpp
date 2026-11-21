@@ -33,7 +33,9 @@ LPanel::LPanel(QSettings *file, QString scr, int num, QWidget *parent, bool rese
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
   screen = LSession::desktop();
 #endif
-  QString screenID = QApplication::screens().at(Screen())->name();
+  //(was screens().at(Screen())->name() - the same name we were given, but crashing with index -1 if that
+  // monitor is already gone)
+  QString screenID = scr;
   PPREFIX = "panel_"+screenID+"."+QString::number(num)+"/";
   if(DEBUG){ qDebug() << "Panel Prefix:" << PPREFIX; }
   defaultpanel = (LSession::handle()->screenGeom(Screen()).x()==0 && num==0);

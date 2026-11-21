@@ -34,8 +34,12 @@ int main(int argc, char **argv){
   //Make sure it is centered on the current screen
   QPoint center = QCursor::pos();
   splash.move(center.x()-(splash.size().width()/2), center.y()-(splash.size().height()/2));
-  QScreen *screen = QApplication::screens().at(0);
-  splash.setPixmap(screen->grabWindow(0, splash.x(), splash.y(), 100, 100));
+  //Grab through the screen under the cursor (falls back to the primary screen).
+  //NOTE: on X11, grabWindow(0, x, y, ...) grabs from the root window, which spans all monitors, so x/y are
+  // global coordinates for every QScreen - keep passing the global position.
+  QScreen *screen = QGuiApplication::screenAt(center);
+  if(screen == nullptr){ screen = QGuiApplication::primaryScreen(); }
+  if(screen != nullptr){ splash.setPixmap(screen->grabWindow(0, splash.x(), splash.y(), 100, 100)); }
   splash.show();
   QPropertyAnimation anim(&splash,"windowOpacity");
   anim.setDuration(1200);

@@ -51,7 +51,10 @@ void SystemWindow::updateWindow(){
     ui->tool_shutdown->setEnabled(ok);
   ui->frame_update->setVisible( !LOS::systemPendingUpdates().isEmpty() );
   //Center this window on the current screen
-  QPoint center = QGuiApplication::screenAt(QCursor::pos())->availableGeometry().center(); //get the center of the current screen
+  //Center on the current screen (screenAt() is null in a dead zone between differently-sized monitors)
+  QScreen *scr = QGuiApplication::screenAt(QCursor::pos());
+  if(scr == nullptr){ scr = QGuiApplication::primaryScreen(); }
+  QPoint center = (scr != nullptr) ? scr->availableGeometry().center() : QPoint(this->width()/2, this->height()/2);
   this->move(center.x() - this->width()/2, center.y() - this->height()/2);
 }
 

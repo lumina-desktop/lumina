@@ -172,7 +172,10 @@ void LScreenSaver::ShowLockScreen(){
   if(DEBUG){ qDebug() << "Showing Lock Screen:" << QDateTime::currentDateTime().toString(); }
   LOCKER->aboutToShow();
   //Move the screen locker to the appropriate spot
-  QPoint ctr = QApplication::screenAt(QCursor::pos())->geometry().center();
+  //screenAt() is null when the cursor sits in a dead zone between differently-sized monitors
+  QScreen *scr = QGuiApplication::screenAt(QCursor::pos());
+  if(scr == nullptr){ scr = QGuiApplication::primaryScreen(); }
+  QPoint ctr = (scr != nullptr) ? scr->geometry().center() : QPoint(0,0);
   LOCKER->resize(LOCKER->sizeHint());
   LOCKER->move(ctr - QPoint(LOCKER->width()/2, LOCKER->height()/2) );
   LOCKER->show();

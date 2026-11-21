@@ -64,9 +64,12 @@ UserItemWidget::UserItemWidget(QWidget *parent, QString itemPath, QString type, 
 }
 
 UserItemWidget::UserItemWidget(QWidget *parent, XDGDesktop *item) : QFrame(parent){
-  if(item==0){ return; }
+  //Always build the child widgets first: the destructor deletes button/icon/name, which were left
+  // uninitialised when a null item returned early here
   createWidget();
   isDirectory = false;
+  isShortcut = false;
+  if(item==0){ gooditem = false; return; }
   if(LDesktopUtils::isFavorite(item->filePath)){
     linkPath = item->filePath;
     isShortcut=true;

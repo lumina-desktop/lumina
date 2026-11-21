@@ -74,7 +74,9 @@ void showOSD(int argc, char **argv, QString message){
   if(DEBUG) qDebug() << "Display OSD";
   splash.setText(message);
   //Make sure it is centered on the current screen
-  QPoint center = App.screenAt(QCursor::pos())->availableGeometry().center();
+  QScreen *scr = App.screenAt(QCursor::pos()); //null in a dead zone between differently-sized monitors
+  if(scr == nullptr){ scr = App.primaryScreen(); }
+  QPoint center = (scr != nullptr) ? scr->availableGeometry().center() : QPoint(0,0);
   splash.move(center.x()-(splash.sizeHint().width()/2), center.y()-(splash.sizeHint().height()/2));
   splash.show();
   //qDebug() << " - show message";
@@ -189,7 +191,7 @@ return;
     }else if(QString(argv[i]).simplified() == "-volumeup"){
         bool isInt = false;
         int volupVal = 5;
-        if(argc > i){
+        if(argc > i+1){ //an optional value follows (was "argc > i", which is always true here)
             int parse = QString(argv[i+1]).toInt(&isInt,10);
             if(isInt && 0 < parse && parse <= 20){
                 volupVal = parse;
@@ -203,7 +205,7 @@ return;
     }else if(QString(argv[i]).simplified() == "-volumedown"){
         bool isInt = false;
         int voldownVal = 5;
-        if(argc > i){
+        if(argc > i+1){ //an optional value follows (was "argc > i", which is always true here)
             int parse = QString(argv[i+1]).toInt(&isInt,10);
             if(isInt && 0 < parse && parse <= 20){
                 voldownVal = parse;
@@ -409,6 +411,7 @@ int main(int argc, char **argv){
     }else{
       QProcess *p = new QProcess();
       p->setProcessEnvironment(QProcessEnvironment::systemEnvironment());
+      p->setProcessChannelMode(QProcess::MergedChannels); //one channel to drain (crash log shows the combined tail)
       if(!path.isEmpty() && QFile::exists(path)){
         //qDebug() << " - Setting working path:" << path;
         p->setWorkingDirectory(path);
@@ -419,15 +422,26 @@ int main(int argc, char **argv){
       p->start(cmd);
       #endif
 
-      //Now check up on it once every minute until it is finished
-      while(!p->waitForFinished(60000)){
-        //qDebug() << "[lumina-open] process check:" << p->state();
-        if(p->state() != QProcess::Running){ break; } //somehow missed the finished signal
+      //Now check up on it until it is finished.
+      //NOTE: lumina-open stays alive for the whole lifetime of the app, and QProcess buffers everything the
+      // app prints until it is read - drain both channels regularly and keep only the tail for the crash log
+      // (previously a chatty app made this wrapper grow without bound).
+      // Drain as soon as data arrives (not on a timer) so only about one pipe-buffer is ever held.
+      const int LOG_TAIL = 64*1024;
+      QByteArray tail;
+      auto drain = [&](){
+        tail.append(p->readAllStandardOutput());
+        if(tail.size() > LOG_TAIL){ tail = tail.right(LOG_TAIL); }
+      };
+      while(true){
+        if(p->waitForReadyRead(5000)){ drain(); continue; } //new output
+        if(p->state() == QProcess::NotRunning){ break; } //finished (or failed to start)
       }
+      p->waitForFinished(1000);
+      drain();
       retcode = p->exitCode();
       if( (p->exitStatus()==QProcess::CrashExit) && retcode ==0){ retcode=-1; } //so we catch it later
-      log = QString(p->readAllStandardError());
-      if(log.isEmpty()){ log = QString(p->readAllStandardOutput()); }
+      log = QString::fromLocal8Bit(tail);
     }
     //qDebug() << "[lumina-open] Finished Cmd:" << cmd << retcode << p->exitStatus();
     if( QFile::exists("/tmp/.luminastopping") ){ watch = false; } //closing down session - ignore "crashes" (app could have been killed during cleanup)

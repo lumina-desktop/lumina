@@ -30,8 +30,9 @@ QPixmap LDesktopBackground::setBackground(const QString& bgFile, const QString& 
 
     if (bgFile.startsWith("rgb(")) {
         QStringList colors = bgFile.section(")",0,0).section("(",1,1).split(",");
-        QColor color = QColor(colors[0].toInt(), colors[1].toInt(), colors[2].toInt());
-        bgPixmap.fill(color);
+        //Malformed value (fewer than 3 components) used to index past the end of the list
+        if(colors.length() >= 3){ bgPixmap.fill( QColor(colors[0].trimmed().toInt(), colors[1].trimmed().toInt(), colors[2].trimmed().toInt()) ); }
+        else{ bgPixmap.fill(Qt::black); }
     } else {
         bgPixmap.fill(Qt::black);
 
@@ -46,7 +47,8 @@ QPixmap LDesktopBackground::setBackground(const QString& bgFile, const QString& 
             } else {
                 mode = Qt::KeepAspectRatio;
             }
-            if(bgImage.height() != geom.height() && bgImage.width() != geom.width() ){ bgImage = bgImage.scaled(geom.size(), mode, Qt::SmoothTransformation);  }
+            //Scale unless it already matches exactly (was "&&": an image matching only one dimension was never scaled)
+            if(bgImage.height() != geom.height() || bgImage.width() != geom.width() ){ bgImage = bgImage.scaled(geom.size(), mode, Qt::SmoothTransformation);  }
             //bgImage = bgImage.scaled(size(), mode);
         }
 

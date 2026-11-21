@@ -251,7 +251,9 @@ void LFileDialog::on_tool_ok_clicked(){
     appExec = ui->line_bin->text();
   }else if(ui->radio_rec->isChecked()){
     //application selected
-    XDGDesktop app(PREFAPPS[ui->combo_rec->currentIndex()]);
+    int idx = ui->combo_rec->currentIndex();
+    if(idx < 0 || idx >= PREFAPPS.length()){ appSelected = false; return; } //nothing valid selected
+    XDGDesktop app(PREFAPPS[idx]);
     //Set the output variables
     appExec =  app.getDesktopExec();
     appPath = app.path;

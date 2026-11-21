@@ -205,6 +205,7 @@ void LDesktop::checkResolution(){
 //     PRIVATE SLOTS
 // =====================
 void LDesktop::InitDesktop(){
+  if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
   //This is called *once* during the main initialization routines
   checkResolution(); //Adjust the desktop config file first (if necessary)
   if(DEBUG){ qDebug() << "Init Desktop:" << Screen(); }
@@ -423,6 +424,7 @@ void LDesktop::RemoveDeskPlugin(QString ID){
 }
 
 void LDesktop::IncreaseDesktopPluginIcons(){
+  if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
   if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){  cur = 100; }
@@ -435,6 +437,7 @@ void LDesktop::IncreaseDesktopPluginIcons(){
 }
 
 void LDesktop::DecreaseDesktopPluginIcons(){
+  if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
   int cur = settings->value(DPREFIX+"GridSize",-1).toInt();
   if(cur<0 && QGuiApplication::screens().at(Screen())->availableGeometry().height() > 2000){ cur = 200; }
   else if(cur<0){ cur = 100; }
@@ -484,6 +487,7 @@ void LDesktop::UpdatePanels(){
 }
 
 void LDesktop::UpdateDesktopPluginArea(){
+  if(Screen() < 0){ return; } //screen was unplugged - this desktop is about to be removed (index -1 would crash below)
   QRegion visReg(QGuiApplication::screens().at(Screen())->availableGeometry() ); //visible region (not hidden behind a panel)
   QRect rawRect = visReg.boundingRect(); //initial value (screen size)
   //qDebug() << "Update Desktop Plugin Area:" << bgWindow->geometry();
@@ -548,7 +552,7 @@ void LDesktop::UpdateBackground(){
     //Remove any invalid files
     for(int i=0; i<bgL.length(); i++){
       if(bgL[i]=="default" || bgL[i].startsWith("rgb(") ){ continue; } //built-in definitions - treat them as valid
-      if(bgL[i].isEmpty()){ bgL.removeAt(i); i--; }
+      if(bgL[i].isEmpty()){ bgL.removeAt(i); i--; continue; } //(no continue before: next line read bgL[-1] when i was 0)
       if( !QFile::exists(bgL[i]) ){
         //Quick Detect/replace for new path for Lumina wallpapers (change in 1.3.4)
         if(bgL[i].contains("/wallpapers/Lumina-DE/")){

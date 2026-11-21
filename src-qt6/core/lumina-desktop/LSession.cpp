@@ -668,6 +668,8 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   QRect geom = XCB->WindowGeometry(win, false);
   //Get the frame size
   QList<int> frame = XCB->WindowFrameGeometry(win); //[top,bottom,left,right] sizes of the frame
+  //Empty when the window is already gone or has no _NET_FRAME_EXTENTS - treat as "no frame"
+  if(frame.length() < 4){ frame = QList<int>() << 0 << 0 << 0 << 0; }
   //Calculate the full geometry (window + frame)
   QRect fgeom = QRect(geom.x()-frame[2], geom.y()-frame[0], geom.width()+frame[2]+frame[3], geom.height()+frame[0]+frame[1]);
   if(DEBUG){
@@ -678,7 +680,11 @@ void LSession::adjustWindowGeom(WId win, bool maximize){
   QRect desk;
   QList<QScreen *> screens = QGuiApplication::screens();
   for(int i=0; i<DESKTOPS.length(); i++){
-    if( screens.at(i)->geometry().contains(geom.center()) ){
+    //Use the desktop's own screen index: DESKTOPS[i] is not screens[i] (order differs, and right after a
+    // monitor is unplugged DESKTOPS can be longer than screens() until updateDesktops() runs)
+    int s = DESKTOPS[i]->Screen();
+    if(s < 0 || s >= screens.length()){ continue; }
+    if( screens.at(s)->geometry().contains(geom.center()) ){
       //Window is on this screen
       if(DEBUG){ qDebug() << " - On Screen:" << DESKTOPS[i]->Screen(); }
       desk = DESKTOPS[i]->availableScreenGeom();
