@@ -113,6 +113,7 @@ void PlainTextEditor::LoadFile(QString filepath){
     this->centerCursor(); //scroll until cursor is centered (if possible)
   }
   hasChanges = false;
+  this->document()->setModified(false); //change tracking uses the document's own flag (see textChanged())
   readonly = false;
   if(QFile::exists(filepath)){
     readonly =  !QFileInfo(filepath).isWritable();
@@ -146,7 +147,7 @@ bool PlainTextEditor::SaveFile(bool newname){
   if( !watcher->files().isEmpty() ){ watcher->removePaths(watcher->files()); }
   bool ok = LUtils::writeFile(this->whatsThis(), this->toPlainText().split("\n"), true);
   hasChanges = !ok;
-  if(ok){ lastSaveContents = this->toPlainText(); emit FileLoaded(this->whatsThis()); }
+  if(ok){ lastSaveContents = this->toPlainText(); this->document()->setModified(false); emit FileLoaded(this->whatsThis()); }
   if(QFile::exists(currentFile())){ watcher->addPath(currentFile()); }
   readonly = !QFileInfo(this->whatsThis()).isWritable(); //update this flag
   if(!ok){
@@ -237,22 +238,26 @@ void PlainTextEditor::highlightMatch(QChar ch, bool forward, int fromPos, QChar 
   int nested = 1; //always start within the first nest (the primary nest)
   int tmpFromPos = fromPos;
   //if(!forward){ tmpFromPos++; } //need to include the initial location
-  QString doc = this->toPlainText();
-  while( nested>0 && tmpFromPos<doc.length() && ( (tmpFromPos>=fromPos && forward) || ( tmpFromPos<=fromPos && !forward ) ) ){
+  //Count characters in place (was a full toPlainText() copy every time the cursor sat next to a bracket)
+  QTextDocument *doc = this->document();
+  auto countIn = [doc](int from, int len, QChar c){
+    int n = 0;
+    for(int p=qMax(0,from); p<from+len && p<doc->characterCount(); p++){ if(doc->characterAt(p)==c){ n++; } }
+    return n;
+  };
+  while( nested>0 && tmpFromPos<doc->characterCount() && ( (tmpFromPos>=fromPos && forward) || ( tmpFromPos<=fromPos && !forward ) ) ){
     if(forward){
       QTextCursor cur = this->document()->find(ch, tmpFromPos);
       if(!cur.isNull()){
-	nested += doc.mid(tmpFromPos+1, cur.position()-tmpFromPos).count(startch) -1;
+	nested += countIn(tmpFromPos+1, cur.position()-tmpFromPos, startch) -1;
 	if(nested==0){ matchright = cur.position(); }
 	else{ tmpFromPos = cur.position(); }
       }else{ break; }
     }else{
       QTextCursor cur = this->document()->find(ch, tmpFromPos, QTextDocument::FindBackward);
       if(!cur.isNull()){
-        QString mid = doc.mid(cur.position()-1, tmpFromPos-cur.position()+1);
-        //qDebug() << "Found backwards match:" << nested << startch << ch << mid;
-        //qDebug() << doc.mid(cur.position(),1) << doc.mid(tmpFromPos,1);
-	nested += (mid.count(startch) - mid.count(ch));
+        int from = cur.position()-1, len = tmpFromPos-cur.position()+1;
+	nested += (countIn(from, len, startch) - countIn(from, len, ch));
 	if(nested==0){ matchleft = cur.position(); }
 	else{ tmpFromPos = cur.position()-1; }
       }else{ break; }
@@ -349,7 +354,9 @@ void PlainTextEditor::checkMatchChar(){
 //Functions for notifying the parent widget of changes
 void PlainTextEditor::textChanged(){
   //qDebug() << " - Got Text Changed signal";
-  bool changed = (lastSaveContents != this->toPlainText());
+  //QTextDocument tracks this itself (and clears it again when undo returns to the saved state) - the old
+  // whole-document copy + compare on every keystroke was O(file size) per key
+  bool changed = this->document()->isModified();
   emit CheckSpelling(this->textCursor().position(), -1);
   if(changed == hasChanges){ return; } //no change
   hasChanges = changed; //save for reading later
@@ -376,6 +383,7 @@ void PlainTextEditor::fileChanged(){
       if(QFile::exists(currentFile())){ fileChanged(); return; } //replaced: handle as a normal change
       //Really gone: keep the text and flag it as unsaved so closing will prompt to save it
       lastSaveContents.clear();
+      this->document()->setModified(true); //stays "changed" whatever is typed next - the file is gone
       hasChanges = true;
       emit UnsavedChanges(currentFile());
     });

@@ -337,15 +337,18 @@ bool MainUI::SaveAllFiles(){
 }
 
 void MainUI::Print() {
-	QPrinter *print = new QPrinter(QPrinter::HighResolution);
-	QPrintDialog dialog(print, NULL);
+	PlainTextEditor *editor = currentEditor();
+	if(editor == 0){ return; } //no open tab (this used to dereference a null editor)
+	QPrinter printer(QPrinter::HighResolution); //stack object (was new'd and never deleted)
+	QPrinter *print = &printer;
+	QPrintDialog dialog(print, this);
 	dialog.setWindowTitle(tr("Print Content"));
 	dialog.setOptions( QAbstractPrintDialog::PrintCurrentPage | QAbstractPrintDialog::PrintToFile );
-	if(currentEditor()->textCursor().hasSelection()) {
+	if(editor->textCursor().hasSelection()) {
 		dialog.setOptions( QAbstractPrintDialog::PrintCurrentPage | QAbstractPrintDialog::PrintToFile | QAbstractPrintDialog::PrintSelection );
 	}
 	if(dialog.exec() == QDialog::Accepted) {
-		currentEditor()->print(print);
+		editor->print(print);
 	}
 }
 
@@ -616,6 +619,9 @@ PlainTextEditor *cur = currentEditor();
   if(cur==0){ return; }
   //See if the current selection matches the find field first
   bool done = false;
+  //One edit block: a single undo step, and the document is only re-laid-out/re-highlighted once
+  QTextCursor block(cur->document());
+  block.beginEditBlock();
   if(cur->textCursor().selectedText()==ui->line_find->text()){
     cur->insertPlainText(ui->line_replace->text());
     done = true;
@@ -625,6 +631,7 @@ PlainTextEditor *cur = currentEditor();
     cur->insertPlainText(ui->line_replace->text());
     done = true;
   }
+  block.endEditBlock();
   if(done){
     //Re-highlight the newly-inserted text
     cur->find( ui->line_replace->text(), QTextDocument::FindCaseSensitively | QTextDocument::FindBackward);

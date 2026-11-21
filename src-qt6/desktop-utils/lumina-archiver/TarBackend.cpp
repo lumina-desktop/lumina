@@ -262,7 +262,7 @@ void Backend::procFinished(int retcode, QProcess::ExitStatus){
       if(args.count("--include")==1){
         //Need to find the full path to the (single) extracted file
         QString path = args.last() +"/"+ args[ args.indexOf("--include")+1].section("/",-1);
-        QFile::setPermissions(path, QFileDevice::ReadOwner);
+        //(no chmod here any more: it made the user's extracted file read-only - and a directory untraversable)
         QProcess::startDetached("xdg-open", QStringList() << path); //argument list - the quoted command string broke on names containing a quote
       }else{
         //Multi-file extract - open the dir instead

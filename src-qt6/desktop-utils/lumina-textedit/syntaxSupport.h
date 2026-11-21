@@ -62,10 +62,12 @@ class Custom_Syntax : public QSyntaxHighlighter{
 private:
   QSettings *settings;
         SyntaxFile syntax;
+  QColor excessColor; //"colors/bracket-missing", cached by loadRules()
 
 public:
   Custom_Syntax(QSettings *set, QTextDocument *parent = 0) : QSyntaxHighlighter(parent){
     settings = set;
+    excessColor = QColor( settings->value("colors/bracket-missing").toString() );
   }
   ~Custom_Syntax(){}
 
@@ -126,7 +128,10 @@ protected:
       while(index>=0){
         int len = pattMatch.capturedLength();
         if(format(index)==currentBlock().charFormat()){ setFormat(index, len, syntax.rules[i].format); } //only apply highlighting if not within a section already
-        pattMatch = syntax.rules[i].pattern.match(text, index+len); //go to the next match
+        //Always advance: a zero-length match (e.g. a rule like "x*") used to match at the same index forever
+        int next = index + (len > 0 ? len : 1);
+        if(next > text.length()){ break; }
+        pattMatch = syntax.rules[i].pattern.match(text, next); //go to the next match
         index = pattMatch.hasMatch() ? pattMatch.capturedStart() : -1;
       }
     }//end loop over normal (single-line) patterns
@@ -162,7 +167,7 @@ protected:
 
     //Now go through and apply any document-wide formatting rules
     QTextCharFormat fmt;
-    fmt.setBackground( QColor( settings->value("colors/bracket-missing").toString() ) );
+    fmt.setBackground( excessColor );
     int max = syntax.char_limit();
     if(max >= 0 && ( (text.length()+(text.count("\t")*(syntax.tab_length()-1)) )> max) ) {
       //Line longer than it should be - highlight the offending characters

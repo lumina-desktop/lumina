@@ -114,6 +114,7 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
   if(!obj.contains("meta") || !obj.contains("format") || !obj.contains("rules")){ qDebug() << "Could not read syntax file:" << file; return false; } //could not get any info
   //Save the raw meta/format objects for later
   fileLoaded = file;
+  lastLoaded = QDateTime::currentDateTime(); //(never set before, so every cached file was re-parsed on every call)
   metaObj = obj.value("meta").toObject();
   formatObj = obj.value("format").toObject();
   //Now read/save the rules structure
@@ -149,9 +150,12 @@ bool SyntaxFile::LoadFile(QString file, QSettings *settings){
     //Now save the rule(s) to the list
     if(rule.contains("words")){
       //special logic - this generates a bunch of rules all at once (one per word)
+      //One rule with a single alternation (was one QRegularExpression per keyword, each run on every line)
       QJsonArray tmpArr = rule.value("words").toArray();
-      for(int a=0; a<tmpArr.count(); a++){
-        tmp.pattern = QRegularExpression("\\b"+tmpArr[a].toString()+"\\b"); //turn each keyword into a QRegularExpression and insert the rule
+      QStringList words;
+      for(int a=0; a<tmpArr.count(); a++){ if(!tmpArr[a].toString().isEmpty()){ words << tmpArr[a].toString(); } }
+      if(!words.isEmpty()){
+        tmp.pattern = QRegularExpression("\\b(?:"+words.join("|")+")\\b");
         rules << tmp;
       }
     }else{ rules << tmp; } //just a single rule
@@ -170,15 +174,15 @@ QList<SyntaxFile> SyntaxFile::availableFiles(QSettings *settings){
     found << list[i].fileLoaded; //save for later
   }
   //Now scan for any new files
-  QStringList paths;
-  paths << QString(getenv("XDG_DATA_HOME")) << QString(getenv("XDG_DATA_DIRS")).split(":");
+  QStringList paths = LUtils::xdgDataDirs(); //(spec defaults when the XDG variables are unset)
   for(int i=0; i<paths.length(); i++){
     QDir dir(paths[i]+"/lumina-desktop/syntax_rules");
     if(!dir.exists()){ continue; }
     //qDebug() << "Found directory:" << dir.absolutePath();
     QFileInfoList files = dir.entryInfoList(QStringList() << "*.syntax", QDir::Files, QDir::Name);
     for(int f=0; f<files.length(); f++){
-      if(paths.contains(files[f].absoluteFilePath()) ){ continue; } //already handled
+      if(found.contains(files[f].absoluteFilePath()) ){ continue; } //already handled (was checking "paths" - the dirs - so every file was appended again on each call)
+      found << files[f].absoluteFilePath();
       //New Syntax File found
       //qDebug() << "Found File:" << files[f].fileName();
       SyntaxFile nfile;
@@ -238,9 +242,11 @@ void Custom_Syntax::loadRules(QString type){
   for(int i=0; i<files.length(); i++){
     if(files[i].name() == type){ syntax = files[i]; break; }
   }
+  excessColor = QColor( settings->value("colors/bracket-missing").toString() ); //read once (was per highlighted line)
   return;
 }
 
 void Custom_Syntax::loadRules(SyntaxFile sfile){
   syntax = sfile;
+  excessColor = QColor( settings->value("colors/bracket-missing").toString() );
 }

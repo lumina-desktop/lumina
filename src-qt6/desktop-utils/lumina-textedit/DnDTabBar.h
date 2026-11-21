@@ -67,7 +67,8 @@ protected:
             //if(ev->button()!=Qt::LeftButton){ QTabBar::mouseMoveEvent(ev); return; }
 	    qDebug() << "Starting Drag:" << this->geometry() << ev->pos();
 	    QString tab = selTab;
-            this->mouseReleaseEvent(new QMouseEvent(QEvent::MouseButtonRelease, ev->pos(), ev->button(), ev->buttons(), ev->modifiers()) ); //will reset selTab
+            QMouseEvent release(QEvent::MouseButtonRelease, ev->pos(), ev->button(), ev->buttons(), ev->modifiers()); //stack event (a heap one leaked on every drag)
+            this->mouseReleaseEvent(&release); //will reset selTab
 	    //this->update();
 	     QDrag *drag = new QDrag(this);
               QMimeData *mimeData = new QMimeData;
