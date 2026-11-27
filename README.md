@@ -1,119 +1,245 @@
 Lumina
 ======
+
 This is the official source tree for the Lumina Desktop Environment.
 
-For additional information about the project, please browse the official website for documentation, screenshots, and more: 
-https://lumina-desktop.org/
+Lumina is a lightweight, plugin-based desktop for Unix-like operating systems. Each user can arrange the whole interface (panels, desktop plugins, menus) as they like, and a system administrator can set a system-wide default layout.
 
-**Community Chat Channels:**
- - Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
- - "Lumina Desktop" public channel on Matrix @ #lumina-desktop:matrix.org
+This README covers the **Qt6 version** of Lumina, which lives in [src-qt6/](src-qt6/) and is built with CMake. The older Qt5 tree is still in [src-qt5/](src-qt5/) for platforms that cannot move to Qt6 yet; see [Building the Qt5 tree](#building-the-qt5-tree).
 
-**Lumina Project Info: Table of Contents**
-
-- [Description](#description)
-- [Operating Systems and Distributions](#osdistros)
-- [Latest Versions](#latestversions)
-- [Translations](#translations)
-- [How to file bug reports or feature requests](#filebugs)
-- [How to build from source](#buildfromsource)
-
----
-
-Description <a name="description"></a>
-=====
-
-The Lumina Desktop Environment is a lightweight system interface that is designed for use on any Unix-like operating system. It takes a plugin-based approach, allowing the entire interface to be assembled/arranged by each individual user as desired, with a system-wide default layout which can be setup by the system administrator. This allows every system (or user session) to be designed to maximize the individual user's productivity.
+- Website: https://lumina-desktop.org/
+- Telegram: ["Lumina Desktop" public channel](https://t.me/luminadesktop)
 
 ![](https://github.com/lumina-desktop/lumina-themes/blob/master/artwork/screenshots/Screenshot-2021-10-02-15-55-58.png)
-Operating Systems and Distributions <a name="osdistros"></a>
+
+**Contents**
+
+- [What gets built](#what-gets-built)
+- [Requirements](#requirements)
+- [Installing dependencies on FreeBSD](#installing-dependencies-on-freebsd)
+- [Installing dependencies on Linux](#installing-dependencies-on-linux)
+- [Building and installing](#building-and-installing)
+- [Starting the desktop](#starting-the-desktop)
+- [Building the Qt5 tree](#building-the-qt5-tree)
+- [Translations](#translations)
+- [Bug reports and contributions](#bug-reports-and-contributions)
+
+What gets built
 ----
-Supported operating systems include (but are not limited to):
- * BSD: TrueOS, FreeBSD, OpenBSD, NetBSD, DragonflyBSD, GNU/kFreeBSD
- * Linux: Void, Gentoo, Debian, "Generic" Linux (including Arch, Ubuntu, and more)
 
-Known OS distributions that provide the Lumina desktop out-of-box:
+| Group | Source | Programs |
+|---|---|---|
+| Core | [src-qt6/core/](src-qt6/core/) | `start-lumina-desktop`, `lumina-desktop`, `lumina-open`, `lumina-info`, `lumina-pingcursor`, `lumina-checkpass`, the `lthemeengine` Qt platform theme and style plugins, themes, menu scripts |
+| Core utilities | [src-qt6/core-utils/](src-qt6/core-utils/) | `lumina-config`, `lumina-xconfig`, `lumina-search`, and the Lumina Control Center (`lcc` plus its `lcc-*` modules, Qt6 tree only) |
+| Desktop utilities | [src-qt6/desktop-utils/](src-qt6/desktop-utils/) | `lumina-fm`, `lumina-archiver`, `lumina-fileinfo`, `lumina-mediaplayer`, `lumina-photo`, `lumina-screenshot`, `lumina-sudo`, `lumina-textedit` |
+| Icons | [icon-theme/](icon-theme/) | `lumina-icons` and the `material-design-light` / `material-design-dark` icon themes |
 
- * [Project Trident (Void Linux)](https://project-trident.org)
- 
-Some operating systems package the Lumina desktop under the name `lumina` and some use `lumina-desktop`. 
+Lumina is an X11 desktop. It does not provide its own window manager: the session starts Fluxbox by default (Openbox or another window manager can be selected in the session settings).
 
-Operating system repos with a `lumina` package
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/lumina.svg)](https://repology.org/project/lumina/versions)
-
-Operating system repos with a `lumina-desktop` package
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/lumina-desktop.svg)](https://repology.org/project/lumina-desktop/versions)
-
-Latest Versions <a name="latestversions"></a>
+Requirements
 ----
-Click [HERE](https://github.com/lumina-desktop/lumina/releases) to see all the available releases for the Lumina Desktop.
 
-Click [HERE](https://github.com/lumina-desktop/lumina/branches) to see all the available branches of the Lumina Desktop source tree (includes development versions: X.Y.(Z > 0)).
-The master branch is where all development is performed and tested before the next version is tagged. Additionally, every version (development **and** release) of the project gets branched off of master at the time the version is tagged, so older versions may be fetched/patched/used as desired.
+### Build tools
 
-Occasionally there may be patches committed for particular versions which are not included in the static "release" archives. On the release page these can be identified by a note stating the release is a number of commits behind it's corresponding branch. In this situation, it may be preferable to fetch/use the corresponding branch of the source tree rather than the static archive if the patch(es) which were committed impact your particular operating system.
+- A C++17 compiler (GCC or Clang)
+- CMake 3.22 or newer
+- Extra CMake Modules (ECM) 5.88 or newer (the KDE Frameworks 6 version works)
+- Make or Ninja
+- git, to fetch the source
 
-Translations <a name="translations"></a>
+### Libraries
+
+- **Qt 6.2 or newer**, with these modules:
+
+  | Qt module | CMake components used |
+  |---|---|
+  | qtbase | Core, Gui, Widgets, Network, Concurrent, DBus, PrintSupport, and the private Gui headers (GuiPrivate, needed by the theme engine) |
+  | qtdeclarative | Qml, Quick |
+  | qtmultimedia | Multimedia, MultimediaWidgets |
+  | qtsvg | Svg, SvgWidgets |
+  | qt5compat | Core5Compat |
+  | qttools | LinguistTools (`lrelease`, to build the translations) |
+
+- **X11**: libX11, libXi, libXcursor
+- **XCB**: libxcb (including its composite, damage, dpms, screensaver, xfixes and xkb extensions; xtest is optional), xcb-util, xcb-util-wm (EWMH and ICCCM), xcb-util-image, xcb-util-keysyms
+- **PAM** (libpam), used by `lumina-checkpass`
+
+### Runtime programs
+
+Required:
+
+| Program | Used for |
+|---|---|
+| `fluxbox` | Default window manager for the session |
+| An X server and `xinit` | `start-lumina-desktop` launches an X session with `xinit` when one is not already running |
+| `xrandr` | Monitor configuration in `lumina-xconfig` |
+| `tar` (bsdtar/libarchive preferred) | Backend for `lumina-archiver` |
+
+Recommended:
+
+| Program | Used for |
+|---|---|
+| `xscreensaver` | Screensaver and screen locking |
+| `picom` (or `compton`, `xcompmgr`) | Compositing: transparency and smoother drawing |
+| D-Bus (`dbus-launch`, `dbus-send`) | Session bus; shutdown and restart on several Linux backends |
+| `numlockx` | Setting Num Lock at login |
+| `xterm` or another graphical terminal | Launching terminal applications |
+| `xdg-user-dirs` | Creating the standard user directories at first login |
+| An icon theme such as La Capitaine | A fuller icon set than the bundled ones |
+| `sudo` | Backend for `lumina-sudo` |
+
+Optional, for OS integration:
+
+| | FreeBSD | Linux |
+|---|---|---|
+| Screen brightness | `xbrightness` | `xbacklight` |
+| Audio volume | `mixer` (base system) | `amixer` (alsa-utils), `pactl`, `pavucontrol` |
+| Battery status | `apm`, `sysctl` (base system) | `acpi` |
+| Bluetooth (`lcc-bluetooth`) | | `bluetoothctl` (BlueZ) |
+
+Installing dependencies on FreeBSD
 ----
-**Legacy Versions (1.0.0 and older)**
 
-All the translation files for Lumina are available through the trueos/lumina-i18n repository (Qt5+ only). Please follow the directions in that repository for installing localization files.
+Build dependencies:
 
-**Version 1.1.0+**
+```sh
+pkg install git cmake ninja pkgconf kf6-extra-cmake-modules \
+    qt6-base qt6-declarative qt6-multimedia qt6-svg qt6-5compat qt6-tools \
+    libX11 libXi libXcursor libxcb \
+    xcb-util xcb-util-wm xcb-util-image xcb-util-keysyms
+```
 
-All the translations for Lumina are contained within this repository directly (the i18n/ subdirectories within each project source tree). To include these translation files, the `WITH_I18N` build flag must be set at compilation time, in which case the translation files will automatically get synced/built alongside the corresponding binaries.
+PAM and a C++17 compiler (Clang) are part of the base system.
 
-To submit translations, please edit those i18n/*.ts translation files and submit a pull request to this repository.
+Runtime dependencies:
 
-How to file bug reports or feature requests <a name="filebugs"></a>
+```sh
+pkg install xorg fluxbox xscreensaver picom numlockx xterm \
+    dbus xdg-user-dirs xbrightness sudo
+```
+
+Installing dependencies on Linux
 ----
-Please create a ticket through the [GitHub issues tracker](https://github.com/lumina-desktop/lumina/issues) on this repository. Similarly, if you want to send in patches or other source contributions, please send in a GitHub pull request so that it can get reviewed/committed as quickly as possible.
+
+Package names differ between distributions and releases. If one of the names below is not found, search your package manager for the library named in [Requirements](#requirements).
 
 
-How to build from source <a name="buildfromsource"></a>
+### Fedora (My best guess ATM)
+
+```sh
+sudo dnf install git gcc-c++ cmake ninja-build extra-cmake-modules \
+    qt6-qtbase-devel qt6-qtbase-private-devel qt6-qtdeclarative-devel \
+    qt6-qtmultimedia-devel qt6-qtsvg-devel qt6-qt5compat-devel qt6-qttools-devel \
+    libX11-devel libXi-devel libXcursor-devel libxcb-devel \
+    xcb-util-devel xcb-util-wm-devel xcb-util-image-devel xcb-util-keysyms-devel \
+    pam-devel
+```
+
+```sh
+sudo dnf install xorg-x11-server-Xorg xorg-x11-xinit fluxbox xscreensaver picom \
+    numlockx xterm dbus-x11 xdg-user-dirs bsdtar \
+    xbacklight alsa-utils pavucontrol acpi
+```
+
+### Arch Linux
+
+```sh
+sudo pacman -S --needed base-devel git cmake ninja extra-cmake-modules \
+    qt6-base qt6-declarative qt6-multimedia qt6-svg qt6-5compat qt6-tools \
+    libx11 libxi libxcursor libxcb \
+    xcb-util xcb-util-wm xcb-util-image xcb-util-keysyms pam
+```
+
+```sh
+sudo pacman -S --needed xorg-server xorg-xinit xorg-xrandr fluxbox xscreensaver picom \
+    numlockx xterm dbus xdg-user-dirs libarchive \
+    xorg-xbacklight alsa-utils pavucontrol acpi
+```
+
+Building and installing
 ----
-1) Checkout the source repo to your local box (GitHub gives a few methods for this)
 
-Examples:
-* To checkout the master branch of the repo, run `git clone https://github.com/lumina-desktop/lumina` to create a "lumina" directory with a local copy of the source tree.
-* To update an exising checkout of the Lumina repo, run "git pull" while within your local copy of the source tree. 
+Fetch the source:
 
-2) In a terminal, change to the lumina repo directory (base dir, not one of the sub-projects)
+```sh
+git clone https://github.com/lumina-desktop/lumina
+cd lumina
+```
 
-3) Run "qmake" on your local system to turn all the Qt project files (*.pro) into Makefiles
- * NOTE 1: The Qt5 version of qmake is located in /usr/local/lib/qt5/bin/qmake on FreeBSD, other OS's may have slightly different locations or names for qmake (such as qmake-qt5 for example)
- * NOTE 2: Check the terminal output of the qmake command to ensure that your OS build settings were loaded properly. Here is an example:
+### With the build script
 
-> Project MESSAGE: Build OS Info: FreeBSD, amd64, FreeBSD 10.2-RELEASE-p11 #0: Thu Jan 14 15:48:17 UTC 2016 root@amd64-builder.pcbsd.org:/usr/obj/usr/src/sys/GENERIC
+[scripts/build-lumina.sh](scripts/build-lumina.sh) configures, builds and installs the Qt6 tree in one step. It uses `sudo` (or `doas`) for the install step when not run as root.
 
-> Project MESSAGE: Build Settings Loaded: FreeBSD
+```sh
+./scripts/build-lumina.sh
+```
 
- * Build Note: Compile-time options may be set at this time using qmake. This is typically not needed unless you are setting up Lumina for automated build/packaging. If the automatically-detected build settings for your particular OS are invalid or need adjustment, please update the "OS-detect.pri" file as needed and send in your changes so that it can be corrected for future builds.
-  * PREFIX: Determines the base directory used to install/run Lumina ("/usr/local" by default)
-	Example: `qmake PREFIX=/usr/local`
-  * LIBPREFIX: Determines the location to install the Lumina library ("PREFIX/lib" by default)
-	Example: `qmake LIBPREFIX=/usr/local/lib`
-  * DESTDIR: An optional directory where the compiled files will be placed temporary (such as for packaging/distributing via some other system).
-	Example: `qmake DESTDIR=/my/build/dir`
-  * DEFAULT_SETTINGS: An optional flag to install the default settings/wallpaper for some other operating system (Note: Make sure the OS name is capitalized appropriately!)
-	Example: `qmake DEFAULT_SETTINGS=TrueOS`
-  * WITH_I18N: Generate/install the translation files. (Note: For versions prior to 1.1.0, do *not* use this flag! The localization files for versions up through 1.0.0 are available in the lumina-i18n repository instead).
-	Example: `qmake CONFIG+=WITH_I18N`
-  * debug: (not recommended for release builds) Do not strip all the debugging information out of the binaries (useful for performing backtraces on builds that crash or for other development tests)
-	Example: `qmake CONFIG+=debug`
+By default it builds a `Debug` configuration in `build-lumina-qt6/` and installs to `/usr` on Linux and `/usr/local` on FreeBSD and the other BSDs. Common options:
 
-4) Run "make" to compile all the Lumina projects (can be done as user)
+| Option | Effect |
+|---|---|
+| `-p`, `--prefix DIR` | Install prefix (default `/usr` on Linux, `/usr/local` elsewhere) |
+| `-t`, `--type TYPE` | `CMAKE_BUILD_TYPE` (default `Debug`; use `Release` for daily use) |
+| `-B`, `--build DIR` | Build directory |
+| `-j`, `--jobs N` | Parallel jobs (default: CPU count) |
+| `-c`, `--clean` | Wipe the build directory first |
+| `-b`, `--branch NAME` | Check out this branch before building |
+| `--pull` | `git pull --ff-only` before building |
+| `--no-install` | Build only |
+| `--qt5` | Build the Qt5 tree instead |
 
-5) Run "make install" to install the Lumina desktop on your local system (requires admin/root privileges usually)
+Run it with `--help` for the full list. The complete output is saved to `build.log` in the build directory.
 
-6-optional) Run "make distclean" to clean up all the build files in the Lumina source tree. (go back to step 3 later)
+### With CMake directly
 
-NOTE: The Lumina project is naturally broken down into a number of individual "sub-projects" which are designed to be built and packaged individually. These sub-projects all use the same overall dependencies, but might have differing library/runtime dependencies or even an alternate minimum-supported version of Qt.
-The sub-projects are broken down as follows:
- * [lumina-core](https://github.com/lumina-desktop/lumina/tree/master/src-qt5/core): The core of the project (desktop itself)
- * [lumina-coreutils](https://github.com/lumina-desktop/lumina/tree/master/src-qt5/core-utils): The core utilities for configuring/managing the desktop
- * [desktop-utilities](https://github.com/lumina-desktop/lumina/tree/master/src-qt5/desktop-utils): Various support utilities for desktop systems. Every one of these utilities should be independently packaged.
+The Qt6 tree is built by default, and the install prefix defaults to `/usr` on Linux and `/usr/local` on FreeBSD and the other BSDs:
 
-The desktop utilities are gradually getting migrated out into their own repositories under the lumina-desktop github organization as well. These repositories are open for individual versioning and updates if an individual would like to "adopt" these utilities and develop them independantly of the release schedule for the desktop components themselves.
+```sh
+cmake -S . -B build-lumina-qt6 -DCMAKE_BUILD_TYPE=Release
+cmake --build build-lumina-qt6 --parallel
+sudo cmake --install build-lumina-qt6
+```
+
+Configuration options:
+
+| Option | Default | Meaning |
+|---|---|---|
+| `WITH_QT6` | `ON` | `ON` builds [src-qt6/](src-qt6/) against Qt6; `OFF` builds [src-qt5/](src-qt5/) against Qt5 |
+| `CMAKE_INSTALL_PREFIX` | `/usr` on Linux, `/usr/local` elsewhere | Where Lumina is installed. On Linux, do not use `/usr/local`: display managers and Qt will not find the session entry and other installed files there |
+| `L_ETCDIR` | `/etc` on Linux with the `/usr` prefix; `<prefix>/etc` on the BSDs | Directory for Lumina's system-wide configuration files |
+| `CMAKE_BUILD_TYPE` | none | `Release`, `Debug`, `RelWithDebInfo` |
+
+The operating system is detected at configure time and selects the matching OS backend (FreeBSD, DragonFly, OpenBSD, NetBSD, or on Linux: Gentoo, Slackware, Void, with a generic Linux backend for everything else).
+
+### Install locations outside the prefix
+
+Two parts of the install do not follow `CMAKE_INSTALL_PREFIX`, so the install step always needs root:
+
+- The `lthemeengine` platform theme and style plugins are installed into Qt's own plugin directory (as reported by `qtpaths --plugin-dir`), because Qt only loads plugins from there.
+- The session script is installed as `/etc/X11/Sessions/lumina`.
+
+Starting the desktop
+----
+
+- **From a display manager:** log out and choose "Lumina" in the session list. The session entry is installed to `<prefix>/share/xsessions/Lumina-DE.desktop`.
+- **From a console:** run `start-lumina-desktop`. It starts X through `xinit` if no X session is running.
+- **From `~/.xinitrc`:** add `exec start-lumina-desktop`.
+
+Building the Qt5 tree
+----
+
+[src-qt5/](src-qt5/) is the Qt5-only source, kept for platforms that cannot yet use Qt6. Build it by passing `-DWITH_QT6=OFF` to CMake (or `--qt5` to the build script); it needs Qt 5.15 with the X11Extras and ThemeSupport modules in place of Core5Compat. It can also still be built with qmake using [lumina.pro](lumina.pro).
+
+Translations
+----
+
+Translations are kept in this repository, in the `i18n/` directory of each program, and are built and installed together with the binaries.
+
+To contribute a translation, edit the relevant `i18n/*.ts` files and open a pull request.
+
+Bug reports and contributions
+----
+
+Please open a ticket on the [GitHub issue tracker](https://github.com/lumina-desktop/lumina/issues). Patches and other contributions are welcome as GitHub pull requests.
+
+Lumina is released under the [BSD 3-Clause license](LICENSE) with some code under the MIT.

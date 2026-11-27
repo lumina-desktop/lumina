@@ -11,7 +11,7 @@ Usage: $(basename "$0") [options]
   -s, --src DIR       Lumina checkout (default: repo containing this script)
   -b, --branch NAME   Checkout this branch before building (default: current)
   -B, --build DIR     Build directory (default: <src>/build-lumina-qt6)
-  -p, --prefix DIR    Install prefix (default: /usr/local)
+  -p, --prefix DIR    Install prefix (default: /usr on Linux, /usr/local elsewhere)
   -t, --type TYPE     CMAKE_BUILD_TYPE (default: Debug)
       --qt5           Build the Qt5 tree instead (WITH_QT6=OFF)
   -c, --clean         Wipe the build directory first (automatic if the
@@ -31,7 +31,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC="$(cd "$SCRIPT_DIR/.." && pwd)"
 BRANCH=""
 BUILD=""
-PREFIX="/usr/local"
+# Linux installs go to /usr; the BSDs use /usr/local.
+if [ "$(uname -s)" = "Linux" ]; then PREFIX="/usr"; else PREFIX="/usr/local"; fi
 TYPE="Debug"
 WITH_QT6="ON"
 CLEAN=0
