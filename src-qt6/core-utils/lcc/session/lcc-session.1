@@ -1,0 +1,76 @@
+.Dd October 16, 2026
+.Dt LCC-SESSION 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc-session
+.Nd configure general Lumina session options.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It sets general options for the Lumina session:
+.Bl -bullet -offset indent
+.It
+Window manager to run in the session.
+.It
+Time and date display formats, and the order in which they are shown.
+A sample of each format is displayed, and the valid format codes can be
+viewed from the window.
+An empty format uses the short format of the current locale.
+.It
+Whether Num Lock is enabled at login.
+.It
+Whether the login and logout sounds are played.
+.It
+Whether application crash data is shown.
+When enabled,
+.Xr lumina-open 1
+watches the processes it starts and reports those that fail.
+.It
+Whether desktop links are managed automatically for installed applications.
+.It
+Whether startup quotes are disabled.
+.It
+The user icon shown at login.
+The selected image is scaled to 64x64 pixels.
+.El
+.Pp
+Desktop settings can also be reset, either to the system defaults
+(including operating system customizations) or to the plain Lumina
+defaults.
+A confirmation is requested before either reset.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-session
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/sessionsettings.conf
+Session settings.
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/nowatch
+Present when application crash data is disabled.
+.It Pa ~/.loginIcon.png
+User icon.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-locale 1 ,
+.Xr lcc-sound-theme 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

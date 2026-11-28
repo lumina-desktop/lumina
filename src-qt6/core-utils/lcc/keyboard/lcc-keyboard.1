@@ -1,0 +1,50 @@
+.Dd October 16, 2026
+.Dt LCC-KEYBOARD 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc-keyboard
+.Nd configure keyboard shortcuts for the Lumina desktop.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It edits the key bindings used by the window manager in the Lumina
+session.
+.Pp
+The Basic Editor lists each action with its current shortcut; a shortcut
+can be changed or cleared.
+The Advanced Editor shows the key binding file as plain text for direct
+editing, and a reference of the binding syntax codes is available from the
+menu.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-keyboard
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/fluxbox-keys
+Key binding file used by
+.Xr fluxbox 1
+in the Lumina session.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-window-manager 1 ,
+.Xr fluxbox-keys 5
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

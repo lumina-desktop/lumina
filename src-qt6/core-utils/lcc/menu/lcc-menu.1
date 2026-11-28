@@ -1,0 +1,46 @@
+.Dd October 16, 2026
+.Dt LCC-MENU 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc-menu
+.Nd configure the Lumina desktop context menu.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It controls the items shown in the menu that appears when the desktop is
+right-clicked.
+Menu plugins can be added, removed and reordered.
+Items can also be added for a specific installed application or for a
+custom script or command.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-menu
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/desktopsettings.conf
+The menu item list is stored under
+.Qq menu/itemlist .
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-panels 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

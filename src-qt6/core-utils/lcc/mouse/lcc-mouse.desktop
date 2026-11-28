@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mouse Settings
+Comment=Configure mouse and pointer device settings
+Icon=preferences-desktop-mouse
+Exec=lcc-mouse
+Categories=Settings;HardwareSettings;Qt;
+StartupNotify=true
+Keywords=mouse;pointer;cursor;click;scroll;acceleration;sensitivity;

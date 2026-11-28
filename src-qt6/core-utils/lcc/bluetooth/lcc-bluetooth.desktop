@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetooth Settings
+Comment=Configure bluetooth devices and settings
+Icon=preferences-system-bluetooth
+Exec=lcc-bluetooth
+Categories=Settings;HardwareSettings;Qt;
+StartupNotify=true

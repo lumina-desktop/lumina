@@ -1,0 +1,16 @@
+# Solarized is a theme created by Ethan Schoonover
+# See the project site at http://ethanschoonover.com/solarized
+# Or see the source at https://github.com/altercation/solarized
+ACCENTCOLOR=rgb(181,137,0)
+ACCENTDISABLECOLOR=rgb(181,137,0)
+ALTBASECOLOR=rgb(0,43,54)
+BASECOLOR=rgb(0,43,54)
+HIGHLIGHTCOLOR=rgb(7,54,66)
+HIGHLIGHTDISABLECOLOR=rgb(7,53,66)
+PRIMARYCOLOR=rgb(0,43,54)
+PRIMARYDISABLECOLOR=rgb(7,54,66)
+SECONDARYCOLOR=rgb(0,43,54)
+SECONDARYDISABLECOLOR=rgb(7,54,66)
+TEXTCOLOR=rgb(131,148,150)
+TEXTDISABLECOLOR=rgb(88,110,117)
+TEXTHIGHLIGHTCOLOR=rgb(147,161,161)

@@ -1,0 +1,91 @@
+.Dd October 16, 2026
+.Dt LCC 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc
+.Nd Lumina Control Center, a launcher for the Lumina configuration utilities.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+opens the Lumina Control Center, a single window that lists every
+Lumina Control Center (LCC) configuration utility together with any other
+installed application whose desktop entry is in the
+.Qq Settings
+category.
+Entries are grouped into Appearance, Interface, Session, User and System
+categories and can be filtered with the search field.
+Activating an entry launches the corresponding utility.
+.Pp
+Each utility is also a standalone program and can be run directly:
+.Bl -tag -width "lcc-window-manager" -offset indent
+.It Xr lcc-wallpaper 1
+Desktop background images.
+.It Xr lcc-compositor 1
+Window effects and compositing.
+.It Xr lcc-window-manager 1
+Window manager theme and behavior.
+.It Xr lcc-desktop 1
+Desktop plugins and icons.
+.It Xr lcc-panels 1
+Desktop panels and panel plugins.
+.It Xr lcc-menu 1
+Desktop context menu.
+.It Xr lcc-autostart 1
+Applications started at login.
+.It Xr lcc-defaultapps 1
+Default applications and file associations.
+.It Xr lcc-keyboard 1
+Keyboard shortcuts.
+.It Xr lcc-sound-theme 1
+Session sound events.
+.It Xr lcc-session 1
+General session options.
+.It Xr lcc-locale 1
+Session locale.
+.It Xr lcc-mouse 1
+Mouse and pointer settings.
+.It Xr lcc-bluetooth 1
+Bluetooth devices.
+.El
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+.Pp
+Only one instance of
+.Nm
+runs at a time; starting it again raises the existing window.
+
+.Sh KEYBOARD SHORTCUTS
+.Bl -tag -width "Ctrl+F" -offset indent
+.It Ic Ctrl+F
+Focus the search field.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc
+.It Pa /usr/local/share/applications/*.desktop
+Scanned for additional Settings applications, along with
+.Pa /usr/share/applications
+and
+.Pa ~/.local/share/applications .
+.El
+
+.Sh SEE ALSO
+.Xr lumina-config 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

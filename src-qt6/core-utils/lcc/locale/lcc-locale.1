@@ -1,0 +1,63 @@
+.Dd October 16, 2026
+.Dt LCC-LOCALE 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc-locale
+.Nd configure the locale used by the Lumina session.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It sets the locale applied when the Lumina session starts.
+Each category can be set independently from the list of locales known to
+the system:
+.Bl -tag -width "Monetary" -offset indent
+.It Language
+.Ev LANG
+.It Messages
+.Ev LC_MESSAGES
+.It Time
+.Ev LC_TIME
+.It Numeric
+.Ev LC_NUMERIC
+.It Monetary
+.Ev LC_MONETARY
+.It Collate
+.Ev LC_COLLATE
+.It CType
+.Ev LC_CTYPE
+.El
+.Pp
+Changes take effect after the session is restarted.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.El
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-locale
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/sessionsettings.conf
+Locale values are stored in the
+.Qq InitLocale
+group.
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-session 1 ,
+.Xr locale 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

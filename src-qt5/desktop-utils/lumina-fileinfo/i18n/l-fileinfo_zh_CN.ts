@@ -13,47 +13,47 @@
     <message>
         <location filename="../MainUI.ui" line="61"/>
         <source>Owner:</source>
-        <translation>所有者:</translation>
+        <translation>所有者：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="78"/>
         <source>Group:</source>
-        <translation>组:</translation>
+        <translation>组：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="95"/>
         <source>Permissions:</source>
-        <translation>权限:</translation>
+        <translation>权限：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="109"/>
         <source>Created:</source>
-        <translation>创建日期:</translation>
+        <translation>创建日期：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="116"/>
         <source>Note: The time a file was created might be more recent than the time modified if the file permissions were changed recently.</source>
-        <translation>注: 如果最近更改过文件权限，那文件的创建时间可能比修改时间更晚。</translation>
+        <translation>注意: 如果最近更改过文件权限，那文件的创建时间可能比修改时间更晚。</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="129"/>
         <source>Last Modified:</source>
-        <translation>最后修改:</translation>
+        <translation>最后修改于：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="136"/>
         <source>Type:</source>
-        <translation>类型:</translation>
+        <translation>类型：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="143"/>
         <source>MimeType:</source>
-        <translation>MIME 类型:</translation>
+        <translation>默认应用：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="190"/>
         <source>File Size:</source>
-        <translation>文件大小:</translation>
+        <translation>文件大小：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="221"/>
@@ -74,12 +74,12 @@
     <message>
         <location filename="../MainUI.ui" line="260"/>
         <source>Value</source>
-        <translation>价值</translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="265"/>
         <source>Source</source>
-        <translation>资源</translation>
+        <translation>源</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="277"/>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../MainUI.ui" line="319"/>
         <source>Working Dir:</source>
-        <translation>工作目录:</translation>
+        <translation>工作目录：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="326"/>
@@ -169,17 +169,17 @@
     <message>
         <location filename="../MainUI.ui" line="340"/>
         <source>Icon:</source>
-        <translation>图标:</translation>
+        <translation>图标：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="347"/>
         <source>Command:</source>
-        <translation>命令:</translation>
+        <translation>命令：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="354"/>
         <source>Comment:</source>
-        <translation>注释:</translation>
+        <translation>注释：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="364"/>
@@ -189,7 +189,7 @@
     <message>
         <location filename="../MainUI.ui" line="371"/>
         <source>Name:</source>
-        <translation>名称:</translation>
+        <translation>名称：</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="378"/>
@@ -247,7 +247,7 @@
     <message>
         <location filename="../MainUI.cpp" line="284"/>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>链接：</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="398"/>
@@ -261,12 +261,12 @@
         <location filename="../MainUI.cpp" line="413"/>
         <location filename="../MainUI.cpp" line="430"/>
         <source>XDG Shortcuts (*.desktop)</source>
-        <translation type="unfinished"></translation>
+        <translation>>XDG 快捷方式（*.desktop）</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="461"/>
         <source>Select a binary</source>
-        <translation>选择一个程序</translation>
+        <translation>选择二进制程序</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="464"/>
@@ -276,7 +276,7 @@
     <message>
         <location filename="../MainUI.cpp" line="464"/>
         <source>Invalid selection: Not a valid executable</source>
-        <translation>无效选择: 不是可执行文件</translation>
+        <translation>选择无效：非可执行文件</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="476"/>
@@ -307,18 +307,18 @@
         <location filename="../MainUI.cpp" line="535"/>
         <location filename="../MainUI.cpp" line="537"/>
         <source> Folders: </source>
-        <translation> 目录: </translation>
+        <translation> 目录：</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="535"/>
         <location filename="../MainUI.cpp" line="537"/>
         <source>Files: </source>
-        <translation>文件: </translation>
+        <translation>文件：</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="537"/>
         <source>  Calculating...</source>
-        <translation>  计算中...</translation>
+        <translation>  计算中……</translation>
     </message>
 </context>
 <context>

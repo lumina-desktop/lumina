@@ -4,7 +4,6 @@
 //  Available under the 3-clause BSD license
 //  See the LICENSE file for full details
 //===========================================
-#ifdef __OSNAME__
 #include "LuminaOS.h"
 #include <unistd.h>
 #include <stdio.h> // Needed for BUFSIZ
@@ -152,4 +151,3 @@ int LOS::MemoryUsagePercent(){
 QStringList LOS::DiskUsage(){ //Returns: List of current read/write stats for each device
   return QStringList(); //not implemented yet
 }
-#endif

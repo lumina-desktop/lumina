@@ -1,0 +1,30 @@
+/* SCROLLBARS (NOTE: Changing 1 subcontrol means you have to change all of them)*/
+QScrollBar{
+  background: palette(alternate-base);
+}
+QScrollBar:horizontal{
+  margin: 0px 0px 0px 0px;
+}
+QScrollBar:vertical{
+  margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle{
+  background: palette(base);
+  border: 1px solid transparent;
+  border-radius: 1px;
+}
+QScrollBar::handle:hover, QScrollBar::add-line:hover, QScrollBar::sub-line:hover{
+  background: palette(highlight);
+}
+QScrollBar::add-line{
+subcontrol-origin: none;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
+height: 0px;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal{
+width: 0px;
+}
+QScrollBar::sub-line{
+subcontrol-origin: none;
+}

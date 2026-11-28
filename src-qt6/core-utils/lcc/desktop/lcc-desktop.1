@@ -1,0 +1,58 @@
+.Dd October 16, 2026
+.Dt LCC-DESKTOP 1
+.Os @PROJECT_VERSION@
+
+.Sh NAME
+.Nm lcc-desktop
+.Nd configure desktop plugins and desktop icons.
+
+.Sh SYNOPSIS
+.Nm
+.Op Fl h | -help
+.Op Fl v | -version
+.Op Fl s | -screen Ar number
+
+.Sh DESCRIPTION
+.Nm
+is part of the Lumina Control Center.
+It manages the utilities embedded on the desktop of one screen: plugins can
+be added and removed.
+It also controls whether the contents of the Desktop folder and icons for
+removable media are shown on the desktop.
+
+.Sh OPTIONS
+.Bl -tag -width indent
+.It Fl h , Fl -help
+Display help on command line options.
+.It Fl v , Fl -version
+Display version information.
+.It Fl s Ar number , Fl -screen Ar number
+Configure the desktop on screen
+.Ar number ,
+counted from 0.
+The default is 0.
+.Nm
+exits with an error if the screen does not exist.
+.El
+
+.Sh EXAMPLES
+.Dl % lcc-desktop --screen 1
+Configure the desktop on the second monitor.
+
+.Sh FILES
+.Bl -tag -width indent
+.It Pa /usr/local/bin/lcc-desktop
+.It Pa $XDG_CONFIG_HOME/lumina-desktop/desktopsettings.conf
+Desktop and plugin settings shared with
+.Xr lumina-desktop 1 .
+.El
+
+.Sh SEE ALSO
+.Xr lcc 1 ,
+.Xr lcc-panels 1 ,
+.Xr lcc-wallpaper 1 ,
+.Xr lumina-desktop 1
+
+.Sh AUTHORS
+.An jt (q5sys)
+.Aq jt@obs-sec.com

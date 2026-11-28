@@ -1,0 +1,49 @@
+# Syntax support file for the Lumina Text Editor
+# ===================================
+#  PHP language support rules
+#  Written by Zackary Welch <zwelch@ixsystems.com>
+#  Released under the 2-clause BSD license
+# ===================================
+
+{
+	"meta": {
+		"name": "PHP",
+		"file_suffix": ["php"]
+	},
+	"format": {
+		"line_wrap": false,
+		"highlight_whitespace_eol" : false
+	},
+	"rules": [{
+			"name": "keywords",
+			"words": ["private", "public", "class", "function", "const", "return", "if", "else", "bool", "abstract", "and", "as", "break", "case", "catch", "const", "do", "echo", "int", "elseif", "default", "endif", "endfor", "final", "for", "foreach", "extends", "global", "include", "interface", "new", "or", "protected", "require", "static", "switch", "throw", "try", "use", "var", "while", "xor"],
+			"foreground": "colors/keyword"
+		},
+		{
+			"name": "single-line comment",
+			"regex": "[//#][^\n]*",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "multi-line comment",
+			"regex_start": "/\\*",
+			"regex_end": "\\*/",
+			"foreground": "colors/comment"
+		},
+		{
+			"name": "numbers",
+			"regex": "\\b[0-9]+\\.?[0-9]*\\b",
+			"foreground": "colors/altkeyword"
+		},
+		{
+			"name": "function names",
+			"regex": "\\b[A-Za-z0-9_]+(?=\\()",
+			"foreground": "colors/class"
+		},
+		{
+			"name" : "text",
+			"regex": "\"[^\"\\\\]*(\\\\(.|\\n)[^\"\\\\]*)*\"|'[^'\\\\]*(\\\\(.|\\n)[^'\\\\]*)*'",
+			"foreground" : "colors/text"
+		}
+	]
+}

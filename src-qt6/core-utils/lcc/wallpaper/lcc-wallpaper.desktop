@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Wallpaper Settings
+Comment=Configure desktop wallpaper and background settings
+Exec=lcc-wallpaper %U
+Icon=preferences-desktop-wallpaper
+Terminal=false
+StartupNotify=true
+Categories=Settings;DesktopSettings;Qt;
+Keywords=wallpaper;background;desktop;settings;configuration;

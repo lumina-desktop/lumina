@@ -1,0 +1,535 @@
+/* ALL THE TEMPLATE WIDGETS */
+INHERITS=None
+
+/* ALL THE WIDGETS WITH THE BASE COLOR */
+QMainWindow, QMenu, QDialog, QMessageBox{ 
+  background: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 %%BASECOLOR%%, stop:1 %%ALTBASECOLOR%%);
+  color: %%TEXTCOLOR%%;
+  border: 1px solid %%ACCENTDISABLECOLOR%%;
+  border-radius: 3px;
+}
+
+/* ALL THE WIDGETS WITH AN ALTERNATE BASE COLOR */
+QLineEdit, QTextEdit, QTextBrowser, QPlainTextEdit, QSpinBox, QDateEdit, QDateTimeEdit, QTimeEdit, QDoubleSpinBox{
+  background: %%ALTBASECOLOR%%;
+  color: %%TEXTCOLOR%%;
+  border-color: %%ACCENTDISABLECOLOR%%;
+  selection-background-color: %%HIGHLIGHTCOLOR%%;
+  selection-color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+
+/* PAGES OF CONTAINER WIDGETS */
+QStackedWidget .QWidget{
+  background: transparent;
+  color: %%TEXTCOLOR%%;
+  border: none;
+}
+
+QToolBox::tab{
+  color: %%TEXTCOLOR%%;
+}
+
+/* MENU WIDGETS */
+QMenuBar, QMenuBar::item,QToolBar{ 
+  background: transparent;
+  border: none;
+  color: %%TEXTCOLOR%%;
+}
+
+QStatusBar{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 transparent, stop: 0.5 %%SECONDARYCOLOR%%);
+  border: none;
+  color: %%TEXTCOLOR%%;
+}
+QToolBar:top{
+  border-bottom: 1px solid %%ACCENTCOLOR%%;
+}
+QToolBar:bottom{
+  border-top: 1px solid %%ACCENTCOLOR%%;
+}
+QToolBar:left{
+  border-right: 1px solid %%ACCENTCOLOR%%;
+}
+QToolBar:right{
+  border-left: 1px solid %%ACCENTCOLOR%%;
+}
+
+QMenuBar::item{
+  background: transparent; /*Use the menu bar color*/
+  padding-left: 4px;
+  padding-right: 2px;
+}
+
+QMenuBar::item:selected, QMenuBar::item:pressed, QMenu::item:selected{ 
+background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+color: %%TEXTHIGHLIGHTCOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+}
+QMenuBar::item:disabled{
+  color: %%TEXTDISABLECOLOR%%;
+}
+
+QMenu::item{ 
+  background: transparent; 
+  border: 1px solid transparent; 
+  color: %%TEXTCOLOR%%; 
+  padding: 4px 2em 4px 2em;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+/* TAB WIDGETS */
+/*QTabBar{
+  Custom Font settings need to be here and NOT in the ::tab fields, 
+      otherwise it will break auto-scaling of the tab sizes to fit the text
+}*/
+/* Transparency does not work on main pages within tabwidgets*/
+QTabWidget QStackedWidget .QWidget{
+  background: rgb(230,230,230);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+QTabWidget{
+  color: black;
+  border: none;
+}
+QTabWidget QLabel{
+  color: black;
+}
+QTabBar::tab {
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%SECONDARYDISABLECOLOR%%, stop: 1 %%ALTBASECOLOR%%);
+  border: 1px solid %%ACCENTCOLOR%%;
+  padding: 2px;
+  color: %%TEXTCOLOR%%;
+}
+QTabBar::tab:top{
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  max-width: 100em;
+  min-width: 0em;
+}
+QTabBar::tab:bottom{
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  max-width: 100em;
+  min-width: 0em;
+}
+/* left/right tab indicators appear to be reversed in Qt*/
+QTabBar::tab:right{
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  max-height: 100em;
+  min-height: 0em;
+}
+QTabBar::tab:left{
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  max-height: 100em;
+  min-height: 0em;
+}
+QTabBar::tab:selected{
+     background: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 rgb(230,230,230));
+    border-bottom: none;
+}
+QTabBar::tab:hover {
+    background: %%HIGHLIGHTCOLOR%%;
+    border: 1px solid %%ACCENTDISABLECOLOR%%;
+ }
+
+QTabBar::tab:!selected:top {
+    margin-top: 4px;
+}
+QTabBar::tab:!selected:bottom{
+  margin-bottom: 4px;
+}
+QTabBar::tab:!selected:right{
+  margin-left: 4px;
+}
+QTabBar::tab:!selected:left{
+  margin-right: 4px;
+}
+
+/* FRAME WIDGETS */
+QToolTip{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%BASECOLOR%%, stop: 1 %%ALTBASECOLOR%%);
+  border-radius: 3px;
+  border: 1px solid %%ACCENTCOLOR%%;
+  padding: 1px;
+  color: %%TEXTCOLOR%%;
+}
+
+QLabel{
+  background: transparent;
+  border: none;
+  color: %%TEXTCOLOR%%;
+}
+QAbstractButton::disabled{
+  color: %%TEXTDISABLECOLOR%%;
+}
+
+/* GROUP BOX */
+QGroupBox{
+  background-color: transparent;
+  border-color: %%ACCENTCOLOR%%;
+  border-radius: 5px;
+  margin-top: 2ex;
+  font-weight: bold;
+}
+QGroupBox::title{
+  subcontrol-origin: margin;
+  subcontrol-position: top center;
+  padding: 0 3px;
+  background: transparent;
+  /*border: none;*/
+  color: %%TEXTCOLOR%%;
+}
+
+/* COMBO BOX */
+QComboBox{
+  /*border: 1px solid %%ACCENTCOLOR%%;
+  border-radius: 3px;
+  padding: 1px 18px 1px 3px;*/
+  color: %%TEXTCOLOR%%;
+  background: %%ALTBASECOLOR%%;
+  selection-background-color: %%HIGHLIGHTCOLOR%%;
+ }
+
+
+/* VIEW WIDGETS */
+QTreeView, QListView{
+  background: %%ALTBASECOLOR%%;
+  alternate-background-color: %%BASECOLOR%%;
+  /*selection-background-color: %%SECONDARYCOLOR%%;*/
+  border: 1px solid %%ACCENTCOLOR%%;
+  border-radius: 3px;
+  /*show-decoration-selected: 1;*/
+  color: %%TEXTCOLOR%%;
+  selection-color: %%TEXTCOLOR%%;
+}
+
+QTreeView:focus, QListView:focus{
+  border: 1px solid %%HIGHLIGHTDISABLECOLOR%%;
+}
+
+/*
+QTreeView::item and QListView::item unneccessary: 
+Already set though parentage  and causes usage errors if set manually
+*/
+
+/*QTreeView::item:selected, QListView::item:selected{
+  background: %%SECONDARYDISABLECOLOR%%;
+  border-color: %%ACCENTCOLOR%%;
+  color: %%TEXTCOLOR%%;
+}*/
+
+QTreeView::item:hover, QListView::item:hover{
+  background: %%HIGHLIGHTDISABLECOLOR%%;
+}
+QTreeView::item:selected:hover, QListView::item:selected:hover{
+  background: %%HIGHLIGHTDISABLECOLOR%%;
+}
+QTreeView::item:selected, QListView::item:selected{
+  background: %%SECONDARYDISABLECOLOR%%;
+}
+QTreeView::item:selected:focus, QListView::item:selected:focus{
+  background: %%SECONDARYCOLOR%%;
+}
+QHeaderView{
+  background: %%HIGHLIGHTDISABLECOLOR%%;
+  color: %%TEXTHIGHLIGHTCOLOR%%;
+  border: none;
+  border-top-left-radius: 3px; /*match the list/tree view widgets*/
+  border-top-right-radius: 3px;  /*match the list/tree view widgets*/
+}
+QHeaderView::section{
+  background: %%HIGHLIGHTDISABLECOLOR%%; /*QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%PRIMARYDISABLECOLOR%%, stop: 1 %%PRIMARYCOLOR%%);*/
+  color: %%TEXTHIGHLIGHTCOLOR%%;
+  border-color: %%ACCENTCOLOR%%;
+  padding: 1px;
+  padding-left: 4px;
+}
+QHeaderView::section:hover{
+  background: %%PRIMARYCOLOR%%;
+  border-color: %%ACCENTDISABLECOLOR%%;
+  color: %%TEXTCOLOR%%;
+}
+
+/* SCROLLBARS (NOTE: Changing 1 subcontrol means you have to change all of them)*/
+QScrollBar{
+  background:%%ALTBASECOLOR%%;
+}
+QScrollBar:horizontal{
+  margin: 0px 0px 0px 0px;
+}
+QScrollBar:vertical{
+  margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle{
+  background: %%SECONDARYCOLOR%%;
+  border: 1px solid transparent;
+  border-radius: 7px;
+}
+QScrollBar::handle:hover, QScrollBar::add-line:hover, QScrollBar::sub-line:hover{
+  background: %%SECONDARYDISABLECOLOR%%;
+}
+QScrollBar::add-line{
+subcontrol-origin: none;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
+height: 0px;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal{
+width: 0px;
+}
+QScrollBar::sub-line{
+subcontrol-origin: none;
+}
+
+/* SLIDERS */
+QSlider::groove:horizontal {
+border: 1px solid %%ACCENTCOLOR%%;
+background: %%ALTBASECOLOR%%;
+height: 10px;
+border-radius: 3px;
+}
+QSlider::groove:vertical {
+border: 1px solid %%ACCENTCOLOR%%;
+background: %%ALTBASECOLOR%%;
+width: 10px;
+border-radius: 3px;
+}
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0,  x2: 1, y2: 1,
+    stop: 0 %%HIGHLIGHTCOLOR%%, stop: 1 %%HIGHLIGHTDISABLECOLOR%%);
+border: 1px solid %%ACCENTCOLOR%%;
+height: 10px;
+border-radius: 3px;
+}
+QSlider::sub-page:vertical {
+background: qlineargradient(x1: 0, y1: 0,  x2: 1, y2: 1,
+    stop: 0 %%HIGHLIGHTCOLOR%%, stop: 1 %%HIGHLIGHTDISABLECOLOR%%);
+border: 1px solid %%ACCENTCOLOR%%;
+width: 10px;
+border-radius: 3px;
+}
+QSlider::add-page:horizontal{
+background: %%ALTBASECOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+height: 10px;
+border-radius: 3px;
+}
+QSlider::add-page:vertical{
+background: %%ALTBASECOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+width: 10px;
+border-radius: 3px;
+}
+QSlider::handle:horizontal{
+background: %%ALTBASECOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+width: 13px;
+border-radius: 4px;
+}
+QSlider::handle:vertical{
+background: %%ALTBASECOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+height: 13px;
+border-radius: 4px;
+}
+QSlider::handle:horizontal:hover, QSlider::handle:vertical:hover{
+border: 1px solid %%ACCENTDISABLECOLOR%%;
+/*background: %%HIGHLIGHTCOLOR%%;*/
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: %%ACCENTDISABLECOLOR%%;
+border-color: %%ACCENTCOLOR%%;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: %%ACCENTDISABLECOLOR%%;
+border-color: %%ACCENTCOLOR%%;
+}
+
+QSlider::handle:horizontal:disabled {
+background: %%ALTBASECOLOR%%;
+border: 1px solid %%ACCENTCOLOR%%;
+}
+
+/* BUTTONS */
+QPushButton{
+     border: 1px solid %%ACCENTCOLOR%%;
+     border-radius: 3px;
+     background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%SECONDARYDISABLECOLOR%%, stop: 1 %%SECONDARYCOLOR%%);
+     padding: 2px;
+     padding-right: 4px;
+  color: %%TEXTCOLOR%%;
+ }
+
+QToolButton{ /* Assume a flat button for every toolbutton by default*/
+  color: %%TEXTCOLOR%%;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background-color: transparent;
+  padding: 1px;
+}
+
+ QPushButton:pressed, QPushButton:open, QPushButton:selected, QPushButton:checked, QPushButton:on, QToolButton:pressed, QToolButton:open, QToolButton:selected, QToolButton:checked, QToolButton:on{
+     background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+	 margin-top: 2px;
+ }
+
+QPushButton:flat, QToolButton:flat{
+   background-color: transparent;
+   border: 1px solid transparent; /* no border for a flat button */
+}
+ 
+QPushButton:hover, QToolButton:hover{
+   border: 1px solid %%ACCENTCOLOR%%;
+   background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+   color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+QRadioButton, QCheckBox{
+   padding: 2px;
+   border: 1px solid transparent;
+   border-radius: 3px;
+   color: %%TEXTCOLOR%%;
+}
+QRadioButton::hover, QCheckBox:hover{
+   background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 %%HIGHLIGHTCOLOR%%);
+   border: 1px solid %%ACCENTCOLOR%%;
+   color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+QRadioButton::indicator, QCheckBox::indicator, QGroupBox::indicator{
+  border: 1px solid %%TEXTCOLOR%%;
+}
+QRadioButton::indicator{
+  border-radius: 7px;
+}
+QRadioButton::indicator:checked{
+  background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:1, fx:0.5, fy:0.5, stop:0 %%TEXTCOLOR%%, stop:0.25 %%TEXTCOLOR%%, stop:0.25001 transparent);
+}
+QCheckBox::indicator:checked, QGroupBox::indicator:checked{
+  padding: 1px;
+  background-origin: content;
+  background-clip: content;
+  background: %%TEXTCOLOR%%;
+}
+QCheckBox::indicator:indeterminate, QGroupBox::indicator:indeterminate{
+  padding: 1px;
+  background-origin: content;
+  background-clip: content;
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0.49 transparent, stop: 0.5 %%TEXTCOLOR%%);
+}
+
+/* PROGRESSBAR */
+QProgressBar{
+     background-color: %%ALTBASECOLOR%%;
+     border: 1px solid %%ACCENTCOLOR%%;
+     border-radius: 5px;
+     color: %%TEXTCOLOR%%;
+     text-align: center;
+     padding: 1px;
+}
+ QProgressBar::chunk {
+     background-color: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 %%HIGHLIGHTCOLOR%%, stop: 1 %%HIGHLIGHTDISABLECOLOR%%);
+     /*border: 1px solid %%ACCENTDISABLECOLOR%%;*/
+     border-radius: 5px;
+ }
+QProgressBar::chunk:vertical{
+ margin-left: 2px;
+ margin-right: 2px;
+}
+QProgressBar::chunk:horizontal{
+ margin-top: 2px;
+ margin-bottom: 2px;
+}
+
+QWidget#LuminaBootSplash{
+  background: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 30), stop:1 rgba(229, 229, 229, 70));
+  border-radius: 5px;
+}
+
+LDPlugin#applauncher{
+  background-color: transparent;
+  border: none;
+}
+LDPlugin#applauncher  QToolButton, LDPlugin, LDPlugin#desktopview QListWidget::item{
+ background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 30), stop:1 rgba(229, 229, 229, 70));
+ border-width: 3px;
+ border-style: solid;
+ border-radius: 5px;
+  border-top-color: qradialgradient(spread:pad, cx:0.5, cy:1, radius:0.5, fx:0.5, fy:1, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-bottom-color: qradialgradient(spread:pad, cx:0.5, cy:0, radius:0.5, fx:0.5, fy:0, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-left-color: qradialgradient(spread:pad, cx:1, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  color: white;
+}
+
+LDPlugin#applauncher  QToolButton:hover, LDPlugin#desktopview QListWidget::item:hover{
+ background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 100), stop:1 rgba(229, 229, 229, 150));
+ border-width: 3px;
+ border-style: solid;
+ border-radius: 5px;
+  border-top-color: qradialgradient(spread:pad, cx:0.5, cy:1, radius:0.5, fx:0.5, fy:1, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-bottom-color: qradialgradient(spread:pad, cx:0.5, cy:0, radius:0.5, fx:0.5, fy:0, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-left-color: qradialgradient(spread:pad, cx:1, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+QWidget#LuminaPanelColor{
+  background: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 60), stop:1 rgba(229, 229, 229, 110));
+  border-radius: 3px;
+}
+/*Special taskmanager window buttons: based on window state*/
+LTBWidget{
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+LTBWidget::menu-indicator{ image: none; } /*disable the menu arrow*/
+LTBWidget#WindowVisible{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1.1, stop: 0.1 %%PRIMARYCOLOR%%, stop: 1 transparent);
+}
+LTBWidget#WindowInvisible{
+  background: transparent;
+}
+LTBWidget#WindowActive{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1.1, stop: 0.1 %%HIGHLIGHTDISABLECOLOR%%, stop: 1 transparent); 
+}
+LTBWidget#WindowAttention{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1.1, stop: 0.1 %%HIGHLIGHTCOLOR%%, stop: 1 transparent);
+}
+LTBWidget:hover, LTBWidget#WindowVisible:hover, LTBWidget#WindowInvisible:hover, LTBWidget#WindowActive:hover, LTBWidget#WindowAttention:hover, QToolButton:hover{
+  background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 1.1, stop: 0.1 %%HIGHLIGHTCOLOR%%, stop: 1 transparent);
+  color: %%TEXTHIGHLIGHTCOLOR%%;
+  border-width: 1px;
+  border-style: solid;
+  border-top-color: qradialgradient(spread:pad, cx:0.5, cy:1, radius:0.5, fx:0.5, fy:1, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-bottom-color: qradialgradient(spread:pad, cx:0.5, cy:0, radius:0.5, fx:0.5, fy:0, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-left-color: qradialgradient(spread:pad, cx:1, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+  border-right-color: qradialgradient(spread:pad, cx:0, cy:0.5, radius:0.5, fx:1, fy:0.5, stop:0 rgba(255, 255, 255, 30), stop:0.724868 rgba(255, 255, 255, 60), stop:1 rgba(255, 255, 255, 10));
+}
+/* CALENDER WIDGET */
+ /* (This is a special hack since there is no official support for stylesheets for this widget) */
+ QCalendarWidget QWidget#qt_calendar_navigationbar{
+   background-color: %%ALTBASECOLOR%%;
+ }
+QCalendarWidget QWidget{ 
+   background-color: %%BASECOLOR%%; 
+   alternate-background-color: rgba(255, 255, 255, 50);
+   color: %%TEXTCOLOR%%;
+}
+QCalendarWidget QAbstractButton{
+  background-color: transparent;
+}
+QCalendarWidget QAbstractButton::menu-indicator{
+  image: none;
+}
+QCalendarWidget QAbstractItemView{
+  selection-background-color: qradialgradient(spread:reflect, cx:0.113757, cy:0.875, radius:0.7, fx:0.045, fy:0.954545, stop:0 rgba(234, 236, 243, 20), stop:1 rgba(229, 229, 229, 100));
+  selection-color: %%TEXTHIGHLIGHTCOLOR%%;
+}
+QCalendarWidget QWidget#qt_calendar_calendarview{ 
+  background-color: rgb(220,220,220);
+  border: none;
+}

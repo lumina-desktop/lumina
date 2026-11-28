@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Locale Settings
+Comment=Configure system localization settings
+Icon=preferences-desktop-locale
+Exec=lcc-locale
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true

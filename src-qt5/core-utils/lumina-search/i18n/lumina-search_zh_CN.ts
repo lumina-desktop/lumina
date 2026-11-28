@@ -11,12 +11,12 @@
     <message>
         <location filename="../ConfigUI.ui" line="20"/>
         <source>Start Search:</source>
-        <translation>开始搜索:</translation>
+        <translation>开始搜索：</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="39"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation>……</translation>
     </message>
     <message>
         <location filename="../ConfigUI.ui" line="48"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../ConfigUI.ui" line="119"/>
         <source>Save as Defaults</source>
-        <translation>另存为默认</translation>
+        <translation>保存为默认</translation>
     </message>
     <message>
         <location filename="../ConfigUI.cpp" line="41"/>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../MainUI.ui" line="14"/>
         <source>Search For...</source>
-        <translation>搜索内容...</translation>
+        <translation>搜索……</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="23"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../MainUI.ui" line="40"/>
         <source>Stop Active Search</source>
-        <translation>停止主动搜索</translation>
+        <translation>停止搜索</translation>
     </message>
     <message>
         <location filename="../MainUI.ui" line="54"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../MainUI.cpp" line="98"/>
         <source>Search: %1 -- Smart: %2</source>
-        <translation>搜索: %1 -- Smart: %2</translation>
+        <translation>搜索: %1 -- 已找到: %2</translation>
     </message>
     <message>
         <location filename="../MainUI.cpp" line="101"/>

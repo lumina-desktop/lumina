@@ -19,7 +19,7 @@
     <message>
         <location filename="../mainUI.ui" line="74"/>
         <source>(No Running Video)</source>
-        <translation>(没有正在播放的视频)</translation>
+        <translation>（没有正在播放的视频）</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="105"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../mainUI.ui" line="521"/>
         <source>Pandora Account Login</source>
-        <translation>随机账户登录</translation>
+        <translation>登录 Pandora 账户</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="527"/>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../mainUI.ui" line="557"/>
         <source>&lt;a href=https://www.pandora.com/account/register&gt;Need an account?&lt;/a&gt;</source>
-        <translation>&lt;a href=https://www.pandora.com/account/register&gt;需要一个新账户？&lt;/a&gt;</translation>
+        <translation>&lt;a href=https://www.pandora.com/account/register&gt;需要账户？&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="573"/>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../mainUI.ui" line="593"/>
         <source>Control Proxy URL</source>
-        <translation>取消地址代理</translation>
+        <translation>取消代理地址</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="618"/>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../mainUI.ui" line="738"/>
         <source>Next</source>
-        <translation>接下来</translation>
+        <translation>继续</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="743"/>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../mainUI.ui" line="781"/>
         <source>Close to tray when active</source>
-        <translation>活动时靠近托盘</translation>
+        <translation>播放时靠近托盘</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="786"/>
@@ -260,12 +260,12 @@
         <location filename="../mainUI.ui" line="828"/>
         <location filename="../mainUI.cpp" line="277"/>
         <source>Pandora Radio</source>
-        <translation>随机电台</translation>
+        <translation>Pandora 电台</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="831"/>
         <source>Stream from Pandora Radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Pandora 电台 Stream</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="839"/>
@@ -280,12 +280,12 @@
     <message>
         <location filename="../mainUI.cpp" line="105"/>
         <source>Please install the `pianobar` utility to enable this functionality</source>
-        <translation>请安装“pianobar”工具以启用该功能。</translation>
+        <translation>请安装工具 `pianobar` 以启用该功能。</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="109"/>
         <source>Stream music from the Pandora online radio service</source>
-        <translation>从随机在线广播服务中传输音乐</translation>
+        <translation>从 Pandora 在线广播服务中传输音乐</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="122"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../mainUI.cpp" line="577"/>
         <source>Pandora: Create Station</source>
-        <translation>随机：创建站点</translation>
+        <translation>Pandora：创建站点</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="577"/>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../mainUI.cpp" line="655"/>
         <source>Pandora Question</source>
-        <translation>随机问题</translation>
+        <translation>Pandora 故障</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="660"/>

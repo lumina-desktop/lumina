@@ -1066,7 +1066,7 @@
     <message>
         <location filename="../mainWindow.cpp" line="149"/>
         <source>No</source>
-        <translatio>Nej</translation>
+        <translation>Nej</translation>
     </message>
     <message>
         <location filename="../mainWindow.cpp" line="150"/>

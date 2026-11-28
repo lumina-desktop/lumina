@@ -11,7 +11,7 @@
     <message>
         <location filename="../mainUI.ui" line="34"/>
         <source>&amp;File</source>
-        <translation>>&amp;文件</translation>
+        <translation>&amp;文件</translation>
     </message>
     <message>
         <location filename="../mainUI.ui" line="45"/>
@@ -182,7 +182,7 @@
     <message>
         <location filename="../mainUI.cpp" line="178"/>
         <source>Cannot load %1: %2</source>
-        <translation>不能读取 %1: %2</translation>
+        <translation>无法读取 %1: %2</translation>
     </message>
     <message>
         <location filename="../mainUI.cpp" line="191"/>
@@ -197,7 +197,7 @@
     <message>
         <location filename="../mainUI.cpp" line="224"/>
         <source>Cannot write %1: %2</source>
-        <translation>不能写入  %1: %2</translation>
+        <translation>无法写入  %1: %2</translation>
     </message>
 </context>
 <context>

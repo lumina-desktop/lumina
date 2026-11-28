@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Window Manager Settings
+Comment=Configure window manager behavior, themes, and workspace settings
+Icon=preferences-system-windows
+Exec=lcc-window-manager
+Categories=Settings;DesktopSettings;Qt;
+StartupNotify=true
