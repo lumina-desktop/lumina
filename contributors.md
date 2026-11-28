@@ -1,4 +1,4 @@
-# Contributors to Lumina by commit as of Nov 2026:
+# Contributors to Lumina by commits as of Nov 2026:
 (If you are listed under multiple lines, please let me know and I will condense them)
 
 
